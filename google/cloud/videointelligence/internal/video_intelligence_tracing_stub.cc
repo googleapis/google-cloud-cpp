@@ -17,8 +17,6 @@
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
 #include "google/cloud/videointelligence/internal/video_intelligence_tracing_stub.h"
-#include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

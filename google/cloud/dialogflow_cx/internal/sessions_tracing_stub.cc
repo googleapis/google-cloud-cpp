@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/session.proto
 
 #include "google/cloud/dialogflow_cx/internal/sessions_tracing_stub.h"
-#include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/internal/services_tracing_stub.h"
-#include <google/cloud/run/v2/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

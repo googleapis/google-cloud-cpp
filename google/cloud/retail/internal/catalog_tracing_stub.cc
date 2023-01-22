@@ -17,8 +17,6 @@
 // source: google/cloud/retail/v2/catalog_service.proto
 
 #include "google/cloud/retail/internal/catalog_tracing_stub.h"
-#include <google/cloud/retail/v2/catalog_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

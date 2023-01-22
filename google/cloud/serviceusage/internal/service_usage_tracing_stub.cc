@@ -17,8 +17,6 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/internal/service_usage_tracing_stub.h"
-#include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

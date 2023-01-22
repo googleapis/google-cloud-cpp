@@ -17,8 +17,6 @@
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
 #include "google/cloud/bigquery/internal/analytics_hub_tracing_stub.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

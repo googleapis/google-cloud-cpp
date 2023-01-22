@@ -17,8 +17,6 @@
 // source: google/cloud/networkconnectivity/v1/hub.proto
 
 #include "google/cloud/networkconnectivity/internal/hub_tracing_stub.h"
-#include <google/cloud/networkconnectivity/v1/hub.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

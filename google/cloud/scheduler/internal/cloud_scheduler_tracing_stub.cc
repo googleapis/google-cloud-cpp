@@ -17,8 +17,6 @@
 // source: google/cloud/scheduler/v1/cloudscheduler.proto
 
 #include "google/cloud/scheduler/internal/cloud_scheduler_tracing_stub.h"
-#include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

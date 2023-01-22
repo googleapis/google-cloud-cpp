@@ -17,8 +17,6 @@
 // source: google/cloud/run/v2/revision.proto
 
 #include "google/cloud/run/internal/revisions_tracing_stub.h"
-#include <google/cloud/run/v2/revision.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

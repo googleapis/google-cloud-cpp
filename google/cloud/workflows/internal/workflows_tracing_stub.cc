@@ -17,8 +17,6 @@
 // source: google/cloud/workflows/v1/workflows.proto
 
 #include "google/cloud/workflows/internal/workflows_tracing_stub.h"
-#include <google/cloud/workflows/v1/workflows.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

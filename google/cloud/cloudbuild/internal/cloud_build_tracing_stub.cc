@@ -17,8 +17,6 @@
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
 #include "google/cloud/cloudbuild/internal/cloud_build_tracing_stub.h"
-#include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

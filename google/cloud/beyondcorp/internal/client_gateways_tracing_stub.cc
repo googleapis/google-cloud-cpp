@@ -18,8 +18,6 @@
 // google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto
 
 #include "google/cloud/beyondcorp/internal/client_gateways_tracing_stub.h"
-#include <google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

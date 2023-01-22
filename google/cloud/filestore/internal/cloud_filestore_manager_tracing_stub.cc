@@ -17,8 +17,6 @@
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
 #include "google/cloud/filestore/internal/cloud_filestore_manager_tracing_stub.h"
-#include <google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

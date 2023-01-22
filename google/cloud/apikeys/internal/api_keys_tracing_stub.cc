@@ -17,8 +17,6 @@
 // source: google/api/apikeys/v2/apikeys.proto
 
 #include "google/cloud/apikeys/internal/api_keys_tracing_stub.h"
-#include <google/api/apikeys/v2/apikeys.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

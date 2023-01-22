@@ -17,8 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/instances_tracing_stub.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/secretmanager/v1/service.proto
 
 #include "google/cloud/secretmanager/internal/secret_manager_tracing_stub.h"
-#include <google/cloud/secretmanager/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

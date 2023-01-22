@@ -17,8 +17,6 @@
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
 #include "google/cloud/securitycenter/internal/security_center_tracing_stub.h"
-#include <google/cloud/securitycenter/v1/securitycenter_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

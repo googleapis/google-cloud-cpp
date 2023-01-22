@@ -17,8 +17,6 @@
 // source: google/cloud/billing/v1/cloud_billing.proto
 
 #include "google/cloud/billing/internal/cloud_billing_tracing_stub.h"
-#include <google/cloud/billing/v1/cloud_billing.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

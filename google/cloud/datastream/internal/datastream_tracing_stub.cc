@@ -17,8 +17,6 @@
 // source: google/cloud/datastream/v1/datastream.proto
 
 #include "google/cloud/datastream/internal/datastream_tracing_stub.h"
-#include <google/cloud/datastream/v1/datastream.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

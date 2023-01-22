@@ -17,8 +17,6 @@
 // source: google/cloud/asset/v1/asset_service.proto
 
 #include "google/cloud/asset/internal/asset_tracing_stub.h"
-#include <google/cloud/asset/v1/asset_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

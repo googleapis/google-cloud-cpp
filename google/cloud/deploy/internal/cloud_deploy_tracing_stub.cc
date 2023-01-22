@@ -17,8 +17,6 @@
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
 #include "google/cloud/deploy/internal/cloud_deploy_tracing_stub.h"
-#include <google/cloud/deploy/v1/cloud_deploy.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

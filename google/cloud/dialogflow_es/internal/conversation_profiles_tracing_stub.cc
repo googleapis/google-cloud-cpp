@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/v2/conversation_profile.proto
 
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_tracing_stub.h"
-#include <google/cloud/dialogflow/v2/conversation_profile.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

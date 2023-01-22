@@ -17,8 +17,6 @@
 // source: google/devtools/cloudtrace/v2/tracing.proto
 
 #include "google/cloud/trace/internal/trace_tracing_stub.h"
-#include <google/devtools/cloudtrace/v2/tracing.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
 #include "google/cloud/monitoring/internal/metrics_scopes_tracing_stub.h"
-#include <google/monitoring/metricsscope/v1/metrics_scopes.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

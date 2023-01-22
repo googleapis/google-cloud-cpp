@@ -17,8 +17,6 @@
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
 #include "google/cloud/tasks/internal/cloud_tasks_tracing_stub.h"
-#include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

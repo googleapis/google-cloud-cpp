@@ -17,8 +17,6 @@
 // source: google/cloud/pubsublite/v1/publisher.proto
 
 #include "google/cloud/pubsublite/internal/publisher_tracing_stub.h"
-#include <google/cloud/pubsublite/v1/publisher.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

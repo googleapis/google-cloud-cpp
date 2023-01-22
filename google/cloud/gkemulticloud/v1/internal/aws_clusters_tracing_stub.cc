@@ -17,8 +17,6 @@
 // source: google/cloud/gkemulticloud/v1/aws_service.proto
 
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_tracing_stub.h"
-#include <google/cloud/gkemulticloud/v1/aws_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

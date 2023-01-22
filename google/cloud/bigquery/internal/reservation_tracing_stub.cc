@@ -17,8 +17,6 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/internal/reservation_tracing_stub.h"
-#include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/iot/v1/device_manager.proto
 
 #include "google/cloud/iot/internal/device_manager_tracing_stub.h"
-#include <google/cloud/iot/v1/device_manager.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

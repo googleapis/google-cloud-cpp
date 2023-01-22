@@ -17,8 +17,6 @@
 // source: google/cloud/video/transcoder/v1/services.proto
 
 #include "google/cloud/video/internal/transcoder_tracing_stub.h"
-#include <google/cloud/video/transcoder/v1/services.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

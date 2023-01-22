@@ -17,8 +17,6 @@
 // source: google/cloud/dataplex/v1/metadata.proto
 
 #include "google/cloud/dataplex/internal/metadata_tracing_stub.h"
-#include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

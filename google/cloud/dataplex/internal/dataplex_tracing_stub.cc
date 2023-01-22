@@ -17,8 +17,6 @@
 // source: google/cloud/dataplex/v1/service.proto
 
 #include "google/cloud/dataplex/internal/dataplex_tracing_stub.h"
-#include <google/cloud/dataplex/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

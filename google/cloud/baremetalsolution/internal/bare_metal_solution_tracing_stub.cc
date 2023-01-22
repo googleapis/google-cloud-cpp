@@ -17,8 +17,6 @@
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_tracing_stub.h"
-#include <google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

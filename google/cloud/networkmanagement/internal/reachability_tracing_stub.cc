@@ -17,8 +17,6 @@
 // source: google/cloud/networkmanagement/v1/reachability.proto
 
 #include "google/cloud/networkmanagement/internal/reachability_tracing_stub.h"
-#include <google/cloud/networkmanagement/v1/reachability.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

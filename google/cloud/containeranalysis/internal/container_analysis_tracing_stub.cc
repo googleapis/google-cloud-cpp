@@ -17,8 +17,6 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/internal/container_analysis_tracing_stub.h"
-#include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

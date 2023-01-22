@@ -17,8 +17,6 @@
 // source: google/iam/v2/policy.proto
 
 #include "google/cloud/iam/v2/internal/policies_tracing_stub.h"
-#include <google/iam/v2/policy.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

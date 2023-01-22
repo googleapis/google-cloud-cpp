@@ -17,8 +17,6 @@
 // source: google/cloud/ids/v1/ids.proto
 
 #include "google/cloud/ids/internal/ids_tracing_stub.h"
-#include <google/cloud/ids/v1/ids.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

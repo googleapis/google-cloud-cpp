@@ -17,8 +17,6 @@
 // source: google/privacy/dlp/v2/dlp.proto
 
 #include "google/cloud/dlp/internal/dlp_tracing_stub.h"
-#include <google/privacy/dlp/v2/dlp.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

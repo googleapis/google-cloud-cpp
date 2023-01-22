@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/v2/conversation_dataset.proto
 
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_tracing_stub.h"
-#include <google/cloud/dialogflow/v2/conversation_dataset.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

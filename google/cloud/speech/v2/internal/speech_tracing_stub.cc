@@ -17,8 +17,6 @@
 // source: google/cloud/speech/v2/cloud_speech.proto
 
 #include "google/cloud/speech/v2/internal/speech_tracing_stub.h"
-#include <google/cloud/speech/v2/cloud_speech.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

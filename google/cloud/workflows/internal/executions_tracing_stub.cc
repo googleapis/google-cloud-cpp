@@ -17,8 +17,6 @@
 // source: google/cloud/workflows/executions/v1/executions.proto
 
 #include "google/cloud/workflows/internal/executions_tracing_stub.h"
-#include <google/cloud/workflows/executions/v1/executions.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

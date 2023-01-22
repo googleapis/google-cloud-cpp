@@ -17,8 +17,6 @@
 // source: google/bigtable/admin/v2/bigtable_instance_admin.proto
 
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_tracing_stub.h"
-#include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

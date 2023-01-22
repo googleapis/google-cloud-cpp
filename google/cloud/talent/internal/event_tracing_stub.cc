@@ -17,8 +17,6 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/internal/event_tracing_stub.h"
-#include <google/cloud/talent/v4/event_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

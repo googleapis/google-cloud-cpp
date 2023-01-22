@@ -17,8 +17,6 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/internal/profiler_tracing_stub.h"
-#include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

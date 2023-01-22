@@ -17,8 +17,6 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/internal/projects_tracing_stub.h"
-#include <google/cloud/resourcemanager/v3/projects.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

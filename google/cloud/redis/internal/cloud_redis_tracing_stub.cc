@@ -17,8 +17,6 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/internal/cloud_redis_tracing_stub.h"
-#include <google/cloud/redis/v1/cloud_redis.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

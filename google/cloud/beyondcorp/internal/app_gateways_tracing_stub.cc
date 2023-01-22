@@ -17,8 +17,6 @@
 // source: google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto
 
 #include "google/cloud/beyondcorp/internal/app_gateways_tracing_stub.h"
-#include <google/cloud/beyondcorp/appgateways/v1/app_gateways_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

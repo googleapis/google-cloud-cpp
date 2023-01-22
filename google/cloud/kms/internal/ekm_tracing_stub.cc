@@ -17,8 +17,6 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/internal/ekm_tracing_stub.h"
-#include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

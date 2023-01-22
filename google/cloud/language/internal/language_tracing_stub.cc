@@ -17,8 +17,6 @@
 // source: google/cloud/language/v1/language_service.proto
 
 #include "google/cloud/language/internal/language_tracing_stub.h"
-#include <google/cloud/language/v1/language_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

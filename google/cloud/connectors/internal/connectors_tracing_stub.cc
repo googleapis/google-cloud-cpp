@@ -17,8 +17,6 @@
 // source: google/cloud/connectors/v1/connectors_service.proto
 
 #include "google/cloud/connectors/internal/connectors_tracing_stub.h"
-#include <google/cloud/connectors/v1/connectors_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

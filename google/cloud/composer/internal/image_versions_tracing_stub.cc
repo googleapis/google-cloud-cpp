@@ -17,8 +17,6 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/internal/image_versions_tracing_stub.h"
-#include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/internal/lookup_tracing_stub.h"
-#include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

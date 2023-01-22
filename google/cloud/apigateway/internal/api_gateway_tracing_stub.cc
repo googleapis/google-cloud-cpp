@@ -17,8 +17,6 @@
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
 #include "google/cloud/apigateway/internal/api_gateway_tracing_stub.h"
-#include <google/cloud/apigateway/v1/apigateway_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

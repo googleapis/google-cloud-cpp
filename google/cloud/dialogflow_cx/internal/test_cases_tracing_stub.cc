@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/test_case.proto
 
 #include "google/cloud/dialogflow_cx/internal/test_cases_tracing_stub.h"
-#include <google/cloud/dialogflow/cx/v3/test_case.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

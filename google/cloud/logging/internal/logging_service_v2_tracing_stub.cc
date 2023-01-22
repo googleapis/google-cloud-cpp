@@ -17,8 +17,6 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/internal/logging_service_v2_tracing_stub.h"
-#include <google/logging/v2/logging.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

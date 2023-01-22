@@ -17,8 +17,6 @@
 // source: google/cloud/memcache/v1/cloud_memcache.proto
 
 #include "google/cloud/memcache/internal/cloud_memcache_tracing_stub.h"
-#include <google/cloud/memcache/v1/cloud_memcache.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

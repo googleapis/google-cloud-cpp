@@ -17,8 +17,6 @@
 // source: google/cloud/bigquery/v2/model.proto
 
 #include "google/cloud/bigquery/internal/model_tracing_stub.h"
-#include <google/cloud/bigquery/v2/model.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

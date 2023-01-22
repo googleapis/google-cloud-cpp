@@ -17,8 +17,6 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/internal/managed_identities_tracing_stub.h"
-#include <google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

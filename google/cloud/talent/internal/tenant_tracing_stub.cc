@@ -17,8 +17,6 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/internal/tenant_tracing_stub.h"
-#include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

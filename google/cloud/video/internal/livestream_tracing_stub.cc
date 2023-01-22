@@ -17,8 +17,6 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/internal/livestream_tracing_stub.h"
-#include <google/cloud/video/livestream/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

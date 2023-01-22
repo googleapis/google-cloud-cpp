@@ -17,8 +17,6 @@
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
 #include "google/cloud/optimization/internal/fleet_routing_tracing_stub.h"
-#include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

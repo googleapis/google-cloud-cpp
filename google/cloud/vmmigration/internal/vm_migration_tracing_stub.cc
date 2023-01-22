@@ -17,8 +17,6 @@
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
 #include "google/cloud/vmmigration/internal/vm_migration_tracing_stub.h"
-#include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

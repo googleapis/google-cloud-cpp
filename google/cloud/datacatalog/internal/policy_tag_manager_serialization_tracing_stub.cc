@@ -17,8 +17,6 @@
 // source: google/cloud/datacatalog/v1/policytagmanagerserialization.proto
 
 #include "google/cloud/datacatalog/internal/policy_tag_manager_serialization_tracing_stub.h"
-#include <google/cloud/datacatalog/v1/policytagmanagerserialization.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/internal/os_login_tracing_stub.h"
-#include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

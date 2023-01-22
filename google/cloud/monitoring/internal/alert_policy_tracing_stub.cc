@@ -17,8 +17,6 @@
 // source: google/monitoring/v3/alert_service.proto
 
 #include "google/cloud/monitoring/internal/alert_policy_tracing_stub.h"
-#include <google/monitoring/v3/alert_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

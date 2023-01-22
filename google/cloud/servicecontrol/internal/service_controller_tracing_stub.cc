@@ -17,8 +17,6 @@
 // source: google/api/servicecontrol/v1/service_controller.proto
 
 #include "google/cloud/servicecontrol/internal/service_controller_tracing_stub.h"
-#include <google/api/servicecontrol/v1/service_controller.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

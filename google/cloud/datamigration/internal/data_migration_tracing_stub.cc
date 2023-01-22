@@ -17,8 +17,6 @@
 // source: google/cloud/clouddms/v1/clouddms.proto
 
 #include "google/cloud/datamigration/internal/data_migration_tracing_stub.h"
-#include <google/cloud/clouddms/v1/clouddms.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

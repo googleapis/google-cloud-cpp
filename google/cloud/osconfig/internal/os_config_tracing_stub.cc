@@ -17,8 +17,6 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/internal/os_config_tracing_stub.h"
-#include <google/cloud/osconfig/v1/osconfig_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

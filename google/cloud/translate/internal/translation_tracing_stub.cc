@@ -17,8 +17,6 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/internal/translation_tracing_stub.h"
-#include <google/cloud/translate/v3/translation_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

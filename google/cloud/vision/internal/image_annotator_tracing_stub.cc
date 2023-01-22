@@ -17,8 +17,6 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/internal/image_annotator_tracing_stub.h"
-#include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

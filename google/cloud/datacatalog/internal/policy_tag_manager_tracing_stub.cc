@@ -17,8 +17,6 @@
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
 #include "google/cloud/datacatalog/internal/policy_tag_manager_tracing_stub.h"
-#include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

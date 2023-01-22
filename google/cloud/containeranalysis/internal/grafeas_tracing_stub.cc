@@ -17,8 +17,6 @@
 // source: grafeas/v1/grafeas.proto
 
 #include "google/cloud/containeranalysis/internal/grafeas_tracing_stub.h"
-#include <grafeas/v1/grafeas.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_tracing_stub.h"
-#include <google/storage/v2/storage.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

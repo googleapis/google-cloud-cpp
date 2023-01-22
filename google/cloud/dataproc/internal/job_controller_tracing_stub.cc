@@ -17,8 +17,6 @@
 // source: google/cloud/dataproc/v1/jobs.proto
 
 #include "google/cloud/dataproc/internal/job_controller_tracing_stub.h"
-#include <google/cloud/dataproc/v1/jobs.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

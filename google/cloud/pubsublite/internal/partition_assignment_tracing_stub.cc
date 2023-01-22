@@ -17,8 +17,6 @@
 // source: google/cloud/pubsublite/v1/subscriber.proto
 
 #include "google/cloud/pubsublite/internal/partition_assignment_tracing_stub.h"
-#include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/monitoring/v3/notification_service.proto
 
 #include "google/cloud/monitoring/internal/notification_channel_tracing_stub.h"
-#include <google/monitoring/v3/notification_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/internal/identity_aware_proxy_o_auth_tracing_stub.h"
-#include <google/cloud/iap/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

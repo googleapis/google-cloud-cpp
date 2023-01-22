@@ -17,8 +17,6 @@
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_tracing_stub.h"
-#include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

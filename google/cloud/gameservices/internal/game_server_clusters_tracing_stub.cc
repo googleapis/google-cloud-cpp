@@ -17,8 +17,6 @@
 // source: google/cloud/gaming/v1/game_server_clusters_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_clusters_tracing_stub.h"
-#include <google/cloud/gaming/v1/game_server_clusters_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

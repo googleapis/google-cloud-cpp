@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/agent.proto
 
 #include "google/cloud/dialogflow_cx/internal/agents_tracing_stub.h"
-#include <google/cloud/dialogflow/cx/v3/agent.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

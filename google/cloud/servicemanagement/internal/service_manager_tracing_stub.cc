@@ -17,8 +17,6 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/internal/service_manager_tracing_stub.h"
-#include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

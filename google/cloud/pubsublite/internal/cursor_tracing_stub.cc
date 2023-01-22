@@ -17,8 +17,6 @@
 // source: google/cloud/pubsublite/v1/cursor.proto
 
 #include "google/cloud/pubsublite/internal/cursor_tracing_stub.h"
-#include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/pubsub/v1/schema.proto
 
 #include "google/cloud/pubsub/internal/schema_tracing_stub.h"
-#include <google/pubsub/v1/schema.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

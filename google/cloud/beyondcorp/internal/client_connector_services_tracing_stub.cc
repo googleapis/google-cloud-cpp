@@ -18,8 +18,6 @@
 // google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto
 
 #include "google/cloud/beyondcorp/internal/client_connector_services_tracing_stub.h"
-#include <google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

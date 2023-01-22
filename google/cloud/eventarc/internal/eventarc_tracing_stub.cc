@@ -17,8 +17,6 @@
 // source: google/cloud/eventarc/v1/eventarc.proto
 
 #include "google/cloud/eventarc/internal/eventarc_tracing_stub.h"
-#include <google/cloud/eventarc/v1/eventarc.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

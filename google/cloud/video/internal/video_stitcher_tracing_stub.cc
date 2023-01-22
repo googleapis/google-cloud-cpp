@@ -17,8 +17,6 @@
 // source: google/cloud/video/stitcher/v1/video_stitcher_service.proto
 
 #include "google/cloud/video/internal/video_stitcher_tracing_stub.h"
-#include <google/cloud/video/stitcher/v1/video_stitcher_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

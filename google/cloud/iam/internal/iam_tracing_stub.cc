@@ -17,8 +17,6 @@
 // source: google/iam/admin/v1/iam.proto
 
 #include "google/cloud/iam/internal/iam_tracing_stub.h"
-#include <google/iam/admin/v1/iam.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

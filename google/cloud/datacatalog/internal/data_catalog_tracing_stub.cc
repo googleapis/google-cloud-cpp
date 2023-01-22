@@ -17,8 +17,6 @@
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
 #include "google/cloud/datacatalog/internal/data_catalog_tracing_stub.h"
-#include <google/cloud/datacatalog/v1/datacatalog.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

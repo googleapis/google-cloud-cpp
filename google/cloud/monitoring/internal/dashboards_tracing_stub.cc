@@ -17,8 +17,6 @@
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
 #include "google/cloud/monitoring/internal/dashboards_tracing_stub.h"
-#include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

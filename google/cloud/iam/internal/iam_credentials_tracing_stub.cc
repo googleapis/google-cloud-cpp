@@ -17,8 +17,6 @@
 // source: google/iam/credentials/v1/iamcredentials.proto
 
 #include "google/cloud/iam/internal/iam_credentials_tracing_stub.h"
-#include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

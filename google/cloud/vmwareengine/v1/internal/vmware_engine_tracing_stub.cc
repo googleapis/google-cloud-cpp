@@ -17,8 +17,6 @@
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_tracing_stub.h"
-#include <google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

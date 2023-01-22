@@ -17,8 +17,6 @@
 // source: google/cloud/gkehub/v1/service.proto
 
 #include "google/cloud/gkehub/internal/gke_hub_tracing_stub.h"
-#include <google/cloud/gkehub/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

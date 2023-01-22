@@ -17,8 +17,6 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/internal/cloud_shell_tracing_stub.h"
-#include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

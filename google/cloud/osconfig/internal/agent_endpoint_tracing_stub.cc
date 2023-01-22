@@ -17,8 +17,6 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/internal/agent_endpoint_tracing_stub.h"
-#include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/api/servicecontrol/v1/quota_controller.proto
 
 #include "google/cloud/servicecontrol/internal/quota_controller_tracing_stub.h"
-#include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

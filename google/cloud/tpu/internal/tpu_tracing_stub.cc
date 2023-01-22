@@ -17,8 +17,6 @@
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
 #include "google/cloud/tpu/internal/tpu_tracing_stub.h"
-#include <google/cloud/tpu/v1/cloud_tpu.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/internal/vpc_access_tracing_stub.h"
-#include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

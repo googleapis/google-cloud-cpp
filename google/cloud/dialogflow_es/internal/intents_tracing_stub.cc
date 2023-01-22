@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/v2/intent.proto
 
 #include "google/cloud/dialogflow_es/internal/intents_tracing_stub.h"
-#include <google/cloud/dialogflow/v2/intent.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

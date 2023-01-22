@@ -17,8 +17,6 @@
 // source: google/spanner/admin/instance/v1/spanner_instance_admin.proto
 
 #include "google/cloud/spanner/admin/internal/instance_admin_tracing_stub.h"
-#include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

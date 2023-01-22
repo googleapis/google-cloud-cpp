@@ -17,8 +17,6 @@
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
 #include "google/cloud/apigeeconnect/internal/connection_tracing_stub.h"
-#include <google/cloud/apigeeconnect/v1/connection.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

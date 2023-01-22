@@ -17,8 +17,6 @@
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
 #include "google/cloud/assuredworkloads/internal/assured_workloads_tracing_stub.h"
-#include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

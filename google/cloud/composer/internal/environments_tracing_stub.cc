@@ -17,8 +17,6 @@
 // source: google/cloud/orchestration/airflow/service/v1/environments.proto
 
 #include "google/cloud/composer/internal/environments_tracing_stub.h"
-#include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

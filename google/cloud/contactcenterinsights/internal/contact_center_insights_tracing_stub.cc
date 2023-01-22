@@ -17,8 +17,6 @@
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_tracing_stub.h"
-#include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

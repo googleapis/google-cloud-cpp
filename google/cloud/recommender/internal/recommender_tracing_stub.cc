@@ -17,8 +17,6 @@
 // source: google/cloud/recommender/v1/recommender_service.proto
 
 #include "google/cloud/recommender/internal/recommender_tracing_stub.h"
-#include <google/cloud/recommender/v1/recommender_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

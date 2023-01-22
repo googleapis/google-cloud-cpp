@@ -18,8 +18,6 @@
 // google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto
 
 #include "google/cloud/beyondcorp/internal/app_connections_tracing_stub.h"
-#include <google/cloud/beyondcorp/appconnections/v1/app_connections_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

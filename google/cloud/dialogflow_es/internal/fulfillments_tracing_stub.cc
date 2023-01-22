@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/v2/fulfillment.proto
 
 #include "google/cloud/dialogflow_es/internal/fulfillments_tracing_stub.h"
-#include <google/cloud/dialogflow/v2/fulfillment.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

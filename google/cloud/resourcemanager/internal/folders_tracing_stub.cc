@@ -17,8 +17,6 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/internal/folders_tracing_stub.h"
-#include <google/cloud/resourcemanager/v3/folders.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

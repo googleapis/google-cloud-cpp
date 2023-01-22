@@ -17,8 +17,6 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/internal/bigquery_read_tracing_stub.h"
-#include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

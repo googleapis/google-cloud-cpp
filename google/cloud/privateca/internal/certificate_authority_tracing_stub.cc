@@ -17,8 +17,6 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/internal/certificate_authority_tracing_stub.h"
-#include <google/cloud/security/privateca/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

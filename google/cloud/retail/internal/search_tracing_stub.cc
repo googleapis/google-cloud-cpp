@@ -17,8 +17,6 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/internal/search_tracing_stub.h"
-#include <google/cloud/retail/v2/search_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

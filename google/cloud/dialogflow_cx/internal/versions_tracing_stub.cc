@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/version.proto
 
 #include "google/cloud/dialogflow_cx/internal/versions_tracing_stub.h"
-#include <google/cloud/dialogflow/cx/v3/version.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

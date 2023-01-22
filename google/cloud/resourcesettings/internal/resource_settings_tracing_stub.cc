@@ -17,8 +17,6 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 #include "google/cloud/resourcesettings/internal/resource_settings_tracing_stub.h"
-#include <google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

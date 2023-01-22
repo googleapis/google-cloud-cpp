@@ -17,8 +17,6 @@
 // source: google/cloud/webrisk/v1/webrisk.proto
 
 #include "google/cloud/webrisk/internal/web_risk_tracing_stub.h"
-#include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

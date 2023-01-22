@@ -17,8 +17,6 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/internal/cluster_manager_tracing_stub.h"
-#include <google/container/v1/cluster_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

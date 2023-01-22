@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/transition_route_group.proto
 
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_tracing_stub.h"
-#include <google/cloud/dialogflow/cx/v3/transition_route_group.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

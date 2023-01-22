@@ -17,8 +17,6 @@
 // source: google/cloud/notebooks/v1/managed_service.proto
 
 #include "google/cloud/notebooks/internal/managed_notebook_tracing_stub.h"
-#include <google/cloud/notebooks/v1/managed_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

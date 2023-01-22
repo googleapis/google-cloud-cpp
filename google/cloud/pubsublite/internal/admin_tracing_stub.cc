@@ -17,8 +17,6 @@
 // source: google/cloud/pubsublite/v1/admin.proto
 
 #include "google/cloud/pubsublite/internal/admin_tracing_stub.h"
-#include <google/cloud/pubsublite/v1/admin.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

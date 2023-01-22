@@ -17,8 +17,6 @@
 // source: google/cloud/dataproc/v1/workflow_templates.proto
 
 #include "google/cloud/dataproc/internal/workflow_template_tracing_stub.h"
-#include <google/cloud/dataproc/v1/workflow_templates.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

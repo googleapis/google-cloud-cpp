@@ -17,8 +17,6 @@
 // source: google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto
 
 #include "google/cloud/beyondcorp/internal/app_connectors_tracing_stub.h"
-#include <google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

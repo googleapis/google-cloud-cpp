@@ -17,8 +17,6 @@
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
 #include "google/cloud/resourcemanager/internal/organizations_tracing_stub.h"
-#include <google/cloud/resourcemanager/v3/organizations.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

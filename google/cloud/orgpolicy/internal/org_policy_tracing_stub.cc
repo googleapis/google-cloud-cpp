@@ -17,8 +17,6 @@
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
 #include "google/cloud/orgpolicy/internal/org_policy_tracing_stub.h"
-#include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/v2/knowledge_base.proto
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_tracing_stub.h"
-#include <google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

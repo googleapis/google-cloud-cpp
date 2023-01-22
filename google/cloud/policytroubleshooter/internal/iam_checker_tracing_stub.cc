@@ -17,8 +17,6 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/internal/iam_checker_tracing_stub.h"
-#include <google/cloud/policytroubleshooter/v1/checker.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

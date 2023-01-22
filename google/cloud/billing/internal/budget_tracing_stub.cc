@@ -17,8 +17,6 @@
 // source: google/cloud/billing/budgets/v1/budget_service.proto
 
 #include "google/cloud/billing/internal/budget_tracing_stub.h"
-#include <google/cloud/billing/budgets/v1/budget_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

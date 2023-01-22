@@ -17,8 +17,6 @@
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
 #include "google/cloud/bigquery/internal/data_transfer_tracing_stub.h"
-#include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

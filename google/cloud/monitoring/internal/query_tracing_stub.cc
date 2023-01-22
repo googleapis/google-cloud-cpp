@@ -17,8 +17,6 @@
 // source: google/monitoring/v3/query_service.proto
 
 #include "google/cloud/monitoring/internal/query_tracing_stub.h"
-#include <google/monitoring/v3/query_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

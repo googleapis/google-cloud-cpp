@@ -17,8 +17,6 @@
 // source: google/storagetransfer/v1/transfer.proto
 
 #include "google/cloud/storagetransfer/internal/storage_transfer_tracing_stub.h"
-#include <google/storagetransfer/v1/transfer.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

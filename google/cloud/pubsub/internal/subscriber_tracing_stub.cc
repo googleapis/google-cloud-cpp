@@ -17,8 +17,6 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/internal/subscriber_tracing_stub.h"
-#include <google/pubsub/v1/pubsub.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

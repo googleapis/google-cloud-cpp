@@ -17,8 +17,6 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/internal/validation_helper_v1_tracing_stub.h"
-#include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

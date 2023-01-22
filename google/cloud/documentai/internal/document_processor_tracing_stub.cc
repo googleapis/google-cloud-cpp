@@ -17,8 +17,6 @@
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
 #include "google/cloud/documentai/internal/document_processor_tracing_stub.h"
-#include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

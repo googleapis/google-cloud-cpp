@@ -17,8 +17,6 @@
 // source: google/devtools/clouddebugger/v2/debugger.proto
 
 #include "google/cloud/debugger/internal/debugger2_tracing_stub.h"
-#include <google/devtools/clouddebugger/v2/debugger.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

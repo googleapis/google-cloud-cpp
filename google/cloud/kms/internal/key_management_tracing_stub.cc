@@ -17,8 +17,6 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/internal/key_management_tracing_stub.h"
-#include <google/cloud/kms/v1/service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

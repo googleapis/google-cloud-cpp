@@ -17,8 +17,6 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/internal/batch_tracing_stub.h"
-#include <google/cloud/batch/v1/batch.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

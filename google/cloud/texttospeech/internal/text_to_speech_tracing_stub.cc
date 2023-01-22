@@ -17,8 +17,6 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/internal/text_to_speech_tracing_stub.h"
-#include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

@@ -17,8 +17,6 @@
 // source: google/bigtable/v2/bigtable.proto
 
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

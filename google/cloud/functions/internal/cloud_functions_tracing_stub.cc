@@ -17,8 +17,6 @@
 // source: google/cloud/functions/v1/functions.proto
 
 #include "google/cloud/functions/internal/cloud_functions_tracing_stub.h"
-#include <google/cloud/functions/v1/functions.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

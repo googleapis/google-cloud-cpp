@@ -17,8 +17,6 @@
 // source: google/cloud/dataproc/v1/batches.proto
 
 #include "google/cloud/dataproc/internal/batch_controller_tracing_stub.h"
-#include <google/cloud/dataproc/v1/batches.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

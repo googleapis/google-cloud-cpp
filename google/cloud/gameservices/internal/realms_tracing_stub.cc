@@ -17,8 +17,6 @@
 // source: google/cloud/gaming/v1/realms_service.proto
 
 #include "google/cloud/gameservices/internal/realms_tracing_stub.h"
-#include <google/cloud/gaming/v1/realms_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

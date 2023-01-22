@@ -17,8 +17,6 @@
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_tracing_stub.h"
-#include <google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

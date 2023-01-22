@@ -17,8 +17,6 @@
 // source: google/cloud/vision/v1/product_search_service.proto
 
 #include "google/cloud/vision/internal/product_search_tracing_stub.h"
-#include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

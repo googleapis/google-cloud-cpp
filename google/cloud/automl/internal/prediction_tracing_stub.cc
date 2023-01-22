@@ -17,8 +17,6 @@
 // source: google/cloud/automl/v1/prediction_service.proto
 
 #include "google/cloud/automl/internal/prediction_tracing_stub.h"
-#include <google/cloud/automl/v1/prediction_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

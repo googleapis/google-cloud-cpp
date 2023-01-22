@@ -17,8 +17,6 @@
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
 #include "google/cloud/certificatemanager/internal/certificate_manager_tracing_stub.h"
-#include <google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

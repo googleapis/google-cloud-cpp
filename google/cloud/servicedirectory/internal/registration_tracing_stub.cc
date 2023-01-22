@@ -17,8 +17,6 @@
 // source: google/cloud/servicedirectory/v1/registration_service.proto
 
 #include "google/cloud/servicedirectory/internal/registration_tracing_stub.h"
-#include <google/cloud/servicedirectory/v1/registration_service.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {

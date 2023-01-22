@@ -17,8 +17,6 @@
 // source: google/cloud/dialogflow/v2/context.proto
 
 #include "google/cloud/dialogflow_es/internal/contexts_tracing_stub.h"
-#include <google/cloud/dialogflow/v2/context.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {
