@@ -136,7 +136,7 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   google::cloud::future<StatusOr<google::longrunning::Operation>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $request_type$ const& request) override;
 )""");
     } else {
@@ -163,14 +163,14 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   google::cloud::future<Status> Async$method_name$(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $request_type$ const& request) override;
 )""");
     } else {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   google::cloud::future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       $request_type$ const& request) override;
 )""");
     }
@@ -182,12 +182,12 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
         R"""(
   google::cloud::future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::CancelOperationRequest const& request) override;
 )""");
   }
@@ -250,13 +250,13 @@ $metadata_rest_class_name$::$metadata_rest_class_name$(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_rest_class_name$::Async$method_name$(
       CompletionQueue& cq,
-      rest_internal::RestContext& rest_context,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
       $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kReference));
+                    SetMetadataText(method, kPointer));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, rest_context, request);
+  return child_->Async$method_name$(cq, std::move(rest_context), request);
 }
 )""");
     } else {
@@ -298,13 +298,13 @@ $metadata_rest_class_name$::$method_name$(
 future<Status>
 $metadata_rest_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
     $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kReference));
+                    SetMetadataText(method, kPointer));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, rest_context, request);
+  return child_->Async$method_name$(cq, std::move(rest_context), request);
 }
 )""");
     } else {
@@ -312,13 +312,13 @@ $metadata_rest_class_name$::Async$method_name$(
 future<StatusOr<$response_type$>>
 $metadata_rest_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
-    google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<rest_internal::RestContext> rest_context,
     $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kReference));
+                    SetMetadataText(method, kPointer));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, rest_context, request);
+  return child_->Async$method_name$(cq, std::move(rest_context), request);
 }
 )""");
     }
@@ -330,19 +330,19 @@ $metadata_rest_class_name$::Async$method_name$(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    google::cloud::rest_internal::RestContext& rest_context,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AsyncGetOperation(cq, rest_context, request);
+  SetMetadata(*rest_context);
+  return child_->AsyncGetOperation(cq, std::move(rest_context), request);
 }
 
 future<Status>
 $metadata_rest_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    google::cloud::rest_internal::RestContext& rest_context,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(rest_context);
-  return child_->AsyncCancelOperation(cq, rest_context, request);
+  SetMetadata(*rest_context);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context), request);
 }
 )""");
   }

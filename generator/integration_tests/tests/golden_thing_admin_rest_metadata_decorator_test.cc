@@ -150,52 +150,54 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, AsyncCreateDatabase)
       .WillOnce(
-          [](CompletionQueue&, rest_internal::RestContext& context,
+          [](CompletionQueue&,
+             std::unique_ptr<rest_internal::RestContext> context,
              google::test::admin::database::v1::CreateDatabaseRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
+            EXPECT_THAT(context->GetHeader("x-goog-api-client"),
                         Contains(google::cloud::internal::ApiClientHeader(
                             "generator")));
-            EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-goog-quota-user"),
+            EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-quota-user"),
                         Contains("test-quota-user"));
-            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-server-timeout"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-request-params"), IsEmpty());
             return LongrunningTransientError();
           });
 
   internal::OptionsSpan span(Options{}.set<QuotaUserOption>("test-quota-user"));
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.AsyncCreateDatabase(cq, context, request);
+  auto status = stub.AsyncCreateDatabase(cq, std::move(context), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
-      .WillOnce([](CompletionQueue&, rest_internal::RestContext& context,
+      .WillOnce([](CompletionQueue&,
+                   std::unique_ptr<rest_internal::RestContext> context,
                    google::test::admin::database::v1::
                        UpdateDatabaseDdlRequest const&) {
         EXPECT_THAT(
-            context.GetHeader("x-goog-api-client"),
+            context->GetHeader("x-goog-api-client"),
             Contains(google::cloud::internal::ApiClientHeader("generator")));
-        EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
-        EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
-        EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
-        EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+        EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
+        EXPECT_THAT(context->GetHeader("x-goog-quota-user"), IsEmpty());
+        EXPECT_THAT(context->GetHeader("x-server-timeout"), IsEmpty());
+        EXPECT_THAT(context->GetHeader("x-goog-request-params"), IsEmpty());
         return LongrunningTransientError();
       });
 
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.AsyncUpdateDatabaseDdl(cq, context, request);
+  auto status = stub.AsyncUpdateDatabaseDdl(cq, std::move(context), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -356,24 +358,25 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce(
-          [](CompletionQueue&, rest_internal::RestContext& context,
+          [](CompletionQueue&,
+             std::unique_ptr<rest_internal::RestContext> context,
              google::test::admin::database::v1::CreateBackupRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
+            EXPECT_THAT(context->GetHeader("x-goog-api-client"),
                         Contains(google::cloud::internal::ApiClientHeader(
                             "generator")));
-            EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-quota-user"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-server-timeout"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-request-params"), IsEmpty());
             return LongrunningTransientError();
           });
 
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.AsyncCreateBackup(cq, context, request);
+  auto status = stub.AsyncCreateBackup(cq, std::move(context), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -479,24 +482,25 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
       .WillOnce(
-          [](CompletionQueue&, rest_internal::RestContext& context,
+          [](CompletionQueue&,
+             std::unique_ptr<rest_internal::RestContext> context,
              google::test::admin::database::v1::RestoreDatabaseRequest const&) {
-            EXPECT_THAT(context.GetHeader("x-goog-api-client"),
+            EXPECT_THAT(context->GetHeader("x-goog-api-client"),
                         Contains(google::cloud::internal::ApiClientHeader(
                             "generator")));
-            EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-user-project"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-quota-user"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-server-timeout"), IsEmpty());
+            EXPECT_THAT(context->GetHeader("x-goog-request-params"), IsEmpty());
             return LongrunningTransientError();
           });
 
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.AsyncRestoreDatabase(cq, context, request);
+  auto status = stub.AsyncRestoreDatabase(cq, std::move(context), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 

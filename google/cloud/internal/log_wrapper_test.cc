@@ -209,15 +209,15 @@ struct TestContext {};
 /// @test the overload for functions returning FutureStatusOr and using
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusOrValueWithTestContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&, TestContext&,
+  auto mock = [](google::cloud::CompletionQueue&, std::unique_ptr<TestContext>,
                  google::spanner::v1::Mutation m) {
     return make_ready_future(make_status_or(std::move(m)));
   };
 
   testing_util::ScopedLog log;
   CompletionQueue cq;
-  TestContext context;
-  LogWrapper(mock, cq, context, MakeMutation(), "in-test", {});
+  auto context = absl::make_unique<TestContext>();
+  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
@@ -231,7 +231,7 @@ TEST(LogWrapper, FutureStatusOrValueWithTestContextAndCQ) {
 /// @test the overload for functions returning FutureStatusOr and using
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusOrErrorWithTestContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&, TestContext&,
+  auto mock = [](google::cloud::CompletionQueue&, std::unique_ptr<TestContext>,
                  google::spanner::v1::Mutation const&) {
     return make_ready_future(StatusOr<google::spanner::v1::Mutation>(
         Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -239,8 +239,8 @@ TEST(LogWrapper, FutureStatusOrErrorWithTestContextAndCQ) {
 
   testing_util::ScopedLog log;
   CompletionQueue cq;
-  TestContext context;
-  LogWrapper(mock, cq, context, MakeMutation(), "in-test", {});
+  auto context = absl::make_unique<TestContext>();
+  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
@@ -257,15 +257,15 @@ TEST(LogWrapper, FutureStatusOrErrorWithTestContextAndCQ) {
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusWithTestContextAndCQ) {
   auto const status = Status(StatusCode::kPermissionDenied, "uh-oh");
-  auto mock = [&](google::cloud::CompletionQueue&, TestContext&,
+  auto mock = [&](google::cloud::CompletionQueue&, std::unique_ptr<TestContext>,
                   google::spanner::v1::Mutation const&) {
     return make_ready_future(status);
   };
 
   testing_util::ScopedLog log;
   CompletionQueue cq;
-  TestContext context;
-  LogWrapper(mock, cq, context, MakeMutation(), "in-test", {});
+  auto context = absl::make_unique<TestContext>();
+  LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   std::ostringstream os;
   os << status;
