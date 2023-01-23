@@ -203,10 +203,14 @@ time {
   done
 }
 
+# mdformat does `tempfile.mkstemp(); ...; os.replace(tmp_path, path)`,
+# which results in the new .md file having mode 0600. So, run a second
+# pass to reset the group/other permissions to something more reasonable.
 printf "%-50s" "Running markdown formatter:" >&2
 time {
   # See `.mdformat.toml` for the configuration parameters.
   git_files -z -- '*.md' | xargs -r -P "$(nproc)" -n 1 -0 mdformat
+  git_files -z -- '*.md' | xargs -r -0 chmod go=u-w
 }
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2
