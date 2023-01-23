@@ -705,6 +705,9 @@ std::string FormatApiMethodSignatureParameters(
             // Runaway escaping and just duplication in gkemulticloud proto
             // file.
             {" formatted as `resource name formatted as", " formatted as"},
+            // Missing escaping in pubsub/v1/schema.proto
+            {"Example: projects/123/schemas/my-schema@c7cfa2a8",
+             "Example: `projects/123/schemas/my-schema@c7cfa2a8`"},
         });
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
