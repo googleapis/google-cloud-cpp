@@ -33,6 +33,14 @@ std::string EscapeXmlContent(absl::string_view content) {
                              {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
 }
 
+std::string UnescapeXmlString(absl::string_view val) {
+  return absl::StrReplaceAll(val, {{"&lt;", "<"},
+                                   {"&gt;", ">"},
+                                   {"&quot;", "\""},
+                                   {"&apos;", "'"},
+                                   {"&amp;", "&"}});
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
