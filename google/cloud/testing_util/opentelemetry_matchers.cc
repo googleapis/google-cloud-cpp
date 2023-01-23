@@ -54,6 +54,10 @@ std::string ToString(opentelemetry::trace::StatusCode c) {
   }
 }
 
+bool ThereIsAnActiveSpan() {
+  return opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid();
+}
+
 std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
 InstallSpanCatcher() {
   auto exporter = absl::make_unique<
