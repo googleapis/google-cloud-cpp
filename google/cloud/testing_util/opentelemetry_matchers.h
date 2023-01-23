@@ -23,6 +23,7 @@
 #include <opentelemetry/sdk/trace/span_data.h>
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_metadata.h>
+#include <opentelemetry/trace/tracer.h>
 #include <memory>
 #include <string>
 
@@ -48,6 +49,12 @@ using SpanDataPtr = std::unique_ptr<opentelemetry::sdk::trace::SpanData>;
 std::string ToString(opentelemetry::trace::SpanKind k);
 
 std::string ToString(opentelemetry::trace::StatusCode c);
+
+bool ThereIsAnActiveSpan();
+
+MATCHER(IsActive, "") {
+  return opentelemetry::trace::Tracer::GetCurrentSpan() == arg;
+}
 
 MATCHER(SpanHasInstrumentationScope,
         "has instrumentation scope (name: gcloud-cpp | version: " +

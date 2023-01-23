@@ -57,6 +57,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/subject_token_test.cc",
     "internal/throw_delegate_test.cc",
     "internal/timer_queue_test.cc",
+    "internal/traced_stream_range_test.cc",
     "internal/tuple_test.cc",
     "internal/type_list_test.cc",
     "internal/user_agent_prefix_test.cc",
