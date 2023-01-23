@@ -98,9 +98,10 @@ TEST(LoggingDecoratorRestTest, AsyncCreateDatabase) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncCreateDatabase(
-      cq, context, google::test::admin::database::v1::CreateDatabaseRequest());
+      cq, std::move(context),
+      google::test::admin::database::v1::CreateDatabaseRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log.ExtractLines();
@@ -116,9 +117,9 @@ TEST(LoggingDecoratorRestTest, AsyncUpdateDatabaseDdl) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncUpdateDatabaseDdl(
-      cq, context,
+      cq, std::move(context),
       google::test::admin::database::v1::UpdateDatabaseDdlRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -215,9 +216,10 @@ TEST(LoggingDecoratorRestTest, AsyncCreateBackup) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncCreateBackup(
-      cq, context, google::test::admin::database::v1::CreateBackupRequest());
+      cq, std::move(context),
+      google::test::admin::database::v1::CreateBackupRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log.ExtractLines();
@@ -297,9 +299,10 @@ TEST(LoggingDecoratorRestTest, AsyncRestoreDatabase) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  rest_internal::RestContext context;
+  auto context = absl::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncRestoreDatabase(
-      cq, context, google::test::admin::database::v1::RestoreDatabaseRequest());
+      cq, std::move(context),
+      google::test::admin::database::v1::RestoreDatabaseRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
   auto const log_lines = log.ExtractLines();

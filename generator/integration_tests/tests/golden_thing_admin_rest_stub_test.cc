@@ -119,8 +119,6 @@ TEST(GoldenThingAdminRestStubTest, ListDatabases) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -130,7 +128,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
   auto constexpr kJsonResponsePayload =
       R"({"name":"my_operation","done":"true"})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::test::admin::database::v1::CreateDatabaseRequest proto_request;
   proto_request.set_parent("projects/my_project/instances/my_instance");
 
@@ -148,7 +146,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   StatusOr<google::longrunning::Operation> success =
-      stub.AsyncCreateDatabase(cq, rest_context, proto_request).get();
+      stub.AsyncCreateDatabase(cq, std::move(rest_context), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -188,8 +187,6 @@ TEST(GoldenThingAdminRestStubTest, GetDatabase) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -198,7 +195,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
   auto constexpr kJsonResponsePayload =
       R"({"name":"my_operation","done":"true"})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::test::admin::database::v1::UpdateDatabaseDdlRequest proto_request;
   proto_request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
@@ -216,7 +213,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success =
-      stub.AsyncUpdateDatabaseDdl(cq, rest_context, proto_request).get();
+      stub.AsyncUpdateDatabaseDdl(cq, std::move(rest_context), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -442,8 +440,6 @@ TEST(GoldenThingAdminRestStubTest, TestIamPermissions) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -452,7 +448,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
   auto constexpr kJsonResponsePayload =
       R"({"name":"my_operation","done":"true"})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::test::admin::database::v1::CreateBackupRequest proto_request;
   proto_request.set_parent("projects/my_project/instances/my_instance");
 
@@ -469,7 +465,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncCreateBackup(cq, rest_context, proto_request).get();
+  auto success =
+      stub.AsyncCreateBackup(cq, std::move(rest_context), proto_request).get();
   cq.Shutdown();
   t.join();
 
@@ -610,8 +607,6 @@ TEST(GoldenThingAdminRestStubTest, ListBackups) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -620,7 +615,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
   auto constexpr kJsonResponsePayload =
       R"({"name":"my_operation","done":"true"})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::test::admin::database::v1::RestoreDatabaseRequest proto_request;
   proto_request.set_parent("projects/my_project/instances/my_instance");
 
@@ -637,7 +632,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success =
-      stub.AsyncRestoreDatabase(cq, rest_context, proto_request).get();
+      stub.AsyncRestoreDatabase(cq, std::move(rest_context), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -726,8 +722,6 @@ TEST(GoldenThingAdminRestStubTest, ListBackupOperations) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -736,7 +730,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
   auto constexpr kJsonResponsePayload =
       R"({"name":"projects/my_project/instances/my_instance/databases/my_database","state":2})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::test::admin::database::v1::GetDatabaseRequest proto_request;
   proto_request.set_name(
       "projects/my_project/instances/my_instance/databases/my_database");
@@ -751,7 +745,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncGetDatabase(cq, rest_context, proto_request).get();
+  auto success =
+      stub.AsyncGetDatabase(cq, std::move(rest_context), proto_request).get();
   cq.Shutdown();
   t.join();
 
@@ -764,8 +759,6 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -773,7 +766,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload = R"({})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::test::admin::database::v1::DropDatabaseRequest proto_request;
   proto_request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
@@ -788,7 +781,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncDropDatabase(cq, rest_context, proto_request).get();
+  auto success =
+      stub.AsyncDropDatabase(cq, std::move(rest_context), proto_request).get();
   cq.Shutdown();
   t.join();
 
@@ -796,8 +790,6 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -806,7 +798,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
   auto constexpr kJsonResponsePayload =
       R"({"name":"my_operation","done":true})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::longrunning::GetOperationRequest proto_request;
   proto_request.set_name("my_operation");
 
@@ -819,7 +811,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncGetOperation(cq, rest_context, proto_request).get();
+  auto success =
+      stub.AsyncGetOperation(cq, std::move(rest_context), proto_request).get();
   cq.Shutdown();
   t.join();
 
@@ -829,8 +822,6 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
-  // TODO(#10629): re-enable this test after fixing.
-  GTEST_SKIP();
   auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
   CompletionQueue cq(impl);
   std::thread t{[&] { cq.Run(); }};
@@ -838,7 +829,7 @@ TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload = R"({})";
   std::string json_response(kJsonResponsePayload);
-  RestContext rest_context;
+  auto rest_context = absl::make_unique<RestContext>();
   google::longrunning::CancelOperationRequest proto_request;
   proto_request.set_name("my_operation");
 
@@ -854,7 +845,8 @@ TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success =
-      stub.AsyncCancelOperation(cq, rest_context, proto_request).get();
+      stub.AsyncCancelOperation(cq, std::move(rest_context), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
