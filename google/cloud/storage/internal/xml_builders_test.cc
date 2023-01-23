@@ -22,7 +22,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-constexpr auto kExpectedCompleteMultipartUploadXml =
+constexpr auto kExpectedCompleteMultipartUpload =
     R"xml(<CompleteMultipartUpload>
   <Part>
     <PartNumber>
@@ -43,13 +43,13 @@ constexpr auto kExpectedCompleteMultipartUploadXml =
 </CompleteMultipartUpload>
 )xml";
 
-TEST(BuildCompleteMultipartUploadXmlTest, Build) {
-  std::map<unsigned int, std::string> parts{
+TEST(CompleteMultipartUploadTest, Build) {
+  std::map<std::size_t, std::string> parts{
       {5U, "\"aaaa18db4cc2f85cedef654fccc4a4x8\""},
       {2U, "\"7778aef83f66abc1fa1e8477f296d394\""}};
   auto xml = CompleteMultipartUpload(parts);
   ASSERT_NE(xml, nullptr);
-  EXPECT_EQ(xml->ToString(2), kExpectedCompleteMultipartUploadXml);
+  EXPECT_EQ(xml->ToString(2), kExpectedCompleteMultipartUpload);
 }
 
 }  // namespace

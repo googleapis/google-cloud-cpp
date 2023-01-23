@@ -21,7 +21,7 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<XmlNode> CompleteMultipartUpload(
-    std::map<unsigned int, std::string> const& parts) {
+    std::map<std::size_t, std::string> const& parts) {
   auto root = XmlNode::CreateRoot();
   auto target_node = root->AppendTagNode("CompleteMultipartUpload");
   for (auto const& p : parts) {

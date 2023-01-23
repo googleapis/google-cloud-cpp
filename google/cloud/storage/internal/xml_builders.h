@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/xml_node.h"
 #include "google/cloud/storage/version.h"
+#include <cstddef>
 #include <map>
 #include <memory>
 #include <string>
@@ -32,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * https://cloud.google.com/storage/docs/xml-api/post-object-complete.
  */
 std::shared_ptr<XmlNode> CompleteMultipartUpload(
-    std::map<unsigned int, std::string> const& parts);
+    std::map<std::size_t, std::string> const& parts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
