@@ -18,6 +18,7 @@
 
 #include "google/cloud/apikeys/internal/api_keys_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -39,7 +40,11 @@ ApiKeysTracingConnection::CreateKey(
 
 StreamRange<google::api::apikeys::v2::Key> ApiKeysTracingConnection::ListKeys(
     google::api::apikeys::v2::ListKeysRequest request) {
-  return child_->ListKeys(request);
+  auto span = internal::MakeSpan("apikeys::ApiKeysConnection::ListKeys");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListKeys(std::move(request));
+  return internal::MakeTracedStreamRange<google::api::apikeys::v2::Key>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingConnection::GetKey(

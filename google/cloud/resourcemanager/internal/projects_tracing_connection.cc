@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/internal/projects_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -43,13 +44,25 @@ ProjectsTracingConnection::GetProject(
 StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsTracingConnection::ListProjects(
     google::cloud::resourcemanager::v3::ListProjectsRequest request) {
-  return child_->ListProjects(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::ProjectsConnection::ListProjects");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProjects(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::resourcemanager::v3::Project>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsTracingConnection::SearchProjects(
     google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
-  return child_->SearchProjects(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::ProjectsConnection::SearchProjects");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->SearchProjects(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::resourcemanager::v3::Project>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>

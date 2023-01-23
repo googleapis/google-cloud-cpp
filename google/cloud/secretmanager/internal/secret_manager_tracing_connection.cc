@@ -18,6 +18,7 @@
 
 #include "google/cloud/secretmanager/internal/secret_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ SecretManagerServiceTracingConnection::SecretManagerServiceTracingConnection(
 StreamRange<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceTracingConnection::ListSecrets(
     google::cloud::secretmanager::v1::ListSecretsRequest request) {
-  return child_->ListSecrets(request);
+  auto span = internal::MakeSpan(
+      "secretmanager::SecretManagerServiceConnection::ListSecrets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSecrets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::secretmanager::v1::Secret>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
@@ -84,7 +91,13 @@ Status SecretManagerServiceTracingConnection::DeleteSecret(
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceTracingConnection::ListSecretVersions(
     google::cloud::secretmanager::v1::ListSecretVersionsRequest request) {
-  return child_->ListSecretVersions(request);
+  auto span = internal::MakeSpan(
+      "secretmanager::SecretManagerServiceConnection::ListSecretVersions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSecretVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::secretmanager::v1::SecretVersion>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>

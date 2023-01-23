@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/internal/query_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ QueryServiceTracingConnection::QueryServiceTracingConnection(
 StreamRange<google::monitoring::v3::TimeSeriesData>
 QueryServiceTracingConnection::QueryTimeSeries(
     google::monitoring::v3::QueryTimeSeriesRequest request) {
-  return child_->QueryTimeSeries(request);
+  auto span =
+      internal::MakeSpan("monitoring::QueryServiceConnection::QueryTimeSeries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->QueryTimeSeries(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::v3::TimeSeriesData>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

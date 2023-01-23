@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicemanagement/internal/service_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ ServiceManagerTracingConnection::ServiceManagerTracingConnection(
 StreamRange<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerTracingConnection::ListServices(
     google::api::servicemanagement::v1::ListServicesRequest request) {
-  return child_->ListServices(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::ListServices");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListServices(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::api::servicemanagement::v1::ManagedService>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
@@ -67,7 +74,12 @@ ServiceManagerTracingConnection::UndeleteService(
 StreamRange<google::api::Service>
 ServiceManagerTracingConnection::ListServiceConfigs(
     google::api::servicemanagement::v1::ListServiceConfigsRequest request) {
-  return child_->ListServiceConfigs(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::ListServiceConfigs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListServiceConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<google::api::Service>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::api::Service>
@@ -100,7 +112,13 @@ ServiceManagerTracingConnection::SubmitConfigSource(
 StreamRange<google::api::servicemanagement::v1::Rollout>
 ServiceManagerTracingConnection::ListServiceRollouts(
     google::api::servicemanagement::v1::ListServiceRolloutsRequest request) {
-  return child_->ListServiceRollouts(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::ListServiceRollouts");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListServiceRollouts(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::api::servicemanagement::v1::Rollout>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::api::servicemanagement::v1::Rollout>

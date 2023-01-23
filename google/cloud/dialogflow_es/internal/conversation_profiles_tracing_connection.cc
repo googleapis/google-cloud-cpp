@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,14 @@ ConversationProfilesTracingConnection::ConversationProfilesTracingConnection(
 StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesTracingConnection::ListConversationProfiles(
     google::cloud::dialogflow::v2::ListConversationProfilesRequest request) {
-  return child_->ListConversationProfiles(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ListConversationProfiles");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListConversationProfiles(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::ConversationProfile>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>

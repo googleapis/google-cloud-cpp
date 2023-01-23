@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/internal/policy_tag_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -60,7 +61,13 @@ PolicyTagManagerTracingConnection::UpdateTaxonomy(
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerTracingConnection::ListTaxonomies(
     google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
-  return child_->ListTaxonomies(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::ListTaxonomies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTaxonomies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::datacatalog::v1::Taxonomy>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
@@ -101,7 +108,13 @@ PolicyTagManagerTracingConnection::UpdatePolicyTag(
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerTracingConnection::ListPolicyTags(
     google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
-  return child_->ListPolicyTags(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::ListPolicyTags");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPolicyTags(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::datacatalog::v1::PolicyTag>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/intents_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ IntentsTracingConnection::IntentsTracingConnection(
 StreamRange<google::cloud::dialogflow::cx::v3::Intent>
 IntentsTracingConnection::ListIntents(
     google::cloud::dialogflow::cx::v3::ListIntentsRequest request) {
-  return child_->ListIntents(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::IntentsConnection::ListIntents");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListIntents(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::Intent>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>

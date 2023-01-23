@@ -18,6 +18,7 @@
 
 #include "google/cloud/artifactregistry/internal/artifact_registry_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ ArtifactRegistryTracingConnection::ArtifactRegistryTracingConnection(
 StreamRange<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryTracingConnection::ListDockerImages(
     google::devtools::artifactregistry::v1::ListDockerImagesRequest request) {
-  return child_->ListDockerImages(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListDockerImages");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDockerImages(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::DockerImage>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
@@ -66,7 +73,13 @@ ArtifactRegistryTracingConnection::ImportYumArtifacts(
 StreamRange<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryTracingConnection::ListRepositories(
     google::devtools::artifactregistry::v1::ListRepositoriesRequest request) {
-  return child_->ListRepositories(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListRepositories");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListRepositories(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::Repository>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -106,7 +119,13 @@ ArtifactRegistryTracingConnection::DeleteRepository(
 StreamRange<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryTracingConnection::ListPackages(
     google::devtools::artifactregistry::v1::ListPackagesRequest request) {
-  return child_->ListPackages(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListPackages");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPackages(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::Package>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
@@ -128,7 +147,13 @@ ArtifactRegistryTracingConnection::DeletePackage(
 StreamRange<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryTracingConnection::ListVersions(
     google::devtools::artifactregistry::v1::ListVersionsRequest request) {
-  return child_->ListVersions(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListVersions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::Version>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
@@ -150,7 +175,13 @@ ArtifactRegistryTracingConnection::DeleteVersion(
 StreamRange<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryTracingConnection::ListFiles(
     google::devtools::artifactregistry::v1::ListFilesRequest request) {
-  return child_->ListFiles(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListFiles");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListFiles(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::File>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
@@ -165,7 +196,13 @@ ArtifactRegistryTracingConnection::GetFile(
 StreamRange<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryTracingConnection::ListTags(
     google::devtools::artifactregistry::v1::ListTagsRequest request) {
-  return child_->ListTags(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListTags");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTags(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::Tag>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>

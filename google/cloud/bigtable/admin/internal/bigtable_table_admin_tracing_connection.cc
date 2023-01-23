@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -43,7 +44,12 @@ BigtableTableAdminTracingConnection::CreateTable(
 StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingConnection::ListTables(
     google::bigtable::admin::v2::ListTablesRequest request) {
-  return child_->ListTables(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::ListTables");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTables(std::move(request));
+  return internal::MakeTracedStreamRange<google::bigtable::admin::v2::Table>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -146,7 +152,12 @@ Status BigtableTableAdminTracingConnection::DeleteBackup(
 StreamRange<google::bigtable::admin::v2::Backup>
 BigtableTableAdminTracingConnection::ListBackups(
     google::bigtable::admin::v2::ListBackupsRequest request) {
-  return child_->ListBackups(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::ListBackups");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListBackups(std::move(request));
+  return internal::MakeTracedStreamRange<google::bigtable::admin::v2::Backup>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/internal/instances_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ InstancesTracingConnection::InstancesTracingConnection(
 StreamRange<google::appengine::v1::Instance>
 InstancesTracingConnection::ListInstances(
     google::appengine::v1::ListInstancesRequest request) {
-  return child_->ListInstances(request);
+  auto span =
+      internal::MakeSpan("appengine::InstancesConnection::ListInstances");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInstances(std::move(request));
+  return internal::MakeTracedStreamRange<google::appengine::v1::Instance>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::Instance>

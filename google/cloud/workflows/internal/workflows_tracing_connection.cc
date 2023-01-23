@@ -18,6 +18,7 @@
 
 #include "google/cloud/workflows/internal/workflows_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ WorkflowsTracingConnection::WorkflowsTracingConnection(
 StreamRange<google::cloud::workflows::v1::Workflow>
 WorkflowsTracingConnection::ListWorkflows(
     google::cloud::workflows::v1::ListWorkflowsRequest request) {
-  return child_->ListWorkflows(request);
+  auto span =
+      internal::MakeSpan("workflows::WorkflowsConnection::ListWorkflows");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListWorkflows(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::workflows::v1::Workflow>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow>

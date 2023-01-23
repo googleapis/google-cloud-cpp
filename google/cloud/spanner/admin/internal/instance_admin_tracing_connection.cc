@@ -18,6 +18,7 @@
 
 #include "google/cloud/spanner/admin/internal/instance_admin_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ InstanceAdminTracingConnection::InstanceAdminTracingConnection(
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminTracingConnection::ListInstanceConfigs(
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
-  return child_->ListInstanceConfigs(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::ListInstanceConfigs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInstanceConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::spanner::admin::instance::v1::InstanceConfig>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
@@ -74,13 +81,24 @@ StreamRange<google::longrunning::Operation>
 InstanceAdminTracingConnection::ListInstanceConfigOperations(
     google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
         request) {
-  return child_->ListInstanceConfigOperations(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::ListInstanceConfigOperations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInstanceConfigOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
 InstanceAdminTracingConnection::ListInstances(
     google::spanner::admin::instance::v1::ListInstancesRequest request) {
-  return child_->ListInstances(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::ListInstances");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInstances(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::spanner::admin::instance::v1::Instance>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>

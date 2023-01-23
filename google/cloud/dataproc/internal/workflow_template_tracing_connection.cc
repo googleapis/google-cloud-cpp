@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/internal/workflow_template_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -76,7 +77,13 @@ WorkflowTemplateServiceTracingConnection::UpdateWorkflowTemplate(
 StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceTracingConnection::ListWorkflowTemplates(
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) {
-  return child_->ListWorkflowTemplates(request);
+  auto span = internal::MakeSpan(
+      "dataproc::WorkflowTemplateServiceConnection::ListWorkflowTemplates");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListWorkflowTemplates(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataproc::v1::WorkflowTemplate>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status WorkflowTemplateServiceTracingConnection::DeleteWorkflowTemplate(

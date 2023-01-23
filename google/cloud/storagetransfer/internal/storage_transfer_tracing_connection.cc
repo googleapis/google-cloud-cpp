@@ -18,6 +18,7 @@
 
 #include "google/cloud/storagetransfer/internal/storage_transfer_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -74,7 +75,13 @@ StorageTransferServiceTracingConnection::GetTransferJob(
 StreamRange<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceTracingConnection::ListTransferJobs(
     google::storagetransfer::v1::ListTransferJobsRequest request) {
-  return child_->ListTransferJobs(request);
+  auto span = internal::MakeSpan(
+      "storagetransfer::StorageTransferServiceConnection::ListTransferJobs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTransferJobs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::storagetransfer::v1::TransferJob>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status StorageTransferServiceTracingConnection::PauseTransferOperation(
@@ -140,7 +147,13 @@ StorageTransferServiceTracingConnection::GetAgentPool(
 StreamRange<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceTracingConnection::ListAgentPools(
     google::storagetransfer::v1::ListAgentPoolsRequest request) {
-  return child_->ListAgentPools(request);
+  auto span = internal::MakeSpan(
+      "storagetransfer::StorageTransferServiceConnection::ListAgentPools");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAgentPools(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::storagetransfer::v1::AgentPool>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 Status StorageTransferServiceTracingConnection::DeleteAgentPool(

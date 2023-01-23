@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/agents_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ AgentsTracingConnection::AgentsTracingConnection(
 StreamRange<google::cloud::dialogflow::cx::v3::Agent>
 AgentsTracingConnection::ListAgents(
     google::cloud::dialogflow::cx::v3::ListAgentsRequest request) {
-  return child_->ListAgents(request);
+  auto span = internal::MakeSpan("dialogflow_cx::AgentsConnection::ListAgents");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAgents(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::Agent>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>

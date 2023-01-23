@@ -18,6 +18,7 @@
 
 #include "google/cloud/networkmanagement/internal/reachability_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,14 @@ StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceTracingConnection::ListConnectivityTests(
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
         request) {
-  return child_->ListConnectivityTests(request);
+  auto span = internal::MakeSpan(
+      "networkmanagement::ReachabilityServiceConnection::"
+      "ListConnectivityTests");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListConnectivityTests(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkmanagement::v1::ConnectivityTest>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/channel/internal/cloud_channel_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ CloudChannelServiceTracingConnection::CloudChannelServiceTracingConnection(
 StreamRange<google::cloud::channel::v1::Customer>
 CloudChannelServiceTracingConnection::ListCustomers(
     google::cloud::channel::v1::ListCustomersRequest request) {
-  return child_->ListCustomers(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListCustomers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCustomers(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::Customer>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
@@ -102,19 +108,37 @@ CloudChannelServiceTracingConnection::ProvisionCloudIdentity(
 StreamRange<google::cloud::channel::v1::Entitlement>
 CloudChannelServiceTracingConnection::ListEntitlements(
     google::cloud::channel::v1::ListEntitlementsRequest request) {
-  return child_->ListEntitlements(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListEntitlements");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEntitlements(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::Entitlement>(std::move(span),
+                                               std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::TransferableSku>
 CloudChannelServiceTracingConnection::ListTransferableSkus(
     google::cloud::channel::v1::ListTransferableSkusRequest request) {
-  return child_->ListTransferableSkus(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListTransferableSkus");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTransferableSkus(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::TransferableSku>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::TransferableOffer>
 CloudChannelServiceTracingConnection::ListTransferableOffers(
     google::cloud::channel::v1::ListTransferableOffersRequest request) {
-  return child_->ListTransferableOffers(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListTransferableOffers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTransferableOffers(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::TransferableOffer>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::Entitlement>
@@ -190,7 +214,13 @@ CloudChannelServiceTracingConnection::TransferEntitlementsToGoogle(
 StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceTracingConnection::ListChannelPartnerLinks(
     google::cloud::channel::v1::ListChannelPartnerLinksRequest request) {
-  return child_->ListChannelPartnerLinks(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListChannelPartnerLinks");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListChannelPartnerLinks(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::ChannelPartnerLink>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
@@ -235,7 +265,13 @@ CloudChannelServiceTracingConnection::GetCustomerRepricingConfig(
 StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceTracingConnection::ListCustomerRepricingConfigs(
     google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request) {
-  return child_->ListCustomerRepricingConfigs(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListCustomerRepricingConfigs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCustomerRepricingConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::CustomerRepricingConfig>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -286,7 +322,14 @@ StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceTracingConnection::ListChannelPartnerRepricingConfigs(
     google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
         request) {
-  return child_->ListChannelPartnerRepricingConfigs(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::"
+      "ListChannelPartnerRepricingConfigs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListChannelPartnerRepricingConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::ChannelPartnerRepricingConfig>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -337,31 +380,58 @@ CloudChannelServiceTracingConnection::LookupOffer(
 StreamRange<google::cloud::channel::v1::Product>
 CloudChannelServiceTracingConnection::ListProducts(
     google::cloud::channel::v1::ListProductsRequest request) {
-  return child_->ListProducts(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListProducts");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProducts(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::Product>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::Sku>
 CloudChannelServiceTracingConnection::ListSkus(
     google::cloud::channel::v1::ListSkusRequest request) {
-  return child_->ListSkus(request);
+  auto span =
+      internal::MakeSpan("channel::CloudChannelServiceConnection::ListSkus");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSkus(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::Sku>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::Offer>
 CloudChannelServiceTracingConnection::ListOffers(
     google::cloud::channel::v1::ListOffersRequest request) {
-  return child_->ListOffers(request);
+  auto span =
+      internal::MakeSpan("channel::CloudChannelServiceConnection::ListOffers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListOffers(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::channel::v1::Offer>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableSku>
 CloudChannelServiceTracingConnection::ListPurchasableSkus(
     google::cloud::channel::v1::ListPurchasableSkusRequest request) {
-  return child_->ListPurchasableSkus(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListPurchasableSkus");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPurchasableSkus(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::PurchasableSku>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::channel::v1::PurchasableOffer>
 CloudChannelServiceTracingConnection::ListPurchasableOffers(
     google::cloud::channel::v1::ListPurchasableOffersRequest request) {
-  return child_->ListPurchasableOffers(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListPurchasableOffers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPurchasableOffers(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::PurchasableOffer>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
@@ -384,7 +454,12 @@ CloudChannelServiceTracingConnection::UnregisterSubscriber(
 
 StreamRange<std::string> CloudChannelServiceTracingConnection::ListSubscribers(
     google::cloud::channel::v1::ListSubscribersRequest request) {
-  return child_->ListSubscribers(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ListSubscribers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSubscribers(std::move(request));
+  return internal::MakeTracedStreamRange<std::string>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

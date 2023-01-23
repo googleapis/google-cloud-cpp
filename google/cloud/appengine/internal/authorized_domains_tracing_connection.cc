@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/internal/authorized_domains_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ AuthorizedDomainsTracingConnection::AuthorizedDomainsTracingConnection(
 StreamRange<google::appengine::v1::AuthorizedDomain>
 AuthorizedDomainsTracingConnection::ListAuthorizedDomains(
     google::appengine::v1::ListAuthorizedDomainsRequest request) {
-  return child_->ListAuthorizedDomains(request);
+  auto span = internal::MakeSpan(
+      "appengine::AuthorizedDomainsConnection::ListAuthorizedDomains");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAuthorizedDomains(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::appengine::v1::AuthorizedDomain>(std::move(span),
+                                               std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

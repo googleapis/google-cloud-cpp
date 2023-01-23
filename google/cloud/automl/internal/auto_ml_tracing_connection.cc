@@ -18,6 +18,7 @@
 
 #include "google/cloud/automl/internal/auto_ml_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -48,7 +49,11 @@ AutoMlTracingConnection::GetDataset(
 StreamRange<google::cloud::automl::v1::Dataset>
 AutoMlTracingConnection::ListDatasets(
     google::cloud::automl::v1::ListDatasetsRequest request) {
-  return child_->ListDatasets(request);
+  auto span = internal::MakeSpan("automl::AutoMlConnection::ListDatasets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDatasets(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::automl::v1::Dataset>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::automl::v1::Dataset>
@@ -101,7 +106,11 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::GetModel(
 StreamRange<google::cloud::automl::v1::Model>
 AutoMlTracingConnection::ListModels(
     google::cloud::automl::v1::ListModelsRequest request) {
-  return child_->ListModels(request);
+  auto span = internal::MakeSpan("automl::AutoMlConnection::ListModels");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListModels(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::automl::v1::Model>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -147,7 +156,13 @@ AutoMlTracingConnection::GetModelEvaluation(
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
 AutoMlTracingConnection::ListModelEvaluations(
     google::cloud::automl::v1::ListModelEvaluationsRequest request) {
-  return child_->ListModelEvaluations(request);
+  auto span =
+      internal::MakeSpan("automl::AutoMlConnection::ListModelEvaluations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListModelEvaluations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::automl::v1::ModelEvaluation>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

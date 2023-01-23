@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/internal/data_catalog_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ DataCatalogTracingConnection::DataCatalogTracingConnection(
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogTracingConnection::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request) {
-  return child_->SearchCatalog(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::SearchCatalog");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->SearchCatalog(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::datacatalog::v1::SearchCatalogResult>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
@@ -75,7 +82,13 @@ Status DataCatalogTracingConnection::DeleteEntryGroup(
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogTracingConnection::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
-  return child_->ListEntryGroups(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::ListEntryGroups");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEntryGroups(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::datacatalog::v1::EntryGroup>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
@@ -125,7 +138,12 @@ DataCatalogTracingConnection::LookupEntry(
 StreamRange<google::cloud::datacatalog::v1::Entry>
 DataCatalogTracingConnection::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request) {
-  return child_->ListEntries(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::ListEntries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEntries(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::datacatalog::v1::Entry>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
@@ -260,7 +278,12 @@ Status DataCatalogTracingConnection::DeleteTag(
 StreamRange<google::cloud::datacatalog::v1::Tag>
 DataCatalogTracingConnection::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request) {
-  return child_->ListTags(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::ListTags");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTags(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::datacatalog::v1::Tag>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>

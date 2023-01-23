@@ -18,6 +18,7 @@
 
 #include "google/cloud/beyondcorp/internal/app_gateways_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,13 @@ StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 AppGatewaysServiceTracingConnection::ListAppGateways(
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
         request) {
-  return child_->ListAppGateways(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::AppGatewaysServiceConnection::ListAppGateways");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAppGateways(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::beyondcorp::appgateways::v1::AppGateway>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>

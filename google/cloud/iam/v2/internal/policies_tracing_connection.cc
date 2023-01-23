@@ -18,6 +18,7 @@
 
 #include "google/cloud/iam/v2/internal/policies_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -33,7 +34,11 @@ PoliciesTracingConnection::PoliciesTracingConnection(
 
 StreamRange<google::iam::v2::Policy> PoliciesTracingConnection::ListPolicies(
     google::iam::v2::ListPoliciesRequest request) {
-  return child_->ListPolicies(request);
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::ListPolicies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<google::iam::v2::Policy>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesTracingConnection::GetPolicy(

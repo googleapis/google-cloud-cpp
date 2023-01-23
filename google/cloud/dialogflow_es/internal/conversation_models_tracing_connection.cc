@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversation_models_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -50,7 +51,13 @@ ConversationModelsTracingConnection::GetConversationModel(
 StreamRange<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsTracingConnection::ListConversationModels(
     google::cloud::dialogflow::v2::ListConversationModelsRequest request) {
-  return child_->ListConversationModels(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::ListConversationModels");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListConversationModels(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::ConversationModel>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<
@@ -93,7 +100,14 @@ StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
 ConversationModelsTracingConnection::ListConversationModelEvaluations(
     google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
         request) {
-  return child_->ListConversationModelEvaluations(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::"
+      "ListConversationModelEvaluations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListConversationModelEvaluations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::ConversationModelEvaluation>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>

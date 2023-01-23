@@ -18,6 +18,7 @@
 
 #include "google/cloud/datamigration/internal/data_migration_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ DataMigrationServiceTracingConnection::DataMigrationServiceTracingConnection(
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceTracingConnection::ListMigrationJobs(
     google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
-  return child_->ListMigrationJobs(request);
+  auto span = internal::MakeSpan(
+      "datamigration::DataMigrationServiceConnection::ListMigrationJobs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListMigrationJobs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::clouddms::v1::MigrationJob>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
@@ -112,7 +119,13 @@ DataMigrationServiceTracingConnection::GenerateSshScript(
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceTracingConnection::ListConnectionProfiles(
     google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
-  return child_->ListConnectionProfiles(request);
+  auto span = internal::MakeSpan(
+      "datamigration::DataMigrationServiceConnection::ListConnectionProfiles");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListConnectionProfiles(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::clouddms::v1::ConnectionProfile>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>

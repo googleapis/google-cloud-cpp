@@ -18,6 +18,7 @@
 
 #include "google/cloud/assuredworkloads/internal/assured_workloads_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -79,13 +80,25 @@ AssuredWorkloadsServiceTracingConnection::GetWorkload(
 StreamRange<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceTracingConnection::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
-  return child_->ListWorkloads(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::ListWorkloads");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListWorkloads(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::assuredworkloads::v1::Workload>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceTracingConnection::ListViolations(
     google::cloud::assuredworkloads::v1::ListViolationsRequest request) {
-  return child_->ListViolations(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::ListViolations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListViolations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::assuredworkloads::v1::Violation>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Violation>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/vpcaccess/internal/vpc_access_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -49,7 +50,13 @@ VpcAccessServiceTracingConnection::GetConnector(
 StreamRange<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceTracingConnection::ListConnectors(
     google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
-  return child_->ListConnectors(request);
+  auto span = internal::MakeSpan(
+      "vpcaccess::VpcAccessServiceConnection::ListConnectors");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListConnectors(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vpcaccess::v1::Connector>(std::move(span),
+                                               std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>

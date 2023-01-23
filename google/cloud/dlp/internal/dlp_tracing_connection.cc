@@ -18,6 +18,7 @@
 
 #include "google/cloud/dlp/internal/dlp_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -103,7 +104,13 @@ DlpServiceTracingConnection::GetInspectTemplate(
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceTracingConnection::ListInspectTemplates(
     google::privacy::dlp::v2::ListInspectTemplatesRequest request) {
-  return child_->ListInspectTemplates(request);
+  auto span =
+      internal::MakeSpan("dlp::DlpServiceConnection::ListInspectTemplates");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInspectTemplates(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::InspectTemplate>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status DlpServiceTracingConnection::DeleteInspectTemplate(
@@ -144,7 +151,13 @@ DlpServiceTracingConnection::GetDeidentifyTemplate(
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceTracingConnection::ListDeidentifyTemplates(
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest request) {
-  return child_->ListDeidentifyTemplates(request);
+  auto span =
+      internal::MakeSpan("dlp::DlpServiceConnection::ListDeidentifyTemplates");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDeidentifyTemplates(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::DeidentifyTemplate>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status DlpServiceTracingConnection::DeleteDeidentifyTemplate(
@@ -191,7 +204,11 @@ DlpServiceTracingConnection::GetJobTrigger(
 StreamRange<google::privacy::dlp::v2::JobTrigger>
 DlpServiceTracingConnection::ListJobTriggers(
     google::privacy::dlp::v2::ListJobTriggersRequest request) {
-  return child_->ListJobTriggers(request);
+  auto span = internal::MakeSpan("dlp::DlpServiceConnection::ListJobTriggers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListJobTriggers(std::move(request));
+  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::JobTrigger>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status DlpServiceTracingConnection::DeleteJobTrigger(
@@ -221,7 +238,11 @@ DlpServiceTracingConnection::CreateDlpJob(
 StreamRange<google::privacy::dlp::v2::DlpJob>
 DlpServiceTracingConnection::ListDlpJobs(
     google::privacy::dlp::v2::ListDlpJobsRequest request) {
-  return child_->ListDlpJobs(request);
+  auto span = internal::MakeSpan("dlp::DlpServiceConnection::ListDlpJobs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDlpJobs(std::move(request));
+  return internal::MakeTracedStreamRange<google::privacy::dlp::v2::DlpJob>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
@@ -276,7 +297,13 @@ DlpServiceTracingConnection::GetStoredInfoType(
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceTracingConnection::ListStoredInfoTypes(
     google::privacy::dlp::v2::ListStoredInfoTypesRequest request) {
-  return child_->ListStoredInfoTypes(request);
+  auto span =
+      internal::MakeSpan("dlp::DlpServiceConnection::ListStoredInfoTypes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListStoredInfoTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::StoredInfoType>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status DlpServiceTracingConnection::DeleteStoredInfoType(

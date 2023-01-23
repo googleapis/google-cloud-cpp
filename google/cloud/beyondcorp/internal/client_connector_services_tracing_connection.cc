@@ -19,6 +19,7 @@
 
 #include "google/cloud/beyondcorp/internal/client_connector_services_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -39,7 +40,15 @@ StreamRange<google::cloud::beyondcorp::clientconnectorservices::v1::
 ClientConnectorServicesServiceTracingConnection::ListClientConnectorServices(
     google::cloud::beyondcorp::clientconnectorservices::v1::
         ListClientConnectorServicesRequest request) {
-  return child_->ListClientConnectorServices(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::ClientConnectorServicesServiceConnection::"
+      "ListClientConnectorServices");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListClientConnectorServices(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::beyondcorp::clientconnectorservices::v1::
+          ClientConnectorService>(std::move(span), std::move(scope),
+                                  std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::

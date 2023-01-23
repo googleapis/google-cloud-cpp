@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/environments_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ EnvironmentsTracingConnection::EnvironmentsTracingConnection(
 StreamRange<google::cloud::dialogflow::v2::Environment>
 EnvironmentsTracingConnection::ListEnvironments(
     google::cloud::dialogflow::v2::ListEnvironmentsRequest request) {
-  return child_->ListEnvironments(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::ListEnvironments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEnvironments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::Environment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
@@ -75,7 +82,13 @@ Status EnvironmentsTracingConnection::DeleteEnvironment(
 StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
 EnvironmentsTracingConnection::GetEnvironmentHistory(
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request) {
-  return child_->GetEnvironmentHistory(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::GetEnvironmentHistory");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->GetEnvironmentHistory(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::EnvironmentHistory::Entry>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

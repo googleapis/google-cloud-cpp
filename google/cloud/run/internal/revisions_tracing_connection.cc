@@ -18,6 +18,7 @@
 
 #include "google/cloud/run/internal/revisions_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -42,7 +43,11 @@ RevisionsTracingConnection::GetRevision(
 StreamRange<google::cloud::run::v2::Revision>
 RevisionsTracingConnection::ListRevisions(
     google::cloud::run::v2::ListRevisionsRequest request) {
-  return child_->ListRevisions(request);
+  auto span = internal::MakeSpan("run::RevisionsConnection::ListRevisions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListRevisions(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::run::v2::Revision>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/asset/internal/asset_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -40,7 +41,11 @@ AssetServiceTracingConnection::ExportAssets(
 StreamRange<google::cloud::asset::v1::Asset>
 AssetServiceTracingConnection::ListAssets(
     google::cloud::asset::v1::ListAssetsRequest request) {
-  return child_->ListAssets(request);
+  auto span = internal::MakeSpan("asset::AssetServiceConnection::ListAssets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAssets(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::asset::v1::Asset>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
@@ -93,13 +98,25 @@ Status AssetServiceTracingConnection::DeleteFeed(
 StreamRange<google::cloud::asset::v1::ResourceSearchResult>
 AssetServiceTracingConnection::SearchAllResources(
     google::cloud::asset::v1::SearchAllResourcesRequest request) {
-  return child_->SearchAllResources(request);
+  auto span =
+      internal::MakeSpan("asset::AssetServiceConnection::SearchAllResources");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->SearchAllResources(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::asset::v1::ResourceSearchResult>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
 AssetServiceTracingConnection::SearchAllIamPolicies(
     google::cloud::asset::v1::SearchAllIamPoliciesRequest request) {
-  return child_->SearchAllIamPolicies(request);
+  auto span =
+      internal::MakeSpan("asset::AssetServiceConnection::SearchAllIamPolicies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->SearchAllIamPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::asset::v1::IamPolicySearchResult>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
@@ -155,7 +172,12 @@ AssetServiceTracingConnection::GetSavedQuery(
 StreamRange<google::cloud::asset::v1::SavedQuery>
 AssetServiceTracingConnection::ListSavedQueries(
     google::cloud::asset::v1::ListSavedQueriesRequest request) {
-  return child_->ListSavedQueries(request);
+  auto span =
+      internal::MakeSpan("asset::AssetServiceConnection::ListSavedQueries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSavedQueries(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::asset::v1::SavedQuery>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
@@ -190,7 +212,13 @@ StreamRange<
     google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
 AssetServiceTracingConnection::AnalyzeOrgPolicies(
     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request) {
-  return child_->AnalyzeOrgPolicies(request);
+  auto span =
+      internal::MakeSpan("asset::AssetServiceConnection::AnalyzeOrgPolicies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->AnalyzeOrgPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::asset::v1::
@@ -198,14 +226,26 @@ StreamRange<google::cloud::asset::v1::
 AssetServiceTracingConnection::AnalyzeOrgPolicyGovernedContainers(
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
         request) {
-  return child_->AnalyzeOrgPolicyGovernedContainers(request);
+  auto span = internal::MakeSpan(
+      "asset::AssetServiceConnection::AnalyzeOrgPolicyGovernedContainers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->AnalyzeOrgPolicyGovernedContainers(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
+          GovernedContainer>(std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
                 GovernedAsset>
 AssetServiceTracingConnection::AnalyzeOrgPolicyGovernedAssets(
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request) {
-  return child_->AnalyzeOrgPolicyGovernedAssets(request);
+  auto span = internal::MakeSpan(
+      "asset::AssetServiceConnection::AnalyzeOrgPolicyGovernedAssets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->AnalyzeOrgPolicyGovernedAssets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+          GovernedAsset>(std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

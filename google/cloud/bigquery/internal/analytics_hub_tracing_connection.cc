@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/internal/analytics_hub_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,14 +36,26 @@ StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceTracingConnection::ListDataExchanges(
     google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
         request) {
-  return child_->ListDataExchanges(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::ListDataExchanges");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDataExchanges(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::DataExchange>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceTracingConnection::ListOrgDataExchanges(
     google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
         request) {
-  return child_->ListOrgDataExchanges(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::ListOrgDataExchanges");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListOrgDataExchanges(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::DataExchange>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -87,7 +100,13 @@ Status AnalyticsHubServiceTracingConnection::DeleteDataExchange(
 StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
 AnalyticsHubServiceTracingConnection::ListListings(
     google::cloud::bigquery::analyticshub::v1::ListListingsRequest request) {
-  return child_->ListListings(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::ListListings");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListListings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::analyticshub::v1::Listing>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>

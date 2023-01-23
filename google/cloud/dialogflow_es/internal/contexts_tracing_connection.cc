@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/contexts_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ ContextsTracingConnection::ContextsTracingConnection(
 StreamRange<google::cloud::dialogflow::v2::Context>
 ContextsTracingConnection::ListContexts(
     google::cloud::dialogflow::v2::ListContextsRequest request) {
-  return child_->ListContexts(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::ContextsConnection::ListContexts");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListContexts(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::Context>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context>

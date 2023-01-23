@@ -18,6 +18,7 @@
 
 #include "google/cloud/logging/internal/logging_service_v2_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -51,18 +52,34 @@ LoggingServiceV2TracingConnection::WriteLogEntries(
 StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2TracingConnection::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
-  return child_->ListLogEntries(request);
+  auto span =
+      internal::MakeSpan("logging::LoggingServiceV2Connection::ListLogEntries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListLogEntries(std::move(request));
+  return internal::MakeTracedStreamRange<google::logging::v2::LogEntry>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::api::MonitoredResourceDescriptor>
 LoggingServiceV2TracingConnection::ListMonitoredResourceDescriptors(
     google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
-  return child_->ListMonitoredResourceDescriptors(request);
+  auto span = internal::MakeSpan(
+      "logging::LoggingServiceV2Connection::ListMonitoredResourceDescriptors");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::api::MonitoredResourceDescriptor>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<std::string> LoggingServiceV2TracingConnection::ListLogs(
     google::logging::v2::ListLogsRequest request) {
-  return child_->ListLogs(request);
+  auto span =
+      internal::MakeSpan("logging::LoggingServiceV2Connection::ListLogs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListLogs(std::move(request));
+  return internal::MakeTracedStreamRange<std::string>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

@@ -18,6 +18,7 @@
 
 #include "google/cloud/gameservices/internal/realms_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ RealmsServiceTracingConnection::RealmsServiceTracingConnection(
 StreamRange<google::cloud::gaming::v1::Realm>
 RealmsServiceTracingConnection::ListRealms(
     google::cloud::gaming::v1::ListRealmsRequest request) {
-  return child_->ListRealms(request);
+  auto span =
+      internal::MakeSpan("gameservices::RealmsServiceConnection::ListRealms");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListRealms(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::gaming::v1::Realm>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::gaming::v1::Realm>

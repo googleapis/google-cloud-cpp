@@ -18,6 +18,7 @@
 
 #include "google/cloud/workflows/internal/executions_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ ExecutionsTracingConnection::ExecutionsTracingConnection(
 StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsTracingConnection::ListExecutions(
     google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
-  return child_->ListExecutions(request);
+  auto span =
+      internal::MakeSpan("workflows::ExecutionsConnection::ListExecutions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListExecutions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::workflows::executions::v1::Execution>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>

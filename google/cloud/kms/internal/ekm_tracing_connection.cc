@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/internal/ekm_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ EkmServiceTracingConnection::EkmServiceTracingConnection(
 StreamRange<google::cloud::kms::v1::EkmConnection>
 EkmServiceTracingConnection::ListEkmConnections(
     google::cloud::kms::v1::ListEkmConnectionsRequest request) {
-  return child_->ListEkmConnections(request);
+  auto span =
+      internal::MakeSpan("kms::EkmServiceConnection::ListEkmConnections");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEkmConnections(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::kms::v1::EkmConnection>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>

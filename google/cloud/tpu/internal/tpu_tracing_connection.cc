@@ -18,6 +18,7 @@
 
 #include "google/cloud/tpu/internal/tpu_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -33,7 +34,11 @@ TpuTracingConnection::TpuTracingConnection(
 
 StreamRange<google::cloud::tpu::v1::Node> TpuTracingConnection::ListNodes(
     google::cloud::tpu::v1::ListNodesRequest request) {
-  return child_->ListNodes(request);
+  auto span = internal::MakeSpan("tpu::TpuConnection::ListNodes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListNodes(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::tpu::v1::Node>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v1::Node> TpuTracingConnection::GetNode(
@@ -72,7 +77,12 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuTracingConnection::StartNode(
 StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
 TpuTracingConnection::ListTensorFlowVersions(
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) {
-  return child_->ListTensorFlowVersions(request);
+  auto span = internal::MakeSpan("tpu::TpuConnection::ListTensorFlowVersions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTensorFlowVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::tpu::v1::TensorFlowVersion>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
@@ -86,7 +96,12 @@ TpuTracingConnection::GetTensorFlowVersion(
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
 TpuTracingConnection::ListAcceleratorTypes(
     google::cloud::tpu::v1::ListAcceleratorTypesRequest request) {
-  return child_->ListAcceleratorTypes(request);
+  auto span = internal::MakeSpan("tpu::TpuConnection::ListAcceleratorTypes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAcceleratorTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::tpu::v1::AcceleratorType>(std::move(span),
+                                               std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType>
