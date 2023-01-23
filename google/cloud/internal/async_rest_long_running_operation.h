@@ -63,16 +63,16 @@ using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
  *  public:
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncFoo(
  *     google::cloud::CompletionQueue& cq,
- *     RestContext& context,
+ *     std::unique_ptr<RestContext> context,
  *     FooRequest const& request) = 0;
  *
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
  *     google::cloud::CompletionQueue& cq,
- *     RestContext& context,
+ *     std::unique_ptr<RestContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
  *   virtual future<Status> AsyncCancelOperation(
  *     google::cloud::CompletionQueue& cq,
- *     RestContext& context,
+ *     std::unique_ptr<RestContext> context,
  *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
@@ -87,13 +87,13 @@ using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
  *     return google::cloud::internal::AsyncRestLongRunningOperation(
  *       cq_, request,
  *       [stub = stub_](auto& cq, auto context, auto const& request) {
- *         return stub->AsyncFoo(cq, context, request);
+ *         return stub->AsyncFoo(cq, std::move(context), request);
  *       },
  *       [stub = stub_](auto& cq, auto context, auto const& request) {
- *         return stub->AsyncGetOperation(cq, context, request);
+ *         return stub->AsyncGetOperation(cq, std::move(context), request);
  *       },
  *       [stub](auto cq, auto context, auto const& r) {
- *         return stub->AsyncCancelOperation(cq, context, r);
+ *         return stub->AsyncCancelOperation(cq, std::move(context), r);
  *       },
  *       retry_policy_->clone(), backoff_policy_->clone(),
  *       IdempotencyPolicy::kIdempotent,
