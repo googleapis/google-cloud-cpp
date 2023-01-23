@@ -50,6 +50,11 @@ RUN apt-get update && \
         apt-utils \
         ca-certificates \
         apt-transport-https
+# Install Python packages used in the integration tests.
+RUN update-alternatives --install /usr/bin/python python $(which python3) 10
+RUN pip3 install setuptools wheel
+# The Cloud Pub/Sub emulator needs Java :shrug:
+RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre)
 
 # Install all the direct (and indirect) dependencies for google-cloud-cpp.
 # Use a different directory for each build, and remove the downloaded
@@ -189,10 +194,6 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.1
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
-# Install Python packages used in the integration tests.
-RUN update-alternatives --install /usr/bin/python python $(which python3) 10
-RUN pip3 install setuptools wheel
-
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
@@ -200,5 +201,3 @@ WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-# The Cloud Pub/Sub emulator needs Java :shrug:
-RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre)
