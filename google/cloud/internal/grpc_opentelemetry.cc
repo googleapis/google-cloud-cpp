@@ -18,6 +18,8 @@
 #include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/context/propagation/global_propagator.h>
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
@@ -29,6 +31,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+namespace {
+
+/**
+ * A [carrier] for gRPC.
+ *
+ * This code originates from the following example:
+ *
+ * https://github.com/open-telemetry/opentelemetry-cpp/blob/a343da043e1351c3cc3003bfce94724345ee22f1/examples/grpc/tracer_common.h#L26-L45
+ *
+ * [carrier]:
+ * https://opentelemetry.io/docs/reference/specification/context/api-propagators/#carrier
+ */
+class GrpcClientCarrier
+    : public opentelemetry::context::propagation::TextMapCarrier {
+ public:
+  explicit GrpcClientCarrier(grpc::ClientContext& context)
+      : context_(context) {}
+
+  // Unneeded by clients.
+  opentelemetry::nostd::string_view Get(
+      opentelemetry::nostd::string_view) const noexcept override {
+    return "";
+  }
+
+  void Set(opentelemetry::nostd::string_view key,
+           opentelemetry::nostd::string_view value) noexcept override {
+    context_.AddMetadata(key.data(), value.data());
+  }
+
+ private:
+  grpc::ClientContext& context_;
+};
+
+}  // namespace
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
     opentelemetry::nostd::string_view service,
@@ -44,6 +81,13 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
                    {sc::kNetTransport, sc::NetTransportValues::kIpTcp},
                    {"grpc.version", grpc::Version()}},
                   options);
+}
+
+void InjectTraceContext(grpc::ClientContext& context, Options const& options) {
+  auto propagator = GetTextMapPropagator(options);
+  auto current = opentelemetry::context::RuntimeContext::GetCurrent();
+  GrpcClientCarrier carrier(context);
+  propagator->Inject(carrier, current);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

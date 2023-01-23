@@ -14,9 +14,11 @@
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/trace/semantic_conventions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
@@ -36,6 +38,7 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Pair;
 
 TEST(OpenTelemetry, MakeSpanGrpc) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
@@ -59,6 +62,46 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
               SpanAttribute<std::string>(sc::kNetTransport,
                                          sc::NetTransportValues::kIpTcp),
               SpanAttribute<std::string>("grpc.version", grpc::Version())))));
+}
+
+class TestTextMapPropagator
+    : public opentelemetry::context::propagation::TextMapPropagator {
+ public:
+  explicit TestTextMapPropagator() = default;
+
+  // Unused.
+  opentelemetry::context::Context Extract(
+      opentelemetry::context::propagation::TextMapCarrier const&,
+      opentelemetry::context::Context& context) noexcept override {
+    return context;
+  }
+
+  // Sets a fixed key/value pair for testing.
+  void Inject(opentelemetry::context::propagation::TextMapCarrier& carrier,
+              opentelemetry::context::Context const&) noexcept override {
+    carrier.Set("x-test-key", "test-value");
+  }
+
+  bool Fields(opentelemetry::nostd::function_ref<
+              bool(opentelemetry::nostd::string_view)>
+                  callback) const noexcept override {
+    return callback("x-test-key");
+  }
+};
+
+TEST(OpenTelemetry, InjectTraceContextGrpc) {
+  // Set the global propagator
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator = std::make_shared<TestTextMapPropagator>();
+  opentelemetry::context::propagation::GlobalTextMapPropagator::
+      SetGlobalPropagator(std::move(propagator));
+
+  grpc::ClientContext context;
+  InjectTraceContext(context, Options{});
+
+  testing_util::ValidateMetadataFixture fixture;
+  auto md = fixture.GetMetadata(context);
+  EXPECT_THAT(md, ElementsAre(Pair("x-test-key", "test-value")));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
