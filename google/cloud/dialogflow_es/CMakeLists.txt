@@ -29,12 +29,8 @@ google_cloud_cpp_doxygen_targets("dialogflow_es" DEPENDS cloud-docs
 
 include(GoogleCloudCppCommon)
 
-find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
-if (PROTO_INCLUDE_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
-endif ()
-
 include(CompileProtos)
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 add_library(google_cloud_cpp_dialogflow_es_protos INTERFACE)
 set_target_properties(
     google_cloud_cpp_dialogflow_es_protos
