@@ -51,7 +51,7 @@ TEST(TracedStreamRange, Success) {
       MakeTracedStreamRange(std::move(span), std::move(scope), std::move(sr));
 
   std::vector<int> actual;
-  for (auto const& v : traced) {
+  for (auto& v : traced) {
     ASSERT_STATUS_OK(v);
     actual.push_back(*std::move(v));
   }
