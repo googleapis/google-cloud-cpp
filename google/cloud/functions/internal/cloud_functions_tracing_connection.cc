@@ -18,6 +18,7 @@
 
 #include "google/cloud/functions/internal/cloud_functions_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ CloudFunctionsServiceTracingConnection::CloudFunctionsServiceTracingConnection(
 StreamRange<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceTracingConnection::ListFunctions(
     google::cloud::functions::v1::ListFunctionsRequest request) {
-  return child_->ListFunctions(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::ListFunctions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListFunctions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::functions::v1::CloudFunction>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::functions::v1::CloudFunction>

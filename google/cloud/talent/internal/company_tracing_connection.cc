@@ -18,6 +18,7 @@
 
 #include "google/cloud/talent/internal/company_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -69,7 +70,12 @@ Status CompanyServiceTracingConnection::DeleteCompany(
 StreamRange<google::cloud::talent::v4::Company>
 CompanyServiceTracingConnection::ListCompanies(
     google::cloud::talent::v4::ListCompaniesRequest request) {
-  return child_->ListCompanies(request);
+  auto span =
+      internal::MakeSpan("talent::CompanyServiceConnection::ListCompanies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCompanies(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::talent::v4::Company>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

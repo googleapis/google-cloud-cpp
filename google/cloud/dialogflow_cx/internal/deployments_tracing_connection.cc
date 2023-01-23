@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/deployments_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ DeploymentsTracingConnection::DeploymentsTracingConnection(
 StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsTracingConnection::ListDeployments(
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request) {
-  return child_->ListDeployments(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::DeploymentsConnection::ListDeployments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDeployments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::Deployment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>

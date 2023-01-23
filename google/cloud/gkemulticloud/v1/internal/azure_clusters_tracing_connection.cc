@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -49,7 +50,13 @@ AzureClustersTracingConnection::GetAzureClient(
 StreamRange<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersTracingConnection::ListAzureClients(
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest request) {
-  return child_->ListAzureClients(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::ListAzureClients");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAzureClients(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gkemulticloud::v1::AzureClient>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -84,7 +91,13 @@ AzureClustersTracingConnection::GetAzureCluster(
 StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersTracingConnection::ListAzureClusters(
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest request) {
-  return child_->ListAzureClusters(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::ListAzureClusters");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAzureClusters(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gkemulticloud::v1::AzureCluster>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -130,7 +143,13 @@ AzureClustersTracingConnection::GetAzureNodePool(
 StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersTracingConnection::ListAzureNodePools(
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request) {
-  return child_->ListAzureNodePools(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::ListAzureNodePools");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAzureNodePools(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gkemulticloud::v1::AzureNodePool>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>

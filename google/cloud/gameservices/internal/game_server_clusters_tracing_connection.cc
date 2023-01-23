@@ -18,6 +18,7 @@
 
 #include "google/cloud/gameservices/internal/game_server_clusters_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -36,7 +37,14 @@ GameServerClustersServiceTracingConnection::
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceTracingConnection::ListGameServerClusters(
     google::cloud::gaming::v1::ListGameServerClustersRequest request) {
-  return child_->ListGameServerClusters(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerClustersServiceConnection::"
+      "ListGameServerClusters");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListGameServerClusters(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gaming::v1::GameServerCluster>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerCluster>

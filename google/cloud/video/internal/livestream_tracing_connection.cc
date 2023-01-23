@@ -18,6 +18,7 @@
 
 #include "google/cloud/video/internal/livestream_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -40,7 +41,13 @@ LivestreamServiceTracingConnection::CreateChannel(
 StreamRange<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceTracingConnection::ListChannels(
     google::cloud::video::livestream::v1::ListChannelsRequest request) {
-  return child_->ListChannels(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::ListChannels");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListChannels(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::video::livestream::v1::Channel>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
@@ -85,7 +92,13 @@ LivestreamServiceTracingConnection::CreateInput(
 StreamRange<google::cloud::video::livestream::v1::Input>
 LivestreamServiceTracingConnection::ListInputs(
     google::cloud::video::livestream::v1::ListInputsRequest request) {
-  return child_->ListInputs(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::ListInputs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInputs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::video::livestream::v1::Input>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Input>
@@ -121,7 +134,13 @@ LivestreamServiceTracingConnection::CreateEvent(
 StreamRange<google::cloud::video::livestream::v1::Event>
 LivestreamServiceTracingConnection::ListEvents(
     google::cloud::video::livestream::v1::ListEventsRequest request) {
-  return child_->ListEvents(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::ListEvents");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEvents(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::video::livestream::v1::Event>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>

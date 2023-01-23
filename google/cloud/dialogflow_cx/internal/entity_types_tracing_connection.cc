@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/entity_types_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ EntityTypesTracingConnection::EntityTypesTracingConnection(
 StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesTracingConnection::ListEntityTypes(
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request) {
-  return child_->ListEntityTypes(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::ListEntityTypes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEntityTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::EntityType>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>

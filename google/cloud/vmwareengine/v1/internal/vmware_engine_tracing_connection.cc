@@ -18,6 +18,7 @@
 
 #include "google/cloud/vmwareengine/v1/internal/vmware_engine_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ VmwareEngineTracingConnection::VmwareEngineTracingConnection(
 StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>
 VmwareEngineTracingConnection::ListPrivateClouds(
     google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request) {
-  return child_->ListPrivateClouds(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListPrivateClouds");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPrivateClouds(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::PrivateCloud>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
@@ -74,7 +81,13 @@ VmwareEngineTracingConnection::UndeletePrivateCloud(
 StreamRange<google::cloud::vmwareengine::v1::Cluster>
 VmwareEngineTracingConnection::ListClusters(
     google::cloud::vmwareengine::v1::ListClustersRequest request) {
-  return child_->ListClusters(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListClusters");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListClusters(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::Cluster>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Cluster>
@@ -107,13 +120,25 @@ VmwareEngineTracingConnection::DeleteCluster(
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
 VmwareEngineTracingConnection::ListSubnets(
     google::cloud::vmwareengine::v1::ListSubnetsRequest request) {
-  return child_->ListSubnets(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListSubnets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSubnets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::Subnet>(std::move(span),
+                                               std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineTracingConnection::ListNodeTypes(
     google::cloud::vmwareengine::v1::ListNodeTypesRequest request) {
-  return child_->ListNodeTypes(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListNodeTypes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListNodeTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::NodeType>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NodeType>
@@ -168,7 +193,13 @@ VmwareEngineTracingConnection::CreateHcxActivationKey(
 StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
 VmwareEngineTracingConnection::ListHcxActivationKeys(
     google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest request) {
-  return child_->ListHcxActivationKeys(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListHcxActivationKeys");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListHcxActivationKeys(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::HcxActivationKey>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -193,7 +224,13 @@ VmwareEngineTracingConnection::GetNetworkPolicy(
 StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
 VmwareEngineTracingConnection::ListNetworkPolicies(
     google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request) {
-  return child_->ListNetworkPolicies(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListNetworkPolicies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListNetworkPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::NetworkPolicy>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -251,7 +288,13 @@ VmwareEngineTracingConnection::GetVmwareEngineNetwork(
 StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
 VmwareEngineTracingConnection::ListVmwareEngineNetworks(
     google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest request) {
-  return child_->ListVmwareEngineNetworks(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ListVmwareEngineNetworks");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListVmwareEngineNetworks(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vmwareengine::v1::VmwareEngineNetwork>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

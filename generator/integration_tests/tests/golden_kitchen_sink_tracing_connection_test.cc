@@ -20,9 +20,6 @@
 #include "generator/integration_tests/golden/v1/mocks/mock_golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/test.pb.h"
 #include <gmock/gmock.h>
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/trace/provider.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 
 namespace google {
@@ -42,6 +39,7 @@ using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::AllOf;
@@ -144,10 +142,14 @@ TEST(GoldenKitchenSinkTracingConnectionTest, WriteLogEntries) {
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, ListLogs)
-      .WillOnce(Return(mocks::MakeStreamRange<std::string>(
-          {}, internal::AbortedError("fail"))));
+  EXPECT_CALL(*mock, ListLogs).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return mocks::MakeStreamRange<std::string>({},
+                                               internal::AbortedError("fail"));
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::ListLogsRequest request;
@@ -156,6 +158,16 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
   ASSERT_FALSE(*it);
   EXPECT_THAT(*it, StatusIs(StatusCode::kAborted));
   EXPECT_EQ(++it, stream.end());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::ListLogs"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListServiceAccountKeys) {

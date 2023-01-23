@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/internal/budget_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -60,7 +61,13 @@ BudgetServiceTracingConnection::GetBudget(
 StreamRange<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceTracingConnection::ListBudgets(
     google::cloud::billing::budgets::v1::ListBudgetsRequest request) {
-  return child_->ListBudgets(request);
+  auto span =
+      internal::MakeSpan("billing::BudgetServiceConnection::ListBudgets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListBudgets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::billing::budgets::v1::Budget>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status BudgetServiceTracingConnection::DeleteBudget(

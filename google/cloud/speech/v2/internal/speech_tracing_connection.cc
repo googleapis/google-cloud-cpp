@@ -18,6 +18,7 @@
 
 #include "google/cloud/speech/v2/internal/speech_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -40,7 +41,12 @@ SpeechTracingConnection::CreateRecognizer(
 StreamRange<google::cloud::speech::v2::Recognizer>
 SpeechTracingConnection::ListRecognizers(
     google::cloud::speech::v2::ListRecognizersRequest request) {
-  return child_->ListRecognizers(request);
+  auto span =
+      internal::MakeSpan("speech_v2::SpeechConnection::ListRecognizers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListRecognizers(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::speech::v2::Recognizer>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v2::Recognizer>
@@ -114,7 +120,13 @@ SpeechTracingConnection::CreateCustomClass(
 StreamRange<google::cloud::speech::v2::CustomClass>
 SpeechTracingConnection::ListCustomClasses(
     google::cloud::speech::v2::ListCustomClassesRequest request) {
-  return child_->ListCustomClasses(request);
+  auto span =
+      internal::MakeSpan("speech_v2::SpeechConnection::ListCustomClasses");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCustomClasses(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::speech::v2::CustomClass>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v2::CustomClass>
@@ -152,7 +164,11 @@ SpeechTracingConnection::CreatePhraseSet(
 StreamRange<google::cloud::speech::v2::PhraseSet>
 SpeechTracingConnection::ListPhraseSets(
     google::cloud::speech::v2::ListPhraseSetsRequest request) {
-  return child_->ListPhraseSets(request);
+  auto span = internal::MakeSpan("speech_v2::SpeechConnection::ListPhraseSets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPhraseSets(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::speech::v2::PhraseSet>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet>

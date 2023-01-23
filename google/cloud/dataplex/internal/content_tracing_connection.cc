@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataplex/internal/content_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -94,7 +95,12 @@ ContentServiceTracingConnection::TestIamPermissions(
 StreamRange<google::cloud::dataplex::v1::Content>
 ContentServiceTracingConnection::ListContent(
     google::cloud::dataplex::v1::ListContentRequest request) {
-  return child_->ListContent(request);
+  auto span =
+      internal::MakeSpan("dataplex::ContentServiceConnection::ListContent");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListContent(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Content>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

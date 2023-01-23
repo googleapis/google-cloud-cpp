@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/internal/cluster_controller_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -73,7 +74,12 @@ ClusterControllerTracingConnection::GetCluster(
 StreamRange<google::cloud::dataproc::v1::Cluster>
 ClusterControllerTracingConnection::ListClusters(
     google::cloud::dataproc::v1::ListClustersRequest request) {
-  return child_->ListClusters(request);
+  auto span =
+      internal::MakeSpan("dataproc::ClusterControllerConnection::ListClusters");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListClusters(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Cluster>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/scheduler/internal/cloud_scheduler_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ CloudSchedulerTracingConnection::CloudSchedulerTracingConnection(
 StreamRange<google::cloud::scheduler::v1::Job>
 CloudSchedulerTracingConnection::ListJobs(
     google::cloud::scheduler::v1::ListJobsRequest request) {
-  return child_->ListJobs(request);
+  auto span =
+      internal::MakeSpan("scheduler::CloudSchedulerConnection::ListJobs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListJobs(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::scheduler::v1::Job>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>

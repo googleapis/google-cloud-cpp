@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/participants_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -52,7 +53,13 @@ ParticipantsTracingConnection::GetParticipant(
 StreamRange<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingConnection::ListParticipants(
     google::cloud::dialogflow::v2::ListParticipantsRequest request) {
-  return child_->ListParticipants(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::ListParticipants");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListParticipants(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::v2::Participant>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/internal/metric_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ MetricServiceTracingConnection::MetricServiceTracingConnection(
 StreamRange<google::api::MonitoredResourceDescriptor>
 MetricServiceTracingConnection::ListMonitoredResourceDescriptors(
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
-  return child_->ListMonitoredResourceDescriptors(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::ListMonitoredResourceDescriptors");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::api::MonitoredResourceDescriptor>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
@@ -51,7 +58,12 @@ MetricServiceTracingConnection::GetMonitoredResourceDescriptor(
 StreamRange<google::api::MetricDescriptor>
 MetricServiceTracingConnection::ListMetricDescriptors(
     google::monitoring::v3::ListMetricDescriptorsRequest request) {
-  return child_->ListMetricDescriptors(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::ListMetricDescriptors");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListMetricDescriptors(std::move(request));
+  return internal::MakeTracedStreamRange<google::api::MetricDescriptor>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::api::MetricDescriptor>
@@ -83,7 +95,12 @@ Status MetricServiceTracingConnection::DeleteMetricDescriptor(
 StreamRange<google::monitoring::v3::TimeSeries>
 MetricServiceTracingConnection::ListTimeSeries(
     google::monitoring::v3::ListTimeSeriesRequest request) {
-  return child_->ListTimeSeries(request);
+  auto span =
+      internal::MakeSpan("monitoring::MetricServiceConnection::ListTimeSeries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTimeSeries(std::move(request));
+  return internal::MakeTracedStreamRange<google::monitoring::v3::TimeSeries>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status MetricServiceTracingConnection::CreateTimeSeries(

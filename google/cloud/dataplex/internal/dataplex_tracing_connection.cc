@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataplex/internal/dataplex_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -52,7 +53,12 @@ DataplexServiceTracingConnection::DeleteLake(
 StreamRange<google::cloud::dataplex::v1::Lake>
 DataplexServiceTracingConnection::ListLakes(
     google::cloud::dataplex::v1::ListLakesRequest request) {
-  return child_->ListLakes(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::ListLakes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListLakes(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Lake>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Lake>
@@ -67,7 +73,12 @@ DataplexServiceTracingConnection::GetLake(
 StreamRange<google::cloud::dataplex::v1::Action>
 DataplexServiceTracingConnection::ListLakeActions(
     google::cloud::dataplex::v1::ListLakeActionsRequest request) {
-  return child_->ListLakeActions(request);
+  auto span = internal::MakeSpan(
+      "dataplex::DataplexServiceConnection::ListLakeActions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListLakeActions(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Action>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
@@ -91,7 +102,12 @@ DataplexServiceTracingConnection::DeleteZone(
 StreamRange<google::cloud::dataplex::v1::Zone>
 DataplexServiceTracingConnection::ListZones(
     google::cloud::dataplex::v1::ListZonesRequest request) {
-  return child_->ListZones(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::ListZones");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListZones(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Zone>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Zone>
@@ -106,7 +122,12 @@ DataplexServiceTracingConnection::GetZone(
 StreamRange<google::cloud::dataplex::v1::Action>
 DataplexServiceTracingConnection::ListZoneActions(
     google::cloud::dataplex::v1::ListZoneActionsRequest request) {
-  return child_->ListZoneActions(request);
+  auto span = internal::MakeSpan(
+      "dataplex::DataplexServiceConnection::ListZoneActions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListZoneActions(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Action>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
@@ -130,7 +151,12 @@ DataplexServiceTracingConnection::DeleteAsset(
 StreamRange<google::cloud::dataplex::v1::Asset>
 DataplexServiceTracingConnection::ListAssets(
     google::cloud::dataplex::v1::ListAssetsRequest request) {
-  return child_->ListAssets(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::ListAssets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAssets(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Asset>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Asset>
@@ -145,7 +171,12 @@ DataplexServiceTracingConnection::GetAsset(
 StreamRange<google::cloud::dataplex::v1::Action>
 DataplexServiceTracingConnection::ListAssetActions(
     google::cloud::dataplex::v1::ListAssetActionsRequest request) {
-  return child_->ListAssetActions(request);
+  auto span = internal::MakeSpan(
+      "dataplex::DataplexServiceConnection::ListAssetActions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAssetActions(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Action>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
@@ -169,7 +200,12 @@ DataplexServiceTracingConnection::DeleteTask(
 StreamRange<google::cloud::dataplex::v1::Task>
 DataplexServiceTracingConnection::ListTasks(
     google::cloud::dataplex::v1::ListTasksRequest request) {
-  return child_->ListTasks(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::ListTasks");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTasks(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Task>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Task>
@@ -184,7 +220,12 @@ DataplexServiceTracingConnection::GetTask(
 StreamRange<google::cloud::dataplex::v1::Job>
 DataplexServiceTracingConnection::ListJobs(
     google::cloud::dataplex::v1::ListJobsRequest request) {
-  return child_->ListJobs(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::ListJobs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListJobs(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Job>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Job>
@@ -224,7 +265,13 @@ DataplexServiceTracingConnection::DeleteEnvironment(
 StreamRange<google::cloud::dataplex::v1::Environment>
 DataplexServiceTracingConnection::ListEnvironments(
     google::cloud::dataplex::v1::ListEnvironmentsRequest request) {
-  return child_->ListEnvironments(request);
+  auto span = internal::MakeSpan(
+      "dataplex::DataplexServiceConnection::ListEnvironments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEnvironments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataplex::v1::Environment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Environment>
@@ -239,7 +286,12 @@ DataplexServiceTracingConnection::GetEnvironment(
 StreamRange<google::cloud::dataplex::v1::Session>
 DataplexServiceTracingConnection::ListSessions(
     google::cloud::dataplex::v1::ListSessionsRequest request) {
-  return child_->ListSessions(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::ListSessions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSessions(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Session>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

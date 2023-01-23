@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/internal/firewall_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ FirewallTracingConnection::FirewallTracingConnection(
 StreamRange<google::appengine::v1::FirewallRule>
 FirewallTracingConnection::ListIngressRules(
     google::appengine::v1::ListIngressRulesRequest request) {
-  return child_->ListIngressRules(request);
+  auto span =
+      internal::MakeSpan("appengine::FirewallConnection::ListIngressRules");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListIngressRules(std::move(request));
+  return internal::MakeTracedStreamRange<google::appengine::v1::FirewallRule>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>

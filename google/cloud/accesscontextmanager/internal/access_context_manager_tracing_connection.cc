@@ -18,6 +18,7 @@
 
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,14 @@ StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerTracingConnection::ListAccessPolicies(
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
         request) {
-  return child_->ListAccessPolicies(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager::AccessContextManagerConnection::"
+      "ListAccessPolicies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAccessPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::identity::accesscontextmanager::v1::AccessPolicy>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
@@ -73,7 +81,13 @@ StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
 AccessContextManagerTracingConnection::ListAccessLevels(
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
         request) {
-  return child_->ListAccessLevels(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager::AccessContextManagerConnection::ListAccessLevels");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAccessLevels(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::identity::accesscontextmanager::v1::AccessLevel>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
@@ -120,7 +134,14 @@ StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
 AccessContextManagerTracingConnection::ListServicePerimeters(
     google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
         request) {
-  return child_->ListServicePerimeters(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager::AccessContextManagerConnection::"
+      "ListServicePerimeters");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListServicePerimeters(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::identity::accesscontextmanager::v1::ServicePerimeter>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
@@ -176,7 +197,14 @@ StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
 AccessContextManagerTracingConnection::ListGcpUserAccessBindings(
     google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
         request) {
-  return child_->ListGcpUserAccessBindings(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager::AccessContextManagerConnection::"
+      "ListGcpUserAccessBindings");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListGcpUserAccessBindings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>

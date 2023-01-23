@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/webhooks_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ WebhooksTracingConnection::WebhooksTracingConnection(
 StreamRange<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksTracingConnection::ListWebhooks(
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest request) {
-  return child_->ListWebhooks(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::WebhooksConnection::ListWebhooks");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListWebhooks(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::Webhook>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>

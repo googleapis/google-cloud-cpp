@@ -18,6 +18,7 @@
 
 #include "google/cloud/networkconnectivity/internal/hub_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ HubServiceTracingConnection::HubServiceTracingConnection(
 StreamRange<google::cloud::networkconnectivity::v1::Hub>
 HubServiceTracingConnection::ListHubs(
     google::cloud::networkconnectivity::v1::ListHubsRequest request) {
-  return child_->ListHubs(request);
+  auto span =
+      internal::MakeSpan("networkconnectivity::HubServiceConnection::ListHubs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListHubs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkconnectivity::v1::Hub>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Hub>
@@ -67,7 +74,13 @@ HubServiceTracingConnection::DeleteHub(
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceTracingConnection::ListSpokes(
     google::cloud::networkconnectivity::v1::ListSpokesRequest request) {
-  return child_->ListSpokes(request);
+  auto span = internal::MakeSpan(
+      "networkconnectivity::HubServiceConnection::ListSpokes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSpokes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::networkconnectivity::v1::Spoke>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Spoke>

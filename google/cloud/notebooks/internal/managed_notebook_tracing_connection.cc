@@ -18,6 +18,7 @@
 
 #include "google/cloud/notebooks/internal/managed_notebook_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,12 @@ ManagedNotebookServiceTracingConnection::
 StreamRange<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceTracingConnection::ListRuntimes(
     google::cloud::notebooks::v1::ListRuntimesRequest request) {
-  return child_->ListRuntimes(request);
+  auto span = internal::MakeSpan(
+      "notebooks::ManagedNotebookServiceConnection::ListRuntimes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListRuntimes(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::notebooks::v1::Runtime>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkehub/internal/gke_hub_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,13 +35,21 @@ GkeHubTracingConnection::GkeHubTracingConnection(
 StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubTracingConnection::ListMemberships(
     google::cloud::gkehub::v1::ListMembershipsRequest request) {
-  return child_->ListMemberships(request);
+  auto span = internal::MakeSpan("gkehub::GkeHubConnection::ListMemberships");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListMemberships(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::gkehub::v1::Membership>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::gkehub::v1::Feature>
 GkeHubTracingConnection::ListFeatures(
     google::cloud::gkehub::v1::ListFeaturesRequest request) {
-  return child_->ListFeatures(request);
+  auto span = internal::MakeSpan("gkehub::GkeHubConnection::ListFeatures");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListFeatures(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::gkehub::v1::Feature>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/internal/authorized_certificates_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,14 @@ AuthorizedCertificatesTracingConnection::
 StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesTracingConnection::ListAuthorizedCertificates(
     google::appengine::v1::ListAuthorizedCertificatesRequest request) {
-  return child_->ListAuthorizedCertificates(request);
+  auto span = internal::MakeSpan(
+      "appengine::AuthorizedCertificatesConnection::"
+      "ListAuthorizedCertificates");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAuthorizedCertificates(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::appengine::v1::AuthorizedCertificate>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>

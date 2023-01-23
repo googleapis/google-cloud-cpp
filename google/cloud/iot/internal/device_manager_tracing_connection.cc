@@ -18,6 +18,7 @@
 
 #include "google/cloud/iot/internal/device_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -69,7 +70,13 @@ Status DeviceManagerTracingConnection::DeleteDeviceRegistry(
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerTracingConnection::ListDeviceRegistries(
     google::cloud::iot::v1::ListDeviceRegistriesRequest request) {
-  return child_->ListDeviceRegistries(request);
+  auto span =
+      internal::MakeSpan("iot::DeviceManagerConnection::ListDeviceRegistries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDeviceRegistries(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::iot::v1::DeviceRegistry>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 StatusOr<google::cloud::iot::v1::Device>
@@ -106,7 +113,11 @@ Status DeviceManagerTracingConnection::DeleteDevice(
 StreamRange<google::cloud::iot::v1::Device>
 DeviceManagerTracingConnection::ListDevices(
     google::cloud::iot::v1::ListDevicesRequest request) {
-  return child_->ListDevices(request);
+  auto span = internal::MakeSpan("iot::DeviceManagerConnection::ListDevices");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDevices(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::iot::v1::Device>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::iot::v1::DeviceConfig>

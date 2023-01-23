@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataplex/internal/metadata_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -69,7 +70,12 @@ MetadataServiceTracingConnection::GetEntity(
 StreamRange<google::cloud::dataplex::v1::Entity>
 MetadataServiceTracingConnection::ListEntities(
     google::cloud::dataplex::v1::ListEntitiesRequest request) {
-  return child_->ListEntities(request);
+  auto span =
+      internal::MakeSpan("dataplex::MetadataServiceConnection::ListEntities");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEntities(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Entity>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
@@ -101,7 +107,13 @@ MetadataServiceTracingConnection::GetPartition(
 StreamRange<google::cloud::dataplex::v1::Partition>
 MetadataServiceTracingConnection::ListPartitions(
     google::cloud::dataplex::v1::ListPartitionsRequest request) {
-  return child_->ListPartitions(request);
+  auto span =
+      internal::MakeSpan("dataplex::MetadataServiceConnection::ListPartitions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPartitions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dataplex::v1::Partition>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

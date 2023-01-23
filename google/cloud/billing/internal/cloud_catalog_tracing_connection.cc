@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/internal/cloud_catalog_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,13 +35,22 @@ CloudCatalogTracingConnection::CloudCatalogTracingConnection(
 StreamRange<google::cloud::billing::v1::Service>
 CloudCatalogTracingConnection::ListServices(
     google::cloud::billing::v1::ListServicesRequest request) {
-  return child_->ListServices(request);
+  auto span =
+      internal::MakeSpan("billing::CloudCatalogConnection::ListServices");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListServices(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::billing::v1::Service>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::billing::v1::Sku>
 CloudCatalogTracingConnection::ListSkus(
     google::cloud::billing::v1::ListSkusRequest request) {
-  return child_->ListSkus(request);
+  auto span = internal::MakeSpan("billing::CloudCatalogConnection::ListSkus");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSkus(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::billing::v1::Sku>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

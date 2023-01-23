@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/internal/alert_policy_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ AlertPolicyServiceTracingConnection::AlertPolicyServiceTracingConnection(
 StreamRange<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceTracingConnection::ListAlertPolicies(
     google::monitoring::v3::ListAlertPoliciesRequest request) {
-  return child_->ListAlertPolicies(request);
+  auto span = internal::MakeSpan(
+      "monitoring::AlertPolicyServiceConnection::ListAlertPolicies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAlertPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<google::monitoring::v3::AlertPolicy>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>

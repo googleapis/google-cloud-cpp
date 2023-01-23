@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcesettings/internal/resource_settings_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -36,7 +37,13 @@ ResourceSettingsServiceTracingConnection::
 StreamRange<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceTracingConnection::ListSettings(
     google::cloud::resourcesettings::v1::ListSettingsRequest request) {
-  return child_->ListSettings(request);
+  auto span = internal::MakeSpan(
+      "resourcesettings::ResourceSettingsServiceConnection::ListSettings");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSettings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::resourcesettings::v1::Setting>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>

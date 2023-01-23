@@ -18,6 +18,7 @@
 
 #include "google/cloud/apigateway/internal/api_gateway_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ ApiGatewayServiceTracingConnection::ApiGatewayServiceTracingConnection(
 StreamRange<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceTracingConnection::ListGateways(
     google::cloud::apigateway::v1::ListGatewaysRequest request) {
-  return child_->ListGateways(request);
+  auto span = internal::MakeSpan(
+      "apigateway::ApiGatewayServiceConnection::ListGateways");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListGateways(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::apigateway::v1::Gateway>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
@@ -67,7 +74,12 @@ ApiGatewayServiceTracingConnection::DeleteGateway(
 StreamRange<google::cloud::apigateway::v1::Api>
 ApiGatewayServiceTracingConnection::ListApis(
     google::cloud::apigateway::v1::ListApisRequest request) {
-  return child_->ListApis(request);
+  auto span =
+      internal::MakeSpan("apigateway::ApiGatewayServiceConnection::ListApis");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListApis(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::apigateway::v1::Api>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::apigateway::v1::Api>
@@ -100,7 +112,13 @@ ApiGatewayServiceTracingConnection::DeleteApi(
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceTracingConnection::ListApiConfigs(
     google::cloud::apigateway::v1::ListApiConfigsRequest request) {
-  return child_->ListApiConfigs(request);
+  auto span = internal::MakeSpan(
+      "apigateway::ApiGatewayServiceConnection::ListApiConfigs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListApiConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::apigateway::v1::ApiConfig>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>

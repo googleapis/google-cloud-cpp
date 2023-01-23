@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/internal/reservation_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -44,7 +45,13 @@ ReservationServiceTracingConnection::CreateReservation(
 StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceTracingConnection::ListReservations(
     google::cloud::bigquery::reservation::v1::ListReservationsRequest request) {
-  return child_->ListReservations(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::ListReservations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListReservations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::reservation::v1::Reservation>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
@@ -90,7 +97,13 @@ StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceTracingConnection::ListCapacityCommitments(
     google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
         request) {
-  return child_->ListCapacityCommitments(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::ListCapacityCommitments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCapacityCommitments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::reservation::v1::CapacityCommitment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -156,7 +169,13 @@ ReservationServiceTracingConnection::CreateAssignment(
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceTracingConnection::ListAssignments(
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request) {
-  return child_->ListAssignments(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::ListAssignments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAssignments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::reservation::v1::Assignment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status ReservationServiceTracingConnection::DeleteAssignment(
@@ -172,14 +191,26 @@ StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceTracingConnection::SearchAssignments(
     google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
         request) {
-  return child_->SearchAssignments(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::SearchAssignments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->SearchAssignments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::reservation::v1::Assignment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceTracingConnection::SearchAllAssignments(
     google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
         request) {
-  return child_->SearchAllAssignments(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::SearchAllAssignments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->SearchAllAssignments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::reservation::v1::Assignment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>

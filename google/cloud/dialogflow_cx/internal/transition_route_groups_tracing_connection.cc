@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,14 @@ StreamRange<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsTracingConnection::ListTransitionRouteGroups(
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest
         request) {
-  return child_->ListTransitionRouteGroups(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "ListTransitionRouteGroups");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTransitionRouteGroups(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::TransitionRouteGroup>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>

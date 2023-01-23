@@ -18,6 +18,7 @@
 
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -63,7 +64,13 @@ WebSecurityScannerTracingConnection::GetScanConfig(
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerTracingConnection::ListScanConfigs(
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest request) {
-  return child_->ListScanConfigs(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::ListScanConfigs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListScanConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::websecurityscanner::v1::ScanConfig>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
@@ -97,7 +104,13 @@ WebSecurityScannerTracingConnection::GetScanRun(
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerTracingConnection::ListScanRuns(
     google::cloud::websecurityscanner::v1::ListScanRunsRequest request) {
-  return child_->ListScanRuns(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::ListScanRuns");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListScanRuns(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::websecurityscanner::v1::ScanRun>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
@@ -112,7 +125,13 @@ WebSecurityScannerTracingConnection::StopScanRun(
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
 WebSecurityScannerTracingConnection::ListCrawledUrls(
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request) {
-  return child_->ListCrawledUrls(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::ListCrawledUrls");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCrawledUrls(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::websecurityscanner::v1::CrawledUrl>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
@@ -127,7 +146,13 @@ WebSecurityScannerTracingConnection::GetFinding(
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerTracingConnection::ListFindings(
     google::cloud::websecurityscanner::v1::ListFindingsRequest request) {
-  return child_->ListFindings(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::ListFindings");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListFindings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::websecurityscanner::v1::Finding>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
