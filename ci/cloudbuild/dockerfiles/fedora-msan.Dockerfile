@@ -54,6 +54,7 @@ RUN cmake -GNinja -S llvm -B build \
 # build the libraries
 RUN cmake --build build -- cxx cxxabi
 RUN cmake --build build -- install-cxx install-cxxabi
+RUN ldconfig
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
