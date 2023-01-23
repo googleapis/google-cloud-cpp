@@ -44,7 +44,7 @@ class GoldenThingAdminRestStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Database> GetDatabase(
@@ -53,7 +53,7 @@ class GoldenThingAdminRestStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
   virtual Status DropDatabase(
@@ -78,7 +78,7 @@ class GoldenThingAdminRestStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Backup> GetBackup(
@@ -99,7 +99,7 @@ class GoldenThingAdminRestStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
@@ -112,22 +112,22 @@ class GoldenThingAdminRestStub {
 
   virtual future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
 
   virtual future<Status> AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -147,7 +147,7 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::Database> GetDatabase(
@@ -156,7 +156,7 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   Status DropDatabase(
@@ -181,7 +181,7 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::Backup> GetBackup(
@@ -202,7 +202,7 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
@@ -215,22 +215,22 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
 
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
   future<Status> AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      google::cloud::rest_internal::RestContext& rest_context,
+      std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
