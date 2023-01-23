@@ -240,6 +240,7 @@ TEST_F(ScaffoldGenerator, CMakeLists) {
   EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
   EXPECT_THAT(actual, Not(HasSubstr("$doxygen_version_suffix$")));
   EXPECT_THAT(actual, HasSubstr(R"""(include(CompileProtos)
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protolist(
     proto_list
     "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/test.list")

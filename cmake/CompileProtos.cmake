@@ -472,3 +472,14 @@ function (external_googleapis_install_pc target)
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
         COMPONENT google_cloud_cpp_development)
 endfunction ()
+
+# Find the proto include directory
+function (google_cloud_cpp_find_proto_include_dir VAR)
+    find_path(dir google/protobuf/descriptor.proto)
+    if (dir)
+        list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
+    endif ()
+    set(${VAR}
+        ${dir}
+        PARENT_SCOPE)
+endfunction ()
