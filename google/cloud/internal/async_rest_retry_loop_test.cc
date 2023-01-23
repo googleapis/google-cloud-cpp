@@ -121,7 +121,8 @@ TEST(AsyncRestRetryLoopTest, Success) {
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](CompletionQueue&, RestContext&, int request) -> future<StatusOr<int>> {
+      [](CompletionQueue&, std::unique_ptr<RestContext>,
+         int request) -> future<StatusOr<int>> {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "Success");
         return make_ready_future(StatusOr<int>(2 * request));
       },
@@ -142,7 +143,7 @@ TEST(AsyncRestRetryLoopTest, TransientThenSuccess) {
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](CompletionQueue&, RestContext&, int request) {
+      [&](CompletionQueue&, std::unique_ptr<RestContext>, int request) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
                   "TransientThenSuccess");
         if (++counter < 3) {
@@ -167,7 +168,7 @@ TEST(AsyncRestRetryLoopTest, ReturnJustStatus) {
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](CompletionQueue&, RestContext&, int) {
+      [&](CompletionQueue&, std::unique_ptr<RestContext>, int) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
                   "ReturnJustStatus");
         if (++counter <= 3) {
@@ -216,7 +217,7 @@ TEST(AsyncRestRetryLoopTest, UsesBackoffPolicy) {
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), std::move(mock), Idempotency::kIdempotent,
       background.cq(),
-      [&](CompletionQueue&, RestContext&, int request) {
+      [&](CompletionQueue&, std::unique_ptr<RestContext>, int request) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
                   "UsesBackoffPolicy");
         if (++counter <= 3) {
@@ -242,7 +243,7 @@ TEST(AsyncRestRetryLoopTest, TransientFailureNonIdempotent) {
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
       background.cq(),
-      [](CompletionQueue&, RestContext&, int) {
+      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
                   "TransientFailureNonIdempotent");
         return make_ready_future(StatusOr<int>(
@@ -267,7 +268,7 @@ TEST(AsyncRestRetryLoopTest, PermanentFailureIdempotent) {
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](CompletionQueue&, RestContext&, int) {
+      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
                   "PermanentFailureIdempotent");
         return make_ready_future(StatusOr<int>(
@@ -292,7 +293,7 @@ TEST(AsyncRestRetryLoopTest, TooManyTransientFailuresIdempotent) {
   auto pending = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](CompletionQueue&, RestContext&, int) {
+      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
                   "TooManyTransientFailuresIdempotent");
         return make_ready_future(StatusOr<int>(
@@ -319,7 +320,7 @@ TEST(AsyncRestRetryLoopTest, ExhaustedDuringBackoff) {
       internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>(0).clone(),
       ExponentialBackoffPolicy(ms(0), ms(0), 2.0).clone(),
       Idempotency::kIdempotent, background.cq(),
-      [](CompletionQueue&, RestContext&, int) {
+      [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
                   "ExhaustedDuringBackoff");
         return make_ready_future(StatusOr<int>(
@@ -347,7 +348,7 @@ TEST(AsyncRestRetryLoopTest, ExhaustedBeforeStart) {
       AsyncRestRetryLoop(
           std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
           TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
-          [](CompletionQueue&, RestContext&, int) {
+          [](CompletionQueue&, std::unique_ptr<RestContext>, int) {
             return make_ready_future(StatusOr<int>(
                 Status(StatusCode::kUnavailable, "test-message-try-again")));
           },
@@ -380,7 +381,7 @@ TEST(AsyncRestRetryLoopTest, SetsTimeout) {
   auto pending = AsyncRestRetryLoop(
       std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
       TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
-      [&](CompletionQueue&, RestContext&, int /*request*/) {
+      [&](CompletionQueue&, std::unique_ptr<RestContext>, int /*request*/) {
         EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "SetsTimeout");
         return make_ready_future(
             StatusOr<int>(Status(StatusCode::kUnavailable, "try again")));
@@ -398,7 +399,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelAndSuccess) {
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, RestContext&, int x) {
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
         return SimulateRequest(x);
       },
       42, "test-location");
@@ -429,7 +430,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelWithFailure) {
   CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, RestContext&, int x) {
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
         return SimulateRequest(x);
       },
       42, "test-location");
@@ -462,7 +463,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, CancelDuringTimer) {
   CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, RestContext&, int x) {
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
         return SimulateRequest(x);
       },
       42, "test-location");
@@ -497,7 +498,7 @@ TEST_F(AsyncRestRetryLoopCancelTest, ShutdownDuringTimer) {
   CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRestRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](CompletionQueue&, RestContext&, int x) {
+      [this](CompletionQueue&, std::unique_ptr<RestContext>, int x) {
         return SimulateRequest(x);
       },
       42, "test-location");

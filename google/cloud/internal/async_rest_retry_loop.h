@@ -52,7 +52,7 @@ struct FutureValueType<future<T>> {
  * class MyStub { public:
  *   virtual future<StatusOr<ResponseProto>> AsyncRpcName(
  *      google::cloud::CompletionQueue& cq,
- *      rest_internal::RestContext& context,
+ *      std::unique_ptr<rest_internal::RestContext> context,
  *      RequestProto const& request) = 0;
  * };
  * @endcode
@@ -191,9 +191,8 @@ class AsyncRestRetryLoopImpl
 
   ~AsyncRestRetryLoopImpl() = default;
 
-  using ReturnType =
-      ::google::cloud::internal::invoke_result_t<Functor, CompletionQueue&,
-                                                 RestContext&, Request const&>;
+  using ReturnType = ::google::cloud::internal::invoke_result_t<
+      Functor, CompletionQueue&, std::unique_ptr<RestContext>, Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
 
   future<T> Start() {
@@ -237,11 +236,9 @@ class AsyncRestRetryLoopImpl
     }
     auto state = StartOperation();
     if (state.cancelled) return;
-    RestContext context;
     SetPending(state.operation,
-               functor_(cq_, context, request_).then([self](future<T> f) {
-                 self->OnAttempt(f.get());
-               }));
+               functor_(cq_, absl::make_unique<RestContext>(), request_)
+                   .then([self](future<T> f) { self->OnAttempt(f.get()); }));
   }
 
   void StartBackoff() {
@@ -349,17 +346,19 @@ class AsyncRestRetryLoopImpl
  * Create the right AsyncRestRetryLoopImpl object and start the retry loop.
  */
 template <typename Functor, typename Request, typename RetryPolicyType,
-          typename std::enable_if<google::cloud::internal::is_invocable<
-                                      Functor, CompletionQueue&, RestContext&,
-                                      Request const&>::value,
-                                  int>::type = 0>
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, CompletionQueue&, std::unique_ptr<RestContext>,
+                  Request const&>::value,
+              int>::type = 0>
 auto AsyncRestRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                         std::unique_ptr<BackoffPolicy> backoff_policy,
                         Idempotency idempotency, CompletionQueue cq,
                         Functor&& functor, Request request,
                         char const* location)
     -> google::cloud::internal::invoke_result_t<Functor, CompletionQueue&,
-                                                RestContext&, Request const&> {
+                                                std::unique_ptr<RestContext>,
+                                                Request const&> {
   auto loop = std::make_shared<
       AsyncRestRetryLoopImpl<Functor, Request, RetryPolicyType>>(
       std::move(retry_policy), std::move(backoff_policy), idempotency,
