@@ -25,10 +25,13 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::binaryauthorization_protos
-                                  google-cloud-cpp::grafeas_protos)
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/google/cloud/grafeas")
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets(
+    "binaryauthorization" DEPENDS cloud-docs
+    google-cloud-cpp::binaryauthorization_protos
+    google-cloud-cpp::grafeas_protos)
 
 include(GoogleCloudCppCommon)
 

@@ -25,6 +25,10 @@ set(DOXYGEN_EXAMPLE_PATH
 set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal"
                             "bigtable_internal" "internal" "testing" "examples")
 
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("bigtable" DEPENDS cloud-docs
+                                 google-cloud-cpp::bigtable_protos)
+
 include(GoogleCloudCppCommon)
 
 # Configure the location of proto files, particularly the googleapis protos.

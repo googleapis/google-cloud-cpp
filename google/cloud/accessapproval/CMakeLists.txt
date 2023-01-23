@@ -35,8 +35,9 @@ foreach (dir IN LISTS service_dirs)
     endif ()
 endforeach ()
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::accessapproval_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("accessapproval" DEPENDS cloud-docs
+                                 google-cloud-cpp::accessapproval_protos)
 
 include(GoogleCloudCppCommon)
 

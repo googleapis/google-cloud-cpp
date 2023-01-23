@@ -23,8 +23,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "video_internal" "video_testing"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::video_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("video" DEPENDS cloud-docs
+                                 google-cloud-cpp::video_protos)
 
 include(GoogleCloudCppCommon)
 
