@@ -23,7 +23,7 @@ ARG NCPU=4
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 # ```
 
@@ -115,6 +115,25 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
+# #### RE2
+
+# The version of RE2 included with this distro hard-codes C++11 in its
+# pkg-config file. You can skip this build and use the system's package if
+# you are not planning to use pkg-config.
+
+# ```bash
+WORKDIR /var/tmp/build/re2
+RUN curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```

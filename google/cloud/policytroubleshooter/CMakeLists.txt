@@ -24,17 +24,14 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "policytroubleshooter_internal"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::policytroubleshooter_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("policytroubleshooter" DEPENDS cloud-docs
+                                 google-cloud-cpp::policytroubleshooter_protos)
 
 include(GoogleCloudCppCommon)
 
-find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
-if (PROTO_INCLUDE_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
-endif ()
-
 include(CompileProtos)
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protolist(
     proto_list
     "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/policytroubleshooter.list"

@@ -15,6 +15,7 @@
 #include "google/cloud/internal/async_rest_polling_loop.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
+#include "absl/memory/memory.h"
 #include <algorithm>
 #include <mutex>
 #include <string>
@@ -74,10 +75,10 @@ class AsyncRestPollingLoopImpl
     }
     // Cancels are best effort, so we use weak pointers.
     auto w = WeakFromThis();
-    RestContext context;
-    cancel_(cq_, context, request).then([w](future<Status> f) {
-      if (auto self = w.lock()) self->OnCancel(f.get());
-    });
+    cancel_(cq_, absl::make_unique<RestContext>(), request)
+        .then([w](future<Status> f) {
+          if (auto self = w.lock()) self->OnCancel(f.get());
+        });
   }
 
   void OnCancel(Status const& status) {
@@ -117,10 +118,10 @@ class AsyncRestPollingLoopImpl
       request.set_name(op_name_);
     }
     auto self = shared_from_this();
-    RestContext context;
-    poll_(cq_, context, request).then([self](future<StatusOr<Operation>> g) {
-      self->OnPoll(std::move(g));
-    });
+    poll_(cq_, absl::make_unique<RestContext>(), request)
+        .then([self](future<StatusOr<Operation>> g) {
+          self->OnPoll(std::move(g));
+        });
   }
 
   void OnPoll(future<StatusOr<Operation>> f) {

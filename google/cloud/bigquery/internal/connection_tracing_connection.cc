@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/internal/connection_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -54,7 +55,13 @@ ConnectionServiceTracingConnection::GetConnection(
 StreamRange<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingConnection::ListConnections(
     google::cloud::bigquery::connection::v1::ListConnectionsRequest request) {
-  return child_->ListConnections(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ConnectionServiceConnection::ListConnections");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListConnections(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::connection::v1::Connection>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/osconfig/internal/os_config_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -61,13 +62,24 @@ OsConfigServiceTracingConnection::CancelPatchJob(
 StreamRange<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceTracingConnection::ListPatchJobs(
     google::cloud::osconfig::v1::ListPatchJobsRequest request) {
-  return child_->ListPatchJobs(request);
+  auto span =
+      internal::MakeSpan("osconfig::OsConfigServiceConnection::ListPatchJobs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPatchJobs(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::osconfig::v1::PatchJob>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
 OsConfigServiceTracingConnection::ListPatchJobInstanceDetails(
     google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request) {
-  return child_->ListPatchJobInstanceDetails(request);
+  auto span = internal::MakeSpan(
+      "osconfig::OsConfigServiceConnection::ListPatchJobInstanceDetails");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPatchJobInstanceDetails(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::osconfig::v1::PatchJobInstanceDetails>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
@@ -91,7 +103,13 @@ OsConfigServiceTracingConnection::GetPatchDeployment(
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceTracingConnection::ListPatchDeployments(
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest request) {
-  return child_->ListPatchDeployments(request);
+  auto span = internal::MakeSpan(
+      "osconfig::OsConfigServiceConnection::ListPatchDeployments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPatchDeployments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::osconfig::v1::PatchDeployment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status OsConfigServiceTracingConnection::DeletePatchDeployment(

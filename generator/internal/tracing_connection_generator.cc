@@ -108,6 +108,7 @@ Status TracingConnectionGenerator::GenerateCc() {
   CcLocalIncludes({
       vars("tracing_connection_header_path"),
       "google/cloud/internal/opentelemetry.h",
+      HasPaginatedMethod() ? "google/cloud/internal/traced_stream_range.h" : "",
   });
   CcSystemIncludes({"memory"});
 
@@ -241,7 +242,11 @@ $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
     return R"""(
 StreamRange<$range_output_type$>
 $tracing_connection_class_name$::$method_name$($request_type$ request) {
-  return child_->$method_name$(request);
+  auto span = internal::MakeSpan("$product_namespace$::$connection_class_name$::$method_name$");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->$method_name$(std::move(request));
+  return internal::MakeTracedStreamRange<$range_output_type$>(
+        std::move(span), std::move(scope), std::move(sr));
 }
 )""";
   }

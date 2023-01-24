@@ -18,6 +18,7 @@
 
 #include "google/cloud/translate/internal/translation_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -90,7 +91,13 @@ TranslationServiceTracingConnection::CreateGlossary(
 StreamRange<google::cloud::translation::v3::Glossary>
 TranslationServiceTracingConnection::ListGlossaries(
     google::cloud::translation::v3::ListGlossariesRequest request) {
-  return child_->ListGlossaries(request);
+  auto span = internal::MakeSpan(
+      "translate::TranslationServiceConnection::ListGlossaries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListGlossaries(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::translation::v3::Glossary>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::translation::v3::Glossary>

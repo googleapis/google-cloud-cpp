@@ -88,7 +88,9 @@ add_library(
     internal/stub_rest_generator.cc
     internal/stub_rest_generator.h
     internal/tracing_connection_generator.cc
-    internal/tracing_connection_generator.h)
+    internal/tracing_connection_generator.h
+    internal/tracing_stub_generator.cc
+    internal/tracing_stub_generator.h)
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(

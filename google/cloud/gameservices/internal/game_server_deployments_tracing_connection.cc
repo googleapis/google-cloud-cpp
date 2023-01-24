@@ -18,6 +18,7 @@
 
 #include "google/cloud/gameservices/internal/game_server_deployments_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -36,7 +37,14 @@ GameServerDeploymentsServiceTracingConnection::
 StreamRange<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceTracingConnection::ListGameServerDeployments(
     google::cloud::gaming::v1::ListGameServerDeploymentsRequest request) {
-  return child_->ListGameServerDeployments(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerDeploymentsServiceConnection::"
+      "ListGameServerDeployments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListGameServerDeployments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gaming::v1::GameServerDeployment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeployment>

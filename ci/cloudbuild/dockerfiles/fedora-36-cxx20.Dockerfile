@@ -28,16 +28,19 @@ RUN dnf makecache && \
         openssl-devel patch python python3 \
         python-pip tar unzip wget which zip zlib-devel
 
+# Install the Python modules needed to run the storage emulator
+RUN dnf makecache && dnf install -y python3-devel
+RUN pip3 install --upgrade pip
+RUN pip3 install setuptools wheel
+
+# This is needed to install gRPC
+RUN dnf makecache && dnf install -y c-ares-devel
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
-
-# Install the Python modules needed to run the storage emulator
-RUN dnf makecache && dnf install -y python3-devel
-RUN pip3 install --upgrade pip
-RUN pip3 install setuptools wheel
 
 # Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 # when handling `.pc` files with lots of `Requires:` deps, which happens with
@@ -155,7 +158,6 @@ RUN curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
     ldconfig
 
 WORKDIR /var/tmp/build/grpc
-RUN dnf makecache && dnf install -y c-ares-devel
 RUN curl -sSL https://github.com/grpc/grpc/archive/v1.51.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \

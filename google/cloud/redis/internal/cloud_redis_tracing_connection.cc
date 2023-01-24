@@ -18,6 +18,7 @@
 
 #include "google/cloud/redis/internal/cloud_redis_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,11 @@ CloudRedisTracingConnection::CloudRedisTracingConnection(
 StreamRange<google::cloud::redis::v1::Instance>
 CloudRedisTracingConnection::ListInstances(
     google::cloud::redis::v1::ListInstancesRequest request) {
-  return child_->ListInstances(request);
+  auto span = internal::MakeSpan("redis::CloudRedisConnection::ListInstances");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInstances(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::redis::v1::Instance>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::redis::v1::Instance>

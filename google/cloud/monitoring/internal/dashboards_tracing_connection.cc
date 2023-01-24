@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/internal/dashboards_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -43,7 +44,13 @@ DashboardsServiceTracingConnection::CreateDashboard(
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceTracingConnection::ListDashboards(
     google::monitoring::dashboard::v1::ListDashboardsRequest request) {
-  return child_->ListDashboards(request);
+  auto span = internal::MakeSpan(
+      "monitoring::DashboardsServiceConnection::ListDashboards");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDashboards(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::dashboard::v1::Dashboard>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>

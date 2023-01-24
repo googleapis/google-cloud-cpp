@@ -19,6 +19,8 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
+#include <cstddef>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -68,6 +70,14 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
    */
   static StatusOr<std::shared_ptr<XmlNode>> Parse(absl::string_view content,
                                                   Options = {});
+
+  /**
+   * Creates an XML request for "Completing multipart upload" API
+   * described at
+   * https://cloud.google.com/storage/docs/xml-api/post-object-complete.
+   */
+  static std::shared_ptr<XmlNode> CompleteMultipartUpload(
+      std::map<std::size_t, std::string> const& parts);
 
   /// Get the tag name.
   std::string GetTagName() const { return tag_name_; };

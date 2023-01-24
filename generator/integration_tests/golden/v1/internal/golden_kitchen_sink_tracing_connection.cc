@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -54,7 +55,11 @@ GoldenKitchenSinkTracingConnection::WriteLogEntries(google::test::admin::databas
 
 StreamRange<std::string>
 GoldenKitchenSinkTracingConnection::ListLogs(google::test::admin::database::v1::ListLogsRequest request) {
-  return child_->ListLogs(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ListLogs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListLogs(std::move(request));
+  return internal::MakeTracedStreamRange<std::string>(
+        std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>

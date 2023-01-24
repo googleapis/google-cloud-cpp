@@ -21,15 +21,13 @@ set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "pubsub_internal" "pubsub_testing"
-                            "examples")
+                            "examples" "samples")
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::pubsub_protos)
-if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
-    set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS}
-                                      pubsub_samples_protos)
-else ()
-    set(DOXYGEN_EXCLUDE_SYMBOLS ${DOXYGEN_EXCLUDE_SYMBOLS} "samples")
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("pubsub" DEPENDS cloud-docs
+                                 google-cloud-cpp::pubsub_protos)
+if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES AND TARGET pubsub-docs)
+    add_dependencies(pubsub-docs pubsub_samples_protos)
 endif ()
 
 include(GoogleCloudCppCommon)

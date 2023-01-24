@@ -18,6 +18,7 @@
 
 #include "google/cloud/eventarc/internal/eventarc_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -42,7 +43,11 @@ EventarcTracingConnection::GetTrigger(
 StreamRange<google::cloud::eventarc::v1::Trigger>
 EventarcTracingConnection::ListTriggers(
     google::cloud::eventarc::v1::ListTriggersRequest request) {
-  return child_->ListTriggers(request);
+  auto span = internal::MakeSpan("eventarc::EventarcConnection::ListTriggers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTriggers(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::eventarc::v1::Trigger>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
@@ -74,7 +79,11 @@ EventarcTracingConnection::GetChannel(
 StreamRange<google::cloud::eventarc::v1::Channel>
 EventarcTracingConnection::ListChannels(
     google::cloud::eventarc::v1::ListChannelsRequest request) {
-  return child_->ListChannels(request);
+  auto span = internal::MakeSpan("eventarc::EventarcConnection::ListChannels");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListChannels(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::eventarc::v1::Channel>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
@@ -106,7 +115,11 @@ EventarcTracingConnection::GetProvider(
 StreamRange<google::cloud::eventarc::v1::Provider>
 EventarcTracingConnection::ListProviders(
     google::cloud::eventarc::v1::ListProvidersRequest request) {
-  return child_->ListProviders(request);
+  auto span = internal::MakeSpan("eventarc::EventarcConnection::ListProviders");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProviders(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::eventarc::v1::Provider>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
@@ -121,7 +134,13 @@ EventarcTracingConnection::GetChannelConnection(
 StreamRange<google::cloud::eventarc::v1::ChannelConnection>
 EventarcTracingConnection::ListChannelConnections(
     google::cloud::eventarc::v1::ListChannelConnectionsRequest request) {
-  return child_->ListChannelConnections(request);
+  auto span = internal::MakeSpan(
+      "eventarc::EventarcConnection::ListChannelConnections");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListChannelConnections(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::eventarc::v1::ChannelConnection>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/internal/domain_mappings_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ DomainMappingsTracingConnection::DomainMappingsTracingConnection(
 StreamRange<google::appengine::v1::DomainMapping>
 DomainMappingsTracingConnection::ListDomainMappings(
     google::appengine::v1::ListDomainMappingsRequest request) {
-  return child_->ListDomainMappings(request);
+  auto span = internal::MakeSpan(
+      "appengine::DomainMappingsConnection::ListDomainMappings");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDomainMappings(std::move(request));
+  return internal::MakeTracedStreamRange<google::appengine::v1::DomainMapping>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::DomainMapping>

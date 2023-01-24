@@ -49,6 +49,7 @@
 #include "generator/internal/stub_generator.h"
 #include "generator/internal/stub_rest_generator.h"
 #include "generator/internal/tracing_connection_generator.h"
+#include "generator/internal/tracing_stub_generator.h"
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
@@ -704,6 +705,9 @@ std::string FormatApiMethodSignatureParameters(
             // Runaway escaping and just duplication in gkemulticloud proto
             // file.
             {" formatted as `resource name formatted as", " formatted as"},
+            // Missing escaping in pubsub/v1/schema.proto
+            {"Example: projects/123/schemas/my-schema@c7cfa2a8",
+             "Example: `projects/123/schemas/my-schema@c7cfa2a8`"},
         });
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
@@ -1119,6 +1123,14 @@ VarsDictionary CreateServiceVars(
   vars["tracing_connection_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_tracing_connection.h");
+  vars["tracing_stub_class_name"] =
+      absl::StrCat(descriptor.name(), "TracingStub");
+  vars["tracing_stub_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_tracing_stub.cc");
+  vars["tracing_stub_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_tracing_stub.h");
   SetRetryStatusCodeExpression(vars);
   return vars;
 }
@@ -1241,6 +1253,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
       service, service_vars, method_vars, context));
   code_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
+      service, service_vars, method_vars, context));
+  code_generators.push_back(absl::make_unique<TracingStubGenerator>(
       service, service_vars, method_vars, context));
   code_generators.push_back(absl::make_unique<StubGenerator>(
       service, service_vars, method_vars, context));

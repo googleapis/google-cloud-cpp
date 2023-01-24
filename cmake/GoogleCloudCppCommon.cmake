@@ -26,9 +26,6 @@ include(EnableWerror)
 # Helper functions to create pkg-config(1) module files.
 include(AddPkgConfig)
 
-# Generate Doxygen documentation
-include(GoogleCloudCppDoxygen)
-
 #
 # google_cloud_cpp_install_headers : install all the headers in a target
 #

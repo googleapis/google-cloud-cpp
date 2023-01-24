@@ -23,8 +23,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "dataproc_internal" "dataproc_testing"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::dataproc_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("dataproc" DEPENDS cloud-docs
+                                 google-cloud-cpp::dataproc_protos)
 
 find_package(gRPC REQUIRED)
 find_package(Protobuf REQUIRED)
@@ -32,12 +33,8 @@ find_package(absl CONFIG REQUIRED)
 
 include(GoogleCloudCppCommon)
 
-find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
-if (PROTO_INCLUDE_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
-endif ()
-
 include(CompileProtos)
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protolist(
     proto_list
     "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/dataproc.list")

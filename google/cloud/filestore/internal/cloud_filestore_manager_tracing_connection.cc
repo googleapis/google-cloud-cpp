@@ -18,6 +18,7 @@
 
 #include "google/cloud/filestore/internal/cloud_filestore_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ CloudFilestoreManagerTracingConnection::CloudFilestoreManagerTracingConnection(
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerTracingConnection::ListInstances(
     google::cloud::filestore::v1::ListInstancesRequest request) {
-  return child_->ListInstances(request);
+  auto span = internal::MakeSpan(
+      "filestore::CloudFilestoreManagerConnection::ListInstances");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInstances(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::filestore::v1::Instance>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 StatusOr<google::cloud::filestore::v1::Instance>
@@ -73,7 +80,12 @@ CloudFilestoreManagerTracingConnection::DeleteInstance(
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerTracingConnection::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {
-  return child_->ListBackups(request);
+  auto span = internal::MakeSpan(
+      "filestore::CloudFilestoreManagerConnection::ListBackups");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListBackups(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::filestore::v1::Backup>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::filestore::v1::Backup>

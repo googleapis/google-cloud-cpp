@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -33,7 +34,11 @@ GoldenThingAdminTracingConnection::GoldenThingAdminTracingConnection(
 
 StreamRange<google::test::admin::database::v1::Database>
 GoldenThingAdminTracingConnection::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) {
-  return child_->ListDatabases(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::ListDatabases");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDatabases(std::move(request));
+  return internal::MakeTracedStreamRange<google::test::admin::database::v1::Database>(
+        std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -116,7 +121,11 @@ GoldenThingAdminTracingConnection::DeleteBackup(google::test::admin::database::v
 
 StreamRange<google::test::admin::database::v1::Backup>
 GoldenThingAdminTracingConnection::ListBackups(google::test::admin::database::v1::ListBackupsRequest request) {
-  return child_->ListBackups(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::ListBackups");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListBackups(std::move(request));
+  return internal::MakeTracedStreamRange<google::test::admin::database::v1::Backup>(
+        std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -126,12 +135,20 @@ GoldenThingAdminTracingConnection::RestoreDatabase(google::test::admin::database
 
 StreamRange<google::longrunning::Operation>
 GoldenThingAdminTracingConnection::ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
-  return child_->ListDatabaseOperations(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::ListDatabaseOperations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDatabaseOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+        std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
 GoldenThingAdminTracingConnection::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request) {
-  return child_->ListBackupOperations(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::ListBackupOperations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListBackupOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+        std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

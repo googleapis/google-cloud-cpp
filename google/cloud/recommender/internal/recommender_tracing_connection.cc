@@ -18,6 +18,7 @@
 
 #include "google/cloud/recommender/internal/recommender_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ RecommenderTracingConnection::RecommenderTracingConnection(
 StreamRange<google::cloud::recommender::v1::Insight>
 RecommenderTracingConnection::ListInsights(
     google::cloud::recommender::v1::ListInsightsRequest request) {
-  return child_->ListInsights(request);
+  auto span =
+      internal::MakeSpan("recommender::RecommenderConnection::ListInsights");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListInsights(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::recommender::v1::Insight>(std::move(span),
+                                               std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
@@ -58,7 +65,13 @@ RecommenderTracingConnection::MarkInsightAccepted(
 StreamRange<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingConnection::ListRecommendations(
     google::cloud::recommender::v1::ListRecommendationsRequest request) {
-  return child_->ListRecommendations(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::ListRecommendations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListRecommendations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::recommender::v1::Recommendation>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>

@@ -28,16 +28,23 @@ RUN dnf makecache && \
         openssl-devel patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
+# Install the Python modules needed to run the storage emulator
+RUN dnf makecache && dnf install -y python3-devel
+RUN pip3 install --upgrade pip
+RUN pip3 install setuptools wheel
+
+# The Cloud Pub/Sub emulator needs Java :shrug:
+RUN dnf makecache && dnf install -y java-latest-openjdk
+
+# This is used to improve the output in check-api builds
+RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
+RUN dnf makecache && dnf debuginfo-install -y libstdc++
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
-
-# Install the Python modules needed to run the storage emulator
-RUN dnf makecache && dnf install -y python3-devel
-RUN pip3 install --upgrade pip
-RUN pip3 install setuptools wheel
 
 # Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 # when handling `.pc` files with lots of `Requires:` deps.  This problem is
@@ -208,16 +215,11 @@ ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-# The Cloud Pub/Sub emulator needs Java :shrug:
-RUN dnf makecache && dnf install -y java-latest-openjdk
 
 # The check-api build uses bazelisk
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel
-
-RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
-RUN dnf makecache && dnf debuginfo-install -y libstdc++
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.

@@ -346,7 +346,12 @@ INSTANTIATE_TEST_SUITE_P(
             "google/cloud/frobber/internal/frobber_tracing_connection.cc"),
         std::make_pair(
             "tracing_connection_header_path",
-            "google/cloud/frobber/internal/frobber_tracing_connection.h")),
+            "google/cloud/frobber/internal/frobber_tracing_connection.h"),
+        std::make_pair("tracing_stub_class_name", "FrobberServiceTracingStub"),
+        std::make_pair("tracing_stub_cc_path",
+                       "google/cloud/frobber/internal/frobber_tracing_stub.cc"),
+        std::make_pair("tracing_stub_header_path",
+                       "google/cloud/frobber/internal/frobber_tracing_stub.h")),
     [](testing::TestParamInfo<CreateServiceVarsTest::ParamType> const& info) {
       return std::get<0>(info.param);
     });

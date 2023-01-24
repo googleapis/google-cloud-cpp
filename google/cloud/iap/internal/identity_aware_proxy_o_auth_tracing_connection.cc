@@ -18,6 +18,7 @@
 
 #include "google/cloud/iap/internal/identity_aware_proxy_o_auth_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -74,7 +75,14 @@ IdentityAwareProxyOAuthServiceTracingConnection::CreateIdentityAwareProxyClient(
 StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceTracingConnection::ListIdentityAwareProxyClients(
     google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
-  return child_->ListIdentityAwareProxyClients(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::"
+      "ListIdentityAwareProxyClients");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListIdentityAwareProxyClients(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::iap::v1::IdentityAwareProxyClient>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>

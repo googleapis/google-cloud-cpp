@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/internal/environments_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -53,7 +54,13 @@ StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsTracingConnection::ListEnvironments(
     google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
         request) {
-  return child_->ListEnvironments(request);
+  auto span =
+      internal::MakeSpan("composer::EnvironmentsConnection::ListEnvironments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEnvironments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::orchestration::airflow::service::v1::Environment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<

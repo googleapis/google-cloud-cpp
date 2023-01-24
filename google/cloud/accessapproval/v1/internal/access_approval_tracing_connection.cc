@@ -18,6 +18,7 @@
 
 #include "google/cloud/accessapproval/v1/internal/access_approval_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ AccessApprovalTracingConnection::AccessApprovalTracingConnection(
 StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
 AccessApprovalTracingConnection::ListApprovalRequests(
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
-  return child_->ListApprovalRequests(request);
+  auto span = internal::MakeSpan(
+      "accessapproval_v1::AccessApprovalConnection::ListApprovalRequests");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListApprovalRequests(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::accessapproval::v1::ApprovalRequest>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>

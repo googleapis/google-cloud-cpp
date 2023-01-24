@@ -23,8 +23,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "trace_internal" "trace_testing"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::trace_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("trace" DEPENDS cloud-docs
+                                 google-cloud-cpp::trace_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -38,11 +39,8 @@ target_link_libraries(
     google_cloud_cpp_trace_protos
     INTERFACE google-cloud-cpp::devtools_cloudtrace_v2_trace_protos
               google-cloud-cpp::devtools_cloudtrace_v2_tracing_protos)
-set_target_properties(
-    google_cloud_cpp_trace_protos
-    PROPERTIES EXPORT_NAME google-cloud-cpp::trace_protos
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+set_target_properties(google_cloud_cpp_trace_protos
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::trace_protos)
 target_compile_options(google_cloud_cpp_trace_protos
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::trace_protos ALIAS google_cloud_cpp_trace_protos)

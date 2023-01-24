@@ -24,8 +24,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "texttospeech_internal"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::texttospeech_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("texttospeech" DEPENDS cloud-docs
+                                 google-cloud-cpp::texttospeech_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -39,9 +40,7 @@ target_link_libraries(google_cloud_cpp_texttospeech_protos
                       INTERFACE google-cloud-cpp::cloud_texttospeech_protos)
 set_target_properties(
     google_cloud_cpp_texttospeech_protos
-    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech_protos
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech_protos)
 target_compile_options(google_cloud_cpp_texttospeech_protos
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::texttospeech_protos ALIAS

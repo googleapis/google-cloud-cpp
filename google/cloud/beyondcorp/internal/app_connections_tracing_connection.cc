@@ -19,6 +19,7 @@
 
 #include "google/cloud/beyondcorp/internal/app_connections_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -36,7 +37,13 @@ StreamRange<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 AppConnectionsServiceTracingConnection::ListAppConnections(
     google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsRequest
         request) {
-  return child_->ListAppConnections(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::AppConnectionsServiceConnection::ListAppConnections");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAppConnections(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::beyondcorp::appconnections::v1::AppConnection>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
@@ -76,7 +83,14 @@ StreamRange<google::cloud::beyondcorp::appconnections::v1::
 AppConnectionsServiceTracingConnection::ResolveAppConnections(
     google::cloud::beyondcorp::appconnections::v1::ResolveAppConnectionsRequest
         request) {
-  return child_->ResolveAppConnections(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::AppConnectionsServiceConnection::ResolveAppConnections");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ResolveAppConnections(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::beyondcorp::appconnections::v1::
+          ResolveAppConnectionsResponse::AppConnectionDetails>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

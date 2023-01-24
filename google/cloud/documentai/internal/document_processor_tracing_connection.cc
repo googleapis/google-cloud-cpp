@@ -18,6 +18,7 @@
 
 #include "google/cloud/documentai/internal/document_processor_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -59,13 +60,25 @@ DocumentProcessorServiceTracingConnection::FetchProcessorTypes(
 StreamRange<google::cloud::documentai::v1::ProcessorType>
 DocumentProcessorServiceTracingConnection::ListProcessorTypes(
     google::cloud::documentai::v1::ListProcessorTypesRequest request) {
-  return child_->ListProcessorTypes(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::ListProcessorTypes");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProcessorTypes(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::documentai::v1::ProcessorType>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceTracingConnection::ListProcessors(
     google::cloud::documentai::v1::ListProcessorsRequest request) {
-  return child_->ListProcessors(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::ListProcessors");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProcessors(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::documentai::v1::Processor>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
@@ -89,7 +102,13 @@ DocumentProcessorServiceTracingConnection::GetProcessorVersion(
 StreamRange<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceTracingConnection::ListProcessorVersions(
     google::cloud::documentai::v1::ListProcessorVersionsRequest request) {
-  return child_->ListProcessorVersions(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::ListProcessorVersions");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProcessorVersions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::documentai::v1::ProcessorVersion>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>

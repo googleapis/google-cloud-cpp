@@ -34,8 +34,9 @@ foreach (dir IN LISTS service_dirs)
     list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "speech_${ns}internal")
 endforeach ()
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::speech_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("speech" DEPENDS cloud-docs
+                                 google-cloud-cpp::speech_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -47,11 +48,8 @@ endif ()
 add_library(google_cloud_cpp_speech_protos INTERFACE)
 target_link_libraries(google_cloud_cpp_speech_protos
                       INTERFACE google-cloud-cpp::cloud_speech_protos)
-set_target_properties(
-    google_cloud_cpp_speech_protos
-    PROPERTIES EXPORT_NAME google-cloud-cpp::speech_protos
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+set_target_properties(google_cloud_cpp_speech_protos
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::speech_protos)
 target_compile_options(google_cloud_cpp_speech_protos
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::speech_protos ALIAS

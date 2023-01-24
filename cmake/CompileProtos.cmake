@@ -315,6 +315,10 @@ include(GNUInstallDirs)
 
 # Install headers for a C++ proto library.
 function (google_cloud_cpp_install_proto_library_headers target)
+    get_target_property(type ${target} TYPE)
+    if ("${type}" STREQUAL "INTERFACE_LIBRARY")
+        return()
+    endif ()
     get_target_property(target_sources ${target} SOURCES)
     foreach (header ${target_sources})
         # Skip anything that is not a header file.
@@ -332,6 +336,10 @@ endfunction ()
 
 # Install protos for a C++ proto library.
 function (google_cloud_cpp_install_proto_library_protos target source_dir)
+    get_target_property(type ${target} TYPE)
+    if ("${type}" STREQUAL "INTERFACE_LIBRARY")
+        return()
+    endif ()
     get_target_property(target_protos ${target} PROTO_SOURCES)
     foreach (header ${target_protos})
         # Skip anything that is not a header file.
@@ -463,4 +471,15 @@ function (external_googleapis_install_pc target)
         FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
         COMPONENT google_cloud_cpp_development)
+endfunction ()
+
+# Find the proto include directory
+function (google_cloud_cpp_find_proto_include_dir VAR)
+    find_path(dir google/protobuf/descriptor.proto)
+    if (dir)
+        list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
+    endif ()
+    set(${VAR}
+        ${dir}
+        PARENT_SCOPE)
 endfunction ()

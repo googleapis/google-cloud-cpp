@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/environments_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ EnvironmentsTracingConnection::EnvironmentsTracingConnection(
 StreamRange<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsTracingConnection::ListEnvironments(
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) {
-  return child_->ListEnvironments(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::ListEnvironments");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListEnvironments(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::Environment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
@@ -73,7 +80,13 @@ StreamRange<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsTracingConnection::LookupEnvironmentHistory(
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest
         request) {
-  return child_->LookupEnvironmentHistory(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::LookupEnvironmentHistory");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->LookupEnvironmentHistory(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::Environment>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
@@ -87,7 +100,13 @@ StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
 EnvironmentsTracingConnection::ListContinuousTestResults(
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
         request) {
-  return child_->ListContinuousTestResults(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::ListContinuousTestResults");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListContinuousTestResults(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::ContinuousTestResult>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>

@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -143,7 +144,13 @@ BigtableInstanceAdminTracingConnection::GetAppProfile(
 StreamRange<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminTracingConnection::ListAppProfiles(
     google::bigtable::admin::v2::ListAppProfilesRequest request) {
-  return child_->ListAppProfiles(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::ListAppProfiles");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAppProfiles(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::bigtable::admin::v2::AppProfile>(std::move(span),
+                                               std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
@@ -190,7 +197,13 @@ BigtableInstanceAdminTracingConnection::TestIamPermissions(
 StreamRange<google::bigtable::admin::v2::HotTablet>
 BigtableInstanceAdminTracingConnection::ListHotTablets(
     google::bigtable::admin::v2::ListHotTabletsRequest request) {
-  return child_->ListHotTablets(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::ListHotTablets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListHotTablets(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::bigtable::admin::v2::HotTablet>(std::move(span), std::move(scope),
+                                              std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

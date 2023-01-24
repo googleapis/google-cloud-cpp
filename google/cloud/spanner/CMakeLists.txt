@@ -25,8 +25,9 @@ set(DOXYGEN_EXAMPLE_PATH
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_admin_internal"
                             "spanner_internal" "spanner_testing" "examples")
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::spanner_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("spanner" DEPENDS cloud-docs
+                                 google-cloud-cpp::spanner_protos)
 
 include(GoogleCloudCppCommon)
 

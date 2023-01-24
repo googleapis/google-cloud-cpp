@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -55,7 +56,13 @@ AwsClustersTracingConnection::GetAwsCluster(
 StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
 AwsClustersTracingConnection::ListAwsClusters(
     google::cloud::gkemulticloud::v1::ListAwsClustersRequest request) {
-  return child_->ListAwsClusters(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::ListAwsClusters");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAwsClusters(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gkemulticloud::v1::AwsCluster>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -98,7 +105,13 @@ AwsClustersTracingConnection::GetAwsNodePool(
 StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersTracingConnection::ListAwsNodePools(
     google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request) {
-  return child_->ListAwsNodePools(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::ListAwsNodePools");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAwsNodePools(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::gkemulticloud::v1::AwsNodePool>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>

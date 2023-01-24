@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/internal/folders_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -43,13 +44,25 @@ FoldersTracingConnection::GetFolder(
 StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersTracingConnection::ListFolders(
     google::cloud::resourcemanager::v3::ListFoldersRequest request) {
-  return child_->ListFolders(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::FoldersConnection::ListFolders");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListFolders(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::resourcemanager::v3::Folder>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
 FoldersTracingConnection::SearchFolders(
     google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
-  return child_->SearchFolders(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::FoldersConnection::SearchFolders");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->SearchFolders(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::resourcemanager::v3::Folder>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>

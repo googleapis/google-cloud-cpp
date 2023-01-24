@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/internal/notification_channel_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -35,7 +36,14 @@ NotificationChannelServiceTracingConnection::
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
 NotificationChannelServiceTracingConnection::ListNotificationChannelDescriptors(
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest request) {
-  return child_->ListNotificationChannelDescriptors(request);
+  auto span = internal::MakeSpan(
+      "monitoring::NotificationChannelServiceConnection::"
+      "ListNotificationChannelDescriptors");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListNotificationChannelDescriptors(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::v3::NotificationChannelDescriptor>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
@@ -53,7 +61,14 @@ NotificationChannelServiceTracingConnection::GetNotificationChannelDescriptor(
 StreamRange<google::monitoring::v3::NotificationChannel>
 NotificationChannelServiceTracingConnection::ListNotificationChannels(
     google::monitoring::v3::ListNotificationChannelsRequest request) {
-  return child_->ListNotificationChannels(request);
+  auto span = internal::MakeSpan(
+      "monitoring::NotificationChannelServiceConnection::"
+      "ListNotificationChannels");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListNotificationChannels(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::monitoring::v3::NotificationChannel>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>

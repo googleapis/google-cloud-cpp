@@ -18,6 +18,7 @@
 
 #include "google/cloud/vision/internal/product_search_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -43,7 +44,12 @@ ProductSearchTracingConnection::CreateProductSet(
 StreamRange<google::cloud::vision::v1::ProductSet>
 ProductSearchTracingConnection::ListProductSets(
     google::cloud::vision::v1::ListProductSetsRequest request) {
-  return child_->ListProductSets(request);
+  auto span =
+      internal::MakeSpan("vision::ProductSearchConnection::ListProductSets");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProductSets(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::vision::v1::ProductSet>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
@@ -84,7 +90,12 @@ ProductSearchTracingConnection::CreateProduct(
 StreamRange<google::cloud::vision::v1::Product>
 ProductSearchTracingConnection::ListProducts(
     google::cloud::vision::v1::ListProductsRequest request) {
-  return child_->ListProducts(request);
+  auto span =
+      internal::MakeSpan("vision::ProductSearchConnection::ListProducts");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProducts(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::Product>
@@ -132,7 +143,13 @@ Status ProductSearchTracingConnection::DeleteReferenceImage(
 StreamRange<google::cloud::vision::v1::ReferenceImage>
 ProductSearchTracingConnection::ListReferenceImages(
     google::cloud::vision::v1::ListReferenceImagesRequest request) {
-  return child_->ListReferenceImages(request);
+  auto span = internal::MakeSpan(
+      "vision::ProductSearchConnection::ListReferenceImages");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListReferenceImages(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::vision::v1::ReferenceImage>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
@@ -164,7 +181,12 @@ Status ProductSearchTracingConnection::RemoveProductFromProductSet(
 StreamRange<google::cloud::vision::v1::Product>
 ProductSearchTracingConnection::ListProductsInProductSet(
     google::cloud::vision::v1::ListProductsInProductSetRequest request) {
-  return child_->ListProductsInProductSet(request);
+  auto span = internal::MakeSpan(
+      "vision::ProductSearchConnection::ListProductsInProductSet");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProductsInProductSet(std::move(request));
+  return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>

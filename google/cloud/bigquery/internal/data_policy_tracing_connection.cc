@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/internal/data_policy_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -84,7 +85,13 @@ StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceTracingConnection::ListDataPolicies(
     google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
         request) {
-  return child_->ListDataPolicies(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataPolicyServiceConnection::ListDataPolicies");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDataPolicies(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::datapolicies::v1::DataPolicy>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::iam::v1::Policy>

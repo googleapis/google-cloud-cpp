@@ -29,6 +29,9 @@ std::string EscapeXmlTag(absl::string_view tag);
 /// Escapes a string for using it as a text in XML.
 std::string EscapeXmlContent(absl::string_view content);
 
+/// Unescape a string used in XML.
+std::string UnescapeXmlString(absl::string_view val);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

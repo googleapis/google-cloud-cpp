@@ -18,6 +18,7 @@
 
 #include "google/cloud/certificatemanager/internal/certificate_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ CertificateManagerTracingConnection::CertificateManagerTracingConnection(
 StreamRange<google::cloud::certificatemanager::v1::Certificate>
 CertificateManagerTracingConnection::ListCertificates(
     google::cloud::certificatemanager::v1::ListCertificatesRequest request) {
-  return child_->ListCertificates(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::ListCertificates");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCertificates(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::certificatemanager::v1::Certificate>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
@@ -71,7 +78,13 @@ CertificateManagerTracingConnection::DeleteCertificate(
 StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
 CertificateManagerTracingConnection::ListCertificateMaps(
     google::cloud::certificatemanager::v1::ListCertificateMapsRequest request) {
-  return child_->ListCertificateMaps(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::ListCertificateMaps");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCertificateMaps(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::certificatemanager::v1::CertificateMap>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
@@ -109,7 +122,14 @@ StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
 CertificateManagerTracingConnection::ListCertificateMapEntries(
     google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest
         request) {
-  return child_->ListCertificateMapEntries(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::"
+      "ListCertificateMapEntries");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCertificateMapEntries(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::certificatemanager::v1::CertificateMapEntry>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
@@ -148,7 +168,14 @@ StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
 CertificateManagerTracingConnection::ListDnsAuthorizations(
     google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest
         request) {
-  return child_->ListDnsAuthorizations(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::"
+      "ListDnsAuthorizations");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListDnsAuthorizations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::certificatemanager::v1::DnsAuthorization>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
@@ -186,7 +213,14 @@ StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
 CertificateManagerTracingConnection::ListCertificateIssuanceConfigs(
     google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest
         request) {
-  return child_->ListCertificateIssuanceConfigs(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::"
+      "ListCertificateIssuanceConfigs");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListCertificateIssuanceConfigs(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::certificatemanager::v1::CertificateIssuanceConfig>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>

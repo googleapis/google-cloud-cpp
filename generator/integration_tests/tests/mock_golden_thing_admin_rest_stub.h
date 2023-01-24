@@ -35,8 +35,9 @@ class MockGoldenThingAdminRestStub
        ::google::test::admin::database::v1::ListDatabasesRequest const&),
       (override));
   MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, CreateDatabase,
-      (google::cloud::rest_internal::RestContext&,
+      future<StatusOr<::google::longrunning::Operation>>, AsyncCreateDatabase,
+      (google::cloud::CompletionQueue & cq,
+       std::unique_ptr<google::cloud::rest_internal::RestContext>,
        ::google::test::admin::database::v1::CreateDatabaseRequest const&),
       (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Database>,
@@ -45,8 +46,10 @@ class MockGoldenThingAdminRestStub
                ::google::test::admin::database::v1::GetDatabaseRequest const&),
               (override));
   MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, UpdateDatabaseDdl,
-      (google::cloud::rest_internal::RestContext&,
+      future<StatusOr<::google::longrunning::Operation>>,
+      AsyncUpdateDatabaseDdl,
+      (google::cloud::CompletionQueue & cq,
+       std::unique_ptr<google::cloud::rest_internal::RestContext>,
        ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&),
       (override));
   MOCK_METHOD(Status, DropDatabase,
@@ -72,8 +75,10 @@ class MockGoldenThingAdminRestStub
               (google::cloud::rest_internal::RestContext&,
                ::google::iam::v1::TestIamPermissionsRequest const&),
               (override));
-  MOCK_METHOD(StatusOr<::google::longrunning::Operation>, CreateBackup,
-              (google::cloud::rest_internal::RestContext&,
+  MOCK_METHOD(future<StatusOr<::google::longrunning::Operation>>,
+              AsyncCreateBackup,
+              (google::cloud::CompletionQueue & cq,
+               std::unique_ptr<google::cloud::rest_internal::RestContext>,
                ::google::test::admin::database::v1::CreateBackupRequest const&),
               (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
@@ -96,8 +101,9 @@ class MockGoldenThingAdminRestStub
        ::google::test::admin::database::v1::ListBackupsRequest const&),
       (override));
   MOCK_METHOD(
-      StatusOr<::google::longrunning::Operation>, RestoreDatabase,
-      (google::cloud::rest_internal::RestContext&,
+      future<StatusOr<::google::longrunning::Operation>>, AsyncRestoreDatabase,
+      (google::cloud::CompletionQueue & cq,
+       std::unique_ptr<google::cloud::rest_internal::RestContext>,
        ::google::test::admin::database::v1::RestoreDatabaseRequest const&),
       (override));
   MOCK_METHOD(
@@ -115,6 +121,33 @@ class MockGoldenThingAdminRestStub
       (google::cloud::rest_internal::RestContext&,
        ::google::test::admin::database::v1::ListBackupOperationsRequest const&),
       (override));
+  MOCK_METHOD(
+      future<StatusOr<google::test::admin::database::v1::Database>>,
+      AsyncGetDatabase,
+      (google::cloud::CompletionQueue & cq,
+       std::unique_ptr<google::cloud::rest_internal::RestContext>,
+       google::test::admin::database::v1::GetDatabaseRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<Status>, AsyncDropDatabase,
+      (google::cloud::CompletionQueue & cq,
+       std::unique_ptr<google::cloud::rest_internal::RestContext>,
+       google::test::admin::database::v1::DropDatabaseRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
+              AsyncGetOperation,
+              (google::cloud::CompletionQueue & cq,
+               std::unique_ptr<google::cloud::rest_internal::RestContext>,
+               google::longrunning::GetOperationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<Status>, AsyncCancelOperation,
+              (google::cloud::CompletionQueue & cq,
+               std::unique_ptr<google::cloud::rest_internal::RestContext>,
+               google::longrunning::CancelOperationRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

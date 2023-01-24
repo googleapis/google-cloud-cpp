@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/internal/cloud_billing_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -43,7 +44,13 @@ CloudBillingTracingConnection::GetBillingAccount(
 StreamRange<google::cloud::billing::v1::BillingAccount>
 CloudBillingTracingConnection::ListBillingAccounts(
     google::cloud::billing::v1::ListBillingAccountsRequest request) {
-  return child_->ListBillingAccounts(request);
+  auto span = internal::MakeSpan(
+      "billing::CloudBillingConnection::ListBillingAccounts");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListBillingAccounts(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::billing::v1::BillingAccount>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
@@ -67,7 +74,13 @@ CloudBillingTracingConnection::CreateBillingAccount(
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingTracingConnection::ListProjectBillingInfo(
     google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
-  return child_->ListProjectBillingInfo(request);
+  auto span = internal::MakeSpan(
+      "billing::CloudBillingConnection::ListProjectBillingInfo");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListProjectBillingInfo(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::billing::v1::ProjectBillingInfo>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>

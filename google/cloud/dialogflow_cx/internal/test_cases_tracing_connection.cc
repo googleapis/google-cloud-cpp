@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/test_cases_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,13 @@ TestCasesTracingConnection::TestCasesTracingConnection(
 StreamRange<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingConnection::ListTestCases(
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest request) {
-  return child_->ListTestCases(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::TestCasesConnection::ListTestCases");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTestCases(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::TestCase>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status TestCasesTracingConnection::BatchDeleteTestCases(
@@ -111,7 +118,13 @@ TestCasesTracingConnection::ExportTestCases(
 StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesTracingConnection::ListTestCaseResults(
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request) {
-  return child_->ListTestCaseResults(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TestCasesConnection::ListTestCaseResults");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListTestCaseResults(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::TestCaseResult>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>

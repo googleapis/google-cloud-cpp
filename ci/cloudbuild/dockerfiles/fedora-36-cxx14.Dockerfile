@@ -28,16 +28,20 @@ RUN dnf makecache && \
         openssl-devel patch python python3.8 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
+# Install the Python modules needed to run the storage emulator
+RUN dnf makecache && dnf install -y python3-devel
+RUN pip3 install --upgrade pip
+RUN pip3 install setuptools wheel
+
+# The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
+# Bazel needs the '-devel' version with javac.
+RUN dnf makecache && dnf install -y java-latest-openjdk-devel
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
-
-# Install the Python modules needed to run the storage emulator
-RUN dnf makecache && dnf install -y python3-devel
-RUN pip3 install --upgrade pip
-RUN pip3 install setuptools wheel
 
 # Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
 # when handling `.pc` files with lots of `Requires:` deps, which happens with
@@ -198,9 +202,6 @@ ENV CLOUDSDK_PYTHON=python3.8
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-# The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
-# Bazel needs the '-devel' version with javac.
-RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.

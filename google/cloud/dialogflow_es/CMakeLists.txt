@@ -23,19 +23,21 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "dialogflow_es_internal"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::dialogflow_es_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("dialogflow_es" DEPENDS cloud-docs
+                                 google-cloud-cpp::dialogflow_es_protos)
 
 include(GoogleCloudCppCommon)
 
-find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
-if (PROTO_INCLUDE_DIR)
-    list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
-endif ()
-
 include(CompileProtos)
+google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 add_library(google_cloud_cpp_dialogflow_es_protos INTERFACE)
-external_googleapis_set_version_and_alias(dialogflow_es_protos)
+set_target_properties(
+    google_cloud_cpp_dialogflow_es_protos
+    PROPERTIES EXPORT_NAME google-cloud-cpp::dialogflow_es_protos)
+add_library(google-cloud-cpp::dialogflow_es_protos ALIAS
+            google_cloud_cpp_dialogflow_es_protos)
+
 target_link_libraries(
     google_cloud_cpp_dialogflow_es_protos
     PUBLIC

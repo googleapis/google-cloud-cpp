@@ -33,11 +33,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using AsyncRestPollLongRunningOperation =
     std::function<future<StatusOr<google::longrunning::Operation>>(
-        google::cloud::CompletionQueue&, RestContext&,
+        google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
         google::longrunning::GetOperationRequest const&)>;
 
 using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
-    google::cloud::CompletionQueue&, RestContext&,
+    google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
     google::longrunning::CancelOperationRequest const&)>;
 
 /**
@@ -80,11 +80,11 @@ using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
  *  public:
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
  *     google::cloud::CompletionQueue& cq,
- *     rest_internal::RestContext& context,
+ *     std::unique_ptr<rest_internal::RestContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
  *   virtual future<Status> AsyncCancelOperation(
  *     google::cloud::CompletionQueue& cq,
- *     rest_internal::RestContext& context,
+ *     std::unique_ptr<rest_internal::RestContext> context,
  *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
@@ -105,10 +105,10 @@ using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
  *       return AsyncPollingLoop(
  *           std::move(cq), *std::move(op),
  *           [stub](auto cq, auto context, auto const& r) {
- *             return stub->AsyncGetOperation(cq, context, r);
+ *             return stub->AsyncGetOperation(cq, std::move(context), r);
  *           },
  *           [stub](auto cq, auto context, auto const& r) {
- *             return stub->AsyncCancelOperation(cq, context, r);
+ *             return stub->AsyncCancelOperation(cq, std::move(context), r);
  *           },
  *           polling_policy_->clone(), loc);
  *        });

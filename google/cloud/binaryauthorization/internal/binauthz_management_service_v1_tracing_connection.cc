@@ -18,6 +18,7 @@
 
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -89,7 +90,14 @@ BinauthzManagementServiceV1TracingConnection::UpdateAttestor(
 StreamRange<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1TracingConnection::ListAttestors(
     google::cloud::binaryauthorization::v1::ListAttestorsRequest request) {
-  return child_->ListAttestors(request);
+  auto span = internal::MakeSpan(
+      "binaryauthorization::BinauthzManagementServiceV1Connection::"
+      "ListAttestors");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListAttestors(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::binaryauthorization::v1::Attestor>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status BinauthzManagementServiceV1TracingConnection::DeleteAttestor(

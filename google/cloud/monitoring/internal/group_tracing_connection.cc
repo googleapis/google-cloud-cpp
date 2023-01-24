@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/internal/group_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -34,7 +35,12 @@ GroupServiceTracingConnection::GroupServiceTracingConnection(
 StreamRange<google::monitoring::v3::Group>
 GroupServiceTracingConnection::ListGroups(
     google::monitoring::v3::ListGroupsRequest request) {
-  return child_->ListGroups(request);
+  auto span =
+      internal::MakeSpan("monitoring::GroupServiceConnection::ListGroups");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListGroups(std::move(request));
+  return internal::MakeTracedStreamRange<google::monitoring::v3::Group>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceTracingConnection::GetGroup(
@@ -74,7 +80,12 @@ Status GroupServiceTracingConnection::DeleteGroup(
 StreamRange<google::api::MonitoredResource>
 GroupServiceTracingConnection::ListGroupMembers(
     google::monitoring::v3::ListGroupMembersRequest request) {
-  return child_->ListGroupMembers(request);
+  auto span = internal::MakeSpan(
+      "monitoring::GroupServiceConnection::ListGroupMembers");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListGroupMembers(std::move(request));
+  return internal::MakeTracedStreamRange<google::api::MonitoredResource>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

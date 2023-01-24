@@ -23,15 +23,19 @@ RUN dnf makecache && \
         git llvm llvm-devel make ninja-build openssl-devel patch python \
         python3 python3-devel python3-lit python-pip tar unzip which wget xz
 
+# Install the Python modules needed to run the storage emulator
+RUN dnf makecache && dnf install -y python3-devel
+RUN pip3 install --upgrade pip
+RUN pip3 install setuptools wheel
+
+# The Cloud Pub/Sub emulator needs Java :shrug:
+RUN dnf makecache && dnf install -y java-latest-openjdk
+
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
 RUN echo 'root:' | chpasswd
-
-# Install the Python modules needed to run the storage emulator
-RUN pip3 install --upgrade pip
-RUN pip3 install setuptools wheel
 
 WORKDIR /var/tmp/build
 
@@ -50,6 +54,7 @@ RUN cmake -GNinja -S llvm -B build \
 # build the libraries
 RUN cmake --build build -- cxx cxxabi
 RUN cmake --build build -- install-cxx install-cxxabi
+RUN ldconfig
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
@@ -59,8 +64,6 @@ ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-# The Cloud Pub/Sub emulator needs Java :shrug:
-RUN dnf makecache && dnf install -y java-latest-openjdk
 
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \

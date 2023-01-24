@@ -753,7 +753,7 @@ export DEBIAN_FRONTEND=noninteractive
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ccache cmake ca-certificates curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make pkg-config tar wget zlib1g-dev
 ```
 
@@ -801,6 +801,25 @@ curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### RE2
+
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -983,6 +1002,7 @@ curl -sSL https://github.com/grpc/grpc/archive/v1.51.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
@@ -1067,7 +1087,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 ```
 
@@ -1152,6 +1172,25 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
+#### RE2
+
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
 #### gRPC
 
 Finally, we build gRPC from source:
@@ -1204,7 +1243,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 sudo apt-get update && \
 sudo apt-get --no-install-recommends install -y apt-transport-https apt-utils \
         automake build-essential ca-certificates ccache cmake curl git \
-        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev libre2-dev \
+        gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev
 ```
 
@@ -1296,6 +1335,25 @@ curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### RE2
+
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```

@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/security_settings_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -67,7 +68,13 @@ SecuritySettingsServiceTracingConnection::UpdateSecuritySettings(
 StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceTracingConnection::ListSecuritySettings(
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request) {
-  return child_->ListSecuritySettings(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SecuritySettingsServiceConnection::ListSecuritySettings");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListSecuritySettings(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::dialogflow::cx::v3::SecuritySettings>(
+      std::move(span), std::move(scope), std::move(sr));
 }
 
 Status SecuritySettingsServiceTracingConnection::DeleteSecuritySettings(
