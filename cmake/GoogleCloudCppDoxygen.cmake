@@ -139,6 +139,7 @@ function (google_cloud_cpp_doxygen_targets_impl library)
     # Options controlling what output is generated
     set(DOXYGEN_GENERATE_LATEX NO)
     set(DOXYGEN_GENERATE_HTML YES)
+    set(DOXYGEN_GENERATE_XML YES)
     set(DOXYGEN_GENERATE_TAGFILE "${CMAKE_CURRENT_BINARY_DIR}/${library}.tag")
 
     doxygen_add_docs(
@@ -146,7 +147,6 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         COMMENT "Generate ${library} HTML documentation")
     add_dependencies(doxygen-docs ${library}-docs)
-
     # Extra dependencies needed by this subproject's docs target.
     if (opt_DEPENDS)
         add_dependencies(${library}-docs ${opt_DEPENDS})
