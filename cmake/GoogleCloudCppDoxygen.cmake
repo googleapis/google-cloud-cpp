@@ -39,6 +39,15 @@ function (google_cloud_cpp_doxygen_targets_impl library)
     endif ()
 
     cmake_parse_arguments(opt "RECURSIVE" "" "INPUTS;TAGFILES;DEPENDS" ${ARGN})
+
+    # Options controlling the inputs into Doxygen
+    set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS ${_opt_INPUTS})
+    set(DOXYGEN_TAGFILES ${opt_TAGFILES})
+    if (opt_RECURSIVE)
+        set(DOXYGEN_RECURSIVE YES)
+    else ()
+        set(DOXYGEN_RECURSIVE NO)
+    endif ()
     set(DOXYGEN_FILE_PATTERNS "*.dox" "*.h")
     set(DOXYGEN_EXCLUDE_PATTERNS
         # We should skip internal directories to speed up the build. We do not
@@ -58,8 +67,18 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         "*/tests/*")
     set(DOXYGEN_EXAMPLE_RECURSIVE NO)
     set(DOXYGEN_EXCLUDE_SYMLINKS YES)
+
+    # Options controlling how Doxygen behaves on errors and the level of output.
     set(DOXYGEN_QUIET YES)
     set(DOXYGEN_WARN_AS_ERROR YES)
+
+    # Options controlling the format of the output.
+    google_cloud_cpp_doxygen_deploy_version(VERSION)
+    list(
+        APPEND
+        DOXYGEN_ALIASES
+        "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${VERSION}/\\2\""
+    )
     set(DOXYGEN_INLINE_INHERITED_MEMB YES)
     set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
     set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
@@ -70,6 +89,25 @@ function (google_cloud_cpp_doxygen_targets_impl library)
     set(DOXYGEN_GENERATE_TODOLIST NO)
     set(DOXYGEN_GENERATE_BUGLIST NO)
     set(DOXYGEN_GENERATE_TESTLIST NO)
+    set(DOXYGEN_HAVE_DOT NO)
+    set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
+    set(DOXYGEN_DIRECTORY_GRAPH NO)
+    set(DOXYGEN_CLASS_GRAPH NO)
+    set(DOXYGEN_COLLABORATION_GRAPH NO)
+    set(DOXYGEN_INCLUDE_GRAPH NO)
+    set(DOXYGEN_INCLUDED_BY_GRAPH NO)
+    set(DOXYGEN_MACRO_EXPANSION YES)
+    set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
+    set(DOXYGEN_STRIP_FROM_INC_PATH "${PROJECT_SOURCE_DIR}")
+    set(DOXYGEN_SHOW_USED_FILES NO)
+    set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
+    set(DOXYGEN_SOURCE_BROWSER YES)
+    set(DOXYGEN_DISTRIBUTE_GROUP_DOC YES)
+    set(DOXYGEN_HTML_TIMESTAMP YES)
+    set(DOXYGEN_LAYOUT_FILE
+        "${PROJECT_SOURCE_DIR}/ci/etc/doxygen/DoxygenLayout.xml")
+
+    # Options controlling how to parse the C++ code
     set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
     set(DOXYGEN_CLANG_OPTIONS)
     set(DOXYGEN_CLANG_DATABASE_PATH)
@@ -89,17 +127,6 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         "${PROJECT_BINARY_DIR}/examples"
         # Any additional includes that the library needs
         ${GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES})
-    set(DOXYGEN_GENERATE_LATEX NO)
-    set(DOXYGEN_HAVE_DOT NO)
-    set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
-    set(DOXYGEN_DIRECTORY_GRAPH NO)
-    set(DOXYGEN_CLASS_GRAPH NO)
-    set(DOXYGEN_COLLABORATION_GRAPH NO)
-    set(DOXYGEN_INCLUDE_GRAPH NO)
-    set(DOXYGEN_INCLUDED_BY_GRAPH NO)
-    set(DOXYGEN_DOT_TRANSPARENT YES)
-    set(DOXYGEN_MACRO_EXPANSION YES)
-    set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
     # Macros confuse Doxygen. We don't use too many, so we predefine them here
     # to be noops or have simple values.
     set(DOXYGEN_PREDEFINED
@@ -107,28 +134,12 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         "GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED(x)="
         "GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN="
         "GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END=")
-    set(DOXYGEN_HTML_TIMESTAMP YES)
-    set(DOXYGEN_STRIP_FROM_INC_PATH "${PROJECT_SOURCE_DIR}")
-    set(DOXYGEN_SHOW_USED_FILES NO)
-    set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
-    set(DOXYGEN_SOURCE_BROWSER YES)
-    set(DOXYGEN_DISTRIBUTE_GROUP_DOC YES)
+
+    # Options controlling what output is generated
+    set(DOXYGEN_GENERATE_LATEX NO)
+    set(DOXYGEN_GENERATE_HTML YES)
     set(DOXYGEN_GENERATE_TAGFILE "${CMAKE_CURRENT_BINARY_DIR}/${library}.tag")
-    set(DOXYGEN_LAYOUT_FILE
-        "${PROJECT_SOURCE_DIR}/ci/etc/doxygen/DoxygenLayout.xml")
-    google_cloud_cpp_doxygen_deploy_version(VERSION)
-    list(
-        APPEND
-        DOXYGEN_ALIASES
-        "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${VERSION}/\\2\""
-    )
-    set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS ${_opt_INPUTS})
-    if (opt_RECURSIVE)
-        set(DOXYGEN_RECURSIVE YES)
-    else ()
-        set(DOXYGEN_RECURSIVE NO)
-    endif ()
-    set(DOXYGEN_TAGFILES ${opt_TAGFILES})
+
     doxygen_add_docs(
         ${library}-docs "${opt_INPUTS}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
