@@ -96,8 +96,6 @@ function (google_cloud_cpp_doxygen_targets_impl library)
     set(DOXYGEN_COLLABORATION_GRAPH NO)
     set(DOXYGEN_INCLUDE_GRAPH NO)
     set(DOXYGEN_INCLUDED_BY_GRAPH NO)
-    set(DOXYGEN_MACRO_EXPANSION YES)
-    set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
     set(DOXYGEN_STRIP_FROM_INC_PATH "${PROJECT_SOURCE_DIR}")
     set(DOXYGEN_SHOW_USED_FILES NO)
     set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
@@ -127,8 +125,11 @@ function (google_cloud_cpp_doxygen_targets_impl library)
         "${PROJECT_BINARY_DIR}/examples"
         # Any additional includes that the library needs
         ${GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES})
+
     # Macros confuse Doxygen. We don't use too many, so we predefine them here
     # to be noops or have simple values.
+    set(DOXYGEN_MACRO_EXPANSION YES)
+    set(DOXYGEN_EXPAND_ONLY_PREDEF YES)
     set(DOXYGEN_PREDEFINED
         "GOOGLE_CLOUD_CPP_DEPRECATED(x)="
         "GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED(x)="
