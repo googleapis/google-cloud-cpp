@@ -23,6 +23,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
@@ -38,6 +39,10 @@ CreateDefaultGoldenThingAdminRestStub(Options const& options) {
   Options opts = options;
   if (!opts.has<UnifiedCredentialsOption>()) {
     opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  }
+  if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
+    opts.set<rest_internal::LongrunningEndpointOption>(
+        "longrunning.googleapis.com");
   }
   std::shared_ptr<GoldenThingAdminRestStub> stub =
       std::make_shared<DefaultGoldenThingAdminRestStub>(std::move(opts));
