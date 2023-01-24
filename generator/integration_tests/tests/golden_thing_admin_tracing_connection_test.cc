@@ -105,8 +105,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetDatabase) {
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, GetDatabase).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -144,8 +143,7 @@ TEST(GoldenThingAdminTracingConnectionTest, DropDatabase) {
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, DropDatabase).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -170,8 +168,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetDatabaseDdl) {
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, GetDatabaseDdl).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -196,8 +193,7 @@ TEST(GoldenThingAdminTracingConnectionTest, SetIamPolicy) {
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, SetIamPolicy).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -222,8 +218,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetIamPolicy) {
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, GetIamPolicy).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -248,8 +243,7 @@ TEST(GoldenThingAdminTracingConnectionTest, TestIamPermissions) {
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, TestIamPermissions).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -287,8 +281,7 @@ TEST(GoldenThingAdminTracingConnectionTest, GetBackup) {
 
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
   EXPECT_CALL(*mock, GetBackup).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 

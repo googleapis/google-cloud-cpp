@@ -67,8 +67,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, GenerateAccessToken) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, GenerateAccessToken).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -94,8 +93,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, GenerateIdToken) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, GenerateIdToken).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -120,8 +118,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, WriteLogEntries) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, WriteLogEntries).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -175,8 +172,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListServiceAccountKeys) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, ListServiceAccountKeys).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -202,8 +198,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, DoNothing) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, DoNothing).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -228,8 +223,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, Deprecated2).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -285,8 +279,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting1) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, ExplicitRouting1).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
@@ -311,8 +304,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting2) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, ExplicitRouting2).WillOnce([]() {
-    EXPECT_TRUE(
-        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    EXPECT_TRUE(ThereIsAnActiveSpan());
     return internal::AbortedError("fail");
   });
 
