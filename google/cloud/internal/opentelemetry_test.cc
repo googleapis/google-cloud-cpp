@@ -17,6 +17,8 @@
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/context/propagation/global_propagator.h>
+#include <opentelemetry/context/propagation/noop_propagator.h>
 #include <opentelemetry/trace/default_span.h>
 #include <opentelemetry/version.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -74,6 +76,20 @@ TEST(OpenTelemetry, GetTracer) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(SpanHasInstrumentationScope()));
+}
+
+TEST(OpenTelemetry, GetTextMapPropagator) {
+  // Set the global propagator
+  namespace propagation = ::opentelemetry::context::propagation;
+  opentelemetry::nostd::shared_ptr<propagation::TextMapPropagator> expected =
+      std::shared_ptr<propagation::TextMapPropagator>(
+          std::make_shared<propagation::NoOpPropagator>());
+  propagation::GlobalTextMapPropagator::SetGlobalPropagator(expected);
+
+  auto options = Options{};
+  auto actual = GetTextMapPropagator(options);
+
+  EXPECT_EQ(actual, expected);
 }
 
 TEST(OpenTelemetry, MakeSpan) {

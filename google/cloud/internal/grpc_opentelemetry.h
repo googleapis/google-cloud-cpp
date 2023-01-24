@@ -15,7 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPENTELEMETRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPENTELEMETRY_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
@@ -38,6 +40,23 @@ namespace internal {
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
     opentelemetry::nostd::string_view service,
     opentelemetry::nostd::string_view method);
+
+/**
+ * Propagate trace context for an outbound gRPC call.
+ *
+ * The trace context is added as metadata in the `grpc::ClientContext`. By
+ * injecting the trace context, we can potentially pick up a client side span
+ * from within Google's servers.
+ *
+ * The format of the metadata is determined by the `TextMapPropagator` used for
+ * the given call. Circa 2023-01, Google expects an `X-Cloud-Trace-Context`
+ * [header].
+ *
+ * @see https://opentelemetry.io/docs/concepts/instrumenting-library/#injecting-context
+ *
+ * [header]: https://cloud.google.com/trace/docs/setup#force-trace
+ */
+void InjectTraceContext(grpc::ClientContext& context, Options const& options);
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 

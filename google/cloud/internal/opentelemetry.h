@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/nostd/string_view.h>
 #include <opentelemetry/trace/span.h>
@@ -51,6 +52,19 @@ bool TracingEnabled(Options const& options);
  */
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
     Options const& options);
+
+/**
+ * Returns a [propagator] to use for propagating context across process
+ * boundaries.
+ *
+ * @see https://opentelemetry.io/docs/instrumentation/cpp/manual/#context-propagation
+ *
+ * [propagator]:
+ * https://opentelemetry.io/docs/reference/specification/context/api-propagators/#textmap-propagator
+ */
+opentelemetry::nostd::shared_ptr<
+    opentelemetry::context::propagation::TextMapPropagator>
+GetTextMapPropagator(Options const& options);
 
 /**
  * Start a [span] using the current [tracer].
