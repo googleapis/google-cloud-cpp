@@ -93,12 +93,12 @@ class ImageVersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L67}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.ListImageVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L42}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L44}
   /// [google.cloud.orchestration.airflow.service.v1.ImageVersion]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L67}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
   ListImageVersions(std::string const& parent, Options opts = {});
@@ -107,16 +107,16 @@ class ImageVersionsClient {
   /// List ImageVersions for provided location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L42}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L44}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L67}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.ListImageVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L42}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L44}
   /// [google.cloud.orchestration.airflow.service.v1.ImageVersion]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L67}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
   ListImageVersions(google::cloud::orchestration::airflow::service::v1::

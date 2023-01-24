@@ -69,6 +69,10 @@ class DocumentProcessorServiceConnectionImpl
       google::cloud::documentai::v1::ListProcessorTypesRequest request)
       override;
 
+  StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request)
+      override;
+
   StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
       google::cloud::documentai::v1::ListProcessorsRequest request) override;
 

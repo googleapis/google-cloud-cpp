@@ -91,12 +91,12 @@ class CompletionClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::CompleteQueryResponse,google/cloud/talent/v4/completion_service.proto#L134}
+  /// @googleapis_link{google::cloud::talent::v4::CompleteQueryResponse,google/cloud/talent/v4/completion_service.proto#L143}
   ///
   /// [google.cloud.talent.v4.CompleteQueryRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L48}
   /// [google.cloud.talent.v4.CompleteQueryResponse]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L134}
+  /// @googleapis_reference_link{google/cloud/talent/v4/completion_service.proto#L143}
   ///
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
       google::cloud::talent::v4::CompleteQueryRequest const& request,

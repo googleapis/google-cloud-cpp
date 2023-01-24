@@ -100,6 +100,23 @@ DocumentProcessorServiceClient::ListProcessorTypes(
   return connection_->ListProcessorTypes(std::move(request));
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceClient::GetProcessorType(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::GetProcessorTypeRequest request;
+  request.set_name(name);
+  return connection_->GetProcessorType(request);
+}
+
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceClient::GetProcessorType(
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetProcessorType(request);
+}
+
 StreamRange<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceClient::ListProcessors(std::string const& parent,
                                                Options opts) {

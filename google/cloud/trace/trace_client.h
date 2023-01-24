@@ -33,11 +33,13 @@ namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// This file describes an API for collecting and viewing traces and spans
-/// within a trace.  A Trace is a collection of spans corresponding to a single
-/// operation or set of operations for an application. A span is an individual
-/// timed event which forms a node of the trace tree. A single trace may
-/// contain span(s) from multiple services.
+/// Service for collecting and viewing traces and spans within a trace.
+///
+/// A trace is a collection of spans corresponding to a single
+/// operation or a set of operations in an application.
+///
+/// A span is an individual timed event which forms a node of the trace tree.
+/// A single trace can contain spans from multiple services.
 ///
 /// @par Equality
 ///
@@ -89,7 +91,7 @@ class TraceServiceClient {
   ///@}
 
   ///
-  /// Sends new spans to new or existing traces. You cannot update
+  /// Batch writes new spans to new or existing traces. You cannot update
   /// existing spans.
   ///
   /// @param name  Required. The name of the project where the spans belong. The
@@ -97,12 +99,12 @@ class TraceServiceClient {
   ///  `projects/[PROJECT_ID]`.
   /// @param spans  Required. A list of new spans. The span names must not match
   /// existing
-  ///  spans, or the results are undefined.
+  ///  spans, otherwise the results are undefined.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L65}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
   ///
   Status BatchWriteSpans(
       std::string const& name,
@@ -110,16 +112,16 @@ class TraceServiceClient {
       Options opts = {});
 
   ///
-  /// Sends new spans to new or existing traces. You cannot update
+  /// Batch writes new spans to new or existing traces. You cannot update
   /// existing spans.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudtrace::v2::BatchWriteSpansRequest,google/devtools/cloudtrace/v2/tracing.proto#L65}
+  /// @googleapis_link{google::devtools::cloudtrace::v2::BatchWriteSpansRequest,google/devtools/cloudtrace/v2/tracing.proto#L67}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.devtools.cloudtrace.v2.BatchWriteSpansRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L65}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/tracing.proto#L67}
   ///
   Status BatchWriteSpans(
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request,
@@ -129,16 +131,16 @@ class TraceServiceClient {
   /// Creates a new span.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L39}
+  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L41}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L39}
+  /// @googleapis_link{google::devtools::cloudtrace::v2::Span,google/devtools/cloudtrace/v2/trace.proto#L41}
   ///
   /// [google.devtools.cloudtrace.v2.Span]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L39}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L41}
   /// [google.devtools.cloudtrace.v2.Span]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L39}
+  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L41}
   ///
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
       google::devtools::cloudtrace::v2::Span const& request, Options opts = {});

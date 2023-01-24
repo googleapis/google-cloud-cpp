@@ -61,6 +61,11 @@ class DocumentProcessorServiceLogging : public DocumentProcessorServiceStub {
       google::cloud::documentai::v1::ListProcessorTypesRequest const& request)
       override;
 
+  StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
+      grpc::ClientContext& context,
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request)
+      override;
+
   StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
   ListProcessors(grpc::ClientContext& context,
                  google::cloud::documentai::v1::ListProcessorsRequest const&

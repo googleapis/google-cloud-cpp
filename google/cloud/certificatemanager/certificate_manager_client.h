@@ -48,15 +48,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// The Certificates Manager service exposes the following resources:
 ///
-/// * `Certificate` which describes a single TLS certificate.
-/// * `CertificateMap` which describes a collection of certificates that can be
+/// * `Certificate` that describes a single TLS certificate.
+/// * `CertificateMap` that describes a collection of certificates that can be
 /// attached to a target resource.
-/// * `CertificateMapEntry` which describes a single configuration entry that
+/// * `CertificateMapEntry` that describes a single configuration entry that
 /// consists of a SNI and a group of certificates. It's a subresource of
 /// CertificateMap.
 ///
 /// Certificate, CertificateMap and CertificateMapEntry IDs
-/// have to match "^[a-z0-9-]{1,63}$" regexp, which means that
+/// have to fully match the regexp `[a-z0-9-]{1,63}`. In other words,
 /// - only lower case letters, digits, and hyphen are allowed
 /// - length of the resource ID has to be in [1,63] range.
 ///
@@ -329,12 +329,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.ListCertificateMapsRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L450}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
   ListCertificateMaps(std::string const& parent, Options opts = {});
@@ -347,12 +347,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.ListCertificateMapsRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L450}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
   ListCertificateMaps(
@@ -368,12 +368,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.GetCertificateMapRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L492}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
   GetCertificateMap(std::string const& name, Options opts = {});
@@ -386,12 +386,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.GetCertificateMapRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L492}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
   GetCertificateMap(
@@ -412,12 +412,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.CreateCertificateMapRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L504}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   CreateCertificateMap(
@@ -434,12 +434,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.CreateCertificateMapRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L504}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   CreateCertificateMap(
@@ -459,12 +459,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.UpdateCertificateMapRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L522}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   UpdateCertificateMap(
@@ -480,12 +480,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   /// [google.cloud.certificatemanager.v1.UpdateCertificateMapRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L522}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L990}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   UpdateCertificateMap(
@@ -547,12 +547,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.ListCertificateMapEntriesRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L546}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
   ListCertificateMapEntries(std::string const& parent, Options opts = {});
@@ -565,12 +565,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.ListCertificateMapEntriesRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L546}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
   ListCertificateMapEntries(
@@ -588,12 +588,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.GetCertificateMapEntryRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L593}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
   GetCertificateMapEntry(std::string const& name, Options opts = {});
@@ -606,12 +606,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.GetCertificateMapEntryRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L593}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
   GetCertificateMapEntry(google::cloud::certificatemanager::v1::
@@ -631,12 +631,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.CreateCertificateMapEntryRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L605}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   CreateCertificateMapEntry(
@@ -653,12 +653,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.CreateCertificateMapEntryRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L605}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   CreateCertificateMapEntry(google::cloud::certificatemanager::v1::
@@ -677,12 +677,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.UpdateCertificateMapEntryRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L624}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   UpdateCertificateMapEntry(
@@ -698,12 +698,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   /// [google.cloud.certificatemanager.v1.UpdateCertificateMapEntryRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L624}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   UpdateCertificateMapEntry(google::cloud::certificatemanager::v1::
@@ -759,12 +759,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.ListDnsAuthorizationsRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L649}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
   ListDnsAuthorizations(std::string const& parent, Options opts = {});
@@ -777,12 +777,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.ListDnsAuthorizationsRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L649}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
   ListDnsAuthorizations(
@@ -799,12 +799,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.GetDnsAuthorizationRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L691}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
   GetDnsAuthorization(std::string const& name, Options opts = {});
@@ -817,12 +817,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.GetDnsAuthorizationRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L691}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
   GetDnsAuthorization(
@@ -843,12 +843,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.CreateDnsAuthorizationRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L703}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   CreateDnsAuthorization(
@@ -865,12 +865,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.CreateDnsAuthorizationRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L703}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   CreateDnsAuthorization(google::cloud::certificatemanager::v1::
@@ -889,12 +889,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.UpdateDnsAuthorizationRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L722}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   UpdateDnsAuthorization(
@@ -910,12 +910,12 @@ class CertificateManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   /// [google.cloud.certificatemanager.v1.UpdateDnsAuthorizationRequest]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L722}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1112}
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   UpdateDnsAuthorization(google::cloud::certificatemanager::v1::

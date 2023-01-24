@@ -77,6 +77,15 @@ DocumentProcessorServiceAuth::ListProcessorTypes(
   return child_->ListProcessorTypes(context, request);
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceAuth::GetProcessorType(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetProcessorType(context, request);
+}
+
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceAuth::ListProcessors(
     grpc::ClientContext& context,

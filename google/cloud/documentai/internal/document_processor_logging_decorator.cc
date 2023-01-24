@@ -88,6 +88,19 @@ DocumentProcessorServiceLogging::ListProcessorTypes(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceLogging::GetProcessorType(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::GetProcessorTypeRequest const&
+                 request) {
+        return child_->GetProcessorType(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceLogging::ListProcessors(
     grpc::ClientContext& context,

@@ -69,6 +69,15 @@ DocumentProcessorServiceTracingConnection::ListProcessorTypes(
       std::move(span), std::move(scope), std::move(sr));
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceTracingConnection::GetProcessorType(
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::GetProcessorType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProcessorType(request));
+}
+
 StreamRange<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceTracingConnection::ListProcessors(
     google::cloud::documentai::v1::ListProcessorsRequest request) {

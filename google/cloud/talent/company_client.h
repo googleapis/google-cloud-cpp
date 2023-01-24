@@ -138,7 +138,7 @@ class CompanyServiceClient {
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
   /// [google.cloud.talent.v4.GetCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L103}
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
   ///
@@ -149,14 +149,14 @@ class CompanyServiceClient {
   /// Retrieves specified company.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::GetCompanyRequest,google/cloud/talent/v4/company_service.proto#L103}
+  /// @googleapis_link{google::cloud::talent::v4::GetCompanyRequest,google/cloud/talent/v4/company_service.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
   /// [google.cloud.talent.v4.GetCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L103}
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
   ///
@@ -168,7 +168,8 @@ class CompanyServiceClient {
   /// Updates specified company.
   ///
   /// @param company  Required. The company resource to replace the current
-  /// resource in the system.
+  /// resource in the
+  ///  system.
   /// @param update_mask  Strongly recommended for the best service experience.
   ///  If [update_mask][google.cloud.talent.v4.UpdateCompanyRequest.update_mask]
   ///  is provided, only the specified fields in
@@ -182,7 +183,7 @@ class CompanyServiceClient {
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
   /// [google.cloud.talent.v4.UpdateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L118}
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
   ///
@@ -194,14 +195,14 @@ class CompanyServiceClient {
   /// Updates specified company.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::UpdateCompanyRequest,google/cloud/talent/v4/company_service.proto#L118}
+  /// @googleapis_link{google::cloud::talent::v4::UpdateCompanyRequest,google/cloud/talent/v4/company_service.proto#L114}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
   /// [google.cloud.talent.v4.UpdateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L118}
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
   ///
@@ -254,7 +255,7 @@ class CompanyServiceClient {
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
   /// [google.cloud.talent.v4.ListCompaniesRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L148}
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
   ///
@@ -265,14 +266,14 @@ class CompanyServiceClient {
   /// Lists all companies associated with the project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::talent::v4::ListCompaniesRequest,google/cloud/talent/v4/company_service.proto#L148}
+  /// @googleapis_link{google::cloud::talent::v4::ListCompaniesRequest,google/cloud/talent/v4/company_service.proto#L146}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
   /// [google.cloud.talent.v4.ListCompaniesRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L148}
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
   ///

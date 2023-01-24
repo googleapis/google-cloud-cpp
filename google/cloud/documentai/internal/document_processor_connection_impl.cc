@@ -133,6 +133,18 @@ DocumentProcessorServiceConnectionImpl::ListProcessorTypes(
       });
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceConnectionImpl::GetProcessorType(
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetProcessorType(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::GetProcessorTypeRequest const&
+                 request) { return stub_->GetProcessorType(context, request); },
+      request, __func__);
+}
+
 StreamRange<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceConnectionImpl::ListProcessors(
     google::cloud::documentai::v1::ListProcessorsRequest request) {

@@ -50,6 +50,9 @@ class DocumentProcessorServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListProcessorTypes(
       google::cloud::documentai::v1::ListProcessorTypesRequest request);
 
+  virtual google::cloud::Idempotency GetProcessorType(
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request);
+
   virtual google::cloud::Idempotency ListProcessors(
       google::cloud::documentai::v1::ListProcessorsRequest request);
 
