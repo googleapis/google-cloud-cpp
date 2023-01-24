@@ -16,10 +16,10 @@
 
 set -euo pipefail
 
-readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="393.0.0"
+readonly GOOGLE_CLOUD_CPP_CLOUD_SDK_VERSION="415.0.0"
 declare -A -r GOOGLE_CLOUD_CPP_SDK_SHA256=(
-  ["x86_64"]="6f3aadf553011f9a0478dc1ef029dd71d8ee1b34a6c534653faaca13392a971c"
-  ["arm"]="55d47d9650adccfc592577c052313dad9e54d4e3ea006280d1b35de2104ddaa4"
+  ["x86_64"]="16cb35866a54f81e302b074af4c42e82889633528fe768c433cf6e5a1e01ac6f"
+  ["arm"]="164980e0aba12ce66c6c7972ecb7790ecdedbdc9ee0dd137da0fbaa874322f8e"
 )
 
 ARCH="$(uname -p)"
