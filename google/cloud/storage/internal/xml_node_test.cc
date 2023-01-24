@@ -158,6 +158,36 @@ TEST(XmlNodeTest, InvalidTag) {
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("Invalid tag")));
 }
 
+constexpr auto kExpectedCompleteMultipartUpload =
+    R"xml(<CompleteMultipartUpload>
+  <Part>
+    <PartNumber>
+      2
+    </PartNumber>
+    <ETag>
+      "7778aef83f66abc1fa1e8477f296d394"
+    </ETag>
+  </Part>
+  <Part>
+    <PartNumber>
+      5
+    </PartNumber>
+    <ETag>
+      "aaaa18db4cc2f85cedef654fccc4a4x8"
+    </ETag>
+  </Part>
+</CompleteMultipartUpload>
+)xml";
+
+TEST(XmlNodeTest, CompleteMultipartUpload) {
+  std::map<std::size_t, std::string> parts{
+      {5, "\"aaaa18db4cc2f85cedef654fccc4a4x8\""},
+      {2, "\"7778aef83f66abc1fa1e8477f296d394\""}};
+  auto xml = XmlNode::CompleteMultipartUpload(parts);
+  ASSERT_NE(xml, nullptr);
+  EXPECT_EQ(xml->ToString(2), kExpectedCompleteMultipartUpload);
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
