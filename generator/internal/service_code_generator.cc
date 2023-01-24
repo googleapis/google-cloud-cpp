@@ -178,6 +178,13 @@ bool ServiceCodeGenerator::HasExplicitRoutingMethod() const {
                      });
 }
 
+bool ServiceCodeGenerator::HasGenerateRestTransport() const {
+  auto const generate_rest_transport =
+      service_vars_.find("generate_rest_transport");
+  return generate_rest_transport != service_vars_.end() &&
+         generate_rest_transport->second == "true";
+}
+
 std::vector<std::string>
 ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   std::vector<std::string> include_paths;

@@ -266,6 +266,74 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
       break;
   }
 
+  if (HasGenerateRestTransport()) {
+    HeaderPrint(R"""(
+/**
+ * A factory function to construct an object of type `$connection_class_name$`
+ * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
+ * only be used for services that do not support gRpc or if the existing network
+ * configuration precludes using gRPC.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of $client_class_name$.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `$connection_class_name$`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::RestOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::$product_namespace$::$service_name$PolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *)""");
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        HeaderPrint(R"""(
+ * @param location Sets the prefix for the default `EndpointOption` value.)""");
+        break;
+      default:
+        break;
+    }
+    HeaderPrint(R"""(
+ * @param options (optional) Configure the `$connection_class_name$` created by
+ * this function.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
+)""");
+    HeaderPrint("    ");
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT:
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        HeaderPrint("std::string const& location, ");
+        break;
+      default:
+        break;
+    }
+    HeaderPrint("Options options = {});\n");
+
+    switch (endpoint_location_style) {
+      case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+        HeaderPrint(R"""(
+/**
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
+    Options options = {});
+)""");
+        break;
+      default:
+        break;
+    }
+  }
+
   HeaderCloseNamespaces();
 
   // close header guard
