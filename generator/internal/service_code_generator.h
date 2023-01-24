@@ -167,6 +167,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasExplicitRoutingMethod() const;
 
   /**
+   * Determines if REST transport is enabled for the service.
+   */
+  bool HasGenerateRestTransport() const;
+
+  /**
    * Determines if any of the method signatures has any Protocol Buffer
    * Well-Known Types per
    * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf
