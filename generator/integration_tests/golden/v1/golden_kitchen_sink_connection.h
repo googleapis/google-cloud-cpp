@@ -123,6 +123,33 @@ class GoldenKitchenSinkConnection {
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options = {});
 
+/**
+ * A factory function to construct an object of type `GoldenKitchenSinkConnection`
+ * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
+ * only be used for services that do not support gRpc or if the existing network
+ * configuration precludes using gRPC.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of GoldenKitchenSinkClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `GoldenKitchenSinkConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::RestOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::golden_v1::GoldenKitchenSinkPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `GoldenKitchenSinkConnection` created by
+ * this function.
+ */
+std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnectionRest(
+    Options options = {});
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1
 }  // namespace cloud
