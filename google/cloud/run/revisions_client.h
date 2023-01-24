@@ -93,12 +93,12 @@ class RevisionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
   ///
   /// [google.cloud.run.v2.GetRevisionRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L90}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
   /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       std::string const& name, Options opts = {});
@@ -107,16 +107,16 @@ class RevisionsClient {
   /// Gets information about a Revision.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::run::v2::GetRevisionRequest,google/cloud/run/v2/revision.proto#L90}
+  /// @googleapis_link{google::cloud::run::v2::GetRevisionRequest,google/cloud/run/v2/revision.proto#L92}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
   ///
   /// [google.cloud.run.v2.GetRevisionRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L90}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
   /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
       google::cloud::run::v2::GetRevisionRequest const& request,
@@ -133,12 +133,12 @@ class RevisionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
   ///
   /// [google.cloud.run.v2.ListRevisionsRequest]:
   /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
   /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
       std::string const& parent, Options opts = {});
@@ -151,12 +151,12 @@ class RevisionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
   ///
   /// [google.cloud.run.v2.ListRevisionsRequest]:
   /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
   /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
       google::cloud::run::v2::ListRevisionsRequest request, Options opts = {});
@@ -170,12 +170,12 @@ class RevisionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
   ///
   /// [google.cloud.run.v2.DeleteRevisionRequest]:
   /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
   /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       std::string const& name, Options opts = {});
@@ -188,12 +188,12 @@ class RevisionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_link{google::cloud::run::v2::Revision,google/cloud/run/v2/revision.proto#L160}
   ///
   /// [google.cloud.run.v2.DeleteRevisionRequest]:
   /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
   /// [google.cloud.run.v2.Revision]:
-  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L162}
+  /// @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
   ///
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       google::cloud::run::v2::DeleteRevisionRequest const& request,

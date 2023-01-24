@@ -95,12 +95,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L122}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L127}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
@@ -114,16 +114,16 @@ class EnvironmentsClient {
   /// Create a new environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L122}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::CreateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L127}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L122}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L127}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
@@ -139,12 +139,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L132}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L137}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(std::string const& name, Options opts = {});
@@ -153,16 +153,16 @@ class EnvironmentsClient {
   /// Get an existing environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L132}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::GetEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L137}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L132}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L137}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(google::cloud::orchestration::airflow::service::v1::
@@ -178,12 +178,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L139}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L144}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
   ListEnvironments(std::string const& parent, Options opts = {});
@@ -192,16 +192,16 @@ class EnvironmentsClient {
   /// List environments.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L139}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L144}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L139}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L144}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
   ListEnvironments(google::cloud::orchestration::airflow::service::v1::
@@ -338,12 +338,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L168}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L173}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
@@ -357,16 +357,16 @@ class EnvironmentsClient {
   /// Update an environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L168}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::UpdateEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L173}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L168}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L173}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1036}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
@@ -385,7 +385,7 @@ class EnvironmentsClient {
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L161}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L166}
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
@@ -397,14 +397,14 @@ class EnvironmentsClient {
   /// Delete an environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L161}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L166}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::OperationMetadata,google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L161}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L166}
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
@@ -421,16 +421,16 @@ class EnvironmentsClient {
   /// in a location specified in the SaveSnapshotRequest.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L304}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::SaveSnapshotRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L309}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse,google/cloud/orchestration/airflow/service/v1/environments.proto#L315}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse,google/cloud/orchestration/airflow/service/v1/environments.proto#L320}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L304}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L309}
   /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L315}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L320}
   ///
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
@@ -445,16 +445,16 @@ class EnvironmentsClient {
   /// LoadSnapshotRequest is loaded into the environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L324}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::LoadSnapshotRequest,google/cloud/orchestration/airflow/service/v1/environments.proto#L329}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse,google/cloud/orchestration/airflow/service/v1/environments.proto#L351}
+  /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse,google/cloud/orchestration/airflow/service/v1/environments.proto#L356}
   ///
   /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L324}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L329}
   /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L351}
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L356}
   ///
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>

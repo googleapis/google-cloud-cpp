@@ -100,7 +100,7 @@ class OsLoginServiceClient {
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
   /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L127}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
   ///
@@ -113,14 +113,14 @@ class OsLoginServiceClient {
   /// Create an SSH public key
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::CreateSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L127}
+  /// @googleapis_link{google::cloud::oslogin::v1::CreateSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L133}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
   /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L127}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
   ///
@@ -132,14 +132,14 @@ class OsLoginServiceClient {
   /// Deletes a POSIX account.
   ///
   /// @param name  Required. A reference to the POSIX account to update. POSIX
-  /// accounts are identified
-  ///  by the project ID they are associated with. A reference to the POSIX
-  ///  account is in format `users/{user}/projects/{project}`.
+  /// accounts are
+  ///  identified by the project ID they are associated with. A reference to the
+  ///  POSIX account is in format `users/{user}/projects/{project}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L141}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
   ///
   Status DeletePosixAccount(std::string const& name, Options opts = {});
 
@@ -147,12 +147,12 @@ class OsLoginServiceClient {
   /// Deletes a POSIX account.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::DeletePosixAccountRequest,google/cloud/oslogin/v1/oslogin.proto#L141}
+  /// @googleapis_link{google::cloud::oslogin::v1::DeletePosixAccountRequest,google/cloud/oslogin/v1/oslogin.proto#L148}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.oslogin.v1.DeletePosixAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L141}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L148}
   ///
   Status DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request,
@@ -162,14 +162,14 @@ class OsLoginServiceClient {
   /// Deletes an SSH public key.
   ///
   /// @param name  Required. The fingerprint of the public key to update. Public
-  /// keys are identified by
-  ///  their SHA-256 fingerprint. The fingerprint of the public key is in format
-  ///  `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
+  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L154}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
   ///
   Status DeleteSshPublicKey(std::string const& name, Options opts = {});
 
@@ -177,12 +177,12 @@ class OsLoginServiceClient {
   /// Deletes an SSH public key.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::DeleteSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L154}
+  /// @googleapis_link{google::cloud::oslogin::v1::DeleteSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L161}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.oslogin.v1.DeleteSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L154}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L161}
   ///
   Status DeleteSshPublicKey(
       google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request,
@@ -197,12 +197,12 @@ class OsLoginServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::LoginProfile,google/cloud/oslogin/v1/oslogin.proto#L115}
+  /// @googleapis_link{google::cloud::oslogin::v1::LoginProfile,google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
   /// [google.cloud.oslogin.v1.GetLoginProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L167}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L174}
   /// [google.cloud.oslogin.v1.LoginProfile]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L115}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
       std::string const& name, Options opts = {});
@@ -212,16 +212,16 @@ class OsLoginServiceClient {
   /// on Google Compute Engine.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::GetLoginProfileRequest,google/cloud/oslogin/v1/oslogin.proto#L167}
+  /// @googleapis_link{google::cloud::oslogin::v1::GetLoginProfileRequest,google/cloud/oslogin/v1/oslogin.proto#L174}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::LoginProfile,google/cloud/oslogin/v1/oslogin.proto#L115}
+  /// @googleapis_link{google::cloud::oslogin::v1::LoginProfile,google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
   /// [google.cloud.oslogin.v1.GetLoginProfileRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L167}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L174}
   /// [google.cloud.oslogin.v1.LoginProfile]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L115}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L121}
   ///
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
       google::cloud::oslogin::v1::GetLoginProfileRequest const& request,
@@ -231,16 +231,16 @@ class OsLoginServiceClient {
   /// Retrieves an SSH public key.
   ///
   /// @param name  Required. The fingerprint of the public key to retrieve.
-  /// Public keys are identified
-  ///  by their SHA-256 fingerprint. The fingerprint of the public key is in
-  ///  format `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// Public keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
+  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
   /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L184}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
   ///
@@ -251,14 +251,14 @@ class OsLoginServiceClient {
   /// Retrieves an SSH public key.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::GetSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L184}
+  /// @googleapis_link{google::cloud::oslogin::v1::GetSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L191}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
   /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L184}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
   ///
@@ -277,12 +277,12 @@ class OsLoginServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L214}
+  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L197}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L214}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
@@ -302,12 +302,12 @@ class OsLoginServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L214}
+  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L197}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L214}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
@@ -321,16 +321,16 @@ class OsLoginServiceClient {
   /// login profile.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L197}
+  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L204}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L214}
+  /// @googleapis_link{google::cloud::oslogin::v1::ImportSshPublicKeyResponse,google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L197}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L204}
   /// [google.cloud.oslogin.v1.ImportSshPublicKeyResponse]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L214}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L222}
   ///
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
@@ -342,9 +342,9 @@ class OsLoginServiceClient {
   /// supports patch semantics.
   ///
   /// @param name  Required. The fingerprint of the public key to update. Public
-  /// keys are identified by
-  ///  their SHA-256 fingerprint. The fingerprint of the public key is in format
-  ///  `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
+  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param ssh_public_key  Required. The SSH public key and expiration time.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -352,7 +352,7 @@ class OsLoginServiceClient {
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
   /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L223}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
   ///
@@ -366,9 +366,9 @@ class OsLoginServiceClient {
   /// supports patch semantics.
   ///
   /// @param name  Required. The fingerprint of the public key to update. Public
-  /// keys are identified by
-  ///  their SHA-256 fingerprint. The fingerprint of the public key is in format
-  ///  `users/{user}/sshPublicKeys/{fingerprint}`.
+  /// keys are
+  ///  identified by their SHA-256 fingerprint. The fingerprint of the public
+  ///  key is in format `users/{user}/sshPublicKeys/{fingerprint}`.
   /// @param ssh_public_key  Required. The SSH public key and expiration time.
   /// @param update_mask  Mask to control which fields get updated. Updates all
   /// if not present.
@@ -378,7 +378,7 @@ class OsLoginServiceClient {
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
   /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L223}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
   ///
@@ -392,14 +392,14 @@ class OsLoginServiceClient {
   /// supports patch semantics.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::oslogin::v1::UpdateSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L223}
+  /// @googleapis_link{google::cloud::oslogin::v1::UpdateSshPublicKeyRequest,google/cloud/oslogin/v1/oslogin.proto#L231}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
   /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L223}
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
   ///

@@ -60,6 +60,12 @@ DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessorTypes(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessorType(
+    google::cloud::documentai::v1::GetProcessorTypeRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ListProcessors(
     google::cloud::documentai::v1::ListProcessorsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

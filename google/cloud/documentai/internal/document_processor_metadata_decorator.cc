@@ -67,6 +67,14 @@ DocumentProcessorServiceMetadata::ListProcessorTypes(
   return child_->ListProcessorTypes(context, request);
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceMetadata::GetProcessorType(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetProcessorType(context, request);
+}
+
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceMetadata::ListProcessors(
     grpc::ClientContext& context,

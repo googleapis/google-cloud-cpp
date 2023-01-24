@@ -83,6 +83,19 @@ DefaultDocumentProcessorServiceStub::ListProcessorTypes(
   return response;
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DefaultDocumentProcessorServiceStub::GetProcessorType(
+    grpc::ClientContext& client_context,
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  google::cloud::documentai::v1::ProcessorType response;
+  auto status =
+      grpc_stub_->GetProcessorType(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DefaultDocumentProcessorServiceStub::ListProcessors(
     grpc::ClientContext& client_context,

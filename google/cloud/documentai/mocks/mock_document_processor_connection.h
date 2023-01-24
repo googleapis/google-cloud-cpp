@@ -71,6 +71,11 @@ class MockDocumentProcessorServiceConnection
       (google::cloud::documentai::v1::ListProcessorTypesRequest request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::documentai::v1::ProcessorType>, GetProcessorType,
+      (google::cloud::documentai::v1::GetProcessorTypeRequest const& request),
+      (override));
+
   MOCK_METHOD(StreamRange<google::cloud::documentai::v1::Processor>,
               ListProcessors,
               (google::cloud::documentai::v1::ListProcessorsRequest request),

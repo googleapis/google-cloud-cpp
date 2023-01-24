@@ -56,6 +56,13 @@ DocumentProcessorServiceTracingStub::ListProcessorTypes(
   return child_->ListProcessorTypes(context, request);
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceTracingStub::GetProcessorType(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
+  return child_->GetProcessorType(context, request);
+}
+
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceTracingStub::ListProcessors(
     grpc::ClientContext& context,

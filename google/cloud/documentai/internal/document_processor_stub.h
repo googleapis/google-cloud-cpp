@@ -59,6 +59,11 @@ class DocumentProcessorServiceStub {
       google::cloud::documentai::v1::ListProcessorTypesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::documentai::v1::ProcessorType>
+  GetProcessorType(grpc::ClientContext& context,
+                   google::cloud::documentai::v1::GetProcessorTypeRequest const&
+                       request) = 0;
+
   virtual StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
   ListProcessors(
       grpc::ClientContext& context,
@@ -176,6 +181,11 @@ class DefaultDocumentProcessorServiceStub
   ListProcessorTypes(
       grpc::ClientContext& client_context,
       google::cloud::documentai::v1::ListProcessorTypesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::documentai::v1::ProcessorType> GetProcessorType(
+      grpc::ClientContext& client_context,
+      google::cloud::documentai::v1::GetProcessorTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>

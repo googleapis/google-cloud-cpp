@@ -98,8 +98,8 @@ class EventServiceClient {
   ///  The format is "projects/{project_id}/tenants/{tenant_id}", for example,
   ///  "projects/foo/tenants/bar".
   /// @param client_event  Required. Events issued when end user interacts with
-  /// customer's application that
-  ///  uses Cloud Talent Solution.
+  /// customer's application
+  ///  that uses Cloud Talent Solution.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return

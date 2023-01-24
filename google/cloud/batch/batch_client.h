@@ -110,7 +110,7 @@ class BatchServiceClient {
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
   /// [google.cloud.batch.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L99}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L102}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
@@ -122,14 +122,14 @@ class BatchServiceClient {
   /// Create a Job.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::CreateJobRequest,google/cloud/batch/v1/batch.proto#L99}
+  /// @googleapis_link{google::cloud::batch::v1::CreateJobRequest,google/cloud/batch/v1/batch.proto#L102}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
   /// [google.cloud.batch.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L99}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L102}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
@@ -147,7 +147,7 @@ class BatchServiceClient {
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
   /// [google.cloud.batch.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L141}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
@@ -158,14 +158,14 @@ class BatchServiceClient {
   /// Get a Job specified by its resource name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::GetJobRequest,google/cloud/batch/v1/batch.proto#L140}
+  /// @googleapis_link{google::cloud::batch::v1::GetJobRequest,google/cloud/batch/v1/batch.proto#L141}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
   /// [google.cloud.batch.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L140}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L141}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
@@ -180,12 +180,12 @@ class BatchServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::batch::v1::OperationMetadata,google/cloud/batch/v1/batch.proto#L249}
+  /// @googleapis_link{google::cloud::batch::v1::OperationMetadata,google/cloud/batch/v1/batch.proto#L244}
   ///
   /// [google.cloud.batch.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L151}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L150}
   /// [google.cloud.batch.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L249}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L244}
   ///
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       std::string const& name, Options opts = {});
@@ -194,16 +194,16 @@ class BatchServiceClient {
   /// Delete a Job.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::DeleteJobRequest,google/cloud/batch/v1/batch.proto#L151}
+  /// @googleapis_link{google::cloud::batch::v1::DeleteJobRequest,google/cloud/batch/v1/batch.proto#L150}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::batch::v1::OperationMetadata,google/cloud/batch/v1/batch.proto#L249}
+  /// @googleapis_link{google::cloud::batch::v1::OperationMetadata,google/cloud/batch/v1/batch.proto#L244}
   ///
   /// [google.cloud.batch.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L151}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L150}
   /// [google.cloud.batch.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L249}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L244}
   ///
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
       google::cloud::batch::v1::DeleteJobRequest const& request,
@@ -219,7 +219,7 @@ class BatchServiceClient {
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
   /// [google.cloud.batch.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L175}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
@@ -230,14 +230,14 @@ class BatchServiceClient {
   /// List all Jobs for a project within a region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::ListJobsRequest,google/cloud/batch/v1/batch.proto#L175}
+  /// @googleapis_link{google::cloud::batch::v1::ListJobsRequest,google/cloud/batch/v1/batch.proto#L174}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
   /// [google.cloud.batch.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L175}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
   ///
@@ -254,7 +254,7 @@ class BatchServiceClient {
   /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L275}
   ///
   /// [google.cloud.batch.v1.GetTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L238}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L235}
   /// [google.cloud.batch.v1.Task]:
   /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L275}
   ///
@@ -265,14 +265,14 @@ class BatchServiceClient {
   /// Return a single Task.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::GetTaskRequest,google/cloud/batch/v1/batch.proto#L238}
+  /// @googleapis_link{google::cloud::batch::v1::GetTaskRequest,google/cloud/batch/v1/batch.proto#L235}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L275}
   ///
   /// [google.cloud.batch.v1.GetTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L238}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L235}
   /// [google.cloud.batch.v1.Task]:
   /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L275}
   ///
@@ -293,7 +293,7 @@ class BatchServiceClient {
   /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L275}
   ///
   /// [google.cloud.batch.v1.ListTasksRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L202}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L201}
   /// [google.cloud.batch.v1.Task]:
   /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L275}
   ///
@@ -304,14 +304,14 @@ class BatchServiceClient {
   /// List Tasks associated with a job.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::batch::v1::ListTasksRequest,google/cloud/batch/v1/batch.proto#L202}
+  /// @googleapis_link{google::cloud::batch::v1::ListTasksRequest,google/cloud/batch/v1/batch.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::batch::v1::Task,google/cloud/batch/v1/task.proto#L275}
   ///
   /// [google.cloud.batch.v1.ListTasksRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L202}
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L201}
   /// [google.cloud.batch.v1.Task]:
   /// @googleapis_reference_link{google/cloud/batch/v1/task.proto#L275}
   ///

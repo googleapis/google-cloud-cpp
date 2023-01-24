@@ -99,12 +99,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L159}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L166}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
       std::string const& parent, google::cloud::run::v2::Service const& service,
@@ -114,16 +114,16 @@ class ServicesClient {
   /// Creates a new Service in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::run::v2::CreateServiceRequest,google/cloud/run/v2/service.proto#L159}
+  /// @googleapis_link{google::cloud::run::v2::CreateServiceRequest,google/cloud/run/v2/service.proto#L166}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L159}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L166}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
       google::cloud::run::v2::CreateServiceRequest const& request,
@@ -138,12 +138,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.GetServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L233}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L240}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   StatusOr<google::cloud::run::v2::Service> GetService(std::string const& name,
                                                        Options opts = {});
@@ -152,16 +152,16 @@ class ServicesClient {
   /// Gets information about a Service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::run::v2::GetServiceRequest,google/cloud/run/v2/service.proto#L233}
+  /// @googleapis_link{google::cloud::run::v2::GetServiceRequest,google/cloud/run/v2/service.proto#L240}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.GetServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L233}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L240}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   StatusOr<google::cloud::run::v2::Service> GetService(
       google::cloud::run::v2::GetServiceRequest const& request,
@@ -171,18 +171,18 @@ class ServicesClient {
   /// Lists Services.
   ///
   /// @param parent  Required. The location and project to list resources on.
-  ///  Location must be a valid GCP region, and cannot be the "-" wildcard.
-  ///  Format: projects/{project}/locations/{location}, where {project} can be
-  ///  project id or number.
+  ///  Location must be a valid Google Cloud region, and cannot be the "-"
+  ///  wildcard. Format: projects/{project}/locations/{location}, where
+  ///  {project} can be project id or number.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L199}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L206}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   StreamRange<google::cloud::run::v2::Service> ListServices(
       std::string const& parent, Options opts = {});
@@ -191,16 +191,16 @@ class ServicesClient {
   /// Lists Services.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::run::v2::ListServicesRequest,google/cloud/run/v2/service.proto#L199}
+  /// @googleapis_link{google::cloud::run::v2::ListServicesRequest,google/cloud/run/v2/service.proto#L206}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L199}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L206}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   StreamRange<google::cloud::run::v2::Service> ListServices(
       google::cloud::run::v2::ListServicesRequest request, Options opts = {});
@@ -212,12 +212,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L184}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
       google::cloud::run::v2::Service const& service, Options opts = {});
@@ -226,16 +226,16 @@ class ServicesClient {
   /// Updates a Service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::run::v2::UpdateServiceRequest,google/cloud/run/v2/service.proto#L184}
+  /// @googleapis_link{google::cloud::run::v2::UpdateServiceRequest,google/cloud/run/v2/service.proto#L191}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L184}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
       google::cloud::run::v2::UpdateServiceRequest const& request,
@@ -252,12 +252,12 @@ class ServicesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L246}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L251}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
       std::string const& name, Options opts = {});
@@ -268,16 +268,16 @@ class ServicesClient {
   /// revisions.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::run::v2::DeleteServiceRequest,google/cloud/run/v2/service.proto#L246}
+  /// @googleapis_link{google::cloud::run::v2::DeleteServiceRequest,google/cloud/run/v2/service.proto#L251}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
   /// [google.cloud.run.v2.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L246}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L251}
   /// [google.cloud.run.v2.Service]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L271}
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
       google::cloud::run::v2::DeleteServiceRequest const& request,

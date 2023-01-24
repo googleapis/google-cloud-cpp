@@ -64,6 +64,12 @@ DocumentProcessorServiceConnection::ListProcessorTypes(
       StreamRange<google::cloud::documentai::v1::ProcessorType>>();
 }
 
+StatusOr<google::cloud::documentai::v1::ProcessorType>
+DocumentProcessorServiceConnection::GetProcessorType(
+    google::cloud::documentai::v1::GetProcessorTypeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceConnection::ListProcessors(
     google::cloud::documentai::v1::
