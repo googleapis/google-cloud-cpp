@@ -81,7 +81,6 @@ expected_dirs+=(
   ./include/google/cloud/orgpolicy/v1
   # no RPC services in google/cloud/oslogin/common
   ./include/google/cloud/oslogin/common
-  ./include/google/cloud/pubsub/mocks
   # no gRPC services in google/cloud/recommender/logging
   ./include/google/cloud/recommender/logging
   ./include/google/cloud/recommender/logging/v1

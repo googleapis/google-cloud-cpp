@@ -76,7 +76,7 @@ Follow these links for additional examples
  [BlockingPublisher](@ref BlockingPublisher-endpoint-snippet)
  [TopicAdminClient](@ref TopicAdminClient-endpoint-snippet)
  [SubscriptionAdminClient](@ref SubscriptionAdminClient-endpoint-snippet)
- [SchemaAdminClient](@ref SchemaAdminClient-endpoint-snippet)
+ [SchemaServiceClient](@ref SchemaServiceClient-endpoint-snippet)
  [Publisher](@ref Publisher-endpoint-snippet)
 */
 
@@ -102,7 +102,7 @@ Follow these links for additional examples
  [BlockingPublisher](@ref BlockingPublisher-service-account-snippet)
  [TopicAdminClient](@ref TopicAdminClient-service-account-snippet)
  [SubscriptionAdminClient](@ref SubscriptionAdminClient-service-account-snippet)
- [SchemaAdminClient](@ref SchemaAdminClient-service-account-snippet)
+ [SchemaServiceClient](@ref SchemaServiceClient-service-account-snippet)
  [Publisher](@ref Publisher-service-account-snippet)
 
 [Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
@@ -135,13 +135,13 @@ Follow these links for additional examples
 
 /*! @page SubscriptionAdminClient-endpoint-snippet Override @c SubscriptionAdminClient Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-set-endpoint
+@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-set-endpoint
 
 */
 
-/*! @page SchemaAdminClient-endpoint-snippet Override @c SchemaAdminClient Default Endpoint
+/*! @page SchemaServiceClient-endpoint-snippet Override @c SchemaServiceClient Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-set-endpoint
+@snippet google/cloud/pubsub/samples/schema_client_samples.cc set-client-endpoint
 
 */
 
@@ -173,12 +173,12 @@ Follow these links for additional examples
 
 /*! @page SubscriptionAdminClient-service-account-snippet Override @c SubscriptionAdminClient Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-service-account
+@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-service-account
 
 */
 
-/*! @page SchemaAdminClient-service-account-snippet Override @c SchemaAdminClient Default Authentication
+/*! @page SchemaServiceClient-service-account-snippet Override @c SchemaServiceClient Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-service-account
+@snippet google/cloud/pubsub/samples/schema_client_samples.cc with-service-account
 
 */

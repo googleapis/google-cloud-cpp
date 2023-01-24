@@ -113,9 +113,9 @@ CreateSubscriptionAdminCommand(std::string const& name,
                                                            std::move(adapter)};
 }
 
-google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(
+google::cloud::testing_util::Commands::value_type CreateSchemaServiceCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
-    SchemaAdminCommand const& command) {
+    SchemaServiceCommand const& command) {
   auto adapter = [=](std::vector<std::string> const& argv) {
     if ((argv.size() == 1 && argv[0] == "--help") ||
         argv.size() != arg_names.size()) {
@@ -126,8 +126,8 @@ google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(
       }
       throw google::cloud::testing_util::Usage{std::move(os).str()};
     }
-    google::cloud::pubsub::SchemaAdminClient client(
-        google::cloud::pubsub::MakeSchemaAdminConnection());
+    google::cloud::pubsub::SchemaServiceClient client(
+        google::cloud::pubsub::MakeSchemaServiceConnection());
     command(std::move(client), std::move(argv));
   };
   return google::cloud::testing_util::Commands::value_type{name,

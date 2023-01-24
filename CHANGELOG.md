@@ -118,6 +118,13 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ## v2.7.0 - TBD
 
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- Replaced the wrappers for [google.pubsub.v1.SchemaServiceClient] with
+  automatically generated code.  Our telemetry indicates that there are no
+  C++ applications using this code, and therefore we do not consider this a
+  breaking change.
+
 ### New Libraries
 
 We are happy to announce the following GA libraries.  Unless specifically noted,
@@ -3388,6 +3395,7 @@ releases.  The relevant notes are:
 [cloud-debugger-deprecated]: https://cloud.google.com/debugger/docs/deprecations
 [cloud-debugger-library]: /google/cloud/debugger/README.md
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
+[google.pubsub.v1.schemaserviceclient]: https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#google.pubsub.v1.SchemaService
 [guac-dox]: https://googleapis.dev/cpp/google-cloud-common/latest/credentials_8h.html
 [howto-mock-data-api]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-mocking.html
 [iam-conditions-link]: https://cloud.google.com/iam/docs/conditions-overview
