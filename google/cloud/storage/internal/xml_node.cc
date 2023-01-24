@@ -308,6 +308,19 @@ StatusOr<std::shared_ptr<XmlNode>> XmlNode::Parse(absl::string_view content,
   return parser.Parse();
 }
 
+std::shared_ptr<XmlNode> XmlNode::CompleteMultipartUpload(
+    std::map<std::size_t, std::string> const& parts) {
+  auto root = CreateRoot();
+  auto target_node = root->AppendTagNode("CompleteMultipartUpload");
+  for (auto const& p : parts) {
+    auto part_tag = target_node->AppendTagNode("Part");
+    part_tag->AppendTagNode("PartNumber")
+        ->AppendTextNode(std::to_string(p.first));
+    part_tag->AppendTagNode("ETag")->AppendTextNode(EscapeXmlContent(p.second));
+  }
+  return root;
+}
+
 std::string XmlNode::GetConcatenatedText() const {
   // For non-tag element, just returns the text content.
   if (!text_content_.empty()) return text_content_;
