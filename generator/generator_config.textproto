@@ -1211,7 +1211,7 @@ service {
 service {
   service_proto_path: "google/pubsub/v1/schema.proto"
   product_path: "google/cloud/pubsub"
-  initial_copyright_year: "2022"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
   emulator_endpoint_env_var: "PUBSUB_EMULATOR_HOST"
 }
