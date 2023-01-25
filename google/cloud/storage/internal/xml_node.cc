@@ -33,29 +33,34 @@ bool IsSpace(char c) {
   return absl::ascii_isspace(static_cast<unsigned char>(c));
 }
 
-std::string Rtrim(absl::string_view str) {
+std::string StripTrailingSpaces(absl::string_view str) {
   return std::string(absl::StripTrailingAsciiWhitespace(str));
 }
 
-std::string EscapeXmlTag(absl::string_view tag) {
-  return absl::StrReplaceAll(tag, {{"&", "&amp;"},
-                                   {"<", "&lt;"},
-                                   {">", "&gt;"},
-                                   {"\"", "&quot;"},
-                                   {"'", "&apos;"}});
+std::string EscapeTagName(absl::string_view tag_name) {
+  return absl::StrReplaceAll(tag_name, {{"&", "&amp;"},
+                                        {"<", "&lt;"},
+                                        {">", "&gt;"},
+                                        {"\"", "&quot;"},
+                                        {"'", "&apos;"}});
 }
 
-std::string EscapeXmlContent(absl::string_view content) {
-  return absl::StrReplaceAll(content,
+std::string UnescapeTagName(absl::string_view tag_name) {
+  return absl::StrReplaceAll(tag_name, {{"&amp;", "&"},
+                                        {"&lt;", "<"},
+                                        {"&gt;", ">"},
+                                        {"&quot;", "\""},
+                                        {"&apos;", "'"}});
+}
+
+std::string EscapeTextContent(absl::string_view text_content) {
+  return absl::StrReplaceAll(text_content,
                              {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
 }
 
-std::string UnescapeXmlString(absl::string_view val) {
-  return absl::StrReplaceAll(val, {{"&lt;", "<"},
-                                   {"&gt;", ">"},
-                                   {"&quot;", "\""},
-                                   {"&apos;", "'"},
-                                   {"&amp;", "&"}});
+std::string UnescapeTextContent(absl::string_view text_content) {
+  return absl::StrReplaceAll(text_content,
+                             {{"&amp;", "&"}, {"&lt;", "<"}, {"&gt;", ">"}});
 }
 
 enum class ParseState {
@@ -86,7 +91,7 @@ class XmlParser {
 
  private:
   inline Status SkipXmlDeclaration() {
-    // Skip the xml declaration
+    // Skip the XML declaration.
     constexpr static absl::string_view kXmlDeclStart = "<?xml";
     constexpr static absl::string_view kXmlDeclEnd = "?>";
     auto xml_decl_start_pos = content_.find(kXmlDeclStart);
@@ -137,8 +142,9 @@ class XmlParser {
     if (state_ == ParseState::kReadingText) {
       // The parser was reading text part. Add a text node to the current
       // parent if the limits allow.
-      auto text_node = AppendTextNode(Rtrim(UnescapeXmlString(text_content_)));
-      if (!text_node.ok()) return std::move(text_node).status();
+      auto text_node = AppendTextNode(
+          UnescapeTextContent(StripTrailingSpaces(text_content_)));
+      if (!text_node) return std::move(text_node).status();
     }
     state_ = ParseState::kStartTag;
     return Status();
@@ -160,10 +166,10 @@ class XmlParser {
     } else if (c == '>') {
       // The tag ends. We create a new tag node and set it as the current
       // parent. It will increase both the node_count_ and the depth.
-      auto tag_node = AppendTagNode(UnescapeXmlString(tag_name_));
-      if (!tag_node.ok()) return std::move(tag_node).status();
-      parent_history_.push(current_parent_);
-      current_parent_ = tag_node.value();
+      auto tag_node = AppendTagNode(UnescapeTagName(tag_name_));
+      if (!tag_node) return std::move(tag_node).status();
+      parent_history_.push(std::move(current_parent_));
+      current_parent_ = std::move(*tag_node);
       state_ = ParseState::kEndTag;
     } else if (c == '/') {
       // This is a tag with this form <TAG/>. Read ahead to the next '>'.
@@ -173,8 +179,8 @@ class XmlParser {
                                               GCP_ERROR_INFO());
       }
       i_ = close_tag_pos + 1;
-      auto tag_node = AppendTagNode(UnescapeXmlString(tag_name_));
-      if (!tag_node.ok()) return std::move(tag_node).status();
+      auto tag_node = AppendTagNode(UnescapeTagName(tag_name_));
+      if (!tag_node) return std::move(tag_node).status();
       state_ = ParseState::kEndTag;
     } else {
       tag_name_ += c;
@@ -185,10 +191,10 @@ class XmlParser {
   inline Status HandleReadingAttr(char const& c) {
     // We don't need the attributes at all. We ignore them.
     if (c == '>') {
-      auto tag_node = AppendTagNode(UnescapeXmlString(tag_name_));
-      if (!tag_node.ok()) return std::move(tag_node).status();
-      parent_history_.push(current_parent_);
-      current_parent_ = tag_node.value();
+      auto tag_node = AppendTagNode(UnescapeTagName(tag_name_));
+      if (!tag_node) return std::move(tag_node).status();
+      parent_history_.push(std::move(current_parent_));
+      current_parent_ = std::move(*tag_node);
       state_ = ParseState::kEndTag;
     }
     return Status();
@@ -212,7 +218,7 @@ class XmlParser {
     close_tag_ = c;
     state_ = ParseState::kReadingClosingTag;
     if (c == '>') {
-      // "</>" is invalid
+      // "</>" is invalid.
       return internal::InvalidArgumentError("Invalid tag '</>' found",
                                             GCP_ERROR_INFO());
     }
@@ -224,7 +230,7 @@ class XmlParser {
       return Status();
     }
     if (c == '>') {
-      auto close_tag = Rtrim(UnescapeXmlString(close_tag_));
+      auto close_tag = UnescapeTagName(StripTrailingSpaces(close_tag_));
       if (current_parent_->GetTagName() != close_tag) {
         // Mismatched close tag.
         return internal::InvalidArgumentError(
@@ -234,7 +240,7 @@ class XmlParser {
             GCP_ERROR_INFO());
       }
       // The current tag ends. Set the current marker to the previous parent.
-      current_parent_ = parent_history_.top();
+      current_parent_ = std::move(parent_history_.top());
       parent_history_.pop();
       state_ = ParseState::kEndTag;
     } else {
@@ -297,7 +303,7 @@ StatusOr<std::shared_ptr<XmlNode>> XmlNode::Parse(absl::string_view content,
   internal::CheckExpectedOptions<XmlParserOptionsList>(options, __func__);
   options = XmlParserDefaultOptions(std::move(options));
 
-  // Check size first
+  // Check size first.
   if (content.size() > options.get<XmlParserMaxSourceSize>()) {
     return internal::InvalidArgumentError(
         absl::StrCat("The source size ", content.size(),
@@ -306,6 +312,7 @@ StatusOr<std::shared_ptr<XmlNode>> XmlNode::Parse(absl::string_view content,
         GCP_ERROR_INFO());
   }
 
+  // Remove unnecessary bits.
   static auto* unnecessary_re = new std::regex{
       absl::StrCat("(",
                    R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)",  // DTD(DOCTYPE)
@@ -315,14 +322,11 @@ StatusOr<std::shared_ptr<XmlNode>> XmlNode::Parse(absl::string_view content,
                    R"(<!--[\s\S]*?-->)",  // XML comments
                    ")"),
       std::regex::icase | std::regex::nosubs | std::regex::optimize};
-
   std::string trimmed;
-  // Remove unnecessary bits
   std::regex_replace(std::back_inserter(trimmed), content.begin(),
                      content.end(), *unnecessary_re, "");
 
-  auto parser = XmlParser(trimmed, options);
-  return parser.Parse();
+  return XmlParser(trimmed, options).Parse();
 }
 
 std::shared_ptr<XmlNode> XmlNode::CompleteMultipartUpload(
@@ -333,7 +337,8 @@ std::shared_ptr<XmlNode> XmlNode::CompleteMultipartUpload(
     auto part_tag = target_node->AppendTagNode("Part");
     part_tag->AppendTagNode("PartNumber")
         ->AppendTextNode(std::to_string(p.first));
-    part_tag->AppendTagNode("ETag")->AppendTextNode(EscapeXmlContent(p.second));
+    part_tag->AppendTagNode("ETag")->AppendTextNode(
+        EscapeTextContent(p.second));
   }
   return root;
 }
@@ -349,7 +354,7 @@ std::string XmlNode::GetConcatenatedText() const {
     auto const cur = stack.top();
     stack.pop();
     ret += cur->text_content_;
-    // put them into the stack in reverse order
+    // Push onto the stack in reverse order.
     for (auto it = cur->children_.rbegin(); it != cur->children_.rend(); ++it) {
       stack.push(*it);
     }
@@ -378,11 +383,11 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
 
   auto ret = [&] {
     if (!tag_name_.empty()) {
-      return absl::StrCat(indentation, "<", EscapeXmlTag(tag_name_), ">",
+      return absl::StrCat(indentation, "<", EscapeTagName(tag_name_), ">",
                           separator);
     }
     if (!text_content_.empty()) {
-      return absl::StrCat(indentation, EscapeXmlContent(text_content_),
+      return absl::StrCat(indentation, EscapeTextContent(text_content_),
                           separator);
     }
     return std::string{};
@@ -392,7 +397,7 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
     absl::StrAppend(&ret, child->ToString(indent_width, indent_level));
   }
   if (!tag_name_.empty()) {
-    absl::StrAppend(&ret, indentation, "</", EscapeXmlTag(tag_name_), ">",
+    absl::StrAppend(&ret, indentation, "</", EscapeTagName(tag_name_), ">",
                     separator);
   }
   return ret;

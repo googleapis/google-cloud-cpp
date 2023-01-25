@@ -173,21 +173,16 @@ TEST(XmlNodeTest, EscapeText) {
 }
 
 TEST(XmlNodeTest, Unescape) {
-  std::string tag_name = "a&lt;&gt;&quot;&apos;&amp;b";
-  std::string text_content = R"(a&lt;&gt;"'&amp;b)";
-  auto res = XmlNode::Parse("<" + tag_name + ">" + text_content + "</" +
-                            tag_name + ">");
+  std::string escaped = "a&lt;&gt;&quot;&apos;&amp;b";
+  auto res =
+      XmlNode::Parse("<" + escaped + ">" + escaped + "</" + escaped + ">");
   ASSERT_STATUS_OK(res);
 
   auto children = (*res)->GetChildren();
   ASSERT_THAT(children, SizeIs(1));
   EXPECT_EQ(R"(a<>"'&b)", children[0]->GetTagName());
   EXPECT_EQ("", children[0]->GetTextContent());
-
-  children = children[0]->GetChildren();
-  ASSERT_THAT(children, SizeIs(1));
-  EXPECT_EQ("", children[0]->GetTagName());
-  EXPECT_EQ(R"(a<>"'&b)", children[0]->GetTextContent());
+  EXPECT_EQ("a<>&quot;&apos;&b", children[0]->GetConcatenatedText());
 }
 
 constexpr auto kExpectedCompleteMultipartUpload =

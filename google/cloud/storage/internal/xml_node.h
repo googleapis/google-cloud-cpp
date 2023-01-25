@@ -33,16 +33,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Represents an XML node in an XML tree.
  *
- * @note This is used in the implementation of [GCS MPU]
- *
- * [GCS MPU]: https://cloud.google.com/storage/docs/multipart-uploads
- *
  * Normally a single node represents an XML element(tag), but we also treat a
- * text portion as a node. If the tag_name_ is empty, it's considered as a text
+ * text portion as a node. If the tag_name_ is empty, it's considered a text
  * node.
  *
- * This is not a general purpose XML node. It is only intended to support XML
- * trees as used in the [GCS MPU]. It does not support many XML features.
+ * @note This is not a general purpose XML node. It is only intended to support
+ * XML trees as used in the [GCS MPU]. It does not support many XML features.
+ *
+ * [GCS MPU]: https://cloud.google.com/storage/docs/multipart-uploads
  */
 class XmlNode : public std::enable_shared_from_this<XmlNode> {
  public:
@@ -56,25 +54,23 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
   /**
    * Parses the given string and returns an XML tree.
    *
-   * Note: This is not a general purpose XML parser. It is only intended to
+   * As a defence to DOS type attacks, it has several limits. The default
+   * values of these limits are large enough for API responses from [GCS MPU],
+   * but in case you need to configure these limits, use the following
+   * options: `XmlParserMaxSourceSize`, `XmlParserMaxNodeCount`, and
+   * `XmlParserMaxNodeDepth`. For the default values of these limits, see
+   * `google/cloud/storage/internal/xml_parser_options.h`.
+   *
+   * @note This is not a general purpose XML parser. It is only intended to
    * parse XML responses from the [GCS MPU]. It does not support many XML
    * features.
-   *
-   * As a defence to DOS type attacks, it has several limits. The default values
-   * of these limits are large enough for API responses from [GCS MPU], but in
-   * case you need to configure these limits, use the following options:
-   * `XmlParserMaxSourceSize`, `XmlParserMaxNodeCount`, and
-   * `XmlParserMaxNodeDepth`. See
-   * `google::cloud::storage::internal::xml_parser_options.h` for the default
-   * values of these limits.
    */
   static StatusOr<std::shared_ptr<XmlNode>> Parse(absl::string_view content,
                                                   Options = {});
 
   /**
-   * Creates an XML request for "Completing multipart upload" API
-   * described at
-   * https://cloud.google.com/storage/docs/xml-api/post-object-complete.
+   * Creates an XML request for "Completing multipart upload" API described
+   * at https://cloud.google.com/storage/docs/xml-api/post-object-complete.
    */
   static std::shared_ptr<XmlNode> CompleteMultipartUpload(
       std::map<std::size_t, std::string> const& parts);
