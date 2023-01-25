@@ -147,7 +147,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 apk update && \
     apk add bash ca-certificates ccache cmake curl git \
-        gcc g++ make patch tar unzip zip zlib-dev
+        gcc g++ make tar unzip zip zlib-dev
 ```
 
 Alpine's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
