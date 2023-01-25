@@ -28,6 +28,8 @@ class FakeSourceTree : public google::protobuf::compiler::SourceTree {
  public:
   explicit FakeSourceTree(std::map<std::string, std::string> files);
 
+  void Insert(std::string const& filename, std::string contents);
+
   google::protobuf::io::ZeroCopyInputStream* Open(
       std::string const& filename) override;
 

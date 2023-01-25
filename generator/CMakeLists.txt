@@ -69,6 +69,8 @@ add_library(
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/resolve_comment_references.cc
+    internal/resolve_comment_references.h
     internal/retry_traits_generator.cc
     internal/retry_traits_generator.h
     internal/round_robin_decorator_generator.cc
@@ -169,6 +171,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/descriptor_utils_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc
+        internal/resolve_comment_references_test.cc
         internal/scaffold_generator_test.cc
         internal/service_code_generator_test.cc)
 
