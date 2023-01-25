@@ -58,7 +58,8 @@ class GrpcClientCarrier
 
   void Set(opentelemetry::nostd::string_view key,
            opentelemetry::nostd::string_view value) noexcept override {
-    context_.AddMetadata(key.data(), value.data());
+    context_.AddMetadata({key.data(), key.size()},
+                         {value.data(), value.size()});
   }
 
  private:
