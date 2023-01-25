@@ -146,22 +146,21 @@ function (google_cloud_cpp_generator_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    add_library(google_cloud_cpp_generator_testing INTERFACE)
-    target_sources(
-        google_cloud_cpp_generator_testing
-        INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/testing/printer_mocks.h)
+    add_library(
+        google_cloud_cpp_generator_testing # cmake-format: sort
+        testing/fake_source_tree.cc testing/fake_source_tree.h
+        testing/printer_mocks.h)
+    google_cloud_cpp_add_common_options(google_cloud_cpp_generator_testing)
     target_link_libraries(
         google_cloud_cpp_generator_testing
-        INTERFACE google_cloud_cpp_testing GTest::gmock_main GTest::gmock
-                  GTest::gtest)
+        PUBLIC google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+               GTest::gtest protobuf::libprotoc)
     create_bazel_config(google_cloud_cpp_generator_testing YEAR "2020")
     target_include_directories(
-        google_cloud_cpp_generator_testing
-        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                  $<INSTALL_INTERFACE:include>)
+        google_cloud_cpp_generator_testing PUBLIC ${PROJECT_SOURCE_DIR}
+                                                  ${PROJECT_BINARY_DIR})
     target_compile_options(google_cloud_cpp_generator_testing
-                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
     set(google_cloud_cpp_generator_unit_tests
         # cmake-format: sort

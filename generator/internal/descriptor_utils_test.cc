@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -31,6 +32,7 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+using ::google::cloud::generator_testing::FakeSourceTree;
 using ::google::cloud::generator_testing::MockGeneratorContext;
 using ::google::cloud::generator_testing::MockZeroCopyOutputStream;
 using ::google::cloud::testing_util::IsOk;
@@ -51,24 +53,6 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
-
-class StringSourceTree : public google::protobuf::compiler::SourceTree {
- public:
-  explicit StringSourceTree(std::map<std::string, std::string> files)
-      : files_(std::move(files)) {}
-
-  google::protobuf::io::ZeroCopyInputStream* Open(
-      std::string const& filename) override {
-    auto iter = files_.find(filename);
-    return iter == files_.end() ? nullptr
-                                : new google::protobuf::io::ArrayInputStream(
-                                      iter->second.data(),
-                                      static_cast<int>(iter->second.size()));
-  }
-
- private:
-  std::map<std::string, std::string> files_;
-};
 
 class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
  public:
@@ -165,7 +149,7 @@ class CreateServiceVarsTest
  private:
   FileDescriptorProto file_proto_;
   AbortingErrorCollector collector_;
-  StringSourceTree source_tree_;
+  FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
   google::protobuf::MergedDescriptorDatabase merged_db_;
@@ -592,7 +576,7 @@ class CreateMethodVarsTest
  private:
   FileDescriptorProto file_proto_;
   AbortingErrorCollector collector_;
-  StringSourceTree source_tree_;
+  FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
   google::protobuf::MergedDescriptorDatabase merged_db_;
@@ -1116,7 +1100,7 @@ message RoutingParameter {
 }
 )""";
 
-  StringSourceTree source_tree(std::map<std::string, std::string>{
+  FakeSourceTree source_tree(std::map<std::string, std::string>{
       {"google/api/routing.proto", kRoutingProto},
       {"google/cloud/foo/service.proto", kServiceBoilerPlate + service_proto}});
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
