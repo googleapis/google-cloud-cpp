@@ -14,10 +14,16 @@
 # limitations under the License.
 # ~~~
 
-# TODO(8125): Re-enable the macos build.
+# TODO(#8125): Re-enable this on macOS and GCC < 8.0.
 if (APPLE)
-    message(WARNING "Cannot build this google/cloud/channel "
+    message(WARNING "Cannot build google/cloud/channel "
                     "on Apple platforms until #8125 is fixed.")
+    return()
+endif ()
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION
+                                                  VERSION_LESS 8.0)
+    message(WARNING "Cannot build google/cloud/channel "
+                    "with GCC < 8.0 until #8125 is fixed.")
     return()
 endif ()
 
