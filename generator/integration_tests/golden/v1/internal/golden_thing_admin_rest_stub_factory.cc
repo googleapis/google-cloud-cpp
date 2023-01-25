@@ -17,11 +17,13 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub_factory.h"
+#include "absl/strings/match.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_logging_decorator.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_metadata_decorator.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/log.h"
@@ -42,7 +44,13 @@ CreateDefaultGoldenThingAdminRestStub(Options const& options) {
   }
   if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
     opts.set<rest_internal::LongrunningEndpointOption>(
-        "longrunning.googleapis.com");
+        "https://longrunning.googleapis.com");
+  }
+  if (opts.has<EndpointOption>()) {
+    std::string endpoint = opts.get<EndpointOption>();
+    if (!absl::StartsWithIgnoreCase(endpoint, "http")) {
+      opts.set<EndpointOption>(absl::StrCat("https://", endpoint));
+    }
   }
   std::shared_ptr<GoldenThingAdminRestStub> stub =
       std::make_shared<DefaultGoldenThingAdminRestStub>(std::move(opts));
