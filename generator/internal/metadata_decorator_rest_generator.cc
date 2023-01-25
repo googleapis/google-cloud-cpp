@@ -219,14 +219,13 @@ Status MetadataDecoratorRestGenerator::GenerateCc() {
   // includes
   CcPrint("\n");
   CcLocalIncludes({vars("metadata_rest_header_path"),
-                   HasExplicitRoutingMethod()
-                       ? "google/cloud/internal/absl_str_join_quiet.h"
-                       : "",
                    "google/cloud/internal/api_client_header.h",
                    HasExplicitRoutingMethod()
                        ? "google/cloud/internal/routing_matcher.h"
                        : "",
                    "google/cloud/common_options.h", "google/cloud/status_or.h",
+                   "google/cloud/internal/absl_str_cat_quiet.h",
+                   "google/cloud/internal/absl_str_join_quiet.h",
                    "absl/strings/str_format.h"});
   CcSystemIncludes({"memory"});
 
