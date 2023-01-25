@@ -42,13 +42,14 @@ load(":google_cloud_cpp_generator_testing.bzl", "google_cloud_cpp_generator_test
 cc_library(
     name = "google_cloud_cpp_generator_testing",
     testonly = True,
-    srcs = google_cloud_cpp_generator_testing_hdrs,
-    hdrs = google_cloud_cpp_generator_testing_srcs,
+    srcs = google_cloud_cpp_generator_testing_srcs,
+    hdrs = google_cloud_cpp_generator_testing_hdrs,
     deps = [
         ":google_cloud_cpp_generator",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
+        "@com_google_protobuf//:protoc_lib",
     ],
 )
 
