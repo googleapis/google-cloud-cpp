@@ -27,6 +27,7 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::SizeIs;
 
 constexpr auto kXmlFilledWithGarbage =
     R"xml(<?xml version="1.0" encoding="UTF-8"?>
@@ -156,6 +157,37 @@ TEST(XmlNodeTest, InvalidTag) {
   auto res = XmlNode::Parse("</>");
   EXPECT_THAT(res,
               StatusIs(StatusCode::kInvalidArgument, HasSubstr("Invalid tag")));
+}
+
+TEST(XmlNodeTest, EscapeTag) {
+  auto root = XmlNode::CreateRoot();
+  auto tag = root->AppendTagNode(R"(a<>"'&b)");
+  std::string escaped = "a&lt;&gt;&quot;&apos;&amp;b";
+  EXPECT_EQ("<" + escaped + "></" + escaped + ">", tag->ToString());
+}
+
+TEST(XmlNodeTest, EscapeText) {
+  auto root = XmlNode::CreateRoot();
+  auto text = root->AppendTextNode(R"(a<>"'&b)");
+  EXPECT_EQ(R"(a&lt;&gt;"'&amp;b)", text->ToString());
+}
+
+TEST(XmlNodeTest, Unescape) {
+  std::string tag_name = "a&lt;&gt;&quot;&apos;&amp;b";
+  std::string text_content = R"(a&lt;&gt;"'&amp;b)";
+  auto res = XmlNode::Parse("<" + tag_name + ">" + text_content + "</" +
+                            tag_name + ">");
+  ASSERT_STATUS_OK(res);
+
+  auto children = (*res)->GetChildren();
+  ASSERT_THAT(children, SizeIs(1));
+  EXPECT_EQ(R"(a<>"'&b)", children[0]->GetTagName());
+  EXPECT_EQ("", children[0]->GetTextContent());
+
+  children = children[0]->GetChildren();
+  ASSERT_THAT(children, SizeIs(1));
+  EXPECT_EQ("", children[0]->GetTagName());
+  EXPECT_EQ(R"(a<>"'&b)", children[0]->GetTextContent());
 }
 
 constexpr auto kExpectedCompleteMultipartUpload =

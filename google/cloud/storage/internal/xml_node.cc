@@ -13,10 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/xml_node.h"
-#include "google/cloud/storage/internal/xml_escape.h"
 #include "google/cloud/storage/internal/xml_parser_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "absl/strings/ascii.h"
 #include <iterator>
 #include <regex>
 #include <stack>
@@ -28,17 +29,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-// std::isblank only treats space and tab as blank
-inline bool IsSpace(char c) {
-  return c == ' ' || c == '\n' || c == '\r' || c == '\t';
+bool IsSpace(char c) {
+  return absl::ascii_isspace(static_cast<unsigned char>(c));
 }
 
-inline std::string Rtrim(absl::string_view val) {
-  auto const* end =
-      std::find_if(val.rbegin(), val.rend(), [](unsigned char ch) {
-        return !IsSpace(ch);
-      }).base();
-  return std::string{val.begin(), end};
+std::string Rtrim(absl::string_view str) {
+  return std::string(absl::StripTrailingAsciiWhitespace(str));
+}
+
+std::string EscapeXmlTag(absl::string_view tag) {
+  return absl::StrReplaceAll(tag, {{"&", "&amp;"},
+                                   {"<", "&lt;"},
+                                   {">", "&gt;"},
+                                   {"\"", "&quot;"},
+                                   {"'", "&apos;"}});
+}
+
+std::string EscapeXmlContent(absl::string_view content) {
+  return absl::StrReplaceAll(content,
+                             {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
+}
+
+std::string UnescapeXmlString(absl::string_view val) {
+  return absl::StrReplaceAll(val, {{"&lt;", "<"},
+                                   {"&gt;", ">"},
+                                   {"&quot;", "\""},
+                                   {"&apos;", "'"},
+                                   {"&amp;", "&"}});
 }
 
 enum class ParseState {
@@ -208,12 +225,12 @@ class XmlParser {
     }
     if (c == '>') {
       auto close_tag = Rtrim(UnescapeXmlString(close_tag_));
-      if (current_parent_->GetTagName() != close_tag_) {
+      if (current_parent_->GetTagName() != close_tag) {
         // Mismatched close tag.
         return internal::InvalidArgumentError(
             absl::StrCat("Mismatched close tag found, starttag: '",
                          current_parent_->GetTagName(), "' and the endtag: '",
-                         close_tag_, "'."),
+                         close_tag, "'."),
             GCP_ERROR_INFO());
       }
       // The current tag ends. Set the current marker to the previous parent.
