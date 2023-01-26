@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_stub.h"
+#include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 
 namespace google {

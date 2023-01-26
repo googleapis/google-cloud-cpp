@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_logging_decorator.h"
+#include "generator/integration_tests/tests/mock_golden_kitchen_sink_rest_stub.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/tests/mock_golden_kitchen_sink_rest_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 

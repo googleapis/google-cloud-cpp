@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
-#include "google/cloud/log.h"
 #include "generator/testing/printer_mocks.h"
+#include "google/cloud/log.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>

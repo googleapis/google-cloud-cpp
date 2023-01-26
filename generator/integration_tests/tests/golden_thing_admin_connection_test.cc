@@ -13,16 +13,16 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_connection_impl.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
+#include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_connection_impl.h"
-#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
-#include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <memory>

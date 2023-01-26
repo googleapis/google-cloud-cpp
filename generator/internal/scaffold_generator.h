@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SCAFFOLD_GENERATOR_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SCAFFOLD_GENERATOR_H
 
-#include "absl/types/optional.h"
 #include "generator/generator_config.pb.h"
+#include "absl/types/optional.h"
 #include <iosfwd>
 #include <map>
 #include <string>

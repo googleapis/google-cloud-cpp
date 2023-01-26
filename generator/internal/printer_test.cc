@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "generator/internal/printer.h"
+#include "generator/testing/printer_mocks.h"
 #include "google/cloud/internal/port_platform.h"
 #include "absl/memory/memory.h"
-#include "generator/testing/printer_mocks.h"
 #include <gmock/gmock.h>
 
 namespace google {

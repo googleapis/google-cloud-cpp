@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
+#include "generator/internal/codegen_utils.h"
+#include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -20,8 +22,6 @@
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
-#include "generator/internal/codegen_utils.h"
-#include "generator/internal/printer.h"
 #include <google/api/client.pb.h>
 #include <google/api/routing.pb.h>
 #include <google/protobuf/descriptor.h>

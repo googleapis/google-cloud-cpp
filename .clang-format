@@ -20,7 +20,13 @@ IncludeCategories:
   Priority: 1000
 - Regex: '^\"google/cloud/'  # project includes should sort first
   Priority: 500
-- Regex: '^\"'
+- Regex: '^\"generator/'     # project includes should sort first
+  Priority: 500
+- Regex: '^\"generator/internal/' # project internals second
+  Priority: 1000
+- Regex: '^\"generator/testing/'  # testing helpers third
+  Priority: 1100
+- Regex: '^\"'         # And then includes from other projects or the system
   Priority: 1500
 - Regex: '^<grpc/'
   Priority: 2000

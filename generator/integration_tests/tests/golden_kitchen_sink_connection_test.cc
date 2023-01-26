@@ -13,14 +13,14 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/testing_util/scoped_log.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_options.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/polling_policy.h"
+#include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 

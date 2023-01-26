@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLIENT_GENERATOR_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CLIENT_GENERATOR_H
 
-#include "google/cloud/status.h"
 #include "generator/internal/service_code_generator.h"
+#include "google/cloud/status.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <map>

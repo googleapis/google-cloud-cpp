@@ -13,14 +13,6 @@
 // limitations under the License.
 
 #include "generator/internal/descriptor_utils.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
-#include "google/cloud/internal/algorithm.h"
-#include "google/cloud/log.h"
-#include "absl/strings/str_split.h"
-#include "absl/strings/strip.h"
-#include "absl/types/variant.h"
 #include "generator/internal/auth_decorator_generator.h"
 #include "generator/internal/client_generator.h"
 #include "generator/internal/codegen_utils.h"
@@ -51,6 +43,14 @@
 #include "generator/internal/stub_rest_generator.h"
 #include "generator/internal/tracing_connection_generator.h"
 #include "generator/internal/tracing_stub_generator.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/log.h"
+#include "absl/strings/str_split.h"
+#include "absl/strings/strip.h"
+#include "absl/types/variant.h"
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>

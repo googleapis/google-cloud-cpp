@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "generator/internal/descriptor_utils.h"
+#include "generator/internal/codegen_utils.h"
+#include "generator/testing/fake_source_tree.h"
+#include "generator/testing/printer_mocks.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
-#include "generator/internal/codegen_utils.h"
-#include "generator/testing/fake_source_tree.h"
-#include "generator/testing/printer_mocks.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/descriptor_database.h>

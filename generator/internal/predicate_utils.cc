@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/descriptor_utils.h"
 #include "google/cloud/log.h"
 #include "google/cloud/optional.h"
-#include "generator/internal/descriptor_utils.h"
 #include <google/longrunning/operations.pb.h>
 #include <string>
 
