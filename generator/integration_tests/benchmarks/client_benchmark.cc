@@ -12,11 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/internal/make_status.h"
-#include "google/cloud/log.h"
-#include "google/cloud/version.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_client.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_connection_impl.h"
@@ -24,6 +19,11 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_metadata_decorator.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
+#include "google/cloud/version.h"
 #include <benchmark/benchmark.h>
 #include <memory>
 

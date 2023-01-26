@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "generator/generator.h"
-#include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 #include "generator/internal/printer.h"
 #include "generator/testing/printer_mocks.h"
+#include "google/cloud/log.h"
+#include "absl/memory/memory.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>

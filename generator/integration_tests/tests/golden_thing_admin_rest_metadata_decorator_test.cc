@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_metadata_decorator.h"
+#include "generator/integration_tests/tests/mock_golden_thing_admin_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/tests/mock_golden_thing_admin_rest_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 

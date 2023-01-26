@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/grpc_options.h"
-#include "google/cloud/testing_util/mock_backoff_policy.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/v1/golden_thing_admin_client.h"
 #include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
+#include "google/cloud/grpc_options.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 

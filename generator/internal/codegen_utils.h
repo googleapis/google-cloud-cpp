@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CODEGEN_UTILS_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_CODEGEN_UTILS_H
 
+#include "generator/internal/printer.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/string_view.h"
-#include "generator/internal/printer.h"
 #include <map>
 #include <string>
 #include <vector>

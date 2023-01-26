@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/generator.h"
+#include "generator/generator_config.pb.h"
+#include "generator/internal/codegen_utils.h"
+#include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/log.h"
@@ -19,10 +23,6 @@
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 #include "absl/strings/match.h"
-#include "generator/generator.h"
-#include "generator/generator_config.pb.h"
-#include "generator/internal/codegen_utils.h"
-#include "generator/internal/scaffold_generator.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
 #include <algorithm>

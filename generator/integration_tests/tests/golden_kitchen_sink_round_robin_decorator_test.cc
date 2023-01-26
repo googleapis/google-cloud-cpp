@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_round_robin_decorator.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <memory>
 
