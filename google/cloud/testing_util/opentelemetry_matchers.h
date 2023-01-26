@@ -111,6 +111,13 @@ template <typename... Args>
 template <typename T>
 ::testing::Matcher<
     std::pair<std::string, opentelemetry::sdk::common::OwnedAttributeValue>>
+SpanAttribute(std::string const& key) {
+  return ::testing::Pair(key, ::testing::VariantWith<T>(::testing::_));
+}
+
+template <typename T>
+::testing::Matcher<
+    std::pair<std::string, opentelemetry::sdk::common::OwnedAttributeValue>>
 SpanAttribute(std::string const& key, T value) {
   return ::testing::Pair(key, ::testing::VariantWith<T>(value));
 }

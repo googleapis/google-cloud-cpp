@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPENTELEMETRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPENTELEMETRY_H
 
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <grpcpp/grpcpp.h>
@@ -57,6 +58,24 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
  * [header]: https://cloud.google.com/trace/docs/setup#force-trace
  */
 void InjectTraceContext(grpc::ClientContext& context, Options const& options);
+
+/**
+ * Extracts information from the `grpc::ClientContext`, and adds it to a span.
+ *
+ * The span is ended. The original value is returned, for the sake of
+ * composition.
+ *
+ * Note that this function should be called after the server has filled in the
+ * relevant information, such as the peer.
+ */
+template <typename T>
+T EndSpan(grpc::ClientContext& context, opentelemetry::trace::Span& span,
+          T value) {
+  // TODO(#10489): extract IP version, IP address, port from peer URI.
+  // https://github.com/grpc/grpc/blob/master/src/core/lib/address_utils/parse_address.h
+  span.SetAttribute("grpc.peer", context.peer());
+  return EndSpan(span, std::move(value));
+}
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 

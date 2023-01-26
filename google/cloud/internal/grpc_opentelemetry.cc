@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
