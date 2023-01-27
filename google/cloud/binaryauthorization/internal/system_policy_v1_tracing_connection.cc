@@ -43,6 +43,17 @@ SystemPolicyV1TracingConnection::GetSystemPolicy(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<binaryauthorization::SystemPolicyV1Connection>
+MakeSystemPolicyV1TracingConnection(
+    std::shared_ptr<binaryauthorization::SystemPolicyV1Connection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<SystemPolicyV1TracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
 }  // namespace cloud

@@ -21,6 +21,7 @@
 #include "google/cloud/appengine/internal/firewall_connection_impl.h"
 #include "google/cloud/appengine/internal/firewall_option_defaults.h"
 #include "google/cloud/appengine/internal/firewall_stub_factory.h"
+#include "google/cloud/appengine/internal/firewall_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -80,8 +81,9 @@ std::shared_ptr<FirewallConnection> MakeFirewallConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       appengine_internal::CreateDefaultFirewallStub(background->cq(), options);
-  return std::make_shared<appengine_internal::FirewallConnectionImpl>(
+  auto conn = std::make_shared<appengine_internal::FirewallConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return appengine_internal::MakeFirewallTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

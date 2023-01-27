@@ -20,6 +20,7 @@
 #include "google/cloud/retail/internal/search_connection_impl.h"
 #include "google/cloud/retail/internal/search_option_defaults.h"
 #include "google/cloud/retail/internal/search_stub_factory.h"
+#include "google/cloud/retail/internal/search_tracing_connection.h"
 #include "google/cloud/retail/search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -53,8 +54,9 @@ std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultSearchServiceStub(background->cq(),
                                                               options);
-  return std::make_shared<retail_internal::SearchServiceConnectionImpl>(
+  auto conn = std::make_shared<retail_internal::SearchServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return retail_internal::MakeSearchServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

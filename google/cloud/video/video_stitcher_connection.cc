@@ -20,6 +20,7 @@
 #include "google/cloud/video/internal/video_stitcher_connection_impl.h"
 #include "google/cloud/video/internal/video_stitcher_option_defaults.h"
 #include "google/cloud/video/internal/video_stitcher_stub_factory.h"
+#include "google/cloud/video/internal/video_stitcher_tracing_connection.h"
 #include "google/cloud/video/video_stitcher_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -174,8 +175,11 @@ MakeVideoStitcherServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = video_internal::CreateDefaultVideoStitcherServiceStub(
       background->cq(), options);
-  return std::make_shared<video_internal::VideoStitcherServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<video_internal::VideoStitcherServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return video_internal::MakeVideoStitcherServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

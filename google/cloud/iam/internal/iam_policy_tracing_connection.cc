@@ -56,6 +56,16 @@ IAMPolicyTracingConnection::TestIamPermissions(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<iam::IAMPolicyConnection> MakeIAMPolicyTracingConnection(
+    std::shared_ptr<iam::IAMPolicyConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<IAMPolicyTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal
 }  // namespace cloud

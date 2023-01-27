@@ -20,6 +20,7 @@
 #include "google/cloud/vision/internal/product_search_connection_impl.h"
 #include "google/cloud/vision/internal/product_search_option_defaults.h"
 #include "google/cloud/vision/internal/product_search_stub_factory.h"
+#include "google/cloud/vision/internal/product_search_tracing_connection.h"
 #include "google/cloud/vision/product_search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -166,8 +167,9 @@ std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = vision_internal::CreateDefaultProductSearchStub(background->cq(),
                                                               options);
-  return std::make_shared<vision_internal::ProductSearchConnectionImpl>(
+  auto conn = std::make_shared<vision_internal::ProductSearchConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return vision_internal::MakeProductSearchTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

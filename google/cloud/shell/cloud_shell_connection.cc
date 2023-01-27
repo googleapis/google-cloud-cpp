@@ -21,6 +21,7 @@
 #include "google/cloud/shell/internal/cloud_shell_connection_impl.h"
 #include "google/cloud/shell/internal/cloud_shell_option_defaults.h"
 #include "google/cloud/shell/internal/cloud_shell_stub_factory.h"
+#include "google/cloud/shell/internal/cloud_shell_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -82,8 +83,10 @@ std::shared_ptr<CloudShellServiceConnection> MakeCloudShellServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = shell_internal::CreateDefaultCloudShellServiceStub(
       background->cq(), options);
-  return std::make_shared<shell_internal::CloudShellServiceConnectionImpl>(
+  auto conn = std::make_shared<shell_internal::CloudShellServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return shell_internal::MakeCloudShellServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

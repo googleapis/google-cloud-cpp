@@ -86,6 +86,18 @@ ReachabilityServiceTracingConnection::DeleteConnectivityTest(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<networkmanagement::ReachabilityServiceConnection>
+MakeReachabilityServiceTracingConnection(
+    std::shared_ptr<networkmanagement::ReachabilityServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<ReachabilityServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
 }  // namespace cloud

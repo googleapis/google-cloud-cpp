@@ -21,6 +21,7 @@
 #include "google/cloud/dialogflow_cx/internal/environments_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/environments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/environments_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/environments_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -113,8 +114,11 @@ std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultEnvironmentsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::EnvironmentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<dialogflow_cx_internal::EnvironmentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakeEnvironmentsTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(

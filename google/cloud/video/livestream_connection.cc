@@ -20,6 +20,7 @@
 #include "google/cloud/video/internal/livestream_connection_impl.h"
 #include "google/cloud/video/internal/livestream_option_defaults.h"
 #include "google/cloud/video/internal/livestream_stub_factory.h"
+#include "google/cloud/video/internal/livestream_tracing_connection.h"
 #include "google/cloud/video/livestream_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -162,8 +163,10 @@ std::shared_ptr<LivestreamServiceConnection> MakeLivestreamServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = video_internal::CreateDefaultLivestreamServiceStub(
       background->cq(), options);
-  return std::make_shared<video_internal::LivestreamServiceConnectionImpl>(
+  auto conn = std::make_shared<video_internal::LivestreamServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return video_internal::MakeLivestreamServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

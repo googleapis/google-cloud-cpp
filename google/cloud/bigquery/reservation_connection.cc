@@ -20,6 +20,7 @@
 #include "google/cloud/bigquery/internal/reservation_connection_impl.h"
 #include "google/cloud/bigquery/internal/reservation_option_defaults.h"
 #include "google/cloud/bigquery/internal/reservation_stub_factory.h"
+#include "google/cloud/bigquery/internal/reservation_tracing_connection.h"
 #include "google/cloud/bigquery/reservation_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -187,8 +188,11 @@ std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigquery_internal::CreateDefaultReservationServiceStub(
       background->cq(), options);
-  return std::make_shared<bigquery_internal::ReservationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<bigquery_internal::ReservationServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return bigquery_internal::MakeReservationServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

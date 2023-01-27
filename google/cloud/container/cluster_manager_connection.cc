@@ -21,6 +21,7 @@
 #include "google/cloud/container/internal/cluster_manager_connection_impl.h"
 #include "google/cloud/container/internal/cluster_manager_option_defaults.h"
 #include "google/cloud/container/internal/cluster_manager_stub_factory.h"
+#include "google/cloud/container/internal/cluster_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -241,8 +242,11 @@ std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = container_internal::CreateDefaultClusterManagerStub(
       background->cq(), options);
-  return std::make_shared<container_internal::ClusterManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<container_internal::ClusterManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return container_internal::MakeClusterManagerTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

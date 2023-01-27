@@ -20,6 +20,7 @@
 #include "google/cloud/osconfig/internal/os_config_connection_impl.h"
 #include "google/cloud/osconfig/internal/os_config_option_defaults.h"
 #include "google/cloud/osconfig/internal/os_config_stub_factory.h"
+#include "google/cloud/osconfig/internal/os_config_tracing_connection.h"
 #include "google/cloud/osconfig/os_config_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -123,8 +124,11 @@ std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = osconfig_internal::CreateDefaultOsConfigServiceStub(
       background->cq(), options);
-  return std::make_shared<osconfig_internal::OsConfigServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<osconfig_internal::OsConfigServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return osconfig_internal::MakeOsConfigServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

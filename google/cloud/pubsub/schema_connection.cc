@@ -20,6 +20,7 @@
 #include "google/cloud/pubsub/internal/schema_connection_impl.h"
 #include "google/cloud/pubsub/internal/schema_option_defaults.h"
 #include "google/cloud/pubsub/internal/schema_stub_factory.h"
+#include "google/cloud/pubsub/internal/schema_tracing_connection.h"
 #include "google/cloud/pubsub/schema_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -103,8 +104,9 @@ std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = pubsub_internal::CreateDefaultSchemaServiceStub(background->cq(),
                                                               options);
-  return std::make_shared<pubsub_internal::SchemaServiceConnectionImpl>(
+  auto conn = std::make_shared<pubsub_internal::SchemaServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return pubsub_internal::MakeSchemaServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

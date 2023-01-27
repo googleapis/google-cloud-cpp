@@ -20,6 +20,7 @@
 #include "google/cloud/dialogflow_es/internal/participants_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/participants_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/participants_stub_factory.h"
+#include "google/cloud/dialogflow_es/internal/participants_tracing_connection.h"
 #include "google/cloud/dialogflow_es/participants_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -107,8 +108,11 @@ std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultParticipantsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::ParticipantsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<dialogflow_es_internal::ParticipantsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return dialogflow_es_internal::MakeParticipantsTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(

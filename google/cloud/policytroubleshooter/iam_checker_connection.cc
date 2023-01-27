@@ -21,6 +21,7 @@
 #include "google/cloud/policytroubleshooter/internal/iam_checker_connection_impl.h"
 #include "google/cloud/policytroubleshooter/internal/iam_checker_option_defaults.h"
 #include "google/cloud/policytroubleshooter/internal/iam_checker_stub_factory.h"
+#include "google/cloud/policytroubleshooter/internal/iam_checker_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -51,9 +52,11 @@ std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = policytroubleshooter_internal::CreateDefaultIamCheckerStub(
       background->cq(), options);
-  return std::make_shared<
-      policytroubleshooter_internal::IamCheckerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<policytroubleshooter_internal::IamCheckerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return policytroubleshooter_internal::MakeIamCheckerTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 #include "google/cloud/billing/internal/cloud_billing_connection_impl.h"
 #include "google/cloud/billing/internal/cloud_billing_option_defaults.h"
 #include "google/cloud/billing/internal/cloud_billing_stub_factory.h"
+#include "google/cloud/billing/internal/cloud_billing_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -107,8 +108,9 @@ std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = billing_internal::CreateDefaultCloudBillingStub(background->cq(),
                                                               options);
-  return std::make_shared<billing_internal::CloudBillingConnectionImpl>(
+  auto conn = std::make_shared<billing_internal::CloudBillingConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return billing_internal::MakeCloudBillingTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

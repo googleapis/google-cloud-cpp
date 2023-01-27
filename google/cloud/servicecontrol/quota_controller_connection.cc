@@ -20,6 +20,7 @@
 #include "google/cloud/servicecontrol/internal/quota_controller_connection_impl.h"
 #include "google/cloud/servicecontrol/internal/quota_controller_option_defaults.h"
 #include "google/cloud/servicecontrol/internal/quota_controller_stub_factory.h"
+#include "google/cloud/servicecontrol/internal/quota_controller_tracing_connection.h"
 #include "google/cloud/servicecontrol/quota_controller_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -51,9 +52,11 @@ std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = servicecontrol_internal::CreateDefaultQuotaControllerStub(
       background->cq(), options);
-  return std::make_shared<
-      servicecontrol_internal::QuotaControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<servicecontrol_internal::QuotaControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return servicecontrol_internal::MakeQuotaControllerTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

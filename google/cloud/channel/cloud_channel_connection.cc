@@ -21,6 +21,7 @@
 #include "google/cloud/channel/internal/cloud_channel_connection_impl.h"
 #include "google/cloud/channel/internal/cloud_channel_option_defaults.h"
 #include "google/cloud/channel/internal/cloud_channel_stub_factory.h"
+#include "google/cloud/channel/internal/cloud_channel_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -364,8 +365,11 @@ MakeCloudChannelServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = channel_internal::CreateDefaultCloudChannelServiceStub(
       background->cq(), options);
-  return std::make_shared<channel_internal::CloudChannelServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<channel_internal::CloudChannelServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return channel_internal::MakeCloudChannelServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

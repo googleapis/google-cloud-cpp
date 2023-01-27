@@ -21,6 +21,7 @@
 #include "google/cloud/dataproc/internal/autoscaling_policy_connection_impl.h"
 #include "google/cloud/dataproc/internal/autoscaling_policy_option_defaults.h"
 #include "google/cloud/dataproc/internal/autoscaling_policy_stub_factory.h"
+#include "google/cloud/dataproc/internal/autoscaling_policy_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -79,9 +80,11 @@ MakeAutoscalingPolicyServiceConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultAutoscalingPolicyServiceStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       dataproc_internal::AutoscalingPolicyServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return dataproc_internal::MakeAutoscalingPolicyServiceTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<AutoscalingPolicyServiceConnection>

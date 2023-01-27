@@ -20,6 +20,7 @@
 #include "google/cloud/resourcemanager/internal/organizations_connection_impl.h"
 #include "google/cloud/resourcemanager/internal/organizations_option_defaults.h"
 #include "google/cloud/resourcemanager/internal/organizations_stub_factory.h"
+#include "google/cloud/resourcemanager/internal/organizations_tracing_connection.h"
 #include "google/cloud/resourcemanager/organizations_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -76,9 +77,11 @@ std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = resourcemanager_internal::CreateDefaultOrganizationsStub(
       background->cq(), options);
-  return std::make_shared<
-      resourcemanager_internal::OrganizationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<resourcemanager_internal::OrganizationsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return resourcemanager_internal::MakeOrganizationsTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

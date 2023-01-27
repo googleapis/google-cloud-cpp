@@ -72,6 +72,18 @@ AppGatewaysServiceTracingConnection::DeleteAppGateway(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<beyondcorp::AppGatewaysServiceConnection>
+MakeAppGatewaysServiceTracingConnection(
+    std::shared_ptr<beyondcorp::AppGatewaysServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<AppGatewaysServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
 }  // namespace cloud

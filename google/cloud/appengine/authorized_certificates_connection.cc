@@ -21,6 +21,7 @@
 #include "google/cloud/appengine/internal/authorized_certificates_connection_impl.h"
 #include "google/cloud/appengine/internal/authorized_certificates_option_defaults.h"
 #include "google/cloud/appengine/internal/authorized_certificates_stub_factory.h"
+#include "google/cloud/appengine/internal/authorized_certificates_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -77,9 +78,11 @@ MakeAuthorizedCertificatesConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = appengine_internal::CreateDefaultAuthorizedCertificatesStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       appengine_internal::AuthorizedCertificatesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return appengine_internal::MakeAuthorizedCertificatesTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

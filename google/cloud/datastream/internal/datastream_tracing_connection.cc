@@ -247,6 +247,17 @@ DatastreamTracingConnection::DeleteRoute(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<datastream::DatastreamConnection>
+MakeDatastreamTracingConnection(
+    std::shared_ptr<datastream::DatastreamConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<DatastreamTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
 }  // namespace cloud

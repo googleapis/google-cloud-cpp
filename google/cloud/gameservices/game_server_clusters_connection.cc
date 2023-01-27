@@ -21,6 +21,7 @@
 #include "google/cloud/gameservices/internal/game_server_clusters_connection_impl.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_option_defaults.h"
 #include "google/cloud/gameservices/internal/game_server_clusters_stub_factory.h"
+#include "google/cloud/gameservices/internal/game_server_clusters_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -103,9 +104,11 @@ MakeGameServerClustersServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gameservices_internal::CreateDefaultGameServerClustersServiceStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       gameservices_internal::GameServerClustersServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return gameservices_internal::MakeGameServerClustersServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

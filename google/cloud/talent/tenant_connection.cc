@@ -20,6 +20,7 @@
 #include "google/cloud/talent/internal/tenant_connection_impl.h"
 #include "google/cloud/talent/internal/tenant_option_defaults.h"
 #include "google/cloud/talent/internal/tenant_stub_factory.h"
+#include "google/cloud/talent/internal/tenant_tracing_connection.h"
 #include "google/cloud/talent/tenant_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -75,8 +76,9 @@ std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = talent_internal::CreateDefaultTenantServiceStub(background->cq(),
                                                               options);
-  return std::make_shared<talent_internal::TenantServiceConnectionImpl>(
+  auto conn = std::make_shared<talent_internal::TenantServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return talent_internal::MakeTenantServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

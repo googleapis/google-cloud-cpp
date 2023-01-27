@@ -21,6 +21,7 @@
 #include "google/cloud/deploy/internal/cloud_deploy_connection_impl.h"
 #include "google/cloud/deploy/internal/cloud_deploy_option_defaults.h"
 #include "google/cloud/deploy/internal/cloud_deploy_stub_factory.h"
+#include "google/cloud/deploy/internal/cloud_deploy_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -198,8 +199,9 @@ std::shared_ptr<CloudDeployConnection> MakeCloudDeployConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       deploy_internal::CreateDefaultCloudDeployStub(background->cq(), options);
-  return std::make_shared<deploy_internal::CloudDeployConnectionImpl>(
+  auto conn = std::make_shared<deploy_internal::CloudDeployConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return deploy_internal::MakeCloudDeployTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

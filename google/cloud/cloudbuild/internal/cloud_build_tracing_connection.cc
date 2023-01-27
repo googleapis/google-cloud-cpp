@@ -187,6 +187,17 @@ CloudBuildTracingConnection::ListWorkerPools(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<cloudbuild::CloudBuildConnection>
+MakeCloudBuildTracingConnection(
+    std::shared_ptr<cloudbuild::CloudBuildConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<CloudBuildTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal
 }  // namespace cloud

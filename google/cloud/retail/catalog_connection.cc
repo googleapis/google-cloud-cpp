@@ -21,6 +21,7 @@
 #include "google/cloud/retail/internal/catalog_connection_impl.h"
 #include "google/cloud/retail/internal/catalog_option_defaults.h"
 #include "google/cloud/retail/internal/catalog_stub_factory.h"
+#include "google/cloud/retail/internal/catalog_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -112,8 +113,9 @@ std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultCatalogServiceStub(background->cq(),
                                                                options);
-  return std::make_shared<retail_internal::CatalogServiceConnectionImpl>(
+  auto conn = std::make_shared<retail_internal::CatalogServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return retail_internal::MakeCatalogServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

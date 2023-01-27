@@ -20,6 +20,7 @@
 #include "google/cloud/managedidentities/internal/managed_identities_connection_impl.h"
 #include "google/cloud/managedidentities/internal/managed_identities_option_defaults.h"
 #include "google/cloud/managedidentities/internal/managed_identities_stub_factory.h"
+#include "google/cloud/managedidentities/internal/managed_identities_tracing_connection.h"
 #include "google/cloud/managedidentities/managed_identities_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -125,9 +126,11 @@ MakeManagedIdentitiesServiceConnection(Options options) {
   auto stub =
       managedidentities_internal::CreateDefaultManagedIdentitiesServiceStub(
           background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       managedidentities_internal::ManagedIdentitiesServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return managedidentities_internal::
+      MakeManagedIdentitiesServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

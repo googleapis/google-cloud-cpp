@@ -21,6 +21,7 @@
 #include "google/cloud/connectors/internal/connectors_connection_impl.h"
 #include "google/cloud/connectors/internal/connectors_option_defaults.h"
 #include "google/cloud/connectors/internal/connectors_stub_factory.h"
+#include "google/cloud/connectors/internal/connectors_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -152,8 +153,9 @@ std::shared_ptr<ConnectorsConnection> MakeConnectorsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = connectors_internal::CreateDefaultConnectorsStub(background->cq(),
                                                                options);
-  return std::make_shared<connectors_internal::ConnectorsConnectionImpl>(
+  auto conn = std::make_shared<connectors_internal::ConnectorsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return connectors_internal::MakeConnectorsTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

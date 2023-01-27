@@ -21,6 +21,7 @@
 #include "google/cloud/talent/internal/event_connection_impl.h"
 #include "google/cloud/talent/internal/event_option_defaults.h"
 #include "google/cloud/talent/internal/event_stub_factory.h"
+#include "google/cloud/talent/internal/event_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -50,8 +51,9 @@ std::shared_ptr<EventServiceConnection> MakeEventServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       talent_internal::CreateDefaultEventServiceStub(background->cq(), options);
-  return std::make_shared<talent_internal::EventServiceConnectionImpl>(
+  auto conn = std::make_shared<talent_internal::EventServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return talent_internal::MakeEventServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

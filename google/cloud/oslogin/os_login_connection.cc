@@ -20,6 +20,7 @@
 #include "google/cloud/oslogin/internal/os_login_connection_impl.h"
 #include "google/cloud/oslogin/internal/os_login_option_defaults.h"
 #include "google/cloud/oslogin/internal/os_login_stub_factory.h"
+#include "google/cloud/oslogin/internal/os_login_tracing_connection.h"
 #include "google/cloud/oslogin/os_login_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -84,8 +85,9 @@ std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = oslogin_internal::CreateDefaultOsLoginServiceStub(
       background->cq(), options);
-  return std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
+  auto conn = std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return oslogin_internal::MakeOsLoginServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

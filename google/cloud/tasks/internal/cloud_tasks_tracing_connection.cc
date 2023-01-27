@@ -160,6 +160,16 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingConnection::RunTask(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<tasks::CloudTasksConnection> MakeCloudTasksTracingConnection(
+    std::shared_ptr<tasks::CloudTasksConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<CloudTasksTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
 }  // namespace cloud

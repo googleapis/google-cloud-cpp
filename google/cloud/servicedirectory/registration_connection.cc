@@ -20,6 +20,7 @@
 #include "google/cloud/servicedirectory/internal/registration_connection_impl.h"
 #include "google/cloud/servicedirectory/internal/registration_option_defaults.h"
 #include "google/cloud/servicedirectory/internal/registration_stub_factory.h"
+#include "google/cloud/servicedirectory/internal/registration_tracing_connection.h"
 #include "google/cloud/servicedirectory/registration_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -155,9 +156,11 @@ MakeRegistrationServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = servicedirectory_internal::CreateDefaultRegistrationServiceStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       servicedirectory_internal::RegistrationServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return servicedirectory_internal::MakeRegistrationServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

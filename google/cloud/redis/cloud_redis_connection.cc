@@ -21,6 +21,7 @@
 #include "google/cloud/redis/internal/cloud_redis_connection_impl.h"
 #include "google/cloud/redis/internal/cloud_redis_option_defaults.h"
 #include "google/cloud/redis/internal/cloud_redis_stub_factory.h"
+#include "google/cloud/redis/internal/cloud_redis_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -127,8 +128,9 @@ std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       redis_internal::CreateDefaultCloudRedisStub(background->cq(), options);
-  return std::make_shared<redis_internal::CloudRedisConnectionImpl>(
+  auto conn = std::make_shared<redis_internal::CloudRedisConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return redis_internal::MakeCloudRedisTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

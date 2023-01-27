@@ -21,6 +21,7 @@
 #include "google/cloud/resourcemanager/internal/folders_connection_impl.h"
 #include "google/cloud/resourcemanager/internal/folders_option_defaults.h"
 #include "google/cloud/resourcemanager/internal/folders_stub_factory.h"
+#include "google/cloud/resourcemanager/internal/folders_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -121,8 +122,10 @@ std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = resourcemanager_internal::CreateDefaultFoldersStub(
       background->cq(), options);
-  return std::make_shared<resourcemanager_internal::FoldersConnectionImpl>(
+  auto conn = std::make_shared<resourcemanager_internal::FoldersConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return resourcemanager_internal::MakeFoldersTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

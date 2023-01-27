@@ -20,6 +20,7 @@
 #include "google/cloud/run/internal/services_connection_impl.h"
 #include "google/cloud/run/internal/services_option_defaults.h"
 #include "google/cloud/run/internal/services_stub_factory.h"
+#include "google/cloud/run/internal/services_tracing_connection.h"
 #include "google/cloud/run/services_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -95,8 +96,9 @@ std::shared_ptr<ServicesConnection> MakeServicesConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       run_internal::CreateDefaultServicesStub(background->cq(), options);
-  return std::make_shared<run_internal::ServicesConnectionImpl>(
+  auto conn = std::make_shared<run_internal::ServicesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return run_internal::MakeServicesTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

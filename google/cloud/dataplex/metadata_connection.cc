@@ -20,6 +20,7 @@
 #include "google/cloud/dataplex/internal/metadata_connection_impl.h"
 #include "google/cloud/dataplex/internal/metadata_option_defaults.h"
 #include "google/cloud/dataplex/internal/metadata_stub_factory.h"
+#include "google/cloud/dataplex/internal/metadata_tracing_connection.h"
 #include "google/cloud/dataplex/metadata_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -102,8 +103,11 @@ std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataplex_internal::CreateDefaultMetadataServiceStub(
       background->cq(), options);
-  return std::make_shared<dataplex_internal::MetadataServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<dataplex_internal::MetadataServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return dataplex_internal::MakeMetadataServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,6 +20,7 @@
 #include "google/cloud/vpcaccess/internal/vpc_access_connection_impl.h"
 #include "google/cloud/vpcaccess/internal/vpc_access_option_defaults.h"
 #include "google/cloud/vpcaccess/internal/vpc_access_stub_factory.h"
+#include "google/cloud/vpcaccess/internal/vpc_access_tracing_connection.h"
 #include "google/cloud/vpcaccess/vpc_access_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -76,8 +77,11 @@ std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = vpcaccess_internal::CreateDefaultVpcAccessServiceStub(
       background->cq(), options);
-  return std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return vpcaccess_internal::MakeVpcAccessServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

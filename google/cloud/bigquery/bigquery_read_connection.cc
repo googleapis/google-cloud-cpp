@@ -21,6 +21,7 @@
 #include "google/cloud/bigquery/internal/bigquery_read_connection_impl.h"
 #include "google/cloud/bigquery/internal/bigquery_read_option_defaults.h"
 #include "google/cloud/bigquery/internal/bigquery_read_stub_factory.h"
+#include "google/cloud/bigquery/internal/bigquery_read_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -74,8 +75,9 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigquery_internal::CreateDefaultBigQueryReadStub(background->cq(),
                                                                options);
-  return std::make_shared<bigquery_internal::BigQueryReadConnectionImpl>(
+  auto conn = std::make_shared<bigquery_internal::BigQueryReadConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return bigquery_internal::MakeBigQueryReadTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

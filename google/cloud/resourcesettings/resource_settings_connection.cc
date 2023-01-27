@@ -20,6 +20,7 @@
 #include "google/cloud/resourcesettings/internal/resource_settings_connection_impl.h"
 #include "google/cloud/resourcesettings/internal/resource_settings_option_defaults.h"
 #include "google/cloud/resourcesettings/internal/resource_settings_stub_factory.h"
+#include "google/cloud/resourcesettings/internal/resource_settings_tracing_connection.h"
 #include "google/cloud/resourcesettings/resource_settings_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -68,9 +69,11 @@ MakeResourceSettingsServiceConnection(Options options) {
   auto stub =
       resourcesettings_internal::CreateDefaultResourceSettingsServiceStub(
           background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       resourcesettings_internal::ResourceSettingsServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return resourcesettings_internal::
+      MakeResourceSettingsServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

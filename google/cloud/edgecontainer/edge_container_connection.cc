@@ -21,6 +21,7 @@
 #include "google/cloud/edgecontainer/internal/edge_container_connection_impl.h"
 #include "google/cloud/edgecontainer/internal/edge_container_option_defaults.h"
 #include "google/cloud/edgecontainer/internal/edge_container_stub_factory.h"
+#include "google/cloud/edgecontainer/internal/edge_container_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -172,8 +173,11 @@ std::shared_ptr<EdgeContainerConnection> MakeEdgeContainerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = edgecontainer_internal::CreateDefaultEdgeContainerStub(
       background->cq(), options);
-  return std::make_shared<edgecontainer_internal::EdgeContainerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<edgecontainer_internal::EdgeContainerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return edgecontainer_internal::MakeEdgeContainerTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

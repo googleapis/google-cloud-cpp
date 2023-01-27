@@ -20,6 +20,7 @@
 #include "google/cloud/vmmigration/internal/vm_migration_connection_impl.h"
 #include "google/cloud/vmmigration/internal/vm_migration_option_defaults.h"
 #include "google/cloud/vmmigration/internal/vm_migration_stub_factory.h"
+#include "google/cloud/vmmigration/internal/vm_migration_tracing_connection.h"
 #include "google/cloud/vmmigration/vm_migration_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -392,8 +393,10 @@ std::shared_ptr<VmMigrationConnection> MakeVmMigrationConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = vmmigration_internal::CreateDefaultVmMigrationStub(
       background->cq(), options);
-  return std::make_shared<vmmigration_internal::VmMigrationConnectionImpl>(
+  auto conn = std::make_shared<vmmigration_internal::VmMigrationConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return vmmigration_internal::MakeVmMigrationTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

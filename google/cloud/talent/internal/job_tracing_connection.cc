@@ -107,6 +107,16 @@ JobServiceTracingConnection::SearchJobsForAlert(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<talent::JobServiceConnection> MakeJobServiceTracingConnection(
+    std::shared_ptr<talent::JobServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<JobServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
 }  // namespace cloud

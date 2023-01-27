@@ -115,6 +115,16 @@ GkeHubTracingConnection::GenerateConnectManifest(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<gkehub::GkeHubConnection> MakeGkeHubTracingConnection(
+    std::shared_ptr<gkehub::GkeHubConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<GkeHubTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
 }  // namespace cloud

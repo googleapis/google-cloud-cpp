@@ -21,6 +21,7 @@
 #include "google/cloud/dataproc/internal/batch_controller_connection_impl.h"
 #include "google/cloud/dataproc/internal/batch_controller_option_defaults.h"
 #include "google/cloud/dataproc/internal/batch_controller_stub_factory.h"
+#include "google/cloud/dataproc/internal/batch_controller_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -73,8 +74,11 @@ std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultBatchControllerStub(
       background->cq(), options);
-  return std::make_shared<dataproc_internal::BatchControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<dataproc_internal::BatchControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return dataproc_internal::MakeBatchControllerTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(

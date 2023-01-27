@@ -20,6 +20,7 @@
 #include "google/cloud/networkmanagement/internal/reachability_connection_impl.h"
 #include "google/cloud/networkmanagement/internal/reachability_option_defaults.h"
 #include "google/cloud/networkmanagement/internal/reachability_stub_factory.h"
+#include "google/cloud/networkmanagement/internal/reachability_tracing_connection.h"
 #include "google/cloud/networkmanagement/reachability_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -95,9 +96,11 @@ MakeReachabilityServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = networkmanagement_internal::CreateDefaultReachabilityServiceStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       networkmanagement_internal::ReachabilityServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return networkmanagement_internal::MakeReachabilityServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

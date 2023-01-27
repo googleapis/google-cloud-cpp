@@ -20,6 +20,7 @@
 #include "google/cloud/notebooks/internal/managed_notebook_connection_impl.h"
 #include "google/cloud/notebooks/internal/managed_notebook_option_defaults.h"
 #include "google/cloud/notebooks/internal/managed_notebook_stub_factory.h"
+#include "google/cloud/notebooks/internal/managed_notebook_tracing_connection.h"
 #include "google/cloud/notebooks/managed_notebook_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -146,9 +147,11 @@ MakeManagedNotebookServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = notebooks_internal::CreateDefaultManagedNotebookServiceStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       notebooks_internal::ManagedNotebookServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return notebooks_internal::MakeManagedNotebookServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

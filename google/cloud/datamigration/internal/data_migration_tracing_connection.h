@@ -124,6 +124,16 @@ class DataMigrationServiceTracingConnection
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<datamigration::DataMigrationServiceConnection>
+MakeDataMigrationServiceTracingConnection(
+    std::shared_ptr<datamigration::DataMigrationServiceConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal
 }  // namespace cloud

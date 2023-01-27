@@ -66,6 +66,18 @@ ResourceSettingsServiceTracingConnection::UpdateSetting(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<resourcesettings::ResourceSettingsServiceConnection>
+MakeResourceSettingsServiceTracingConnection(
+    std::shared_ptr<resourcesettings::ResourceSettingsServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ResourceSettingsServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal
 }  // namespace cloud

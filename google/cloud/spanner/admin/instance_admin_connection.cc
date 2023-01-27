@@ -21,6 +21,7 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_connection_impl.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_stub_factory.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -140,8 +141,11 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = spanner_admin_internal::CreateDefaultInstanceAdminStub(
       background->cq(), options);
-  return std::make_shared<spanner_admin_internal::InstanceAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<spanner_admin_internal::InstanceAdminConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return spanner_admin_internal::MakeInstanceAdminTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -72,6 +72,17 @@ DomainMappingsTracingConnection::DeleteDomainMapping(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<appengine::DomainMappingsConnection>
+MakeDomainMappingsTracingConnection(
+    std::shared_ptr<appengine::DomainMappingsConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<DomainMappingsTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
 }  // namespace cloud

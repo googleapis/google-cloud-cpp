@@ -20,6 +20,7 @@
 #include "google/cloud/speech/internal/speech_connection_impl.h"
 #include "google/cloud/speech/internal/speech_option_defaults.h"
 #include "google/cloud/speech/internal/speech_stub_factory.h"
+#include "google/cloud/speech/internal/speech_tracing_connection.h"
 #include "google/cloud/speech/speech_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -67,8 +68,9 @@ std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       speech_internal::CreateDefaultSpeechStub(background->cq(), options);
-  return std::make_shared<speech_internal::SpeechConnectionImpl>(
+  auto conn = std::make_shared<speech_internal::SpeechConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return speech_internal::MakeSpeechTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

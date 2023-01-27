@@ -20,6 +20,7 @@
 #include "google/cloud/monitoring/internal/metrics_scopes_connection_impl.h"
 #include "google/cloud/monitoring/internal/metrics_scopes_option_defaults.h"
 #include "google/cloud/monitoring/internal/metrics_scopes_stub_factory.h"
+#include "google/cloud/monitoring/internal/metrics_scopes_tracing_connection.h"
 #include "google/cloud/monitoring/metrics_scopes_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -77,8 +78,11 @@ std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = monitoring_internal::CreateDefaultMetricsScopesStub(
       background->cq(), options);
-  return std::make_shared<monitoring_internal::MetricsScopesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<monitoring_internal::MetricsScopesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return monitoring_internal::MakeMetricsScopesTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

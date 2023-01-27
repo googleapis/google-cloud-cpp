@@ -105,6 +105,17 @@ ContentServiceTracingConnection::ListContent(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<dataplex::ContentServiceConnection>
+MakeContentServiceTracingConnection(
+    std::shared_ptr<dataplex::ContentServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ContentServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
 }  // namespace cloud

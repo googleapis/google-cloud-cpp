@@ -20,6 +20,7 @@
 #include "google/cloud/tpu/internal/tpu_connection_impl.h"
 #include "google/cloud/tpu/internal/tpu_option_defaults.h"
 #include "google/cloud/tpu/internal/tpu_stub_factory.h"
+#include "google/cloud/tpu/internal/tpu_tracing_connection.h"
 #include "google/cloud/tpu/tpu_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -117,8 +118,9 @@ std::shared_ptr<TpuConnection> MakeTpuConnection(Options options) {
   options = tpu_internal::TpuDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = tpu_internal::CreateDefaultTpuStub(background->cq(), options);
-  return std::make_shared<tpu_internal::TpuConnectionImpl>(
+  auto conn = std::make_shared<tpu_internal::TpuConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return tpu_internal::MakeTpuTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

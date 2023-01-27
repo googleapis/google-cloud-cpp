@@ -21,6 +21,7 @@
 #include "google/cloud/dialogflow_es/internal/conversations_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/conversations_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/conversations_stub_factory.h"
+#include "google/cloud/dialogflow_es/internal/conversations_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -86,8 +87,11 @@ std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultConversationsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::ConversationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<dialogflow_es_internal::ConversationsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return dialogflow_es_internal::MakeConversationsTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(

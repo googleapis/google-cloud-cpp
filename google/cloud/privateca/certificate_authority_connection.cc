@@ -21,6 +21,7 @@
 #include "google/cloud/privateca/internal/certificate_authority_connection_impl.h"
 #include "google/cloud/privateca/internal/certificate_authority_option_defaults.h"
 #include "google/cloud/privateca/internal/certificate_authority_stub_factory.h"
+#include "google/cloud/privateca/internal/certificate_authority_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -276,9 +277,11 @@ MakeCertificateAuthorityServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = privateca_internal::CreateDefaultCertificateAuthorityServiceStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       privateca_internal::CertificateAuthorityServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return privateca_internal::MakeCertificateAuthorityServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

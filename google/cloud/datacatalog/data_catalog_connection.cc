@@ -21,6 +21,7 @@
 #include "google/cloud/datacatalog/internal/data_catalog_connection_impl.h"
 #include "google/cloud/datacatalog/internal/data_catalog_option_defaults.h"
 #include "google/cloud/datacatalog/internal/data_catalog_stub_factory.h"
+#include "google/cloud/datacatalog/internal/data_catalog_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -236,8 +237,10 @@ std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = datacatalog_internal::CreateDefaultDataCatalogStub(
       background->cq(), options);
-  return std::make_shared<datacatalog_internal::DataCatalogConnectionImpl>(
+  auto conn = std::make_shared<datacatalog_internal::DataCatalogConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return datacatalog_internal::MakeDataCatalogTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

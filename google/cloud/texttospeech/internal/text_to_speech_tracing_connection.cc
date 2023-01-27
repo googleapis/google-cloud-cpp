@@ -51,6 +51,17 @@ TextToSpeechTracingConnection::SynthesizeSpeech(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<texttospeech::TextToSpeechConnection>
+MakeTextToSpeechTracingConnection(
+    std::shared_ptr<texttospeech::TextToSpeechConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<TextToSpeechTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_internal
 }  // namespace cloud

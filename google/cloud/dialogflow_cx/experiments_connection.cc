@@ -21,6 +21,7 @@
 #include "google/cloud/dialogflow_cx/internal/experiments_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/experiments_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/experiments_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -89,8 +90,11 @@ std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultExperimentsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::ExperimentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<dialogflow_cx_internal::ExperimentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakeExperimentsTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(

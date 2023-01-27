@@ -20,6 +20,7 @@
 #include "google/cloud/profiler/internal/profiler_connection_impl.h"
 #include "google/cloud/profiler/internal/profiler_option_defaults.h"
 #include "google/cloud/profiler/internal/profiler_stub_factory.h"
+#include "google/cloud/profiler/internal/profiler_tracing_connection.h"
 #include "google/cloud/profiler/profiler_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -63,8 +64,11 @@ std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = profiler_internal::CreateDefaultProfilerServiceStub(
       background->cq(), options);
-  return std::make_shared<profiler_internal::ProfilerServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<profiler_internal::ProfilerServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return profiler_internal::MakeProfilerServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

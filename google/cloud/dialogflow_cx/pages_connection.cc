@@ -20,6 +20,7 @@
 #include "google/cloud/dialogflow_cx/internal/pages_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/pages_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/pages_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/pages_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/pages_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -72,8 +73,9 @@ std::shared_ptr<PagesConnection> MakePagesConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       dialogflow_cx_internal::CreateDefaultPagesStub(background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::PagesConnectionImpl>(
+  auto conn = std::make_shared<dialogflow_cx_internal::PagesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakePagesTracingConnection(std::move(conn));
 }
 
 std::shared_ptr<PagesConnection> MakePagesConnection(Options options) {

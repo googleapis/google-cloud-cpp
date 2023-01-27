@@ -21,6 +21,7 @@
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_connection_impl.h"
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_option_defaults.h"
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub_factory.h"
+#include "google/cloud/baremetalsolution/internal/bare_metal_solution_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -194,9 +195,11 @@ std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = baremetalsolution_internal::CreateDefaultBareMetalSolutionStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       baremetalsolution_internal::BareMetalSolutionConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return baremetalsolution_internal::MakeBareMetalSolutionTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

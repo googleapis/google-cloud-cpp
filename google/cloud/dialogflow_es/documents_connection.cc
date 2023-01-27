@@ -21,6 +21,7 @@
 #include "google/cloud/dialogflow_es/internal/documents_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/documents_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/documents_stub_factory.h"
+#include "google/cloud/dialogflow_es/internal/documents_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -107,8 +108,10 @@ std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultDocumentsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::DocumentsConnectionImpl>(
+  auto conn = std::make_shared<dialogflow_es_internal::DocumentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return dialogflow_es_internal::MakeDocumentsTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(Options options) {

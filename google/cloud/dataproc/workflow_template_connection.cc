@@ -20,6 +20,7 @@
 #include "google/cloud/dataproc/internal/workflow_template_connection_impl.h"
 #include "google/cloud/dataproc/internal/workflow_template_option_defaults.h"
 #include "google/cloud/dataproc/internal/workflow_template_stub_factory.h"
+#include "google/cloud/dataproc/internal/workflow_template_tracing_connection.h"
 #include "google/cloud/dataproc/workflow_template_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -96,9 +97,11 @@ MakeWorkflowTemplateServiceConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultWorkflowTemplateServiceStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       dataproc_internal::WorkflowTemplateServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return dataproc_internal::MakeWorkflowTemplateServiceTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<WorkflowTemplateServiceConnection>

@@ -63,6 +63,17 @@ Controller2TracingConnection::UpdateActiveBreakpoint(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<debugger::Controller2Connection>
+MakeController2TracingConnection(
+    std::shared_ptr<debugger::Controller2Connection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<Controller2TracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
 }  // namespace cloud

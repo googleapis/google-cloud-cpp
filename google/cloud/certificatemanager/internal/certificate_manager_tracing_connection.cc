@@ -252,6 +252,18 @@ CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<certificatemanager::CertificateManagerConnection>
+MakeCertificateManagerTracingConnection(
+    std::shared_ptr<certificatemanager::CertificateManagerConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<CertificateManagerTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_internal
 }  // namespace cloud

@@ -21,6 +21,7 @@
 #include "google/cloud/optimization/internal/fleet_routing_connection_impl.h"
 #include "google/cloud/optimization/internal/fleet_routing_option_defaults.h"
 #include "google/cloud/optimization/internal/fleet_routing_stub_factory.h"
+#include "google/cloud/optimization/internal/fleet_routing_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -59,8 +60,11 @@ std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = optimization_internal::CreateDefaultFleetRoutingStub(
       background->cq(), options);
-  return std::make_shared<optimization_internal::FleetRoutingConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<optimization_internal::FleetRoutingConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return optimization_internal::MakeFleetRoutingTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

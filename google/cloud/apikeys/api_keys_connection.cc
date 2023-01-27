@@ -21,6 +21,7 @@
 #include "google/cloud/apikeys/internal/api_keys_connection_impl.h"
 #include "google/cloud/apikeys/internal/api_keys_option_defaults.h"
 #include "google/cloud/apikeys/internal/api_keys_stub_factory.h"
+#include "google/cloud/apikeys/internal/api_keys_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -95,8 +96,9 @@ std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       apikeys_internal::CreateDefaultApiKeysStub(background->cq(), options);
-  return std::make_shared<apikeys_internal::ApiKeysConnectionImpl>(
+  auto conn = std::make_shared<apikeys_internal::ApiKeysConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return apikeys_internal::MakeApiKeysTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

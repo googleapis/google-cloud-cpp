@@ -129,6 +129,17 @@ CloudBillingTracingConnection::TestIamPermissions(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<billing::CloudBillingConnection>
+MakeCloudBillingTracingConnection(
+    std::shared_ptr<billing::CloudBillingConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<CloudBillingTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
 }  // namespace cloud

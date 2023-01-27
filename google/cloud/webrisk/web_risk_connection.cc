@@ -20,6 +20,7 @@
 #include "google/cloud/webrisk/internal/web_risk_connection_impl.h"
 #include "google/cloud/webrisk/internal/web_risk_option_defaults.h"
 #include "google/cloud/webrisk/internal/web_risk_stub_factory.h"
+#include "google/cloud/webrisk/internal/web_risk_tracing_connection.h"
 #include "google/cloud/webrisk/web_risk_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -68,8 +69,9 @@ std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = webrisk_internal::CreateDefaultWebRiskServiceStub(
       background->cq(), options);
-  return std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
+  auto conn = std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return webrisk_internal::MakeWebRiskServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

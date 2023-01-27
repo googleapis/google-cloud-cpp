@@ -20,6 +20,7 @@
 #include "google/cloud/trace/internal/trace_connection_impl.h"
 #include "google/cloud/trace/internal/trace_option_defaults.h"
 #include "google/cloud/trace/internal/trace_stub_factory.h"
+#include "google/cloud/trace/internal/trace_tracing_connection.h"
 #include "google/cloud/trace/trace_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -55,8 +56,9 @@ std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       trace_internal::CreateDefaultTraceServiceStub(background->cq(), options);
-  return std::make_shared<trace_internal::TraceServiceConnectionImpl>(
+  auto conn = std::make_shared<trace_internal::TraceServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return trace_internal::MakeTraceServiceTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

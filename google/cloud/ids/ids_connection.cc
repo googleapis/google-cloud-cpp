@@ -21,6 +21,7 @@
 #include "google/cloud/ids/internal/ids_connection_impl.h"
 #include "google/cloud/ids/internal/ids_option_defaults.h"
 #include "google/cloud/ids/internal/ids_stub_factory.h"
+#include "google/cloud/ids/internal/ids_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -70,8 +71,9 @@ std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   options = ids_internal::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = ids_internal::CreateDefaultIDSStub(background->cq(), options);
-  return std::make_shared<ids_internal::IDSConnectionImpl>(
+  auto conn = std::make_shared<ids_internal::IDSConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return ids_internal::MakeIDSTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

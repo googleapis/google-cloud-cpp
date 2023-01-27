@@ -85,6 +85,18 @@ Status SessionEntityTypesTracingConnection::DeleteSessionEntityType(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<dialogflow_cx::SessionEntityTypesConnection>
+MakeSessionEntityTypesTracingConnection(
+    std::shared_ptr<dialogflow_cx::SessionEntityTypesConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<SessionEntityTypesTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
 }  // namespace cloud

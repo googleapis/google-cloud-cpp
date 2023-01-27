@@ -21,6 +21,7 @@
 #include "google/cloud/dialogflow_cx/internal/changelogs_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/changelogs_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/changelogs_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -59,8 +60,11 @@ std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultChangelogsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::ChangelogsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<dialogflow_cx_internal::ChangelogsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakeChangelogsTracingConnection(
+      std::move(conn));
 }
 
 std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(

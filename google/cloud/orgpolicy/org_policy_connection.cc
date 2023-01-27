@@ -20,6 +20,7 @@
 #include "google/cloud/orgpolicy/internal/org_policy_connection_impl.h"
 #include "google/cloud/orgpolicy/internal/org_policy_option_defaults.h"
 #include "google/cloud/orgpolicy/internal/org_policy_stub_factory.h"
+#include "google/cloud/orgpolicy/internal/org_policy_tracing_connection.h"
 #include "google/cloud/orgpolicy/org_policy_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -87,8 +88,9 @@ std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       orgpolicy_internal::CreateDefaultOrgPolicyStub(background->cq(), options);
-  return std::make_shared<orgpolicy_internal::OrgPolicyConnectionImpl>(
+  auto conn = std::make_shared<orgpolicy_internal::OrgPolicyConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return orgpolicy_internal::MakeOrgPolicyTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

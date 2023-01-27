@@ -21,6 +21,7 @@
 #include "google/cloud/apigateway/internal/api_gateway_connection_impl.h"
 #include "google/cloud/apigateway/internal/api_gateway_option_defaults.h"
 #include "google/cloud/apigateway/internal/api_gateway_stub_factory.h"
+#include "google/cloud/apigateway/internal/api_gateway_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -160,8 +161,11 @@ std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = apigateway_internal::CreateDefaultApiGatewayServiceStub(
       background->cq(), options);
-  return std::make_shared<apigateway_internal::ApiGatewayServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<apigateway_internal::ApiGatewayServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return apigateway_internal::MakeApiGatewayServiceTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

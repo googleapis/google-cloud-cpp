@@ -20,6 +20,7 @@
 #include "google/cloud/texttospeech/internal/text_to_speech_connection_impl.h"
 #include "google/cloud/texttospeech/internal/text_to_speech_option_defaults.h"
 #include "google/cloud/texttospeech/internal/text_to_speech_stub_factory.h"
+#include "google/cloud/texttospeech/internal/text_to_speech_tracing_connection.h"
 #include "google/cloud/texttospeech/text_to_speech_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -57,8 +58,11 @@ std::shared_ptr<TextToSpeechConnection> MakeTextToSpeechConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = texttospeech_internal::CreateDefaultTextToSpeechStub(
       background->cq(), options);
-  return std::make_shared<texttospeech_internal::TextToSpeechConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<texttospeech_internal::TextToSpeechConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
+  return texttospeech_internal::MakeTextToSpeechTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_connection_impl.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_option_defaults.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_stub_factory.h"
+#include "google/cloud/gkemulticloud/v1/internal/attached_clusters_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -106,9 +107,11 @@ std::shared_ptr<AttachedClustersConnection> MakeAttachedClustersConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gkemulticloud_v1_internal::CreateDefaultAttachedClustersStub(
       background->cq(), options);
-  return std::make_shared<
+  auto conn = std::make_shared<
       gkemulticloud_v1_internal::AttachedClustersConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return gkemulticloud_v1_internal::MakeAttachedClustersTracingConnection(
+      std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

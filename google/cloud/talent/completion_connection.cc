@@ -21,6 +21,7 @@
 #include "google/cloud/talent/internal/completion_connection_impl.h"
 #include "google/cloud/talent/internal/completion_option_defaults.h"
 #include "google/cloud/talent/internal/completion_stub_factory.h"
+#include "google/cloud/talent/internal/completion_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -49,8 +50,9 @@ std::shared_ptr<CompletionConnection> MakeCompletionConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       talent_internal::CreateDefaultCompletionStub(background->cq(), options);
-  return std::make_shared<talent_internal::CompletionConnectionImpl>(
+  auto conn = std::make_shared<talent_internal::CompletionConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return talent_internal::MakeCompletionTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
