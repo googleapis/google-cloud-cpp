@@ -19,6 +19,7 @@
 #include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_impl_generator.h"
 #include "generator/internal/connection_impl_rest_generator.h"
+#include "generator/internal/format_method_comments.h"
 #include "generator/internal/forwarding_client_generator.h"
 #include "generator/internal/forwarding_connection_generator.h"
 #include "generator/internal/forwarding_idempotency_policy_generator.h"
@@ -95,26 +96,6 @@ std::string CppTypeToString(FieldDescriptor const* field) {
   return field->cpp_type_name();
 }
 
-std::string FormatDoxygenLink(
-    google::protobuf::Descriptor const& message_type) {
-  google::protobuf::SourceLocation loc;
-  message_type.GetSourceLocation(&loc);
-  std::string output_type_proto_file_name = message_type.file()->name();
-  return absl::StrCat(
-      "@googleapis_link{", ProtoNameToCppName(message_type.full_name()), ",",
-      output_type_proto_file_name, "#L", loc.start_line + 1, "}");
-}
-
-std::string DefineReferenceLink(
-    google::protobuf::Descriptor const& message_type) {
-  google::protobuf::SourceLocation loc;
-  message_type.GetSourceLocation(&loc);
-  std::string output_type_proto_file_name = message_type.file()->name();
-  return absl::StrCat("@googleapis_reference_link{",
-                      output_type_proto_file_name, "#L", loc.start_line + 1,
-                      "}");
-}
-
 absl::variant<std::string, google::protobuf::Descriptor const*>
 FullyQualifyMessageType(google::protobuf::MethodDescriptor const& method,
                         std::string message_type) {
@@ -156,16 +137,6 @@ struct FormatDoxygenLinkVisitor {
   }
   std::string operator()(google::protobuf::Descriptor const* d) const {
     return FormatDoxygenLink(*d);
-  }
-};
-
-struct DefineReferenceLinkVisitor {
-  explicit DefineReferenceLinkVisitor() = default;
-  std::string operator()(std::string const& s) const {
-    return ProtoNameToCppName(s);
-  }
-  std::string operator()(google::protobuf::Descriptor const* d) const {
-    return DefineReferenceLink(*d);
   }
 };
 
@@ -757,6 +728,16 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
 
 }  // namespace
 
+std::string FormatDoxygenLink(
+    google::protobuf::Descriptor const& message_type) {
+  google::protobuf::SourceLocation loc;
+  message_type.GetSourceLocation(&loc);
+  std::string output_type_proto_file_name = message_type.file()->name();
+  return absl::StrCat(
+      "@googleapis_link{", ProtoNameToCppName(message_type.full_name()), ",",
+      output_type_proto_file_name, "#L", loc.start_line + 1, "}");
+}
+
 absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
 ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
@@ -853,68 +834,6 @@ ExplicitRoutingInfo ParseExplicitRoutingHeader(
     info[match[2].str()].push_back({std::move(field_name), std::move(pattern)});
   }
   return info;
-}
-
-std::string FormatMethodComments(
-    google::protobuf::MethodDescriptor const& method,
-    std::string const& variable_parameter_comments) {
-  google::protobuf::SourceLocation method_source_location;
-  if (!method.GetSourceLocation(&method_source_location) ||
-      method_source_location.leading_comments.empty()) {
-    GCP_LOG(FATAL) << __FILE__ << ":" << __LINE__ << ": " << method.full_name()
-                   << " no leading_comments to format";
-  }
-  std::string doxygen_formatted_function_comments = absl::StrReplaceAll(
-      EscapePrinterDelimiter(method_source_location.leading_comments),
-      {{"\n", "\n  ///"}});
-
-  auto const options_comment = std::string{
-      R"""(  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-)"""};
-
-  std::string return_comment_string;
-  if (IsLongrunningOperation(method)) {
-    return_comment_string =
-        "  /// @return $method_longrunning_deduced_return_doxygen_link$\n";
-  } else if (IsBidirStreaming(method)) {
-    return_comment_string =
-        "  /// @return A bidirectional streaming interface with request "
-        "(write) type: " +
-        FormatDoxygenLink(*method.input_type()) +
-        " and response (read) type: $method_return_doxygen_link$\n";
-  } else if (!IsResponseTypeEmpty(method) && !IsPaginated(method)) {
-    return_comment_string = "  /// @return $method_return_doxygen_link$\n";
-  } else if (IsPaginated(method)) {
-    return_comment_string =
-        "  /// @return $method_paginated_return_doxygen_link$\n";
-  }
-
-  std::string trailer = "  ///\n";
-  trailer += "  /// [" + method.input_type()->full_name() + "]: ";
-  trailer += DefineReferenceLink(*method.input_type()) + "\n";
-  if (IsLongrunningOperation(method)) {
-    auto info =
-        method.options().GetExtension(google::longrunning::operation_info);
-    auto type = DeduceLongrunningOperationResponseType(method, info);
-    trailer += "  /// [" +
-               absl::visit(FullyQualifiedMessageTypeVisitor(), type) + "]: ";
-    trailer += absl::visit(DefineReferenceLinkVisitor{}, type) + "\n";
-  } else if (IsPaginated(method)) {
-    auto info = DeterminePagination(method);
-    if (info->second != nullptr) {
-      trailer += "  /// [" + info->second->full_name() + "]: ";
-      trailer += DefineReferenceLink(*info->second) + "\n";
-    }
-  } else if (!IsResponseTypeEmpty(method)) {
-    trailer += "  /// [" + method.output_type()->full_name() + "]: ";
-    trailer += DefineReferenceLink(*method.output_type()) + "\n";
-  }
-
-  trailer += "  ///\n";
-  return absl::StrCat("  ///\n  ///", doxygen_formatted_function_comments, "\n",
-                      variable_parameter_comments, options_comment,
-                      return_comment_string, trailer);
 }
 
 std::string FormatMethodCommentsMethodSignature(
