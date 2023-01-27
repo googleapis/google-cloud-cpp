@@ -82,6 +82,17 @@ ServiceUsageTracingConnection::BatchGetServices(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<serviceusage::ServiceUsageConnection>
+MakeServiceUsageTracingConnection(
+    std::shared_ptr<serviceusage::ServiceUsageConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ServiceUsageTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_internal
 }  // namespace cloud

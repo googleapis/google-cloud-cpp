@@ -68,6 +68,16 @@ PoliciesTracingConnection::DeletePolicy(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<iam_v2::PoliciesConnection> MakePoliciesTracingConnection(
+    std::shared_ptr<iam_v2::PoliciesConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<PoliciesTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v2_internal
 }  // namespace cloud

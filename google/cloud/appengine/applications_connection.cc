@@ -21,6 +21,7 @@
 #include "google/cloud/appengine/internal/applications_connection_impl.h"
 #include "google/cloud/appengine/internal/applications_option_defaults.h"
 #include "google/cloud/appengine/internal/applications_stub_factory.h"
+#include "google/cloud/appengine/internal/applications_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -74,8 +75,9 @@ std::shared_ptr<ApplicationsConnection> MakeApplicationsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = appengine_internal::CreateDefaultApplicationsStub(
       background->cq(), options);
-  return std::make_shared<appengine_internal::ApplicationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return appengine_internal::MakeApplicationsTracingConnection(
+      std::make_shared<appengine_internal::ApplicationsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

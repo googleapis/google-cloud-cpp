@@ -60,6 +60,16 @@ class Controller2TracingConnection : public debugger::Controller2Connection {
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<debugger::Controller2Connection>
+MakeController2TracingConnection(
+    std::shared_ptr<debugger::Controller2Connection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
 }  // namespace cloud

@@ -279,6 +279,18 @@ KeyManagementServiceTracingConnection::GenerateRandomBytes(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<kms::KeyManagementServiceConnection>
+MakeKeyManagementServiceTracingConnection(
+    std::shared_ptr<kms::KeyManagementServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<KeyManagementServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
 }  // namespace cloud

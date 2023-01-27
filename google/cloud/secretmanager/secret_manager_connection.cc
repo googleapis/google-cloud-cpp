@@ -20,6 +20,7 @@
 #include "google/cloud/secretmanager/internal/secret_manager_connection_impl.h"
 #include "google/cloud/secretmanager/internal/secret_manager_option_defaults.h"
 #include "google/cloud/secretmanager/internal/secret_manager_stub_factory.h"
+#include "google/cloud/secretmanager/internal/secret_manager_tracing_connection.h"
 #include "google/cloud/secretmanager/secret_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -137,9 +138,10 @@ MakeSecretManagerServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = secretmanager_internal::CreateDefaultSecretManagerServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      secretmanager_internal::SecretManagerServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return secretmanager_internal::MakeSecretManagerServiceTracingConnection(
+      std::make_shared<
+          secretmanager_internal::SecretManagerServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

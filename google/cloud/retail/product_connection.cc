@@ -20,6 +20,7 @@
 #include "google/cloud/retail/internal/product_connection_impl.h"
 #include "google/cloud/retail/internal/product_option_defaults.h"
 #include "google/cloud/retail/internal/product_stub_factory.h"
+#include "google/cloud/retail/internal/product_tracing_connection.h"
 #include "google/cloud/retail/product_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -124,8 +125,9 @@ std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultProductServiceStub(background->cq(),
                                                                options);
-  return std::make_shared<retail_internal::ProductServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return retail_internal::MakeProductServiceTracingConnection(
+      std::make_shared<retail_internal::ProductServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

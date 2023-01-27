@@ -21,6 +21,7 @@
 #include "google/cloud/certificatemanager/internal/certificate_manager_connection_impl.h"
 #include "google/cloud/certificatemanager/internal/certificate_manager_option_defaults.h"
 #include "google/cloud/certificatemanager/internal/certificate_manager_stub_factory.h"
+#include "google/cloud/certificatemanager/internal/certificate_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -239,9 +240,10 @@ std::shared_ptr<CertificateManagerConnection> MakeCertificateManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = certificatemanager_internal::CreateDefaultCertificateManagerStub(
       background->cq(), options);
-  return std::make_shared<
-      certificatemanager_internal::CertificateManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return certificatemanager_internal::MakeCertificateManagerTracingConnection(
+      std::make_shared<
+          certificatemanager_internal::CertificateManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

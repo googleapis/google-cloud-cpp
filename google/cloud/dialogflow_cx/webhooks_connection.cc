@@ -20,6 +20,7 @@
 #include "google/cloud/dialogflow_cx/internal/webhooks_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/webhooks_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/webhooks_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/webhooks_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -76,8 +77,9 @@ std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultWebhooksStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::WebhooksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakeWebhooksTracingConnection(
+      std::make_shared<dialogflow_cx_internal::WebhooksConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(Options options) {

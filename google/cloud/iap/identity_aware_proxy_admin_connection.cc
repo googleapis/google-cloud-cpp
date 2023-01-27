@@ -21,6 +21,7 @@
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_connection_impl.h"
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_option_defaults.h"
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_stub_factory.h"
+#include "google/cloud/iap/internal/identity_aware_proxy_admin_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -107,9 +108,10 @@ MakeIdentityAwareProxyAdminServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = iap_internal::CreateDefaultIdentityAwareProxyAdminServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      iap_internal::IdentityAwareProxyAdminServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return iap_internal::MakeIdentityAwareProxyAdminServiceTracingConnection(
+      std::make_shared<
+          iap_internal::IdentityAwareProxyAdminServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

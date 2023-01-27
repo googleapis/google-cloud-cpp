@@ -20,6 +20,7 @@
 #include "google/cloud/video/internal/transcoder_connection_impl.h"
 #include "google/cloud/video/internal/transcoder_option_defaults.h"
 #include "google/cloud/video/internal/transcoder_stub_factory.h"
+#include "google/cloud/video/internal/transcoder_tracing_connection.h"
 #include "google/cloud/video/transcoder_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -95,8 +96,9 @@ std::shared_ptr<TranscoderServiceConnection> MakeTranscoderServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = video_internal::CreateDefaultTranscoderServiceStub(
       background->cq(), options);
-  return std::make_shared<video_internal::TranscoderServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return video_internal::MakeTranscoderServiceTracingConnection(
+      std::make_shared<video_internal::TranscoderServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

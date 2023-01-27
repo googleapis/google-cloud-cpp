@@ -17,8 +17,11 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -333,6 +336,51 @@ TEST(GoldenKitchenSinkConnectionTest, CheckExpectedOptions) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(ContainsRegex("Unexpected option.+UnexpectedOption")));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(GoldenKitchenSinkConnectionTest, TracingEnabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto options =
+      Options{}
+          .set<internal::OpenTelemetryTracingOption>(true)
+          .set<EndpointOption>("localhost:1")
+          .set<GoldenKitchenSinkRetryPolicyOption>(
+              GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone());
+  auto conn = MakeGoldenKitchenSinkConnection(std::move(options));
+  // Make a call, which should fail fast. The error itself is not important.
+  (void)conn->DoNothing({});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Contains(SpanNamed("golden_v1::GoldenKitchenSinkConnection::DoNothing")));
+}
+
+TEST(GoldenKitchenSinkConnectionTest, TracingDisabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  using ::testing::Not;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto options =
+      Options{}
+          .set<internal::OpenTelemetryTracingOption>(false)
+          .set<EndpointOption>("localhost:1")
+          .set<GoldenKitchenSinkRetryPolicyOption>(
+              GoldenKitchenSinkLimitedErrorCountRetryPolicy(0).clone());
+  auto conn = MakeGoldenKitchenSinkConnection(std::move(options));
+  // Make a call, which should fail fast. The error itself is not important.
+  (void)conn->DoNothing({});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Not(Contains(SpanNamed(
+                  "golden_v1::GoldenKitchenSinkConnection::DoNothing"))));
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

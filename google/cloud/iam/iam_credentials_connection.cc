@@ -21,6 +21,7 @@
 #include "google/cloud/iam/internal/iam_credentials_connection_impl.h"
 #include "google/cloud/iam/internal/iam_credentials_option_defaults.h"
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.h"
+#include "google/cloud/iam/internal/iam_credentials_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -68,8 +69,9 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iam_internal::CreateDefaultIAMCredentialsStub(background->cq(), options);
-  return std::make_shared<iam_internal::IAMCredentialsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return iam_internal::MakeIAMCredentialsTracingConnection(
+      std::make_shared<iam_internal::IAMCredentialsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

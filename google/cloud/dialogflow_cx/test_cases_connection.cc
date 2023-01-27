@@ -20,6 +20,7 @@
 #include "google/cloud/dialogflow_cx/internal/test_cases_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/test_cases_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/test_cases_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -128,8 +129,9 @@ std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultTestCasesStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::TestCasesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakeTestCasesTracingConnection(
+      std::make_shared<dialogflow_cx_internal::TestCasesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(Options options) {

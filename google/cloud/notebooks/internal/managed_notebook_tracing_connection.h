@@ -96,6 +96,16 @@ class ManagedNotebookServiceTracingConnection
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<notebooks::ManagedNotebookServiceConnection>
+MakeManagedNotebookServiceTracingConnection(
+    std::shared_ptr<notebooks::ManagedNotebookServiceConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
 }  // namespace cloud

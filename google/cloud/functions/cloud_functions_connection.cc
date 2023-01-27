@@ -21,6 +21,7 @@
 #include "google/cloud/functions/internal/cloud_functions_connection_impl.h"
 #include "google/cloud/functions/internal/cloud_functions_option_defaults.h"
 #include "google/cloud/functions/internal/cloud_functions_stub_factory.h"
+#include "google/cloud/functions/internal/cloud_functions_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -118,9 +119,9 @@ MakeCloudFunctionsServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = functions_internal::CreateDefaultCloudFunctionsServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      functions_internal::CloudFunctionsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return functions_internal::MakeCloudFunctionsServiceTracingConnection(
+      std::make_shared<functions_internal::CloudFunctionsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

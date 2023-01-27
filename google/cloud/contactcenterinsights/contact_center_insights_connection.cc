@@ -21,6 +21,7 @@
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_connection_impl.h"
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_option_defaults.h"
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub_factory.h"
+#include "google/cloud/contactcenterinsights/internal/contact_center_insights_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -307,9 +308,11 @@ MakeContactCenterInsightsConnection(Options options) {
   auto stub =
       contactcenterinsights_internal::CreateDefaultContactCenterInsightsStub(
           background->cq(), options);
-  return std::make_shared<
-      contactcenterinsights_internal::ContactCenterInsightsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return contactcenterinsights_internal::
+      MakeContactCenterInsightsTracingConnection(
+          std::make_shared<contactcenterinsights_internal::
+                               ContactCenterInsightsConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

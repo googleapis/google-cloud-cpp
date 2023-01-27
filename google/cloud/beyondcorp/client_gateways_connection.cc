@@ -22,6 +22,7 @@
 #include "google/cloud/beyondcorp/internal/client_gateways_connection_impl.h"
 #include "google/cloud/beyondcorp/internal/client_gateways_option_defaults.h"
 #include "google/cloud/beyondcorp/internal/client_gateways_stub_factory.h"
+#include "google/cloud/beyondcorp/internal/client_gateways_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -82,9 +83,10 @@ MakeClientGatewaysServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = beyondcorp_internal::CreateDefaultClientGatewaysServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      beyondcorp_internal::ClientGatewaysServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return beyondcorp_internal::MakeClientGatewaysServiceTracingConnection(
+      std::make_shared<
+          beyondcorp_internal::ClientGatewaysServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

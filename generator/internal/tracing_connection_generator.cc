@@ -86,6 +86,16 @@ class $tracing_connection_class_name$
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<$product_namespace$::$connection_class_name$>
+Make$tracing_connection_class_name$(
+    std::shared_ptr<$product_namespace$::$connection_class_name$> conn);
 )""");
 
   HeaderCloseNamespaces();
@@ -135,6 +145,17 @@ $tracing_connection_class_name$::$tracing_connection_class_name$(
 
   CcPrint(R"""(
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<$product_namespace$::$connection_class_name$>
+Make$tracing_connection_class_name$(
+    std::shared_ptr<$product_namespace$::$connection_class_name$> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<$tracing_connection_class_name$>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
 )""");
   CcCloseNamespaces();
   return {};

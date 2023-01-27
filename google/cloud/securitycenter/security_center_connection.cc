@@ -20,6 +20,7 @@
 #include "google/cloud/securitycenter/internal/security_center_connection_impl.h"
 #include "google/cloud/securitycenter/internal/security_center_option_defaults.h"
 #include "google/cloud/securitycenter/internal/security_center_stub_factory.h"
+#include "google/cloud/securitycenter/internal/security_center_tracing_connection.h"
 #include "google/cloud/securitycenter/security_center_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -282,9 +283,9 @@ std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = securitycenter_internal::CreateDefaultSecurityCenterStub(
       background->cq(), options);
-  return std::make_shared<
-      securitycenter_internal::SecurityCenterConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return securitycenter_internal::MakeSecurityCenterTracingConnection(
+      std::make_shared<securitycenter_internal::SecurityCenterConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

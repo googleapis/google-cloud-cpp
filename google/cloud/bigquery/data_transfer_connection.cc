@@ -21,6 +21,7 @@
 #include "google/cloud/bigquery/internal/data_transfer_connection_impl.h"
 #include "google/cloud/bigquery/internal/data_transfer_option_defaults.h"
 #include "google/cloud/bigquery/internal/data_transfer_stub_factory.h"
+#include "google/cloud/bigquery/internal/data_transfer_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -151,8 +152,9 @@ MakeDataTransferServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigquery_internal::CreateDefaultDataTransferServiceStub(
       background->cq(), options);
-  return std::make_shared<bigquery_internal::DataTransferServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return bigquery_internal::MakeDataTransferServiceTracingConnection(
+      std::make_shared<bigquery_internal::DataTransferServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

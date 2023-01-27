@@ -20,6 +20,7 @@
 #include "google/cloud/monitoring/internal/notification_channel_connection_impl.h"
 #include "google/cloud/monitoring/internal/notification_channel_option_defaults.h"
 #include "google/cloud/monitoring/internal/notification_channel_stub_factory.h"
+#include "google/cloud/monitoring/internal/notification_channel_tracing_connection.h"
 #include "google/cloud/monitoring/notification_channel_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -112,9 +113,10 @@ MakeNotificationChannelServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = monitoring_internal::CreateDefaultNotificationChannelServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      monitoring_internal::NotificationChannelServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return monitoring_internal::MakeNotificationChannelServiceTracingConnection(
+      std::make_shared<
+          monitoring_internal::NotificationChannelServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

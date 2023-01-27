@@ -58,6 +58,16 @@ class BigQueryReadTracingConnection : public bigquery::BigQueryReadConnection {
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<bigquery::BigQueryReadConnection>
+MakeBigQueryReadTracingConnection(
+    std::shared_ptr<bigquery::BigQueryReadConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_internal

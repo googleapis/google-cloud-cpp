@@ -127,6 +127,16 @@ class DocumentProcessorServiceTracingConnection
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<documentai::DocumentProcessorServiceConnection>
+MakeDocumentProcessorServiceTracingConnection(
+    std::shared_ptr<documentai::DocumentProcessorServiceConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
 }  // namespace cloud

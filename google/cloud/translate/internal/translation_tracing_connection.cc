@@ -117,6 +117,18 @@ TranslationServiceTracingConnection::DeleteGlossary(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<translate::TranslationServiceConnection>
+MakeTranslationServiceTracingConnection(
+    std::shared_ptr<translate::TranslationServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<TranslationServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_internal
 }  // namespace cloud

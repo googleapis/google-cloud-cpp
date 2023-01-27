@@ -73,6 +73,18 @@ ContainerAnalysisTracingConnection::GetVulnerabilityOccurrencesSummary(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<containeranalysis::ContainerAnalysisConnection>
+MakeContainerAnalysisTracingConnection(
+    std::shared_ptr<containeranalysis::ContainerAnalysisConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<ContainerAnalysisTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
 }  // namespace cloud

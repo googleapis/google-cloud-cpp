@@ -20,6 +20,7 @@
 #include "google/cloud/monitoring/internal/uptime_check_connection_impl.h"
 #include "google/cloud/monitoring/internal/uptime_check_option_defaults.h"
 #include "google/cloud/monitoring/internal/uptime_check_stub_factory.h"
+#include "google/cloud/monitoring/internal/uptime_check_tracing_connection.h"
 #include "google/cloud/monitoring/uptime_check_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -85,9 +86,9 @@ std::shared_ptr<UptimeCheckServiceConnection> MakeUptimeCheckServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = monitoring_internal::CreateDefaultUptimeCheckServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      monitoring_internal::UptimeCheckServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return monitoring_internal::MakeUptimeCheckServiceTracingConnection(
+      std::make_shared<monitoring_internal::UptimeCheckServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

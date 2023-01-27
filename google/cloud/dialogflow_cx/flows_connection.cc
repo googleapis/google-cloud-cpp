@@ -21,6 +21,7 @@
 #include "google/cloud/dialogflow_cx/internal/flows_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/flows_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/flows_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/flows_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -106,8 +107,9 @@ std::shared_ptr<FlowsConnection> MakeFlowsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       dialogflow_cx_internal::CreateDefaultFlowsStub(background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::FlowsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakeFlowsTracingConnection(
+      std::make_shared<dialogflow_cx_internal::FlowsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<FlowsConnection> MakeFlowsConnection(Options options) {

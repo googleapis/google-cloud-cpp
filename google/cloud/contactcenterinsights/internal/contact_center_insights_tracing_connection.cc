@@ -404,6 +404,19 @@ Status ContactCenterInsightsTracingConnection::DeleteView(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<contactcenterinsights::ContactCenterInsightsConnection>
+MakeContactCenterInsightsTracingConnection(
+    std::shared_ptr<contactcenterinsights::ContactCenterInsightsConnection>
+        conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ContactCenterInsightsTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_internal
 }  // namespace cloud

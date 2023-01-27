@@ -17,10 +17,13 @@
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
@@ -48,23 +51,22 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-std::shared_ptr<golden_v1::GoldenThingAdminConnection> CreateTestingConnection(
+std::shared_ptr<GoldenThingAdminConnection> CreateTestingConnection(
     std::shared_ptr<GoldenThingAdminStub> mock) {
-  golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy retry(
+  GoldenThingAdminLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
       /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
-  GenericPollingPolicy<golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy,
+  GenericPollingPolicy<GoldenThingAdminLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
   auto options = GoldenThingAdminDefaultOptions(
       Options{}
-          .set<golden_v1::GoldenThingAdminRetryPolicyOption>(retry.clone())
-          .set<golden_v1::GoldenThingAdminBackoffPolicyOption>(backoff.clone())
-          .set<golden_v1::GoldenThingAdminPollingPolicyOption>(
-              polling.clone()));
+          .set<GoldenThingAdminRetryPolicyOption>(retry.clone())
+          .set<GoldenThingAdminBackoffPolicyOption>(backoff.clone())
+          .set<GoldenThingAdminPollingPolicyOption>(polling.clone()));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<GoldenThingAdminConnectionImpl>(
       std::move(background), std::move(mock), std::move(options));
@@ -1361,6 +1363,51 @@ TEST(GoldenThingAdminConnectionTest, CheckExpectedOptions) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(ContainsRegex("Unexpected option.+UnexpectedOption")));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(GoldenThingAdminConnectionTest, TracingEnabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto options =
+      Options{}
+          .set<internal::OpenTelemetryTracingOption>(true)
+          .set<EndpointOption>("localhost:1")
+          .set<GoldenThingAdminRetryPolicyOption>(
+              GoldenThingAdminLimitedErrorCountRetryPolicy(0).clone());
+  auto conn = MakeGoldenThingAdminConnection(std::move(options));
+  // Make a call, which should fail fast. The error itself is not important.
+  (void)conn->DeleteBackup({});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Contains(SpanNamed(
+                  "golden_v1::GoldenThingAdminConnection::DeleteBackup")));
+}
+
+TEST(GoldenThingAdminConnectionTest, TracingDisabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  using ::testing::Not;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto options =
+      Options{}
+          .set<internal::OpenTelemetryTracingOption>(false)
+          .set<EndpointOption>("localhost:1")
+          .set<GoldenThingAdminRetryPolicyOption>(
+              GoldenThingAdminLimitedErrorCountRetryPolicy(0).clone());
+  auto conn = MakeGoldenThingAdminConnection(std::move(options));
+  // Make a call, which should fail fast. The error itself is not important.
+  (void)conn->DeleteBackup({});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              Not(Contains(SpanNamed(
+                  "golden_v1::GoldenThingAdminConnection::DeleteBackup"))));
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

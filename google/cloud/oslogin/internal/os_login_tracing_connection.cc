@@ -94,6 +94,17 @@ OsLoginServiceTracingConnection::UpdateSshPublicKey(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<oslogin::OsLoginServiceConnection>
+MakeOsLoginServiceTracingConnection(
+    std::shared_ptr<oslogin::OsLoginServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<OsLoginServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_internal
 }  // namespace cloud

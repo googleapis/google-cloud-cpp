@@ -20,6 +20,7 @@
 #include "google/cloud/kms/internal/key_management_connection_impl.h"
 #include "google/cloud/kms/internal/key_management_option_defaults.h"
 #include "google/cloud/kms/internal/key_management_stub_factory.h"
+#include "google/cloud/kms/internal/key_management_tracing_connection.h"
 #include "google/cloud/kms/key_management_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -210,8 +211,9 @@ MakeKeyManagementServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = kms_internal::CreateDefaultKeyManagementServiceStub(
       background->cq(), options);
-  return std::make_shared<kms_internal::KeyManagementServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return kms_internal::MakeKeyManagementServiceTracingConnection(
+      std::make_shared<kms_internal::KeyManagementServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

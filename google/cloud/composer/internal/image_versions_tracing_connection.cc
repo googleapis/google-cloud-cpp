@@ -47,6 +47,17 @@ ImageVersionsTracingConnection::ListImageVersions(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<composer::ImageVersionsConnection>
+MakeImageVersionsTracingConnection(
+    std::shared_ptr<composer::ImageVersionsConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ImageVersionsTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
 }  // namespace cloud

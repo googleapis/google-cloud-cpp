@@ -179,6 +179,17 @@ ConnectorsTracingConnection::GetRuntimeConfig(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<connectors::ConnectorsConnection>
+MakeConnectorsTracingConnection(
+    std::shared_ptr<connectors::ConnectorsConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ConnectorsTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors_internal
 }  // namespace cloud

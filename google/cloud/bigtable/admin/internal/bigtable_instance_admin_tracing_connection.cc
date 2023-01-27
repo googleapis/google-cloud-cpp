@@ -208,6 +208,18 @@ BigtableInstanceAdminTracingConnection::ListHotTablets(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
+MakeBigtableInstanceAdminTracingConnection(
+    std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<BigtableInstanceAdminTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
 }  // namespace cloud

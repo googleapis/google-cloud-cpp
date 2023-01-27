@@ -100,6 +100,16 @@ Status OrgPolicyTracingConnection::DeletePolicy(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<orgpolicy::OrgPolicyConnection> MakeOrgPolicyTracingConnection(
+    std::shared_ptr<orgpolicy::OrgPolicyConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<OrgPolicyTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_internal
 }  // namespace cloud

@@ -355,9 +355,9 @@ Status ConnectionGenerator::GenerateCc() {
   CcLocalIncludes(
       {vars("connection_header_path"), vars("options_header_path"),
        vars("connection_impl_header_path"), vars("option_defaults_header_path"),
-       vars("stub_factory_header_path"), "google/cloud/background_threads.h",
-       "google/cloud/common_options.h", "google/cloud/credentials.h",
-       "google/cloud/grpc_options.h",
+       vars("tracing_connection_header_path"), vars("stub_factory_header_path"),
+       "google/cloud/background_threads.h", "google/cloud/common_options.h",
+       "google/cloud/credentials.h", "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
   CcSystemIncludes({"memory"});
 
@@ -513,8 +513,9 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
     background->cq(), options);
-  return std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
-      std::move(background), std::move(stub), std::move(options));
+  return $product_internal_namespace$::Make$tracing_connection_class_name$(
+      std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 )""");
 

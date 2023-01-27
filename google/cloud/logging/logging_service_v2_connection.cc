@@ -20,6 +20,7 @@
 #include "google/cloud/logging/internal/logging_service_v2_connection_impl.h"
 #include "google/cloud/logging/internal/logging_service_v2_option_defaults.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
+#include "google/cloud/logging/internal/logging_service_v2_tracing_connection.h"
 #include "google/cloud/logging/logging_service_v2_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -99,8 +100,9 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = logging_internal::CreateDefaultLoggingServiceV2Stub(
       background->cq(), options);
-  return std::make_shared<logging_internal::LoggingServiceV2ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return logging_internal::MakeLoggingServiceV2TracingConnection(
+      std::make_shared<logging_internal::LoggingServiceV2ConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

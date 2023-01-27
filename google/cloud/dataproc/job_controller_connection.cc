@@ -20,6 +20,7 @@
 #include "google/cloud/dataproc/internal/job_controller_connection_impl.h"
 #include "google/cloud/dataproc/internal/job_controller_option_defaults.h"
 #include "google/cloud/dataproc/internal/job_controller_stub_factory.h"
+#include "google/cloud/dataproc/internal/job_controller_tracing_connection.h"
 #include "google/cloud/dataproc/job_controller_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -86,8 +87,9 @@ std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultJobControllerStub(
       background->cq(), options);
-  return std::make_shared<dataproc_internal::JobControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dataproc_internal::MakeJobControllerTracingConnection(
+      std::make_shared<dataproc_internal::JobControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(

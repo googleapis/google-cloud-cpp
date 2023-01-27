@@ -20,6 +20,7 @@
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_connection_impl.h"
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_option_defaults.h"
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_stub_factory.h"
+#include "google/cloud/websecurityscanner/internal/web_security_scanner_tracing_connection.h"
 #include "google/cloud/websecurityscanner/web_security_scanner_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -131,9 +132,10 @@ std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = websecurityscanner_internal::CreateDefaultWebSecurityScannerStub(
       background->cq(), options);
-  return std::make_shared<
-      websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return websecurityscanner_internal::MakeWebSecurityScannerTracingConnection(
+      std::make_shared<
+          websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

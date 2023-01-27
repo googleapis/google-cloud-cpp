@@ -21,6 +21,7 @@
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_stub_factory.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -178,8 +179,9 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = golden_v1_internal::CreateDefaultGoldenThingAdminStub(
     background->cq(), options);
-  return std::make_shared<golden_v1_internal::GoldenThingAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return golden_v1_internal::MakeGoldenThingAdminTracingConnection(
+      std::make_shared<golden_v1_internal::GoldenThingAdminConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

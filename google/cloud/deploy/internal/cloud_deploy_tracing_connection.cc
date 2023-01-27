@@ -209,6 +209,16 @@ CloudDeployTracingConnection::GetConfig(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<deploy::CloudDeployConnection> MakeCloudDeployTracingConnection(
+    std::shared_ptr<deploy::CloudDeployConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<CloudDeployTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_internal
 }  // namespace cloud

@@ -132,6 +132,17 @@ AwsClustersTracingConnection::GetAwsServerConfig(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<gkemulticloud_v1::AwsClustersConnection>
+MakeAwsClustersTracingConnection(
+    std::shared_ptr<gkemulticloud_v1::AwsClustersConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<AwsClustersTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal
 }  // namespace cloud

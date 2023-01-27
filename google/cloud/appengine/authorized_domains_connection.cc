@@ -21,6 +21,7 @@
 #include "google/cloud/appengine/internal/authorized_domains_connection_impl.h"
 #include "google/cloud/appengine/internal/authorized_domains_option_defaults.h"
 #include "google/cloud/appengine/internal/authorized_domains_stub_factory.h"
+#include "google/cloud/appengine/internal/authorized_domains_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -54,8 +55,9 @@ std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = appengine_internal::CreateDefaultAuthorizedDomainsStub(
       background->cq(), options);
-  return std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return appengine_internal::MakeAuthorizedDomainsTracingConnection(
+      std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

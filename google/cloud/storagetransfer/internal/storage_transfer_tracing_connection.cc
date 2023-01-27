@@ -166,6 +166,18 @@ Status StorageTransferServiceTracingConnection::DeleteAgentPool(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<storagetransfer::StorageTransferServiceConnection>
+MakeStorageTransferServiceTracingConnection(
+    std::shared_ptr<storagetransfer::StorageTransferServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<StorageTransferServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
 }  // namespace cloud

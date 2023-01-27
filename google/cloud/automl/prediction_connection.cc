@@ -20,6 +20,7 @@
 #include "google/cloud/automl/internal/prediction_connection_impl.h"
 #include "google/cloud/automl/internal/prediction_option_defaults.h"
 #include "google/cloud/automl/internal/prediction_stub_factory.h"
+#include "google/cloud/automl/internal/prediction_tracing_connection.h"
 #include "google/cloud/automl/prediction_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -59,8 +60,9 @@ std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = automl_internal::CreateDefaultPredictionServiceStub(
       background->cq(), options);
-  return std::make_shared<automl_internal::PredictionServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return automl_internal::MakePredictionServiceTracingConnection(
+      std::make_shared<automl_internal::PredictionServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

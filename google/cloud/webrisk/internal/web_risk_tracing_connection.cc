@@ -69,6 +69,17 @@ WebRiskServiceTracingConnection::CreateSubmission(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<webrisk::WebRiskServiceConnection>
+MakeWebRiskServiceTracingConnection(
+    std::shared_ptr<webrisk::WebRiskServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<WebRiskServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal
 }  // namespace cloud

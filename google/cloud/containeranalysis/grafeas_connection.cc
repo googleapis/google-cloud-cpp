@@ -21,6 +21,7 @@
 #include "google/cloud/containeranalysis/internal/grafeas_connection_impl.h"
 #include "google/cloud/containeranalysis/internal/grafeas_option_defaults.h"
 #include "google/cloud/containeranalysis/internal/grafeas_stub_factory.h"
+#include "google/cloud/containeranalysis/internal/grafeas_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -121,8 +122,9 @@ std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = containeranalysis_internal::CreateDefaultGrafeasStub(
       background->cq(), options);
-  return std::make_shared<containeranalysis_internal::GrafeasConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return containeranalysis_internal::MakeGrafeasTracingConnection(
+      std::make_shared<containeranalysis_internal::GrafeasConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

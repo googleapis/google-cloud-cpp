@@ -99,6 +99,16 @@ class WebSecurityScannerTracingConnection
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<websecurityscanner::WebSecurityScannerConnection>
+MakeWebSecurityScannerTracingConnection(
+    std::shared_ptr<websecurityscanner::WebSecurityScannerConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
 }  // namespace cloud

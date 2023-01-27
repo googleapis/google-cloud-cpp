@@ -21,6 +21,7 @@
 #include "google/cloud/iot/internal/device_manager_connection_impl.h"
 #include "google/cloud/iot/internal/device_manager_option_defaults.h"
 #include "google/cloud/iot/internal/device_manager_stub_factory.h"
+#include "google/cloud/iot/internal/device_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -156,8 +157,9 @@ std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iot_internal::CreateDefaultDeviceManagerStub(background->cq(), options);
-  return std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return iot_internal::MakeDeviceManagerTracingConnection(
+      std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

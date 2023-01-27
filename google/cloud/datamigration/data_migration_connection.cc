@@ -21,6 +21,7 @@
 #include "google/cloud/datamigration/internal/data_migration_connection_impl.h"
 #include "google/cloud/datamigration/internal/data_migration_option_defaults.h"
 #include "google/cloud/datamigration/internal/data_migration_stub_factory.h"
+#include "google/cloud/datamigration/internal/data_migration_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -176,9 +177,10 @@ MakeDataMigrationServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = datamigration_internal::CreateDefaultDataMigrationServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      datamigration_internal::DataMigrationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return datamigration_internal::MakeDataMigrationServiceTracingConnection(
+      std::make_shared<
+          datamigration_internal::DataMigrationServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 #include "google/cloud/dataproc/internal/cluster_controller_connection_impl.h"
 #include "google/cloud/dataproc/internal/cluster_controller_option_defaults.h"
 #include "google/cloud/dataproc/internal/cluster_controller_stub_factory.h"
+#include "google/cloud/dataproc/internal/cluster_controller_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -108,8 +109,9 @@ std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultClusterControllerStub(
       background->cq(), options);
-  return std::make_shared<dataproc_internal::ClusterControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dataproc_internal::MakeClusterControllerTracingConnection(
+      std::make_shared<dataproc_internal::ClusterControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(

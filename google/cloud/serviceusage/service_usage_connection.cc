@@ -20,6 +20,7 @@
 #include "google/cloud/serviceusage/internal/service_usage_connection_impl.h"
 #include "google/cloud/serviceusage/internal/service_usage_option_defaults.h"
 #include "google/cloud/serviceusage/internal/service_usage_stub_factory.h"
+#include "google/cloud/serviceusage/internal/service_usage_tracing_connection.h"
 #include "google/cloud/serviceusage/service_usage_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -90,8 +91,9 @@ std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = serviceusage_internal::CreateDefaultServiceUsageStub(
       background->cq(), options);
-  return std::make_shared<serviceusage_internal::ServiceUsageConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return serviceusage_internal::MakeServiceUsageTracingConnection(
+      std::make_shared<serviceusage_internal::ServiceUsageConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
