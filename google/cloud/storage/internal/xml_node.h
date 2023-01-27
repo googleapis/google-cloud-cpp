@@ -52,7 +52,7 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
   }
 
   /**
-   * Parses the given string and returns an XML tree.
+   * Parses the given XML document and returns an XML tree.
    *
    * As a defence to DOS type attacks, it has several limits. The default
    * values of these limits are large enough for API responses from [GCS MPU],
@@ -65,7 +65,7 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
    * parse XML responses from the [GCS MPU]. It does not support many XML
    * features.
    */
-  static StatusOr<std::shared_ptr<XmlNode>> Parse(absl::string_view content,
+  static StatusOr<std::shared_ptr<XmlNode>> Parse(absl::string_view document,
                                                   Options = {});
 
   /**
