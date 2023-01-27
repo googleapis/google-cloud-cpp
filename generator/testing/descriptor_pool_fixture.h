@@ -26,12 +26,12 @@ namespace cloud {
 namespace generator_testing {
 
 /**
- * Implements a fixture for test using a `google::protobuf::DescriptorPool`.
+ * Implements a fixture for testing with a `google::protobuf::DescriptorPool`.
  *
- * Some test need a properly initialized descriptor pool, with:
+ * Some tests need a properly initialized descriptor pool, with:
  * - the basic protobuf types and options already available
- * - connected to error collectors so the test fails with meaningful errors
- *   if there is a test bug
+ * - error collectors so the test fails with meaningful errors if there is a
+ *   test bug
  * - basic Google features, like longrunning operations.
  *
  * This class provides all these features so we don't duplicate them across
