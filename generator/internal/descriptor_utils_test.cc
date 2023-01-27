@@ -14,6 +14,7 @@
 
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
 #include "generator/testing/printer_mocks.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -53,20 +54,6 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
-
-class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
- public:
-  AbortingErrorCollector() = default;
-  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
-  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
-
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override {
-    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message;
-  }
-};
 
 char const* const kHttpProto =
     "syntax = \"proto3\";\n"
@@ -148,7 +135,7 @@ class CreateServiceVarsTest
 
  private:
   FileDescriptorProto file_proto_;
-  AbortingErrorCollector collector_;
+  generator_testing::ErrorCollector collector_;
   FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
@@ -575,7 +562,7 @@ class CreateMethodVarsTest
 
  private:
   FileDescriptorProto file_proto_;
-  AbortingErrorCollector collector_;
+  generator_testing::ErrorCollector collector_;
   FakeSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
@@ -1113,7 +1100,7 @@ message RoutingParameter {
   simple_db.Add(file_proto);
   google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
                                                        &source_tree_db);
-  AbortingErrorCollector collector;
+  generator_testing::ErrorCollector collector;
   DescriptorPool pool(&merged_db, &collector);
 
   // Run the test

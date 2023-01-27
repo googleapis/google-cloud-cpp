@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/service_code_generator.h"
+#include "generator/testing/error_collectors.h"
 #include "generator/testing/printer_mocks.h"
 #include "google/cloud/log.h"
 #include <google/protobuf/compiler/importer.h>
@@ -52,20 +53,6 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
 
  private:
   std::map<std::string, std::string> files_;
-};
-
-class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
- public:
-  AbortingErrorCollector() = default;
-  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
-  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
-
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override {
-    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message;
-  }
 };
 
 class TestGenerator : public ServiceCodeGenerator {
@@ -391,7 +378,7 @@ class HasMessageWithMapFieldTest : public testing::Test {
 
  private:
   FileDescriptorProto file_proto_;
-  AbortingErrorCollector collector_;
+  generator_testing::ErrorCollector collector_;
   StringSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
@@ -504,7 +491,7 @@ class MethodSignatureWellKnownProtobufTypeIncludesTest : public testing::Test {
 
  private:
   FileDescriptorProto file_proto_;
-  AbortingErrorCollector collector_;
+  generator_testing::ErrorCollector collector_;
   StringSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
@@ -596,7 +583,7 @@ class StreamingReadTest : public testing::Test {
 
  private:
   FileDescriptorProto file_proto_;
-  AbortingErrorCollector collector_;
+  generator_testing::ErrorCollector collector_;
   StringSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
@@ -685,7 +672,7 @@ service Service1 {
   simple_db.Add(file_proto);
   google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
                                                        &source_tree_db);
-  AbortingErrorCollector collector;
+  generator_testing::ErrorCollector collector;
   DescriptorPool pool(&merged_db, &collector);
 
   FileDescriptor const* service_file_descriptor =
@@ -763,7 +750,7 @@ service Service1 {
   simple_db.Add(file_proto);
   google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
                                                        &source_tree_db);
-  AbortingErrorCollector collector;
+  generator_testing::ErrorCollector collector;
   DescriptorPool pool(&merged_db, &collector);
 
   FileDescriptor const* service_file_descriptor =
@@ -868,7 +855,7 @@ service Service1 {
   simple_db.Add(file_proto);
   google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
                                                        &source_tree_db);
-  AbortingErrorCollector collector;
+  generator_testing::ErrorCollector collector;
   DescriptorPool pool(&merged_db, &collector);
 
   FileDescriptor const* service_file_descriptor =
