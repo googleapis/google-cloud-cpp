@@ -17,10 +17,12 @@
 """Automatically generated source lists for google_cloud_cpp_generator_testing - DO NOT EDIT."""
 
 google_cloud_cpp_generator_testing_hdrs = [
+    "testing/error_collectors.h",
     "testing/fake_source_tree.h",
     "testing/printer_mocks.h",
 ]
 
 google_cloud_cpp_generator_testing_srcs = [
+    "testing/error_collectors.cc",
     "testing/fake_source_tree.cc",
 ]

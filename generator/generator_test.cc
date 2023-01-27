@@ -14,6 +14,7 @@
 
 #include "generator/generator.h"
 #include "generator/internal/printer.h"
+#include "generator/testing/error_collectors.h"
 #include "generator/testing/printer_mocks.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
@@ -52,20 +53,6 @@ class StringSourceTree : public google::protobuf::compiler::SourceTree {
   std::map<std::string, std::string> files_;
 };
 
-class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
- public:
-  AbortingErrorCollector() = default;
-  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
-  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
-
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override {
-    GCP_LOG(FATAL) << "AddError() called unexpectedly: " << filename << " ["
-                   << element_name << "]: " << error_message;
-  }
-};
-
 char const* const kSuccessServiceProto =
     "syntax = \"proto3\";\n"
     "package google.foo.v1;\n"
@@ -90,7 +77,7 @@ class GeneratorTest : public ::testing::Test {
 
  private:
   FileDescriptorProto file_proto_;
-  AbortingErrorCollector collector_;
+  generator_testing::ErrorCollector collector_;
   StringSourceTree source_tree_;
   google::protobuf::SimpleDescriptorDatabase simple_db_;
   google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;

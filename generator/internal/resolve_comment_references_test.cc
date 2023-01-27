@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/resolve_comment_references.h"
+#include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/compiler/importer.h>
@@ -29,7 +30,6 @@ namespace {
 
 using ::google::cloud::generator_testing::FakeSourceTree;
 using ::testing::Field;
-using ::testing::IsEmpty;
 using ::testing::NotNull;
 using ::testing::Pair;
 
@@ -345,47 +345,11 @@ message Response {}
 message Metadata {}
 )""";
 
-class AbortingErrorCollector
-    : public google::protobuf::DescriptorPool::ErrorCollector {
- public:
-  AbortingErrorCollector() = default;
-  AbortingErrorCollector(AbortingErrorCollector const&) = delete;
-  AbortingErrorCollector& operator=(AbortingErrorCollector const&) = delete;
-
-  // NOLINTNEXTLINE
-  void AddError(std::string const& filename, std::string const& element_name,
-                google::protobuf::Message const*, ErrorLocation,
-                std::string const& error_message) override {
-    EXPECT_THAT(error_message, IsEmpty())
-        << "filename=" << filename << ", element_name=" << element_name;
-  }
-};
-
-class MultiFileErrorCollector
-    : public google::protobuf::compiler::MultiFileErrorCollector {
- public:
-  ~MultiFileErrorCollector() override = default;
-
-  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-  void AddError(std::string const& filename, int line, int column,
-                std::string const& message) override {
-    EXPECT_THAT(message, IsEmpty())
-        << "filename=" << filename << ", line=" << line
-        << ", column=" << column;
-  }
-
-  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
-  void AddWarning(std::string const& filename, int line, int column,
-                  std::string const& message) override {
-    EXPECT_THAT(message, IsEmpty())
-        << "filename=" << filename << ", line=" << line
-        << ", column=" << column;
-  }
-};
-
 ResolveCommentsReferenceTest::ResolveCommentsReferenceTest()
-    : descriptor_error_collector_(absl::make_unique<AbortingErrorCollector>()),
-      multifile_error_collector_(absl::make_unique<MultiFileErrorCollector>()),
+    : descriptor_error_collector_(
+          absl::make_unique<generator_testing::ErrorCollector>()),
+      multifile_error_collector_(
+          absl::make_unique<generator_testing::MultiFileErrorCollector>()),
       source_tree_({
           {"google/longrunning/operation.proto",
            kLongrunningOperationsContents},
