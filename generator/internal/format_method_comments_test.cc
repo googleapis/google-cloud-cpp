@@ -41,7 +41,8 @@ import "test/v1/common.proto";
 package test.v1;
 
 service Service {
-    // Some brief description of the method.
+    // Some brief description of the method. With a reference to another
+    // message [Metadata][test.v1.Metadata].
     rpc Method(Request) returns (Response) {}
 }
 )""";
@@ -59,13 +60,16 @@ service Service {
       lines,
       ElementsAre(
           Eq(std::string{"  ///"}),  //
-          Eq(std::string{"  /// Some brief description of the method."}),
+          StartsWith(std::string{"  /// Some brief description"}),
+          StartsWith(std::string{"  /// message [Metadata]"}),
           Eq(std::string{"  ///"}),  //
           HasSubstr("<variable parameter comments>"),
           StartsWith("  /// @param opts Optional."),
           StartsWith("  ///     backoff policies."),
           Eq(std::string{"  /// @return $method_return_doxygen_link$"}),
           Eq("  ///"),
+          StartsWith("  /// [test.v1.Metadata]: "
+                     "@googleapis_reference_link{test/v1/common.proto#L"),
           StartsWith("  /// [test.v1.Request]: "
                      "@googleapis_reference_link{test/v1/common.proto#L"),
           StartsWith("  /// [test.v1.Response]: "
