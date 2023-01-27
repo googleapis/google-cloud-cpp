@@ -513,9 +513,9 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
     background->cq(), options);
-  auto conn = std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
-      std::move(background), std::move(stub), std::move(options));
-  return $product_internal_namespace$::Make$tracing_connection_class_name$(std::move(conn));
+  return $product_internal_namespace$::Make$tracing_connection_class_name$(
+      std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 )""");
 
