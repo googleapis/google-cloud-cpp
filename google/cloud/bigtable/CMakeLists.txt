@@ -73,6 +73,10 @@ add_library(
     admin/internal/bigtable_instance_admin_stub.h
     admin/internal/bigtable_instance_admin_stub_factory.cc
     admin/internal/bigtable_instance_admin_stub_factory.h
+    admin/internal/bigtable_instance_admin_tracing_connection.cc
+    admin/internal/bigtable_instance_admin_tracing_connection.h
+    admin/internal/bigtable_instance_admin_tracing_stub.cc
+    admin/internal/bigtable_instance_admin_tracing_stub.h
     admin/internal/bigtable_table_admin_auth_decorator.cc
     admin/internal/bigtable_table_admin_auth_decorator.h
     admin/internal/bigtable_table_admin_connection_impl.cc
@@ -88,6 +92,10 @@ add_library(
     admin/internal/bigtable_table_admin_stub.h
     admin/internal/bigtable_table_admin_stub_factory.cc
     admin/internal/bigtable_table_admin_stub_factory.h
+    admin/internal/bigtable_table_admin_tracing_connection.cc
+    admin/internal/bigtable_table_admin_tracing_connection.h
+    admin/internal/bigtable_table_admin_tracing_stub.cc
+    admin/internal/bigtable_table_admin_tracing_stub.h
     admin_client.cc
     admin_client.h
     app_profile_config.cc
@@ -149,6 +157,8 @@ add_library(
     internal/bigtable_stub.h
     internal/bigtable_stub_factory.cc
     internal/bigtable_stub_factory.h
+    internal/bigtable_tracing_stub.cc
+    internal/bigtable_tracing_stub.h
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/client_options_defaults.h

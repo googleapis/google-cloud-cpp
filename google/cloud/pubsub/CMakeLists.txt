@@ -82,6 +82,8 @@ add_library(
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
+    internal/publisher_tracing_stub.cc
+    internal/publisher_tracing_stub.h
     internal/pull_lease_manager.cc
     internal/pull_lease_manager.h
     internal/rejects_with_ordering_key.cc
@@ -103,6 +105,8 @@ add_library(
     internal/schema_stub_factory.h
     internal/schema_tracing_connection.cc
     internal/schema_tracing_connection.h
+    internal/schema_tracing_stub.cc
+    internal/schema_tracing_stub.h
     internal/sequential_batch_sink.cc
     internal/sequential_batch_sink.h
     internal/session_shutdown_manager.cc
@@ -123,6 +127,8 @@ add_library(
     internal/subscriber_stub.h
     internal/subscriber_stub_factory.cc
     internal/subscriber_stub_factory.h
+    internal/subscriber_tracing_stub.cc
+    internal/subscriber_tracing_stub.h
     internal/subscription_batch_source.h
     internal/subscription_concurrency_control.cc
     internal/subscription_concurrency_control.h
