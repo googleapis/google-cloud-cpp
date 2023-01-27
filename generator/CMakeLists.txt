@@ -151,14 +151,19 @@ function (google_cloud_cpp_generator_define_tests)
 
     add_library(
         google_cloud_cpp_generator_testing # cmake-format: sort
-        testing/error_collectors.cc testing/error_collectors.h
-        testing/fake_source_tree.cc testing/fake_source_tree.h
+        testing/descriptor_pool_fixture.cc
+        testing/descriptor_pool_fixture.h
+        testing/error_collectors.cc
+        testing/error_collectors.h
+        testing/fake_source_tree.cc
+        testing/fake_source_tree.h
         testing/printer_mocks.h)
     google_cloud_cpp_add_common_options(google_cloud_cpp_generator_testing)
     target_link_libraries(
         google_cloud_cpp_generator_testing
         PUBLIC google_cloud_cpp_testing GTest::gmock_main GTest::gmock
-               GTest::gtest protobuf::libprotoc)
+               GTest::gtest google-cloud-cpp::longrunning_operations_protos
+               protobuf::libprotoc)
     create_bazel_config(google_cloud_cpp_generator_testing YEAR "2020")
     target_include_directories(
         google_cloud_cpp_generator_testing PUBLIC ${PROJECT_SOURCE_DIR}

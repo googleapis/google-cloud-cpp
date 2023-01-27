@@ -26,6 +26,7 @@ namespace generator_testing {
 
 class FakeSourceTree : public google::protobuf::compiler::SourceTree {
  public:
+  FakeSourceTree() = default;
   explicit FakeSourceTree(std::map<std::string, std::string> files);
 
   void Insert(std::string const& filename, std::string contents);
