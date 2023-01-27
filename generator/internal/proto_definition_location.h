@@ -12,23 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_RESOLVE_COMMENT_REFERENCES_H
-#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_RESOLVE_COMMENT_REFERENCES_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PROTO_DEFINITION_LOCATION_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PROTO_DEFINITION_LOCATION_H
 
-#include "generator/internal/proto_definition_location.h"
-#include <google/protobuf/descriptor.h>
-#include <map>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
 
-std::map<std::string, ProtoDefinitionLocation> ResolveCommentReferences(
-    std::string const& comment, google::protobuf::DescriptorPool const& pool);
+/**
+ * Where to find the definition of a proto entity.
+ *
+ * This is used to generate the links to these entities in our Doxygen
+ * documentation. Eventually we can add other information here, such as the
+ * relative anchor in the cloud site documents.
+ */
+struct ProtoDefinitionLocation {
+  std::string filename;
+  int lineno;
+};
 
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_RESOLVE_COMMENT_REFERENCES_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PROTO_DEFINITION_LOCATION_H

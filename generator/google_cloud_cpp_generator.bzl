@@ -41,6 +41,7 @@ google_cloud_cpp_generator_hdrs = [
     "internal/options_generator.h",
     "internal/predicate_utils.h",
     "internal/printer.h",
+    "internal/proto_definition_location.h",
     "internal/resolve_comment_references.h",
     "internal/retry_traits_generator.h",
     "internal/round_robin_decorator_generator.h",
