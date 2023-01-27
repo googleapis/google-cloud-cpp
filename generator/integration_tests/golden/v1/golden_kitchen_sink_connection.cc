@@ -21,6 +21,7 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub_factory.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -120,8 +121,9 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = golden_v1_internal::CreateDefaultGoldenKitchenSinkStub(
     background->cq(), options);
-  return std::make_shared<golden_v1_internal::GoldenKitchenSinkConnectionImpl>(
+  auto conn = std::make_shared<golden_v1_internal::GoldenKitchenSinkConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
+  return golden_v1_internal::MakeGoldenKitchenSinkTracingConnection(std::move(conn));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
