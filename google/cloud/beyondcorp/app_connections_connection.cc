@@ -102,11 +102,10 @@ MakeAppConnectionsServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = beyondcorp_internal::CreateDefaultAppConnectionsServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      beyondcorp_internal::AppConnectionsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return beyondcorp_internal::MakeAppConnectionsServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          beyondcorp_internal::AppConnectionsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -173,11 +173,9 @@ std::shared_ptr<EdgeContainerConnection> MakeEdgeContainerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = edgecontainer_internal::CreateDefaultEdgeContainerStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<edgecontainer_internal::EdgeContainerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return edgecontainer_internal::MakeEdgeContainerTracingConnection(
-      std::move(conn));
+      std::make_shared<edgecontainer_internal::EdgeContainerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

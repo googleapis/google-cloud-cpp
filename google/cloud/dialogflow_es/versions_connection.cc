@@ -76,9 +76,9 @@ std::shared_ptr<VersionsConnection> MakeVersionsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultVersionsStub(
       background->cq(), options);
-  auto conn = std::make_shared<dialogflow_es_internal::VersionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dialogflow_es_internal::MakeVersionsTracingConnection(std::move(conn));
+  return dialogflow_es_internal::MakeVersionsTracingConnection(
+      std::make_shared<dialogflow_es_internal::VersionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {

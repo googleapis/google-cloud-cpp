@@ -74,9 +74,9 @@ std::shared_ptr<PoliciesConnection> MakePoliciesConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iam_v2_internal::CreateDefaultPoliciesStub(background->cq(), options);
-  auto conn = std::make_shared<iam_v2_internal::PoliciesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return iam_v2_internal::MakePoliciesTracingConnection(std::move(conn));
+  return iam_v2_internal::MakePoliciesTracingConnection(
+      std::make_shared<iam_v2_internal::PoliciesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

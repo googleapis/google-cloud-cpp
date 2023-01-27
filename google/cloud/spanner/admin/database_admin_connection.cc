@@ -178,11 +178,9 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = spanner_admin_internal::CreateDefaultDatabaseAdminStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<spanner_admin_internal::DatabaseAdminConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return spanner_admin_internal::MakeDatabaseAdminTracingConnection(
-      std::move(conn));
+      std::make_shared<spanner_admin_internal::DatabaseAdminConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -124,11 +124,9 @@ std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = osconfig_internal::CreateDefaultOsConfigServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<osconfig_internal::OsConfigServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return osconfig_internal::MakeOsConfigServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<osconfig_internal::OsConfigServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

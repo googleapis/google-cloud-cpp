@@ -109,11 +109,9 @@ std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultClusterControllerStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dataproc_internal::ClusterControllerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dataproc_internal::MakeClusterControllerTracingConnection(
-      std::move(conn));
+      std::make_shared<dataproc_internal::ClusterControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(

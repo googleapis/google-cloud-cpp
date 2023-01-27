@@ -129,10 +129,9 @@ std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultTestCasesStub(
       background->cq(), options);
-  auto conn = std::make_shared<dialogflow_cx_internal::TestCasesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return dialogflow_cx_internal::MakeTestCasesTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_cx_internal::TestCasesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(Options options) {

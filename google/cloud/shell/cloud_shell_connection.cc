@@ -83,10 +83,9 @@ std::shared_ptr<CloudShellServiceConnection> MakeCloudShellServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = shell_internal::CreateDefaultCloudShellServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<shell_internal::CloudShellServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return shell_internal::MakeCloudShellServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<shell_internal::CloudShellServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

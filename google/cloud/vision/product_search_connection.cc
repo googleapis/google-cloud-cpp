@@ -167,9 +167,9 @@ std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = vision_internal::CreateDefaultProductSearchStub(background->cq(),
                                                               options);
-  auto conn = std::make_shared<vision_internal::ProductSearchConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return vision_internal::MakeProductSearchTracingConnection(std::move(conn));
+  return vision_internal::MakeProductSearchTracingConnection(
+      std::make_shared<vision_internal::ProductSearchConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

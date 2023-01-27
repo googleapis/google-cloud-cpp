@@ -80,9 +80,9 @@ std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       appengine_internal::CreateDefaultVersionsStub(background->cq(), options);
-  auto conn = std::make_shared<appengine_internal::VersionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return appengine_internal::MakeVersionsTracingConnection(std::move(conn));
+  return appengine_internal::MakeVersionsTracingConnection(
+      std::make_shared<appengine_internal::VersionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

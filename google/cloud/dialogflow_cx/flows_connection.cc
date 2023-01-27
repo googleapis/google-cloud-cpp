@@ -107,9 +107,9 @@ std::shared_ptr<FlowsConnection> MakeFlowsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       dialogflow_cx_internal::CreateDefaultFlowsStub(background->cq(), options);
-  auto conn = std::make_shared<dialogflow_cx_internal::FlowsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dialogflow_cx_internal::MakeFlowsTracingConnection(std::move(conn));
+  return dialogflow_cx_internal::MakeFlowsTracingConnection(
+      std::make_shared<dialogflow_cx_internal::FlowsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<FlowsConnection> MakeFlowsConnection(Options options) {

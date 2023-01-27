@@ -81,9 +81,9 @@ std::shared_ptr<FirewallConnection> MakeFirewallConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       appengine_internal::CreateDefaultFirewallStub(background->cq(), options);
-  auto conn = std::make_shared<appengine_internal::FirewallConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return appengine_internal::MakeFirewallTracingConnection(std::move(conn));
+  return appengine_internal::MakeFirewallTracingConnection(
+      std::make_shared<appengine_internal::FirewallConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

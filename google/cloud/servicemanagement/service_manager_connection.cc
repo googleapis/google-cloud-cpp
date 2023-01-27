@@ -138,11 +138,10 @@ std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = servicemanagement_internal::CreateDefaultServiceManagerStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      servicemanagement_internal::ServiceManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return servicemanagement_internal::MakeServiceManagerTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          servicemanagement_internal::ServiceManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

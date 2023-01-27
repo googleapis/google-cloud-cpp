@@ -277,11 +277,10 @@ MakeCertificateAuthorityServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = privateca_internal::CreateDefaultCertificateAuthorityServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      privateca_internal::CertificateAuthorityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return privateca_internal::MakeCertificateAuthorityServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          privateca_internal::CertificateAuthorityServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

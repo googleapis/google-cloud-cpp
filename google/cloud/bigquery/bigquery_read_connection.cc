@@ -75,9 +75,9 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigquery_internal::CreateDefaultBigQueryReadStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<bigquery_internal::BigQueryReadConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return bigquery_internal::MakeBigQueryReadTracingConnection(std::move(conn));
+  return bigquery_internal::MakeBigQueryReadTracingConnection(
+      std::make_shared<bigquery_internal::BigQueryReadConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -65,9 +65,9 @@ std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       run_internal::CreateDefaultRevisionsStub(background->cq(), options);
-  auto conn = std::make_shared<run_internal::RevisionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return run_internal::MakeRevisionsTracingConnection(std::move(conn));
+  return run_internal::MakeRevisionsTracingConnection(
+      std::make_shared<run_internal::RevisionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

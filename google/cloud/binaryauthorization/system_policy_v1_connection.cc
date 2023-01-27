@@ -52,11 +52,10 @@ std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = binaryauthorization_internal::CreateDefaultSystemPolicyV1Stub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      binaryauthorization_internal::SystemPolicyV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return binaryauthorization_internal::MakeSystemPolicyV1TracingConnection(
-      std::move(conn));
+      std::make_shared<
+          binaryauthorization_internal::SystemPolicyV1ConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -135,11 +135,9 @@ std::shared_ptr<AwsClustersConnection> MakeAwsClustersConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gkemulticloud_v1_internal::CreateDefaultAwsClustersStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<gkemulticloud_v1_internal::AwsClustersConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return gkemulticloud_v1_internal::MakeAwsClustersTracingConnection(
-      std::move(conn));
+      std::make_shared<gkemulticloud_v1_internal::AwsClustersConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

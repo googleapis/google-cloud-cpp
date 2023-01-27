@@ -237,10 +237,9 @@ std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = datacatalog_internal::CreateDefaultDataCatalogStub(
       background->cq(), options);
-  auto conn = std::make_shared<datacatalog_internal::DataCatalogConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return datacatalog_internal::MakeDataCatalogTracingConnection(
-      std::move(conn));
+      std::make_shared<datacatalog_internal::DataCatalogConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

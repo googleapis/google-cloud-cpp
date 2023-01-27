@@ -96,9 +96,9 @@ std::shared_ptr<ServicesConnection> MakeServicesConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       run_internal::CreateDefaultServicesStub(background->cq(), options);
-  auto conn = std::make_shared<run_internal::ServicesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return run_internal::MakeServicesTracingConnection(std::move(conn));
+  return run_internal::MakeServicesTracingConnection(
+      std::make_shared<run_internal::ServicesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

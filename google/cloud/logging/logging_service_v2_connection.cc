@@ -100,11 +100,9 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = logging_internal::CreateDefaultLoggingServiceV2Stub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<logging_internal::LoggingServiceV2ConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return logging_internal::MakeLoggingServiceV2TracingConnection(
-      std::move(conn));
+      std::make_shared<logging_internal::LoggingServiceV2ConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

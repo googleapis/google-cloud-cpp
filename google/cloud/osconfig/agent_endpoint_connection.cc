@@ -92,11 +92,9 @@ MakeAgentEndpointServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = osconfig_internal::CreateDefaultAgentEndpointServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<osconfig_internal::AgentEndpointServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return osconfig_internal::MakeAgentEndpointServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<osconfig_internal::AgentEndpointServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -54,10 +54,9 @@ std::shared_ptr<QueryServiceConnection> MakeQueryServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = monitoring_internal::CreateDefaultQueryServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<monitoring_internal::QueryServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return monitoring_internal::MakeQueryServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<monitoring_internal::QueryServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -69,9 +69,9 @@ std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = webrisk_internal::CreateDefaultWebRiskServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return webrisk_internal::MakeWebRiskServiceTracingConnection(std::move(conn));
+  return webrisk_internal::MakeWebRiskServiceTracingConnection(
+      std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -58,11 +58,9 @@ std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultFulfillmentsStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dialogflow_es_internal::FulfillmentsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dialogflow_es_internal::MakeFulfillmentsTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_es_internal::FulfillmentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(

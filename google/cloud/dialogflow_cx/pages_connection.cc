@@ -73,9 +73,9 @@ std::shared_ptr<PagesConnection> MakePagesConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       dialogflow_cx_internal::CreateDefaultPagesStub(background->cq(), options);
-  auto conn = std::make_shared<dialogflow_cx_internal::PagesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dialogflow_cx_internal::MakePagesTracingConnection(std::move(conn));
+  return dialogflow_cx_internal::MakePagesTracingConnection(
+      std::make_shared<dialogflow_cx_internal::PagesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<PagesConnection> MakePagesConnection(Options options) {

@@ -96,10 +96,9 @@ std::shared_ptr<TranscoderServiceConnection> MakeTranscoderServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = video_internal::CreateDefaultTranscoderServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<video_internal::TranscoderServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return video_internal::MakeTranscoderServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<video_internal::TranscoderServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

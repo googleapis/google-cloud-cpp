@@ -102,9 +102,9 @@ std::shared_ptr<AgentsConnection> MakeAgentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultAgentsStub(background->cq(),
                                                               options);
-  auto conn = std::make_shared<dialogflow_cx_internal::AgentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dialogflow_cx_internal::MakeAgentsTracingConnection(std::move(conn));
+  return dialogflow_cx_internal::MakeAgentsTracingConnection(
+      std::make_shared<dialogflow_cx_internal::AgentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<AgentsConnection> MakeAgentsConnection(Options options) {

@@ -126,11 +126,11 @@ MakeManagedIdentitiesServiceConnection(Options options) {
   auto stub =
       managedidentities_internal::CreateDefaultManagedIdentitiesServiceStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      managedidentities_internal::ManagedIdentitiesServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return managedidentities_internal::
-      MakeManagedIdentitiesServiceTracingConnection(std::move(conn));
+      MakeManagedIdentitiesServiceTracingConnection(
+          std::make_shared<managedidentities_internal::
+                               ManagedIdentitiesServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

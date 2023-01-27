@@ -103,11 +103,9 @@ std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataplex_internal::CreateDefaultMetadataServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dataplex_internal::MetadataServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dataplex_internal::MakeMetadataServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<dataplex_internal::MetadataServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

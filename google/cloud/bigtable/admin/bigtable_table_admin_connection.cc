@@ -176,11 +176,10 @@ std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigtable_admin_internal::CreateDefaultBigtableTableAdminStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      bigtable_admin_internal::BigtableTableAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return bigtable_admin_internal::MakeBigtableTableAdminTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          bigtable_admin_internal::BigtableTableAdminConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

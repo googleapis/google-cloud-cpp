@@ -122,10 +122,9 @@ std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = resourcemanager_internal::CreateDefaultFoldersStub(
       background->cq(), options);
-  auto conn = std::make_shared<resourcemanager_internal::FoldersConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return resourcemanager_internal::MakeFoldersTracingConnection(
-      std::move(conn));
+      std::make_shared<resourcemanager_internal::FoldersConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

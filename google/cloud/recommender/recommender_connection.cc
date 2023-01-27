@@ -122,10 +122,9 @@ std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = recommender_internal::CreateDefaultRecommenderStub(
       background->cq(), options);
-  auto conn = std::make_shared<recommender_internal::RecommenderConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return recommender_internal::MakeRecommenderTracingConnection(
-      std::move(conn));
+      std::make_shared<recommender_internal::RecommenderConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

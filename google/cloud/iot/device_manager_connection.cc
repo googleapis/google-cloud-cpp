@@ -157,9 +157,9 @@ std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iot_internal::CreateDefaultDeviceManagerStub(background->cq(), options);
-  auto conn = std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return iot_internal::MakeDeviceManagerTracingConnection(std::move(conn));
+  return iot_internal::MakeDeviceManagerTracingConnection(
+      std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -66,9 +66,9 @@ std::shared_ptr<ModelServiceConnection> MakeModelServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = bigquery_internal::CreateDefaultModelServiceStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<bigquery_internal::ModelServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return bigquery_internal::MakeModelServiceTracingConnection(std::move(conn));
+  return bigquery_internal::MakeModelServiceTracingConnection(
+      std::make_shared<bigquery_internal::ModelServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

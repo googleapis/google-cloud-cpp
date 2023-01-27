@@ -74,9 +74,9 @@ std::shared_ptr<SessionsConnection> MakeSessionsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultSessionsStub(
       background->cq(), options);
-  auto conn = std::make_shared<dialogflow_cx_internal::SessionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dialogflow_cx_internal::MakeSessionsTracingConnection(std::move(conn));
+  return dialogflow_cx_internal::MakeSessionsTracingConnection(
+      std::make_shared<dialogflow_cx_internal::SessionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<SessionsConnection> MakeSessionsConnection(Options options) {

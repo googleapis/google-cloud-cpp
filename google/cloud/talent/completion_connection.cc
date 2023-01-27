@@ -50,9 +50,9 @@ std::shared_ptr<CompletionConnection> MakeCompletionConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       talent_internal::CreateDefaultCompletionStub(background->cq(), options);
-  auto conn = std::make_shared<talent_internal::CompletionConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return talent_internal::MakeCompletionTracingConnection(std::move(conn));
+  return talent_internal::MakeCompletionTracingConnection(
+      std::make_shared<talent_internal::CompletionConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

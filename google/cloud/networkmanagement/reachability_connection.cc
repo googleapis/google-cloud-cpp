@@ -96,11 +96,10 @@ MakeReachabilityServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = networkmanagement_internal::CreateDefaultReachabilityServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      networkmanagement_internal::ReachabilityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return networkmanagement_internal::MakeReachabilityServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          networkmanagement_internal::ReachabilityServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

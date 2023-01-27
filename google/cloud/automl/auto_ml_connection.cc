@@ -170,9 +170,9 @@ std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       automl_internal::CreateDefaultAutoMlStub(background->cq(), options);
-  auto conn = std::make_shared<automl_internal::AutoMlConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return automl_internal::MakeAutoMlTracingConnection(std::move(conn));
+  return automl_internal::MakeAutoMlTracingConnection(
+      std::make_shared<automl_internal::AutoMlConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

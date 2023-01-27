@@ -308,11 +308,11 @@ MakeContactCenterInsightsConnection(Options options) {
   auto stub =
       contactcenterinsights_internal::CreateDefaultContactCenterInsightsStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      contactcenterinsights_internal::ContactCenterInsightsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return contactcenterinsights_internal::
-      MakeContactCenterInsightsTracingConnection(std::move(conn));
+      MakeContactCenterInsightsTracingConnection(
+          std::make_shared<contactcenterinsights_internal::
+                               ContactCenterInsightsConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

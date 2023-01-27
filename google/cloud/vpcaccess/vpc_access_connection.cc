@@ -77,11 +77,9 @@ std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = vpcaccess_internal::CreateDefaultVpcAccessServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return vpcaccess_internal::MakeVpcAccessServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

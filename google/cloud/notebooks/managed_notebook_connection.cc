@@ -147,11 +147,10 @@ MakeManagedNotebookServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = notebooks_internal::CreateDefaultManagedNotebookServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      notebooks_internal::ManagedNotebookServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return notebooks_internal::MakeManagedNotebookServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          notebooks_internal::ManagedNotebookServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

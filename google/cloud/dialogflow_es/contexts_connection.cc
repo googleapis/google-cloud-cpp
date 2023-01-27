@@ -81,9 +81,9 @@ std::shared_ptr<ContextsConnection> MakeContextsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultContextsStub(
       background->cq(), options);
-  auto conn = std::make_shared<dialogflow_es_internal::ContextsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dialogflow_es_internal::MakeContextsTracingConnection(std::move(conn));
+  return dialogflow_es_internal::MakeContextsTracingConnection(
+      std::make_shared<dialogflow_es_internal::ContextsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ContextsConnection> MakeContextsConnection(Options options) {

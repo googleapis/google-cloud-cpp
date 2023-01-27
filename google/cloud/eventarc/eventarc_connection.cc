@@ -173,9 +173,9 @@ std::shared_ptr<EventarcConnection> MakeEventarcConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       eventarc_internal::CreateDefaultEventarcStub(background->cq(), options);
-  auto conn = std::make_shared<eventarc_internal::EventarcConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return eventarc_internal::MakeEventarcTracingConnection(std::move(conn));
+  return eventarc_internal::MakeEventarcTracingConnection(
+      std::make_shared<eventarc_internal::EventarcConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

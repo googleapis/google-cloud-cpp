@@ -69,9 +69,9 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iam_internal::CreateDefaultIAMCredentialsStub(background->cq(), options);
-  auto conn = std::make_shared<iam_internal::IAMCredentialsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return iam_internal::MakeIAMCredentialsTracingConnection(std::move(conn));
+  return iam_internal::MakeIAMCredentialsTracingConnection(
+      std::make_shared<iam_internal::IAMCredentialsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

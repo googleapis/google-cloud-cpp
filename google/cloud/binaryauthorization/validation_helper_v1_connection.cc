@@ -54,11 +54,10 @@ std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = binaryauthorization_internal::CreateDefaultValidationHelperV1Stub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      binaryauthorization_internal::ValidationHelperV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return binaryauthorization_internal::MakeValidationHelperV1TracingConnection(
-      std::move(conn));
+      std::make_shared<
+          binaryauthorization_internal::ValidationHelperV1ConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

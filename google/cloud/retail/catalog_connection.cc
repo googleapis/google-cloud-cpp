@@ -113,9 +113,9 @@ std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultCatalogServiceStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<retail_internal::CatalogServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return retail_internal::MakeCatalogServiceTracingConnection(std::move(conn));
+  return retail_internal::MakeCatalogServiceTracingConnection(
+      std::make_shared<retail_internal::CatalogServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

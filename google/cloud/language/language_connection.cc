@@ -82,11 +82,9 @@ std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = language_internal::CreateDefaultLanguageServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<language_internal::LanguageServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return language_internal::MakeLanguageServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<language_internal::LanguageServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

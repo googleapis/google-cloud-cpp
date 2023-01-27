@@ -271,11 +271,11 @@ MakeAccessContextManagerConnection(Options options) {
   auto stub =
       accesscontextmanager_internal::CreateDefaultAccessContextManagerStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      accesscontextmanager_internal::AccessContextManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return accesscontextmanager_internal::
-      MakeAccessContextManagerTracingConnection(std::move(conn));
+      MakeAccessContextManagerTracingConnection(
+          std::make_shared<accesscontextmanager_internal::
+                               AccessContextManagerConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -224,9 +224,9 @@ std::shared_ptr<DatastreamConnection> MakeDatastreamConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = datastream_internal::CreateDefaultDatastreamStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<datastream_internal::DatastreamConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return datastream_internal::MakeDatastreamTracingConnection(std::move(conn));
+  return datastream_internal::MakeDatastreamTracingConnection(
+      std::make_shared<datastream_internal::DatastreamConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

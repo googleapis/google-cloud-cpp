@@ -93,10 +93,9 @@ std::shared_ptr<ContentServiceConnection> MakeContentServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataplex_internal::CreateDefaultContentServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<dataplex_internal::ContentServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return dataplex_internal::MakeContentServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<dataplex_internal::ContentServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

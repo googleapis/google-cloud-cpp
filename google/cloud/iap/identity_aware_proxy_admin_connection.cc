@@ -108,11 +108,10 @@ MakeIdentityAwareProxyAdminServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = iap_internal::CreateDefaultIdentityAwareProxyAdminServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      iap_internal::IdentityAwareProxyAdminServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return iap_internal::MakeIdentityAwareProxyAdminServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          iap_internal::IdentityAwareProxyAdminServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

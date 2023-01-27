@@ -83,9 +83,9 @@ std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       batch_internal::CreateDefaultBatchServiceStub(background->cq(), options);
-  auto conn = std::make_shared<batch_internal::BatchServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return batch_internal::MakeBatchServiceTracingConnection(std::move(conn));
+  return batch_internal::MakeBatchServiceTracingConnection(
+      std::make_shared<batch_internal::BatchServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -153,9 +153,9 @@ std::shared_ptr<ConnectorsConnection> MakeConnectorsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = connectors_internal::CreateDefaultConnectorsStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<connectors_internal::ConnectorsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return connectors_internal::MakeConnectorsTracingConnection(std::move(conn));
+  return connectors_internal::MakeConnectorsTracingConnection(
+      std::make_shared<connectors_internal::ConnectorsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

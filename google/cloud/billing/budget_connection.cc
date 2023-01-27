@@ -77,9 +77,9 @@ std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = billing_internal::CreateDefaultBudgetServiceStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<billing_internal::BudgetServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return billing_internal::MakeBudgetServiceTracingConnection(std::move(conn));
+  return billing_internal::MakeBudgetServiceTracingConnection(
+      std::make_shared<billing_internal::BudgetServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

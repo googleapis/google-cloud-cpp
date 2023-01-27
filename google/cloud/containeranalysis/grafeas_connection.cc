@@ -122,11 +122,9 @@ std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = containeranalysis_internal::CreateDefaultGrafeasStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<containeranalysis_internal::GrafeasConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return containeranalysis_internal::MakeGrafeasTracingConnection(
-      std::move(conn));
+      std::make_shared<containeranalysis_internal::GrafeasConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

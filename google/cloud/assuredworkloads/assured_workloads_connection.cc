@@ -109,11 +109,11 @@ MakeAssuredWorkloadsServiceConnection(Options options) {
   auto stub =
       assuredworkloads_internal::CreateDefaultAssuredWorkloadsServiceStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      assuredworkloads_internal::AssuredWorkloadsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return assuredworkloads_internal::
-      MakeAssuredWorkloadsServiceTracingConnection(std::move(conn));
+      MakeAssuredWorkloadsServiceTracingConnection(
+          std::make_shared<
+              assuredworkloads_internal::AssuredWorkloadsServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

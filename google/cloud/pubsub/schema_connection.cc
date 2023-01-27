@@ -104,9 +104,9 @@ std::shared_ptr<SchemaServiceConnection> MakeSchemaServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = pubsub_internal::CreateDefaultSchemaServiceStub(background->cq(),
                                                               options);
-  auto conn = std::make_shared<pubsub_internal::SchemaServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return pubsub_internal::MakeSchemaServiceTracingConnection(std::move(conn));
+  return pubsub_internal::MakeSchemaServiceTracingConnection(
+      std::make_shared<pubsub_internal::SchemaServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

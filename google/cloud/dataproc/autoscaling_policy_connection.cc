@@ -80,11 +80,10 @@ MakeAutoscalingPolicyServiceConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultAutoscalingPolicyServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      dataproc_internal::AutoscalingPolicyServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return dataproc_internal::MakeAutoscalingPolicyServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          dataproc_internal::AutoscalingPolicyServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<AutoscalingPolicyServiceConnection>

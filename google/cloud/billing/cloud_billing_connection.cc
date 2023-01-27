@@ -108,9 +108,9 @@ std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = billing_internal::CreateDefaultCloudBillingStub(background->cq(),
                                                               options);
-  auto conn = std::make_shared<billing_internal::CloudBillingConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return billing_internal::MakeCloudBillingTracingConnection(std::move(conn));
+  return billing_internal::MakeCloudBillingTracingConnection(
+      std::make_shared<billing_internal::CloudBillingConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

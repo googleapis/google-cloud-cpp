@@ -216,9 +216,9 @@ std::shared_ptr<SpeechConnection> MakeSpeechConnection(ExperimentalTag,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       speech_v2_internal::CreateDefaultSpeechStub(background->cq(), options);
-  auto conn = std::make_shared<speech_v2_internal::SpeechConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return speech_v2_internal::MakeSpeechTracingConnection(std::move(conn));
+  return speech_v2_internal::MakeSpeechTracingConnection(
+      std::make_shared<speech_v2_internal::SpeechConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

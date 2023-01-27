@@ -59,9 +59,9 @@ std::shared_ptr<IAMPolicyConnection> MakeIAMPolicyConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iam_internal::CreateDefaultIAMPolicyStub(background->cq(), options);
-  auto conn = std::make_shared<iam_internal::IAMPolicyConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return iam_internal::MakeIAMPolicyTracingConnection(std::move(conn));
+  return iam_internal::MakeIAMPolicyTracingConnection(
+      std::make_shared<iam_internal::IAMPolicyConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

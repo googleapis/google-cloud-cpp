@@ -97,11 +97,10 @@ MakeWorkflowTemplateServiceConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultWorkflowTemplateServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      dataproc_internal::WorkflowTemplateServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return dataproc_internal::MakeWorkflowTemplateServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          dataproc_internal::WorkflowTemplateServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<WorkflowTemplateServiceConnection>

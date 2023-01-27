@@ -96,9 +96,9 @@ std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       apikeys_internal::CreateDefaultApiKeysStub(background->cq(), options);
-  auto conn = std::make_shared<apikeys_internal::ApiKeysConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return apikeys_internal::MakeApiKeysTracingConnection(std::move(conn));
+  return apikeys_internal::MakeApiKeysTracingConnection(
+      std::make_shared<apikeys_internal::ApiKeysConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

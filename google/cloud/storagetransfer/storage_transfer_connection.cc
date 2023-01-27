@@ -133,11 +133,10 @@ MakeStorageTransferServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = storagetransfer_internal::CreateDefaultStorageTransferServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      storagetransfer_internal::StorageTransferServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return storagetransfer_internal::MakeStorageTransferServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          storagetransfer_internal::StorageTransferServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

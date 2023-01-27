@@ -108,9 +108,9 @@ std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = memcache_internal::CreateDefaultCloudMemcacheStub(
       background->cq(), options);
-  auto conn = std::make_shared<memcache_internal::CloudMemcacheConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return memcache_internal::MakeCloudMemcacheTracingConnection(std::move(conn));
+  return memcache_internal::MakeCloudMemcacheTracingConnection(
+      std::make_shared<memcache_internal::CloudMemcacheConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

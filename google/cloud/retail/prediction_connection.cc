@@ -52,11 +52,9 @@ std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultPredictionServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<retail_internal::PredictionServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return retail_internal::MakePredictionServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<retail_internal::PredictionServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

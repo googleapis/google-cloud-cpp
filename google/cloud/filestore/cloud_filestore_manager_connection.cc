@@ -131,11 +131,9 @@ MakeCloudFilestoreManagerConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = filestore_internal::CreateDefaultCloudFilestoreManagerStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<filestore_internal::CloudFilestoreManagerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return filestore_internal::MakeCloudFilestoreManagerTracingConnection(
-      std::move(conn));
+      std::make_shared<filestore_internal::CloudFilestoreManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

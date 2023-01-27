@@ -57,9 +57,9 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       eventarc_internal::CreateDefaultPublisherStub(background->cq(), options);
-  auto conn = std::make_shared<eventarc_internal::PublisherConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return eventarc_internal::MakePublisherTracingConnection(std::move(conn));
+  return eventarc_internal::MakePublisherTracingConnection(
+      std::make_shared<eventarc_internal::PublisherConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

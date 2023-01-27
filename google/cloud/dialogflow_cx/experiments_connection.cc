@@ -90,11 +90,9 @@ std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultExperimentsStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dialogflow_cx_internal::ExperimentsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dialogflow_cx_internal::MakeExperimentsTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_cx_internal::ExperimentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(

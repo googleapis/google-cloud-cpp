@@ -69,11 +69,11 @@ MakeResourceSettingsServiceConnection(Options options) {
   auto stub =
       resourcesettings_internal::CreateDefaultResourceSettingsServiceStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      resourcesettings_internal::ResourceSettingsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return resourcesettings_internal::
-      MakeResourceSettingsServiceTracingConnection(std::move(conn));
+      MakeResourceSettingsServiceTracingConnection(
+          std::make_shared<
+              resourcesettings_internal::ResourceSettingsServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

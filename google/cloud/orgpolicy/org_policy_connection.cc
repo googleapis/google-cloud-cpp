@@ -88,9 +88,9 @@ std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       orgpolicy_internal::CreateDefaultOrgPolicyStub(background->cq(), options);
-  auto conn = std::make_shared<orgpolicy_internal::OrgPolicyConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return orgpolicy_internal::MakeOrgPolicyTracingConnection(std::move(conn));
+  return orgpolicy_internal::MakeOrgPolicyTracingConnection(
+      std::make_shared<orgpolicy_internal::OrgPolicyConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

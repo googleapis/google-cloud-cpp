@@ -77,9 +77,9 @@ std::shared_ptr<IntentsConnection> MakeIntentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultIntentsStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<dialogflow_cx_internal::IntentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dialogflow_cx_internal::MakeIntentsTracingConnection(std::move(conn));
+  return dialogflow_cx_internal::MakeIntentsTracingConnection(
+      std::make_shared<dialogflow_cx_internal::IntentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<IntentsConnection> MakeIntentsConnection(Options options) {

@@ -100,11 +100,11 @@ MakeClientConnectorServicesServiceConnection(Options options) {
   auto stub =
       beyondcorp_internal::CreateDefaultClientConnectorServicesServiceStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      beyondcorp_internal::ClientConnectorServicesServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return beyondcorp_internal::
-      MakeClientConnectorServicesServiceTracingConnection(std::move(conn));
+      MakeClientConnectorServicesServiceTracingConnection(
+          std::make_shared<beyondcorp_internal::
+                               ClientConnectorServicesServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

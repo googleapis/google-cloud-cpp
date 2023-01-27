@@ -78,11 +78,9 @@ std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultKnowledgeBasesStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dialogflow_es_internal::KnowledgeBasesConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dialogflow_es_internal::MakeKnowledgeBasesTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_es_internal::KnowledgeBasesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(

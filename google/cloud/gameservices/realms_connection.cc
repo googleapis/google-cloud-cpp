@@ -90,11 +90,9 @@ std::shared_ptr<RealmsServiceConnection> MakeRealmsServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gameservices_internal::CreateDefaultRealmsServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<gameservices_internal::RealmsServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return gameservices_internal::MakeRealmsServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<gameservices_internal::RealmsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

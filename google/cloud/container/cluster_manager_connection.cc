@@ -242,11 +242,9 @@ std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = container_internal::CreateDefaultClusterManagerStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<container_internal::ClusterManagerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return container_internal::MakeClusterManagerTracingConnection(
-      std::move(conn));
+      std::make_shared<container_internal::ClusterManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

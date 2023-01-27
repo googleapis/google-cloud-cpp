@@ -125,9 +125,9 @@ std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultProductServiceStub(background->cq(),
                                                                options);
-  auto conn = std::make_shared<retail_internal::ProductServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return retail_internal::MakeProductServiceTracingConnection(std::move(conn));
+  return retail_internal::MakeProductServiceTracingConnection(
+      std::make_shared<retail_internal::ProductServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

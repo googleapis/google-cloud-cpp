@@ -179,9 +179,9 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = golden_v1_internal::CreateDefaultGoldenThingAdminStub(
     background->cq(), options);
-  auto conn = std::make_shared<golden_v1_internal::GoldenThingAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return golden_v1_internal::MakeGoldenThingAdminTracingConnection(std::move(conn));
+  return golden_v1_internal::MakeGoldenThingAdminTracingConnection(
+      std::make_shared<golden_v1_internal::GoldenThingAdminConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

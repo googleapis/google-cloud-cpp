@@ -115,11 +115,11 @@ MakeGameServerDeploymentsServiceConnection(Options options) {
   auto stub =
       gameservices_internal::CreateDefaultGameServerDeploymentsServiceStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      gameservices_internal::GameServerDeploymentsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return gameservices_internal::
-      MakeGameServerDeploymentsServiceTracingConnection(std::move(conn));
+      MakeGameServerDeploymentsServiceTracingConnection(
+          std::make_shared<gameservices_internal::
+                               GameServerDeploymentsServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

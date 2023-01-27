@@ -78,11 +78,9 @@ std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = monitoring_internal::CreateDefaultDashboardsServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<monitoring_internal::DashboardsServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return monitoring_internal::MakeDashboardsServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<monitoring_internal::DashboardsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

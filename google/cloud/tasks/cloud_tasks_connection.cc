@@ -130,9 +130,9 @@ std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       tasks_internal::CreateDefaultCloudTasksStub(background->cq(), options);
-  auto conn = std::make_shared<tasks_internal::CloudTasksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return tasks_internal::MakeCloudTasksTracingConnection(std::move(conn));
+  return tasks_internal::MakeCloudTasksTracingConnection(
+      std::make_shared<tasks_internal::CloudTasksConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

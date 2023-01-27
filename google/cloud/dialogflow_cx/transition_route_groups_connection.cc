@@ -82,11 +82,10 @@ MakeTransitionRouteGroupsConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultTransitionRouteGroupsStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      dialogflow_cx_internal::TransitionRouteGroupsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return dialogflow_cx_internal::MakeTransitionRouteGroupsTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          dialogflow_cx_internal::TransitionRouteGroupsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<TransitionRouteGroupsConnection>

@@ -92,11 +92,11 @@ MakeBinauthzManagementServiceV1Connection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = binaryauthorization_internal::
       CreateDefaultBinauthzManagementServiceV1Stub(background->cq(), options);
-  auto conn = std::make_shared<
-      binaryauthorization_internal::BinauthzManagementServiceV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return binaryauthorization_internal::
-      MakeBinauthzManagementServiceV1TracingConnection(std::move(conn));
+      MakeBinauthzManagementServiceV1TracingConnection(
+          std::make_shared<binaryauthorization_internal::
+                               BinauthzManagementServiceV1ConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

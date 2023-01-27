@@ -203,9 +203,9 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
   options = iam_internal::IAMDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = iam_internal::CreateDefaultIAMStub(background->cq(), options);
-  auto conn = std::make_shared<iam_internal::IAMConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return iam_internal::MakeIAMTracingConnection(std::move(conn));
+  return iam_internal::MakeIAMTracingConnection(
+      std::make_shared<iam_internal::IAMConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

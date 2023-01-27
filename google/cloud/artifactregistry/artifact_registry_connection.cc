@@ -233,11 +233,10 @@ std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = artifactregistry_internal::CreateDefaultArtifactRegistryStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      artifactregistry_internal::ArtifactRegistryConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return artifactregistry_internal::MakeArtifactRegistryTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          artifactregistry_internal::ArtifactRegistryConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

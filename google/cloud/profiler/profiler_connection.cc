@@ -64,11 +64,9 @@ std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = profiler_internal::CreateDefaultProfilerServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<profiler_internal::ProfilerServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return profiler_internal::MakeProfilerServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<profiler_internal::ProfilerServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

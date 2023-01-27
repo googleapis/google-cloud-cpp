@@ -283,11 +283,9 @@ std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = securitycenter_internal::CreateDefaultSecurityCenterStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<securitycenter_internal::SecurityCenterConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return securitycenter_internal::MakeSecurityCenterTracingConnection(
-      std::move(conn));
+      std::make_shared<securitycenter_internal::SecurityCenterConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

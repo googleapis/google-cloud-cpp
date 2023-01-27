@@ -165,11 +165,9 @@ std::shared_ptr<AzureClustersConnection> MakeAzureClustersConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = gkemulticloud_v1_internal::CreateDefaultAzureClustersStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<gkemulticloud_v1_internal::AzureClustersConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return gkemulticloud_v1_internal::MakeAzureClustersTracingConnection(
-      std::move(conn));
+      std::make_shared<gkemulticloud_v1_internal::AzureClustersConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

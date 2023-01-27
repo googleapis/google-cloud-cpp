@@ -63,9 +63,9 @@ std::shared_ptr<Controller2Connection> MakeController2Connection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = debugger_internal::CreateDefaultController2Stub(background->cq(),
                                                               options);
-  auto conn = std::make_shared<debugger_internal::Controller2ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return debugger_internal::MakeController2TracingConnection(std::move(conn));
+  return debugger_internal::MakeController2TracingConnection(
+      std::make_shared<debugger_internal::Controller2ConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

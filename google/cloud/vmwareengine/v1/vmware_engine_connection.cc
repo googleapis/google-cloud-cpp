@@ -279,11 +279,9 @@ std::shared_ptr<VmwareEngineConnection> MakeVmwareEngineConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = vmwareengine_v1_internal::CreateDefaultVmwareEngineStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<vmwareengine_v1_internal::VmwareEngineConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return vmwareengine_v1_internal::MakeVmwareEngineTracingConnection(
-      std::move(conn));
+      std::make_shared<vmwareengine_v1_internal::VmwareEngineConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

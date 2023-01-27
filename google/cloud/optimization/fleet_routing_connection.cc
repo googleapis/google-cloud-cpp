@@ -60,11 +60,9 @@ std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = optimization_internal::CreateDefaultFleetRoutingStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<optimization_internal::FleetRoutingConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return optimization_internal::MakeFleetRoutingTracingConnection(
-      std::move(conn));
+      std::make_shared<optimization_internal::FleetRoutingConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

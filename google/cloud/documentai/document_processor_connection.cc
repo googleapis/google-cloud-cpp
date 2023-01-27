@@ -183,11 +183,10 @@ MakeDocumentProcessorServiceConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = documentai_internal::CreateDefaultDocumentProcessorServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      documentai_internal::DocumentProcessorServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return documentai_internal::MakeDocumentProcessorServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          documentai_internal::DocumentProcessorServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<DocumentProcessorServiceConnection>

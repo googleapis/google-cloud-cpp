@@ -87,9 +87,9 @@ std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultJobControllerStub(
       background->cq(), options);
-  auto conn = std::make_shared<dataproc_internal::JobControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return dataproc_internal::MakeJobControllerTracingConnection(std::move(conn));
+  return dataproc_internal::MakeJobControllerTracingConnection(
+      std::make_shared<dataproc_internal::JobControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(

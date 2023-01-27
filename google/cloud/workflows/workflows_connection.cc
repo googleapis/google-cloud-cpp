@@ -82,9 +82,9 @@ std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       workflows_internal::CreateDefaultWorkflowsStub(background->cq(), options);
-  auto conn = std::make_shared<workflows_internal::WorkflowsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return workflows_internal::MakeWorkflowsTracingConnection(std::move(conn));
+  return workflows_internal::MakeWorkflowsTracingConnection(
+      std::make_shared<workflows_internal::WorkflowsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

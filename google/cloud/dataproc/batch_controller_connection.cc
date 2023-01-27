@@ -74,11 +74,9 @@ std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultBatchControllerStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dataproc_internal::BatchControllerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dataproc_internal::MakeBatchControllerTracingConnection(
-      std::move(conn));
+      std::make_shared<dataproc_internal::BatchControllerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(

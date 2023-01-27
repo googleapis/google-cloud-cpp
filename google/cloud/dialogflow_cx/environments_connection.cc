@@ -114,11 +114,9 @@ std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultEnvironmentsStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dialogflow_cx_internal::EnvironmentsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dialogflow_cx_internal::MakeEnvironmentsTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_cx_internal::EnvironmentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(

@@ -85,9 +85,9 @@ std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = oslogin_internal::CreateDefaultOsLoginServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return oslogin_internal::MakeOsLoginServiceTracingConnection(std::move(conn));
+  return oslogin_internal::MakeOsLoginServiceTracingConnection(
+      std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

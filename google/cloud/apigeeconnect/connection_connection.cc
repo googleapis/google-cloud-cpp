@@ -55,11 +55,9 @@ std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = apigeeconnect_internal::CreateDefaultConnectionServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<apigeeconnect_internal::ConnectionServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return apigeeconnect_internal::MakeConnectionServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<apigeeconnect_internal::ConnectionServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

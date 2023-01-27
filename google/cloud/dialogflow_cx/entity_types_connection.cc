@@ -78,11 +78,9 @@ std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultEntityTypesStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dialogflow_cx_internal::EntityTypesConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dialogflow_cx_internal::MakeEntityTypesTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_cx_internal::EntityTypesConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(

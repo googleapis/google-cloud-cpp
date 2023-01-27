@@ -60,11 +60,9 @@ std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultChangelogsStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<dialogflow_cx_internal::ChangelogsConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return dialogflow_cx_internal::MakeChangelogsTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_cx_internal::ChangelogsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(

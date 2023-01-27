@@ -199,9 +199,9 @@ std::shared_ptr<CloudDeployConnection> MakeCloudDeployConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       deploy_internal::CreateDefaultCloudDeployStub(background->cq(), options);
-  auto conn = std::make_shared<deploy_internal::CloudDeployConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return deploy_internal::MakeCloudDeployTracingConnection(std::move(conn));
+  return deploy_internal::MakeCloudDeployTracingConnection(
+      std::make_shared<deploy_internal::CloudDeployConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

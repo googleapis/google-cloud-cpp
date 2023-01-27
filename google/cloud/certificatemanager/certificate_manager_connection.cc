@@ -240,11 +240,10 @@ std::shared_ptr<CertificateManagerConnection> MakeCertificateManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = certificatemanager_internal::CreateDefaultCertificateManagerStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      certificatemanager_internal::CertificateManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return certificatemanager_internal::MakeCertificateManagerTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          certificatemanager_internal::CertificateManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

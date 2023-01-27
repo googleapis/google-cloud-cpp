@@ -80,11 +80,10 @@ MakeSecuritySettingsServiceConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultSecuritySettingsServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<
-      dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return dialogflow_cx_internal::MakeSecuritySettingsServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<
+          dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<SecuritySettingsServiceConnection>

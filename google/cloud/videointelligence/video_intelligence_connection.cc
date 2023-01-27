@@ -56,11 +56,11 @@ MakeVideoIntelligenceServiceConnection(Options options) {
   auto stub =
       videointelligence_internal::CreateDefaultVideoIntelligenceServiceStub(
           background->cq(), options);
-  auto conn = std::make_shared<
-      videointelligence_internal::VideoIntelligenceServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return videointelligence_internal::
-      MakeVideoIntelligenceServiceTracingConnection(std::move(conn));
+      MakeVideoIntelligenceServiceTracingConnection(
+          std::make_shared<videointelligence_internal::
+                               VideoIntelligenceServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

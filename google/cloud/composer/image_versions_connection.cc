@@ -54,9 +54,9 @@ std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = composer_internal::CreateDefaultImageVersionsStub(
       background->cq(), options);
-  auto conn = std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return composer_internal::MakeImageVersionsTracingConnection(std::move(conn));
+  return composer_internal::MakeImageVersionsTracingConnection(
+      std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

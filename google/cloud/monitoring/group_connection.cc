@@ -81,10 +81,9 @@ std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = monitoring_internal::CreateDefaultGroupServiceStub(
       background->cq(), options);
-  auto conn = std::make_shared<monitoring_internal::GroupServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return monitoring_internal::MakeGroupServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<monitoring_internal::GroupServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -128,9 +128,9 @@ std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       redis_internal::CreateDefaultCloudRedisStub(background->cq(), options);
-  auto conn = std::make_shared<redis_internal::CloudRedisConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return redis_internal::MakeCloudRedisTracingConnection(std::move(conn));
+  return redis_internal::MakeCloudRedisTracingConnection(
+      std::make_shared<redis_internal::CloudRedisConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

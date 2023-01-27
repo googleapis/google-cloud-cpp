@@ -91,11 +91,9 @@ std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = serviceusage_internal::CreateDefaultServiceUsageStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<serviceusage_internal::ServiceUsageConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return serviceusage_internal::MakeServiceUsageTracingConnection(
-      std::move(conn));
+      std::make_shared<serviceusage_internal::ServiceUsageConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

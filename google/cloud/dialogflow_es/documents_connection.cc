@@ -108,10 +108,9 @@ std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultDocumentsStub(
       background->cq(), options);
-  auto conn = std::make_shared<dialogflow_es_internal::DocumentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
   return dialogflow_es_internal::MakeDocumentsTracingConnection(
-      std::move(conn));
+      std::make_shared<dialogflow_es_internal::DocumentsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(Options options) {

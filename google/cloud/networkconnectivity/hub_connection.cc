@@ -122,11 +122,9 @@ std::shared_ptr<HubServiceConnection> MakeHubServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = networkconnectivity_internal::CreateDefaultHubServiceStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<networkconnectivity_internal::HubServiceConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return networkconnectivity_internal::MakeHubServiceTracingConnection(
-      std::move(conn));
+      std::make_shared<networkconnectivity_internal::HubServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

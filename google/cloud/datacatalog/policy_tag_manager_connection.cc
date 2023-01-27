@@ -125,11 +125,9 @@ std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = datacatalog_internal::CreateDefaultPolicyTagManagerStub(
       background->cq(), options);
-  auto conn =
-      std::make_shared<datacatalog_internal::PolicyTagManagerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options));
   return datacatalog_internal::MakePolicyTagManagerTracingConnection(
-      std::move(conn));
+      std::make_shared<datacatalog_internal::PolicyTagManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

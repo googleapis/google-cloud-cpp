@@ -123,9 +123,9 @@ std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       gkehub_internal::CreateDefaultGkeHubStub(background->cq(), options);
-  auto conn = std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-  return gkehub_internal::MakeGkeHubTracingConnection(std::move(conn));
+  return gkehub_internal::MakeGkeHubTracingConnection(
+      std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
