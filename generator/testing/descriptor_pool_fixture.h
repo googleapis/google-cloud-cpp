@@ -62,6 +62,7 @@ class DescriptorPoolFixture : public ::testing::Test {
    * TEST_F(MyTest, Name) {
    *   ASSERT_TRUE(AddProtoFile("foo.proto", contents));
    * }
+   * @endcode
    */
   bool AddProtoFile(std::string const& name, std::string contents);
 
