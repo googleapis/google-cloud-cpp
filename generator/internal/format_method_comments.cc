@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/resolve_method_return.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
@@ -27,14 +28,10 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-std::string DefineReferenceLink(
-    google::protobuf::Descriptor const& message_type) {
+ProtoDefinitionLocation Location(google::protobuf::Descriptor const& d) {
   google::protobuf::SourceLocation loc;
-  message_type.GetSourceLocation(&loc);
-  std::string output_type_proto_file_name = message_type.file()->name();
-  return absl::StrCat("@googleapis_reference_link{",
-                      output_type_proto_file_name, "#L", loc.start_line + 1,
-                      "}");
+  d.GetSourceLocation(&loc);
+  return ProtoDefinitionLocation{d.file()->name(), loc.start_line + 1};
 }
 
 }  // namespace
@@ -74,44 +71,22 @@ std::string FormatMethodComments(
         "  /// @return $method_paginated_return_doxygen_link$\n";
   }
 
-  std::string trailer = "  ///\n";
-  trailer += "  /// [" + method.input_type()->full_name() + "]: ";
-  trailer += DefineReferenceLink(*method.input_type()) + "\n";
-  if (IsLongrunningOperation(method)) {
-    auto const info =
-        method.options().GetExtension(google::longrunning::operation_info);
-    auto const response_type_name =
-        info.response_type() == "google.protobuf.Empty" ? info.metadata_type()
-                                                        : info.response_type();
-    auto const& pool = *method.file()->pool();
-    auto const* message = pool.FindMessageTypeByName(response_type_name);
-    if (message == nullptr) {
-      message = pool.FindMessageTypeByName(method.file()->package() + "." +
-                                           response_type_name);
-    }
-    if (message == nullptr) {
-      absl::StrAppend(&trailer, "  /// [", response_type_name,
-                      "]: ", ProtoNameToCppName(response_type_name), "\n");
-    } else {
-      absl::StrAppend(&trailer, "  /// [", message->full_name(),
-                      "]: ", DefineReferenceLink(*message), "\n");
-    }
+  std::map<std::string, ProtoDefinitionLocation> references;
+  references.emplace(method.input_type()->full_name(),
+                     Location(*method.input_type()));
+  auto method_return = ResolveMethodReturn(method);
+  if (method_return) references.insert(*std::move(method_return));
 
-  } else if (IsPaginated(method)) {
-    auto info = DeterminePagination(method);
-    if (info->second != nullptr) {
-      trailer += "  /// [" + info->second->full_name() + "]: ";
-      trailer += DefineReferenceLink(*info->second) + "\n";
-    }
-  } else if (!IsResponseTypeEmpty(method)) {
-    trailer += "  /// [" + method.output_type()->full_name() + "]: ";
-    trailer += DefineReferenceLink(*method.output_type()) + "\n";
+  std::string trailer;
+  for (auto const& kv : references) {
+    absl::StrAppend(&trailer, "  /// [", kv.first,
+                    "]: @googleapis_reference_link{", kv.second.filename, "#L",
+                    kv.second.lineno, "}\n");
   }
 
-  trailer += "  ///\n";
   return absl::StrCat("  ///\n  ///", doxygen_formatted_function_comments, "\n",
                       variable_parameter_comments, options_comment,
-                      return_comment_string, trailer);
+                      return_comment_string, "  ///\n", trailer, "  ///\n");
 }
 
 }  // namespace generator_internal
