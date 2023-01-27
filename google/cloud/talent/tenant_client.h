@@ -182,10 +182,10 @@ class TenantServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
-  /// [google.cloud.talent.v4.UpdateTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
   /// [google.cloud.talent.v4.Tenant]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [google.cloud.talent.v4.UpdateTenantRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::Tenant const& tenant,
@@ -201,10 +201,10 @@ class TenantServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Tenant,google/cloud/talent/v4/tenant.proto#L32}
   ///
-  /// [google.cloud.talent.v4.UpdateTenantRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
   /// [google.cloud.talent.v4.Tenant]:
   /// @googleapis_reference_link{google/cloud/talent/v4/tenant.proto#L32}
+  /// [google.cloud.talent.v4.UpdateTenantRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/tenant_service.proto#L114}
   ///
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
       google::cloud::talent::v4::UpdateTenantRequest const& request,

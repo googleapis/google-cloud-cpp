@@ -99,10 +99,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L276}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L276}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
@@ -118,10 +118,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L276}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L276}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment> ListEnvironments(
       google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request,
@@ -140,10 +140,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L311}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L311}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
@@ -159,10 +159,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L311}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L311}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
       google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request,
@@ -251,10 +251,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L343}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L343}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(
@@ -280,10 +280,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L343}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L343}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(
@@ -340,10 +340,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L369}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L369}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment>
   LookupEnvironmentHistory(std::string const& name, Options opts = {});
@@ -359,10 +359,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Environment,google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L369}
   /// [google.cloud.dialogflow.cx.v3.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.LookupEnvironmentHistoryRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L369}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Environment>
   LookupEnvironmentHistory(
@@ -412,10 +412,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::ContinuousTestResult,google/cloud/dialogflow/cx/v3/environment.proto#L402}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L469}
   /// [google.cloud.dialogflow.cx.v3.ContinuousTestResult]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L402}
+  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L469}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
   ListContinuousTestResults(std::string const& parent, Options opts = {});
@@ -430,10 +430,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::ContinuousTestResult,google/cloud/dialogflow/cx/v3/environment.proto#L402}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L469}
   /// [google.cloud.dialogflow.cx.v3.ContinuousTestResult]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L402}
+  /// [google.cloud.dialogflow.cx.v3.ListContinuousTestResultsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L469}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
   ListContinuousTestResults(

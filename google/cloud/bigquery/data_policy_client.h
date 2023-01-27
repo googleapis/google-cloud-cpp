@@ -152,10 +152,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
   ///
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   UpdateDataPolicy(
@@ -173,10 +173,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.UpdateDataPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L143}
   ///
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   UpdateDataPolicy(
@@ -196,10 +196,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
   ///
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   RenameDataPolicy(std::string const& name,
@@ -215,10 +215,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.RenameDataPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L160}
   ///
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   RenameDataPolicy(
@@ -267,10 +267,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   ///
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
       std::string const& name, Options opts = {});
@@ -285,10 +285,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.GetDataPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L182}
   ///
   StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy> GetDataPolicy(
       google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
@@ -306,10 +306,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
   ///
   StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   ListDataPolicies(std::string const& parent, Options opts = {});
@@ -324,10 +324,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datapolicies::v1::DataPolicy,google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
   ///
-  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
   /// [google.cloud.bigquery.datapolicies.v1.DataPolicy]:
   /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L234}
+  /// [google.cloud.bigquery.datapolicies.v1.ListDataPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datapolicies/v1/datapolicy.proto#L194}
   ///
   StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
   ListDataPolicies(
@@ -363,10 +363,10 @@ class DataPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

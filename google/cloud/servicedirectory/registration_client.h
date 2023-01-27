@@ -237,10 +237,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
-  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   /// [google.cloud.servicedirectory.v1.Namespace]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
       google::cloud::servicedirectory::v1::Namespace const& namespace_,
@@ -256,10 +256,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Namespace,google/cloud/servicedirectory/v1/namespace.proto#L34}
   ///
-  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   /// [google.cloud.servicedirectory.v1.Namespace]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/namespace.proto#L34}
+  /// [google.cloud.servicedirectory.v1.UpdateNamespaceRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L334}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Namespace> UpdateNamespace(
       google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
@@ -430,10 +430,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
-  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   /// [google.cloud.servicedirectory.v1.Service]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
       google::cloud::servicedirectory::v1::Service const& service,
@@ -449,10 +449,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Service,google/cloud/servicedirectory/v1/service.proto#L36}
   ///
-  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   /// [google.cloud.servicedirectory.v1.Service]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [google.cloud.servicedirectory.v1.UpdateServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L454}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Service> UpdateService(
       google::cloud::servicedirectory::v1::UpdateServiceRequest const& request,
@@ -547,10 +547,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
-  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
       std::string const& parent, Options opts = {});
@@ -565,10 +565,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
-  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.ListEndpointsRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L501}
   ///
   StreamRange<google::cloud::servicedirectory::v1::Endpoint> ListEndpoints(
       google::cloud::servicedirectory::v1::ListEndpointsRequest request,
@@ -583,10 +583,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
-  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
       std::string const& name, Options opts = {});
@@ -601,10 +601,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
-  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.GetEndpointRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L564}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> GetEndpoint(
       google::cloud::servicedirectory::v1::GetEndpointRequest const& request,
@@ -621,10 +621,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
-  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
       google::cloud::servicedirectory::v1::Endpoint const& endpoint,
@@ -640,10 +640,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::servicedirectory::v1::Endpoint,google/cloud/servicedirectory/v1/endpoint.proto#L33}
   ///
-  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   /// [google.cloud.servicedirectory.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+  /// [google.cloud.servicedirectory.v1.UpdateEndpointRequest]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/registration_service.proto#L576}
   ///
   StatusOr<google::cloud::servicedirectory::v1::Endpoint> UpdateEndpoint(
       google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request,
@@ -704,10 +704,10 @@ class RegistrationServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

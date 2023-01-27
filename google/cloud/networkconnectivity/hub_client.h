@@ -96,10 +96,10 @@ class HubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
-  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
   /// [google.cloud.networkconnectivity.v1.Hub]:
   /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]:
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
   ///
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
       std::string const& parent, Options opts = {});
@@ -115,10 +115,10 @@ class HubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
-  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
   /// [google.cloud.networkconnectivity.v1.Hub]:
   /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.ListHubsRequest]:
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
   ///
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
       google::cloud::networkconnectivity::v1::ListHubsRequest request,
@@ -217,10 +217,10 @@ class HubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
-  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
   /// [google.cloud.networkconnectivity.v1.Hub]:
   /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]:
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
       google::cloud::networkconnectivity::v1::Hub const& hub,
@@ -237,10 +237,10 @@ class HubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
-  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
   /// [google.cloud.networkconnectivity.v1.Hub]:
   /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
+  /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]:
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
@@ -413,10 +413,10 @@ class HubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
-  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
   /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]:
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
@@ -432,10 +432,10 @@ class HubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
-  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
   /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
+  /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]:
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,

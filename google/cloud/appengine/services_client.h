@@ -131,10 +131,10 @@ class ServicesClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::Service,google/appengine/v1/service.proto#L36}
   ///
-  /// [google.appengine.v1.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L218}
   /// [google.appengine.v1.Service]:
   /// @googleapis_reference_link{google/appengine/v1/service.proto#L36}
+  /// [google.appengine.v1.UpdateServiceRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L218}
   ///
   future<StatusOr<google::appengine::v1::Service>> UpdateService(
       google::appengine::v1::UpdateServiceRequest const& request,

@@ -97,10 +97,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
-  /// [google.cloud.apigateway.v1.ListGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   /// [google.cloud.apigateway.v1.Gateway]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.ListGatewaysRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   ///
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
       std::string const& parent, Options opts = {});
@@ -115,10 +115,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
-  /// [google.cloud.apigateway.v1.ListGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   /// [google.cloud.apigateway.v1.Gateway]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.ListGatewaysRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L305}
   ///
   StreamRange<google::cloud::apigateway::v1::Gateway> ListGateways(
       google::cloud::apigateway::v1::ListGatewaysRequest request,
@@ -134,10 +134,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
-  /// [google.cloud.apigateway.v1.GetGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   /// [google.cloud.apigateway.v1.Gateway]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.GetGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   ///
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
       std::string const& name, Options opts = {});
@@ -152,10 +152,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
-  /// [google.cloud.apigateway.v1.GetGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   /// [google.cloud.apigateway.v1.Gateway]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.GetGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L341}
   ///
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
       google::cloud::apigateway::v1::GetGatewayRequest const& request,
@@ -219,10 +219,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
-  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   /// [google.cloud.apigateway.v1.Gateway]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
       google::cloud::apigateway::v1::Gateway const& gateway,
@@ -238,10 +238,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Gateway,google/cloud/apigateway/v1/apigateway.proto#L242}
   ///
-  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   /// [google.cloud.apigateway.v1.Gateway]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L242}
+  /// [google.cloud.apigateway.v1.UpdateGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L372}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
@@ -295,10 +295,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.ListApisRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.ListApisRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   ///
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
       std::string const& parent, Options opts = {});
@@ -313,10 +313,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.ListApisRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.ListApisRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L397}
   ///
   StreamRange<google::cloud::apigateway::v1::Api> ListApis(
       google::cloud::apigateway::v1::ListApisRequest request,
@@ -332,10 +332,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.GetApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.GetApiRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   ///
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(std::string const& name,
                                                       Options opts = {});
@@ -350,10 +350,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.GetApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.GetApiRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L433}
   ///
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(
       google::cloud::apigateway::v1::GetApiRequest const& request,
@@ -373,10 +373,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.CreateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.CreateApiRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       std::string const& parent, google::cloud::apigateway::v1::Api const& api,
@@ -392,10 +392,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.CreateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.CreateApiRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L445}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       google::cloud::apigateway::v1::CreateApiRequest const& request,
@@ -416,10 +416,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.UpdateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.UpdateApiRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       google::cloud::apigateway::v1::Api const& api,
@@ -435,10 +435,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::Api,google/cloud/apigateway/v1/apigateway.proto#L44}
   ///
-  /// [google.cloud.apigateway.v1.UpdateApiRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   /// [google.cloud.apigateway.v1.Api]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L44}
+  /// [google.cloud.apigateway.v1.UpdateApiRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L464}
   ///
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       google::cloud::apigateway::v1::UpdateApiRequest const& request,
@@ -491,10 +491,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   ///
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
       std::string const& parent, Options opts = {});
@@ -509,10 +509,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.ListApiConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L489}
   ///
   StreamRange<google::cloud::apigateway::v1::ApiConfig> ListApiConfigs(
       google::cloud::apigateway::v1::ListApiConfigsRequest request,
@@ -528,10 +528,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.GetApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.GetApiConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   ///
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
       std::string const& name, Options opts = {});
@@ -546,10 +546,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.GetApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.GetApiConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L525}
   ///
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
       google::cloud::apigateway::v1::GetApiConfigRequest const& request,
@@ -569,10 +569,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
       std::string const& parent,
@@ -589,10 +589,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.CreateApiConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L552}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
@@ -613,10 +613,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
       google::cloud::apigateway::v1::ApiConfig const& api_config,
@@ -632,10 +632,10 @@ class ApiGatewayServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigateway::v1::ApiConfig,google/cloud/apigateway/v1/apigateway.proto#L107}
   ///
-  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   /// [google.cloud.apigateway.v1.ApiConfig]:
   /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L107}
+  /// [google.cloud.apigateway.v1.UpdateApiConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/apigateway/v1/apigateway.proto#L571}
   ///
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,

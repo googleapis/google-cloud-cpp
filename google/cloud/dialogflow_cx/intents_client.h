@@ -94,10 +94,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Intent,google/cloud/dialogflow/cx/v3/intent.proto#L102}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L242}
   /// [google.cloud.dialogflow.cx.v3.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L242}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
       std::string const& parent, Options opts = {});
@@ -112,10 +112,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Intent,google/cloud/dialogflow/cx/v3/intent.proto#L102}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L242}
   /// [google.cloud.dialogflow.cx.v3.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.ListIntentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L242}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Intent> ListIntents(
       google::cloud::dialogflow::cx::v3::ListIntentsRequest request,
@@ -224,10 +224,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Intent,google/cloud/dialogflow/cx/v3/intent.proto#L102}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L342}
   /// [google.cloud.dialogflow.cx.v3.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L342}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
       google::cloud::dialogflow::cx::v3::Intent const& intent,
@@ -247,10 +247,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Intent,google/cloud/dialogflow/cx/v3/intent.proto#L102}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L342}
   /// [google.cloud.dialogflow.cx.v3.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L102}
+  /// [google.cloud.dialogflow.cx.v3.UpdateIntentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/intent.proto#L342}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
       google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request,

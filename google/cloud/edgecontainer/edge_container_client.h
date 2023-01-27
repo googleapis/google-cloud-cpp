@@ -97,10 +97,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L241}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.ListClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L241}
   ///
   StreamRange<google::cloud::edgecontainer::v1::Cluster> ListClusters(
       std::string const& parent, Options opts = {});
@@ -115,10 +115,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L241}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.ListClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L241}
   ///
   StreamRange<google::cloud::edgecontainer::v1::Cluster> ListClusters(
       google::cloud::edgecontainer::v1::ListClustersRequest request,
@@ -133,10 +133,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L277}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.GetClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L277}
   ///
   StatusOr<google::cloud::edgecontainer::v1::Cluster> GetCluster(
       std::string const& name, Options opts = {});
@@ -151,10 +151,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L277}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.GetClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L277}
   ///
   StatusOr<google::cloud::edgecontainer::v1::Cluster> GetCluster(
       google::cloud::edgecontainer::v1::GetClusterRequest const& request,
@@ -173,10 +173,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
       std::string const& parent,
@@ -193,10 +193,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.CreateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L288}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
       google::cloud::edgecontainer::v1::CreateClusterRequest const& request,
@@ -217,10 +217,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L310}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L310}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
       google::cloud::edgecontainer::v1::Cluster const& cluster,
@@ -236,10 +236,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::Cluster,google/cloud/edgecontainer/v1/resources.proto#L52}
   ///
-  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L310}
   /// [google.cloud.edgecontainer.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L52}
+  /// [google.cloud.edgecontainer.v1.UpdateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L310}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
@@ -450,10 +450,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
-  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
   /// [google.cloud.edgecontainer.v1.NodePool]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
@@ -469,10 +469,10 @@ class EdgeContainerClient {
   /// @return
   /// @googleapis_link{google::cloud::edgecontainer::v1::NodePool,google/cloud/edgecontainer/v1/resources.proto#L150}
   ///
-  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
   /// [google.cloud.edgecontainer.v1.NodePool]:
   /// @googleapis_reference_link{google/cloud/edgecontainer/v1/resources.proto#L150}
+  /// [google.cloud.edgecontainer.v1.UpdateNodePoolRequest]:
+  /// @googleapis_reference_link{google/cloud/edgecontainer/v1/service.proto#L432}
   ///
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,

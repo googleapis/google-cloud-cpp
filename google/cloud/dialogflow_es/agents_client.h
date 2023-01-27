@@ -94,10 +94,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       std::string const& parent, Options opts = {});
@@ -112,10 +112,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       google::cloud::dialogflow::v2::GetAgentRequest const& request,
@@ -134,10 +134,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::Agent const& agent, Options opts = {});
@@ -156,10 +156,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::SetAgentRequest const& request,
@@ -210,10 +210,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   ///
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       std::string const& parent, Options opts = {});
@@ -234,10 +234,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   ///
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       google::cloud::dialogflow::v2::SearchAgentsRequest request,

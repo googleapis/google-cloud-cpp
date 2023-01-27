@@ -103,10 +103,10 @@ class CloudShellServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L116}
   ///
-  /// [google.cloud.shell.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   /// [google.cloud.shell.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
+  /// [google.cloud.shell.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   ///
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
@@ -121,10 +121,10 @@ class CloudShellServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::shell::v1::Environment,google/cloud/shell/v1/cloudshell.proto#L116}
   ///
-  /// [google.cloud.shell.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   /// [google.cloud.shell.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L116}
+  /// [google.cloud.shell.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/shell/v1/cloudshell.proto#L191}
   ///
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
       google::cloud::shell::v1::GetEnvironmentRequest const& request,

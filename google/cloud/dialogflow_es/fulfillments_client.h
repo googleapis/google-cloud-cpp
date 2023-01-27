@@ -94,10 +94,10 @@ class FulfillmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
-  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   ///
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       std::string const& name, Options opts = {});
@@ -112,10 +112,10 @@ class FulfillmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
-  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   ///
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
       google::cloud::dialogflow::v2::GetFulfillmentRequest const& request,
@@ -133,10 +133,10 @@ class FulfillmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   ///
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
       google::cloud::dialogflow::v2::Fulfillment const& fulfillment,
@@ -152,10 +152,10 @@ class FulfillmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
+  /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   ///
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
       google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request,

@@ -96,10 +96,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.ListDocumentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L410}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.ListDocumentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L410}
   ///
   StreamRange<google::cloud::dialogflow::v2::Document> ListDocuments(
       std::string const& parent, Options opts = {});
@@ -114,10 +114,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.ListDocumentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L410}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.ListDocumentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L410}
   ///
   StreamRange<google::cloud::dialogflow::v2::Document> ListDocuments(
       google::cloud::dialogflow::v2::ListDocumentsRequest request,
@@ -134,10 +134,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.GetDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L396}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.GetDocumentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L396}
   ///
   StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
       std::string const& name, Options opts = {});
@@ -152,10 +152,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.GetDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L396}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.GetDocumentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L396}
   ///
   StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
       google::cloud::dialogflow::v2::GetDocumentRequest const& request,
@@ -326,10 +326,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
       google::cloud::dialogflow::v2::Document const& document,
@@ -353,10 +353,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
@@ -392,10 +392,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
       std::string const& name, std::string const& content_uri,
@@ -425,10 +425,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
@@ -453,10 +453,10 @@ class DocumentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Document,google/cloud/dialogflow/v2/document.proto#L260}
   ///
-  /// [google.cloud.dialogflow.v2.ExportDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L607}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.ExportDocumentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L607}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request,

@@ -114,10 +114,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.ListAppConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L134}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.ListAppConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L134}
   ///
   StreamRange<google::cloud::beyondcorp::appconnections::v1::AppConnection>
   ListAppConnections(std::string const& parent, Options opts = {});
@@ -132,10 +132,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.ListAppConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L134}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.ListAppConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L134}
   ///
   StreamRange<google::cloud::beyondcorp::appconnections::v1::AppConnection>
   ListAppConnections(
@@ -153,10 +153,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.GetAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L180}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.GetAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L180}
   ///
   StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
   GetAppConnection(std::string const& name, Options opts = {});
@@ -171,10 +171,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.GetAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L180}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.GetAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L180}
   ///
   StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
   GetAppConnection(google::cloud::beyondcorp::appconnections::v1::
@@ -198,10 +198,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.CreateAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L192}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.CreateAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L192}
   ///
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
   CreateAppConnection(
@@ -220,10 +220,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.CreateAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L192}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.CreateAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L192}
   ///
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
   CreateAppConnection(google::cloud::beyondcorp::appconnections::v1::
@@ -249,10 +249,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.UpdateAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L232}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.UpdateAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L232}
   ///
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
   UpdateAppConnection(
@@ -270,10 +270,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnection,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.UpdateAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L232}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnection]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L362}
+  /// [google.cloud.beyondcorp.appconnections.v1.UpdateAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L232}
   ///
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
   UpdateAppConnection(google::cloud::beyondcorp::appconnections::v1::
@@ -290,10 +290,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnectionOperationMetadata,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L485}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.DeleteAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L271}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnectionOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L485}
+  /// [google.cloud.beyondcorp.appconnections.v1.DeleteAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L271}
   ///
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                       AppConnectionOperationMetadata>>
@@ -309,10 +309,10 @@ class AppConnectionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::appconnections::v1::AppConnectionOperationMetadata,google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L485}
   ///
-  /// [google.cloud.beyondcorp.appconnections.v1.DeleteAppConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L271}
   /// [google.cloud.beyondcorp.appconnections.v1.AppConnectionOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L485}
+  /// [google.cloud.beyondcorp.appconnections.v1.DeleteAppConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto#L271}
   ///
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                       AppConnectionOperationMetadata>>

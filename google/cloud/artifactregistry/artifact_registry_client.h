@@ -109,10 +109,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::DockerImage,google/devtools/artifactregistry/v1/artifact.proto#L37}
   ///
-  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L86}
   /// [google.devtools.artifactregistry.v1.DockerImage]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
+  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L86}
   ///
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
   ListDockerImages(std::string const& parent, Options opts = {});
@@ -127,10 +127,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::DockerImage,google/devtools/artifactregistry/v1/artifact.proto#L37}
   ///
-  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L86}
   /// [google.devtools.artifactregistry.v1.DockerImage]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
+  /// [google.devtools.artifactregistry.v1.ListDockerImagesRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L86}
   ///
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
   ListDockerImages(
@@ -146,10 +146,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::DockerImage,google/devtools/artifactregistry/v1/artifact.proto#L37}
   ///
-  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L108}
   /// [google.devtools.artifactregistry.v1.DockerImage]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
+  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L108}
   ///
   StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
       std::string const& name, Options opts = {});
@@ -164,10 +164,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::DockerImage,google/devtools/artifactregistry/v1/artifact.proto#L37}
   ///
-  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L108}
   /// [google.devtools.artifactregistry.v1.DockerImage]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L37}
+  /// [google.devtools.artifactregistry.v1.GetDockerImageRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/artifact.proto#L108}
   ///
   StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
       google::devtools::artifactregistry::v1::GetDockerImageRequest const&
@@ -359,10 +359,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Repository,google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L182}
   /// [google.devtools.artifactregistry.v1.Repository]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L182}
   ///
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
       google::devtools::artifactregistry::v1::Repository const& repository,
@@ -378,10 +378,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Repository,google/devtools/artifactregistry/v1/repository.proto#L33}
   ///
-  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L182}
   /// [google.devtools.artifactregistry.v1.Repository]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L33}
+  /// [google.devtools.artifactregistry.v1.UpdateRepositoryRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/repository.proto#L182}
   ///
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
       google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
@@ -667,10 +667,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::File,google/devtools/artifactregistry/v1/file.proto#L52}
   ///
-  /// [google.devtools.artifactregistry.v1.ListFilesRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L80}
   /// [google.devtools.artifactregistry.v1.File]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L52}
+  /// [google.devtools.artifactregistry.v1.ListFilesRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L80}
   ///
   StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
       std::string const& parent, Options opts = {});
@@ -685,10 +685,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::File,google/devtools/artifactregistry/v1/file.proto#L52}
   ///
-  /// [google.devtools.artifactregistry.v1.ListFilesRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L80}
   /// [google.devtools.artifactregistry.v1.File]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L52}
+  /// [google.devtools.artifactregistry.v1.ListFilesRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L80}
   ///
   StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
       google::devtools::artifactregistry::v1::ListFilesRequest request,
@@ -703,10 +703,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::File,google/devtools/artifactregistry/v1/file.proto#L52}
   ///
-  /// [google.devtools.artifactregistry.v1.GetFileRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L120}
   /// [google.devtools.artifactregistry.v1.File]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L52}
+  /// [google.devtools.artifactregistry.v1.GetFileRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L120}
   ///
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
       std::string const& name, Options opts = {});
@@ -721,10 +721,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::File,google/devtools/artifactregistry/v1/file.proto#L52}
   ///
-  /// [google.devtools.artifactregistry.v1.GetFileRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L120}
   /// [google.devtools.artifactregistry.v1.File]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L52}
+  /// [google.devtools.artifactregistry.v1.GetFileRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/file.proto#L120}
   ///
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
       google::devtools::artifactregistry::v1::GetFileRequest const& request,
@@ -856,10 +856,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Tag,google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
-  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L104}
   /// [google.devtools.artifactregistry.v1.Tag]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
+  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L104}
   ///
   StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
       google::devtools::artifactregistry::v1::Tag const& tag,
@@ -875,10 +875,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::Tag,google/devtools/artifactregistry/v1/tag.proto#L32}
   ///
-  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L104}
   /// [google.devtools.artifactregistry.v1.Tag]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L32}
+  /// [google.devtools.artifactregistry.v1.UpdateTagRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/tag.proto#L104}
   ///
   StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
       google::devtools::artifactregistry::v1::UpdateTagRequest const& request,
@@ -921,10 +921,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -1014,10 +1014,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::ProjectSettings,google/devtools/artifactregistry/v1/settings.proto#L32}
   ///
-  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L78}
   /// [google.devtools.artifactregistry.v1.ProjectSettings]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L32}
+  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L78}
   ///
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
   UpdateProjectSettings(
@@ -1035,10 +1035,10 @@ class ArtifactRegistryClient {
   /// @return
   /// @googleapis_link{google::devtools::artifactregistry::v1::ProjectSettings,google/devtools/artifactregistry/v1/settings.proto#L32}
   ///
-  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]:
-  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L78}
   /// [google.devtools.artifactregistry.v1.ProjectSettings]:
   /// @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L32}
+  /// [google.devtools.artifactregistry.v1.UpdateProjectSettingsRequest]:
+  /// @googleapis_reference_link{google/devtools/artifactregistry/v1/settings.proto#L78}
   ///
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
   UpdateProjectSettings(google::devtools::artifactregistry::v1::

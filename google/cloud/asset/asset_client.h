@@ -131,10 +131,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::Asset,google/cloud/asset/v1/assets.proto#L96}
   ///
-  /// [google.cloud.asset.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
   /// [google.cloud.asset.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.ListAssetsRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
   ///
   StreamRange<google::cloud::asset::v1::Asset> ListAssets(
       std::string const& parent, Options opts = {});
@@ -150,10 +150,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::Asset,google/cloud/asset/v1/assets.proto#L96}
   ///
-  /// [google.cloud.asset.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
   /// [google.cloud.asset.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
+  /// [google.cloud.asset.v1.ListAssetsRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L417}
   ///
   StreamRange<google::cloud::asset::v1::Asset> ListAssets(
       google::cloud::asset::v1::ListAssetsRequest request, Options opts = {});
@@ -239,10 +239,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
   ///
-  /// [google.cloud.asset.v1.GetFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
   /// [google.cloud.asset.v1.Feed]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.GetFeedRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
   ///
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(std::string const& name,
                                                    Options opts = {});
@@ -257,10 +257,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
   ///
-  /// [google.cloud.asset.v1.GetFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
   /// [google.cloud.asset.v1.Feed]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.GetFeedRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L582}
   ///
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(
       google::cloud::asset::v1::GetFeedRequest const& request,
@@ -319,10 +319,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
   ///
-  /// [google.cloud.asset.v1.UpdateFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
   /// [google.cloud.asset.v1.Feed]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.UpdateFeedRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
   ///
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
       google::cloud::asset::v1::Feed const& feed, Options opts = {});
@@ -337,10 +337,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::Feed,google/cloud/asset/v1/asset_service.proto#L812}
   ///
-  /// [google.cloud.asset.v1.UpdateFeedRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
   /// [google.cloud.asset.v1.Feed]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L812}
+  /// [google.cloud.asset.v1.UpdateFeedRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L607}
   ///
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
       google::cloud::asset::v1::UpdateFeedRequest const& request,
@@ -469,10 +469,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L311}
   ///
-  /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
   /// [google.cloud.asset.v1.ResourceSearchResult]:
   /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
+  /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
   ///
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
   SearchAllResources(std::string const& scope, std::string const& query,
@@ -492,10 +492,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::ResourceSearchResult,google/cloud/asset/v1/assets.proto#L311}
   ///
-  /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
   /// [google.cloud.asset.v1.ResourceSearchResult]:
   /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L311}
+  /// [google.cloud.asset.v1.SearchAllResourcesRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L891}
   ///
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
   SearchAllResources(
@@ -566,10 +566,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L667}
   ///
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
   /// [google.cloud.asset.v1.IamPolicySearchResult]:
   /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L667}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
   ///
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
   SearchAllIamPolicies(std::string const& scope, std::string const& query,
@@ -588,10 +588,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::IamPolicySearchResult,google/cloud/asset/v1/assets.proto#L667}
   ///
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
   /// [google.cloud.asset.v1.IamPolicySearchResult]:
   /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L667}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1062}
   ///
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
   SearchAllIamPolicies(
@@ -852,10 +852,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
   ///
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
   /// [google.cloud.asset.v1.SavedQuery]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
       google::cloud::asset::v1::SavedQuery const& saved_query,
@@ -871,10 +871,10 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::SavedQuery,google/cloud/asset/v1/asset_service.proto#L1563}
   ///
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
-  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
   /// [google.cloud.asset.v1.SavedQuery]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1563}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1710}
   ///
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
       google::cloud::asset::v1::UpdateSavedQueryRequest const& request,

@@ -98,10 +98,10 @@ class DataTransferServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       std::string const& name, Options opts = {});
@@ -116,10 +116,10 @@ class DataTransferServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L430}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
@@ -138,10 +138,10 @@ class DataTransferServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
   ListDataSources(std::string const& parent, Options opts = {});
@@ -156,10 +156,10 @@ class DataTransferServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L320}
+  /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L443}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
   ListDataSources(
@@ -225,10 +225,10 @@ class DataTransferServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   UpdateTransferConfig(
@@ -247,10 +247,10 @@ class DataTransferServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
-  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
+  /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L545}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
   UpdateTransferConfig(google::cloud::bigquery::datatransfer::v1::

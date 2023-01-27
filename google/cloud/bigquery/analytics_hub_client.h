@@ -101,10 +101,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L433}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L433}
   ///
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
   ListDataExchanges(std::string const& parent, Options opts = {});
@@ -119,10 +119,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L433}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.ListDataExchangesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L433}
   ///
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
   ListDataExchanges(
@@ -142,10 +142,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L463}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L463}
   ///
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
   ListOrgDataExchanges(std::string const& organization, Options opts = {});
@@ -161,10 +161,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L463}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.ListOrgDataExchangesRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L463}
   ///
   StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
   ListOrgDataExchanges(
@@ -182,10 +182,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L488}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L488}
   ///
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
   GetDataExchange(std::string const& name, Options opts = {});
@@ -200,10 +200,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L488}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.GetDataExchangeRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L488}
   ///
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
   GetDataExchange(
@@ -267,10 +267,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L522}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L522}
   ///
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
   UpdateDataExchange(
@@ -288,10 +288,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::DataExchange,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L522}
   /// [google.cloud.bigquery.analyticshub.v1.DataExchange]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L200}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateDataExchangeRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L522}
   ///
   StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
   UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::
@@ -456,10 +456,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::Listing,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L301}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L608}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L301}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L608}
   ///
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
       google::cloud::bigquery::analyticshub::v1::Listing const& listing,
@@ -475,10 +475,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::analyticshub::v1::Listing,google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L301}
   ///
-  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L608}
   /// [google.cloud.bigquery.analyticshub.v1.Listing]:
   /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L301}
+  /// [google.cloud.bigquery.analyticshub.v1.UpdateListingRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/analyticshub/v1/analyticshub.proto#L608}
   ///
   StatusOr<google::cloud::bigquery::analyticshub::v1::Listing> UpdateListing(
       google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
@@ -592,10 +592,10 @@ class AnalyticsHubServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

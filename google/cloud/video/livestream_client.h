@@ -107,10 +107,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L218}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L218}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       std::string const& parent,
@@ -128,10 +128,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L218}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L218}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       google::cloud::video::livestream::v1::CreateChannelRequest const& request,
@@ -148,10 +148,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L253}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L253}
   ///
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
       std::string const& parent, Options opts = {});
@@ -166,10 +166,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L253}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L253}
   ///
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
       google::cloud::video::livestream::v1::ListChannelsRequest request,
@@ -185,10 +185,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L295}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.GetChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L295}
   ///
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
       std::string const& name, Options opts = {});
@@ -203,10 +203,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L295}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.GetChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L295}
   ///
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
       google::cloud::video::livestream::v1::GetChannelRequest const& request,
@@ -270,10 +270,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L340}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L340}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       google::cloud::video::livestream::v1::Channel const& channel,
@@ -289,10 +289,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
   ///
-  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L340}
   /// [google.cloud.video.livestream.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L340}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
@@ -309,10 +309,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
   ///
-  /// [google.cloud.video.livestream.v1.StartChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L375}
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// [google.cloud.video.livestream.v1.StartChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L375}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -329,10 +329,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
   ///
-  /// [google.cloud.video.livestream.v1.StartChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L375}
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// [google.cloud.video.livestream.v1.StartChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L375}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -351,10 +351,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
   ///
-  /// [google.cloud.video.livestream.v1.StopChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L402}
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// [google.cloud.video.livestream.v1.StopChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L402}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -371,10 +371,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
   ///
-  /// [google.cloud.video.livestream.v1.StopChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L402}
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// [google.cloud.video.livestream.v1.StopChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L402}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -437,10 +437,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
-  /// [google.cloud.video.livestream.v1.ListInputsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L464}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.ListInputsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L464}
   ///
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
       std::string const& parent, Options opts = {});
@@ -455,10 +455,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
-  /// [google.cloud.video.livestream.v1.ListInputsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L464}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.ListInputsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L464}
   ///
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
       google::cloud::video::livestream::v1::ListInputsRequest request,
@@ -555,10 +555,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
-  /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L545}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L545}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::Input const& input,
@@ -574,10 +574,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
-  /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L545}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
+  /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L545}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::UpdateInputRequest const& request,
@@ -638,10 +638,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
   ///
-  /// [google.cloud.video.livestream.v1.ListEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L611}
   /// [google.cloud.video.livestream.v1.Event]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// [google.cloud.video.livestream.v1.ListEventsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L611}
   ///
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
       std::string const& parent, Options opts = {});
@@ -656,10 +656,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
   ///
-  /// [google.cloud.video.livestream.v1.ListEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L611}
   /// [google.cloud.video.livestream.v1.Event]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// [google.cloud.video.livestream.v1.ListEventsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L611}
   ///
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
       google::cloud::video::livestream::v1::ListEventsRequest request,
@@ -675,10 +675,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
   ///
-  /// [google.cloud.video.livestream.v1.GetEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L653}
   /// [google.cloud.video.livestream.v1.Event]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// [google.cloud.video.livestream.v1.GetEventRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L653}
   ///
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
       std::string const& name, Options opts = {});
@@ -693,10 +693,10 @@ class LivestreamServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
   ///
-  /// [google.cloud.video.livestream.v1.GetEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L653}
   /// [google.cloud.video.livestream.v1.Event]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// [google.cloud.video.livestream.v1.GetEventRequest]:
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L653}
   ///
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
       google::cloud::video::livestream::v1::GetEventRequest const& request,

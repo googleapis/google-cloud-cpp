@@ -226,10 +226,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.ListDomainsRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ListDomainsRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   ///
   StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
       std::string const& parent, Options opts = {});
@@ -244,10 +244,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.ListDomainsRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ListDomainsRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L267}
   ///
   StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
       google::cloud::managedidentities::v1::ListDomainsRequest request,
@@ -263,10 +263,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.GetDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.GetDomainRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   ///
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
       std::string const& name, Options opts = {});
@@ -281,10 +281,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.GetDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.GetDomainRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L315}
   ///
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
       google::cloud::managedidentities::v1::GetDomainRequest const& request,
@@ -308,10 +308,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
       google::cloud::managedidentities::v1::Domain const& domain,
@@ -327,10 +327,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.UpdateDomainRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L328}
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
@@ -432,10 +432,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(std::string const& name,
@@ -453,10 +453,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ReconfigureTrustRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L373}
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(
@@ -518,10 +518,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       std::string const& name,
@@ -539,10 +539,10 @@ class ManagedIdentitiesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::managedidentities::v1::Domain,google/cloud/managedidentities/v1/resource.proto#L33}
   ///
-  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]:
-  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   /// [google.cloud.managedidentities.v1.Domain]:
   /// @googleapis_reference_link{google/cloud/managedidentities/v1/resource.proto#L33}
+  /// [google.cloud.managedidentities.v1.ValidateTrustRequest]:
+  /// @googleapis_reference_link{google/cloud/managedidentities/v1/managed_identities_service.proto#L410}
   ///
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request,

@@ -125,10 +125,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
-  /// [google.cloud.filestore.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L494}
   /// [google.cloud.filestore.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
+  /// [google.cloud.filestore.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L494}
   ///
   StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -144,10 +144,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
-  /// [google.cloud.filestore.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L494}
   /// [google.cloud.filestore.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
+  /// [google.cloud.filestore.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L494}
   ///
   StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
       google::cloud::filestore::v1::ListInstancesRequest request,
@@ -257,10 +257,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
-  /// [google.cloud.filestore.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L446}
   /// [google.cloud.filestore.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
+  /// [google.cloud.filestore.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L446}
   ///
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
       google::cloud::filestore::v1::Instance const& instance,
@@ -276,10 +276,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
-  /// [google.cloud.filestore.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L446}
   /// [google.cloud.filestore.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
+  /// [google.cloud.filestore.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L446}
   ///
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
       google::cloud::filestore::v1::UpdateInstanceRequest const& request,
@@ -299,10 +299,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Instance,google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
   ///
-  /// [google.cloud.filestore.v1.RestoreInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L462}
   /// [google.cloud.filestore.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L315}
+  /// [google.cloud.filestore.v1.RestoreInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L462}
   ///
   future<StatusOr<google::cloud::filestore::v1::Instance>> RestoreInstance(
       google::cloud::filestore::v1::RestoreInstanceRequest const& request,
@@ -318,10 +318,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
-  /// [google.cloud.filestore.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L484}
   /// [google.cloud.common.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
+  /// [google.cloud.filestore.v1.DeleteInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L484}
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
       std::string const& name, Options opts = {});
@@ -336,10 +336,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
-  /// [google.cloud.filestore.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L484}
   /// [google.cloud.common.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
+  /// [google.cloud.filestore.v1.DeleteInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L484}
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
       google::cloud::filestore::v1::DeleteInstanceRequest const& request,
@@ -361,10 +361,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.ListBackupsRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L673}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.ListBackupsRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L673}
   ///
   StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
       std::string const& parent, Options opts = {});
@@ -380,10 +380,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.ListBackupsRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L673}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.ListBackupsRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L673}
   ///
   StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
       google::cloud::filestore::v1::ListBackupsRequest request,
@@ -399,10 +399,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.GetBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L663}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.GetBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L663}
   ///
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
       std::string const& name, Options opts = {});
@@ -417,10 +417,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.GetBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L663}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.GetBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L663}
   ///
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
       google::cloud::filestore::v1::GetBackupRequest const& request,
@@ -445,10 +445,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.CreateBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L617}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.CreateBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L617}
   ///
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
       std::string const& parent,
@@ -465,10 +465,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.CreateBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L617}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.CreateBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L617}
   ///
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
       google::cloud::filestore::v1::CreateBackupRequest const& request,
@@ -484,10 +484,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
-  /// [google.cloud.filestore.v1.DeleteBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L642}
   /// [google.cloud.common.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
+  /// [google.cloud.filestore.v1.DeleteBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L642}
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
       std::string const& name, Options opts = {});
@@ -502,10 +502,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::common::OperationMetadata,google/cloud/common/operation_metadata.proto#L27}
   ///
-  /// [google.cloud.filestore.v1.DeleteBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L642}
   /// [google.cloud.common.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/common/operation_metadata.proto#L27}
+  /// [google.cloud.filestore.v1.DeleteBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L642}
   ///
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
       google::cloud::filestore::v1::DeleteBackupRequest const& request,
@@ -524,10 +524,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.UpdateBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L652}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.UpdateBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L652}
   ///
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
       google::cloud::filestore::v1::Backup const& backup,
@@ -543,10 +543,10 @@ class CloudFilestoreManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::filestore::v1::Backup,google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
   ///
-  /// [google.cloud.filestore.v1.UpdateBackupRequest]:
-  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L652}
   /// [google.cloud.filestore.v1.Backup]:
   /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L540}
+  /// [google.cloud.filestore.v1.UpdateBackupRequest]:
+  /// @googleapis_reference_link{google/cloud/filestore/v1/cloud_filestore_service.proto#L652}
   ///
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
       google::cloud::filestore::v1::UpdateBackupRequest const& request,

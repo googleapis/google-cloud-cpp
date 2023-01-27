@@ -95,10 +95,10 @@ class KnowledgeBasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
-  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
   ///
   StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> ListKnowledgeBases(
       std::string const& parent, Options opts = {});
@@ -113,10 +113,10 @@ class KnowledgeBasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
-  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
   ///
   StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> ListKnowledgeBases(
       google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request,
@@ -241,10 +241,10 @@ class KnowledgeBasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
       google::cloud::dialogflow::v2::KnowledgeBase const& knowledge_base,
@@ -260,10 +260,10 @@ class KnowledgeBasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
+  /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
       google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request,

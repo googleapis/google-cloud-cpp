@@ -171,10 +171,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
-  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   /// [google.cloud.binaryauthorization.v1.Policy]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
       google::cloud::binaryauthorization::v1::Policy const& policy,
@@ -195,10 +195,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
-  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   /// [google.cloud.binaryauthorization.v1.Policy]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
+  /// [google.cloud.binaryauthorization.v1.UpdatePolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L167}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
       google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
@@ -228,10 +228,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
       std::string const& parent, std::string const& attestor_id,
@@ -253,10 +253,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.CreateAttestorRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L175}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> CreateAttestor(
       google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
@@ -277,10 +277,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
       std::string const& name, Options opts = {});
@@ -297,10 +297,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.GetAttestorRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L194}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> GetAttestor(
       google::cloud::binaryauthorization::v1::GetAttestorRequest const& request,
@@ -322,10 +322,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
       google::cloud::binaryauthorization::v1::Attestor const& attestor,
@@ -343,10 +343,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.UpdateAttestorRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L206}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Attestor> UpdateAttestor(
       google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
@@ -366,10 +366,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   ///
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
       std::string const& parent, Options opts = {});
@@ -385,10 +385,10 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Attestor,google/cloud/binaryauthorization/v1/resources.proto#L168}
   ///
-  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   /// [google.cloud.binaryauthorization.v1.Attestor]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
+  /// [google.cloud.binaryauthorization.v1.ListAttestorsRequest]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L214}
   ///
   StreamRange<google::cloud::binaryauthorization::v1::Attestor> ListAttestors(
       google::cloud::binaryauthorization::v1::ListAttestorsRequest request,

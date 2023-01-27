@@ -154,10 +154,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::TransferJob,google/storagetransfer/v1/transfer_types.proto#L842}
   ///
-  /// [google.storagetransfer.v1.UpdateTransferJobRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L188}
   /// [google.storagetransfer.v1.TransferJob]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
+  /// [google.storagetransfer.v1.UpdateTransferJobRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L188}
   ///
   StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
       google::storagetransfer::v1::UpdateTransferJobRequest const& request,
@@ -292,10 +292,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       std::string const& project_id,
@@ -312,10 +312,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.CreateAgentPoolRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L297}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
       google::storagetransfer::v1::CreateAgentPoolRequest const& request,
@@ -343,10 +343,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
       google::storagetransfer::v1::AgentPool const& agent_pool,
@@ -362,10 +362,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.UpdateAgentPoolRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L322}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
       google::storagetransfer::v1::UpdateAgentPoolRequest const& request,
@@ -380,10 +380,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.GetAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.GetAgentPoolRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
       std::string const& name, Options opts = {});
@@ -398,10 +398,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.GetAgentPoolRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.GetAgentPoolRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L347}
   ///
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
       google::storagetransfer::v1::GetAgentPoolRequest const& request,
@@ -417,10 +417,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   ///
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
       std::string const& project_id, Options opts = {});
@@ -435,10 +435,10 @@ class StorageTransferServiceClient {
   /// @return
   /// @googleapis_link{google::storagetransfer::v1::AgentPool,google/storagetransfer/v1/transfer_types.proto#L425}
   ///
-  /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
-  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   /// [google.storagetransfer.v1.AgentPool]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L425}
+  /// [google.storagetransfer.v1.ListAgentPoolsRequest]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   ///
   StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
       google::storagetransfer::v1::ListAgentPoolsRequest request,

@@ -215,10 +215,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L47}
   ///
-  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L309}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L309}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
       google::cloud::eventarc::v1::Trigger const& trigger,
@@ -235,10 +235,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Trigger,google/cloud/eventarc/v1/trigger.proto#L47}
   ///
-  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L309}
   /// [google.cloud.eventarc.v1.Trigger]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/trigger.proto#L47}
+  /// [google.cloud.eventarc.v1.UpdateTriggerRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L309}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
@@ -292,10 +292,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L351}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.GetChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L351}
   ///
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
       std::string const& name, Options opts = {});
@@ -310,10 +310,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L351}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.GetChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L351}
   ///
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
       google::cloud::eventarc::v1::GetChannelRequest const& request,
@@ -328,10 +328,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
   ///
   StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
       std::string const& parent, Options opts = {});
@@ -346,10 +346,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.ListChannelsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L362}
   ///
   StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
       google::cloud::eventarc::v1::ListChannelsRequest request,
@@ -368,10 +368,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L404}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L404}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
       std::string const& parent,
@@ -388,10 +388,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L404}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.CreateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L404}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
       google::cloud::eventarc::v1::CreateChannelRequest const& request,
@@ -410,10 +410,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L425}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L425}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
       google::cloud::eventarc::v1::Channel const& channel,
@@ -429,10 +429,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L425}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.UpdateChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L425}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
       google::cloud::eventarc::v1::UpdateChannelRequest const& request,
@@ -447,10 +447,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.DeleteChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L440}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L440}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       std::string const& name, Options opts = {});
@@ -465,10 +465,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::Channel,google/cloud/eventarc/v1/channel.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.DeleteChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L440}
   /// [google.cloud.eventarc.v1.Channel]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel.proto#L35}
+  /// [google.cloud.eventarc.v1.DeleteChannelRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L440}
   ///
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       google::cloud::eventarc::v1::DeleteChannelRequest const& request,
@@ -555,10 +555,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L509}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L509}
   ///
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
       std::string const& name, Options opts = {});
@@ -573,10 +573,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L509}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.GetChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L509}
   ///
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
       google::cloud::eventarc::v1::GetChannelConnectionRequest const& request,
@@ -592,10 +592,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L520}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L520}
   ///
   StreamRange<google::cloud::eventarc::v1::ChannelConnection>
   ListChannelConnections(std::string const& parent, Options opts = {});
@@ -610,10 +610,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L520}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.ListChannelConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L520}
   ///
   StreamRange<google::cloud::eventarc::v1::ChannelConnection>
   ListChannelConnections(
@@ -633,10 +633,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L558}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L558}
   ///
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   CreateChannelConnection(
@@ -654,10 +654,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L558}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.CreateChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L558}
   ///
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   CreateChannelConnection(
@@ -674,10 +674,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L575}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L575}
   ///
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   DeleteChannelConnection(std::string const& name, Options opts = {});
@@ -692,10 +692,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::ChannelConnection,google/cloud/eventarc/v1/channel_connection.proto#L35}
   ///
-  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L575}
   /// [google.cloud.eventarc.v1.ChannelConnection]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/channel_connection.proto#L35}
+  /// [google.cloud.eventarc.v1.DeleteChannelConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L575}
   ///
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   DeleteChannelConnection(
@@ -753,10 +753,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::GoogleChannelConfig,google/cloud/eventarc/v1/google_channel_config.proto#L40}
   ///
-  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L586}
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
+  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L586}
   ///
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
   UpdateGoogleChannelConfig(
@@ -774,10 +774,10 @@ class EventarcClient {
   /// @return
   /// @googleapis_link{google::cloud::eventarc::v1::GoogleChannelConfig,google/cloud/eventarc/v1/google_channel_config.proto#L40}
   ///
-  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L586}
   /// [google.cloud.eventarc.v1.GoogleChannelConfig]:
   /// @googleapis_reference_link{google/cloud/eventarc/v1/google_channel_config.proto#L40}
+  /// [google.cloud.eventarc.v1.UpdateGoogleChannelConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/eventarc/v1/eventarc.proto#L586}
   ///
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
   UpdateGoogleChannelConfig(

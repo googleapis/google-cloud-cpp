@@ -96,10 +96,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L452}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L452}
   ///
   StreamRange<google::cloud::notebooks::v1::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -114,10 +114,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L452}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L452}
   ///
   StreamRange<google::cloud::notebooks::v1::Instance> ListInstances(
       google::cloud::notebooks::v1::ListInstancesRequest request,
@@ -214,10 +214,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.RegisterInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L501}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.RegisterInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L501}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RegisterInstance(
       google::cloud::notebooks::v1::RegisterInstanceRequest const& request,
@@ -233,10 +233,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.SetInstanceAcceleratorRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L514}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.SetInstanceAcceleratorRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L514}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   SetInstanceAccelerator(
@@ -254,10 +254,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.SetInstanceMachineTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L530}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.SetInstanceMachineTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L530}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   SetInstanceMachineType(
@@ -275,10 +275,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.UpdateInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L541}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.UpdateInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L541}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> UpdateInstanceConfig(
       google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request,
@@ -294,10 +294,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.UpdateShieldedInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L579}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.UpdateShieldedInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L579}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   UpdateShieldedInstanceConfig(
@@ -315,10 +315,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.SetInstanceLabelsRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L551}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.SetInstanceLabelsRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L551}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> SetInstanceLabels(
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request,
@@ -393,10 +393,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.StartInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L596}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.StartInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L596}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StartInstance(
       google::cloud::notebooks::v1::StartInstanceRequest const& request,
@@ -412,10 +412,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.StopInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L603}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.StopInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L603}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> StopInstance(
       google::cloud::notebooks::v1::StopInstanceRequest const& request,
@@ -431,10 +431,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.ResetInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L610}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.ResetInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L610}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ResetInstance(
       google::cloud::notebooks::v1::ResetInstanceRequest const& request,
@@ -453,10 +453,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.ReportInstanceInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L617}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.ReportInstanceInfoRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L617}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> ReportInstanceInfo(
       google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request,
@@ -530,10 +530,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.UpgradeInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L714}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.UpgradeInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L714}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> UpgradeInstance(
       google::cloud::notebooks::v1::UpgradeInstanceRequest const& request,
@@ -549,10 +549,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.RollbackInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L725}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.RollbackInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L725}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RollbackInstance(
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request,
@@ -610,10 +610,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Instance,google/cloud/notebooks/v1/instance.proto#L61}
   ///
-  /// [google.cloud.notebooks.v1.UpgradeInstanceInternalRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L736}
   /// [google.cloud.notebooks.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/instance.proto#L61}
+  /// [google.cloud.notebooks.v1.UpgradeInstanceInternalRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L736}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   UpgradeInstanceInternal(
@@ -631,10 +631,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Environment,google/cloud/notebooks/v1/environment.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L751}
   /// [google.cloud.notebooks.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/environment.proto#L33}
+  /// [google.cloud.notebooks.v1.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L751}
   ///
   StreamRange<google::cloud::notebooks::v1::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
@@ -649,10 +649,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Environment,google/cloud/notebooks/v1/environment.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L751}
   /// [google.cloud.notebooks.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/environment.proto#L33}
+  /// [google.cloud.notebooks.v1.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L751}
   ///
   StreamRange<google::cloud::notebooks::v1::Environment> ListEnvironments(
       google::cloud::notebooks::v1::ListEnvironmentsRequest request,
@@ -668,10 +668,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Environment,google/cloud/notebooks/v1/environment.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L792}
   /// [google.cloud.notebooks.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/environment.proto#L33}
+  /// [google.cloud.notebooks.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L792}
   ///
   StatusOr<google::cloud::notebooks::v1::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
@@ -686,10 +686,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Environment,google/cloud/notebooks/v1/environment.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L792}
   /// [google.cloud.notebooks.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/environment.proto#L33}
+  /// [google.cloud.notebooks.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L792}
   ///
   StatusOr<google::cloud::notebooks::v1::Environment> GetEnvironment(
       google::cloud::notebooks::v1::GetEnvironmentRequest const& request,
@@ -941,10 +941,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Schedule,google/cloud/notebooks/v1/schedule.proto#L30}
   ///
-  /// [google.cloud.notebooks.v1.TriggerScheduleRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L904}
   /// [google.cloud.notebooks.v1.Schedule]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/schedule.proto#L30}
+  /// [google.cloud.notebooks.v1.TriggerScheduleRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L904}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Schedule>> TriggerSchedule(
       google::cloud::notebooks::v1::TriggerScheduleRequest const& request,
@@ -960,10 +960,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
-  /// [google.cloud.notebooks.v1.ListExecutionsRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L916}
   /// [google.cloud.notebooks.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
+  /// [google.cloud.notebooks.v1.ListExecutionsRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L916}
   ///
   StreamRange<google::cloud::notebooks::v1::Execution> ListExecutions(
       std::string const& parent, Options opts = {});
@@ -978,10 +978,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
-  /// [google.cloud.notebooks.v1.ListExecutionsRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L916}
   /// [google.cloud.notebooks.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
+  /// [google.cloud.notebooks.v1.ListExecutionsRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L916}
   ///
   StreamRange<google::cloud::notebooks::v1::Execution> ListExecutions(
       google::cloud::notebooks::v1::ListExecutionsRequest request,
@@ -997,10 +997,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
-  /// [google.cloud.notebooks.v1.GetExecutionRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L959}
   /// [google.cloud.notebooks.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
+  /// [google.cloud.notebooks.v1.GetExecutionRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L959}
   ///
   StatusOr<google::cloud::notebooks::v1::Execution> GetExecution(
       std::string const& name, Options opts = {});
@@ -1015,10 +1015,10 @@ class NotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
-  /// [google.cloud.notebooks.v1.GetExecutionRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L959}
   /// [google.cloud.notebooks.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
+  /// [google.cloud.notebooks.v1.GetExecutionRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L959}
   ///
   StatusOr<google::cloud::notebooks::v1::Execution> GetExecution(
       google::cloud::notebooks::v1::GetExecutionRequest const& request,

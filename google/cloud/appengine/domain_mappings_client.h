@@ -95,10 +95,10 @@ class DomainMappingsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
-  /// [google.appengine.v1.ListDomainMappingsRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L932}
   /// [google.appengine.v1.DomainMapping]:
   /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
+  /// [google.appengine.v1.ListDomainMappingsRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L932}
   ///
   StreamRange<google::appengine::v1::DomainMapping> ListDomainMappings(
       google::appengine::v1::ListDomainMappingsRequest request,
@@ -114,10 +114,10 @@ class DomainMappingsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
-  /// [google.appengine.v1.GetDomainMappingRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L953}
   /// [google.appengine.v1.DomainMapping]:
   /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
+  /// [google.appengine.v1.GetDomainMappingRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L953}
   ///
   StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
       google::appengine::v1::GetDomainMappingRequest const& request,
@@ -157,10 +157,10 @@ class DomainMappingsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::DomainMapping,google/appengine/v1/domain_mapping.proto#L28}
   ///
-  /// [google.appengine.v1.UpdateDomainMappingRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L990}
   /// [google.appengine.v1.DomainMapping]:
   /// @googleapis_reference_link{google/appengine/v1/domain_mapping.proto#L28}
+  /// [google.appengine.v1.UpdateDomainMappingRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L990}
   ///
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request,

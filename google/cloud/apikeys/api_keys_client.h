@@ -151,10 +151,10 @@ class ApiKeysClient {
   /// @return
   /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
   ///
-  /// [google.api.apikeys.v2.ListKeysRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
   /// [google.api.apikeys.v2.Key]:
   /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.ListKeysRequest]:
+  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
   ///
   StreamRange<google::api::apikeys::v2::Key> ListKeys(std::string const& parent,
                                                       Options opts = {});
@@ -173,10 +173,10 @@ class ApiKeysClient {
   /// @return
   /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
   ///
-  /// [google.api.apikeys.v2.ListKeysRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
   /// [google.api.apikeys.v2.Key]:
   /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.ListKeysRequest]:
+  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L181}
   ///
   StreamRange<google::api::apikeys::v2::Key> ListKeys(
       google::api::apikeys::v2::ListKeysRequest request, Options opts = {});
@@ -291,10 +291,10 @@ class ApiKeysClient {
   /// @return
   /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
   ///
-  /// [google.api.apikeys.v2.UpdateKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
   /// [google.api.apikeys.v2.Key]:
   /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.UpdateKeyRequest]:
+  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
   ///
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
       google::api::apikeys::v2::Key const& key,
@@ -314,10 +314,10 @@ class ApiKeysClient {
   /// @return
   /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
   ///
-  /// [google.api.apikeys.v2.UpdateKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
   /// [google.api.apikeys.v2.Key]:
   /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.UpdateKeyRequest]:
+  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L235}
   ///
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
       google::api::apikeys::v2::UpdateKeyRequest const& request,
@@ -380,10 +380,10 @@ class ApiKeysClient {
   /// @return
   /// @googleapis_link{google::api::apikeys::v2::Key,google/api/apikeys/v2/resources.proto#L32}
   ///
-  /// [google.api.apikeys.v2.UndeleteKeyRequest]:
-  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L265}
   /// [google.api.apikeys.v2.Key]:
   /// @googleapis_reference_link{google/api/apikeys/v2/resources.proto#L32}
+  /// [google.api.apikeys.v2.UndeleteKeyRequest]:
+  /// @googleapis_reference_link{google/api/apikeys/v2/apikeys.proto#L265}
   ///
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       google::api::apikeys::v2::UndeleteKeyRequest const& request,

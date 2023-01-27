@@ -246,10 +246,10 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
       google::cloud::dialogflow::cx::v3::TestCase const& test_case,
@@ -265,10 +265,10 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
       google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request,

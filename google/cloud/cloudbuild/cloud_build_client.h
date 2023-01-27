@@ -105,10 +105,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1211}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1211}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       std::string const& project_id,
@@ -128,10 +128,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1211}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1211}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
@@ -150,10 +150,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1226}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1226}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
@@ -171,10 +171,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1226}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1226}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       google::devtools::cloudbuild::v1::GetBuildRequest const& request,
@@ -193,10 +193,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1241}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1241}
   ///
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       std::string const& project_id, std::string const& filter,
@@ -215,10 +215,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1241}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1241}
   ///
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       google::devtools::cloudbuild::v1::ListBuildsRequest request,
@@ -234,10 +234,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1280}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1280}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
@@ -252,10 +252,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1280}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1280}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
       google::devtools::cloudbuild::v1::CancelBuildRequest const& request,
@@ -297,10 +297,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L364}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L364}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
@@ -341,10 +341,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L364}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L364}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
@@ -413,10 +413,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1668}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1668}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       std::string const& project_id,
@@ -435,10 +435,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1668}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1668}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
@@ -458,10 +458,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1683}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1683}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
@@ -479,10 +479,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1683}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1683}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request,
@@ -500,10 +500,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1698}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1698}
   ///
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
       std::string const& project_id, Options opts = {});
@@ -520,10 +520,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1698}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1698}
   ///
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
       google::devtools::cloudbuild::v1::ListBuildTriggersRequest request,
@@ -576,10 +576,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1740}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1740}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
@@ -598,10 +598,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
-  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1740}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
+  /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1740}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
@@ -619,10 +619,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L379}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L379}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
@@ -639,10 +639,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
-  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L379}
   /// [google.devtools.cloudbuild.v1.Build]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
+  /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L379}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
@@ -767,10 +767,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
   ///
-  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2136}
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
+  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2136}
   ///
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
@@ -786,10 +786,10 @@ class CloudBuildClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
   ///
-  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2136}
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
+  /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2136}
   ///
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>

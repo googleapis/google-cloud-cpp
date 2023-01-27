@@ -97,10 +97,10 @@ class UserEventServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::UserEvent,google/cloud/retail/v2/user_event.proto#L36}
   ///
-  /// [google.cloud.retail.v2.WriteUserEventRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L120}
   /// [google.cloud.retail.v2.UserEvent]:
   /// @googleapis_reference_link{google/cloud/retail/v2/user_event.proto#L36}
+  /// [google.cloud.retail.v2.WriteUserEventRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L120}
   ///
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       google::cloud::retail::v2::WriteUserEventRequest const& request,
@@ -120,10 +120,10 @@ class UserEventServiceClient {
   /// @return
   /// @googleapis_link{google::api::HttpBody,google/api/httpbody.proto#L71}
   ///
-  /// [google.cloud.retail.v2.CollectUserEventRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L136}
   /// [google.api.HttpBody]:
   /// @googleapis_reference_link{google/api/httpbody.proto#L71}
+  /// [google.cloud.retail.v2.CollectUserEventRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L136}
   ///
   StatusOr<google::api::HttpBody> CollectUserEvent(
       google::cloud::retail::v2::CollectUserEventRequest const& request,

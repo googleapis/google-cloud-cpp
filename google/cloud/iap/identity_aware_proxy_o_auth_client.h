@@ -127,10 +127,10 @@ class IdentityAwareProxyOAuthServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::Brand,google/cloud/iap/v1/service.proto#L698}
   ///
-  /// [google.cloud.iap.v1.CreateBrandRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L612}
   /// [google.cloud.iap.v1.Brand]:
   /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L698}
+  /// [google.cloud.iap.v1.CreateBrandRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L612}
   ///
   StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
       google::cloud::iap::v1::CreateBrandRequest const& request,
@@ -146,10 +146,10 @@ class IdentityAwareProxyOAuthServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::Brand,google/cloud/iap/v1/service.proto#L698}
   ///
-  /// [google.cloud.iap.v1.GetBrandRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L622}
   /// [google.cloud.iap.v1.Brand]:
   /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L698}
+  /// [google.cloud.iap.v1.GetBrandRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L622}
   ///
   StatusOr<google::cloud::iap::v1::Brand> GetBrand(
       google::cloud::iap::v1::GetBrandRequest const& request,
@@ -188,10 +188,10 @@ class IdentityAwareProxyOAuthServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L716}
   ///
-  /// [google.cloud.iap.v1.ListIdentityAwareProxyClientsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L629}
   /// [google.cloud.iap.v1.IdentityAwareProxyClient]:
   /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L716}
+  /// [google.cloud.iap.v1.ListIdentityAwareProxyClientsRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L629}
   ///
   StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
   ListIdentityAwareProxyClients(
@@ -230,10 +230,10 @@ class IdentityAwareProxyOAuthServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::IdentityAwareProxyClient,google/cloud/iap/v1/service.proto#L716}
   ///
-  /// [google.cloud.iap.v1.ResetIdentityAwareProxyClientSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L681}
   /// [google.cloud.iap.v1.IdentityAwareProxyClient]:
   /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L716}
+  /// [google.cloud.iap.v1.ResetIdentityAwareProxyClientSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L681}
   ///
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   ResetIdentityAwareProxyClientSecret(

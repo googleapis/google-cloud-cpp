@@ -120,10 +120,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L585}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L585}
   ///
   StreamRange<google::cloud::redis::v1::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -146,10 +146,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L585}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L585}
   ///
   StreamRange<google::cloud::redis::v1::Instance> ListInstances(
       google::cloud::redis::v1::ListInstancesRequest request,
@@ -329,10 +329,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L692}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L692}
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
       google::protobuf::FieldMask const& update_mask,
@@ -352,10 +352,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L692}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L692}
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
       google::cloud::redis::v1::UpdateInstanceRequest const& request,
@@ -375,10 +375,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.UpgradeInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L710}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.UpgradeInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L710}
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       std::string const& name, std::string const& redis_version,
@@ -395,10 +395,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.UpgradeInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L710}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.UpgradeInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L710}
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       google::cloud::redis::v1::UpgradeInstanceRequest const& request,
@@ -614,10 +614,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.RescheduleMaintenanceRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L500}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.RescheduleMaintenanceRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L500}
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
       std::string const& name,
@@ -636,10 +636,10 @@ class CloudRedisClient {
   /// @return
   /// @googleapis_link{google::cloud::redis::v1::Instance,google/cloud/redis/v1/cloud_redis.proto#L233}
   ///
-  /// [google.cloud.redis.v1.RescheduleMaintenanceRequest]:
-  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L500}
   /// [google.cloud.redis.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L233}
+  /// [google.cloud.redis.v1.RescheduleMaintenanceRequest]:
+  /// @googleapis_reference_link{google/cloud/redis/v1/cloud_redis.proto#L500}
   ///
   future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,

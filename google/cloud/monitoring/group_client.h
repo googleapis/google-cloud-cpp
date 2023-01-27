@@ -107,10 +107,10 @@ class GroupServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
-  /// [google.monitoring.v3.ListGroupsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L108}
   /// [google.monitoring.v3.Group]:
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
+  /// [google.monitoring.v3.ListGroupsRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L108}
   ///
   StreamRange<google::monitoring::v3::Group> ListGroups(std::string const& name,
                                                         Options opts = {});
@@ -125,10 +125,10 @@ class GroupServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
-  /// [google.monitoring.v3.ListGroupsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L108}
   /// [google.monitoring.v3.Group]:
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
+  /// [google.monitoring.v3.ListGroupsRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L108}
   ///
   StreamRange<google::monitoring::v3::Group> ListGroups(
       google::monitoring::v3::ListGroupsRequest request, Options opts = {});
@@ -226,10 +226,10 @@ class GroupServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
-  /// [google.monitoring.v3.UpdateGroupRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L213}
   /// [google.monitoring.v3.Group]:
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
+  /// [google.monitoring.v3.UpdateGroupRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L213}
   ///
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
       google::monitoring::v3::Group const& group, Options opts = {});
@@ -245,10 +245,10 @@ class GroupServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::Group,google/monitoring/v3/group.proto#L55}
   ///
-  /// [google.monitoring.v3.UpdateGroupRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L213}
   /// [google.monitoring.v3.Group]:
   /// @googleapis_reference_link{google/monitoring/v3/group.proto#L55}
+  /// [google.monitoring.v3.UpdateGroupRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L213}
   ///
   StatusOr<google::monitoring::v3::Group> UpdateGroup(
       google::monitoring::v3::UpdateGroupRequest const& request,
@@ -291,10 +291,10 @@ class GroupServiceClient {
   /// @return
   /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L90}
   ///
-  /// [google.monitoring.v3.ListGroupMembersRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   /// [google.api.MonitoredResource]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L90}
+  /// [google.monitoring.v3.ListGroupMembersRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   ///
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
       std::string const& name, Options opts = {});
@@ -309,10 +309,10 @@ class GroupServiceClient {
   /// @return
   /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L90}
   ///
-  /// [google.monitoring.v3.ListGroupMembersRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   /// [google.api.MonitoredResource]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L90}
+  /// [google.monitoring.v3.ListGroupMembersRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   ///
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
       google::monitoring::v3::ListGroupMembersRequest request,

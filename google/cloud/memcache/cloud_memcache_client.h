@@ -114,10 +114,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L409}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L409}
   ///
   StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -132,10 +132,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L409}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L409}
   ///
   StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
       google::cloud::memcache::v1::ListInstancesRequest request,
@@ -243,10 +243,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L499}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L499}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
       google::cloud::memcache::v1::Instance const& instance,
@@ -262,10 +262,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L499}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L499}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
       google::cloud::memcache::v1::UpdateInstanceRequest const& request,
@@ -287,10 +287,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.UpdateParametersRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L544}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.UpdateParametersRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L544}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
       std::string const& name, google::protobuf::FieldMask const& update_mask,
@@ -310,10 +310,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.UpdateParametersRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L544}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.UpdateParametersRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L544}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
       google::cloud::memcache::v1::UpdateParametersRequest const& request,
@@ -422,10 +422,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.RescheduleMaintenanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L372}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.RescheduleMaintenanceRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L372}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
       std::string const& instance,
@@ -443,10 +443,10 @@ class CloudMemcacheClient {
   /// @return
   /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
-  /// [google.cloud.memcache.v1.RescheduleMaintenanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L372}
   /// [google.cloud.memcache.v1.Instance]:
   /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  /// [google.cloud.memcache.v1.RescheduleMaintenanceRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L372}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
       google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,

@@ -97,10 +97,10 @@ class AuthorizedDomainsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedDomain,google/appengine/v1/domain.proto#L30}
   ///
-  /// [google.appengine.v1.ListAuthorizedDomainsRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L718}
   /// [google.appengine.v1.AuthorizedDomain]:
   /// @googleapis_reference_link{google/appengine/v1/domain.proto#L30}
+  /// [google.appengine.v1.ListAuthorizedDomainsRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L718}
   ///
   StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
       google::appengine::v1::ListAuthorizedDomainsRequest request,

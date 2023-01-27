@@ -109,10 +109,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.ListAccessPoliciesRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L475}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.ListAccessPoliciesRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L475}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
   ListAccessPolicies(
@@ -131,10 +131,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.GetAccessPolicyRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L507}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.GetAccessPolicyRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L507}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
   GetAccessPolicy(std::string const& name, Options opts = {});
@@ -150,10 +150,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.GetAccessPolicyRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L507}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.GetAccessPolicyRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L507}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
   GetAccessPolicy(
@@ -175,8 +175,6 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
@@ -201,10 +199,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L520}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L520}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(
@@ -226,10 +224,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessPolicy,google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L520}
   /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.UpdateAccessPolicyRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L520}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
@@ -250,10 +248,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
   ///
-  /// [google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L529}
   /// [google.identity.accesscontextmanager.v1.AccessContextManagerOperationMetadata]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
+  /// [google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L529}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -273,10 +271,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
   ///
-  /// [google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L529}
   /// [google.identity.accesscontextmanager.v1.AccessContextManagerOperationMetadata]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
+  /// [google.identity.accesscontextmanager.v1.DeleteAccessPolicyRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L529}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -299,10 +297,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.ListAccessLevelsRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L542}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.ListAccessLevelsRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L542}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
   ListAccessLevels(std::string const& parent, Options opts = {});
@@ -319,10 +317,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.ListAccessLevelsRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L542}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.ListAccessLevelsRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L542}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
   ListAccessLevels(
@@ -344,10 +342,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.GetAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L583}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.GetAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L583}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
   GetAccessLevel(std::string const& name, Options opts = {});
@@ -364,10 +362,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.GetAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L583}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.GetAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L583}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
   GetAccessLevel(
@@ -398,10 +396,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.CreateAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L608}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.CreateAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L608}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   CreateAccessLevel(
@@ -426,10 +424,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.CreateAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L608}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.CreateAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L608}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   CreateAccessLevel(google::identity::accesscontextmanager::v1::
@@ -458,10 +456,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L629}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L629}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   UpdateAccessLevel(
@@ -486,10 +484,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessLevel,google/identity/accesscontextmanager/v1/access_level.proto#L36}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L629}
   /// [google.identity.accesscontextmanager.v1.AccessLevel]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.UpdateAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L629}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   UpdateAccessLevel(google::identity::accesscontextmanager::v1::
@@ -513,10 +511,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
   ///
-  /// [google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L642}
   /// [google.identity.accesscontextmanager.v1.AccessContextManagerOperationMetadata]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
+  /// [google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L642}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -537,10 +535,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
   ///
-  /// [google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L642}
   /// [google.identity.accesscontextmanager.v1.AccessContextManagerOperationMetadata]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
+  /// [google.identity.accesscontextmanager.v1.DeleteAccessLevelRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L642}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -758,10 +756,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L770}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
+  /// [google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L770}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   UpdateServicePerimeter(
@@ -786,10 +784,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::ServicePerimeter,google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L770}
   /// [google.identity.accesscontextmanager.v1.ServicePerimeter]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/service_perimeter.proto#L41}
+  /// [google.identity.accesscontextmanager.v1.UpdateServicePerimeterRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L770}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   UpdateServicePerimeter(google::identity::accesscontextmanager::v1::
@@ -813,10 +811,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
   ///
-  /// [google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L780}
   /// [google.identity.accesscontextmanager.v1.AccessContextManagerOperationMetadata]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
+  /// [google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L780}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -837,10 +835,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::AccessContextManagerOperationMetadata,google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
   ///
-  /// [google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L780}
   /// [google.identity.accesscontextmanager.v1.AccessContextManagerOperationMetadata]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L984}
+  /// [google.identity.accesscontextmanager.v1.DeleteServicePerimeterRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L780}
   ///
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -927,10 +925,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
-  /// [google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L889}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
+  /// [google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L889}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   ListGcpUserAccessBindings(std::string const& parent, Options opts = {});
@@ -947,10 +945,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
-  /// [google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L889}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
+  /// [google.identity.accesscontextmanager.v1.ListGcpUserAccessBindingsRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L889}
   ///
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::
@@ -969,10 +967,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
-  /// [google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L922}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
+  /// [google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L922}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   GetGcpUserAccessBinding(std::string const& name, Options opts = {});
@@ -989,10 +987,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
-  /// [google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L922}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
+  /// [google.identity.accesscontextmanager.v1.GetGcpUserAccessBindingRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L922}
   ///
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::
@@ -1083,10 +1081,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L950}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
+  /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L950}
   ///
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
@@ -1109,10 +1107,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::GcpUserAccessBinding,google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
   ///
-  /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]:
-  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L950}
   /// [google.identity.accesscontextmanager.v1.GcpUserAccessBinding]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/gcp_user_access_binding.proto#L33}
+  /// [google.identity.accesscontextmanager.v1.UpdateGcpUserAccessBindingRequest]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L950}
   ///
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
@@ -1185,10 +1183,10 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

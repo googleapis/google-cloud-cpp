@@ -269,10 +269,10 @@ class SessionEntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::SessionEntityType,google/cloud/dialogflow/v2/session_entity_type.proto#L174}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L305}
   /// [google.cloud.dialogflow.v2.SessionEntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L174}
+  /// [google.cloud.dialogflow.v2.UpdateSessionEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L305}
   ///
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
   UpdateSessionEntityType(
@@ -295,10 +295,10 @@ class SessionEntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::SessionEntityType,google/cloud/dialogflow/v2/session_entity_type.proto#L174}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L305}
   /// [google.cloud.dialogflow.v2.SessionEntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L174}
+  /// [google.cloud.dialogflow.v2.UpdateSessionEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L305}
   ///
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
   UpdateSessionEntityType(
@@ -320,10 +320,10 @@ class SessionEntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::SessionEntityType,google/cloud/dialogflow/v2/session_entity_type.proto#L174}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L305}
   /// [google.cloud.dialogflow.v2.SessionEntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L174}
+  /// [google.cloud.dialogflow.v2.UpdateSessionEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session_entity_type.proto#L305}
   ///
   StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
   UpdateSessionEntityType(

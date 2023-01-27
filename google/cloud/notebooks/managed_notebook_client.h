@@ -235,10 +235,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.UpdateRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L368}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.UpdateRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L368}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
       google::cloud::notebooks::v1::Runtime const& runtime,
@@ -254,10 +254,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.UpdateRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L368}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.UpdateRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L368}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request,
@@ -315,10 +315,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.StartRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L291}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.StartRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L291}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
       std::string const& name, Options opts = {});
@@ -337,10 +337,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.StartRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L291}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.StartRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L291}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StartRuntime(
       google::cloud::notebooks::v1::StartRuntimeRequest const& request,
@@ -360,10 +360,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.StopRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L301}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.StopRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L301}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
       std::string const& name, Options opts = {});
@@ -382,10 +382,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.StopRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L301}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.StopRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L301}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> StopRuntime(
       google::cloud::notebooks::v1::StopRuntimeRequest const& request,
@@ -401,10 +401,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.SwitchRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L311}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.SwitchRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L311}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
       std::string const& name, Options opts = {});
@@ -419,10 +419,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.SwitchRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L311}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.SwitchRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L311}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> SwitchRuntime(
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request,
@@ -475,10 +475,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.UpgradeRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L339}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.UpgradeRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L339}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpgradeRuntime(
       std::string const& name, Options opts = {});
@@ -493,10 +493,10 @@ class ManagedNotebookServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::notebooks::v1::Runtime,google/cloud/notebooks/v1/runtime.proto#L33}
   ///
-  /// [google.cloud.notebooks.v1.UpgradeRuntimeRequest]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L339}
   /// [google.cloud.notebooks.v1.Runtime]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/runtime.proto#L33}
+  /// [google.cloud.notebooks.v1.UpgradeRuntimeRequest]:
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/managed_service.proto#L339}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpgradeRuntime(
       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request,

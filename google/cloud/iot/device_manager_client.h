@@ -140,10 +140,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
-  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   ///
   StatusOr<google::cloud::iot::v1::DeviceRegistry> GetDeviceRegistry(
       std::string const& name, Options opts = {});
@@ -158,10 +158,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
-  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.GetDeviceRegistryRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L290}
   ///
   StatusOr<google::cloud::iot::v1::DeviceRegistry> GetDeviceRegistry(
       google::cloud::iot::v1::GetDeviceRegistryRequest const& request,
@@ -185,10 +185,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
-  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   ///
   StatusOr<google::cloud::iot::v1::DeviceRegistry> UpdateDeviceRegistry(
       google::cloud::iot::v1::DeviceRegistry const& device_registry,
@@ -204,10 +204,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
-  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.UpdateDeviceRegistryRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L314}
   ///
   StatusOr<google::cloud::iot::v1::DeviceRegistry> UpdateDeviceRegistry(
       google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request,
@@ -251,10 +251,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
-  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   ///
   StreamRange<google::cloud::iot::v1::DeviceRegistry> ListDeviceRegistries(
       std::string const& parent, Options opts = {});
@@ -269,10 +269,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceRegistry,google/cloud/iot/v1/resources.proto#L155}
   ///
-  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   /// [google.cloud.iot.v1.DeviceRegistry]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L155}
+  /// [google.cloud.iot.v1.ListDeviceRegistriesRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L329}
   ///
   StreamRange<google::cloud::iot::v1::DeviceRegistry> ListDeviceRegistries(
       google::cloud::iot::v1::ListDeviceRegistriesRequest request,
@@ -334,10 +334,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
-  /// [google.cloud.iot.v1.GetDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.GetDeviceRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   ///
   StatusOr<google::cloud::iot::v1::Device> GetDevice(std::string const& name,
                                                      Options opts = {});
@@ -352,10 +352,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
-  /// [google.cloud.iot.v1.GetDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.GetDeviceRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L381}
   ///
   StatusOr<google::cloud::iot::v1::Device> GetDevice(
       google::cloud::iot::v1::GetDeviceRequest const& request,
@@ -379,10 +379,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
-  /// [google.cloud.iot.v1.UpdateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.UpdateDeviceRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   ///
   StatusOr<google::cloud::iot::v1::Device> UpdateDevice(
       google::cloud::iot::v1::Device const& device,
@@ -398,10 +398,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
-  /// [google.cloud.iot.v1.UpdateDeviceRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.UpdateDeviceRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L399}
   ///
   StatusOr<google::cloud::iot::v1::Device> UpdateDevice(
       google::cloud::iot::v1::UpdateDeviceRequest const& request,
@@ -447,10 +447,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
-  /// [google.cloud.iot.v1.ListDevicesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.ListDevicesRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   ///
   StreamRange<google::cloud::iot::v1::Device> ListDevices(
       std::string const& parent, Options opts = {});
@@ -465,10 +465,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::Device,google/cloud/iot/v1/resources.proto#L30}
   ///
-  /// [google.cloud.iot.v1.ListDevicesRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   /// [google.cloud.iot.v1.Device]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L30}
+  /// [google.cloud.iot.v1.ListDevicesRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L427}
   ///
   StreamRange<google::cloud::iot::v1::Device> ListDevices(
       google::cloud::iot::v1::ListDevicesRequest request, Options opts = {});
@@ -488,10 +488,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceConfig,google/cloud/iot/v1/resources.proto#L449}
   ///
-  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   /// [google.cloud.iot.v1.DeviceConfig]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
+  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   ///
   StatusOr<google::cloud::iot::v1::DeviceConfig> ModifyCloudToDeviceConfig(
       std::string const& name, std::string const& binary_data,
@@ -509,10 +509,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::iot::v1::DeviceConfig,google/cloud/iot/v1/resources.proto#L449}
   ///
-  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   /// [google.cloud.iot.v1.DeviceConfig]:
   /// @googleapis_reference_link{google/cloud/iot/v1/resources.proto#L449}
+  /// [google.cloud.iot.v1.ModifyCloudToDeviceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/iot/v1/device_manager.proto#L501}
   ///
   StatusOr<google::cloud::iot::v1::DeviceConfig> ModifyCloudToDeviceConfig(
       google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request,
@@ -618,10 +618,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -662,10 +662,10 @@ class DeviceManagerClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
