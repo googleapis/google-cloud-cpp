@@ -63,7 +63,7 @@ constexpr auto kExpectedXml =
 </InitiateMultipartUploadResult>
 )xml";
 
-TEST(XmlNodeTest, BuildTree) {
+TEST(XmlNode, BuildTree) {
   auto root = XmlNode::CreateRoot();
   auto mpu_result = root->AppendTagNode("InitiateMultipartUploadResult");
   auto bucket = mpu_result->AppendTagNode("Bucket");
@@ -82,7 +82,7 @@ TEST(XmlNodeTest, BuildTree) {
   EXPECT_THAT(tags, ElementsAre(bucket, key, upload_id));
 }
 
-TEST(XmlNodeTest, Accessors) {
+TEST(XmlNode, Accessors) {
   auto root = XmlNode::CreateRoot();
   auto text_node = root->AppendTextNode("text");
   EXPECT_EQ(text_node->GetConcatenatedText(), "text");
@@ -96,18 +96,24 @@ TEST(XmlNodeTest, Accessors) {
   EXPECT_EQ(tag_node->GetTagName(), "Tag");
 }
 
-TEST(XmlNodeTest, Parse) {
+TEST(XmlNode, Parse) {
   auto res = XmlNode::Parse(kXmlFilledWithGarbage);
-  EXPECT_TRUE(res.ok());
-  auto rendered = res.value()->ToString(2);
+  ASSERT_STATUS_OK(res);
+  auto rendered = (*res)->ToString(2);
   EXPECT_EQ(rendered, kExpectedXml);
   // It should be parsable again.
   res = XmlNode::Parse(rendered);
-  EXPECT_TRUE(res.ok());
-  EXPECT_EQ(res.value()->ToString(2), kExpectedXml);
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ((*res)->ToString(2), kExpectedXml);
 }
 
-TEST(XmlNodeTest, ContentTooLarge) {
+TEST(XmlNode, StartAndEndTag) {
+  auto res = XmlNode::Parse("<tag/ attr>");
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ("<tag></tag>", (*res)->ToString());
+}
+
+TEST(XmlNode, ContentTooLarge) {
   Options options;
   options.set<XmlParserMaxSourceSize>(10);
   auto res = XmlNode::Parse(kXmlFilledWithGarbage, options);
@@ -115,64 +121,82 @@ TEST(XmlNodeTest, ContentTooLarge) {
                             HasSubstr("exceeds the max size")));
 }
 
-TEST(XmlNodeTest, MaxNodeCount) {
+TEST(XmlNode, MaxNodeCount) {
   Options options;
   options.set<XmlParserMaxNodeCount>(1);
   auto res = XmlNode::Parse("<tag></tag>", options);
-  EXPECT_TRUE(res.ok());
+  EXPECT_STATUS_OK(res);
   res = XmlNode::Parse("<tag>It exceeds the limit</tag>", options);
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("Exceeding max node count")));
+                            HasSubstr("Exceeds max node count")));
 }
 
-TEST(XmlNodeTest, MaxNodeDepth) {
+TEST(XmlNode, MaxNodeDepth) {
   Options options;
-  options.set<XmlParserMaxNodeDepth>(1);
+  options.set<XmlParserMaxNodeDepth>(2);
   auto res = XmlNode::Parse("<tag></tag>", options);
-  EXPECT_TRUE(res.ok());
+  EXPECT_STATUS_OK(res);
   res = XmlNode::Parse("<tag>It exceeds the limit</tag>", options);
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("Exceeding max node depth")));
+                            HasSubstr("Exceeds max node depth")));
 }
 
-TEST(XmlNodeTest, BrokenXmlDeclaration) {
+TEST(XmlNode, UnterminatedDeclaration) {
   auto res = XmlNode::Parse("<?xml");
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("XML declaration")));
+                            HasSubstr("Unterminated XML declaration")));
 }
 
-TEST(XmlNodeTest, MissMatchedTag) {
+TEST(XmlNode, MismatchedEndTag) {
   auto res = XmlNode::Parse("<tag></nottag>");
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("Mismatched close tag")));
+                            HasSubstr("Mismatched end tag")));
 }
 
-TEST(XmlNodeTest, TagNotClosed) {
+TEST(XmlNode, UnterminatedTag) {
+  auto res = XmlNode::Parse("<tag>text");
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("Unterminated tag 'tag'")));
+}
+
+TEST(XmlNode, UnexpectedLeadingChar) {
+  auto res = XmlNode::Parse("text");
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("Expected tag but found 'text'")));
+}
+
+TEST(XmlNode, UnexpectedTrailingChar) {
+  auto res = XmlNode::Parse("<tag/> text");
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("Expected tag but found 'text'")));
+}
+
+TEST(XmlNode, TagNotClosed) {
   auto res = XmlNode::Parse("<tag/");
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
                             HasSubstr("tag never closes")));
 }
 
-TEST(XmlNodeTest, InvalidTag) {
+TEST(XmlNode, InvalidTag) {
   auto res = XmlNode::Parse("</>");
-  EXPECT_THAT(res,
-              StatusIs(StatusCode::kInvalidArgument, HasSubstr("Invalid tag")));
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("Invalid tag '</>'")));
 }
 
-TEST(XmlNodeTest, EscapeTag) {
+TEST(XmlNode, EscapeTag) {
   auto root = XmlNode::CreateRoot();
   auto tag = root->AppendTagNode(R"(a<>"'&b)");
   std::string escaped = "a&lt;&gt;&quot;&apos;&amp;b";
   EXPECT_EQ("<" + escaped + "></" + escaped + ">", tag->ToString());
 }
 
-TEST(XmlNodeTest, EscapeText) {
+TEST(XmlNode, EscapeText) {
   auto root = XmlNode::CreateRoot();
   auto text = root->AppendTextNode(R"(a<>"'&b)");
   EXPECT_EQ(R"(a&lt;&gt;"'&amp;b)", text->ToString());
 }
 
-TEST(XmlNodeTest, Unescape) {
+TEST(XmlNode, Unescape) {
   std::string escaped = "a&lt;&gt;&quot;&apos;&amp;b";
   auto res =
       XmlNode::Parse("<" + escaped + ">" + escaped + "</" + escaped + ">");
@@ -206,7 +230,7 @@ constexpr auto kExpectedCompleteMultipartUpload =
 </CompleteMultipartUpload>
 )xml";
 
-TEST(XmlNodeTest, CompleteMultipartUpload) {
+TEST(XmlNode, CompleteMultipartUpload) {
   std::map<std::size_t, std::string> parts{
       {5, "\"aaaa18db4cc2f85cedef654fccc4a4x8\""},
       {2, "\"7778aef83f66abc1fa1e8477f296d394\""}};
