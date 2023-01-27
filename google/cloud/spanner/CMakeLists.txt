@@ -62,6 +62,10 @@ add_library(
     admin/internal/database_admin_stub.h
     admin/internal/database_admin_stub_factory.cc
     admin/internal/database_admin_stub_factory.h
+    admin/internal/database_admin_tracing_connection.cc
+    admin/internal/database_admin_tracing_connection.h
+    admin/internal/database_admin_tracing_stub.cc
+    admin/internal/database_admin_tracing_stub.h
     admin/internal/instance_admin_auth_decorator.cc
     admin/internal/instance_admin_auth_decorator.h
     admin/internal/instance_admin_connection_impl.cc
@@ -77,6 +81,10 @@ add_library(
     admin/internal/instance_admin_stub.h
     admin/internal/instance_admin_stub_factory.cc
     admin/internal/instance_admin_stub_factory.h
+    admin/internal/instance_admin_tracing_connection.cc
+    admin/internal/instance_admin_tracing_connection.h
+    admin/internal/instance_admin_tracing_stub.cc
+    admin/internal/instance_admin_tracing_stub.h
     admin/retry_traits.h
     backoff_policy.h
     backup.cc
