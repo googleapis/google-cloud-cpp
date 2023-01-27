@@ -646,6 +646,8 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.datacatalog.v1.DataCatalog.CreateEntry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L171}
   /// [google.cloud.datacatalog.v1.DeleteEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L849}
   ///
@@ -668,6 +670,8 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.datacatalog.v1.DataCatalog.CreateEntry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L171}
   /// [google.cloud.datacatalog.v1.DeleteEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L849}
   ///
@@ -747,6 +751,8 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L931}
   ///
+  /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L72}
   /// [google.cloud.datacatalog.v1.Entry]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.ListEntriesRequest]:
@@ -769,6 +775,8 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L931}
   ///
+  /// [google.cloud.datacatalog.v1.DataCatalog.SearchCatalog]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L72}
   /// [google.cloud.datacatalog.v1.Entry]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.ListEntriesRequest]:
@@ -793,6 +801,8 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::EntryOverview,google/cloud/datacatalog/v1/datacatalog.proto#L1244}
   ///
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.EntryOverview]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1244}
   /// [google.cloud.datacatalog.v1.ModifyEntryOverviewRequest]:
@@ -819,6 +829,8 @@ class DataCatalogClient {
   ///
   /// [google.cloud.datacatalog.v1.Contacts]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1256}
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.ModifyEntryContactsRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1653}
   ///
@@ -1367,6 +1379,10 @@ class DataCatalogClient {
   ///
   /// [google.cloud.datacatalog.v1.CreateTagRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1372}
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
+  /// [google.cloud.datacatalog.v1.EntryGroup]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1397,6 +1413,10 @@ class DataCatalogClient {
   ///
   /// [google.cloud.datacatalog.v1.CreateTagRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1372}
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
+  /// [google.cloud.datacatalog.v1.EntryGroup]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1506,10 +1526,14 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.ListTagsRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1526}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
+  /// [google.cloud.datacatalog.v1.Tag.column]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L73}
   ///
   StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       std::string const& parent, Options opts = {});
@@ -1526,10 +1550,14 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.ListTagsRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1526}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
+  /// [google.cloud.datacatalog.v1.Tag.column]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L73}
   ///
   StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request,
@@ -1545,6 +1573,8 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1613}
   ///
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.StarEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1600}
   /// [google.cloud.datacatalog.v1.StarEntryResponse]:
@@ -1564,6 +1594,8 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1613}
   ///
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.StarEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1600}
   /// [google.cloud.datacatalog.v1.StarEntryResponse]:
@@ -1583,6 +1615,8 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1632}
   ///
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.UnstarEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1619}
   /// [google.cloud.datacatalog.v1.UnstarEntryResponse]:
@@ -1602,6 +1636,8 @@ class DataCatalogClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1632}
   ///
+  /// [google.cloud.datacatalog.v1.Entry]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   /// [google.cloud.datacatalog.v1.UnstarEntryRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1619}
   /// [google.cloud.datacatalog.v1.UnstarEntryResponse]:

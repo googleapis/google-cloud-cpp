@@ -109,6 +109,8 @@ class ConversationModelsClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationModel]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L586}
   /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L462}
   ///
@@ -140,6 +142,8 @@ class ConversationModelsClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationModel]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L586}
   /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L462}
   ///

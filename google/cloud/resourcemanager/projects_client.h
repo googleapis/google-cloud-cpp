@@ -232,6 +232,8 @@ class ProjectsClient {
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
   /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
   ///
@@ -260,6 +262,8 @@ class ProjectsClient {
   ///
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
   /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
   ///
@@ -475,6 +479,8 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       std::string const& name, Options opts = {});
@@ -525,6 +531,8 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,

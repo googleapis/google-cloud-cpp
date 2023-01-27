@@ -96,6 +96,8 @@ class VersionsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
+  /// [google.cloud.dialogflow.cx.v3.Flow]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L194}
   /// [google.cloud.dialogflow.cx.v3.Version]:
@@ -115,6 +117,8 @@ class VersionsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
+  /// [google.cloud.dialogflow.cx.v3.Flow]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L194}
   /// [google.cloud.dialogflow.cx.v3.Version]:
@@ -186,8 +190,12 @@ class VersionsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
+  /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L242}
+  /// [google.cloud.dialogflow.cx.v3.Flow]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   /// [google.cloud.dialogflow.cx.v3.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
@@ -215,8 +223,12 @@ class VersionsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
+  /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L242}
+  /// [google.cloud.dialogflow.cx.v3.Flow]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   /// [google.cloud.dialogflow.cx.v3.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
@@ -276,6 +288,8 @@ class VersionsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L272}
+  /// [google.cloud.dialogflow.cx.v3.Version]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   Status DeleteVersion(std::string const& name, Options opts = {});
 
@@ -289,6 +303,8 @@ class VersionsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L272}
+  /// [google.cloud.dialogflow.cx.v3.Version]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
   ///
   Status DeleteVersion(
       google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request,

@@ -524,8 +524,16 @@ class BigtableTableAdminClient {
   ///
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L311}
+  /// [google.bigtable.admin.v2.CreateBackupMetadata]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L943}
   /// [google.bigtable.admin.v2.CreateBackupRequest]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L918}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
       std::string const& parent, std::string const& backup_id,
@@ -550,8 +558,16 @@ class BigtableTableAdminClient {
   ///
   /// [google.bigtable.admin.v2.Backup]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L311}
+  /// [google.bigtable.admin.v2.CreateBackupMetadata]:
+  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L943}
   /// [google.bigtable.admin.v2.CreateBackupRequest]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L918}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
       google::bigtable::admin::v2::CreateBackupRequest const& request,
@@ -734,6 +750,12 @@ class BigtableTableAdminClient {
   /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L362}
   /// [google.bigtable.admin.v2.Table]:
   /// @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L53}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
       google::bigtable::admin::v2::RestoreTableRequest const& request,

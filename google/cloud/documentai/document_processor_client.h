@@ -708,6 +708,12 @@ class DocumentProcessorServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::documentai::v1::SetDefaultProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L752}
   ///
+  /// [google.cloud.documentai.v1.DocumentProcessorService.BatchProcessDocuments]:
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L74}
+  /// [google.cloud.documentai.v1.DocumentProcessorService.ProcessDocument]:
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L60}
+  /// [google.cloud.documentai.v1.Processor]:
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L114}
   /// [google.cloud.documentai.v1.SetDefaultProcessorVersionRequest]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L728}
   /// [google.cloud.documentai.v1.SetDefaultProcessorVersionResponse]:

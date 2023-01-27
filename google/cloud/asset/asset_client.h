@@ -106,10 +106,14 @@ class AssetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::asset::v1::ExportAssetsResponse,google/cloud/asset/v1/asset_service.proto#L401}
   ///
+  /// [google.cloud.asset.v1.Asset]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L96}
   /// [google.cloud.asset.v1.ExportAssetsRequest]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L331}
   /// [google.cloud.asset.v1.ExportAssetsResponse]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L401}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
       google::cloud::asset::v1::ExportAssetsRequest const& request,
@@ -641,6 +645,10 @@ class AssetServiceClient {
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1529}
   /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]:
   /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1560}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]:
+  /// @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1413}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>

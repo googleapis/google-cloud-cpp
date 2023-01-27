@@ -269,6 +269,8 @@ class ExperimentsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteExperimentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L485}
+  /// [google.cloud.dialogflow.cx.v3.Experiment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   Status DeleteExperiment(std::string const& name, Options opts = {});
 
@@ -283,6 +285,8 @@ class ExperimentsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteExperimentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L485}
+  /// [google.cloud.dialogflow.cx.v3.Experiment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   Status DeleteExperiment(
       google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request,

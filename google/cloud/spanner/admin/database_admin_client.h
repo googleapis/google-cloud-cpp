@@ -153,6 +153,14 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.spanner.admin.database.v1.CreateDatabaseMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L521}
   /// [google.spanner.admin.database.v1.CreateDatabaseRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L487}
   /// [google.spanner.admin.database.v1.Database]:
@@ -179,6 +187,14 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.spanner.admin.database.v1.CreateDatabaseMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L521}
   /// [google.spanner.admin.database.v1.CreateDatabaseRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L487}
   /// [google.spanner.admin.database.v1.Database]:
@@ -245,6 +261,10 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]:
@@ -273,6 +293,10 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata,google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlMetadata]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L592}
   /// [google.spanner.admin.database.v1.UpdateDatabaseDdlRequest]:
@@ -333,6 +357,8 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L648}
   ///
+  /// [google.longrunning.Operations]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L54}
   /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L635}
   /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]:
@@ -353,6 +379,8 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::GetDatabaseDdlResponse,google/spanner/admin/database/v1/spanner_database_admin.proto#L648}
   ///
+  /// [google.longrunning.Operations]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L54}
   /// [google.spanner.admin.database.v1.GetDatabaseDdlRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L635}
   /// [google.spanner.admin.database.v1.GetDatabaseDdlResponse]:
@@ -390,6 +418,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   /// [google.iam.v1.SetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L104}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -439,6 +469,8 @@ class DatabaseAdminClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   /// [google.iam.v1.SetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L104}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -463,6 +495,8 @@ class DatabaseAdminClient {
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.GetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
@@ -488,6 +522,8 @@ class DatabaseAdminClient {
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.GetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
@@ -587,8 +623,16 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L35}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
+  /// [google.spanner.admin.database.v1.CreateBackupMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L178}
   /// [google.spanner.admin.database.v1.CreateBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L146}
   ///
@@ -618,8 +662,16 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L35}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
+  /// [google.spanner.admin.database.v1.CreateBackupMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L178}
   /// [google.spanner.admin.database.v1.CreateBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L146}
   ///
@@ -664,8 +716,16 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L35}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
+  /// [google.spanner.admin.database.v1.CopyBackupMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L254}
   /// [google.spanner.admin.database.v1.CopyBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L209}
   ///
@@ -695,8 +755,16 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Backup,google/spanner/admin/database/v1/backup.proto#L35}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Backup]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
+  /// [google.spanner.admin.database.v1.CopyBackupMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L254}
   /// [google.spanner.admin.database.v1.CopyBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L209}
   ///
@@ -803,6 +871,8 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.spanner.admin.database.v1.Backup]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
   /// [google.spanner.admin.database.v1.DeleteBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L318}
   ///
@@ -817,6 +887,8 @@ class DatabaseAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.spanner.admin.database.v1.Backup]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L35}
   /// [google.spanner.admin.database.v1.DeleteBackupRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L318}
   ///
@@ -903,8 +975,16 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Database]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
+  /// [google.spanner.admin.database.v1.RestoreDatabaseMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L813}
   /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L739}
   ///
@@ -938,8 +1018,16 @@ class DatabaseAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::database::v1::Database,google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.database.v1.Database]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L365}
+  /// [google.spanner.admin.database.v1.RestoreDatabaseMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L813}
   /// [google.spanner.admin.database.v1.RestoreDatabaseRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L739}
   ///
@@ -968,6 +1056,8 @@ class DatabaseAdminClient {
   ///
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L656}
   ///
@@ -993,6 +1083,8 @@ class DatabaseAdminClient {
   ///
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.spanner.admin.database.v1.ListDatabaseOperationsRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/spanner_database_admin.proto#L656}
   ///
@@ -1023,6 +1115,8 @@ class DatabaseAdminClient {
   ///
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L403}
   ///
@@ -1050,6 +1144,8 @@ class DatabaseAdminClient {
   ///
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.spanner.admin.database.v1.ListBackupOperationsRequest]:
   /// @googleapis_reference_link{google/spanner/admin/database/v1/backup.proto#L403}
   ///

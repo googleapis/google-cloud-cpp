@@ -464,6 +464,8 @@ class JobServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::SearchJobsResponse,google/cloud/talent/v4/job_service.proto#L812}
   ///
+  /// [google.cloud.talent.v4.Job.visibility]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
   /// [google.cloud.talent.v4.SearchJobsRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
   /// [google.cloud.talent.v4.SearchJobsResponse]:
@@ -494,6 +496,8 @@ class JobServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::SearchJobsResponse,google/cloud/talent/v4/job_service.proto#L812}
   ///
+  /// [google.cloud.talent.v4.Job.visibility]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L296}
   /// [google.cloud.talent.v4.SearchJobsRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L343}
   /// [google.cloud.talent.v4.SearchJobsResponse]:

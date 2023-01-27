@@ -230,6 +230,8 @@ class ServiceManagerClient {
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L304}
   /// [google.api.servicemanagement.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L45}
+  /// [google.api.servicemanagement.v1.ServiceManager.UndeleteService]:
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L117}
   ///
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
   DeleteService(std::string const& service_name, Options opts = {});
@@ -255,6 +257,8 @@ class ServiceManagerClient {
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L304}
   /// [google.api.servicemanagement.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L45}
+  /// [google.api.servicemanagement.v1.ServiceManager.UndeleteService]:
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L117}
   ///
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
   DeleteService(
@@ -421,6 +425,8 @@ class ServiceManagerClient {
   /// @googleapis_reference_link{google/api/service.proto#L80}
   /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]:
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
   ///
   StatusOr<google::api::Service> CreateServiceConfig(
       std::string const& service_name,
@@ -447,6 +453,8 @@ class ServiceManagerClient {
   /// @googleapis_reference_link{google/api/service.proto#L80}
   /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]:
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
   ///
   StatusOr<google::api::Service> CreateServiceConfig(
       google::api::servicemanagement::v1::CreateServiceConfigRequest const&
@@ -481,6 +489,8 @@ class ServiceManagerClient {
   /// @return
   /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceResponse,google/api/servicemanagement/v1/servicemanager.proto#L407}
   ///
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]:
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
   /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L391}
   /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]:
@@ -515,6 +525,8 @@ class ServiceManagerClient {
   /// @return
   /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceResponse,google/api/servicemanagement/v1/servicemanager.proto#L407}
   ///
+  /// [google.api.servicemanagement.v1.ServiceManager.CreateServiceRollout]:
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L226}
   /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L391}
   /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]:

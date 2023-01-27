@@ -1149,6 +1149,8 @@ class ClusterManagerClient {
   /// @return
   /// @googleapis_link{google::container::v1::Operation,google/container/v1/cluster_service.proto#L2028}
   ///
+  /// [google.container.v1.NodePool.locations]:
+  /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L3117}
   /// [google.container.v1.Operation]:
   /// @googleapis_reference_link{google/container/v1/cluster_service.proto#L2028}
   /// [google.container.v1.SetNodePoolSizeRequest]:

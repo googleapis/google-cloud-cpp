@@ -310,8 +310,12 @@ class CloudSchedulerClient {
   /// @return
   /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
+  /// [google.cloud.scheduler.v1.CloudScheduler.ResumeJob]:
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L111}
   /// [google.cloud.scheduler.v1.Job]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
+  /// [google.cloud.scheduler.v1.Job.state]:
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L142}
   /// [google.cloud.scheduler.v1.PauseJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L234}
   ///
@@ -337,8 +341,12 @@ class CloudSchedulerClient {
   /// @return
   /// @googleapis_link{google::cloud::scheduler::v1::Job,google/cloud/scheduler/v1/job.proto#L33}
   ///
+  /// [google.cloud.scheduler.v1.CloudScheduler.ResumeJob]:
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L111}
   /// [google.cloud.scheduler.v1.Job]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
+  /// [google.cloud.scheduler.v1.Job.state]:
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L142}
   /// [google.cloud.scheduler.v1.PauseJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L234}
   ///
@@ -366,6 +374,8 @@ class CloudSchedulerClient {
   ///
   /// [google.cloud.scheduler.v1.Job]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
+  /// [google.cloud.scheduler.v1.Job.state]:
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L142}
   /// [google.cloud.scheduler.v1.ResumeJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L246}
   ///
@@ -392,6 +402,8 @@ class CloudSchedulerClient {
   ///
   /// [google.cloud.scheduler.v1.Job]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L33}
+  /// [google.cloud.scheduler.v1.Job.state]:
+  /// @googleapis_reference_link{google/cloud/scheduler/v1/job.proto#L142}
   /// [google.cloud.scheduler.v1.ResumeJobRequest]:
   /// @googleapis_reference_link{google/cloud/scheduler/v1/cloudscheduler.proto#L246}
   ///

@@ -185,6 +185,8 @@ class ConversationProfilesClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L189}
+  /// [google.cloud.dialogflow.v2.ConversationProfiles.GetConversationProfile]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L63}
   /// [google.cloud.dialogflow.v2.CreateConversationProfileRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L305}
   ///
@@ -212,6 +214,8 @@ class ConversationProfilesClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L189}
+  /// [google.cloud.dialogflow.v2.ConversationProfiles.GetConversationProfile]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L63}
   /// [google.cloud.dialogflow.v2.CreateConversationProfileRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L305}
   ///
@@ -238,6 +242,8 @@ class ConversationProfilesClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L189}
+  /// [google.cloud.dialogflow.v2.ConversationProfiles.GetConversationProfile]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L63}
   /// [google.cloud.dialogflow.v2.UpdateConversationProfileRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L322}
   ///
@@ -264,6 +270,8 @@ class ConversationProfilesClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L189}
+  /// [google.cloud.dialogflow.v2.ConversationProfiles.GetConversationProfile]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L63}
   /// [google.cloud.dialogflow.v2.UpdateConversationProfileRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L322}
   ///
@@ -334,6 +342,8 @@ class ConversationProfilesClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L189}
+  /// [google.cloud.dialogflow.v2.SetSuggestionFeatureConfigOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L755}
   /// [google.cloud.dialogflow.v2.SetSuggestionFeatureConfigRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L720}
   ///
@@ -370,6 +380,8 @@ class ConversationProfilesClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L189}
+  /// [google.cloud.dialogflow.v2.SetSuggestionFeatureConfigOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L755}
   /// [google.cloud.dialogflow.v2.SetSuggestionFeatureConfigRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L720}
   ///
@@ -401,6 +413,8 @@ class ConversationProfilesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationProfile,google/cloud/dialogflow/v2/conversation_profile.proto#L189}
   ///
+  /// [google.cloud.dialogflow.v2.ClearSuggestionFeatureConfigOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L776}
   /// [google.cloud.dialogflow.v2.ClearSuggestionFeatureConfigRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L737}
   /// [google.cloud.dialogflow.v2.ConversationProfile]:
@@ -430,6 +444,8 @@ class ConversationProfilesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationProfile,google/cloud/dialogflow/v2/conversation_profile.proto#L189}
   ///
+  /// [google.cloud.dialogflow.v2.ClearSuggestionFeatureConfigOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L776}
   /// [google.cloud.dialogflow.v2.ClearSuggestionFeatureConfigRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L737}
   /// [google.cloud.dialogflow.v2.ConversationProfile]:

@@ -113,6 +113,8 @@ class ConversationDatasetsClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L326}
   /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   ///
@@ -144,6 +146,8 @@ class ConversationDatasetsClient {
   ///
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L326}
   /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   ///
@@ -315,6 +319,8 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataOperationResponse,google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
   ///
+  /// [google.cloud.dialogflow.v2.ImportConversationDataOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L293}
   /// [google.cloud.dialogflow.v2.ImportConversationDataOperationResponse]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
   /// [google.cloud.dialogflow.v2.ImportConversationDataRequest]:

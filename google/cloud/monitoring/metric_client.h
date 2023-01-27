@@ -471,6 +471,8 @@ class MetricServiceClient {
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.MetricService.CreateTimeSeries]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L148}
   ///
   Status CreateServiceTimeSeries(
       std::string const& name,
@@ -495,6 +497,8 @@ class MetricServiceClient {
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.MetricService.CreateTimeSeries]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L148}
   ///
   Status CreateServiceTimeSeries(
       google::monitoring::v3::CreateTimeSeriesRequest const& request,

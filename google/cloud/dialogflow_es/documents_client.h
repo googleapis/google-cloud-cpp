@@ -185,6 +185,8 @@ class DocumentsClient {
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L465}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
       std::string const& parent,
@@ -213,6 +215,8 @@ class DocumentsClient {
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L465}
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
@@ -243,6 +247,8 @@ class DocumentsClient {
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L482}
   /// [google.cloud.dialogflow.v2.ImportDocumentsResponse]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L538}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
   ImportDocuments(
@@ -328,6 +334,8 @@ class DocumentsClient {
   ///
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   ///
@@ -355,6 +363,8 @@ class DocumentsClient {
   ///
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   /// [google.cloud.dialogflow.v2.UpdateDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L559}
   ///
@@ -394,6 +404,8 @@ class DocumentsClient {
   ///
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   ///
@@ -427,6 +439,8 @@ class DocumentsClient {
   ///
   /// [google.cloud.dialogflow.v2.Document]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   /// [google.cloud.dialogflow.v2.ReloadDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L572}
   ///
@@ -457,6 +471,8 @@ class DocumentsClient {
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L260}
   /// [google.cloud.dialogflow.v2.ExportDocumentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L607}
+  /// [google.cloud.dialogflow.v2.KnowledgeOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/document.proto#L640}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
