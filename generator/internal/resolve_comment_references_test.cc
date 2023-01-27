@@ -13,14 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/resolve_comment_references.h"
-#include "generator/testing/error_collectors.h"
-#include "generator/testing/fake_source_tree.h"
-#include "absl/memory/memory.h"
-#include <google/protobuf/compiler/importer.h>
-#include <google/protobuf/descriptor.pb.h>
-#include <google/protobuf/descriptor_database.h>
-#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
-#include <google/protobuf/text_format.h>
+#include "generator/testing/descriptor_pool_fixture.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,41 +21,17 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
-using ::google::cloud::generator_testing::FakeSourceTree;
 using ::testing::Field;
 using ::testing::NotNull;
 using ::testing::Pair;
 
-class ResolveCommentsReferenceTest : public ::testing::Test {
+class ResolveCommentsReferenceTest
+    : public generator_testing::DescriptorPoolFixture {
  public:
-  ResolveCommentsReferenceTest();
-
-  google::protobuf::FileDescriptor const* FindFile(
-      std::string const& name) const {
-    return pool_.FindFileByName(name);
-  }
-  bool AddProtoFile(std::string const& name, std::string contents) {
-    source_tree_.Insert(name, std::move(contents));
-    return pool_.FindFileByName(name) != nullptr;
-  }
-
   google::protobuf::MethodDescriptor const* FindMethod(
       std::string const& name) {
-    return pool_.FindMethodByName(name);
+    return pool().FindMethodByName(name);
   }
-
-  google::protobuf::DescriptorPool const& pool() const { return pool_; }
-
- private:
-  std::unique_ptr<google::protobuf::DescriptorPool::ErrorCollector>
-      descriptor_error_collector_;
-  std::unique_ptr<google::protobuf::compiler::MultiFileErrorCollector>
-      multifile_error_collector_;
-  FakeSourceTree source_tree_;
-  google::protobuf::SimpleDescriptorDatabase simple_db_;
-  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db_;
-  google::protobuf::MergedDescriptorDatabase merged_db_;
-  google::protobuf::DescriptorPool pool_;
 };
 
 TEST_F(ResolveCommentsReferenceTest, Multiple) {
@@ -316,61 +285,6 @@ service Service {
       UnorderedElementsAre(Pair(
           "test.v1.OtherService",
           Field(&ProtoDefinitionLocation::filename, "test/v1/service.proto"))));
-}
-
-auto constexpr kLongrunningOperationsContents = R"""(
-// This is a (extremely) simplified version of LRO support.
-syntax = "proto3";
-package google.longrunning;
-import "google/protobuf/descriptor.proto";
-
-extend google.protobuf.MethodOptions {
-    google.longrunning.OperationInfo operation_info = 1049;
-}
-
-message OperationInfo {
-    string response_type = 1;
-    string metadata_type = 2;
-}
-
-message Operation {
-    string name = 1;
-}
-)""";
-
-auto constexpr kCommonFileContents = R"""(
-// We need to test that our generator handles references to different entities.
-// This simulated .proto file provides their definition.
-
-syntax = "proto3";
-package test.v1;
-
-// A request type for the methods
-message Request {}
-// A response type for the methods
-message Response {}
-// A metadata type for some LROs
-message Metadata {}
-)""";
-
-ResolveCommentsReferenceTest::ResolveCommentsReferenceTest()
-    : descriptor_error_collector_(
-          absl::make_unique<generator_testing::ErrorCollector>()),
-      multifile_error_collector_(
-          absl::make_unique<generator_testing::MultiFileErrorCollector>()),
-      source_tree_({
-          {"google/longrunning/operation.proto",
-           kLongrunningOperationsContents},
-          {"test/v1/common.proto", kCommonFileContents},
-      }),
-      source_tree_db_(&source_tree_),
-      merged_db_(&simple_db_, &source_tree_db_),
-      pool_(&merged_db_, descriptor_error_collector_.get()) {
-  source_tree_db_.RecordErrorsTo(multifile_error_collector_.get());
-  // We need the basic "descriptor" protos to be available.
-  google::protobuf::FileDescriptorProto proto;
-  google::protobuf::FileDescriptorProto::descriptor()->file()->CopyTo(&proto);
-  simple_db_.Add(proto);
 }
 
 }  // namespace
