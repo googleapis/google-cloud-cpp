@@ -22,19 +22,21 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 namespace {
+
 template <typename Descriptor>
-absl::optional<std::pair<std::string, Location>> GetLocation(
+absl::optional<std::pair<std::string, ProtoDefinitionLocation>> GetLocation(
     Descriptor const* d) {
   if (d == nullptr) return absl::nullopt;
   google::protobuf::SourceLocation loc;
   d->GetSourceLocation(&loc);
-  return std::make_pair(d->full_name(),
-                        Location{d->file()->name(), loc.start_line + 1});
+  return std::make_pair(
+      d->full_name(),
+      ProtoDefinitionLocation{d->file()->name(), loc.start_line + 1});
 }
 
 /// Search @p pool for an entity called @p name and return its fully qualified
 /// name and location.
-absl::optional<std::pair<std::string, Location>> FindByName(
+absl::optional<std::pair<std::string, ProtoDefinitionLocation>> FindByName(
     google::protobuf::DescriptorPool const& pool, std::string const& name) {
   auto location = GetLocation(pool.FindEnumTypeByName(name));
   if (location.has_value()) return location;
@@ -57,11 +59,11 @@ absl::optional<std::pair<std::string, Location>> FindByName(
 
 }  // namespace
 
-std::map<std::string, Location> ResolveCommentReferences(
+std::map<std::string, ProtoDefinitionLocation> ResolveCommentReferences(
     std::string const& comment, google::protobuf::DescriptorPool const& pool) {
   auto const re = std::regex(R"re(\]\[([a-z_]+\.[a-zA-Z0-9_\.]+)\])re");
   auto begin = std::sregex_iterator(comment.begin(), comment.end(), re);
-  std::map<std::string, Location> references;
+  std::map<std::string, ProtoDefinitionLocation> references;
   for (auto i = begin; i != std::sregex_iterator{}; ++i) {
     auto const& match = *i;
     if (match.size() != 2) continue;

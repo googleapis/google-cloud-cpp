@@ -92,12 +92,13 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual,
-              UnorderedElementsAre(
-                  Pair("test.v1.Resource",
-                       Field(&Location::filename, "test/v1/service.proto")),
-                  Pair("test.v1.Service.Other",
-                       Field(&Location::filename, "test/v1/service.proto"))));
+  EXPECT_THAT(actual, UnorderedElementsAre(
+                          Pair("test.v1.Resource",
+                               Field(&ProtoDefinitionLocation::filename,
+                                     "test/v1/service.proto")),
+                          Pair("test.v1.Service.Other",
+                               Field(&ProtoDefinitionLocation::filename,
+                                     "test/v1/service.proto"))));
 }
 
 TEST_F(ResolveCommentsReferenceTest, EnumType) {
@@ -125,9 +126,10 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual, UnorderedElementsAre(Pair(
-                          "test.v1.State", Field(&Location::filename,
-                                                 "test/v1/service.proto"))));
+  EXPECT_THAT(actual,
+              UnorderedElementsAre(Pair(
+                  "test.v1.State", Field(&ProtoDefinitionLocation::filename,
+                                         "test/v1/service.proto"))));
 }
 
 TEST_F(ResolveCommentsReferenceTest, EnumValue) {
@@ -155,9 +157,10 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual, UnorderedElementsAre(Pair(
-                          "test.v1.STATE_0", Field(&Location::filename,
-                                                   "test/v1/service.proto"))));
+  EXPECT_THAT(actual,
+              UnorderedElementsAre(Pair(
+                  "test.v1.STATE_0", Field(&ProtoDefinitionLocation::filename,
+                                           "test/v1/service.proto"))));
 }
 
 TEST_F(ResolveCommentsReferenceTest, Field) {
@@ -184,10 +187,11 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual,
-              UnorderedElementsAre(
-                  Pair("test.v1.Resource.the_field",
-                       Field(&Location::filename, "test/v1/service.proto"))));
+  EXPECT_THAT(
+      actual,
+      UnorderedElementsAre(Pair(
+          "test.v1.Resource.the_field",
+          Field(&ProtoDefinitionLocation::filename, "test/v1/service.proto"))));
 }
 
 TEST_F(ResolveCommentsReferenceTest, Message) {
@@ -212,9 +216,10 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual, UnorderedElementsAre(Pair(
-                          "test.v1.Resource", Field(&Location::filename,
-                                                    "test/v1/service.proto"))));
+  EXPECT_THAT(actual,
+              UnorderedElementsAre(Pair(
+                  "test.v1.Resource", Field(&ProtoDefinitionLocation::filename,
+                                            "test/v1/service.proto"))));
 }
 
 TEST_F(ResolveCommentsReferenceTest, Method) {
@@ -240,10 +245,11 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual,
-              UnorderedElementsAre(
-                  Pair("test.v1.OtherService.SomeMethod",
-                       Field(&Location::filename, "test/v1/service.proto"))));
+  EXPECT_THAT(
+      actual,
+      UnorderedElementsAre(Pair(
+          "test.v1.OtherService.SomeMethod",
+          Field(&ProtoDefinitionLocation::filename, "test/v1/service.proto"))));
 }
 
 TEST_F(ResolveCommentsReferenceTest, Oneof) {
@@ -274,10 +280,11 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual,
-              UnorderedElementsAre(
-                  Pair("test.v1.Resource.which",
-                       Field(&Location::filename, "test/v1/service.proto"))));
+  EXPECT_THAT(
+      actual,
+      UnorderedElementsAre(Pair(
+          "test.v1.Resource.which",
+          Field(&ProtoDefinitionLocation::filename, "test/v1/service.proto"))));
 }
 
 TEST_F(ResolveCommentsReferenceTest, Service) {
@@ -304,10 +311,11 @@ service Service {
   ASSERT_TRUE(AddProtoFile("test/v1/service.proto", kContents));
 
   auto const actual = ResolveCommentReferences(kComment, pool());
-  EXPECT_THAT(actual,
-              UnorderedElementsAre(
-                  Pair("test.v1.OtherService",
-                       Field(&Location::filename, "test/v1/service.proto"))));
+  EXPECT_THAT(
+      actual,
+      UnorderedElementsAre(Pair(
+          "test.v1.OtherService",
+          Field(&ProtoDefinitionLocation::filename, "test/v1/service.proto"))));
 }
 
 auto constexpr kLongrunningOperationsContents = R"""(

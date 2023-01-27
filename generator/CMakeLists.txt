@@ -69,6 +69,7 @@ add_library(
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/proto_definition_location.h
     internal/resolve_comment_references.cc
     internal/resolve_comment_references.h
     internal/retry_traits_generator.cc
