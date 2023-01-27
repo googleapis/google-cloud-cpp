@@ -17,6 +17,7 @@
 #include "generator/integration_tests/test.pb.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -28,9 +29,12 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_v1_mocks::MockGoldenThingAdminConnection;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Return;
+
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-using ::google::cloud::golden_v1_mocks::MockGoldenThingAdminConnection;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
@@ -38,13 +42,13 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::google::test::admin::database::v1::Backup;
 using ::google::test::admin::database::v1::Database;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
-using ::testing::Return;
+using ::testing::IsEmpty;
+using ::testing::Not;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
@@ -452,6 +456,54 @@ TEST(GoldenThingAdminTracingConnectionTest, AsyncDropDatabase) {
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::test::admin::database::v1::DropDatabaseRequest request;
   auto result = under_test.AsyncDropDatabase(request).get();
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+}
+
+TEST(MakeGoldenThingAdminTracingConnection, TracingEnabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockGoldenThingAdminConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillOnce(
+          Return(Options{}.set<internal::OpenTelemetryTracingOption>(true)));
+  EXPECT_CALL(*mock, DropDatabase)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = MakeGoldenThingAdminTracingConnection(mock);
+  auto result = under_test->DropDatabase({});
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Not(IsEmpty()));
+}
+
+TEST(MakeGoldenThingAdminTracingConnection, TracingDisabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_shared<MockGoldenThingAdminConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillOnce(
+          Return(Options{}.set<internal::OpenTelemetryTracingOption>(false)));
+  EXPECT_CALL(*mock, DropDatabase)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = MakeGoldenThingAdminTracingConnection(mock);
+  auto result = under_test->DropDatabase({});
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+#else
+
+TEST(MakeGoldenThingAdminTracingConnection, NoOpenTelemetry) {
+  auto mock = std::make_shared<MockGoldenThingAdminConnection>();
+  EXPECT_CALL(*mock, DropDatabase)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = MakeGoldenThingAdminTracingConnection(mock);
+  auto result = under_test->DropDatabase({});
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 }
 
