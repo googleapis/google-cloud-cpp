@@ -72,6 +72,8 @@ add_library(
     internal/proto_definition_location.h
     internal/resolve_comment_references.cc
     internal/resolve_comment_references.h
+    internal/resolve_method_return.cc
+    internal/resolve_method_return.h
     internal/retry_traits_generator.cc
     internal/retry_traits_generator.h
     internal/round_robin_decorator_generator.cc
@@ -179,6 +181,7 @@ function (google_cloud_cpp_generator_define_tests)
         internal/predicate_utils_test.cc
         internal/printer_test.cc
         internal/resolve_comment_references_test.cc
+        internal/resolve_method_return_test.cc
         internal/scaffold_generator_test.cc
         internal/service_code_generator_test.cc)
 
