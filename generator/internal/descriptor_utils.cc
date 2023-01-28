@@ -19,6 +19,7 @@
 #include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_impl_generator.h"
 #include "generator/internal/connection_impl_rest_generator.h"
+#include "generator/internal/format_class_comments.h"
 #include "generator/internal/format_method_comments.h"
 #include "generator/internal/forwarding_client_generator.h"
 #include "generator/internal/forwarding_connection_generator.h"
@@ -452,50 +453,6 @@ std::string ChompByValue(std::string const& s) {
 
 std::string EscapePrinterDelimiter(std::string const& text) {
   return absl::StrReplaceAll(text, {{"$", "$$"}});
-}
-
-std::string FormatClassCommentsFromServiceComments(
-    google::protobuf::ServiceDescriptor const& service) {
-  google::protobuf::SourceLocation service_source_location;
-  std::string formatted_comments;
-  if (!service.GetSourceLocation(&service_source_location) ||
-      service_source_location.leading_comments.empty()) {
-    GCP_LOG(INFO) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
-                  << " no leading_comments to format";
-    formatted_comments = absl::StrCat(" ", service.name(), "Client");
-  } else {
-    formatted_comments = absl::StrReplaceAll(
-        ChompByValue(service_source_location.leading_comments),
-        {{"\n\n", "\n///\n/// "}, {"\n", "\n/// "}});
-  }
-  std::string doxygen_formatted_comments =
-      absl::StrCat("///\n///", formatted_comments,
-                   R"""(
-///
-/// @par Equality
-///
-/// Instances of this class created via copy-construction or copy-assignment
-/// always compare equal. Instances created with equal
-/// `std::shared_ptr<*Connection>` objects compare equal. Objects that compare
-/// equal share the same underlying resources.
-///
-/// @par Performance
-///
-/// Creating a new instance of this class is a relatively expensive operation,
-/// new objects establish new connections to the service. In contrast,
-/// copy-construction, move-construction, and the corresponding assignment
-/// operations are relatively efficient as the copies share all underlying
-/// resources.
-///
-/// @par Thread Safety
-///
-/// Concurrent access to different instances of this class, even if they compare
-/// equal, is guaranteed to work. Two or more threads operating on the same
-/// instance of this class is not guaranteed to work. Since copy-construction
-/// and move-construction is a relatively efficient operation, consider using
-/// such a copy when using this class from multiple threads.
-///)""");
-  return absl::StrReplaceAll(doxygen_formatted_comments, {{"///  ", "/// "}});
 }
 
 auto constexpr kDialogflowCXEnvironmentIdProto1 = R"""(
