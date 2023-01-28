@@ -275,6 +275,8 @@ class SecuritySettingsServiceClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   Status DeleteSecuritySettings(std::string const& name, Options opts = {});
 
@@ -289,6 +291,8 @@ class SecuritySettingsServiceClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
+  /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   Status DeleteSecuritySettings(
       google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&

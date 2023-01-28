@@ -903,6 +903,8 @@ class AccessContextManagerClient {
   /// @return
   /// @googleapis_link{google::identity::accesscontextmanager::v1::CommitServicePerimetersResponse,google/identity/accesscontextmanager/v1/access_context_manager.proto#L865}
   ///
+  /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   /// [google.identity.accesscontextmanager.v1.CommitServicePerimetersRequest]:
   /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_context_manager.proto#L838}
   /// [google.identity.accesscontextmanager.v1.CommitServicePerimetersResponse]:
@@ -1187,6 +1189,8 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   /// [google.iam.v1.SetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -1206,6 +1210,8 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -1229,6 +1235,10 @@ class AccessContextManagerClient {
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
+  /// [google.identity.accesscontextmanager.v1.AccessLevel]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_level.proto#L36}
+  /// [google.identity.accesscontextmanager.v1.AccessPolicy]:
+  /// @googleapis_reference_link{google/identity/accesscontextmanager/v1/access_policy.proto#L36}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,

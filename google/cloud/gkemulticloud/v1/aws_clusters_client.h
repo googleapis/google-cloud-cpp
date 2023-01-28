@@ -122,6 +122,8 @@ class AwsClustersClient {
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(
@@ -148,6 +150,8 @@ class AwsClustersClient {
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L208}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(
@@ -331,10 +335,16 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(std::string const& name, Options opts = {});
@@ -357,10 +367,16 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L345}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(
@@ -378,6 +394,8 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse,google/cloud/gkemulticloud/v1/aws_service.proto#L598}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L579}
   /// [google.cloud.gkemulticloud.v1.GenerateAwsAccessTokenResponse]:
@@ -421,10 +439,14 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(
@@ -448,10 +470,14 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L383}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(
@@ -587,6 +613,8 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]:
@@ -607,6 +635,8 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::AwsNodePool,google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsCluster]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]:
@@ -635,10 +665,14 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(std::string const& name, Options opts = {});
@@ -658,10 +692,14 @@ class AwsClustersClient {
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
+  /// [google.cloud.gkemulticloud.v1.AwsNodePool]:
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L342}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L521}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(

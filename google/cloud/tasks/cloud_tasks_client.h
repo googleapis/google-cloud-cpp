@@ -412,10 +412,14 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
+  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L166}
   /// [google.cloud.tasks.v2.PauseQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.state]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(std::string const& name,
                                                        Options opts = {});
@@ -437,10 +441,14 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
+  /// [google.cloud.tasks.v2.CloudTasks.ResumeQueue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L166}
   /// [google.cloud.tasks.v2.PauseQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L443}
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.state]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
       google::cloud::tasks::v2::PauseQueueRequest const& request,
@@ -471,6 +479,8 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.state]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
   /// [google.cloud.tasks.v2.ResumeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   ///
@@ -502,6 +512,8 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.Queue.state]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L154}
   /// [google.cloud.tasks.v2.ResumeQueueRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   ///
@@ -528,6 +540,8 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
@@ -554,6 +568,8 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
@@ -588,6 +604,8 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   /// [google.iam.v1.SetIamPolicyRequest]:
@@ -641,6 +659,8 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   /// [google.iam.v1.SetIamPolicyRequest]:
@@ -672,6 +692,8 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.TestIamPermissionsRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
@@ -698,6 +720,8 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
+  /// [google.cloud.tasks.v2.Queue]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
   /// [google.iam.v1.TestIamPermissionsRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
@@ -727,6 +751,8 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
+  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L489}
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
@@ -753,6 +779,8 @@ class CloudTasksClient {
   ///
   /// [google.cloud.tasks.v2.ListTasksRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L467}
+  /// [google.cloud.tasks.v2.ListTasksRequest.response_view]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L489}
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
   ///
@@ -940,10 +968,18 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
+  /// [google.cloud.tasks.v2.CloudTasks.RunTask]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L298}
+  /// [google.cloud.tasks.v2.RateLimits]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L182}
+  /// [google.cloud.tasks.v2.RetryConfig]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L252}
   /// [google.cloud.tasks.v2.RunTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
+  /// [google.cloud.tasks.v2.Task.schedule_time]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L105}
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(std::string const& name,
                                                    Options opts = {});
@@ -983,10 +1019,18 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Task,google/cloud/tasks/v2/task.proto#L32}
   ///
+  /// [google.cloud.tasks.v2.CloudTasks.RunTask]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L298}
+  /// [google.cloud.tasks.v2.RateLimits]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L182}
+  /// [google.cloud.tasks.v2.RetryConfig]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L252}
   /// [google.cloud.tasks.v2.RunTaskRequest]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L632}
   /// [google.cloud.tasks.v2.Task]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L32}
+  /// [google.cloud.tasks.v2.Task.schedule_time]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/task.proto#L105}
   ///
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
       google::cloud::tasks::v2::RunTaskRequest const& request,

@@ -303,6 +303,8 @@ class TransitionRouteGroupsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L271}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
   Status DeleteTransitionRouteGroup(std::string const& name, Options opts = {});
 
@@ -321,6 +323,8 @@ class TransitionRouteGroupsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L271}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
   Status DeleteTransitionRouteGroup(
       google::cloud::dialogflow::cx::v3::

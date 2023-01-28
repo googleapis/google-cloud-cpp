@@ -265,6 +265,10 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       std::string const& name, Options opts = {});
@@ -287,6 +291,10 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L368}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
       google::cloud::automl::v1::DeleteDatasetRequest const& request,
@@ -316,8 +324,12 @@ class AutoMlClient {
   ///
   /// [google.cloud.automl.v1.ImportDataRequest]:
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
+  /// [google.cloud.automl.v1.InputConfig.params]:
+  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L660}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       std::string const& name,
@@ -344,8 +356,12 @@ class AutoMlClient {
   ///
   /// [google.cloud.automl.v1.ImportDataRequest]:
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L379}
+  /// [google.cloud.automl.v1.InputConfig.params]:
+  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L660}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
       google::cloud::automl::v1::ImportDataRequest const& request,
@@ -367,6 +383,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       std::string const& name,
@@ -389,6 +407,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L395}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
       google::cloud::automl::v1::ExportDataRequest const& request,
@@ -450,6 +470,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       std::string const& parent, google::cloud::automl::v1::Model const& model,
@@ -473,6 +495,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L420}
   /// [google.cloud.automl.v1.Model]:
   /// @googleapis_reference_link{google/cloud/automl/v1/model.proto#L33}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
       google::cloud::automl::v1::CreateModelRequest const& request,
@@ -567,6 +591,10 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       std::string const& name, Options opts = {});
@@ -589,6 +617,10 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L486}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
       google::cloud::automl::v1::DeleteModelRequest const& request,
@@ -656,6 +688,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       std::string const& name, Options opts = {});
@@ -684,6 +718,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L506}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
       google::cloud::automl::v1::DeployModelRequest const& request,
@@ -708,6 +744,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
   /// [google.cloud.automl.v1.UndeployModelRequest]:
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       std::string const& name, Options opts = {});
@@ -732,6 +770,8 @@ class AutoMlClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
   /// [google.cloud.automl.v1.UndeployModelRequest]:
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L526}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
       google::cloud::automl::v1::UndeployModelRequest const& request,
@@ -756,8 +796,12 @@ class AutoMlClient {
   ///
   /// [google.cloud.automl.v1.ExportModelRequest]:
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
+  /// [google.cloud.automl.v1.ModelExportOutputConfig]:
+  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L1256}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       std::string const& name,
@@ -782,8 +826,12 @@ class AutoMlClient {
   ///
   /// [google.cloud.automl.v1.ExportModelRequest]:
   /// @googleapis_reference_link{google/cloud/automl/v1/service.proto#L539}
+  /// [google.cloud.automl.v1.ModelExportOutputConfig]:
+  /// @googleapis_reference_link{google/cloud/automl/v1/io.proto#L1256}
   /// [google.cloud.automl.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/automl/v1/operations.proto#L31}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
       google::cloud::automl::v1::ExportModelRequest const& request,

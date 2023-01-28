@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/resolve_comment_references.h"
 #include "generator/internal/resolve_method_return.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -71,7 +72,8 @@ std::string FormatMethodComments(
         "  /// @return $method_paginated_return_doxygen_link$\n";
   }
 
-  std::map<std::string, ProtoDefinitionLocation> references;
+  auto references = ResolveCommentReferences(
+      method_source_location.leading_comments, *method.file()->pool());
   references.emplace(method.input_type()->full_name(),
                      Location(*method.input_type()));
   auto method_return = ResolveMethodReturn(method);

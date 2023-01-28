@@ -119,8 +119,14 @@ class ConversationsClient {
   ///
   /// [google.cloud.dialogflow.v2.Conversation]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
+  /// [google.cloud.dialogflow.v2.Conversation.conversation_profile]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L197}
   /// [google.cloud.dialogflow.v2.CreateConversationRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L238}
+  /// [google.cloud.dialogflow.v2.Intent]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.Intent.live_agent_handoff]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L860}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
       std::string const& parent,
@@ -159,8 +165,14 @@ class ConversationsClient {
   ///
   /// [google.cloud.dialogflow.v2.Conversation]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
+  /// [google.cloud.dialogflow.v2.Conversation.conversation_profile]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L197}
   /// [google.cloud.dialogflow.v2.CreateConversationRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L238}
+  /// [google.cloud.dialogflow.v2.Intent]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.Intent.live_agent_handoff]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L860}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
       google::cloud::dialogflow::v2::CreateConversationRequest const& request,

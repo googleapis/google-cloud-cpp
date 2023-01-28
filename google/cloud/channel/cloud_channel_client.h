@@ -228,6 +228,8 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1347}
   /// [google.cloud.channel.v1.CheckCloudIdentityAccountsExistResponse]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1378}
+  /// [google.cloud.channel.v1.CloudIdentityCustomerAccount]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1358}
   ///
   StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
   CheckCloudIdentityAccountsExist(
@@ -314,6 +316,8 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.channel.v1.Customer]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   /// [google.cloud.channel.v1.DeleteCustomerRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1460}
   ///
@@ -337,6 +341,8 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.channel.v1.Customer]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
   /// [google.cloud.channel.v1.DeleteCustomerRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1460}
   ///
@@ -412,6 +418,8 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.Customer]:
   /// @googleapis_reference_link{google/cloud/channel/v1/customers.proto#L31}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   /// [google.cloud.channel.v1.ProvisionCloudIdentityRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1520}
   ///
@@ -603,6 +611,8 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2012}
   /// [google.cloud.channel.v1.Entitlement]:
   /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
       google::cloud::channel::v1::CreateEntitlementRequest const& request,
@@ -645,6 +655,8 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2110}
   /// [google.cloud.channel.v1.Entitlement]:
   /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
       google::cloud::channel::v1::ChangeParametersRequest const& request,
@@ -688,6 +700,8 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2144}
   /// [google.cloud.channel.v1.Entitlement]:
   /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ChangeRenewalSettings(
@@ -729,6 +743,8 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2170}
   /// [google.cloud.channel.v1.Entitlement]:
   /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
       google::cloud::channel::v1::ChangeOfferRequest const& request,
@@ -770,6 +786,8 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.Entitlement]:
   /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   /// [google.cloud.channel.v1.StartPaidServiceRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2211}
   ///
@@ -810,6 +828,8 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.Entitlement]:
   /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   /// [google.cloud.channel.v1.SuspendEntitlementRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2257}
   ///
@@ -904,6 +924,8 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2280}
   /// [google.cloud.channel.v1.Entitlement]:
   /// @googleapis_reference_link{google/cloud/channel/v1/entitlements.proto#L32}
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   ///
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
       google::cloud::channel::v1::ActivateEntitlementRequest const& request,
@@ -948,6 +970,8 @@ class CloudChannelServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::channel::v1::TransferEntitlementsResponse,google/cloud/channel/v1/service.proto#L2077}
   ///
+  /// [google.cloud.channel.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/operations.proto#L26}
   /// [google.cloud.channel.v1.TransferEntitlementsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L2043}
   /// [google.cloud.channel.v1.TransferEntitlementsResponse]:
@@ -1268,8 +1292,14 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.CustomerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
+  /// [google.cloud.channel.v1.CustomerRepricingConfig.update_time]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L65}
   /// [google.cloud.channel.v1.ListCustomerRepricingConfigsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1816}
+  /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
   ListCustomerRepricingConfigs(std::string const& parent, Options opts = {});
@@ -1309,8 +1339,14 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.CustomerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
+  /// [google.cloud.channel.v1.CustomerRepricingConfig.update_time]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L65}
   /// [google.cloud.channel.v1.ListCustomerRepricingConfigsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1816}
+  /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
   ListCustomerRepricingConfigs(
@@ -1376,6 +1412,12 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1866}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
+  /// [google.cloud.channel.v1.CustomerRepricingConfig.repricing_config]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L59}
+  /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
   CreateCustomerRepricingConfig(
@@ -1439,6 +1481,12 @@ class CloudChannelServiceClient {
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1866}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
+  /// [google.cloud.channel.v1.CustomerRepricingConfig.repricing_config]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L59}
+  /// [google.cloud.channel.v1.RepricingConfig.EntitlementGranularity.entitlement]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L101}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
   CreateCustomerRepricingConfig(
@@ -1487,8 +1535,12 @@ class CloudChannelServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::channel::v1::CustomerRepricingConfig,google/cloud/channel/v1/repricing.proto#L46}
   ///
+  /// [google.cloud.channel.v1.CloudChannelService.CreateCustomerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L932}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   /// [google.cloud.channel.v1.UpdateCustomerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1884}
   ///
@@ -1539,8 +1591,12 @@ class CloudChannelServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::channel::v1::CustomerRepricingConfig,google/cloud/channel/v1/repricing.proto#L46}
   ///
+  /// [google.cloud.channel.v1.CloudChannelService.CreateCustomerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L932}
   /// [google.cloud.channel.v1.CustomerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   /// [google.cloud.channel.v1.UpdateCustomerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1884}
   ///
@@ -1576,8 +1632,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.channel.v1.CustomerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.DeleteCustomerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1892}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   Status DeleteCustomerRepricingConfig(std::string const& name,
                                        Options opts = {});
@@ -1606,8 +1666,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.channel.v1.CustomerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L46}
   /// [google.cloud.channel.v1.DeleteCustomerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1892}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   Status DeleteCustomerRepricingConfig(
       google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
@@ -1725,8 +1789,12 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
+  /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.update_time]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L90}
   /// [google.cloud.channel.v1.ListChannelPartnerRepricingConfigsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1920}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
   ListChannelPartnerRepricingConfigs(std::string const& parent,
@@ -1766,8 +1834,12 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
+  /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.update_time]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L90}
   /// [google.cloud.channel.v1.ListChannelPartnerRepricingConfigsRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1920}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
   ListChannelPartnerRepricingConfigs(
@@ -1831,8 +1903,12 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
+  /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.repricing_config]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L84}
   /// [google.cloud.channel.v1.CreateChannelPartnerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1974}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
   CreateChannelPartnerRepricingConfig(
@@ -1893,8 +1969,12 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
+  /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig.repricing_config]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L84}
   /// [google.cloud.channel.v1.CreateChannelPartnerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1974}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
   CreateChannelPartnerRepricingConfig(
@@ -1945,6 +2025,10 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
+  /// [google.cloud.channel.v1.CloudChannelService.CreateChannelPartnerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1105}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   /// [google.cloud.channel.v1.UpdateChannelPartnerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1992}
   ///
@@ -1997,6 +2081,10 @@ class CloudChannelServiceClient {
   ///
   /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
   /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
+  /// [google.cloud.channel.v1.CloudChannelService.CreateChannelPartnerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1105}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   /// [google.cloud.channel.v1.UpdateChannelPartnerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1992}
   ///
@@ -2031,8 +2119,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.DeleteChannelPartnerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1999}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   Status DeleteChannelPartnerRepricingConfig(std::string const& name,
                                              Options opts = {});
@@ -2061,8 +2153,12 @@ class CloudChannelServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.channel.v1.ChannelPartnerRepricingConfig]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L71}
   /// [google.cloud.channel.v1.DeleteChannelPartnerRepricingConfigRequest]:
   /// @googleapis_reference_link{google/cloud/channel/v1/service.proto#L1999}
+  /// [google.cloud.channel.v1.RepricingConfig.effective_invoice_month]:
+  /// @googleapis_reference_link{google/cloud/channel/v1/repricing.proto#L124}
   ///
   Status DeleteChannelPartnerRepricingConfig(
       google::cloud::channel::v1::

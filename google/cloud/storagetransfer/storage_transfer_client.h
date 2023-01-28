@@ -156,6 +156,8 @@ class StorageTransferServiceClient {
   ///
   /// [google.storagetransfer.v1.TransferJob]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L842}
+  /// [google.storagetransfer.v1.TransferJob.status]:
+  /// @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L919}
   /// [google.storagetransfer.v1.UpdateTransferJobRequest]:
   /// @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L188}
   ///

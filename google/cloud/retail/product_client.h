@@ -305,6 +305,8 @@ class ProductServiceClient {
   ///
   /// [google.cloud.retail.v2.DeleteProductRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L424}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   Status DeleteProduct(std::string const& name, Options opts = {});
 
@@ -318,6 +320,8 @@ class ProductServiceClient {
   ///
   /// [google.cloud.retail.v2.DeleteProductRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L424}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   Status DeleteProduct(
       google::cloud::retail::v2::DeleteProductRequest const& request,
@@ -343,6 +347,8 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L164}
   /// [google.cloud.retail.v2.ImportProductsResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L345}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
   ImportProducts(
@@ -461,10 +467,36 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L649}
   ///
+  /// [google.cloud.retail.v2.CreateProductRequest.product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L345}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L196}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L233}
+  /// [google.cloud.retail.v2.ProductService.SetInventory]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L160}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
   /// [google.cloud.retail.v2.SetInventoryRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L555}
+  /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L623}
   /// [google.cloud.retail.v2.SetInventoryResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L649}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::Product const& inventory,
@@ -532,10 +564,36 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L649}
   ///
+  /// [google.cloud.retail.v2.CreateProductRequest.product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L345}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.AddFulfillmentPlaces]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L196}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L233}
+  /// [google.cloud.retail.v2.ProductService.SetInventory]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L160}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
   /// [google.cloud.retail.v2.SetInventoryRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L555}
+  /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L623}
   /// [google.cloud.retail.v2.SetInventoryResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L649}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request,
@@ -584,6 +642,20 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L654}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L730}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L465}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(std::string const& product, Options opts = {});
@@ -626,6 +698,20 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L654}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L730}
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L465}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(
@@ -671,10 +757,24 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L920}
   ///
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L465}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L849}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L920}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(std::string const& product, Options opts = {});
@@ -713,10 +813,24 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L920}
   ///
+  /// [google.cloud.retail.v2.FulfillmentInfo.place_ids]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/common.proto#L465}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L849}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L920}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
@@ -773,6 +887,22 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L735}
   /// [google.cloud.retail.v2.AddLocalInventoriesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L796}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
   AddLocalInventories(std::string const& product, Options opts = {});
@@ -822,6 +952,22 @@ class ProductServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L735}
   /// [google.cloud.retail.v2.AddLocalInventoriesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L796}
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
   AddLocalInventories(
@@ -872,10 +1018,26 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L844}
   ///
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L801}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L844}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(std::string const& product, Options opts = {});
@@ -919,10 +1081,26 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L844}
   ///
+  /// [google.cloud.retail.v2.Product]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.ProductService.CreateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L48}
+  /// [google.cloud.retail.v2.ProductService.GetProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L57}
+  /// [google.cloud.retail.v2.ProductService.ListProducts]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L65}
+  /// [google.cloud.retail.v2.ProductService.UpdateProduct]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L73}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L801}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L844}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.done]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L143}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(

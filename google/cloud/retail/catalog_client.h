@@ -281,6 +281,8 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L322}
   ///
+  /// [google.cloud.retail.v2.CatalogService.SetDefaultBranch]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L94}
   /// [google.cloud.retail.v2.GetDefaultBranchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L312}
   /// [google.cloud.retail.v2.GetDefaultBranchResponse]:
@@ -301,6 +303,8 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L322}
   ///
+  /// [google.cloud.retail.v2.CatalogService.SetDefaultBranch]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L94}
   /// [google.cloud.retail.v2.GetDefaultBranchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L312}
   /// [google.cloud.retail.v2.GetDefaultBranchResponse]:
@@ -514,6 +518,8 @@ class CatalogServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L416}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.CatalogAttribute]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
       google::cloud::retail::v2::AddCatalogAttributeRequest const& request,
@@ -536,6 +542,8 @@ class CatalogServiceClient {
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.CatalogAttribute]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
   /// [google.cloud.retail.v2.RemoveCatalogAttributeRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L435}
   ///
@@ -562,6 +570,10 @@ class CatalogServiceClient {
   ///
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.CatalogAttribute]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// [google.cloud.retail.v2.CatalogAttribute.key]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L174}
   /// [google.cloud.retail.v2.ReplaceCatalogAttributeRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L453}
   ///

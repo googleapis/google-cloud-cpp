@@ -304,6 +304,8 @@ class EnvironmentsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L354}
+  /// [google.cloud.dialogflow.cx.v3.Environment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   Status DeleteEnvironment(std::string const& name, Options opts = {});
 
@@ -318,6 +320,8 @@ class EnvironmentsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteEnvironmentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L354}
+  /// [google.cloud.dialogflow.cx.v3.Environment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   Status DeleteEnvironment(
       google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
@@ -390,6 +394,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunContinuousTestResponse,google/cloud/dialogflow/cx/v3/environment.proto#L454}
   ///
+  /// [google.cloud.dialogflow.cx.v3.Environment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.RunContinuousTestMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L462}
   /// [google.cloud.dialogflow.cx.v3.RunContinuousTestRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L441}
   /// [google.cloud.dialogflow.cx.v3.RunContinuousTestResponse]:
@@ -461,10 +469,14 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeployFlowResponse,google/cloud/dialogflow/cx/v3/environment.proto#L524}
   ///
+  /// [google.cloud.dialogflow.cx.v3.DeployFlowMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L538}
   /// [google.cloud.dialogflow.cx.v3.DeployFlowRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L500}
   /// [google.cloud.dialogflow.cx.v3.DeployFlowResponse]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L524}
+  /// [google.cloud.dialogflow.cx.v3.Environment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/environment.proto#L195}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
   DeployFlow(

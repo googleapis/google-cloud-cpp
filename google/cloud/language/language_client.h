@@ -227,6 +227,8 @@ class LanguageServiceClient {
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1034}
   /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1043}
+  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L49}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
@@ -250,6 +252,8 @@ class LanguageServiceClient {
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1034}
   /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1043}
+  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L49}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(google::cloud::language::v1::Document const& document,
@@ -272,6 +276,8 @@ class LanguageServiceClient {
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1034}
   /// [google.cloud.language.v1.AnalyzeEntitySentimentResponse]:
   /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L1043}
+  /// [google.cloud.language.v1.LanguageService.AnalyzeEntities]:
+  /// @googleapis_reference_link{google/cloud/language/v1/language_service.proto#L49}
   ///
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(

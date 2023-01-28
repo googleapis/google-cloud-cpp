@@ -399,6 +399,8 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
+  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
   /// [google.cloud.dialogflow.v2.ImportAgentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L499}
   /// [google.protobuf.Struct]:
@@ -442,6 +444,8 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
+  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
   /// [google.cloud.dialogflow.v2.RestoreAgentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L528}
   /// [google.protobuf.Struct]:

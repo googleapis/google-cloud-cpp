@@ -253,6 +253,8 @@ class PoliciesClient {
   /// @return
   /// @googleapis_link{google::iam::v2::Policy,google/iam/v2/policy.proto#L107}
   ///
+  /// [google.iam.v2.Policies.GetPolicy]:
+  /// @googleapis_reference_link{google/iam/v2/policy.proto#L51}
   /// [google.iam.v2.Policy]:
   /// @googleapis_reference_link{google/iam/v2/policy.proto#L107}
   /// [google.iam.v2.UpdatePolicyRequest]:

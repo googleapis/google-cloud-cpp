@@ -116,6 +116,8 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
+  /// [google.cloud.binaryauthorization.v1.Attestor]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
   /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
   /// [google.cloud.binaryauthorization.v1.Policy]:
@@ -143,6 +145,8 @@ class BinauthzManagementServiceV1Client {
   /// @return
   /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
+  /// [google.cloud.binaryauthorization.v1.Attestor]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
   /// [google.cloud.binaryauthorization.v1.GetPolicyRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L155}
   /// [google.cloud.binaryauthorization.v1.Policy]:
@@ -406,6 +410,8 @@ class BinauthzManagementServiceV1Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.binaryauthorization.v1.Attestor]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
   /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
   ///
@@ -421,6 +427,8 @@ class BinauthzManagementServiceV1Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.cloud.binaryauthorization.v1.Attestor]:
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L168}
   /// [google.cloud.binaryauthorization.v1.DeleteAttestorRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L246}
   ///

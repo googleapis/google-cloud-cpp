@@ -291,6 +291,10 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L626}
+  /// [google.iam.admin.v1.IAM.DisableServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L184}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   Status DeleteServiceAccount(std::string const& name, Options opts = {});
 
@@ -321,6 +325,10 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L626}
+  /// [google.iam.admin.v1.IAM.DisableServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L184}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   Status DeleteServiceAccount(
       google::iam::admin::v1::DeleteServiceAccountRequest const& request,
@@ -343,6 +351,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::UndeleteServiceAccountResponse,google/iam/admin/v1/iam.proto#L662}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.admin.v1.UndeleteServiceAccountRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L654}
   /// [google.iam.admin.v1.UndeleteServiceAccountResponse]:
@@ -371,6 +381,10 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.EnableServiceAccountRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L668}
+  /// [google.iam.admin.v1.IAM.DisableServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L184}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   Status EnableServiceAccount(
       google::iam::admin::v1::EnableServiceAccountRequest const& request,
@@ -404,6 +418,12 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DisableServiceAccountRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L678}
+  /// [google.iam.admin.v1.IAM.DeleteServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L131}
+  /// [google.iam.admin.v1.IAM.EnableServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L161}
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   ///
   Status DisableServiceAccount(
       google::iam::admin::v1::DisableServiceAccountRequest const& request,
@@ -432,6 +452,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L688}
   /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L723}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
@@ -456,6 +478,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L688}
   /// [google.iam.admin.v1.ListServiceAccountKeysResponse]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L723}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
@@ -574,6 +598,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::admin::v1::ServiceAccountKey,google/iam/admin/v1/iam.proto#L822}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.admin.v1.ServiceAccountKey]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   /// [google.iam.admin.v1.UploadServiceAccountKeyRequest]:
@@ -599,6 +625,8 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L916}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   Status DeleteServiceAccountKey(std::string const& name, Options opts = {});
 
@@ -614,6 +642,8 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DeleteServiceAccountKeyRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L916}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   Status DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request,
@@ -635,6 +665,10 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DisableServiceAccountKeyRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L931}
+  /// [google.iam.admin.v1.IAM.EnableServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L249}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   Status DisableServiceAccountKey(std::string const& name, Options opts = {});
 
@@ -650,6 +684,10 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DisableServiceAccountKeyRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L931}
+  /// [google.iam.admin.v1.IAM.EnableServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L249}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   Status DisableServiceAccountKey(
       google::iam::admin::v1::DisableServiceAccountKeyRequest const& request,
@@ -669,6 +707,8 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.EnableServiceAccountKeyRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L947}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   Status EnableServiceAccountKey(std::string const& name, Options opts = {});
 
@@ -682,6 +722,8 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.EnableServiceAccountKeyRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L947}
+  /// [google.iam.admin.v1.ServiceAccountKey]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L822}
   ///
   Status EnableServiceAccountKey(
       google::iam::admin::v1::EnableServiceAccountKeyRequest const& request,
@@ -708,6 +750,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
@@ -736,6 +780,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
@@ -780,6 +826,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   /// [google.iam.v1.SetIamPolicyRequest]:
@@ -843,6 +891,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   /// [google.iam.v1.SetIamPolicyRequest]:
@@ -868,6 +918,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.TestIamPermissionsRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
@@ -888,6 +940,8 @@ class IAMClient {
   /// @return
   /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
+  /// [google.iam.admin.v1.ServiceAccount]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.TestIamPermissionsRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
@@ -1045,8 +1099,12 @@ class IAMClient {
   ///
   /// [google.iam.admin.v1.DeleteRoleRequest]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1347}
+  /// [google.iam.admin.v1.IAM.ListRoles]:
+  /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L359}
   /// [google.iam.admin.v1.Role]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
+  /// [google.iam.v1.Policy]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
       google::iam::admin::v1::DeleteRoleRequest const& request,
@@ -1135,6 +1193,8 @@ class IAMClient {
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1522}
   /// [google.iam.admin.v1.LintPolicyResponse]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1620}
+  /// [google.iam.v1.Binding.condition]:
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L217}
   ///
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
       google::iam::admin::v1::LintPolicyRequest const& request,
