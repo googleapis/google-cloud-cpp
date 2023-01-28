@@ -60,6 +60,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Environment]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/environment.proto#L195}
+///
 class EnvironmentsClient {
  public:
   explicit EnvironmentsClient(

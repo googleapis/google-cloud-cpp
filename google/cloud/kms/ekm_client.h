@@ -62,6 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.kms.v1.EkmConnection]:
+/// @googleapis_link_reference{google/cloud/kms/v1/ekm_service.proto#L239}
+///
 class EkmServiceClient {
  public:
   explicit EkmServiceClient(std::shared_ptr<EkmServiceConnection> connection,

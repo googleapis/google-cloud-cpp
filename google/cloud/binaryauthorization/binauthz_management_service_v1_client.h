@@ -65,6 +65,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.binaryauthorization.v1.Attestor]:
+/// @googleapis_link_reference{google/cloud/binaryauthorization/v1/resources.proto#L168}
+/// [google.cloud.binaryauthorization.v1.Policy]:
+/// @googleapis_link_reference{google/cloud/binaryauthorization/v1/resources.proto#L32}
+///
 class BinauthzManagementServiceV1Client {
  public:
   explicit BinauthzManagementServiceV1Client(

@@ -61,6 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.retail.v2.Product]:
+/// @googleapis_link_reference{google/cloud/retail/v2/product.proto#L43}
+///
 class ProductServiceClient {
  public:
   explicit ProductServiceClient(

@@ -65,6 +65,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.secretmanager.v1.Secret]:
+/// @googleapis_link_reference{google/cloud/secretmanager/v1/resources.proto#L40}
+/// [google.cloud.secretmanager.v1.SecretVersion]:
+/// @googleapis_link_reference{google/cloud/secretmanager/v1/resources.proto#L144}
+///
 class SecretManagerServiceClient {
  public:
   explicit SecretManagerServiceClient(
