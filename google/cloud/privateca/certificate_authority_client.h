@@ -62,6 +62,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.security.privateca.v1.CertificateAuthorityService]:
+/// @googleapis_link_reference{google/cloud/security/privateca/v1/service.proto#L39}
+///
 class CertificateAuthorityServiceClient {
  public:
   explicit CertificateAuthorityServiceClient(

@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Version]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/version.proto#L147}
+///
 class VersionsClient {
  public:
   explicit VersionsClient(std::shared_ptr<VersionsConnection> connection,

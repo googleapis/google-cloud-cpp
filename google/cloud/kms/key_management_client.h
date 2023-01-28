@@ -70,6 +70,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.kms.v1.CryptoKey]:
+/// @googleapis_link_reference{google/cloud/kms/v1/resources.proto#L58}
+/// [google.cloud.kms.v1.CryptoKeyVersion]:
+/// @googleapis_link_reference{google/cloud/kms/v1/resources.proto#L284}
+/// [google.cloud.kms.v1.ImportJob]:
+/// @googleapis_link_reference{google/cloud/kms/v1/resources.proto#L666}
+/// [google.cloud.kms.v1.KeyRing]:
+/// @googleapis_link_reference{google/cloud/kms/v1/resources.proto#L35}
+///
 class KeyManagementServiceClient {
  public:
   explicit KeyManagementServiceClient(

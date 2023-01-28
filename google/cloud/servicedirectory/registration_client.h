@@ -73,6 +73,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.servicedirectory.v1.Endpoint]:
+/// @googleapis_link_reference{google/cloud/servicedirectory/v1/endpoint.proto#L33}
+/// [google.cloud.servicedirectory.v1.Namespace]:
+/// @googleapis_link_reference{google/cloud/servicedirectory/v1/namespace.proto#L34}
+/// [google.cloud.servicedirectory.v1.Service]:
+/// @googleapis_link_reference{google/cloud/servicedirectory/v1/service.proto#L36}
+///
 class RegistrationServiceClient {
  public:
   explicit RegistrationServiceClient(

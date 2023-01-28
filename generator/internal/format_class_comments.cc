@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/format_class_comments.h"
+#include "generator/internal/resolve_comment_references.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/log.h"
@@ -21,24 +22,9 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
 
-std::string FormatClassCommentsFromServiceComments(
-    google::protobuf::ServiceDescriptor const& service) {
-  google::protobuf::SourceLocation service_source_location;
-  std::string formatted_comments;
-  if (!service.GetSourceLocation(&service_source_location) ||
-      service_source_location.leading_comments.empty()) {
-    GCP_LOG(INFO) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
-                  << " no leading_comments to format";
-    formatted_comments = absl::StrCat(" ", service.name(), "Client");
-  } else {
-    formatted_comments = absl::StrReplaceAll(
-        absl::StripSuffix(service_source_location.leading_comments, "\n"),
-        {{"\n\n", "\n///\n/// "}, {"\n", "\n/// "}});
-  }
-  std::string doxygen_formatted_comments =
-      absl::StrCat("///\n///", formatted_comments,
-                   R"""(
+auto constexpr kFixedClientComment = R"""(
 ///
 /// @par Equality
 ///
@@ -62,7 +48,37 @@ std::string FormatClassCommentsFromServiceComments(
 /// instance of this class is not guaranteed to work. Since copy-construction
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
-///)""");
+///)""";
+
+}  // namespace
+
+std::string FormatClassCommentsFromServiceComments(
+    google::protobuf::ServiceDescriptor const& service) {
+  google::protobuf::SourceLocation service_source_location;
+  std::string formatted_comments;
+  if (!service.GetSourceLocation(&service_source_location) ||
+      service_source_location.leading_comments.empty()) {
+    GCP_LOG(INFO) << __FILE__ << ":" << __LINE__ << ": " << service.full_name()
+                  << " no leading_comments to format";
+    formatted_comments = absl::StrCat(" ", service.name(), "Client");
+  } else {
+    formatted_comments = absl::StrReplaceAll(
+        absl::StripSuffix(service_source_location.leading_comments, "\n"),
+        {{"\n\n", "\n///\n/// "}, {"\n", "\n/// "}});
+  }
+
+  auto const references =
+      ResolveCommentReferences(formatted_comments, *service.file()->pool());
+  auto trailer = std::string{};
+  for (auto const& kv : references) {
+    absl::StrAppend(&trailer, "\n/// [", kv.first,
+                    "]: @googleapis_link_reference{", kv.second.filename, "#L",
+                    kv.second.lineno, "}");
+  }
+  if (!trailer.empty()) trailer += "\n///";
+
+  auto doxygen_formatted_comments = absl::StrCat("///\n///", formatted_comments,
+                                                 kFixedClientComment, trailer);
   return absl::StrReplaceAll(doxygen_formatted_comments, {{"///  ", "/// "}});
 }
 
