@@ -34,6 +34,7 @@
 #include "generator/internal/option_defaults_generator.h"
 #include "generator/internal/options_generator.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/resolve_method_return.h"
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/round_robin_decorator_generator.h"
 #include "generator/internal/sample_generator.h"

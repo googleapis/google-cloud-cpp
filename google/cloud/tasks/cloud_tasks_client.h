@@ -255,10 +255,10 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
-  /// [google.cloud.tasks.v2.UpdateQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.UpdateQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
       google::cloud::tasks::v2::Queue const& queue,
@@ -287,10 +287,10 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
-  /// [google.cloud.tasks.v2.UpdateQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.UpdateQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L402}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
       google::cloud::tasks::v2::UpdateQueueRequest const& request,
@@ -469,10 +469,10 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
-  /// [google.cloud.tasks.v2.ResumeQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.ResumeQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(std::string const& name,
                                                         Options opts = {});
@@ -500,10 +500,10 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::cloud::tasks::v2::Queue,google/cloud/tasks/v2/queue.proto#L33}
   ///
-  /// [google.cloud.tasks.v2.ResumeQueueRequest]:
-  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   /// [google.cloud.tasks.v2.Queue]:
   /// @googleapis_reference_link{google/cloud/tasks/v2/queue.proto#L33}
+  /// [google.cloud.tasks.v2.ResumeQueueRequest]:
+  /// @googleapis_reference_link{google/cloud/tasks/v2/cloudtasks.proto#L455}
   ///
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
       google::cloud::tasks::v2::ResumeQueueRequest const& request,
@@ -588,10 +588,10 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -641,10 +641,10 @@ class CloudTasksClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

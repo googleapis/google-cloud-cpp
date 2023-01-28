@@ -105,10 +105,10 @@ class EventServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L33}
   ///
-  /// [google.cloud.talent.v4.CreateClientEventRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   /// [google.cloud.talent.v4.ClientEvent]:
   /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
+  /// [google.cloud.talent.v4.CreateClientEventRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   ///
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       std::string const& parent,
@@ -131,10 +131,10 @@ class EventServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L33}
   ///
-  /// [google.cloud.talent.v4.CreateClientEventRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   /// [google.cloud.talent.v4.ClientEvent]:
   /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
+  /// [google.cloud.talent.v4.CreateClientEventRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   ///
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request,

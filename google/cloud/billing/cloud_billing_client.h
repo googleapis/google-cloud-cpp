@@ -99,10 +99,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.GetBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L255}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.GetBillingAccountRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L255}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       std::string const& name, Options opts = {});
@@ -119,10 +119,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.GetBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L255}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.GetBillingAccountRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L255}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       google::cloud::billing::v1::GetBillingAccountRequest const& request,
@@ -138,10 +138,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L267}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L267}
   ///
   StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
       Options opts = {});
@@ -158,10 +158,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L267}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L267}
   ///
   StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
       google::cloud::billing::v1::ListBillingAccountsRequest request,
@@ -184,10 +184,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L307}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L307}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
       std::string const& name,
@@ -209,10 +209,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L307}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L307}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
       google::cloud::billing::v1::UpdateBillingAccountRequest const& request,
@@ -244,10 +244,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L298}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L298}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
       google::cloud::billing::v1::BillingAccount const& billing_account,
@@ -277,10 +277,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
-  /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L298}
   /// [google.cloud.billing.v1.BillingAccount]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
+  /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L298}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
       google::cloud::billing::v1::CreateBillingAccountRequest const& request,
@@ -422,10 +422,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
-  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L365}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
+  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L365}
   ///
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(std::string const& name,
@@ -473,10 +473,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
-  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L365}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
   /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
+  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L365}
   ///
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(
@@ -546,10 +546,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -592,10 +592,10 @@ class CloudBillingClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

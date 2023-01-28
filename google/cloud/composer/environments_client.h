@@ -141,10 +141,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L137}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
+  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L137}
   ///
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(std::string const& name, Options opts = {});
@@ -159,10 +159,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L137}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
+  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L137}
   ///
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(google::cloud::orchestration::airflow::service::v1::
@@ -180,10 +180,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L144}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
+  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L144}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
   ListEnvironments(std::string const& parent, Options opts = {});
@@ -198,10 +198,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L144}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
+  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L144}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
   ListEnvironments(google::cloud::orchestration::airflow::service::v1::
@@ -340,10 +340,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L173}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L173}
   ///
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
@@ -363,10 +363,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::Environment,google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L173}
   /// [google.cloud.orchestration.airflow.service.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1077}
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L173}
   ///
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>

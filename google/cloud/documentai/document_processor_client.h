@@ -456,10 +456,10 @@ class DocumentProcessorServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L603}
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L592}
   /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L603}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L592}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
@@ -476,10 +476,10 @@ class DocumentProcessorServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L603}
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L592}
   /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L603}
+  /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L592}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
@@ -625,10 +625,10 @@ class DocumentProcessorServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L680}
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L669}
   /// [google.cloud.documentai.v1.DeleteProcessorMetadata]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L680}
+  /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L669}
   ///
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(std::string const& name, Options opts = {});
@@ -644,10 +644,10 @@ class DocumentProcessorServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L680}
   ///
-  /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L669}
   /// [google.cloud.documentai.v1.DeleteProcessorMetadata]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L680}
+  /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L669}
   ///
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(

@@ -128,10 +128,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L369}
   ///
-  /// [google.cloud.accessapproval.v1.ListApprovalRequestsMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L584}
   /// [google.cloud.accessapproval.v1.ApprovalRequest]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+  /// [google.cloud.accessapproval.v1.ListApprovalRequestsMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L584}
   ///
   StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
   ListApprovalRequests(std::string const& parent, Options opts = {});
@@ -148,10 +148,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L369}
   ///
-  /// [google.cloud.accessapproval.v1.ListApprovalRequestsMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L584}
   /// [google.cloud.accessapproval.v1.ApprovalRequest]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+  /// [google.cloud.accessapproval.v1.ListApprovalRequestsMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L584}
   ///
   StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
   ListApprovalRequests(
@@ -169,10 +169,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L369}
   ///
-  /// [google.cloud.accessapproval.v1.GetApprovalRequestMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L622}
   /// [google.cloud.accessapproval.v1.ApprovalRequest]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+  /// [google.cloud.accessapproval.v1.GetApprovalRequestMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L622}
   ///
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   GetApprovalRequest(std::string const& name, Options opts = {});
@@ -187,10 +187,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L369}
   ///
-  /// [google.cloud.accessapproval.v1.GetApprovalRequestMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L622}
   /// [google.cloud.accessapproval.v1.ApprovalRequest]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+  /// [google.cloud.accessapproval.v1.GetApprovalRequestMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L622}
   ///
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   GetApprovalRequest(
@@ -211,10 +211,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L369}
   ///
-  /// [google.cloud.accessapproval.v1.ApproveApprovalRequestMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L632}
   /// [google.cloud.accessapproval.v1.ApprovalRequest]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+  /// [google.cloud.accessapproval.v1.ApproveApprovalRequestMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L632}
   ///
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   ApproveApprovalRequest(
@@ -241,10 +241,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L369}
   ///
-  /// [google.cloud.accessapproval.v1.DismissApprovalRequestMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L643}
   /// [google.cloud.accessapproval.v1.ApprovalRequest]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+  /// [google.cloud.accessapproval.v1.DismissApprovalRequestMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L643}
   ///
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   DismissApprovalRequest(
@@ -269,10 +269,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::ApprovalRequest,google/cloud/accessapproval/v1/accessapproval.proto#L369}
   ///
-  /// [google.cloud.accessapproval.v1.InvalidateApprovalRequestMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L651}
   /// [google.cloud.accessapproval.v1.ApprovalRequest]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L369}
+  /// [google.cloud.accessapproval.v1.InvalidateApprovalRequestMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L651}
   ///
   StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
   InvalidateApprovalRequest(
@@ -290,10 +290,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L496}
   ///
-  /// [google.cloud.accessapproval.v1.GetAccessApprovalSettingsMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L659}
   /// [google.cloud.accessapproval.v1.AccessApprovalSettings]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L496}
+  /// [google.cloud.accessapproval.v1.GetAccessApprovalSettingsMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L659}
   ///
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   GetAccessApprovalSettings(std::string const& name, Options opts = {});
@@ -308,10 +308,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L496}
   ///
-  /// [google.cloud.accessapproval.v1.GetAccessApprovalSettingsMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L659}
   /// [google.cloud.accessapproval.v1.AccessApprovalSettings]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L496}
+  /// [google.cloud.accessapproval.v1.GetAccessApprovalSettingsMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L659}
   ///
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   GetAccessApprovalSettings(
@@ -339,10 +339,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L496}
   ///
-  /// [google.cloud.accessapproval.v1.UpdateAccessApprovalSettingsMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L668}
   /// [google.cloud.accessapproval.v1.AccessApprovalSettings]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L496}
+  /// [google.cloud.accessapproval.v1.UpdateAccessApprovalSettingsMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L668}
   ///
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   UpdateAccessApprovalSettings(
@@ -360,10 +360,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalSettings,google/cloud/accessapproval/v1/accessapproval.proto#L496}
   ///
-  /// [google.cloud.accessapproval.v1.UpdateAccessApprovalSettingsMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L668}
   /// [google.cloud.accessapproval.v1.AccessApprovalSettings]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L496}
+  /// [google.cloud.accessapproval.v1.UpdateAccessApprovalSettingsMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L668}
   ///
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
   UpdateAccessApprovalSettings(
@@ -420,10 +420,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalServiceAccount,google/cloud/accessapproval/v1/accessapproval.proto#L562}
   ///
-  /// [google.cloud.accessapproval.v1.GetAccessApprovalServiceAccountMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L694}
   /// [google.cloud.accessapproval.v1.AccessApprovalServiceAccount]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L562}
+  /// [google.cloud.accessapproval.v1.GetAccessApprovalServiceAccountMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L694}
   ///
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
   GetAccessApprovalServiceAccount(std::string const& name, Options opts = {});
@@ -439,10 +439,10 @@ class AccessApprovalClient {
   /// @return
   /// @googleapis_link{google::cloud::accessapproval::v1::AccessApprovalServiceAccount,google/cloud/accessapproval/v1/accessapproval.proto#L562}
   ///
-  /// [google.cloud.accessapproval.v1.GetAccessApprovalServiceAccountMessage]:
-  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L694}
   /// [google.cloud.accessapproval.v1.AccessApprovalServiceAccount]:
   /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L562}
+  /// [google.cloud.accessapproval.v1.GetAccessApprovalServiceAccountMessage]:
+  /// @googleapis_reference_link{google/cloud/accessapproval/v1/accessapproval.proto#L694}
   ///
   StatusOr<google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
   GetAccessApprovalServiceAccount(

@@ -251,10 +251,10 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
-  /// [google.cloud.retail.v2.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L388}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.UpdateProductRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L388}
   ///
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
       google::cloud::retail::v2::Product const& product,
@@ -270,10 +270,10 @@ class ProductServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
-  /// [google.cloud.retail.v2.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L388}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+  /// [google.cloud.retail.v2.UpdateProductRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L388}
   ///
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
       google::cloud::retail::v2::UpdateProductRequest const& request,

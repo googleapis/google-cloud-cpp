@@ -103,10 +103,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
-  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
   /// [google.cloud.baremetalsolution.v2.Instance]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -121,10 +121,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
-  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
   /// [google.cloud.baremetalsolution.v2.Instance]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L136}
   ///
   StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
       google::cloud::baremetalsolution::v2::ListInstancesRequest request,
@@ -182,10 +182,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
-  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
   /// [google.cloud.baremetalsolution.v2.Instance]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
   UpdateInstance(google::cloud::baremetalsolution::v2::Instance const& instance,
@@ -202,10 +202,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::Instance,google/cloud/baremetalsolution/v2/instance.proto#L35}
   ///
-  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
   /// [google.cloud.baremetalsolution.v2.Instance]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L35}
+  /// [google.cloud.baremetalsolution.v2.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/instance.proto#L169}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
   UpdateInstance(
@@ -644,10 +644,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
-  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
   /// [google.cloud.baremetalsolution.v2.Network]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
       google::cloud::baremetalsolution::v2::Network const& network,
@@ -663,10 +663,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::Network,google/cloud/baremetalsolution/v2/network.proto#L32}
   ///
-  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
   /// [google.cloud.baremetalsolution.v2.Network]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.UpdateNetworkRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/network.proto#L247}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
@@ -830,10 +830,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
-  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
   /// [google.cloud.baremetalsolution.v2.NfsShare]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   UpdateNfsShare(
@@ -850,10 +850,10 @@ class BareMetalSolutionClient {
   /// @return
   /// @googleapis_link{google::cloud::baremetalsolution::v2::NfsShare,google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
   ///
-  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]:
-  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
   /// [google.cloud.baremetalsolution.v2.NfsShare]:
   /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L32}
+  /// [google.cloud.baremetalsolution.v2.UpdateNfsShareRequest]:
+  /// @googleapis_reference_link{google/cloud/baremetalsolution/v2/nfs_share.proto#L153}
   ///
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   UpdateNfsShare(

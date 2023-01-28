@@ -214,10 +214,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   /// [google.cloud.vmmigration.v1.Source]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
       google::cloud::vmmigration::v1::Source const& source,
@@ -233,10 +233,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   /// [google.cloud.vmmigration.v1.Source]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
+  /// [google.cloud.vmmigration.v1.UpdateSourceRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
       google::cloud::vmmigration::v1::UpdateSourceRequest const& request,
@@ -496,10 +496,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
-  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
+  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
   ///
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
   ListDatacenterConnectors(std::string const& parent, Options opts = {});
@@ -514,10 +514,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
-  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
+  /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
   ///
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
   ListDatacenterConnectors(
@@ -533,10 +533,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
-  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
+  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
   ///
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
   GetDatacenterConnector(std::string const& name, Options opts = {});
@@ -551,10 +551,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
-  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
+  /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
   ///
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
   GetDatacenterConnector(
@@ -799,10 +799,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   UpdateMigratingVm(
@@ -819,10 +819,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
+  /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   UpdateMigratingVm(
@@ -1002,10 +1002,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
-  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   /// [google.cloud.vmmigration.v1.CloneJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
+  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
       std::string const& parent,
@@ -1022,10 +1022,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
-  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   /// [google.cloud.vmmigration.v1.CloneJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
+  /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request,
@@ -1078,10 +1078,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
-  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   /// [google.cloud.vmmigration.v1.CloneJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
+  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   ///
   StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
       std::string const& parent, Options opts = {});
@@ -1096,10 +1096,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
-  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   /// [google.cloud.vmmigration.v1.CloneJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
+  /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   ///
   StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
       google::cloud::vmmigration::v1::ListCloneJobsRequest request,
@@ -1114,10 +1114,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
-  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   /// [google.cloud.vmmigration.v1.CloneJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
+  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   ///
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
       std::string const& name, Options opts = {});
@@ -1132,10 +1132,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
-  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   /// [google.cloud.vmmigration.v1.CloneJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
+  /// [google.cloud.vmmigration.v1.GetCloneJobRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   ///
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
       google::cloud::vmmigration::v1::GetCloneJobRequest const& request,
@@ -1232,10 +1232,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
-  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
+  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   ///
   StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
       std::string const& parent, Options opts = {});
@@ -1250,10 +1250,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
-  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
+  /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   ///
   StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
       google::cloud::vmmigration::v1::ListCutoverJobsRequest request,
@@ -1268,10 +1268,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
-  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
+  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   ///
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
       std::string const& name, Options opts = {});
@@ -1286,10 +1286,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
-  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
+  /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   ///
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
       google::cloud::vmmigration::v1::GetCutoverJobRequest const& request,
@@ -1304,10 +1304,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
-  /// [google.cloud.vmmigration.v1.ListGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   /// [google.cloud.vmmigration.v1.Group]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.ListGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   ///
   StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
       std::string const& parent, Options opts = {});
@@ -1322,10 +1322,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
-  /// [google.cloud.vmmigration.v1.ListGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   /// [google.cloud.vmmigration.v1.Group]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.ListGroupsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   ///
   StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
       google::cloud::vmmigration::v1::ListGroupsRequest request,
@@ -1422,10 +1422,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   /// [google.cloud.vmmigration.v1.Group]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
       google::cloud::vmmigration::v1::Group const& group,
@@ -1441,10 +1441,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   /// [google.cloud.vmmigration.v1.Group]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
+  /// [google.cloud.vmmigration.v1.UpdateGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
       google::cloud::vmmigration::v1::UpdateGroupRequest const& request,
@@ -1712,10 +1712,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
   /// [google.cloud.vmmigration.v1.TargetProject]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   UpdateTargetProject(
@@ -1735,10 +1735,10 @@ class VmMigrationClient {
   /// @return
   /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
-  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
   /// [google.cloud.vmmigration.v1.TargetProject]:
   /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
+  /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   UpdateTargetProject(

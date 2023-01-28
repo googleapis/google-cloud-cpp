@@ -236,10 +236,10 @@ class JobServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
-  /// [google.cloud.talent.v4.UpdateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
   /// [google.cloud.talent.v4.Job]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.UpdateJobRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
   ///
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
       google::cloud::talent::v4::Job const& job,
@@ -258,10 +258,10 @@ class JobServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
-  /// [google.cloud.talent.v4.UpdateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
   /// [google.cloud.talent.v4.Job]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.UpdateJobRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L203}
   ///
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
       google::cloud::talent::v4::UpdateJobRequest const& request,
@@ -422,10 +422,10 @@ class JobServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
-  /// [google.cloud.talent.v4.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   /// [google.cloud.talent.v4.Job]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   ///
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
       std::string const& parent, std::string const& filter, Options opts = {});
@@ -440,10 +440,10 @@ class JobServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Job,google/cloud/talent/v4/job.proto#L34}
   ///
-  /// [google.cloud.talent.v4.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   /// [google.cloud.talent.v4.Job]:
   /// @googleapis_reference_link{google/cloud/talent/v4/job.proto#L34}
+  /// [google.cloud.talent.v4.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/job_service.proto#L271}
   ///
   StreamRange<google::cloud::talent::v4::Job> ListJobs(
       google::cloud::talent::v4::ListJobsRequest request, Options opts = {});

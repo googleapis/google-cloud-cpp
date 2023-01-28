@@ -111,10 +111,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.ListClientConnectorServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L234}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.ListClientConnectorServicesRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L234}
   ///
   StreamRange<google::cloud::beyondcorp::clientconnectorservices::v1::
                   ClientConnectorService>
@@ -130,10 +130,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.ListClientConnectorServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L234}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.ListClientConnectorServicesRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L234}
   ///
   StreamRange<google::cloud::beyondcorp::clientconnectorservices::v1::
                   ClientConnectorService>
@@ -151,10 +151,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.GetClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L270}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.GetClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L270}
   ///
   StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                ClientConnectorService>
@@ -170,10 +170,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.GetClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L270}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.GetClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L270}
   ///
   StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                ClientConnectorService>
@@ -199,10 +199,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.CreateClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L281}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.CreateClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L281}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                       ClientConnectorService>>
@@ -222,10 +222,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.CreateClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L281}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.CreateClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L281}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                       ClientConnectorService>>
@@ -250,10 +250,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.UpdateClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L325}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.UpdateClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L325}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                       ClientConnectorService>>
@@ -272,10 +272,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorService,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.UpdateClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L325}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorService]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L114}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.UpdateClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L325}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                       ClientConnectorService>>
@@ -293,10 +293,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorServiceOperationMetadata,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L394}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.DeleteClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L364}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorServiceOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L394}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.DeleteClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L364}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                       ClientConnectorServiceOperationMetadata>>
@@ -312,10 +312,10 @@ class ClientConnectorServicesServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientconnectorservices::v1::ClientConnectorServiceOperationMetadata,google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L394}
   ///
-  /// [google.cloud.beyondcorp.clientconnectorservices.v1.DeleteClientConnectorServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L364}
   /// [google.cloud.beyondcorp.clientconnectorservices.v1.ClientConnectorServiceOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L394}
+  /// [google.cloud.beyondcorp.clientconnectorservices.v1.DeleteClientConnectorServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto#L364}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
                       ClientConnectorServiceOperationMetadata>>

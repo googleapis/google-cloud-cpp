@@ -97,10 +97,10 @@ class InstancesClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::Instance,google/appengine/v1/instance.proto#L33}
   ///
-  /// [google.appengine.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L492}
   /// [google.appengine.v1.Instance]:
   /// @googleapis_reference_link{google/appengine/v1/instance.proto#L33}
+  /// [google.appengine.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L492}
   ///
   StreamRange<google::appengine::v1::Instance> ListInstances(
       google::appengine::v1::ListInstancesRequest request, Options opts = {});

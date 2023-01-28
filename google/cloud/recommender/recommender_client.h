@@ -109,10 +109,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
-  /// [google.cloud.recommender.v1.ListInsightsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L298}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
+  /// [google.cloud.recommender.v1.ListInsightsRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L298}
   ///
   StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
       std::string const& parent, Options opts = {});
@@ -128,10 +128,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
-  /// [google.cloud.recommender.v1.ListInsightsRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L298}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
+  /// [google.cloud.recommender.v1.ListInsightsRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L298}
   ///
   StreamRange<google::cloud::recommender::v1::Insight> ListInsights(
       google::cloud::recommender::v1::ListInsightsRequest request,
@@ -194,10 +194,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
-  /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L380}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
+  /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L380}
   ///
   StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
       std::string const& name,
@@ -219,10 +219,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::Insight,google/cloud/recommender/v1/insight.proto#L40}
   ///
-  /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L380}
   /// [google.cloud.recommender.v1.Insight]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight.proto#L40}
+  /// [google.cloud.recommender.v1.MarkInsightAcceptedRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L380}
   ///
   StatusOr<google::cloud::recommender::v1::Insight> MarkInsightAccepted(
       google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request,
@@ -618,10 +618,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::RecommenderConfig,google/cloud/recommender/v1/recommender_config.proto#L32}
   ///
-  /// [google.cloud.recommender.v1.UpdateRecommenderConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L560}
   /// [google.cloud.recommender.v1.RecommenderConfig]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_config.proto#L32}
+  /// [google.cloud.recommender.v1.UpdateRecommenderConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L560}
   ///
   StatusOr<google::cloud::recommender::v1::RecommenderConfig>
   UpdateRecommenderConfig(
@@ -640,10 +640,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::RecommenderConfig,google/cloud/recommender/v1/recommender_config.proto#L32}
   ///
-  /// [google.cloud.recommender.v1.UpdateRecommenderConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L560}
   /// [google.cloud.recommender.v1.RecommenderConfig]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_config.proto#L32}
+  /// [google.cloud.recommender.v1.UpdateRecommenderConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L560}
   ///
   StatusOr<google::cloud::recommender::v1::RecommenderConfig>
   UpdateRecommenderConfig(
@@ -706,10 +706,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::InsightTypeConfig,google/cloud/recommender/v1/insight_type_config.proto#L32}
   ///
-  /// [google.cloud.recommender.v1.UpdateInsightTypeConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L593}
   /// [google.cloud.recommender.v1.InsightTypeConfig]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight_type_config.proto#L32}
+  /// [google.cloud.recommender.v1.UpdateInsightTypeConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L593}
   ///
   StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
   UpdateInsightTypeConfig(
@@ -728,10 +728,10 @@ class RecommenderClient {
   /// @return
   /// @googleapis_link{google::cloud::recommender::v1::InsightTypeConfig,google/cloud/recommender/v1/insight_type_config.proto#L32}
   ///
-  /// [google.cloud.recommender.v1.UpdateInsightTypeConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L593}
   /// [google.cloud.recommender.v1.InsightTypeConfig]:
   /// @googleapis_reference_link{google/cloud/recommender/v1/insight_type_config.proto#L32}
+  /// [google.cloud.recommender.v1.UpdateInsightTypeConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/recommender/v1/recommender_service.proto#L593}
   ///
   StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
   UpdateInsightTypeConfig(

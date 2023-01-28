@@ -349,10 +349,10 @@ class TranslationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::BatchTranslateResponse,google/cloud/translate/v3/translation_service.proto#L919}
   ///
-  /// [google.cloud.translation.v3.BatchTranslateTextRequest]:
-  /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L799}
   /// [google.cloud.translation.v3.BatchTranslateResponse]:
   /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L919}
+  /// [google.cloud.translation.v3.BatchTranslateTextRequest]:
+  /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L799}
   ///
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
   BatchTranslateText(
@@ -490,10 +490,10 @@ class TranslationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L968}
   ///
-  /// [google.cloud.translation.v3.ListGlossariesRequest]:
-  /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1059}
   /// [google.cloud.translation.v3.Glossary]:
   /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L968}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]:
+  /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1059}
   ///
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
       std::string const& parent, Options opts = {});
@@ -509,10 +509,10 @@ class TranslationServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::translation::v3::Glossary,google/cloud/translate/v3/translation_service.proto#L968}
   ///
-  /// [google.cloud.translation.v3.ListGlossariesRequest]:
-  /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1059}
   /// [google.cloud.translation.v3.Glossary]:
   /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L968}
+  /// [google.cloud.translation.v3.ListGlossariesRequest]:
+  /// @googleapis_reference_link{google/cloud/translate/v3/translation_service.proto#L1059}
   ///
   StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
       google::cloud::translation::v3::ListGlossariesRequest request,

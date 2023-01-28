@@ -101,10 +101,10 @@ class VpcAccessServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
-  /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
+  /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   ///
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       std::string const& parent, std::string const& connector_id,
@@ -121,10 +121,10 @@ class VpcAccessServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
-  /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
+  /// [google.cloud.vpcaccess.v1.CreateConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L163}
   ///
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
@@ -140,10 +140,10 @@ class VpcAccessServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
-  /// [google.cloud.vpcaccess.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
+  /// [google.cloud.vpcaccess.v1.GetConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   ///
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       std::string const& name, Options opts = {});
@@ -159,10 +159,10 @@ class VpcAccessServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
-  /// [google.cloud.vpcaccess.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
+  /// [google.cloud.vpcaccess.v1.GetConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L181}
   ///
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request,
@@ -178,10 +178,10 @@ class VpcAccessServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
-  /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
+  /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]:
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   ///
   StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
       std::string const& parent, Options opts = {});
@@ -196,10 +196,10 @@ class VpcAccessServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::vpcaccess::v1::Connector,google/cloud/vpcaccess/v1/vpc_access.proto#L86}
   ///
-  /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   /// [google.cloud.vpcaccess.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L86}
+  /// [google.cloud.vpcaccess.v1.ListConnectorsRequest]:
+  /// @googleapis_reference_link{google/cloud/vpcaccess/v1/vpc_access.proto#L192}
   ///
   StreamRange<google::cloud::vpcaccess::v1::Connector> ListConnectors(
       google::cloud::vpcaccess::v1::ListConnectorsRequest request,

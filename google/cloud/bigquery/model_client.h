@@ -183,10 +183,10 @@ class ModelServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::v2::Model,google/cloud/bigquery/v2/model.proto#L78}
   ///
-  /// [google.cloud.bigquery.v2.PatchModelRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1237}
   /// [google.cloud.bigquery.v2.Model]:
   /// @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L78}
+  /// [google.cloud.bigquery.v2.PatchModelRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1237}
   ///
   StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
       std::string const& project_id, std::string const& dataset_id,
@@ -203,10 +203,10 @@ class ModelServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::v2::Model,google/cloud/bigquery/v2/model.proto#L78}
   ///
-  /// [google.cloud.bigquery.v2.PatchModelRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1237}
   /// [google.cloud.bigquery.v2.Model]:
   /// @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L78}
+  /// [google.cloud.bigquery.v2.PatchModelRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1237}
   ///
   StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
       google::cloud::bigquery::v2::PatchModelRequest const& request,

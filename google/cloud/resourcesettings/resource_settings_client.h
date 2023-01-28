@@ -208,10 +208,10 @@ class ResourceSettingsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcesettings::v1::Setting,google/cloud/resourcesettings/v1/resource_settings.proto#L115}
   ///
-  /// [google.cloud.resourcesettings.v1.UpdateSettingRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L288}
   /// [google.cloud.resourcesettings.v1.Setting]:
   /// @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L115}
+  /// [google.cloud.resourcesettings.v1.UpdateSettingRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L288}
   ///
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
       google::cloud::resourcesettings::v1::UpdateSettingRequest const& request,

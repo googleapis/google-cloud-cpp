@@ -191,10 +191,10 @@ class SecuritySettingsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   UpdateSecuritySettings(
@@ -213,10 +213,10 @@ class SecuritySettingsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   UpdateSecuritySettings(

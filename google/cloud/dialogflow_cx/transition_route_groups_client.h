@@ -246,10 +246,10 @@ class TransitionRouteGroupsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TransitionRouteGroup,google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
   UpdateTransitionRouteGroup(
@@ -272,10 +272,10 @@ class TransitionRouteGroupsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TransitionRouteGroup,google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
   UpdateTransitionRouteGroup(

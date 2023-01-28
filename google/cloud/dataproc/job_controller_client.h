@@ -100,10 +100,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       std::string const& project_id, std::string const& region,
@@ -119,10 +119,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
@@ -142,10 +142,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
       std::string const& project_id, std::string const& region,
@@ -161,10 +161,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.SubmitJobRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
@@ -225,10 +225,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   ///
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       std::string const& project_id, std::string const& region,
@@ -257,10 +257,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   ///
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       std::string const& project_id, std::string const& region,
@@ -276,10 +276,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   ///
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       google::cloud::dataproc::v1::ListJobsRequest request, Options opts = {});
@@ -294,10 +294,10 @@ class JobControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
-  /// [google.cloud.dataproc.v1.UpdateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L892}
   /// [google.cloud.dataproc.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
+  /// [google.cloud.dataproc.v1.UpdateJobRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L892}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
       google::cloud::dataproc::v1::UpdateJobRequest const& request,

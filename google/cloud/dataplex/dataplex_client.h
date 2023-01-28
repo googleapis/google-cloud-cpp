@@ -150,10 +150,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L413}
   /// [google.cloud.dataplex.v1.Lake]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L413}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::Lake const& lake,
@@ -169,10 +169,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
-  /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L413}
   /// [google.cloud.dataplex.v1.Lake]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.UpdateLakeRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L413}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       google::cloud::dataplex::v1::UpdateLakeRequest const& request,
@@ -229,10 +229,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
-  /// [google.cloud.dataplex.v1.ListLakesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L438}
   /// [google.cloud.dataplex.v1.Lake]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L438}
   ///
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       std::string const& parent, Options opts = {});
@@ -247,10 +247,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Lake,google/cloud/dataplex/v1/resources.proto#L37}
   ///
-  /// [google.cloud.dataplex.v1.ListLakesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L438}
   /// [google.cloud.dataplex.v1.Lake]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L37}
+  /// [google.cloud.dataplex.v1.ListLakesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L438}
   ///
   StreamRange<google::cloud::dataplex::v1::Lake> ListLakes(
       google::cloud::dataplex::v1::ListLakesRequest request, Options opts = {});
@@ -302,10 +302,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L314}
   ///
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L480}
   /// [google.cloud.dataplex.v1.Action]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L314}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L480}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
       std::string const& parent, Options opts = {});
@@ -320,10 +320,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L314}
   ///
-  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L480}
   /// [google.cloud.dataplex.v1.Action]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L314}
+  /// [google.cloud.dataplex.v1.ListLakeActionsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L480}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListLakeActions(
       google::cloud::dataplex::v1::ListLakeActionsRequest request,
@@ -538,10 +538,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L314}
   ///
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L610}
   /// [google.cloud.dataplex.v1.Action]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L314}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L610}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
       std::string const& parent, Options opts = {});
@@ -556,10 +556,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L314}
   ///
-  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L610}
   /// [google.cloud.dataplex.v1.Action]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L314}
+  /// [google.cloud.dataplex.v1.ListZoneActionsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L610}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListZoneActions(
       google::cloud::dataplex::v1::ListZoneActionsRequest request,
@@ -584,10 +584,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L641}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L641}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       std::string const& parent,
@@ -604,10 +604,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.CreateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L641}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.CreateAssetRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L641}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       google::cloud::dataplex::v1::CreateAssetRequest const& request,
@@ -624,10 +624,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L668}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L668}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::Asset const& asset,
@@ -643,10 +643,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L668}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.UpdateAssetRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L668}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       google::cloud::dataplex::v1::UpdateAssetRequest const& request,
@@ -701,10 +701,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L693}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L693}
   ///
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       std::string const& parent, Options opts = {});
@@ -719,10 +719,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.ListAssetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L693}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.ListAssetsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L693}
   ///
   StreamRange<google::cloud::dataplex::v1::Asset> ListAssets(
       google::cloud::dataplex::v1::ListAssetsRequest request,
@@ -738,10 +738,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.GetAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L751}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L751}
   ///
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(std::string const& name,
                                                         Options opts = {});
@@ -756,10 +756,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Asset,google/cloud/dataplex/v1/resources.proto#L504}
   ///
-  /// [google.cloud.dataplex.v1.GetAssetRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L751}
   /// [google.cloud.dataplex.v1.Asset]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L504}
+  /// [google.cloud.dataplex.v1.GetAssetRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L751}
   ///
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
       google::cloud::dataplex::v1::GetAssetRequest const& request,
@@ -775,10 +775,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L314}
   ///
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L730}
   /// [google.cloud.dataplex.v1.Action]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L314}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L730}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
       std::string const& parent, Options opts = {});
@@ -793,10 +793,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Action,google/cloud/dataplex/v1/resources.proto#L314}
   ///
-  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L730}
   /// [google.cloud.dataplex.v1.Action]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/resources.proto#L314}
+  /// [google.cloud.dataplex.v1.ListAssetActionsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L730}
   ///
   StreamRange<google::cloud::dataplex::v1::Action> ListAssetActions(
       google::cloud::dataplex::v1::ListAssetActionsRequest request,
@@ -853,10 +853,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L811}
   /// [google.cloud.dataplex.v1.Task]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L811}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::Task const& task,
@@ -872,10 +872,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Task,google/cloud/dataplex/v1/tasks.proto#L31}
   ///
-  /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L811}
   /// [google.cloud.dataplex.v1.Task]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L31}
+  /// [google.cloud.dataplex.v1.UpdateTaskRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L811}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       google::cloud::dataplex::v1::UpdateTaskRequest const& request,
@@ -1001,10 +1001,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L330}
   ///
-  /// [google.cloud.dataplex.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L895}
   /// [google.cloud.dataplex.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L330}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L895}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
@@ -1019,10 +1019,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Job,google/cloud/dataplex/v1/tasks.proto#L330}
   ///
-  /// [google.cloud.dataplex.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L895}
   /// [google.cloud.dataplex.v1.Job]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/tasks.proto#L330}
+  /// [google.cloud.dataplex.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L895}
   ///
   StreamRange<google::cloud::dataplex::v1::Job> ListJobs(
       google::cloud::dataplex::v1::ListJobsRequest request, Options opts = {});
@@ -1148,10 +1148,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
-  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L961}
   /// [google.cloud.dataplex.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L961}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       google::cloud::dataplex::v1::Environment const& environment,
@@ -1167,10 +1167,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
-  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L961}
   /// [google.cloud.dataplex.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.UpdateEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L961}
   ///
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
@@ -1226,10 +1226,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
-  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L988}
   /// [google.cloud.dataplex.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L988}
   ///
   StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
@@ -1244,10 +1244,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
-  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L988}
   /// [google.cloud.dataplex.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L988}
   ///
   StreamRange<google::cloud::dataplex::v1::Environment> ListEnvironments(
       google::cloud::dataplex::v1::ListEnvironmentsRequest request,
@@ -1263,10 +1263,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
-  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1026}
   /// [google.cloud.dataplex.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1026}
   ///
   StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
       std::string const& name, Options opts = {});
@@ -1281,10 +1281,10 @@ class DataplexServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Environment,google/cloud/dataplex/v1/analyze.proto#L32}
   ///
-  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1026}
   /// [google.cloud.dataplex.v1.Environment]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/analyze.proto#L32}
+  /// [google.cloud.dataplex.v1.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/service.proto#L1026}
   ///
   StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
       google::cloud::dataplex::v1::GetEnvironmentRequest const& request,

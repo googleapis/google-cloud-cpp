@@ -98,10 +98,10 @@ class EkmServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
   ///
-  /// [google.cloud.kms.v1.ListEkmConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L90}
   /// [google.cloud.kms.v1.EkmConnection]:
   /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// [google.cloud.kms.v1.ListEkmConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L90}
   ///
   StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
       std::string const& parent, Options opts = {});
@@ -116,10 +116,10 @@ class EkmServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
   ///
-  /// [google.cloud.kms.v1.ListEkmConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L90}
   /// [google.cloud.kms.v1.EkmConnection]:
   /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// [google.cloud.kms.v1.ListEkmConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L90}
   ///
   StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
       google::cloud::kms::v1::ListEkmConnectionsRequest request,
@@ -137,10 +137,10 @@ class EkmServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
   ///
-  /// [google.cloud.kms.v1.GetEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L145}
   /// [google.cloud.kms.v1.EkmConnection]:
   /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// [google.cloud.kms.v1.GetEkmConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L145}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
       std::string const& name, Options opts = {});
@@ -156,10 +156,10 @@ class EkmServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
   ///
-  /// [google.cloud.kms.v1.GetEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L145}
   /// [google.cloud.kms.v1.EkmConnection]:
   /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// [google.cloud.kms.v1.GetEkmConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L145}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
       google::cloud::kms::v1::GetEkmConnectionRequest const& request,
@@ -227,10 +227,10 @@ class EkmServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
   ///
-  /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
   /// [google.cloud.kms.v1.EkmConnection]:
   /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
       google::cloud::kms::v1::EkmConnection const& ekm_connection,
@@ -246,10 +246,10 @@ class EkmServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
   ///
-  /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
   /// [google.cloud.kms.v1.EkmConnection]:
   /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request,

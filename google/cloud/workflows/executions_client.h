@@ -97,10 +97,10 @@ class ExecutionsClient {
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
-  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]:
-  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L205}
   /// [google.cloud.workflows.executions.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]:
+  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L205}
   ///
   StreamRange<google::cloud::workflows::executions::v1::Execution>
   ListExecutions(std::string const& parent, Options opts = {});
@@ -118,10 +118,10 @@ class ExecutionsClient {
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
-  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]:
-  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L205}
   /// [google.cloud.workflows.executions.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.ListExecutionsRequest]:
+  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L205}
   ///
   StreamRange<google::cloud::workflows::executions::v1::Execution>
   ListExecutions(
@@ -182,10 +182,10 @@ class ExecutionsClient {
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
-  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]:
-  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L267}
   /// [google.cloud.workflows.executions.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]:
+  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L267}
   ///
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
       std::string const& name, Options opts = {});
@@ -200,10 +200,10 @@ class ExecutionsClient {
   /// @return
   /// @googleapis_link{google::cloud::workflows::executions::v1::Execution,google/cloud/workflows/executions/v1/executions.proto#L80}
   ///
-  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]:
-  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L267}
   /// [google.cloud.workflows.executions.v1.Execution]:
   /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L80}
+  /// [google.cloud.workflows.executions.v1.GetExecutionRequest]:
+  /// @googleapis_reference_link{google/cloud/workflows/executions/v1/executions.proto#L267}
   ///
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
       google::cloud::workflows::executions::v1::GetExecutionRequest const&

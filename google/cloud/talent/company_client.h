@@ -97,10 +97,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.CreateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.CreateCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   ///
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       std::string const& parent,
@@ -116,10 +116,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.CreateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.CreateCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L86}
   ///
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
       google::cloud::talent::v4::CreateCompanyRequest const& request,
@@ -137,10 +137,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.GetCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.GetCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   ///
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
       std::string const& name, Options opts = {});
@@ -155,10 +155,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.GetCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.GetCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L101}
   ///
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
       google::cloud::talent::v4::GetCompanyRequest const& request,
@@ -182,10 +182,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.UpdateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.UpdateCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   ///
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
       google::cloud::talent::v4::Company const& company,
@@ -201,10 +201,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.UpdateCompanyRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.UpdateCompanyRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L114}
   ///
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
       google::cloud::talent::v4::UpdateCompanyRequest const& request,
@@ -254,10 +254,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.ListCompaniesRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.ListCompaniesRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   ///
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       std::string const& parent, Options opts = {});
@@ -272,10 +272,10 @@ class CompanyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::talent::v4::Company,google/cloud/talent/v4/company.proto#L32}
   ///
-  /// [google.cloud.talent.v4.ListCompaniesRequest]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   /// [google.cloud.talent.v4.Company]:
   /// @googleapis_reference_link{google/cloud/talent/v4/company.proto#L32}
+  /// [google.cloud.talent.v4.ListCompaniesRequest]:
+  /// @googleapis_reference_link{google/cloud/talent/v4/company_service.proto#L146}
   ///
   StreamRange<google::cloud::talent::v4::Company> ListCompanies(
       google::cloud::talent::v4::ListCompaniesRequest request,

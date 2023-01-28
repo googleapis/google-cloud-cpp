@@ -278,10 +278,10 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::Secret const& secret,
@@ -298,10 +298,10 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
@@ -640,10 +640,10 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

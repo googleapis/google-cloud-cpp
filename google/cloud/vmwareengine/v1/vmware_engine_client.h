@@ -258,10 +258,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L757}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L757}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UpdatePrivateCloud(
@@ -285,10 +285,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L757}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L757}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UpdatePrivateCloud(
@@ -381,10 +381,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L813}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L813}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(std::string const& name, Options opts = {});
@@ -402,10 +402,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L813}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L813}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(
@@ -427,10 +427,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L895}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.ListClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L895}
   ///
   StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
       std::string const& parent, Options opts = {});
@@ -445,10 +445,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L895}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.ListClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L895}
   ///
   StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
       google::cloud::vmwareengine::v1::ListClustersRequest request,
@@ -467,10 +467,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L962}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.GetClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L962}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
       std::string const& name, Options opts = {});
@@ -485,10 +485,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L962}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.GetClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L962}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
       google::cloud::vmwareengine::v1::GetClusterRequest const& request,
@@ -523,10 +523,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L978}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L978}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
       std::string const& parent,
@@ -546,10 +546,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L978}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.CreateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L978}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
       google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
@@ -577,10 +577,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1018}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1018}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
       google::cloud::vmwareengine::v1::Cluster const& cluster,
@@ -603,10 +603,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
-  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1018}
   /// [google.cloud.vmwareengine.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
+  /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1018}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
       google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
@@ -796,10 +796,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
-  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1316}
   /// [google.cloud.vmwareengine.v1.Credentials]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
+  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1316}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
       std::string const& private_cloud, Options opts = {});
@@ -814,10 +814,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
-  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1316}
   /// [google.cloud.vmwareengine.v1.Credentials]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
+  /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1316}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
       google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request,
@@ -837,10 +837,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
-  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1333}
   /// [google.cloud.vmwareengine.v1.Credentials]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
+  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1333}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
       std::string const& private_cloud, Options opts = {});
@@ -855,10 +855,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
-  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1333}
   /// [google.cloud.vmwareengine.v1.Credentials]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
+  /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1333}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
       google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
@@ -879,10 +879,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1350}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1350}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetNsxCredentials(std::string const& private_cloud, Options opts = {});
@@ -897,10 +897,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1350}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1350}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetNsxCredentials(
@@ -922,10 +922,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1383}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1383}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(std::string const& private_cloud, Options opts = {});
@@ -940,10 +940,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
-  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1383}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
+  /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1383}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(
@@ -1026,10 +1026,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
-  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1481}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
+  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1481}
   ///
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
   ListHcxActivationKeys(std::string const& parent, Options opts = {});
@@ -1044,10 +1044,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
-  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1481}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
+  /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1481}
   ///
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
   ListHcxActivationKeys(
@@ -1269,10 +1269,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
-  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1850}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
+  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1850}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   UpdateNetworkPolicy(
@@ -1300,10 +1300,10 @@ class VmwareEngineClient {
   /// @return
   /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
-  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1850}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
   /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
+  /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1850}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   UpdateNetworkPolicy(

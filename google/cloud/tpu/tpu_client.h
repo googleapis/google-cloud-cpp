@@ -241,10 +241,10 @@ class TpuClient {
   /// @return
   /// @googleapis_link{google::cloud::tpu::v1::Node,google/cloud/tpu/v1/cloud_tpu.proto#L167}
   ///
-  /// [google.cloud.tpu.v1.ReimageNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L413}
   /// [google.cloud.tpu.v1.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L167}
+  /// [google.cloud.tpu.v1.ReimageNodeRequest]:
+  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L413}
   ///
   future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
       google::cloud::tpu::v1::ReimageNodeRequest const& request,
@@ -260,10 +260,10 @@ class TpuClient {
   /// @return
   /// @googleapis_link{google::cloud::tpu::v1::Node,google/cloud/tpu/v1/cloud_tpu.proto#L167}
   ///
-  /// [google.cloud.tpu.v1.StopNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L422}
   /// [google.cloud.tpu.v1.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L167}
+  /// [google.cloud.tpu.v1.StopNodeRequest]:
+  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L422}
   ///
   future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
       google::cloud::tpu::v1::StopNodeRequest const& request,
@@ -279,10 +279,10 @@ class TpuClient {
   /// @return
   /// @googleapis_link{google::cloud::tpu::v1::Node,google/cloud/tpu/v1/cloud_tpu.proto#L167}
   ///
-  /// [google.cloud.tpu.v1.StartNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L428}
   /// [google.cloud.tpu.v1.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L167}
+  /// [google.cloud.tpu.v1.StartNodeRequest]:
+  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L428}
   ///
   future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
       google::cloud::tpu::v1::StartNodeRequest const& request,
@@ -369,10 +369,10 @@ class TpuClient {
   /// @return
   /// @googleapis_link{google::cloud::tpu::v1::AcceleratorType,google/cloud/tpu/v1/cloud_tpu.proto#L494}
   ///
-  /// [google.cloud.tpu.v1.ListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L519}
   /// [google.cloud.tpu.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L494}
+  /// [google.cloud.tpu.v1.ListAcceleratorTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L519}
   ///
   StreamRange<google::cloud::tpu::v1::AcceleratorType> ListAcceleratorTypes(
       std::string const& parent, Options opts = {});
@@ -387,10 +387,10 @@ class TpuClient {
   /// @return
   /// @googleapis_link{google::cloud::tpu::v1::AcceleratorType,google/cloud/tpu/v1/cloud_tpu.proto#L494}
   ///
-  /// [google.cloud.tpu.v1.ListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L519}
   /// [google.cloud.tpu.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L494}
+  /// [google.cloud.tpu.v1.ListAcceleratorTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L519}
   ///
   StreamRange<google::cloud::tpu::v1::AcceleratorType> ListAcceleratorTypes(
       google::cloud::tpu::v1::ListAcceleratorTypesRequest request,
@@ -405,10 +405,10 @@ class TpuClient {
   /// @return
   /// @googleapis_link{google::cloud::tpu::v1::AcceleratorType,google/cloud/tpu/v1/cloud_tpu.proto#L494}
   ///
-  /// [google.cloud.tpu.v1.GetAcceleratorTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L508}
   /// [google.cloud.tpu.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L494}
+  /// [google.cloud.tpu.v1.GetAcceleratorTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L508}
   ///
   StatusOr<google::cloud::tpu::v1::AcceleratorType> GetAcceleratorType(
       std::string const& name, Options opts = {});
@@ -423,10 +423,10 @@ class TpuClient {
   /// @return
   /// @googleapis_link{google::cloud::tpu::v1::AcceleratorType,google/cloud/tpu/v1/cloud_tpu.proto#L494}
   ///
-  /// [google.cloud.tpu.v1.GetAcceleratorTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L508}
   /// [google.cloud.tpu.v1.AcceleratorType]:
   /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L494}
+  /// [google.cloud.tpu.v1.GetAcceleratorTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/tpu/v1/cloud_tpu.proto#L508}
   ///
   StatusOr<google::cloud::tpu::v1::AcceleratorType> GetAcceleratorType(
       google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request,

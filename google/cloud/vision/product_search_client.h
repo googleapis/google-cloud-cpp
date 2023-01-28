@@ -273,10 +273,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
-  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   /// [google.cloud.vision.v1.ProductSet]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::ProductSet const& product_set,
@@ -299,10 +299,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
-  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   /// [google.cloud.vision.v1.ProductSet]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::UpdateProductSetRequest const& request,
@@ -531,10 +531,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
-  /// [google.cloud.vision.v1.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   /// [google.cloud.vision.v1.Product]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [google.cloud.vision.v1.UpdateProductRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   ///
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::Product const& product,
@@ -565,10 +565,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
-  /// [google.cloud.vision.v1.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   /// [google.cloud.vision.v1.Product]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [google.cloud.vision.v1.UpdateProductRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   ///
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::UpdateProductRequest const& request,
@@ -1070,10 +1070,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
   ///
-  /// [google.cloud.vision.v1.PurgeProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
   /// [google.cloud.vision.v1.BatchOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
+  /// [google.cloud.vision.v1.PurgeProductsRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
   ///
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(std::string const& parent, Options opts = {});
@@ -1111,10 +1111,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
   ///
-  /// [google.cloud.vision.v1.PurgeProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
   /// [google.cloud.vision.v1.BatchOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
+  /// [google.cloud.vision.v1.PurgeProductsRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
   ///
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request,

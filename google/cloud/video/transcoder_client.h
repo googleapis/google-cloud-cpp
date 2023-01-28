@@ -140,10 +140,10 @@ class TranscoderServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
-  /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L128}
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L128}
   ///
   StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
@@ -158,10 +158,10 @@ class TranscoderServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
-  /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L128}
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
+  /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L128}
   ///
   StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
       google::cloud::video::transcoder::v1::ListJobsRequest request,
@@ -289,10 +289,10 @@ class TranscoderServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
   ///
-  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
   StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
   ListJobTemplates(std::string const& parent, Options opts = {});
@@ -307,10 +307,10 @@ class TranscoderServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
   ///
-  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
   StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
   ListJobTemplates(

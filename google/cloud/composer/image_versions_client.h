@@ -95,10 +95,10 @@ class ImageVersionsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.ListImageVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L44}
   /// [google.cloud.orchestration.airflow.service.v1.ImageVersion]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
+  /// [google.cloud.orchestration.airflow.service.v1.ListImageVersionsRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L44}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
   ListImageVersions(std::string const& parent, Options opts = {});
@@ -113,10 +113,10 @@ class ImageVersionsClient {
   /// @return
   /// @googleapis_link{google::cloud::orchestration::airflow::service::v1::ImageVersion,google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
   ///
-  /// [google.cloud.orchestration.airflow.service.v1.ListImageVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L44}
   /// [google.cloud.orchestration.airflow.service.v1.ImageVersion]:
   /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L69}
+  /// [google.cloud.orchestration.airflow.service.v1.ListImageVersionsRequest]:
+  /// @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/image_versions.proto#L44}
   ///
   StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
   ListImageVersions(google::cloud::orchestration::airflow::service::v1::

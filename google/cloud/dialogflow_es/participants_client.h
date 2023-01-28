@@ -213,10 +213,10 @@ class ParticipantsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   /// [google.cloud.dialogflow.v2.Participant]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   ///
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
       google::cloud::dialogflow::v2::Participant const& participant,
@@ -232,10 +232,10 @@ class ParticipantsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   /// [google.cloud.dialogflow.v2.Participant]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   ///
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
       google::cloud::dialogflow::v2::UpdateParticipantRequest const& request,

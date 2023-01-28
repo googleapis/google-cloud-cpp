@@ -253,10 +253,10 @@ class RealmsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
-  /// [google.cloud.gaming.v1.UpdateRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L115}
   /// [google.cloud.gaming.v1.Realm]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
+  /// [google.cloud.gaming.v1.UpdateRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L115}
   ///
   future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
       google::cloud::gaming::v1::Realm const& realm,
@@ -272,10 +272,10 @@ class RealmsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::Realm,google/cloud/gaming/v1/realms.proto#L151}
   ///
-  /// [google.cloud.gaming.v1.UpdateRealmRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L115}
   /// [google.cloud.gaming.v1.Realm]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L151}
+  /// [google.cloud.gaming.v1.UpdateRealmRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/realms.proto#L115}
   ///
   future<StatusOr<google::cloud::gaming::v1::Realm>> UpdateRealm(
       google::cloud::gaming::v1::UpdateRealmRequest const& request,

@@ -101,10 +101,10 @@ class FirewallClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L29}
   ///
-  /// [google.appengine.v1.ListIngressRulesRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L611}
   /// [google.appengine.v1.FirewallRule]:
   /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
+  /// [google.appengine.v1.ListIngressRulesRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L611}
   ///
   StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
       google::appengine::v1::ListIngressRulesRequest request,
@@ -163,10 +163,10 @@ class FirewallClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L29}
   ///
-  /// [google.appengine.v1.GetIngressRuleRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L673}
   /// [google.appengine.v1.FirewallRule]:
   /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
+  /// [google.appengine.v1.GetIngressRuleRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L673}
   ///
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
       google::appengine::v1::GetIngressRuleRequest const& request,
@@ -182,10 +182,10 @@ class FirewallClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L29}
   ///
-  /// [google.appengine.v1.UpdateIngressRuleRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L680}
   /// [google.appengine.v1.FirewallRule]:
   /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
+  /// [google.appengine.v1.UpdateIngressRuleRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L680}
   ///
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
       google::appengine::v1::UpdateIngressRuleRequest const& request,

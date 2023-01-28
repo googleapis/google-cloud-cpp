@@ -94,10 +94,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L222}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.ListConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L222}
   ///
   StreamRange<google::cloud::connectors::v1::Connection> ListConnections(
       std::string const& parent, Options opts = {});
@@ -112,10 +112,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L222}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.ListConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L222}
   ///
   StreamRange<google::cloud::connectors::v1::Connection> ListConnections(
       google::cloud::connectors::v1::ListConnectionsRequest request,
@@ -131,10 +131,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L262}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.GetConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L262}
   ///
   StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
       std::string const& name, Options opts = {});
@@ -149,10 +149,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L262}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.GetConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L262}
   ///
   StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
       google::cloud::connectors::v1::GetConnectionRequest const& request,
@@ -172,10 +172,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L278}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.CreateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L278}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
       std::string const& parent,
@@ -192,10 +192,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L278}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.CreateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L278}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
       google::cloud::connectors::v1::CreateConnectionRequest const& request,
@@ -216,10 +216,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L297}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.UpdateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L297}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
       google::cloud::connectors::v1::Connection const& connection,
@@ -235,10 +235,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
   ///
-  /// [google.cloud.connectors.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L297}
   /// [google.cloud.connectors.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// [google.cloud.connectors.v1.UpdateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L297}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
       google::cloud::connectors::v1::UpdateConnectionRequest const& request,
@@ -369,10 +369,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connector,google/cloud/connectors/v1/connector.proto#L30}
   ///
-  /// [google.cloud.connectors.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L86}
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
+  /// [google.cloud.connectors.v1.ListConnectorsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L86}
   ///
   StreamRange<google::cloud::connectors::v1::Connector> ListConnectors(
       std::string const& parent, Options opts = {});
@@ -387,10 +387,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connector,google/cloud/connectors/v1/connector.proto#L30}
   ///
-  /// [google.cloud.connectors.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L86}
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
+  /// [google.cloud.connectors.v1.ListConnectorsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L86}
   ///
   StreamRange<google::cloud::connectors::v1::Connector> ListConnectors(
       google::cloud::connectors::v1::ListConnectorsRequest request,
@@ -407,10 +407,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connector,google/cloud/connectors/v1/connector.proto#L30}
   ///
-  /// [google.cloud.connectors.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L73}
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
+  /// [google.cloud.connectors.v1.GetConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L73}
   ///
   StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
       std::string const& name, Options opts = {});
@@ -425,10 +425,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Connector,google/cloud/connectors/v1/connector.proto#L30}
   ///
-  /// [google.cloud.connectors.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L73}
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
+  /// [google.cloud.connectors.v1.GetConnectorRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L73}
   ///
   StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
       google::cloud::connectors::v1::GetConnectorRequest const& request,
@@ -445,10 +445,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
   ///
-  /// [google.cloud.connectors.v1.ListConnectorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L101}
   /// [google.cloud.connectors.v1.ConnectorVersion]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// [google.cloud.connectors.v1.ListConnectorVersionsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L101}
   ///
   StreamRange<google::cloud::connectors::v1::ConnectorVersion>
   ListConnectorVersions(std::string const& parent, Options opts = {});
@@ -463,10 +463,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
   ///
-  /// [google.cloud.connectors.v1.ListConnectorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L101}
   /// [google.cloud.connectors.v1.ConnectorVersion]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// [google.cloud.connectors.v1.ListConnectorVersionsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L101}
   ///
   StreamRange<google::cloud::connectors::v1::ConnectorVersion>
   ListConnectorVersions(
@@ -484,10 +484,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
   ///
-  /// [google.cloud.connectors.v1.GetConnectorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L84}
   /// [google.cloud.connectors.v1.ConnectorVersion]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// [google.cloud.connectors.v1.GetConnectorVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L84}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
       std::string const& name, Options opts = {});
@@ -502,10 +502,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
   ///
-  /// [google.cloud.connectors.v1.GetConnectorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L84}
   /// [google.cloud.connectors.v1.ConnectorVersion]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// [google.cloud.connectors.v1.GetConnectorVersionRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L84}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
       google::cloud::connectors::v1::GetConnectorVersionRequest const& request,
@@ -523,10 +523,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L120}
   ///
-  /// [google.cloud.connectors.v1.GetConnectionSchemaMetadataRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L322}
   /// [google.cloud.connectors.v1.ConnectionSchemaMetadata]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L120}
+  /// [google.cloud.connectors.v1.GetConnectionSchemaMetadataRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L322}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
   GetConnectionSchemaMetadata(std::string const& name, Options opts = {});
@@ -542,10 +542,10 @@ class ConnectorsClient {
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L120}
   ///
-  /// [google.cloud.connectors.v1.GetConnectionSchemaMetadataRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L322}
   /// [google.cloud.connectors.v1.ConnectionSchemaMetadata]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L120}
+  /// [google.cloud.connectors.v1.GetConnectionSchemaMetadataRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L322}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
   GetConnectionSchemaMetadata(

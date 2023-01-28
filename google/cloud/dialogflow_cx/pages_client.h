@@ -222,10 +222,10 @@ class PagesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
       google::cloud::dialogflow::cx::v3::Page const& page,
@@ -245,10 +245,10 @@ class PagesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
       google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request,

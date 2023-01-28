@@ -178,10 +178,10 @@ class PolicyTagManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
-  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L334}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
+  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L334}
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
       google::cloud::datacatalog::v1::Taxonomy const& taxonomy,
@@ -198,10 +198,10 @@ class PolicyTagManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
   ///
-  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L334}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
+  /// [google.cloud.datacatalog.v1.UpdateTaxonomyRequest]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L334}
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
       google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request,
@@ -372,10 +372,10 @@ class PolicyTagManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
-  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L423}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
+  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L423}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::PolicyTag const& policy_tag,
@@ -392,10 +392,10 @@ class PolicyTagManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::PolicyTag,google/cloud/datacatalog/v1/policytagmanager.proto#L266}
   ///
-  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L423}
   /// [google.cloud.datacatalog.v1.PolicyTag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L266}
+  /// [google.cloud.datacatalog.v1.UpdatePolicyTagRequest]:
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L423}
   ///
   StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
       google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request,
@@ -502,10 +502,10 @@ class PolicyTagManagerClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

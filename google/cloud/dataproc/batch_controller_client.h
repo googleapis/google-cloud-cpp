@@ -101,10 +101,10 @@ class BatchControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.CreateBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L78}
   /// [google.cloud.dataproc.v1.Batch]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
+  /// [google.cloud.dataproc.v1.CreateBatchRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L78}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       std::string const& parent,
@@ -121,10 +121,10 @@ class BatchControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.CreateBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L78}
   /// [google.cloud.dataproc.v1.Batch]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
+  /// [google.cloud.dataproc.v1.CreateBatchRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L78}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       google::cloud::dataproc::v1::CreateBatchRequest const& request,
@@ -139,10 +139,10 @@ class BatchControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.GetBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L112}
   /// [google.cloud.dataproc.v1.Batch]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
+  /// [google.cloud.dataproc.v1.GetBatchRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L112}
   ///
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(std::string const& name,
                                                         Options opts = {});
@@ -157,10 +157,10 @@ class BatchControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.GetBatchRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L112}
   /// [google.cloud.dataproc.v1.Batch]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
+  /// [google.cloud.dataproc.v1.GetBatchRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L112}
   ///
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
       google::cloud::dataproc::v1::GetBatchRequest const& request,
@@ -176,10 +176,10 @@ class BatchControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.ListBatchesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L123}
   /// [google.cloud.dataproc.v1.Batch]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
+  /// [google.cloud.dataproc.v1.ListBatchesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L123}
   ///
   StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
       std::string const& parent, Options opts = {});
@@ -194,10 +194,10 @@ class BatchControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Batch,google/cloud/dataproc/v1/batches.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.ListBatchesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L123}
   /// [google.cloud.dataproc.v1.Batch]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L164}
+  /// [google.cloud.dataproc.v1.ListBatchesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/batches.proto#L123}
   ///
   StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
       google::cloud::dataproc::v1::ListBatchesRequest request,

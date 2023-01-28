@@ -100,10 +100,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       std::string const& parent,
@@ -123,10 +123,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.CreateBudgetRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L100}
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
       google::cloud::billing::budgets::v1::CreateBudgetRequest const& request,
@@ -153,10 +153,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
       google::cloud::billing::budgets::v1::Budget const& budget,
@@ -176,10 +176,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.UpdateBudgetRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L115}
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
       google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request,
@@ -200,10 +200,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
       std::string const& name, Options opts = {});
@@ -223,10 +223,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.GetBudgetRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L131}
   ///
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
       google::cloud::billing::budgets::v1::GetBudgetRequest const& request,
@@ -248,10 +248,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   ///
   StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
       std::string const& parent, Options opts = {});
@@ -271,10 +271,10 @@ class BudgetServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::billing::budgets::v1::Budget,google/cloud/billing/budgets/v1/budget_model.proto#L35}
   ///
-  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   /// [google.cloud.billing.budgets.v1.Budget]:
   /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_model.proto#L35}
+  /// [google.cloud.billing.budgets.v1.ListBudgetsRequest]:
+  /// @googleapis_reference_link{google/cloud/billing/budgets/v1/budget_service.proto#L143}
   ///
   StreamRange<google::cloud::billing::budgets::v1::Budget> ListBudgets(
       google::cloud::billing::budgets::v1::ListBudgetsRequest request,

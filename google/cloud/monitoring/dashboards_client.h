@@ -125,10 +125,10 @@ class DashboardsServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
-  /// [google.monitoring.dashboard.v1.ListDashboardsRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L121}
   /// [google.monitoring.dashboard.v1.Dashboard]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
+  /// [google.monitoring.dashboard.v1.ListDashboardsRequest]:
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L121}
   ///
   StreamRange<google::monitoring::dashboard::v1::Dashboard> ListDashboards(
       google::monitoring::dashboard::v1::ListDashboardsRequest request,
@@ -148,10 +148,10 @@ class DashboardsServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
-  /// [google.monitoring.dashboard.v1.GetDashboardRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L154}
   /// [google.monitoring.dashboard.v1.Dashboard]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
+  /// [google.monitoring.dashboard.v1.GetDashboardRequest]:
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L154}
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
       google::monitoring::dashboard::v1::GetDashboardRequest const& request,
@@ -190,10 +190,10 @@ class DashboardsServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::dashboard::v1::Dashboard,google/monitoring/dashboard/v1/dashboard.proto#L34}
   ///
-  /// [google.monitoring.dashboard.v1.UpdateDashboardRequest]:
-  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L182}
   /// [google.monitoring.dashboard.v1.Dashboard]:
   /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboard.proto#L34}
+  /// [google.monitoring.dashboard.v1.UpdateDashboardRequest]:
+  /// @googleapis_reference_link{google/monitoring/dashboard/v1/dashboards_service.proto#L182}
   ///
   StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
       google::monitoring::dashboard::v1::UpdateDashboardRequest const& request,

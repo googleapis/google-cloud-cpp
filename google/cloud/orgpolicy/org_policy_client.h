@@ -116,10 +116,10 @@ class OrgPolicyClient {
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Constraint,google/cloud/orgpolicy/v2/constraint.proto#L45}
   ///
-  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]:
-  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L336}
   /// [google.cloud.orgpolicy.v2.Constraint]:
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L45}
+  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]:
+  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L336}
   ///
   StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
       std::string const& parent, Options opts = {});
@@ -134,10 +134,10 @@ class OrgPolicyClient {
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Constraint,google/cloud/orgpolicy/v2/constraint.proto#L45}
   ///
-  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]:
-  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L336}
   /// [google.cloud.orgpolicy.v2.Constraint]:
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/constraint.proto#L45}
+  /// [google.cloud.orgpolicy.v2.ListConstraintsRequest]:
+  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L336}
   ///
   StreamRange<google::cloud::orgpolicy::v2::Constraint> ListConstraints(
       google::cloud::orgpolicy::v2::ListConstraintsRequest request,
@@ -350,10 +350,10 @@ class OrgPolicyClient {
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
   ///
-  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L457}
   /// [google.cloud.orgpolicy.v2.Policy]:
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L457}
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
       google::cloud::orgpolicy::v2::Policy const& policy, Options opts = {});
@@ -376,10 +376,10 @@ class OrgPolicyClient {
   /// @return
   /// @googleapis_link{google::cloud::orgpolicy::v2::Policy,google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
   ///
-  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L457}
   /// [google.cloud.orgpolicy.v2.Policy]:
   /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L179}
+  /// [google.cloud.orgpolicy.v2.UpdatePolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/orgpolicy/v2/orgpolicy.proto#L457}
   ///
   StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
       google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request,
