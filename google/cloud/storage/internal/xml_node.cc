@@ -213,6 +213,9 @@ Status XmlParser::HandleReadingTag() {
       return internal::InvalidArgumentError("The tag never closes",
                                             GCP_ERROR_INFO());
     }
+    // Note: This is the only place a handler consumes additional input.
+    // We should probably deal with that using the state machine instead,
+    // or use the same tactic in other handlers too.
     unparsed_.remove_prefix(close_tag_pos);
     auto tag_node = AppendTagNode(UnescapeTagName(Move(tag_name_)));
     if (!tag_node) return std::move(tag_node).status();
