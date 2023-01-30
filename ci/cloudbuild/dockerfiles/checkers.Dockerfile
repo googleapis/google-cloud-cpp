@@ -36,7 +36,7 @@ RUN dnf makecache && \
 
 RUN cargo install typos-cli --version 1.3.9 --root /usr/local
 
-RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/5.0.1/buildifier-linux-${ARCH} && \
+RUN curl -L -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/6.0.0/buildifier-linux-${ARCH} && \
     chmod 755 /usr/bin/buildifier
 
 RUN curl -L -o /usr/local/bin/shfmt https://github.com/mvdan/sh/releases/download/v3.4.3/shfmt_v3.4.3_linux_${ARCH} && \

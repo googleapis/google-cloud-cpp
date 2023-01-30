@@ -65,7 +65,7 @@ sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/c
 Install the buildifier tool, which we use to format `BUILD.bazel` files:
 
 ```console
-sudo wget -q -O /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/0.29.0/buildifier
+sudo curl -sSL -o /usr/bin/buildifier https://github.com/bazelbuild/buildtools/releases/download/6.0.0/buildifier-linux-amd64
 sudo chmod 755 /usr/bin/buildifier
 ```
 
@@ -73,7 +73,7 @@ Install shfmt tool, which we use to format our shell scripts:
 
 ```console
 sudo curl -L -o /usr/local/bin/shfmt \
-    "https://github.com/mvdan/sh/releases/download/v3.1.0/shfmt_v3.1.0_linux_amd64"
+    "https://github.com/mvdan/sh/releases/download/v3.4.3/shfmt_v3.4.3_linux_amd64"
 sudo chmod 755 /usr/local/bin/shfmt
 ```
 
@@ -85,19 +85,28 @@ because some third party changed something.
 ```console
 sudo apt install -y python3 python3-pip
 pip3 install --upgrade pip
-pip3 install cmake_format==0.6.8
+pip3 install cmake_format==0.6.13
 ```
 
 Install black, which we use to format our Python scripts:
 
 ```console
-pip3 install black==19.3b0
+pip3 install black==22.3.0
 ```
 
-Install cspell for spell checking.
+Install `mdformat`, which we use to format our `.md` documents:
 
-```console
-sudo npm install -g cspell
+```
+pip3 install mdformat-gfm==0.3.5 \
+                 mdformat-frontmatter==0.4.1 \
+                 mdformat-footnote==0.1.1
+```
+
+Install `typos-cli` for spell and typo checking:
+
+```
+sudo apt install cargo
+cargo install typos-cli --version 1.3.9
 ```
 
 Install the Python modules used in the integration tests:
