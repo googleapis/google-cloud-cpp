@@ -17,7 +17,7 @@
 # than to the extent that certain distros offer certain versions of software
 # that the build needs. It's fine to add more deps that are needed by the
 # `checkers.sh` build.
-FROM fedora:36
+FROM fedora:37
 ARG NCPU=4
 ARG ARCH=amd64
 
