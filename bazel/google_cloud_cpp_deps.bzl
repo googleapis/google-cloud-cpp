@@ -195,5 +195,5 @@ def google_cloud_cpp_deps():
             urls = [
                 "https://github.com/open-telemetry/opentelemetry-cpp/archive/d5571916e18abbd994373cdb633be0815deda319.tar.gz",
             ],
-            sha256 = "051cbbc3b76e0459371cdcf4044a1e5182a686a443d03f9dbcec6bb7d4e2aa46",
+            sha256 = "41524acd2e1599227d5046ece21eea6b9dc5e938087d608cb8cabb25192cdfde",
         )
