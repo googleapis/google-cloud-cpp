@@ -61,6 +61,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Sessions.DetectIntent]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/session.proto#L65}
+///
 class SessionsClient {
  public:
   explicit SessionsClient(std::shared_ptr<SessionsConnection> connection,
@@ -178,6 +181,10 @@ class SessionsClient {
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L875}
   /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L888}
+  /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L839}
+  /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L88}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
   FulfillIntent(

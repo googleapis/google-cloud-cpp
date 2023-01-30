@@ -21,6 +21,7 @@
 #include "google/cloud/dialogflow_es/internal/contexts_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/contexts_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/contexts_stub_factory.h"
+#include "google/cloud/dialogflow_es/internal/contexts_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -80,8 +81,9 @@ std::shared_ptr<ContextsConnection> MakeContextsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultContextsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::ContextsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dialogflow_es_internal::MakeContextsTracingConnection(
+      std::make_shared<dialogflow_es_internal::ContextsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<ContextsConnection> MakeContextsConnection(Options options) {

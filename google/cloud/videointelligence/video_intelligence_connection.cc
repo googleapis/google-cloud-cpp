@@ -20,6 +20,7 @@
 #include "google/cloud/videointelligence/internal/video_intelligence_connection_impl.h"
 #include "google/cloud/videointelligence/internal/video_intelligence_option_defaults.h"
 #include "google/cloud/videointelligence/internal/video_intelligence_stub_factory.h"
+#include "google/cloud/videointelligence/internal/video_intelligence_tracing_connection.h"
 #include "google/cloud/videointelligence/video_intelligence_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -55,9 +56,11 @@ MakeVideoIntelligenceServiceConnection(Options options) {
   auto stub =
       videointelligence_internal::CreateDefaultVideoIntelligenceServiceStub(
           background->cq(), options);
-  return std::make_shared<
-      videointelligence_internal::VideoIntelligenceServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return videointelligence_internal::
+      MakeVideoIntelligenceServiceTracingConnection(
+          std::make_shared<videointelligence_internal::
+                               VideoIntelligenceServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

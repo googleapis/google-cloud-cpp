@@ -21,6 +21,7 @@
 #include "google/cloud/tasks/internal/cloud_tasks_connection_impl.h"
 #include "google/cloud/tasks/internal/cloud_tasks_option_defaults.h"
 #include "google/cloud/tasks/internal/cloud_tasks_stub_factory.h"
+#include "google/cloud/tasks/internal/cloud_tasks_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -129,8 +130,9 @@ std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       tasks_internal::CreateDefaultCloudTasksStub(background->cq(), options);
-  return std::make_shared<tasks_internal::CloudTasksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return tasks_internal::MakeCloudTasksTracingConnection(
+      std::make_shared<tasks_internal::CloudTasksConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

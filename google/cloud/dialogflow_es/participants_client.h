@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.v2.Participant]:
+/// @googleapis_link_reference{google/cloud/dialogflow/v2/participant.proto#L178}
+///
 class ParticipantsClient {
  public:
   explicit ParticipantsClient(
@@ -213,10 +216,10 @@ class ParticipantsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   /// [google.cloud.dialogflow.v2.Participant]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   ///
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
       google::cloud::dialogflow::v2::Participant const& participant,
@@ -232,10 +235,10 @@ class ParticipantsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Participant,google/cloud/dialogflow/v2/participant.proto#L178}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   /// [google.cloud.dialogflow.v2.Participant]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L178}
+  /// [google.cloud.dialogflow.v2.UpdateParticipantRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L383}
   ///
   StatusOr<google::cloud::dialogflow::v2::Participant> UpdateParticipant(
       google::cloud::dialogflow::v2::UpdateParticipantRequest const& request,

@@ -100,10 +100,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       std::string const& name, Options opts = {});
@@ -122,10 +122,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.GetFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L322}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
       google::cloud::resourcemanager::v3::GetFolderRequest const& request,
@@ -150,10 +150,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
       std::string const& parent, Options opts = {});
@@ -173,10 +173,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.ListFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L334}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> ListFolders(
       google::cloud::resourcemanager::v3::ListFoldersRequest request,
@@ -222,10 +222,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
       std::string const& query, Options opts = {});
@@ -245,10 +245,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.SearchFoldersRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L373}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Folder> SearchFolders(
       google::cloud::resourcemanager::v3::SearchFoldersRequest request,
@@ -374,10 +374,12 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::Folder const& folder,
@@ -409,10 +411,12 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UpdateFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L452}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
@@ -448,10 +452,12 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       std::string const& name, std::string const& destination_parent,
@@ -483,10 +489,12 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.MoveFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L469}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
@@ -569,10 +577,12 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       std::string const& name, Options opts = {});
@@ -597,10 +607,12 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Folder,google/cloud/resourcemanager/v3/folders.proto#L263}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
   /// [google.cloud.resourcemanager.v3.Folder]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L263}
+  /// [google.cloud.resourcemanager.v3.Folders.CreateFolder]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L112}
+  /// [google.cloud.resourcemanager.v3.UndeleteFolderRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/folders.proto#L521}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
@@ -671,10 +683,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -718,10 +730,10 @@ class FoldersClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

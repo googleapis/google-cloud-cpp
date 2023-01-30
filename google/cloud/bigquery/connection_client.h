@@ -98,10 +98,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L124}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.CreateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L124}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   CreateConnection(
@@ -119,10 +119,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L124}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.CreateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L124}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   CreateConnection(
@@ -140,10 +140,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L142}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L142}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
       std::string const& name, Options opts = {});
@@ -158,10 +158,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L142}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.GetConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L142}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection> GetConnection(
       google::cloud::bigquery::connection::v1::GetConnectionRequest const&
@@ -178,10 +178,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L154}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.ListConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L154}
   ///
   StreamRange<google::cloud::bigquery::connection::v1::Connection>
   ListConnections(std::string const& parent, Options opts = {});
@@ -196,10 +196,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L154}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.ListConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L154}
   ///
   StreamRange<google::cloud::bigquery::connection::v1::Connection>
   ListConnections(
@@ -220,10 +220,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L181}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.UpdateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L181}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   UpdateConnection(
@@ -242,10 +242,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::bigquery::connection::v1::Connection,google/cloud/bigquery/connection/v1/connection.proto#L212}
   ///
-  /// [google.cloud.bigquery.connection.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L181}
   /// [google.cloud.bigquery.connection.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L212}
+  /// [google.cloud.bigquery.connection.v1.UpdateConnectionRequest]:
+  /// @googleapis_reference_link{google/cloud/bigquery/connection/v1/connection.proto#L181}
   ///
   StatusOr<google::cloud::bigquery::connection::v1::Connection>
   UpdateConnection(
@@ -347,10 +347,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -370,10 +370,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

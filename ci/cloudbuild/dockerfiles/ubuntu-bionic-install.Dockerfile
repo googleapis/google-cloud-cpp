@@ -62,7 +62,7 @@ RUN apt update && (apt install -y openjdk-11-jre || apt install -y openjdk-9-jre
 # image smaller (and with fewer layers)
 
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
@@ -75,7 +75,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/googletest
-RUN curl -sSL https://github.com/google/googletest/archive/release-1.12.1.tar.gz | \
+RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \

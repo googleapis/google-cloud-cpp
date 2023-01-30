@@ -220,10 +220,10 @@ class ServiceMonitoringServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
-  /// [google.monitoring.v3.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   /// [google.monitoring.v3.Service]:
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.UpdateServiceRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   ///
   StatusOr<google::monitoring::v3::Service> UpdateService(
       google::monitoring::v3::Service const& service, Options opts = {});
@@ -238,10 +238,10 @@ class ServiceMonitoringServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::Service,google/monitoring/v3/service.proto#L36}
   ///
-  /// [google.monitoring.v3.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   /// [google.monitoring.v3.Service]:
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L36}
+  /// [google.monitoring.v3.UpdateServiceRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L223}
   ///
   StatusOr<google::monitoring::v3::Service> UpdateService(
       google::monitoring::v3::UpdateServiceRequest const& request,
@@ -414,10 +414,10 @@ class ServiceMonitoringServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
-  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   /// [google.monitoring.v3.ServiceLevelObjective]:
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
@@ -435,10 +435,10 @@ class ServiceMonitoringServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::ServiceLevelObjective,google/monitoring/v3/service.proto#L183}
   ///
-  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   /// [google.monitoring.v3.ServiceLevelObjective]:
   /// @googleapis_reference_link{google/monitoring/v3/service.proto#L183}
+  /// [google.monitoring.v3.UpdateServiceLevelObjectiveRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/service_service.proto#L332}
   ///
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(

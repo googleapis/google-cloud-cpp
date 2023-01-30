@@ -70,6 +70,10 @@ add_library(
     internal/admin_stub.h
     internal/admin_stub_factory.cc
     internal/admin_stub_factory.h
+    internal/admin_tracing_connection.cc
+    internal/admin_tracing_connection.h
+    internal/admin_tracing_stub.cc
+    internal/admin_tracing_stub.h
     internal/alarm_registry.h
     internal/alarm_registry_impl.cc
     internal/alarm_registry_impl.h
@@ -88,6 +92,8 @@ add_library(
     internal/cursor_stub.h
     internal/cursor_stub_factory.cc
     internal/cursor_stub_factory.h
+    internal/cursor_tracing_stub.cc
+    internal/cursor_tracing_stub.h
     internal/default_publish_message_transformer.cc
     internal/default_publish_message_transformer.h
     internal/default_routing_policy.cc
@@ -107,6 +113,8 @@ add_library(
     internal/partition_assignment_stub.h
     internal/partition_assignment_stub_factory.cc
     internal/partition_assignment_stub_factory.h
+    internal/partition_assignment_tracing_stub.cc
+    internal/partition_assignment_tracing_stub.h
     internal/partition_publisher.cc
     internal/partition_publisher.h
     internal/publisher.h
@@ -122,6 +130,8 @@ add_library(
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
+    internal/publisher_tracing_stub.cc
+    internal/publisher_tracing_stub.h
     internal/resumable_async_streaming_read_write_rpc.h
     internal/routing_policy.h
     internal/service.h
@@ -138,6 +148,8 @@ add_library(
     internal/subscriber_stub.h
     internal/subscriber_stub_factory.cc
     internal/subscriber_stub_factory.h
+    internal/subscriber_tracing_stub.cc
+    internal/subscriber_tracing_stub.h
     internal/topic_stats_auth_decorator.cc
     internal/topic_stats_auth_decorator.h
     internal/topic_stats_connection_impl.cc
@@ -153,6 +165,10 @@ add_library(
     internal/topic_stats_stub.h
     internal/topic_stats_stub_factory.cc
     internal/topic_stats_stub_factory.h
+    internal/topic_stats_tracing_connection.cc
+    internal/topic_stats_tracing_connection.h
+    internal/topic_stats_tracing_stub.cc
+    internal/topic_stats_tracing_stub.h
     message_metadata.cc
     message_metadata.h
     options.h

@@ -98,10 +98,10 @@ class AuthorizedCertificatesClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
-  /// [google.appengine.v1.ListAuthorizedCertificatesRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L790}
   /// [google.appengine.v1.AuthorizedCertificate]:
   /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
+  /// [google.appengine.v1.ListAuthorizedCertificatesRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L790}
   ///
   StreamRange<google::appengine::v1::AuthorizedCertificate>
   ListAuthorizedCertificates(
@@ -118,10 +118,10 @@ class AuthorizedCertificatesClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
-  /// [google.appengine.v1.GetAuthorizedCertificateRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L814}
   /// [google.appengine.v1.AuthorizedCertificate]:
   /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
+  /// [google.appengine.v1.GetAuthorizedCertificateRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L814}
   ///
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   GetAuthorizedCertificate(
@@ -138,10 +138,10 @@ class AuthorizedCertificatesClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
-  /// [google.appengine.v1.CreateAuthorizedCertificateRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L836}
   /// [google.appengine.v1.AuthorizedCertificate]:
   /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
+  /// [google.appengine.v1.CreateAuthorizedCertificateRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L836}
   ///
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   CreateAuthorizedCertificate(
@@ -162,10 +162,10 @@ class AuthorizedCertificatesClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::AuthorizedCertificate,google/appengine/v1/certificate.proto#L32}
   ///
-  /// [google.appengine.v1.UpdateAuthorizedCertificateRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L845}
   /// [google.appengine.v1.AuthorizedCertificate]:
   /// @googleapis_reference_link{google/appengine/v1/certificate.proto#L32}
+  /// [google.appengine.v1.UpdateAuthorizedCertificateRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L845}
   ///
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   UpdateAuthorizedCertificate(

@@ -134,10 +134,10 @@ class MetadataServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
   ///
-  /// [google.cloud.dataplex.v1.UpdateEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L134}
   /// [google.cloud.dataplex.v1.Entity]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.UpdateEntityRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L134}
   ///
   StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
       google::cloud::dataplex::v1::UpdateEntityRequest const& request,
@@ -181,10 +181,10 @@ class MetadataServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
   ///
-  /// [google.cloud.dataplex.v1.GetEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   /// [google.cloud.dataplex.v1.Entity]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.GetEntityRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   ///
   StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
       std::string const& name, Options opts = {});
@@ -199,10 +199,10 @@ class MetadataServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
   ///
-  /// [google.cloud.dataplex.v1.GetEntityRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   /// [google.cloud.dataplex.v1.Entity]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.GetEntityRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L216}
   ///
   StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
       google::cloud::dataplex::v1::GetEntityRequest const& request,
@@ -218,10 +218,10 @@ class MetadataServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
   ///
-  /// [google.cloud.dataplex.v1.ListEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   /// [google.cloud.dataplex.v1.Entity]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.ListEntitiesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   ///
   StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
       std::string const& parent, Options opts = {});
@@ -236,10 +236,10 @@ class MetadataServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataplex::v1::Entity,google/cloud/dataplex/v1/metadata.proto#L347}
   ///
-  /// [google.cloud.dataplex.v1.ListEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   /// [google.cloud.dataplex.v1.Entity]:
   /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L347}
+  /// [google.cloud.dataplex.v1.ListEntitiesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataplex/v1/metadata.proto#L158}
   ///
   StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
       google::cloud::dataplex::v1::ListEntitiesRequest request,

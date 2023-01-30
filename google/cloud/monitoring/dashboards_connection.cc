@@ -21,6 +21,7 @@
 #include "google/cloud/monitoring/internal/dashboards_connection_impl.h"
 #include "google/cloud/monitoring/internal/dashboards_option_defaults.h"
 #include "google/cloud/monitoring/internal/dashboards_stub_factory.h"
+#include "google/cloud/monitoring/internal/dashboards_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -77,8 +78,9 @@ std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = monitoring_internal::CreateDefaultDashboardsServiceStub(
       background->cq(), options);
-  return std::make_shared<monitoring_internal::DashboardsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return monitoring_internal::MakeDashboardsServiceTracingConnection(
+      std::make_shared<monitoring_internal::DashboardsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

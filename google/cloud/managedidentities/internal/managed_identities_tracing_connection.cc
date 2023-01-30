@@ -112,6 +112,19 @@ ManagedIdentitiesServiceTracingConnection::ValidateTrust(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<managedidentities::ManagedIdentitiesServiceConnection>
+MakeManagedIdentitiesServiceTracingConnection(
+    std::shared_ptr<managedidentities::ManagedIdentitiesServiceConnection>
+        conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ManagedIdentitiesServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
 }  // namespace cloud

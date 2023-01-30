@@ -272,6 +272,19 @@ AccessContextManagerTracingConnection::TestIamPermissions(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
+MakeAccessContextManagerTracingConnection(
+    std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
+        conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<AccessContextManagerTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
 }  // namespace cloud

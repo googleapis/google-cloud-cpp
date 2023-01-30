@@ -99,10 +99,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L194}
   ///
-  /// [google.cloud.functions.v1.ListFunctionsRequest]:
-  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L727}
   /// [google.cloud.functions.v1.CloudFunction]:
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L194}
+  /// [google.cloud.functions.v1.ListFunctionsRequest]:
+  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L727}
   ///
   StreamRange<google::cloud::functions::v1::CloudFunction> ListFunctions(
       google::cloud::functions::v1::ListFunctionsRequest request,
@@ -118,10 +118,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L194}
   ///
-  /// [google.cloud.functions.v1.GetFunctionRequest]:
-  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L716}
   /// [google.cloud.functions.v1.CloudFunction]:
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L194}
+  /// [google.cloud.functions.v1.GetFunctionRequest]:
+  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L716}
   ///
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
       std::string const& name, Options opts = {});
@@ -136,10 +136,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L194}
   ///
-  /// [google.cloud.functions.v1.GetFunctionRequest]:
-  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L716}
   /// [google.cloud.functions.v1.CloudFunction]:
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L194}
+  /// [google.cloud.functions.v1.GetFunctionRequest]:
+  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L716}
   ///
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
       google::cloud::functions::v1::GetFunctionRequest const& request,
@@ -159,10 +159,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L194}
   ///
-  /// [google.cloud.functions.v1.CreateFunctionRequest]:
-  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L692}
   /// [google.cloud.functions.v1.CloudFunction]:
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L194}
+  /// [google.cloud.functions.v1.CreateFunctionRequest]:
+  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L692}
   ///
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
       std::string const& location,
@@ -181,10 +181,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L194}
   ///
-  /// [google.cloud.functions.v1.CreateFunctionRequest]:
-  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L692}
   /// [google.cloud.functions.v1.CloudFunction]:
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L194}
+  /// [google.cloud.functions.v1.CreateFunctionRequest]:
+  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L692}
   ///
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
       google::cloud::functions::v1::CreateFunctionRequest const& request,
@@ -199,10 +199,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L194}
   ///
-  /// [google.cloud.functions.v1.UpdateFunctionRequest]:
-  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L707}
   /// [google.cloud.functions.v1.CloudFunction]:
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L194}
+  /// [google.cloud.functions.v1.UpdateFunctionRequest]:
+  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L707}
   ///
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
       google::cloud::functions::v1::CloudFunction const& function,
@@ -218,10 +218,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::functions::v1::CloudFunction,google/cloud/functions/v1/functions.proto#L194}
   ///
-  /// [google.cloud.functions.v1.UpdateFunctionRequest]:
-  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L707}
   /// [google.cloud.functions.v1.CloudFunction]:
   /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L194}
+  /// [google.cloud.functions.v1.UpdateFunctionRequest]:
+  /// @googleapis_reference_link{google/cloud/functions/v1/functions.proto#L707}
   ///
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
       google::cloud::functions::v1::UpdateFunctionRequest const& request,
@@ -391,10 +391,10 @@ class CloudFunctionsServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

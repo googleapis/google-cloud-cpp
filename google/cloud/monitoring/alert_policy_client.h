@@ -112,10 +112,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.ListAlertPoliciesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L138}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.ListAlertPoliciesRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L138}
   ///
   StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
       std::string const& name, Options opts = {});
@@ -130,10 +130,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.ListAlertPoliciesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L138}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.ListAlertPoliciesRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L138}
   ///
   StreamRange<google::monitoring::v3::AlertPolicy> ListAlertPolicies(
       google::monitoring::v3::ListAlertPoliciesRequest request,
@@ -149,10 +149,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.GetAlertPolicyRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L125}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.GetAlertPolicyRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L125}
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
       std::string const& name, Options opts = {});
@@ -167,10 +167,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.GetAlertPolicyRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L125}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.GetAlertPolicyRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L125}
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
       google::monitoring::v3::GetAlertPolicyRequest const& request,
@@ -199,10 +199,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.CreateAlertPolicyRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L98}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.CreateAlertPolicyRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L98}
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
       std::string const& name,
@@ -219,10 +219,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.CreateAlertPolicyRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L98}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.CreateAlertPolicyRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L98}
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
       google::monitoring::v3::CreateAlertPolicyRequest const& request,
@@ -294,10 +294,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.UpdateAlertPolicyRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L196}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.UpdateAlertPolicyRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L196}
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
       google::protobuf::FieldMask const& update_mask,
@@ -317,10 +317,10 @@ class AlertPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::AlertPolicy,google/monitoring/v3/alert.proto#L39}
   ///
-  /// [google.monitoring.v3.UpdateAlertPolicyRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L196}
   /// [google.monitoring.v3.AlertPolicy]:
   /// @googleapis_reference_link{google/monitoring/v3/alert.proto#L39}
+  /// [google.monitoring.v3.UpdateAlertPolicyRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/alert_service.proto#L196}
   ///
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
       google::monitoring::v3::UpdateAlertPolicyRequest const& request,

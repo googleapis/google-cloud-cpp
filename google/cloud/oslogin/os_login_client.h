@@ -99,10 +99,10 @@ class OsLoginServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
-  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   ///
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
       std::string const& parent,
@@ -119,10 +119,10 @@ class OsLoginServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
-  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.CreateSshPublicKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L133}
   ///
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
       google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request,
@@ -239,10 +239,10 @@ class OsLoginServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
-  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   ///
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
       std::string const& name, Options opts = {});
@@ -257,10 +257,10 @@ class OsLoginServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
-  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.GetSshPublicKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L191}
   ///
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
       google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request,
@@ -351,10 +351,10 @@ class OsLoginServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   ///
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
       std::string const& name,
@@ -377,10 +377,10 @@ class OsLoginServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   ///
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
       std::string const& name,
@@ -398,10 +398,10 @@ class OsLoginServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::oslogin::common::SshPublicKey,google/cloud/oslogin/common/common.proto#L89}
   ///
-  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   /// [google.cloud.oslogin.common.SshPublicKey]:
   /// @googleapis_reference_link{google/cloud/oslogin/common/common.proto#L89}
+  /// [google.cloud.oslogin.v1.UpdateSshPublicKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/oslogin/v1/oslogin.proto#L231}
   ///
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
       google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request,

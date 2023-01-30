@@ -75,6 +75,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.vision.v1.Product]:
+/// @googleapis_link_reference{google/cloud/vision/v1/product_search_service.proto#L365}
+/// [google.cloud.vision.v1.ProductSet]:
+/// @googleapis_link_reference{google/cloud/vision/v1/product_search_service.proto#L423}
+/// [google.cloud.vision.v1.ReferenceImage]:
+/// @googleapis_link_reference{google/cloud/vision/v1/product_search_service.proto#L458}
+///
 class ProductSearchClient {
  public:
   explicit ProductSearchClient(
@@ -273,10 +280,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
-  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   /// [google.cloud.vision.v1.ProductSet]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::ProductSet const& product_set,
@@ -299,10 +306,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ProductSet,google/cloud/vision/v1/product_search_service.proto#L423}
   ///
-  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   /// [google.cloud.vision.v1.ProductSet]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L423}
+  /// [google.cloud.vision.v1.UpdateProductSetRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L649}
   ///
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
       google::cloud::vision::v1::UpdateProductSetRequest const& request,
@@ -531,10 +538,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
-  /// [google.cloud.vision.v1.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   /// [google.cloud.vision.v1.Product]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [google.cloud.vision.v1.UpdateProductRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   ///
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::Product const& product,
@@ -565,10 +572,10 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::Product,google/cloud/vision/v1/product_search_service.proto#L365}
   ///
-  /// [google.cloud.vision.v1.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   /// [google.cloud.vision.v1.Product]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L365}
+  /// [google.cloud.vision.v1.UpdateProductRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L556}
   ///
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
       google::cloud::vision::v1::UpdateProductRequest const& request,
@@ -994,10 +1001,14 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsResponse,google/cloud/vision/v1/product_search_service.proto#L939}
   ///
+  /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L905}
   /// [google.cloud.vision.v1.ImportProductSetsRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L919}
   /// [google.cloud.vision.v1.ImportProductSetsResponse]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L939}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
   ImportProductSets(
@@ -1026,10 +1037,14 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::ImportProductSetsResponse,google/cloud/vision/v1/product_search_service.proto#L939}
   ///
+  /// [google.cloud.vision.v1.ImportProductSetsGcsSource.csv_file_uri]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L905}
   /// [google.cloud.vision.v1.ImportProductSetsRequest]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L919}
   /// [google.cloud.vision.v1.ImportProductSetsResponse]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L939}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
   ImportProductSets(
@@ -1070,10 +1085,12 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
   ///
-  /// [google.cloud.vision.v1.PurgeProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
   /// [google.cloud.vision.v1.BatchOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
+  /// [google.cloud.vision.v1.PurgeProductsRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(std::string const& parent, Options opts = {});
@@ -1111,10 +1128,12 @@ class ProductSearchClient {
   /// @return
   /// @googleapis_link{google::cloud::vision::v1::BatchOperationMetadata,google/cloud/vision/v1/product_search_service.proto#L956}
   ///
-  /// [google.cloud.vision.v1.PurgeProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
   /// [google.cloud.vision.v1.BatchOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L956}
+  /// [google.cloud.vision.v1.PurgeProductsRequest]:
+  /// @googleapis_reference_link{google/cloud/vision/v1/product_search_service.proto#L998}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request,

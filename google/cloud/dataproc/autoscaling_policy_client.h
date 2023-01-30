@@ -108,10 +108,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L260}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L260}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
@@ -129,10 +129,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L260}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L260}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
@@ -152,10 +152,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L303}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L303}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
@@ -175,10 +175,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L303}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L303}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
@@ -203,10 +203,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L283}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L283}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
       std::string const& name, Options opts = {});
@@ -221,10 +221,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L283}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L283}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
       google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request,
@@ -247,10 +247,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L331}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L331}
   ///
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
   ListAutoscalingPolicies(std::string const& parent, Options opts = {});
@@ -265,10 +265,10 @@ class AutoscalingPolicyServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
   ///
-  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L331}
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L331}
   ///
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
   ListAutoscalingPolicies(

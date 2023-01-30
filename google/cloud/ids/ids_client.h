@@ -94,10 +94,10 @@ class IDSClient {
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
-  /// [google.cloud.ids.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   /// [google.cloud.ids.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
+  /// [google.cloud.ids.v1.ListEndpointsRequest]:
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   ///
   StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
       std::string const& parent, Options opts = {});
@@ -112,10 +112,10 @@ class IDSClient {
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
-  /// [google.cloud.ids.v1.ListEndpointsRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   /// [google.cloud.ids.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
+  /// [google.cloud.ids.v1.ListEndpointsRequest]:
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L158}
   ///
   StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
       google::cloud::ids::v1::ListEndpointsRequest request, Options opts = {});
@@ -130,10 +130,10 @@ class IDSClient {
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
-  /// [google.cloud.ids.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   /// [google.cloud.ids.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
+  /// [google.cloud.ids.v1.GetEndpointRequest]:
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   ///
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
       std::string const& name, Options opts = {});
@@ -148,10 +148,10 @@ class IDSClient {
   /// @return
   /// @googleapis_link{google::cloud::ids::v1::Endpoint,google/cloud/ids/v1/ids.proto#L81}
   ///
-  /// [google.cloud.ids.v1.GetEndpointRequest]:
-  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   /// [google.cloud.ids.v1.Endpoint]:
   /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L81}
+  /// [google.cloud.ids.v1.GetEndpointRequest]:
+  /// @googleapis_reference_link{google/cloud/ids/v1/ids.proto#L199}
   ///
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
       google::cloud::ids::v1::GetEndpointRequest const& request,

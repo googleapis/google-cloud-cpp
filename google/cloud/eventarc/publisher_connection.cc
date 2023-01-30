@@ -20,6 +20,7 @@
 #include "google/cloud/eventarc/internal/publisher_connection_impl.h"
 #include "google/cloud/eventarc/internal/publisher_option_defaults.h"
 #include "google/cloud/eventarc/internal/publisher_stub_factory.h"
+#include "google/cloud/eventarc/internal/publisher_tracing_connection.h"
 #include "google/cloud/eventarc/publisher_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -56,8 +57,9 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       eventarc_internal::CreateDefaultPublisherStub(background->cq(), options);
-  return std::make_shared<eventarc_internal::PublisherConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return eventarc_internal::MakePublisherTracingConnection(
+      std::make_shared<eventarc_internal::PublisherConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

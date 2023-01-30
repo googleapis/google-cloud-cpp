@@ -123,6 +123,18 @@ AssuredWorkloadsServiceTracingConnection::AcknowledgeViolation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection>
+MakeAssuredWorkloadsServiceTracingConnection(
+    std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<AssuredWorkloadsServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal
 }  // namespace cloud

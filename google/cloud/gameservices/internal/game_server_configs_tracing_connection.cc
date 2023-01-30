@@ -69,6 +69,18 @@ GameServerConfigsServiceTracingConnection::DeleteGameServerConfig(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<gameservices::GameServerConfigsServiceConnection>
+MakeGameServerConfigsServiceTracingConnection(
+    std::shared_ptr<gameservices::GameServerConfigsServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<GameServerConfigsServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
 }  // namespace cloud

@@ -254,10 +254,10 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
-  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
   ///
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::Topic const& topic,
@@ -273,10 +273,10 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
-  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
+  /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
   ///
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
@@ -472,10 +472,10 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
-  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L437}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L437}
   ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::Subscription const& subscription,
@@ -491,10 +491,10 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
-  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L437}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
+  /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L437}
   ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request,
@@ -701,10 +701,10 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
-  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
   ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::Reservation const& reservation,
@@ -720,10 +720,10 @@ class AdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
-  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
+  /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
   ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::UpdateReservationRequest const& request,

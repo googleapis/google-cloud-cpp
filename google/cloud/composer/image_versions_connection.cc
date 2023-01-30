@@ -21,6 +21,7 @@
 #include "google/cloud/composer/internal/image_versions_connection_impl.h"
 #include "google/cloud/composer/internal/image_versions_option_defaults.h"
 #include "google/cloud/composer/internal/image_versions_stub_factory.h"
+#include "google/cloud/composer/internal/image_versions_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -53,8 +54,9 @@ std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = composer_internal::CreateDefaultImageVersionsStub(
       background->cq(), options);
-  return std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return composer_internal::MakeImageVersionsTracingConnection(
+      std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

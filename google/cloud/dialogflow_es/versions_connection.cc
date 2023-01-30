@@ -20,6 +20,7 @@
 #include "google/cloud/dialogflow_es/internal/versions_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/versions_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/versions_stub_factory.h"
+#include "google/cloud/dialogflow_es/internal/versions_tracing_connection.h"
 #include "google/cloud/dialogflow_es/versions_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -75,8 +76,9 @@ std::shared_ptr<VersionsConnection> MakeVersionsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultVersionsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::VersionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dialogflow_es_internal::MakeVersionsTracingConnection(
+      std::make_shared<dialogflow_es_internal::VersionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {

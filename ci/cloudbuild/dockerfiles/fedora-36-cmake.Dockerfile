@@ -61,10 +61,13 @@ RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.g
     ldconfig
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
 
+# We expose `absl::optional<>` in our public API. An Abseil LTS update will
+# break our `check-api` build, unless we disable the inline namespace.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20230125.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
+    sed -i 's/^#define ABSL_OPTION_USE_INLINE_NAMESPACE 1$/#define ABSL_OPTION_USE_INLINE_NAMESPACE 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DABSL_BUILD_TESTING=OFF \
@@ -74,7 +77,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/googletest/archive/release-1.12.1.tar.gz | \
+RUN curl -sSL https://github.com/google/googletest/archive/v1.13.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \

@@ -20,6 +20,7 @@
 #include "google/cloud/dialogflow_es/internal/sessions_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/sessions_option_defaults.h"
 #include "google/cloud/dialogflow_es/internal/sessions_stub_factory.h"
+#include "google/cloud/dialogflow_es/internal/sessions_tracing_connection.h"
 #include "google/cloud/dialogflow_es/sessions_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -61,8 +62,9 @@ std::shared_ptr<SessionsConnection> MakeSessionsConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_es_internal::CreateDefaultSessionsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::SessionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dialogflow_es_internal::MakeSessionsTracingConnection(
+      std::make_shared<dialogflow_es_internal::SessionsConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<SessionsConnection> MakeSessionsConnection(Options options) {

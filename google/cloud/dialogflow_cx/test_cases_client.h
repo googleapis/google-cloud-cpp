@@ -60,6 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.TestCase]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+/// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
+///
 class TestCasesClient {
  public:
   explicit TestCasesClient(std::shared_ptr<TestCasesConnection> connection,
@@ -246,10 +251,10 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
       google::cloud::dialogflow::cx::v3::TestCase const& test_case,
@@ -265,10 +270,10 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
       google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request,
@@ -293,6 +298,8 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunTestCaseResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L708}
   ///
+  /// [google.cloud.dialogflow.cx.v3.RunTestCaseMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L716}
   /// [google.cloud.dialogflow.cx.v3.RunTestCaseRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L685}
   /// [google.cloud.dialogflow.cx.v3.RunTestCaseResponse]:
@@ -322,6 +329,8 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L752}
   ///
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L763}
   /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L720}
   /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]:
@@ -375,6 +384,8 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L814}
   ///
+  /// [google.cloud.dialogflow.cx.v3.ImportTestCasesMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L826}
   /// [google.cloud.dialogflow.cx.v3.ImportTestCasesRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L784}
   /// [google.cloud.dialogflow.cx.v3.ImportTestCasesResponse]:
@@ -405,6 +416,8 @@ class TestCasesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L898}
   ///
+  /// [google.cloud.dialogflow.cx.v3.ExportTestCasesMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L914}
   /// [google.cloud.dialogflow.cx.v3.ExportTestCasesRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L842}
   /// [google.cloud.dialogflow.cx.v3.ExportTestCasesResponse]:

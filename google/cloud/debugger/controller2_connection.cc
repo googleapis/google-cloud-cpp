@@ -21,6 +21,7 @@
 #include "google/cloud/debugger/internal/controller2_connection_impl.h"
 #include "google/cloud/debugger/internal/controller2_option_defaults.h"
 #include "google/cloud/debugger/internal/controller2_stub_factory.h"
+#include "google/cloud/debugger/internal/controller2_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -62,8 +63,9 @@ std::shared_ptr<Controller2Connection> MakeController2Connection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = debugger_internal::CreateDefaultController2Stub(background->cq(),
                                                               options);
-  return std::make_shared<debugger_internal::Controller2ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return debugger_internal::MakeController2TracingConnection(
+      std::make_shared<debugger_internal::Controller2ConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

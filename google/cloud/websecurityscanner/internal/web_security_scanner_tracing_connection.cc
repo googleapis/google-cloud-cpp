@@ -167,6 +167,18 @@ WebSecurityScannerTracingConnection::ListFindingTypeStats(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<websecurityscanner::WebSecurityScannerConnection>
+MakeWebSecurityScannerTracingConnection(
+    std::shared_ptr<websecurityscanner::WebSecurityScannerConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<WebSecurityScannerTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
 }  // namespace cloud

@@ -95,10 +95,10 @@ class ApplicationsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
-  /// [google.appengine.v1.GetApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.GetApplicationRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   ///
   StatusOr<google::appengine::v1::Application> GetApplication(
       std::string const& name, Options opts = {});
@@ -113,10 +113,10 @@ class ApplicationsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
-  /// [google.appengine.v1.GetApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.GetApplicationRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L115}
   ///
   StatusOr<google::appengine::v1::Application> GetApplication(
       google::appengine::v1::GetApplicationRequest const& request,
@@ -142,10 +142,10 @@ class ApplicationsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
-  /// [google.appengine.v1.CreateApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L121}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.CreateApplicationRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L121}
   ///
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       google::appengine::v1::CreateApplicationRequest const& request,
@@ -168,10 +168,10 @@ class ApplicationsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
-  /// [google.appengine.v1.UpdateApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L127}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.UpdateApplicationRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L127}
   ///
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       google::appengine::v1::UpdateApplicationRequest const& request,
@@ -197,10 +197,10 @@ class ApplicationsClient {
   /// @return
   /// @googleapis_link{google::appengine::v1::Application,google/appengine/v1/application.proto#L31}
   ///
-  /// [google.appengine.v1.RepairApplicationRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L139}
   /// [google.appengine.v1.Application]:
   /// @googleapis_reference_link{google/appengine/v1/application.proto#L31}
+  /// [google.appengine.v1.RepairApplicationRequest]:
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L139}
   ///
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       google::appengine::v1::RepairApplicationRequest const& request,

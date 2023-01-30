@@ -21,6 +21,10 @@ namespace generator_testing {
 FakeSourceTree::FakeSourceTree(std::map<std::string, std::string> files)
     : files_(std::move(files)) {}
 
+void FakeSourceTree::Insert(std::string const& filename, std::string contents) {
+  files_.emplace(filename, std::move(contents));
+}
+
 google::protobuf::io::ZeroCopyInputStream* FakeSourceTree::Open(
     std::string const& filename) {
   auto iter = files_.find(filename);

@@ -100,6 +100,8 @@ class LookupServiceClient {
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L54}
   /// [google.cloud.servicedirectory.v1.ResolveServiceResponse]:
   /// @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L91}
+  /// [google.cloud.servicedirectory.v1.Service]:
+  /// @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
   ///
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(

@@ -341,10 +341,10 @@ class NotificationChannelServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
-  /// [google.monitoring.v3.UpdateNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L317}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.UpdateNotificationChannelRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L317}
   ///
   StatusOr<google::monitoring::v3::NotificationChannel>
   UpdateNotificationChannel(
@@ -363,10 +363,10 @@ class NotificationChannelServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
-  /// [google.monitoring.v3.UpdateNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L317}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.UpdateNotificationChannelRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L317}
   ///
   StatusOr<google::monitoring::v3::NotificationChannel>
   UpdateNotificationChannel(
@@ -543,10 +543,10 @@ class NotificationChannelServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
-  /// [google.monitoring.v3.VerifyNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L397}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.VerifyNotificationChannelRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L397}
   ///
   StatusOr<google::monitoring::v3::NotificationChannel>
   VerifyNotificationChannel(std::string const& name, std::string const& code,
@@ -564,10 +564,10 @@ class NotificationChannelServiceClient {
   /// @return
   /// @googleapis_link{google::monitoring::v3::NotificationChannel,google/monitoring/v3/notification.proto#L87}
   ///
-  /// [google.monitoring.v3.VerifyNotificationChannelRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L397}
   /// [google.monitoring.v3.NotificationChannel]:
   /// @googleapis_reference_link{google/monitoring/v3/notification.proto#L87}
+  /// [google.monitoring.v3.VerifyNotificationChannelRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/notification_service.proto#L397}
   ///
   StatusOr<google::monitoring::v3::NotificationChannel>
   VerifyNotificationChannel(

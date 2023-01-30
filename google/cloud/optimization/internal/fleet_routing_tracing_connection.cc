@@ -48,6 +48,17 @@ FleetRoutingTracingConnection::BatchOptimizeTours(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<optimization::FleetRoutingConnection>
+MakeFleetRoutingTracingConnection(
+    std::shared_ptr<optimization::FleetRoutingConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<FleetRoutingTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal
 }  // namespace cloud

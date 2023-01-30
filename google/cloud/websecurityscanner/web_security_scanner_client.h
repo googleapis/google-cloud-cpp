@@ -174,10 +174,10 @@ class WebSecurityScannerClient {
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanConfig,google/cloud/websecurityscanner/v1/scan_config.proto#L31}
   ///
-  /// [google.cloud.websecurityscanner.v1.UpdateScanConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L183}
   /// [google.cloud.websecurityscanner.v1.ScanConfig]:
   /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_config.proto#L31}
+  /// [google.cloud.websecurityscanner.v1.UpdateScanConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L183}
   ///
   StatusOr<google::cloud::websecurityscanner::v1::ScanConfig> UpdateScanConfig(
       google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
@@ -194,10 +194,10 @@ class WebSecurityScannerClient {
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
-  /// [google.cloud.websecurityscanner.v1.StartScanRunRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L206}
   /// [google.cloud.websecurityscanner.v1.ScanRun]:
   /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.StartScanRunRequest]:
+  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L206}
   ///
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
       google::cloud::websecurityscanner::v1::StartScanRunRequest const& request,
@@ -252,10 +252,10 @@ class WebSecurityScannerClient {
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::ScanRun,google/cloud/websecurityscanner/v1/scan_run.proto#L33}
   ///
-  /// [google.cloud.websecurityscanner.v1.StopScanRunRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L248}
   /// [google.cloud.websecurityscanner.v1.ScanRun]:
   /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/scan_run.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.StopScanRunRequest]:
+  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L248}
   ///
   StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
       google::cloud::websecurityscanner::v1::StopScanRunRequest const& request,
@@ -271,10 +271,10 @@ class WebSecurityScannerClient {
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::CrawledUrl,google/cloud/websecurityscanner/v1/crawled_url.proto#L30}
   ///
-  /// [google.cloud.websecurityscanner.v1.ListCrawledUrlsRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L256}
   /// [google.cloud.websecurityscanner.v1.CrawledUrl]:
   /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/crawled_url.proto#L30}
+  /// [google.cloud.websecurityscanner.v1.ListCrawledUrlsRequest]:
+  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L256}
   ///
   StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
   ListCrawledUrls(
@@ -291,10 +291,10 @@ class WebSecurityScannerClient {
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::Finding,google/cloud/websecurityscanner/v1/finding.proto#L33}
   ///
-  /// [google.cloud.websecurityscanner.v1.GetFindingRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L284}
   /// [google.cloud.websecurityscanner.v1.Finding]:
   /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/finding.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.GetFindingRequest]:
+  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L284}
   ///
   StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
       google::cloud::websecurityscanner::v1::GetFindingRequest const& request,
@@ -310,10 +310,10 @@ class WebSecurityScannerClient {
   /// @return
   /// @googleapis_link{google::cloud::websecurityscanner::v1::Finding,google/cloud/websecurityscanner/v1/finding.proto#L33}
   ///
-  /// [google.cloud.websecurityscanner.v1.ListFindingsRequest]:
-  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L292}
   /// [google.cloud.websecurityscanner.v1.Finding]:
   /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/finding.proto#L33}
+  /// [google.cloud.websecurityscanner.v1.ListFindingsRequest]:
+  /// @googleapis_reference_link{google/cloud/websecurityscanner/v1/web_security_scanner.proto#L292}
   ///
   StreamRange<google::cloud::websecurityscanner::v1::Finding> ListFindings(
       google::cloud::websecurityscanner::v1::ListFindingsRequest request,

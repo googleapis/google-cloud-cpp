@@ -21,6 +21,7 @@
 #include "google/cloud/automl/internal/auto_ml_connection_impl.h"
 #include "google/cloud/automl/internal/auto_ml_option_defaults.h"
 #include "google/cloud/automl/internal/auto_ml_stub_factory.h"
+#include "google/cloud/automl/internal/auto_ml_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -169,8 +170,9 @@ std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       automl_internal::CreateDefaultAutoMlStub(background->cq(), options);
-  return std::make_shared<automl_internal::AutoMlConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return automl_internal::MakeAutoMlTracingConnection(
+      std::make_shared<automl_internal::AutoMlConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

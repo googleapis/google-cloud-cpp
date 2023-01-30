@@ -230,10 +230,12 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
+  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
       std::string const& query, Options opts = {});
@@ -258,10 +260,12 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.GetProject]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L49}
+  /// [google.cloud.resourcemanager.v3.SearchProjectsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L444}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Project> SearchProjects(
       google::cloud::resourcemanager::v3::SearchProjectsRequest request,
@@ -333,10 +337,10 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::Project const& project,
@@ -357,10 +361,10 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UpdateProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L562}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
@@ -475,6 +479,8 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       std::string const& name, Options opts = {});
@@ -525,6 +531,8 @@ class ProjectsClient {
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L605}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.Projects.SearchProjects]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L79}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
@@ -549,10 +557,10 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       std::string const& name, Options opts = {});
@@ -575,10 +583,10 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Project,google/cloud/resourcemanager/v3/projects.proto#L285}
   ///
-  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   /// [google.cloud.resourcemanager.v3.Project]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L285}
+  /// [google.cloud.resourcemanager.v3.UndeleteProjectRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/projects.proto#L624}
   ///
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
@@ -682,10 +690,10 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -744,10 +752,10 @@ class ProjectsClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

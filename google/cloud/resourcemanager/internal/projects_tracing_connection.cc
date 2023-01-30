@@ -122,6 +122,17 @@ ProjectsTracingConnection::TestIamPermissions(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<resourcemanager::ProjectsConnection>
+MakeProjectsTracingConnection(
+    std::shared_ptr<resourcemanager::ProjectsConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ProjectsTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
 }  // namespace cloud

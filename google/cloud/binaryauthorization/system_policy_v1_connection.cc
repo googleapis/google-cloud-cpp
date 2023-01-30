@@ -20,6 +20,7 @@
 #include "google/cloud/binaryauthorization/internal/system_policy_v1_connection_impl.h"
 #include "google/cloud/binaryauthorization/internal/system_policy_v1_option_defaults.h"
 #include "google/cloud/binaryauthorization/internal/system_policy_v1_stub_factory.h"
+#include "google/cloud/binaryauthorization/internal/system_policy_v1_tracing_connection.h"
 #include "google/cloud/binaryauthorization/system_policy_v1_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -51,9 +52,10 @@ std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = binaryauthorization_internal::CreateDefaultSystemPolicyV1Stub(
       background->cq(), options);
-  return std::make_shared<
-      binaryauthorization_internal::SystemPolicyV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return binaryauthorization_internal::MakeSystemPolicyV1TracingConnection(
+      std::make_shared<
+          binaryauthorization_internal::SystemPolicyV1ConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

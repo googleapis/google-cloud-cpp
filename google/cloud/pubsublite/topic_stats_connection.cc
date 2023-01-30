@@ -20,6 +20,7 @@
 #include "google/cloud/pubsublite/internal/topic_stats_connection_impl.h"
 #include "google/cloud/pubsublite/internal/topic_stats_option_defaults.h"
 #include "google/cloud/pubsublite/internal/topic_stats_stub_factory.h"
+#include "google/cloud/pubsublite/internal/topic_stats_tracing_connection.h"
 #include "google/cloud/pubsublite/topic_stats_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -63,8 +64,9 @@ std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = pubsublite_internal::CreateDefaultTopicStatsServiceStub(
       background->cq(), options);
-  return std::make_shared<pubsublite_internal::TopicStatsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return pubsublite_internal::MakeTopicStatsServiceTracingConnection(
+      std::make_shared<pubsublite_internal::TopicStatsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

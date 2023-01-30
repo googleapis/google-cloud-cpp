@@ -20,6 +20,7 @@
 #include "google/cloud/dialogflow_cx/internal/security_settings_connection_impl.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_option_defaults.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_stub_factory.h"
+#include "google/cloud/dialogflow_cx/internal/security_settings_tracing_connection.h"
 #include "google/cloud/dialogflow_cx/security_settings_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -79,9 +80,10 @@ MakeSecuritySettingsServiceConnection(std::string const& location,
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dialogflow_cx_internal::CreateDefaultSecuritySettingsServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dialogflow_cx_internal::MakeSecuritySettingsServiceTracingConnection(
+      std::make_shared<
+          dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 std::shared_ptr<SecuritySettingsServiceConnection>

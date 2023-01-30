@@ -81,6 +81,17 @@ RealmsServiceTracingConnection::PreviewRealmUpdate(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<gameservices::RealmsServiceConnection>
+MakeRealmsServiceTracingConnection(
+    std::shared_ptr<gameservices::RealmsServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<RealmsServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
 }  // namespace cloud

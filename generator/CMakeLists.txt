@@ -39,6 +39,10 @@ add_library(
     internal/connection_impl_rest_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/format_class_comments.cc
+    internal/format_class_comments.h
+    internal/format_method_comments.cc
+    internal/format_method_comments.h
     internal/forwarding_client_generator.cc
     internal/forwarding_client_generator.h
     internal/forwarding_connection_generator.cc
@@ -69,6 +73,11 @@ add_library(
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/proto_definition_location.h
+    internal/resolve_comment_references.cc
+    internal/resolve_comment_references.h
+    internal/resolve_method_return.cc
+    internal/resolve_method_return.h
     internal/retry_traits_generator.cc
     internal/retry_traits_generator.h
     internal/round_robin_decorator_generator.cc
@@ -148,13 +157,19 @@ function (google_cloud_cpp_generator_define_tests)
 
     add_library(
         google_cloud_cpp_generator_testing # cmake-format: sort
-        testing/fake_source_tree.cc testing/fake_source_tree.h
+        testing/descriptor_pool_fixture.cc
+        testing/descriptor_pool_fixture.h
+        testing/error_collectors.cc
+        testing/error_collectors.h
+        testing/fake_source_tree.cc
+        testing/fake_source_tree.h
         testing/printer_mocks.h)
     google_cloud_cpp_add_common_options(google_cloud_cpp_generator_testing)
     target_link_libraries(
         google_cloud_cpp_generator_testing
         PUBLIC google_cloud_cpp_testing GTest::gmock_main GTest::gmock
-               GTest::gtest protobuf::libprotoc)
+               GTest::gtest google-cloud-cpp::longrunning_operations_protos
+               protobuf::libprotoc)
     create_bazel_config(google_cloud_cpp_generator_testing YEAR "2020")
     target_include_directories(
         google_cloud_cpp_generator_testing PUBLIC ${PROJECT_SOURCE_DIR}
@@ -167,8 +182,12 @@ function (google_cloud_cpp_generator_define_tests)
         generator_test.cc
         internal/codegen_utils_test.cc
         internal/descriptor_utils_test.cc
+        internal/format_class_comments_test.cc
+        internal/format_method_comments_test.cc
         internal/predicate_utils_test.cc
         internal/printer_test.cc
+        internal/resolve_comment_references_test.cc
+        internal/resolve_method_return_test.cc
         internal/scaffold_generator_test.cc
         internal/service_code_generator_test.cc)
 

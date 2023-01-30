@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+///
 class SessionEntityTypesClient {
  public:
   explicit SessionEntityTypesClient(
@@ -266,10 +269,10 @@ class SessionEntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   UpdateSessionEntityType(
@@ -287,10 +290,10 @@ class SessionEntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   UpdateSessionEntityType(

@@ -405,10 +405,10 @@ class OsConfigServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
-  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   /// [google.cloud.osconfig.v1.PatchDeployment]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
       google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
@@ -424,10 +424,10 @@ class OsConfigServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
-  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   /// [google.cloud.osconfig.v1.PatchDeployment]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.UpdatePatchDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L307}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
       google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request,
@@ -445,10 +445,10 @@ class OsConfigServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
-  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   /// [google.cloud.osconfig.v1.PatchDeployment]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
       std::string const& name, Options opts = {});
@@ -464,10 +464,10 @@ class OsConfigServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
-  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   /// [google.cloud.osconfig.v1.PatchDeployment]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.PausePatchDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L318}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
       google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request,
@@ -485,10 +485,10 @@ class OsConfigServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
-  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   /// [google.cloud.osconfig.v1.PatchDeployment]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
       std::string const& name, Options opts = {});
@@ -504,10 +504,10 @@ class OsConfigServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::osconfig::v1::PatchDeployment,google/cloud/osconfig/v1/patch_deployments.proto#L41}
   ///
-  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   /// [google.cloud.osconfig.v1.PatchDeployment]:
   /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L41}
+  /// [google.cloud.osconfig.v1.ResumePatchDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/osconfig/v1/patch_deployments.proto#L330}
   ///
   StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
       google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request,

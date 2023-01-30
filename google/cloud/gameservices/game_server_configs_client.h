@@ -101,10 +101,10 @@ class GameServerConfigsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L141}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L29}
   /// [google.cloud.gaming.v1.GameServerConfig]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L141}
+  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L29}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerConfig>
   ListGameServerConfigs(std::string const& parent, Options opts = {});
@@ -120,10 +120,10 @@ class GameServerConfigsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L141}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L29}
   /// [google.cloud.gaming.v1.GameServerConfig]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L141}
+  /// [google.cloud.gaming.v1.ListGameServerConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L29}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerConfig>
   ListGameServerConfigs(
@@ -141,10 +141,10 @@ class GameServerConfigsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L141}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L71}
   /// [google.cloud.gaming.v1.GameServerConfig]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L141}
+  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L71}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
       std::string const& name, Options opts = {});
@@ -159,10 +159,10 @@ class GameServerConfigsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerConfig,google/cloud/gaming/v1/game_server_configs.proto#L141}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L71}
   /// [google.cloud.gaming.v1.GameServerConfig]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L141}
+  /// [google.cloud.gaming.v1.GetGameServerConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_configs.proto#L71}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerConfig> GetGameServerConfig(
       google::cloud::gaming::v1::GetGameServerConfigRequest const& request,

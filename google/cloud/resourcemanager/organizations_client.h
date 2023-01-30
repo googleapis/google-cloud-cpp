@@ -155,10 +155,10 @@ class OrganizationsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// [google.cloud.resourcemanager.v3.Organization]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
+  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(std::string const& query, Options opts = {});
@@ -179,10 +179,10 @@ class OrganizationsClient {
   /// @return
   /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
-  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// [google.cloud.resourcemanager.v3.Organization]:
   /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
+  /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(
@@ -257,10 +257,10 @@ class OrganizationsClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
                                                  Options opts = {});
@@ -281,10 +281,10 @@ class OrganizationsClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

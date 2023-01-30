@@ -108,10 +108,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGateway,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.ListClientGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L153}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGateway]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
+  /// [google.cloud.beyondcorp.clientgateways.v1.ListClientGatewaysRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L153}
   ///
   StreamRange<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
   ListClientGateways(std::string const& parent, Options opts = {});
@@ -126,10 +126,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGateway,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.ListClientGatewaysRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L153}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGateway]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
+  /// [google.cloud.beyondcorp.clientgateways.v1.ListClientGatewaysRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L153}
   ///
   StreamRange<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
   ListClientGateways(
@@ -146,10 +146,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGateway,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.GetClientGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L189}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGateway]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
+  /// [google.cloud.beyondcorp.clientgateways.v1.GetClientGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L189}
   ///
   StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
   GetClientGateway(std::string const& name, Options opts = {});
@@ -164,10 +164,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGateway,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.GetClientGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L189}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGateway]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
+  /// [google.cloud.beyondcorp.clientgateways.v1.GetClientGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L189}
   ///
   StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
   GetClientGateway(google::cloud::beyondcorp::clientgateways::v1::
@@ -189,10 +189,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGateway,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.CreateClientGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L200}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGateway]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
+  /// [google.cloud.beyondcorp.clientgateways.v1.CreateClientGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L200}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>>
   CreateClientGateway(
@@ -211,10 +211,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGateway,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.CreateClientGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L200}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGateway]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L97}
+  /// [google.cloud.beyondcorp.clientgateways.v1.CreateClientGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L200}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>>
   CreateClientGateway(google::cloud::beyondcorp::clientgateways::v1::
@@ -230,10 +230,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGatewayOperationMetadata,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L269}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.DeleteClientGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L239}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGatewayOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L269}
+  /// [google.cloud.beyondcorp.clientgateways.v1.DeleteClientGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L239}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::
                       ClientGatewayOperationMetadata>>
@@ -249,10 +249,10 @@ class ClientGatewaysServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::beyondcorp::clientgateways::v1::ClientGatewayOperationMetadata,google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L269}
   ///
-  /// [google.cloud.beyondcorp.clientgateways.v1.DeleteClientGatewayRequest]:
-  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L239}
   /// [google.cloud.beyondcorp.clientgateways.v1.ClientGatewayOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L269}
+  /// [google.cloud.beyondcorp.clientgateways.v1.DeleteClientGatewayRequest]:
+  /// @googleapis_reference_link{google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto#L239}
   ///
   future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::
                       ClientGatewayOperationMetadata>>

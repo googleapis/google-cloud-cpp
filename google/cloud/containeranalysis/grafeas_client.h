@@ -293,10 +293,10 @@ class GrafeasClient {
   /// @return
   /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
   ///
-  /// [grafeas.v1.UpdateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L383}
   /// [grafeas.v1.Occurrence]:
   /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// [grafeas.v1.UpdateOccurrenceRequest]:
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L383}
   ///
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
       std::string const& name, grafeas::v1::Occurrence const& occurrence,
@@ -312,10 +312,10 @@ class GrafeasClient {
   /// @return
   /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
   ///
-  /// [grafeas.v1.UpdateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L383}
   /// [grafeas.v1.Occurrence]:
   /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// [grafeas.v1.UpdateOccurrenceRequest]:
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L383}
   ///
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
       grafeas::v1::UpdateOccurrenceRequest const& request, Options opts = {});
@@ -542,10 +542,10 @@ class GrafeasClient {
   ///     backoff policies.
   /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
   ///
-  /// [grafeas.v1.UpdateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L471}
   /// [grafeas.v1.Note]:
   /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// [grafeas.v1.UpdateNoteRequest]:
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L471}
   ///
   StatusOr<grafeas::v1::Note> UpdateNote(
       std::string const& name, grafeas::v1::Note const& note,
@@ -560,10 +560,10 @@ class GrafeasClient {
   ///     backoff policies.
   /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
   ///
-  /// [grafeas.v1.UpdateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L471}
   /// [grafeas.v1.Note]:
   /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// [grafeas.v1.UpdateNoteRequest]:
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L471}
   ///
   StatusOr<grafeas::v1::Note> UpdateNote(
       grafeas::v1::UpdateNoteRequest const& request, Options opts = {});

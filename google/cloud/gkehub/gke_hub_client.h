@@ -73,6 +73,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.gkehub.v1.Feature]:
+/// @googleapis_link_reference{google/cloud/gkehub/v1/feature.proto#L34}
+/// [google.cloud.gkehub.v1.Membership]:
+/// @googleapis_link_reference{google/cloud/gkehub/v1/membership.proto#L32}
+///
 class GkeHubClient {
  public:
   explicit GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
@@ -146,10 +151,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
-  /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L435}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
+  /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L435}
   ///
   StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
       std::string const& parent, Options opts = {});
@@ -164,10 +169,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
-  /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L435}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
+  /// [google.cloud.gkehub.v1.ListFeaturesRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L435}
   ///
   StreamRange<google::cloud::gkehub::v1::Feature> ListFeatures(
       google::cloud::gkehub::v1::ListFeaturesRequest request,
@@ -220,10 +225,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
-  /// [google.cloud.gkehub.v1.GetFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L489}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
+  /// [google.cloud.gkehub.v1.GetFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L489}
   ///
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
       std::string const& name, Options opts = {});
@@ -238,10 +243,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
-  /// [google.cloud.gkehub.v1.GetFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L489}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
+  /// [google.cloud.gkehub.v1.GetFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L489}
   ///
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
       google::cloud::gkehub::v1::GetFeatureRequest const& request,
@@ -448,10 +453,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
-  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
+  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
       std::string const& name,
@@ -468,10 +473,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Membership,google/cloud/gkehub/v1/membership.proto#L32}
   ///
-  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
   /// [google.cloud.gkehub.v1.Membership]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/membership.proto#L32}
+  /// [google.cloud.gkehub.v1.UpdateMembershipRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L325}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
@@ -495,10 +500,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
-  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L563}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
+  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L563}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       std::string const& name,
@@ -515,10 +520,10 @@ class GkeHubClient {
   /// @return
   /// @googleapis_link{google::cloud::gkehub::v1::Feature,google/cloud/gkehub/v1/feature.proto#L34}
   ///
-  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
-  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L563}
   /// [google.cloud.gkehub.v1.Feature]:
   /// @googleapis_reference_link{google/cloud/gkehub/v1/feature.proto#L34}
+  /// [google.cloud.gkehub.v1.UpdateFeatureRequest]:
+  /// @googleapis_reference_link{google/cloud/gkehub/v1/service.proto#L563}
   ///
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request,

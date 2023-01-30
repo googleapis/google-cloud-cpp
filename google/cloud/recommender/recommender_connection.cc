@@ -20,6 +20,7 @@
 #include "google/cloud/recommender/internal/recommender_connection_impl.h"
 #include "google/cloud/recommender/internal/recommender_option_defaults.h"
 #include "google/cloud/recommender/internal/recommender_stub_factory.h"
+#include "google/cloud/recommender/internal/recommender_tracing_connection.h"
 #include "google/cloud/recommender/recommender_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -121,8 +122,9 @@ std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = recommender_internal::CreateDefaultRecommenderStub(
       background->cq(), options);
-  return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return recommender_internal::MakeRecommenderTracingConnection(
+      std::make_shared<recommender_internal::RecommenderConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

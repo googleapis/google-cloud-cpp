@@ -65,6 +65,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.secretmanager.v1.Secret]:
+/// @googleapis_link_reference{google/cloud/secretmanager/v1/resources.proto#L40}
+/// [google.cloud.secretmanager.v1.SecretVersion]:
+/// @googleapis_link_reference{google/cloud/secretmanager/v1/resources.proto#L144}
+///
 class SecretManagerServiceClient {
  public:
   explicit SecretManagerServiceClient(
@@ -155,6 +160,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
   /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       std::string const& parent, std::string const& secret_id,
@@ -176,6 +183,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
   /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       google::cloud::secretmanager::v1::CreateSecretRequest const& request,
@@ -199,6 +208,8 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L270}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
@@ -221,6 +232,8 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L270}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
@@ -278,10 +291,10 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::Secret const& secret,
@@ -298,10 +311,10 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
-  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   /// [google.cloud.secretmanager.v1.Secret]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
@@ -318,6 +331,8 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   Status DeleteSecret(std::string const& name, Options opts = {});
 
@@ -331,6 +346,8 @@ class SecretManagerServiceClient {
   ///
   /// [google.cloud.secretmanager.v1.DeleteSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L390}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   Status DeleteSecret(
       google::cloud::secretmanager::v1::DeleteSecretRequest const& request,
@@ -447,6 +464,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L363}
   /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
   AccessSecretVersion(std::string const& name, Options opts = {});
@@ -469,6 +488,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L363}
   /// [google.cloud.secretmanager.v1.AccessSecretVersionResponse]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L378}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
   AccessSecretVersion(
@@ -496,6 +517,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DisableSecretVersion(std::string const& name, Options opts = {});
@@ -518,6 +541,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DisableSecretVersion(
@@ -545,6 +570,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
       std::string const& name, Options opts = {});
@@ -567,6 +594,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
       google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
@@ -594,6 +623,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DestroySecretVersion(std::string const& name, Options opts = {});
@@ -617,6 +648,8 @@ class SecretManagerServiceClient {
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
+  /// [google.cloud.secretmanager.v1.SecretVersion.state]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L198}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DestroySecretVersion(
@@ -640,10 +673,14 @@ class SecretManagerServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.cloud.secretmanager.v1.Secret]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
+  /// [google.cloud.secretmanager.v1.SecretVersion]:
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

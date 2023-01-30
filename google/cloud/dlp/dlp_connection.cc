@@ -21,6 +21,7 @@
 #include "google/cloud/dlp/internal/dlp_connection_impl.h"
 #include "google/cloud/dlp/internal/dlp_option_defaults.h"
 #include "google/cloud/dlp/internal/dlp_stub_factory.h"
+#include "google/cloud/dlp/internal/dlp_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -248,8 +249,9 @@ std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       dlp_internal::CreateDefaultDlpServiceStub(background->cq(), options);
-  return std::make_shared<dlp_internal::DlpServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dlp_internal::MakeDlpServiceTracingConnection(
+      std::make_shared<dlp_internal::DlpServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

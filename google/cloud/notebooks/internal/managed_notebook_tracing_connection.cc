@@ -126,6 +126,18 @@ ManagedNotebookServiceTracingConnection::DiagnoseRuntime(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<notebooks::ManagedNotebookServiceConnection>
+MakeManagedNotebookServiceTracingConnection(
+    std::shared_ptr<notebooks::ManagedNotebookServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ManagedNotebookServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
 }  // namespace cloud

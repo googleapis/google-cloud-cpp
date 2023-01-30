@@ -47,6 +47,10 @@ add_library(
     internal/logging_service_v2_stub.h
     internal/logging_service_v2_stub_factory.cc
     internal/logging_service_v2_stub_factory.h
+    internal/logging_service_v2_tracing_connection.cc
+    internal/logging_service_v2_tracing_connection.h
+    internal/logging_service_v2_tracing_stub.cc
+    internal/logging_service_v2_tracing_stub.h
     internal/streaming.cc
     logging_service_v2_client.cc
     logging_service_v2_client.h

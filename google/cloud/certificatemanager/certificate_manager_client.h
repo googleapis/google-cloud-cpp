@@ -124,10 +124,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L354}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.ListCertificatesRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L354}
   ///
   StreamRange<google::cloud::certificatemanager::v1::Certificate>
   ListCertificates(std::string const& parent, Options opts = {});
@@ -142,10 +142,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificatesRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L354}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.ListCertificatesRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L354}
   ///
   StreamRange<google::cloud::certificatemanager::v1::Certificate>
   ListCertificates(
@@ -163,10 +163,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L396}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.GetCertificateRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L396}
   ///
   StatusOr<google::cloud::certificatemanager::v1::Certificate> GetCertificate(
       std::string const& name, Options opts = {});
@@ -181,10 +181,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L396}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.GetCertificateRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L396}
   ///
   StatusOr<google::cloud::certificatemanager::v1::Certificate> GetCertificate(
       google::cloud::certificatemanager::v1::GetCertificateRequest const&
@@ -204,10 +204,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L408}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L408}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   CreateCertificate(
@@ -225,10 +225,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L408}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L408}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   CreateCertificate(
@@ -249,10 +249,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L426}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.UpdateCertificateRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L426}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   UpdateCertificate(
@@ -269,10 +269,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::Certificate,google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateCertificateRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L426}
   /// [google.cloud.certificatemanager.v1.Certificate]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L775}
+  /// [google.cloud.certificatemanager.v1.UpdateCertificateRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L426}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   UpdateCertificate(
@@ -331,10 +331,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificateMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L450}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.ListCertificateMapsRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L450}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
   ListCertificateMaps(std::string const& parent, Options opts = {});
@@ -349,10 +349,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificateMapsRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L450}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.ListCertificateMapsRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L450}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
   ListCertificateMaps(
@@ -370,10 +370,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateMapRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L492}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.GetCertificateMapRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L492}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
   GetCertificateMap(std::string const& name, Options opts = {});
@@ -388,10 +388,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateMapRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L492}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.GetCertificateMapRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L492}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
   GetCertificateMap(
@@ -414,10 +414,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateMapRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L504}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateMapRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L504}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   CreateCertificateMap(
@@ -436,10 +436,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateMapRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L504}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateMapRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L504}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   CreateCertificateMap(
@@ -461,10 +461,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L522}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L522}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   UpdateCertificateMap(
@@ -482,10 +482,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMap,google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L522}
   /// [google.cloud.certificatemanager.v1.CertificateMap]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L998}
+  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L522}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   UpdateCertificateMap(
@@ -549,10 +549,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificateMapEntriesRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L546}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.ListCertificateMapEntriesRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L546}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
   ListCertificateMapEntries(std::string const& parent, Options opts = {});
@@ -567,10 +567,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificateMapEntriesRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L546}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.ListCertificateMapEntriesRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L546}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
   ListCertificateMapEntries(
@@ -590,10 +590,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateMapEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L593}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.GetCertificateMapEntryRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L593}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
   GetCertificateMapEntry(std::string const& name, Options opts = {});
@@ -608,10 +608,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateMapEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L593}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.GetCertificateMapEntryRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L593}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
   GetCertificateMapEntry(google::cloud::certificatemanager::v1::
@@ -633,10 +633,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateMapEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L605}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateMapEntryRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L605}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   CreateCertificateMapEntry(
@@ -655,10 +655,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateMapEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L605}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateMapEntryRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L605}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   CreateCertificateMapEntry(google::cloud::certificatemanager::v1::
@@ -679,10 +679,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L624}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapEntryRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L624}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   UpdateCertificateMapEntry(
@@ -700,10 +700,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateMapEntry,google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L624}
   /// [google.cloud.certificatemanager.v1.CertificateMapEntry]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1061}
+  /// [google.cloud.certificatemanager.v1.UpdateCertificateMapEntryRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L624}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   UpdateCertificateMapEntry(google::cloud::certificatemanager::v1::
@@ -761,10 +761,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
-  /// [google.cloud.certificatemanager.v1.ListDnsAuthorizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L649}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
+  /// [google.cloud.certificatemanager.v1.ListDnsAuthorizationsRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L649}
   ///
   StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
   ListDnsAuthorizations(std::string const& parent, Options opts = {});
@@ -779,10 +779,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
-  /// [google.cloud.certificatemanager.v1.ListDnsAuthorizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L649}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
+  /// [google.cloud.certificatemanager.v1.ListDnsAuthorizationsRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L649}
   ///
   StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
   ListDnsAuthorizations(
@@ -801,10 +801,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
-  /// [google.cloud.certificatemanager.v1.GetDnsAuthorizationRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L691}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
+  /// [google.cloud.certificatemanager.v1.GetDnsAuthorizationRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L691}
   ///
   StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
   GetDnsAuthorization(std::string const& name, Options opts = {});
@@ -819,10 +819,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
-  /// [google.cloud.certificatemanager.v1.GetDnsAuthorizationRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L691}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
+  /// [google.cloud.certificatemanager.v1.GetDnsAuthorizationRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L691}
   ///
   StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
   GetDnsAuthorization(
@@ -891,10 +891,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateDnsAuthorizationRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L722}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
+  /// [google.cloud.certificatemanager.v1.UpdateDnsAuthorizationRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L722}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   UpdateDnsAuthorization(
@@ -912,10 +912,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::DnsAuthorization,google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
   ///
-  /// [google.cloud.certificatemanager.v1.UpdateDnsAuthorizationRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L722}
   /// [google.cloud.certificatemanager.v1.DnsAuthorization]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L1120}
+  /// [google.cloud.certificatemanager.v1.UpdateDnsAuthorizationRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_manager.proto#L722}
   ///
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   UpdateDnsAuthorization(google::cloud::certificatemanager::v1::
@@ -972,10 +972,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateIssuanceConfig,google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificateIssuanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L37}
   /// [google.cloud.certificatemanager.v1.CertificateIssuanceConfig]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
+  /// [google.cloud.certificatemanager.v1.ListCertificateIssuanceConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L37}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
   ListCertificateIssuanceConfigs(std::string const& parent, Options opts = {});
@@ -990,10 +990,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateIssuanceConfig,google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
   ///
-  /// [google.cloud.certificatemanager.v1.ListCertificateIssuanceConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L37}
   /// [google.cloud.certificatemanager.v1.CertificateIssuanceConfig]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
+  /// [google.cloud.certificatemanager.v1.ListCertificateIssuanceConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L37}
   ///
   StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
   ListCertificateIssuanceConfigs(
@@ -1012,10 +1012,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateIssuanceConfig,google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateIssuanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L80}
   /// [google.cloud.certificatemanager.v1.CertificateIssuanceConfig]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
+  /// [google.cloud.certificatemanager.v1.GetCertificateIssuanceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L80}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
   GetCertificateIssuanceConfig(std::string const& name, Options opts = {});
@@ -1030,10 +1030,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateIssuanceConfig,google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
   ///
-  /// [google.cloud.certificatemanager.v1.GetCertificateIssuanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L80}
   /// [google.cloud.certificatemanager.v1.CertificateIssuanceConfig]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
+  /// [google.cloud.certificatemanager.v1.GetCertificateIssuanceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L80}
   ///
   StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
   GetCertificateIssuanceConfig(
@@ -1056,10 +1056,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateIssuanceConfig,google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateIssuanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L92}
   /// [google.cloud.certificatemanager.v1.CertificateIssuanceConfig]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateIssuanceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L92}
   ///
   future<StatusOr<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
@@ -1079,10 +1079,10 @@ class CertificateManagerClient {
   /// @return
   /// @googleapis_link{google::cloud::certificatemanager::v1::CertificateIssuanceConfig,google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
   ///
-  /// [google.cloud.certificatemanager.v1.CreateCertificateIssuanceConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L92}
   /// [google.cloud.certificatemanager.v1.CertificateIssuanceConfig]:
   /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L124}
+  /// [google.cloud.certificatemanager.v1.CreateCertificateIssuanceConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/certificatemanager/v1/certificate_issuance_config.proto#L92}
   ///
   future<StatusOr<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>

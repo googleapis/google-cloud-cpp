@@ -58,6 +58,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Page]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/page.proto#L115}
+///
 class PagesClient {
  public:
   explicit PagesClient(std::shared_ptr<PagesConnection> connection,
@@ -222,10 +225,10 @@ class PagesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
       google::cloud::dialogflow::cx::v3::Page const& page,
@@ -245,10 +248,10 @@ class PagesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
       google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request,

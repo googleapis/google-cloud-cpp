@@ -85,6 +85,18 @@ Status AutoscalingPolicyServiceTracingConnection::DeleteAutoscalingPolicy(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<dataproc::AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceTracingConnection(
+    std::shared_ptr<dataproc::AutoscalingPolicyServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<AutoscalingPolicyServiceTracingConnection>(
+        std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
 }  // namespace cloud

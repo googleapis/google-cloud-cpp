@@ -214,10 +214,10 @@ class ServicesClient {
   /// @return
   /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
-  /// [google.cloud.run.v2.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   /// [google.cloud.run.v2.Service]:
   /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [google.cloud.run.v2.UpdateServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
       google::cloud::run::v2::Service const& service, Options opts = {});
@@ -232,10 +232,10 @@ class ServicesClient {
   /// @return
   /// @googleapis_link{google::cloud::run::v2::Service,google/cloud/run/v2/service.proto#L274}
   ///
-  /// [google.cloud.run.v2.UpdateServiceRequest]:
-  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   /// [google.cloud.run.v2.Service]:
   /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L274}
+  /// [google.cloud.run.v2.UpdateServiceRequest]:
+  /// @googleapis_reference_link{google/cloud/run/v2/service.proto#L191}
   ///
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
       google::cloud::run::v2::UpdateServiceRequest const& request,
@@ -313,10 +313,10 @@ class ServicesClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});

@@ -156,10 +156,10 @@ class ProfilerServiceClient {
   /// @return
   /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L125}
   ///
-  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L113}
   /// [google.devtools.cloudprofiler.v2.Profile]:
   /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L125}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L113}
   ///
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request,

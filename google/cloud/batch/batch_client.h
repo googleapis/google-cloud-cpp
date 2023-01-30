@@ -218,10 +218,10 @@ class BatchServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
-  /// [google.cloud.batch.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [google.cloud.batch.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   ///
   StreamRange<google::cloud::batch::v1::Job> ListJobs(std::string const& parent,
                                                       Options opts = {});
@@ -236,10 +236,10 @@ class BatchServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::batch::v1::Job,google/cloud/batch/v1/job.proto#L35}
   ///
-  /// [google.cloud.batch.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   /// [google.cloud.batch.v1.Job]:
   /// @googleapis_reference_link{google/cloud/batch/v1/job.proto#L35}
+  /// [google.cloud.batch.v1.ListJobsRequest]:
+  /// @googleapis_reference_link{google/cloud/batch/v1/batch.proto#L174}
   ///
   StreamRange<google::cloud::batch::v1::Job> ListJobs(
       google::cloud::batch::v1::ListJobsRequest request, Options opts = {});

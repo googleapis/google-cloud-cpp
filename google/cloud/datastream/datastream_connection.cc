@@ -21,6 +21,7 @@
 #include "google/cloud/datastream/internal/datastream_connection_impl.h"
 #include "google/cloud/datastream/internal/datastream_option_defaults.h"
 #include "google/cloud/datastream/internal/datastream_stub_factory.h"
+#include "google/cloud/datastream/internal/datastream_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -223,8 +224,9 @@ std::shared_ptr<DatastreamConnection> MakeDatastreamConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = datastream_internal::CreateDefaultDatastreamStub(background->cq(),
                                                                options);
-  return std::make_shared<datastream_internal::DatastreamConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return datastream_internal::MakeDatastreamTracingConnection(
+      std::make_shared<datastream_internal::DatastreamConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

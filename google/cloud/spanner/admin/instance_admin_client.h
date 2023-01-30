@@ -119,10 +119,10 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L671}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L671}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(std::string const& parent, Options opts = {});
@@ -137,10 +137,10 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L671}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L671}
   ///
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
   ListInstanceConfigs(
@@ -251,10 +251,22 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1055}
   /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L720}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L723}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L559}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   CreateInstanceConfig(
@@ -314,10 +326,22 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1055}
   /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L720}
+  /// [google.spanner.admin.instance.v1.CreateInstanceConfigRequest.parent]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L723}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L559}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   CreateInstanceConfig(
@@ -390,10 +414,24 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L750}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L492}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L559}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1070}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1080}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L750}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   UpdateInstanceConfig(
@@ -454,10 +492,24 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::InstanceConfig,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
   ///
-  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L750}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.instance.v1.InstanceConfig]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L458}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L492}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.reconciling]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L559}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1070}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata.cancel_time]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1080}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceConfigRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L750}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   UpdateInstanceConfig(
@@ -484,6 +536,8 @@ class InstanceAdminClient {
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L775}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L492}
   ///
   Status DeleteInstanceConfig(std::string const& name, Options opts = {});
 
@@ -504,6 +558,8 @@ class InstanceAdminClient {
   ///
   /// [google.spanner.admin.instance.v1.DeleteInstanceConfigRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L775}
+  /// [google.spanner.admin.instance.v1.InstanceConfig.name]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L492}
   ///
   Status DeleteInstanceConfig(
       google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
@@ -530,10 +586,12 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L802}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L802}
   ///
   StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
       std::string const& parent, Options opts = {});
@@ -558,10 +616,12 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L802}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L802}
   ///
   StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
       google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
@@ -579,10 +639,10 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
-  /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L928}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
+  /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L928}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -597,10 +657,10 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
-  /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L928}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
+  /// [google.spanner.admin.instance.v1.ListInstancesRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L928}
   ///
   StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request,
@@ -695,6 +755,14 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1015}
   /// [google.spanner.admin.instance.v1.CreateInstanceRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L906}
   /// [google.spanner.admin.instance.v1.Instance]:
@@ -748,6 +816,14 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.spanner.admin.instance.v1.CreateInstanceMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1015}
   /// [google.spanner.admin.instance.v1.CreateInstanceRequest]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L906}
   /// [google.spanner.admin.instance.v1.Instance]:
@@ -816,10 +892,22 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L984}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
+  /// [google.spanner.admin.instance.v1.Instance.name]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L591}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1035}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1047}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L984}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance,
@@ -875,10 +963,22 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::spanner::admin::instance::v1::Instance,google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
   ///
-  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L984}
+  /// [google.longrunning.Operation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.spanner.admin.instance.v1.Instance]:
   /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L566}
+  /// [google.spanner.admin.instance.v1.Instance.name]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L591}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1035}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceMetadata.cancel_time]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1047}
+  /// [google.spanner.admin.instance.v1.UpdateInstanceRequest]:
+  /// @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L984}
   ///
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(
@@ -956,10 +1056,12 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L104}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& resource, google::iam::v1::Policy const& policy,
@@ -1003,10 +1105,12 @@ class InstanceAdminClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L104}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -1028,6 +1132,8 @@ class InstanceAdminClient {
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.GetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
@@ -1050,6 +1156,8 @@ class InstanceAdminClient {
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.GetIamPolicyRequest.resource]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///

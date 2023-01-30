@@ -131,6 +131,17 @@ AccessApprovalTracingConnection::GetAccessApprovalServiceAccount(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<accessapproval_v1::AccessApprovalConnection>
+MakeAccessApprovalTracingConnection(
+    std::shared_ptr<accessapproval_v1::AccessApprovalConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<AccessApprovalTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_v1_internal
 }  // namespace cloud

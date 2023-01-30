@@ -132,6 +132,16 @@ class KeyManagementServiceTracingConnection
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<kms::KeyManagementServiceConnection>
+MakeKeyManagementServiceTracingConnection(
+    std::shared_ptr<kms::KeyManagementServiceConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
 }  // namespace cloud

@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.v2.Agent]:
+/// @googleapis_link_reference{google/cloud/dialogflow/v2/agent.proto#L258}
+///
 class AgentsClient {
  public:
   explicit AgentsClient(std::shared_ptr<AgentsConnection> connection,
@@ -94,10 +97,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       std::string const& parent, Options opts = {});
@@ -112,10 +115,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.GetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       google::cloud::dialogflow::v2::GetAgentRequest const& request,
@@ -134,10 +137,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::Agent const& agent, Options opts = {});
@@ -156,10 +159,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SetAgentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::SetAgentRequest const& request,
@@ -210,10 +213,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   ///
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       std::string const& parent, Options opts = {});
@@ -234,10 +237,10 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
   ///
-  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   /// [google.cloud.dialogflow.v2.Agent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
   ///
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       google::cloud::dialogflow::v2::SearchAgentsRequest request,
@@ -399,6 +402,8 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
+  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
   /// [google.cloud.dialogflow.v2.ImportAgentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L499}
   /// [google.protobuf.Struct]:
@@ -442,6 +447,8 @@ class AgentsClient {
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
+  /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
   /// [google.cloud.dialogflow.v2.RestoreAgentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L528}
   /// [google.protobuf.Struct]:

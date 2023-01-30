@@ -100,10 +100,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
   ///
-  /// [google.cloud.retail.v2.ListCatalogsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// [google.cloud.retail.v2.ListCatalogsRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   ///
   StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
       std::string const& parent, Options opts = {});
@@ -119,10 +119,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
   ///
-  /// [google.cloud.retail.v2.ListCatalogsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// [google.cloud.retail.v2.ListCatalogsRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L207}
   ///
   StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
       google::cloud::retail::v2::ListCatalogsRequest request,
@@ -147,10 +147,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
   ///
-  /// [google.cloud.retail.v2.UpdateCatalogRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// [google.cloud.retail.v2.UpdateCatalogRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   ///
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
       google::cloud::retail::v2::Catalog const& catalog,
@@ -166,10 +166,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Catalog,google/cloud/retail/v2/catalog.proto#L364}
   ///
-  /// [google.cloud.retail.v2.UpdateCatalogRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   /// [google.cloud.retail.v2.Catalog]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L364}
+  /// [google.cloud.retail.v2.UpdateCatalogRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L258}
   ///
   StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
       google::cloud::retail::v2::UpdateCatalogRequest const& request,
@@ -281,6 +281,8 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L322}
   ///
+  /// [google.cloud.retail.v2.CatalogService.SetDefaultBranch]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L94}
   /// [google.cloud.retail.v2.GetDefaultBranchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L312}
   /// [google.cloud.retail.v2.GetDefaultBranchResponse]:
@@ -301,6 +303,8 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::GetDefaultBranchResponse,google/cloud/retail/v2/catalog_service.proto#L322}
   ///
+  /// [google.cloud.retail.v2.CatalogService.SetDefaultBranch]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L94}
   /// [google.cloud.retail.v2.GetDefaultBranchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L312}
   /// [google.cloud.retail.v2.GetDefaultBranchResponse]:
@@ -321,10 +325,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
   ///
-  /// [google.cloud.retail.v2.GetCompletionConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   /// [google.cloud.retail.v2.CompletionConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// [google.cloud.retail.v2.GetCompletionConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   ///
   StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
       std::string const& name, Options opts = {});
@@ -339,10 +343,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
   ///
-  /// [google.cloud.retail.v2.GetCompletionConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   /// [google.cloud.retail.v2.CompletionConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// [google.cloud.retail.v2.GetCompletionConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L340}
   ///
   StatusOr<google::cloud::retail::v2::CompletionConfig> GetCompletionConfig(
       google::cloud::retail::v2::GetCompletionConfigRequest const& request,
@@ -372,10 +376,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
   ///
-  /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   /// [google.cloud.retail.v2.CompletionConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   ///
   StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
       google::cloud::retail::v2::CompletionConfig const& completion_config,
@@ -391,10 +395,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::CompletionConfig,google/cloud/retail/v2/catalog.proto#L280}
   ///
-  /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   /// [google.cloud.retail.v2.CompletionConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L280}
+  /// [google.cloud.retail.v2.UpdateCompletionConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L354}
   ///
   StatusOr<google::cloud::retail::v2::CompletionConfig> UpdateCompletionConfig(
       google::cloud::retail::v2::UpdateCompletionConfigRequest const& request,
@@ -410,10 +414,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
   ///
-  /// [google.cloud.retail.v2.GetAttributesConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.GetAttributesConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
       std::string const& name, Options opts = {});
@@ -428,10 +432,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
   ///
-  /// [google.cloud.retail.v2.GetAttributesConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.GetAttributesConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L383}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> GetAttributesConfig(
       google::cloud::retail::v2::GetAttributesConfigRequest const& request,
@@ -460,10 +464,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
   ///
-  /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
       google::cloud::retail::v2::AttributesConfig const& attributes_config,
@@ -486,10 +490,10 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
   ///
-  /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.UpdateAttributesConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L397}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> UpdateAttributesConfig(
       google::cloud::retail::v2::UpdateAttributesConfigRequest const& request,
@@ -514,6 +518,8 @@ class CatalogServiceClient {
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L416}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.CatalogAttribute]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> AddCatalogAttribute(
       google::cloud::retail::v2::AddCatalogAttributeRequest const& request,
@@ -534,10 +540,12 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
   ///
-  /// [google.cloud.retail.v2.RemoveCatalogAttributeRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L435}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.CatalogAttribute]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// [google.cloud.retail.v2.RemoveCatalogAttributeRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L435}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> RemoveCatalogAttribute(
       google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request,
@@ -560,10 +568,14 @@ class CatalogServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::AttributesConfig,google/cloud/retail/v2/catalog.proto#L247}
   ///
-  /// [google.cloud.retail.v2.ReplaceCatalogAttributeRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L453}
   /// [google.cloud.retail.v2.AttributesConfig]:
   /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L247}
+  /// [google.cloud.retail.v2.CatalogAttribute]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L89}
+  /// [google.cloud.retail.v2.CatalogAttribute.key]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog.proto#L174}
+  /// [google.cloud.retail.v2.ReplaceCatalogAttributeRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/catalog_service.proto#L453}
   ///
   StatusOr<google::cloud::retail::v2::AttributesConfig> ReplaceCatalogAttribute(
       google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request,

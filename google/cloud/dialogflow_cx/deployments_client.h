@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Deployment]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+///
 class DeploymentsClient {
  public:
   explicit DeploymentsClient(std::shared_ptr<DeploymentsConnection> connection,
@@ -101,10 +104,10 @@ class DeploymentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
       std::string const& parent, Options opts = {});
@@ -120,10 +123,10 @@ class DeploymentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+  /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
       google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request,
@@ -142,10 +145,10 @@ class DeploymentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
       std::string const& name, Options opts = {});
@@ -161,10 +164,10 @@ class DeploymentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
       google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request,

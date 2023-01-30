@@ -102,10 +102,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L30}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.ListGameServerDeploymentsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L30}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerDeployment>
   ListGameServerDeployments(std::string const& parent, Options opts = {});
@@ -120,10 +120,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.ListGameServerDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L30}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.ListGameServerDeploymentsRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L30}
   ///
   StreamRange<google::cloud::gaming::v1::GameServerDeployment>
   ListGameServerDeployments(
@@ -141,10 +141,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L73}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.GetGameServerDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L73}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeployment>
   GetGameServerDeployment(std::string const& name, Options opts = {});
@@ -159,10 +159,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L73}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.GetGameServerDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L73}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeployment>
   GetGameServerDeployment(
@@ -269,10 +269,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L129}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L129}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeployment(
@@ -290,10 +290,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L129}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L129}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeployment(
@@ -312,10 +312,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeploymentRollout,google/cloud/gaming/v1/game_server_deployments.proto#L226}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L86}
   /// [google.cloud.gaming.v1.GameServerDeploymentRollout]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L226}
+  /// [google.cloud.gaming.v1.GetGameServerDeploymentRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L86}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
   GetGameServerDeploymentRollout(std::string const& name, Options opts = {});
@@ -330,10 +330,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeploymentRollout,google/cloud/gaming/v1/game_server_deployments.proto#L226}
   ///
-  /// [google.cloud.gaming.v1.GetGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L86}
   /// [google.cloud.gaming.v1.GameServerDeploymentRollout]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L226}
+  /// [google.cloud.gaming.v1.GetGameServerDeploymentRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L86}
   ///
   StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
   GetGameServerDeploymentRollout(
@@ -361,10 +361,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L142}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L142}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeploymentRollout(
@@ -386,10 +386,10 @@ class GameServerDeploymentsServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::gaming::v1::GameServerDeployment,google/cloud/gaming/v1/game_server_deployments.proto#L180}
   ///
-  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L142}
   /// [google.cloud.gaming.v1.GameServerDeployment]:
   /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L180}
+  /// [google.cloud.gaming.v1.UpdateGameServerDeploymentRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/gaming/v1/game_server_deployments.proto#L142}
   ///
   future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
   UpdateGameServerDeploymentRollout(

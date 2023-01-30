@@ -47,6 +47,7 @@ google_cloud_cpp_storage_grpc_hdrs = [
     "internal/storage_round_robin.h",
     "internal/storage_stub.h",
     "internal/storage_stub_factory.h",
+    "internal/storage_tracing_stub.h",
 ]
 
 google_cloud_cpp_storage_grpc_srcs = [
@@ -78,4 +79,5 @@ google_cloud_cpp_storage_grpc_srcs = [
     "internal/storage_round_robin.cc",
     "internal/storage_stub.cc",
     "internal/storage_stub_factory.cc",
+    "internal/storage_tracing_stub.cc",
 ]

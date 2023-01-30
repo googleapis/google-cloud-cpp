@@ -98,10 +98,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
-  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   ///
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(std::string const& name, Options opts = {});
@@ -117,10 +117,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
-  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   ///
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(
@@ -141,10 +141,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
-  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   ///
   StatusOr<google::api::MonitoredResourceDescriptor>
   GetMonitoredResourceDescriptor(std::string const& name, Options opts = {});
@@ -160,10 +160,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
-  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   ///
   StatusOr<google::api::MonitoredResourceDescriptor>
   GetMonitoredResourceDescriptor(
@@ -184,10 +184,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
-  /// [google.monitoring.v3.ListMetricDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
+  /// [google.monitoring.v3.ListMetricDescriptorsRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
   ///
   StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
       std::string const& name, Options opts = {});
@@ -203,10 +203,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
-  /// [google.monitoring.v3.ListMetricDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
+  /// [google.monitoring.v3.ListMetricDescriptorsRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
   ///
   StreamRange<google::api::MetricDescriptor> ListMetricDescriptors(
       google::monitoring::v3::ListMetricDescriptorsRequest request,
@@ -225,10 +225,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
-  /// [google.monitoring.v3.GetMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
+  /// [google.monitoring.v3.GetMetricDescriptorRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
   ///
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
       std::string const& name, Options opts = {});
@@ -243,10 +243,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
-  /// [google.monitoring.v3.GetMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
+  /// [google.monitoring.v3.GetMetricDescriptorRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
   ///
   StatusOr<google::api::MetricDescriptor> GetMetricDescriptor(
       google::monitoring::v3::GetMetricDescriptorRequest const& request,
@@ -272,10 +272,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
-  /// [google.monitoring.v3.CreateMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
+  /// [google.monitoring.v3.CreateMetricDescriptorRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
   ///
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
       std::string const& name,
@@ -296,10 +296,10 @@ class MetricServiceClient {
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
-  /// [google.monitoring.v3.CreateMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
+  /// [google.monitoring.v3.CreateMetricDescriptorRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
   ///
   StatusOr<google::api::MetricDescriptor> CreateMetricDescriptor(
       google::monitoring::v3::CreateMetricDescriptorRequest const& request,
@@ -471,6 +471,8 @@ class MetricServiceClient {
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.MetricService.CreateTimeSeries]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L148}
   ///
   Status CreateServiceTimeSeries(
       std::string const& name,
@@ -495,6 +497,8 @@ class MetricServiceClient {
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  /// [google.monitoring.v3.MetricService.CreateTimeSeries]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L148}
   ///
   Status CreateServiceTimeSeries(
       google::monitoring::v3::CreateTimeSeriesRequest const& request,

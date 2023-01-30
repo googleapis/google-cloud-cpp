@@ -105,10 +105,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.ListConnectivityTestsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L153}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.ListConnectivityTestsRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L153}
   ///
   StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
   ListConnectivityTests(std::string const& parent, Options opts = {});
@@ -123,10 +123,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.ListConnectivityTestsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L153}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.ListConnectivityTestsRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L153}
   ///
   StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
   ListConnectivityTests(
@@ -144,10 +144,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L201}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L201}
   ///
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
   GetConnectivityTest(std::string const& name, Options opts = {});
@@ -162,10 +162,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L201}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.GetConnectivityTestRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L201}
   ///
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
   GetConnectivityTest(
@@ -206,10 +206,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L208}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L208}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   CreateConnectivityTest(
@@ -240,10 +240,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L208}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.CreateConnectivityTestRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L208}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   CreateConnectivityTest(
@@ -278,10 +278,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L228}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L228}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   UpdateConnectivityTest(
@@ -313,10 +313,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L228}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.UpdateConnectivityTestRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L228}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   UpdateConnectivityTest(
@@ -345,10 +345,10 @@ class ReachabilityServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::networkmanagement::v1::ConnectivityTest,google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
   ///
-  /// [google.cloud.networkmanagement.v1.RerunConnectivityTestRequest]:
-  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L245}
   /// [google.cloud.networkmanagement.v1.ConnectivityTest]:
   /// @googleapis_reference_link{google/cloud/networkmanagement/v1/connectivity_test.proto#L34}
+  /// [google.cloud.networkmanagement.v1.RerunConnectivityTestRequest]:
+  /// @googleapis_reference_link{google/cloud/networkmanagement/v1/reachability.proto#L245}
   ///
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   RerunConnectivityTest(

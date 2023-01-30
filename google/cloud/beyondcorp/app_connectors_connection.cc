@@ -21,6 +21,7 @@
 #include "google/cloud/beyondcorp/internal/app_connectors_connection_impl.h"
 #include "google/cloud/beyondcorp/internal/app_connectors_option_defaults.h"
 #include "google/cloud/beyondcorp/internal/app_connectors_stub_factory.h"
+#include "google/cloud/beyondcorp/internal/app_connectors_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -98,9 +99,9 @@ MakeAppConnectorsServiceConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = beyondcorp_internal::CreateDefaultAppConnectorsServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      beyondcorp_internal::AppConnectorsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return beyondcorp_internal::MakeAppConnectorsServiceTracingConnection(
+      std::make_shared<beyondcorp_internal::AppConnectorsServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

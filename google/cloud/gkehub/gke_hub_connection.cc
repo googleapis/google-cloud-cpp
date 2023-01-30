@@ -21,6 +21,7 @@
 #include "google/cloud/gkehub/internal/gke_hub_connection_impl.h"
 #include "google/cloud/gkehub/internal/gke_hub_option_defaults.h"
 #include "google/cloud/gkehub/internal/gke_hub_stub_factory.h"
+#include "google/cloud/gkehub/internal/gke_hub_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -122,8 +123,9 @@ std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       gkehub_internal::CreateDefaultGkeHubStub(background->cq(), options);
-  return std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return gkehub_internal::MakeGkeHubTracingConnection(
+      std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

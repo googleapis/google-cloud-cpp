@@ -104,10 +104,12 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1157}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.CreateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1157}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       std::string const& project_id, std::string const& region,
@@ -125,10 +127,12 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1157}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.CreateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1157}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       google::cloud::dataproc::v1::CreateClusterRequest const& request,
@@ -204,10 +208,14 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1188}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.ClusterStatus.State]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L816}
+  /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1188}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       std::string const& project_id, std::string const& region,
@@ -230,10 +238,14 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1188}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.ClusterStatus.State]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L816}
+  /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1188}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       google::cloud::dataproc::v1::UpdateClusterRequest const& request,
@@ -249,10 +261,10 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.StopClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1284}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.StopClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1284}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       google::cloud::dataproc::v1::StopClusterRequest const& request,
@@ -268,10 +280,10 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.StartClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1315}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.StartClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1315}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
       google::cloud::dataproc::v1::StartClusterRequest const& request,
@@ -293,10 +305,12 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L95}
   ///
-  /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1346}
   /// [google.cloud.dataproc.v1.ClusterOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
+  /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1346}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(std::string const& project_id, std::string const& region,
@@ -314,10 +328,12 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L95}
   ///
-  /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1346}
   /// [google.cloud.dataproc.v1.ClusterOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
+  /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1346}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
   ///
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(
@@ -338,10 +354,10 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1377}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.GetClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1377}
   ///
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       std::string const& project_id, std::string const& region,
@@ -357,10 +373,10 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1377}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.GetClusterRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1377}
   ///
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       google::cloud::dataproc::v1::GetClusterRequest const& request,
@@ -379,10 +395,10 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1390}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.ListClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1390}
   ///
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       std::string const& project_id, std::string const& region,
@@ -415,10 +431,10 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1390}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.ListClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1390}
   ///
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       std::string const& project_id, std::string const& region,
@@ -434,10 +450,10 @@ class ClusterControllerClient {
   /// @return
   /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
-  /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1390}
   /// [google.cloud.dataproc.v1.Cluster]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
+  /// [google.cloud.dataproc.v1.ListClustersRequest]:
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1390}
   ///
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       google::cloud::dataproc::v1::ListClustersRequest request,
@@ -467,6 +483,10 @@ class ClusterControllerClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1438}
   /// [google.cloud.dataproc.v1.DiagnoseClusterResults]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1451}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(std::string const& project_id, std::string const& region,
@@ -492,6 +512,10 @@ class ClusterControllerClient {
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1438}
   /// [google.cloud.dataproc.v1.DiagnoseClusterResults]:
   /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1451}
+  /// [google.longrunning.Operation.metadata]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
   ///
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(

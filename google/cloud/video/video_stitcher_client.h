@@ -109,10 +109,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L217}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L217}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
       std::string const& parent,
@@ -129,10 +129,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L217}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L217}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
@@ -149,10 +149,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L240}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L240}
   ///
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
       std::string const& parent, Options opts = {});
@@ -167,10 +167,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L240}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L240}
   ///
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
       google::cloud::video::stitcher::v1::ListCdnKeysRequest request,
@@ -187,10 +187,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L277}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L277}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
       std::string const& name, Options opts = {});
@@ -205,10 +205,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L277}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L277}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request,
@@ -257,10 +257,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L301}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L301}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
@@ -277,10 +277,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::CdnKey,google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   ///
-  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L301}
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
+  /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L301}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
@@ -738,10 +738,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
-  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
   ///
   StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
       google::cloud::video::stitcher::v1::Slate const& slate,
@@ -757,10 +757,10 @@ class VideoStitcherServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
-  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
+  /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
   ///
   StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,

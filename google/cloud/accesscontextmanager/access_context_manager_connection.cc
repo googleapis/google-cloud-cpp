@@ -21,6 +21,7 @@
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_connection_impl.h"
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_option_defaults.h"
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_stub_factory.h"
+#include "google/cloud/accesscontextmanager/internal/access_context_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -270,9 +271,11 @@ MakeAccessContextManagerConnection(Options options) {
   auto stub =
       accesscontextmanager_internal::CreateDefaultAccessContextManagerStub(
           background->cq(), options);
-  return std::make_shared<
-      accesscontextmanager_internal::AccessContextManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return accesscontextmanager_internal::
+      MakeAccessContextManagerTracingConnection(
+          std::make_shared<accesscontextmanager_internal::
+                               AccessContextManagerConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

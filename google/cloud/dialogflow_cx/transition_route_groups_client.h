@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+///
 class TransitionRouteGroupsClient {
  public:
   explicit TransitionRouteGroupsClient(
@@ -246,10 +249,10 @@ class TransitionRouteGroupsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TransitionRouteGroup,google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
   UpdateTransitionRouteGroup(
@@ -272,10 +275,10 @@ class TransitionRouteGroupsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::TransitionRouteGroup,google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
+  /// [google.cloud.dialogflow.cx.v3.UpdateTransitionRouteGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L247}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
   UpdateTransitionRouteGroup(
@@ -303,6 +306,8 @@ class TransitionRouteGroupsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L271}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
   Status DeleteTransitionRouteGroup(std::string const& name, Options opts = {});
 
@@ -321,6 +326,8 @@ class TransitionRouteGroupsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteTransitionRouteGroupRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L271}
+  /// [google.cloud.dialogflow.cx.v3.TransitionRouteGroup]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/transition_route_group.proto#L112}
   ///
   Status DeleteTransitionRouteGroup(
       google::cloud::dialogflow::cx::v3::

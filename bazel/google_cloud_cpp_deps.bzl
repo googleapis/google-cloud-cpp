@@ -51,22 +51,22 @@ def google_cloud_cpp_deps():
     if "com_google_absl" not in native.existing_rules():
         http_archive(
             name = "com_google_absl",
-            strip_prefix = "abseil-cpp-20220623.1",
+            strip_prefix = "abseil-cpp-20230125.0",
             urls = [
-                "https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz",
+                "https://github.com/abseil/abseil-cpp/archive/20230125.0.tar.gz",
             ],
-            sha256 = "91ac87d30cc6d79f9ab974c51874a704de9c2647c40f6932597329a282217ba8",
+            sha256 = "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
         )
 
     # Load a version of googletest that we know works.
     if "com_google_googletest" not in native.existing_rules():
         http_archive(
             name = "com_google_googletest",
-            strip_prefix = "googletest-release-1.12.1",
+            strip_prefix = "googletest-1.13.0",
             urls = [
-                "https://github.com/google/googletest/archive/release-1.12.1.tar.gz",
+                "https://github.com/google/googletest/archive/v1.13.0.tar.gz",
             ],
-            sha256 = "81964fe578e9bd7c94dfdb09c8e4d6e6759e19967e397dbea48d1c10e45d0df2",
+            sha256 = "ad7fdba11ea011c1d925b3289cf4af2c66a352e18d4c7264392fead75e919363",
         )
 
     # Load a version of benchmark that we know works.
@@ -85,11 +85,11 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/7bfa825d0618f4b9857e68866782694c972585ff.tar.gz",
-                "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/7bfa825d0618f4b9857e68866782694c972585ff.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/d6e9adbf6646748cb41ca6aa61a78a70a1d83ff5.tar.gz",
+                "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/d6e9adbf6646748cb41ca6aa61a78a70a1d83ff5.tar.gz",
             ],
-            strip_prefix = "googleapis-7bfa825d0618f4b9857e68866782694c972585ff",
-            sha256 = "842f10934c7cd23d5095316191cf625696aab64d4776ba7970ca6f0bc69772d2",
+            strip_prefix = "googleapis-d6e9adbf6646748cb41ca6aa61a78a70a1d83ff5",
+            sha256 = "df6715a8f21465a797cceb4722aeee1d711a7fc06fa68330e1382f06baa1e93c",
             build_file = Label("//bazel:googleapis.BUILD"),
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]

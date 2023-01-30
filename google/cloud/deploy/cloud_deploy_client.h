@@ -98,10 +98,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
   ///
-  /// [google.cloud.deploy.v1.ListDeliveryPipelinesRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L422}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// [google.cloud.deploy.v1.ListDeliveryPipelinesRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L422}
   ///
   StreamRange<google::cloud::deploy::v1::DeliveryPipeline>
   ListDeliveryPipelines(std::string const& parent, Options opts = {});
@@ -116,10 +116,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
   ///
-  /// [google.cloud.deploy.v1.ListDeliveryPipelinesRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L422}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// [google.cloud.deploy.v1.ListDeliveryPipelinesRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L422}
   ///
   StreamRange<google::cloud::deploy::v1::DeliveryPipeline>
   ListDeliveryPipelines(
@@ -136,10 +136,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
   ///
-  /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L467}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L467}
   ///
   StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
       std::string const& name, Options opts = {});
@@ -154,10 +154,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
   ///
-  /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L467}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L467}
   ///
   StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
       google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request,
@@ -222,10 +222,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
   ///
-  /// [google.cloud.deploy.v1.UpdateDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L516}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// [google.cloud.deploy.v1.UpdateDeliveryPipelineRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L516}
   ///
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
@@ -242,10 +242,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
   ///
-  /// [google.cloud.deploy.v1.UpdateDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L516}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// [google.cloud.deploy.v1.UpdateDeliveryPipelineRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L516}
   ///
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
@@ -423,10 +423,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
   ///
-  /// [google.cloud.deploy.v1.UpdateTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L906}
   /// [google.cloud.deploy.v1.Target]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// [google.cloud.deploy.v1.UpdateTargetRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L906}
   ///
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::cloud::deploy::v1::Target const& target,
@@ -442,10 +442,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
   ///
-  /// [google.cloud.deploy.v1.UpdateTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L906}
   /// [google.cloud.deploy.v1.Target]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// [google.cloud.deploy.v1.UpdateTargetRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L906}
   ///
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::cloud::deploy::v1::UpdateTargetRequest const& request,
@@ -850,10 +850,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L1746}
   ///
-  /// [google.cloud.deploy.v1.ListJobRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1896}
   /// [google.cloud.deploy.v1.JobRun]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// [google.cloud.deploy.v1.ListJobRunsRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1896}
   ///
   StreamRange<google::cloud::deploy::v1::JobRun> ListJobRuns(
       std::string const& parent, Options opts = {});
@@ -868,10 +868,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L1746}
   ///
-  /// [google.cloud.deploy.v1.ListJobRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1896}
   /// [google.cloud.deploy.v1.JobRun]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// [google.cloud.deploy.v1.ListJobRunsRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1896}
   ///
   StreamRange<google::cloud::deploy::v1::JobRun> ListJobRuns(
       google::cloud::deploy::v1::ListJobRunsRequest request, Options opts = {});
@@ -922,10 +922,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::Config,google/cloud/deploy/v1/cloud_deploy.proto#L1951}
   ///
-  /// [google.cloud.deploy.v1.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1978}
   /// [google.cloud.deploy.v1.Config]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1951}
+  /// [google.cloud.deploy.v1.GetConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1978}
   ///
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(std::string const& name,
                                                         Options opts = {});
@@ -940,10 +940,10 @@ class CloudDeployClient {
   /// @return
   /// @googleapis_link{google::cloud::deploy::v1::Config,google/cloud/deploy/v1/cloud_deploy.proto#L1951}
   ///
-  /// [google.cloud.deploy.v1.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1978}
   /// [google.cloud.deploy.v1.Config]:
   /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1951}
+  /// [google.cloud.deploy.v1.GetConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1978}
   ///
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       google::cloud::deploy::v1::GetConfigRequest const& request,

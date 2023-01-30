@@ -58,6 +58,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.v2.Environment]:
+/// @googleapis_link_reference{google/cloud/dialogflow/v2/environment.proto#L142}
+///
 class EnvironmentsClient {
  public:
   explicit EnvironmentsClient(
@@ -96,10 +99,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
-  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
   /// [google.cloud.dialogflow.v2.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
+  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
   ///
   StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
@@ -114,10 +117,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
-  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
   /// [google.cloud.dialogflow.v2.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
+  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
   ///
   StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
       google::cloud::dialogflow::v2::ListEnvironmentsRequest request,
@@ -133,10 +136,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
-  /// [google.cloud.dialogflow.v2.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L273}
   /// [google.cloud.dialogflow.v2.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
+  /// [google.cloud.dialogflow.v2.GetEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L273}
   ///
   StatusOr<google::cloud::dialogflow::v2::Environment> GetEnvironment(
       google::cloud::dialogflow::v2::GetEnvironmentRequest const& request,
@@ -182,10 +185,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L314}
   /// [google.cloud.dialogflow.v2.Environment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
+  /// [google.cloud.dialogflow.v2.UpdateEnvironmentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L314}
   ///
   StatusOr<google::cloud::dialogflow::v2::Environment> UpdateEnvironment(
       google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request,
@@ -216,10 +219,10 @@ class EnvironmentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::EnvironmentHistory::Entry,google/cloud/dialogflow/v2/environment.proto#L379}
   ///
-  /// [google.cloud.dialogflow.v2.GetEnvironmentHistoryRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L351}
   /// [google.cloud.dialogflow.v2.EnvironmentHistory.Entry]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L379}
+  /// [google.cloud.dialogflow.v2.GetEnvironmentHistoryRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L351}
   ///
   StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
   GetEnvironmentHistory(

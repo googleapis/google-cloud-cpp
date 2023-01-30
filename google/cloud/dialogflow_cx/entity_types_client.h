@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.EntityType]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+///
 class EntityTypesClient {
  public:
   explicit EntityTypesClient(std::shared_ptr<EntityTypesConnection> connection,
@@ -96,10 +99,10 @@ class EntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::EntityType,google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L235}
   /// [google.cloud.dialogflow.cx.v3.EntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L235}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
       std::string const& parent, Options opts = {});
@@ -114,10 +117,10 @@ class EntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::EntityType,google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L235}
   /// [google.cloud.dialogflow.cx.v3.EntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L235}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request,
@@ -134,10 +137,10 @@ class EntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::EntityType,google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L281}
   /// [google.cloud.dialogflow.cx.v3.EntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L281}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
       std::string const& name, Options opts = {});
@@ -152,10 +155,10 @@ class EntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::EntityType,google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L281}
   /// [google.cloud.dialogflow.cx.v3.EntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L281}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request,
@@ -224,10 +227,10 @@ class EntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::EntityType,google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L338}
   /// [google.cloud.dialogflow.cx.v3.EntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L338}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
       google::cloud::dialogflow::cx::v3::EntityType const& entity_type,
@@ -247,10 +250,10 @@ class EntityTypesClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::EntityType,google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L338}
   /// [google.cloud.dialogflow.cx.v3.EntityType]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L338}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
       google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request,

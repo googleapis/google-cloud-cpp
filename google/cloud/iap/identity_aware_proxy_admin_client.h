@@ -102,10 +102,10 @@ class IdentityAwareProxyAdminServiceClient {
   /// @return
   /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
   /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]:
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -183,10 +183,10 @@ class IdentityAwareProxyAdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L295}
   ///
-  /// [google.cloud.iap.v1.UpdateIapSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L282}
   /// [google.cloud.iap.v1.IapSettings]:
   /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L295}
+  /// [google.cloud.iap.v1.UpdateIapSettingsRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L282}
   ///
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
@@ -362,10 +362,10 @@ class IdentityAwareProxyAdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
-  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L240}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
   /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L240}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
       google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
@@ -381,10 +381,10 @@ class IdentityAwareProxyAdminServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
-  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L240}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
   /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
+  /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L240}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
       google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request,

@@ -20,6 +20,7 @@
 #include "google/cloud/retail/internal/user_event_connection_impl.h"
 #include "google/cloud/retail/internal/user_event_option_defaults.h"
 #include "google/cloud/retail/internal/user_event_stub_factory.h"
+#include "google/cloud/retail/internal/user_event_tracing_connection.h"
 #include "google/cloud/retail/user_event_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -79,8 +80,9 @@ std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = retail_internal::CreateDefaultUserEventServiceStub(
       background->cq(), options);
-  return std::make_shared<retail_internal::UserEventServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return retail_internal::MakeUserEventServiceTracingConnection(
+      std::make_shared<retail_internal::UserEventServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

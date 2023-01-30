@@ -21,6 +21,7 @@
 #include "google/cloud/dataplex/internal/content_connection_impl.h"
 #include "google/cloud/dataplex/internal/content_option_defaults.h"
 #include "google/cloud/dataplex/internal/content_stub_factory.h"
+#include "google/cloud/dataplex/internal/content_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -92,8 +93,9 @@ std::shared_ptr<ContentServiceConnection> MakeContentServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataplex_internal::CreateDefaultContentServiceStub(
       background->cq(), options);
-  return std::make_shared<dataplex_internal::ContentServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return dataplex_internal::MakeContentServiceTracingConnection(
+      std::make_shared<dataplex_internal::ContentServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

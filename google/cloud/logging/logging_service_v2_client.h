@@ -306,10 +306,10 @@ class LoggingServiceV2Client {
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
-  /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/logging/v2/logging.proto#L332}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// [google.logging.v2.ListMonitoredResourceDescriptorsRequest]:
+  /// @googleapis_reference_link{google/logging/v2/logging.proto#L332}
   ///
   StreamRange<google::api::MonitoredResourceDescriptor>
   ListMonitoredResourceDescriptors(

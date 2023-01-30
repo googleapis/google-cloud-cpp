@@ -330,6 +330,12 @@ class PredictionServiceClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
   /// [google.cloud.automl.v1.BatchPredictResult]:
   /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
+  /// [google.cloud.automl.v1.PredictionService.Predict]:
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       std::string const& name,
@@ -368,6 +374,12 @@ class PredictionServiceClient {
   /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
   /// [google.cloud.automl.v1.BatchPredictResult]:
   /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
+  /// [google.cloud.automl.v1.PredictionService.Predict]:
+  /// @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
+  /// [google.longrunning.Operation.response]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operations.GetOperation]:
+  /// @googleapis_reference_link{google/longrunning/operations.proto#L77}
   ///
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request,

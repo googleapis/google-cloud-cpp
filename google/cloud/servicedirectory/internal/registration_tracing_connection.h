@@ -115,6 +115,16 @@ class RegistrationServiceTracingConnection
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<servicedirectory::RegistrationServiceConnection>
+MakeRegistrationServiceTracingConnection(
+    std::shared_ptr<servicedirectory::RegistrationServiceConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
 }  // namespace cloud

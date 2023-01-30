@@ -97,8 +97,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L400}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L400}
   ///
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(std::string const& parent, Options opts = {});
@@ -111,8 +111,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L400}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.ListDatabasesRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L400}
   ///
   StreamRange<google::test::admin::database::v1::Database>
   ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request, Options opts = {});
@@ -138,6 +138,10 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.test.admin.database.v1.CreateDatabaseMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L458}
   /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L432}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
   ///
@@ -159,6 +163,10 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.test.admin.database.v1.CreateDatabaseMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L458}
   /// [google.test.admin.database.v1.CreateDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L432}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
   ///
@@ -174,8 +182,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   ///
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(std::string const& name, Options opts = {});
@@ -188,8 +196,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   ///
   StatusOr<google::test::admin::database::v1::Database>
   GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options opts = {});
@@ -209,8 +217,10 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L529}
   ///
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L493}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L529}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L493}
   ///
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(std::string const& database, std::vector<std::string> const& statements, Options opts = {});
@@ -229,8 +239,10 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::UpdateDatabaseDdlMetadata,generator/integration_tests/test.proto#L529}
   ///
-  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L493}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
   /// [google.test.admin.database.v1.UpdateDatabaseDdlMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L529}
+  /// [google.test.admin.database.v1.UpdateDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L493}
   ///
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts = {});
@@ -273,6 +285,7 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L568}
   ///
+  /// [google.longrunning.Operations]: @googleapis_reference_link{google/longrunning/operations.proto#L54}
   /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L557}
   /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L568}
   ///
@@ -289,6 +302,7 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::GetDatabaseDdlResponse,generator/integration_tests/test.proto#L568}
   ///
+  /// [google.longrunning.Operations]: @googleapis_reference_link{google/longrunning/operations.proto#L54}
   /// [google.test.admin.database.v1.GetDatabaseDdlRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L557}
   /// [google.test.admin.database.v1.GetDatabaseDdlResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L568}
   ///
@@ -314,8 +328,9 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest.resource]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L104}
   ///
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
@@ -357,8 +372,9 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
-  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
+  /// [google.iam.v1.SetIamPolicyRequest.resource]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L104}
   ///
   StatusOr<google::iam::v1::Policy>
   SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -380,6 +396,7 @@ class GoldenThingAdminClient {
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.GetIamPolicyRequest.resource]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy>
@@ -401,6 +418,7 @@ class GoldenThingAdminClient {
   /// @return @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
+  /// [google.iam.v1.GetIamPolicyRequest.resource]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy>
@@ -485,8 +503,12 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L109}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.CreateBackupMetadata]: @googleapis_reference_link{generator/integration_tests/backup.proto#L134}
+  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L109}
   ///
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
@@ -510,8 +532,12 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L109}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.CreateBackupMetadata]: @googleapis_reference_link{generator/integration_tests/backup.proto#L134}
+  /// [google.test.admin.database.v1.CreateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L109}
   ///
   future<StatusOr<google::test::admin::database::v1::Backup>>
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request, Options opts = {});
@@ -526,8 +552,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L176}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L176}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(std::string const& name, Options opts = {});
@@ -540,8 +566,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L176}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.GetBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L176}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   GetBackup(google::test::admin::database::v1::GetBackupRequest const& request, Options opts = {});
@@ -562,8 +588,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L160}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L160}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -576,8 +602,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L160}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.UpdateBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L160}
   ///
   StatusOr<google::test::admin::database::v1::Backup>
   UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request, Options opts = {});
@@ -591,6 +617,7 @@ class GoldenThingAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L189}
   ///
   Status
@@ -603,6 +630,7 @@ class GoldenThingAdminClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
+  /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
   /// [google.test.admin.database.v1.DeleteBackupRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L189}
   ///
   Status
@@ -619,8 +647,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L202}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L202}
   ///
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(std::string const& parent, Options opts = {});
@@ -635,8 +663,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Backup,generator/integration_tests/backup.proto#L35}
   ///
-  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L202}
   /// [google.test.admin.database.v1.Backup]: @googleapis_reference_link{generator/integration_tests/backup.proto#L35}
+  /// [google.test.admin.database.v1.ListBackupsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L202}
   ///
   StreamRange<google::test::admin::database::v1::Backup>
   ListBackups(google::test::admin::database::v1::ListBackupsRequest request, Options opts = {});
@@ -675,8 +703,12 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L657}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.RestoreDatabaseMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L688}
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L657}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(std::string const& parent, std::string const& database_id, std::string const& backup, Options opts = {});
@@ -705,8 +737,12 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L657}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.RestoreDatabaseMetadata]: @googleapis_reference_link{generator/integration_tests/test.proto#L688}
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L657}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
@@ -727,8 +763,9 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L576}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L576}
   ///
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(std::string const& parent, Options opts = {});
@@ -748,8 +785,9 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L576}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.test.admin.database.v1.ListDatabaseOperationsRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L576}
   ///
   StreamRange<google::longrunning::Operation>
   ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request, Options opts = {});
@@ -772,8 +810,9 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L273}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L273}
   ///
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(std::string const& parent, Options opts = {});
@@ -795,8 +834,9 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::longrunning::Operation,google/longrunning/operations.proto#L128}
   ///
-  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L273}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.test.admin.database.v1.ListBackupOperationsRequest]: @googleapis_reference_link{generator/integration_tests/backup.proto#L273}
   ///
   StreamRange<google::longrunning::Operation>
   ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request, Options opts = {});
@@ -809,8 +849,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L657}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.RestoreDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L657}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
@@ -824,8 +864,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(std::string const& name, Options opts = {});
@@ -838,8 +878,8 @@ class GoldenThingAdminClient {
   ///     backoff policies.
   /// @return @googleapis_link{google::test::admin::database::v1::Database,generator/integration_tests/test.proto#L352}
   ///
-  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   /// [google.test.admin.database.v1.Database]: @googleapis_reference_link{generator/integration_tests/test.proto#L352}
+  /// [google.test.admin.database.v1.GetDatabaseRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L466}
   ///
   future<StatusOr<google::test::admin::database::v1::Database>>
   AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request, Options opts = {});

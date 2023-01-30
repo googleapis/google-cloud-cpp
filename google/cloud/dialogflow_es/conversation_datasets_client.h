@@ -111,10 +111,12 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
-  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L326}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
@@ -142,10 +144,12 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
-  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L326}
+  /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
@@ -164,10 +168,10 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
-  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(std::string const& name, Options opts = {});
@@ -182,10 +186,10 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
-  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(
@@ -205,10 +209,10 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
-  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L230}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L230}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
   ListConversationDatasets(std::string const& parent, Options opts = {});
@@ -224,10 +228,10 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
-  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L230}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
+  /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L230}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
   ListConversationDatasets(
@@ -254,10 +258,10 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
   ///
-  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L261}
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
+  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L261}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
@@ -282,10 +286,10 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
   ///
-  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L261}
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
+  /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L261}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
@@ -315,10 +319,12 @@ class ConversationDatasetsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataOperationResponse,google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
   ///
-  /// [google.cloud.dialogflow.v2.ImportConversationDataRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L275}
+  /// [google.cloud.dialogflow.v2.ImportConversationDataOperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L293}
   /// [google.cloud.dialogflow.v2.ImportConversationDataOperationResponse]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
+  /// [google.cloud.dialogflow.v2.ImportConversationDataRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L275}
   ///
   future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>

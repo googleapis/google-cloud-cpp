@@ -20,6 +20,7 @@
 #include "google/cloud/translate/internal/translation_connection_impl.h"
 #include "google/cloud/translate/internal/translation_option_defaults.h"
 #include "google/cloud/translate/internal/translation_stub_factory.h"
+#include "google/cloud/translate/internal/translation_tracing_connection.h"
 #include "google/cloud/translate/translation_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -116,8 +117,9 @@ std::shared_ptr<TranslationServiceConnection> MakeTranslationServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = translate_internal::CreateDefaultTranslationServiceStub(
       background->cq(), options);
-  return std::make_shared<translate_internal::TranslationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return translate_internal::MakeTranslationServiceTracingConnection(
+      std::make_shared<translate_internal::TranslationServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

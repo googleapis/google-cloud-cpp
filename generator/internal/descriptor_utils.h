@@ -32,6 +32,11 @@ namespace cloud {
 namespace generator_internal {
 
 /**
+ * Create a formatted doxygen link referencing the @p message_type.
+ */
+std::string FormatDoxygenLink(google::protobuf::Descriptor const& message_type);
+
+/**
  * Extracts service wide substitution data required by all class generators from
  * the provided descriptor.
  */
@@ -71,14 +76,6 @@ Status PrintMethod(google::protobuf::MethodDescriptor const& method,
                    Printer& printer, VarsDictionary const& vars,
                    std::vector<MethodPattern> const& patterns, char const* file,
                    int line);
-
-/**
- * Formats comments from the source .proto file into Doxygen compatible
- * function headers, including param and return lines as necessary.
- */
-std::string FormatMethodComments(
-    google::protobuf::MethodDescriptor const& method,
-    std::string const& variable_parameter_comments);
 
 /**
  * Formats comments from the source .proto file into Doxygen compatible

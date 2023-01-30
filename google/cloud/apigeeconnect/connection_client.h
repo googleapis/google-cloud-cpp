@@ -96,10 +96,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigeeconnect::v1::Connection,google/cloud/apigeeconnect/v1/connection.proto#L86}
   ///
-  /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
   /// [google.cloud.apigeeconnect.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L86}
+  /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
   ///
   StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
       std::string const& parent, Options opts = {});
@@ -115,10 +115,10 @@ class ConnectionServiceClient {
   /// @return
   /// @googleapis_link{google::cloud::apigeeconnect::v1::Connection,google/cloud/apigeeconnect/v1/connection.proto#L86}
   ///
-  /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
   /// [google.cloud.apigeeconnect.v1.Connection]:
   /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L86}
+  /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]:
+  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
   ///
   StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
       google::cloud::apigeeconnect::v1::ListConnectionsRequest request,

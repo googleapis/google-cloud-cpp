@@ -58,6 +58,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Changelog]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
+///
 class ChangelogsClient {
  public:
   explicit ChangelogsClient(std::shared_ptr<ChangelogsConnection> connection,
@@ -93,10 +96,10 @@ class ChangelogsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListChangelogsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L60}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.ListChangelogsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L60}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Changelog> ListChangelogs(
       std::string const& parent, Options opts = {});
@@ -111,10 +114,10 @@ class ChangelogsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListChangelogsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L60}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.ListChangelogsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L60}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Changelog> ListChangelogs(
       google::cloud::dialogflow::cx::v3::ListChangelogsRequest request,
@@ -131,10 +134,10 @@ class ChangelogsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetChangelogRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L115}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.GetChangelogRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L115}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
       std::string const& name, Options opts = {});
@@ -149,10 +152,10 @@ class ChangelogsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetChangelogRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L115}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.GetChangelogRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L115}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
       google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request,

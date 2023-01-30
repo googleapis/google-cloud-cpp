@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Experiment]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+///
 class ExperimentsClient {
  public:
   explicit ExperimentsClient(std::shared_ptr<ExperimentsConnection> connection,
@@ -101,10 +104,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L405}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L405}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ListExperiments(
       std::string const& parent, Options opts = {});
@@ -120,10 +123,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L405}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L405}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ListExperiments(
       google::cloud::dialogflow::cx::v3::ListExperimentsRequest request,
@@ -142,10 +145,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L441}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L441}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
       std::string const& name, Options opts = {});
@@ -161,10 +164,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L441}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L441}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
       google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request,
@@ -227,10 +230,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L474}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L474}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
       google::cloud::dialogflow::cx::v3::Experiment const& experiment,
@@ -247,10 +250,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L474}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L474}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
       google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request,
@@ -269,6 +272,8 @@ class ExperimentsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteExperimentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L485}
+  /// [google.cloud.dialogflow.cx.v3.Experiment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   Status DeleteExperiment(std::string const& name, Options opts = {});
 
@@ -283,6 +288,8 @@ class ExperimentsClient {
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteExperimentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L485}
+  /// [google.cloud.dialogflow.cx.v3.Experiment]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   Status DeleteExperiment(
       google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request,
@@ -301,10 +308,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L500}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L500}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
       std::string const& name, Options opts = {});
@@ -321,10 +328,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L500}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L500}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
       google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request,
@@ -343,10 +350,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L514}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L514}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
       std::string const& name, Options opts = {});
@@ -363,10 +370,10 @@ class ExperimentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
-  /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L514}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
+  /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L514}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
       google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request,

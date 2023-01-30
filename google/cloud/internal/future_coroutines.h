@@ -25,8 +25,8 @@
 
 /// Specialize `std::coroutine_traits` for `google::cloud::future<T>`.
 template <typename T, typename... Args>
-requires(!std::is_void_v<T> && !std::is_reference_v<T>) /**/
-    struct std::coroutine_traits<google::cloud::future<T>, Args...> {
+  requires(!std::is_void_v<T> && !std::is_reference_v<T>) /**/
+struct std::coroutine_traits<google::cloud::future<T>, Args...> {
   struct promise_type {
     google::cloud::promise<T> impl;
 
@@ -85,7 +85,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Overload `co_await` for `google::cloud::future<T>`
 template <typename T>
 auto operator co_await(future<T> f) noexcept
-    requires(!std::is_reference_v<T>) /**/ {
+  requires(!std::is_reference_v<T>) /**/ {
   struct awaiter {
     future<T> impl;
 

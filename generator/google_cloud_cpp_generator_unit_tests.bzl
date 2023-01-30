@@ -20,8 +20,12 @@ google_cloud_cpp_generator_unit_tests = [
     "generator_test.cc",
     "internal/codegen_utils_test.cc",
     "internal/descriptor_utils_test.cc",
+    "internal/format_class_comments_test.cc",
+    "internal/format_method_comments_test.cc",
     "internal/predicate_utils_test.cc",
     "internal/printer_test.cc",
+    "internal/resolve_comment_references_test.cc",
+    "internal/resolve_method_return_test.cc",
     "internal/scaffold_generator_test.cc",
     "internal/service_code_generator_test.cc",
 ]

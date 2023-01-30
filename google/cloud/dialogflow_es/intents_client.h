@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.v2.Intent]:
+/// @googleapis_link_reference{google/cloud/dialogflow/v2/intent.proto#L198}
+///
 class IntentsClient {
  public:
   explicit IntentsClient(std::shared_ptr<IntentsConnection> connection,
@@ -100,10 +103,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
-  /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   /// [google.cloud.dialogflow.v2.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   ///
   StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
       std::string const& parent, Options opts = {});
@@ -131,10 +134,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
-  /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   /// [google.cloud.dialogflow.v2.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   ///
   StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
       std::string const& parent, std::string const& language_code,
@@ -150,10 +153,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
-  /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   /// [google.cloud.dialogflow.v2.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   ///
   StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
       google::cloud::dialogflow::v2::ListIntentsRequest request,
@@ -318,10 +321,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   /// [google.cloud.dialogflow.v2.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
       google::cloud::dialogflow::v2::Intent const& intent,
@@ -348,10 +351,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   /// [google.cloud.dialogflow.v2.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
       google::cloud::dialogflow::v2::Intent const& intent,
@@ -372,10 +375,10 @@ class IntentsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
-  /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   /// [google.cloud.dialogflow.v2.Intent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
+  /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
       google::cloud::dialogflow::v2::UpdateIntentRequest const& request,

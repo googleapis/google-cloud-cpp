@@ -21,6 +21,7 @@
 #include "google/cloud/iam/internal/iam_policy_connection_impl.h"
 #include "google/cloud/iam/internal/iam_policy_option_defaults.h"
 #include "google/cloud/iam/internal/iam_policy_stub_factory.h"
+#include "google/cloud/iam/internal/iam_policy_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -58,8 +59,9 @@ std::shared_ptr<IAMPolicyConnection> MakeIAMPolicyConnection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       iam_internal::CreateDefaultIAMPolicyStub(background->cq(), options);
-  return std::make_shared<iam_internal::IAMPolicyConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return iam_internal::MakeIAMPolicyTracingConnection(
+      std::make_shared<iam_internal::IAMPolicyConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

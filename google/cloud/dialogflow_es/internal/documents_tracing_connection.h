@@ -76,6 +76,16 @@ class DocumentsTracingConnection : public dialogflow_es::DocumentsConnection {
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<dialogflow_es::DocumentsConnection>
+MakeDocumentsTracingConnection(
+    std::shared_ptr<dialogflow_es::DocumentsConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

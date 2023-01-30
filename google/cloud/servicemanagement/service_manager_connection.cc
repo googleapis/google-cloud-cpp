@@ -20,6 +20,7 @@
 #include "google/cloud/servicemanagement/internal/service_manager_connection_impl.h"
 #include "google/cloud/servicemanagement/internal/service_manager_option_defaults.h"
 #include "google/cloud/servicemanagement/internal/service_manager_stub_factory.h"
+#include "google/cloud/servicemanagement/internal/service_manager_tracing_connection.h"
 #include "google/cloud/servicemanagement/service_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -137,9 +138,10 @@ std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = servicemanagement_internal::CreateDefaultServiceManagerStub(
       background->cq(), options);
-  return std::make_shared<
-      servicemanagement_internal::ServiceManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return servicemanagement_internal::MakeServiceManagerTracingConnection(
+      std::make_shared<
+          servicemanagement_internal::ServiceManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

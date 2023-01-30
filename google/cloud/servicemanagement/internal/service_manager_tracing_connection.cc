@@ -150,6 +150,17 @@ ServiceManagerTracingConnection::GenerateConfigReport(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<servicemanagement::ServiceManagerConnection>
+MakeServiceManagerTracingConnection(
+    std::shared_ptr<servicemanagement::ServiceManagerConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn = std::make_shared<ServiceManagerTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_internal
 }  // namespace cloud

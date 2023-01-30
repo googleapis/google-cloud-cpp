@@ -21,6 +21,7 @@
 #include "google/cloud/batch/internal/batch_connection_impl.h"
 #include "google/cloud/batch/internal/batch_option_defaults.h"
 #include "google/cloud/batch/internal/batch_stub_factory.h"
+#include "google/cloud/batch/internal/batch_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -82,8 +83,9 @@ std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
       batch_internal::CreateDefaultBatchServiceStub(background->cq(), options);
-  return std::make_shared<batch_internal::BatchServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return batch_internal::MakeBatchServiceTracingConnection(
+      std::make_shared<batch_internal::BatchServiceConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_connection_impl.h"
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_option_defaults.h"
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_stub_factory.h"
+#include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -91,9 +92,11 @@ MakeBinauthzManagementServiceV1Connection(Options options) {
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = binaryauthorization_internal::
       CreateDefaultBinauthzManagementServiceV1Stub(background->cq(), options);
-  return std::make_shared<
-      binaryauthorization_internal::BinauthzManagementServiceV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return binaryauthorization_internal::
+      MakeBinauthzManagementServiceV1TracingConnection(
+          std::make_shared<binaryauthorization_internal::
+                               BinauthzManagementServiceV1ConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -194,6 +194,18 @@ Status DataTransferServiceTracingConnection::EnrollDataSources(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+std::shared_ptr<bigquery::DataTransferServiceConnection>
+MakeDataTransferServiceTracingConnection(
+    std::shared_ptr<bigquery::DataTransferServiceConnection> conn) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (internal::TracingEnabled(conn->options())) {
+    conn =
+        std::make_shared<DataTransferServiceTracingConnection>(std::move(conn));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return conn;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
 }  // namespace cloud

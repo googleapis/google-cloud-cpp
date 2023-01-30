@@ -21,6 +21,7 @@
 #include "google/cloud/accessapproval/v1/internal/access_approval_connection_impl.h"
 #include "google/cloud/accessapproval/v1/internal/access_approval_option_defaults.h"
 #include "google/cloud/accessapproval/v1/internal/access_approval_stub_factory.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -106,9 +107,10 @@ std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = accessapproval_v1_internal::CreateDefaultAccessApprovalStub(
       background->cq(), options);
-  return std::make_shared<
-      accessapproval_v1_internal::AccessApprovalConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return accessapproval_v1_internal::MakeAccessApprovalTracingConnection(
+      std::make_shared<
+          accessapproval_v1_internal::AccessApprovalConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

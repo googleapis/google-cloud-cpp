@@ -59,6 +59,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
+/// [google.cloud.dialogflow.cx.v3.Flow]:
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+///
 class FlowsClient {
  public:
   explicit FlowsClient(std::shared_ptr<FlowsConnection> connection,
@@ -171,10 +174,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L376}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L376}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
       std::string const& parent, Options opts = {});
@@ -189,10 +192,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L376}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L376}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
       google::cloud::dialogflow::cx::v3::ListFlowsRequest request,
@@ -209,10 +212,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L423}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L423}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
       std::string const& name, Options opts = {});
@@ -227,10 +230,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L423}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L423}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
       google::cloud::dialogflow::cx::v3::GetFlowRequest const& request,
@@ -252,10 +255,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L450}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L450}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
       google::cloud::dialogflow::cx::v3::Flow const& flow,
@@ -275,10 +278,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
-  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L450}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L450}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
       google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request,
@@ -362,10 +365,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
-  /// [google.cloud.dialogflow.cx.v3.ValidateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L487}
   /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L519}
+  /// [google.cloud.dialogflow.cx.v3.ValidateFlowRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L487}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   ValidateFlow(
@@ -384,10 +387,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L502}
   /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L519}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L502}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   GetFlowValidationResult(std::string const& name, Options opts = {});
@@ -403,10 +406,10 @@ class FlowsClient {
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
-  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L502}
   /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L519}
+  /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L502}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   GetFlowValidationResult(

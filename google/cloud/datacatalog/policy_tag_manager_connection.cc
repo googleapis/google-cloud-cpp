@@ -20,6 +20,7 @@
 #include "google/cloud/datacatalog/internal/policy_tag_manager_connection_impl.h"
 #include "google/cloud/datacatalog/internal/policy_tag_manager_option_defaults.h"
 #include "google/cloud/datacatalog/internal/policy_tag_manager_stub_factory.h"
+#include "google/cloud/datacatalog/internal/policy_tag_manager_tracing_connection.h"
 #include "google/cloud/datacatalog/policy_tag_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
@@ -124,8 +125,9 @@ std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = datacatalog_internal::CreateDefaultPolicyTagManagerStub(
       background->cq(), options);
-  return std::make_shared<datacatalog_internal::PolicyTagManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  return datacatalog_internal::MakePolicyTagManagerTracingConnection(
+      std::make_shared<datacatalog_internal::PolicyTagManagerConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

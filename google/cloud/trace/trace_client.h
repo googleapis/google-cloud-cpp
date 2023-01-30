@@ -139,8 +139,6 @@ class TraceServiceClient {
   ///
   /// [google.devtools.cloudtrace.v2.Span]:
   /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L41}
-  /// [google.devtools.cloudtrace.v2.Span]:
-  /// @googleapis_reference_link{google/devtools/cloudtrace/v2/trace.proto#L41}
   ///
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
       google::devtools::cloudtrace::v2::Span const& request, Options opts = {});
