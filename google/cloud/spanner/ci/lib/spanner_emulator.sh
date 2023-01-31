@@ -22,7 +22,7 @@ fi # include guard
 
 source module /ci/lib/io.sh
 
-# Global variable that holds the PIDs of the Spanner emulators. These will be set
+# Global variables that hold the PIDs of the Spanner emulators. These will be set
 # when the emulators are started, and will be used to kill the emulators.
 SPANNER_EMULATOR_PID=0
 SPANNER_HTTP_EMULATOR_PID=0
