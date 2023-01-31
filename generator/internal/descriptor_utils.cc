@@ -364,8 +364,8 @@ void SetHttpGetQueryParameters(
           if (!field->is_repeated() &&
               field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
             if (!param_field_name || field->name() != *param_field_name) {
-              remaining_request_fields.emplace_back(
-                  std::make_pair(field->name(), field->cpp_type()));
+              remaining_request_fields.emplace_back(field->name(),
+                                                    field->cpp_type());
             }
           }
         }
