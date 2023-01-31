@@ -222,7 +222,7 @@ StatusOr<CommitResult> Client::Commit(
   auto const txn_opts = Transaction::ReadWriteOptions().WithTag(
       OptOpt<TransactionTagOption>(internal::CurrentOptions()));
   Transaction txn = MakeReadWriteTransaction(txn_opts);
-  for (int rerun = 0;; ++rerun) {
+  while (true) {
     StatusOr<Mutations> mutations;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {

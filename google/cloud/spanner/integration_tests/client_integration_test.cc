@@ -301,8 +301,7 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
                                  {"fname", Value("test-fname-" + s)},
                                  {"lname", Value("test-lname-" + s)}}));
           if (!insert) return std::move(insert).status();
-          expected_rows.emplace_back(
-              std::make_tuple(i, "test-fname-" + s, "test-lname-" + s));
+          expected_rows.emplace_back(i, "test-fname-" + s, "test-lname-" + s);
         }
 
         auto delete_result =
