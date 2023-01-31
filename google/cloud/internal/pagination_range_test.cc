@@ -16,6 +16,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <string>
 
 namespace google {
@@ -144,10 +145,10 @@ TYPED_TEST(PaginationRangeTest, NonProtoRange) {
   auto range = MakePaginationRange<NonProtoRange>(
       Request{}, [&mock](Request const& r) { return mock.Loader(r); },
       [](ResponseType const& r) {
-        std::vector<std::string> v;
-        for (auto const& i : r.testonly_items) {
-          v.push_back(i.data);
-        }
+        std::vector<std::string> v(r.testonly_items.size());
+        std::transform(r.testonly_items.begin(), r.testonly_items.end(),
+                       v.begin(),
+                       [](auto& item) { return std::move(item.data); });
         return v;
       });
   OptionsSpan overlay(Options{}.set<StringOption>("uh-oh"));
