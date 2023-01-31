@@ -57,6 +57,11 @@
       "versioning": "loose"
     },
     {
+      "matchPackageNames": ["io_opentelemetry_cpp", "open-telemetry/opentelemetry-cpp"],
+      "groupName": "OpenTelemetry",
+      "versioning": "loose"
+    },
+    {
       "matchPackageNames": ["com_google_benchmark", "google/benchmark"],
       "groupName": "Benchmark",
       "versioning": "loose"
@@ -73,7 +78,6 @@
   ],
   "ignoreDeps": [
     "boringssl",
-    "com_google_googleapis",
-    "io_opentelemetry_cpp"
+    "com_google_googleapis"
   ]
 }
