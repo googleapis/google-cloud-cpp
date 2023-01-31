@@ -101,8 +101,8 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
       std::deque<MessagePromisePair> message_batch;
       for (auto& message_with_future : batch) {
         message_batch.emplace_back(
-            MessagePromisePair{std::move(message_with_future.message),
-                               std::move(message_with_future.message_promise)});
+            std::move(message_with_future.message),
+            std::move(message_with_future.message_promise));
       }
       ret_batches.push_back(std::move(message_batch));
     }
@@ -136,8 +136,7 @@ TEST_F(PartitionPublisherBatchingTest, SingleMessageBatch) {
       EXPECT_EQ(status.status(),
                 Status(StatusCode::kUnavailable, std::to_string(i)));
     });
-    message_with_promises.emplace_back(
-        MessagePromisePair{message, std::move(message_promise)});
+    message_with_promises.emplace_back(message, std::move(message_promise));
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
@@ -172,8 +171,7 @@ TEST_F(PartitionPublisherBatchingTest,
       EXPECT_EQ(status.status(),
                 Status(StatusCode::kUnavailable, std::to_string(i)));
     });
-    message_with_promises.emplace_back(
-        MessagePromisePair{message, std::move(message_promise)});
+    message_with_promises.emplace_back(message, std::move(message_promise));
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
@@ -214,8 +212,7 @@ TEST_F(PartitionPublisherBatchingTest, FullAndPartialBatches) {
                                     std::to_string(i / max_batch_message_count),
                                     "offset:", std::to_string(i))));
     });
-    message_with_promises.emplace_back(
-        MessagePromisePair{message, std::move(message_promise)});
+    message_with_promises.emplace_back(message, std::move(message_promise));
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
@@ -271,8 +268,7 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
                                     std::to_string(i / max_batch_message_count),
                                     "offset:", std::to_string(i))));
     });
-    message_with_promises.emplace_back(
-        MessagePromisePair{message, std::move(message_promise)});
+    message_with_promises.emplace_back(message, std::move(message_promise));
     messages.push_back(std::move(message));
   }
   BatchingOptions options;
@@ -326,8 +322,8 @@ class PartitionPublisherTest : public ::testing::Test {
     publisher_ = absl::make_unique<PartitionPublisher>(
         [&](StreamInitializer<PublishRequest, PublishResponse> initializer) {
           // as this is a unit test, we mock the resumable stream behavior
-          // this enables the test suite to control when underlying streams are
-          // initialized
+          // this enables the test suite to control when underlying streams
+          // are initialized
           initializer_ = std::move(initializer);
           return absl::WrapUnique(&resumable_stream_ref_);
         },
