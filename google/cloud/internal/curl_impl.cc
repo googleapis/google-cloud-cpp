@@ -23,6 +23,7 @@
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/strip.h"
 #include <algorithm>
 #include <sstream>
 #include <thread>
@@ -123,21 +124,6 @@ class WriteVector {
 };
 
 }  // namespace
-
-std::string ConcatenateEndpointAndPath(std::string const& endpoint,
-                                       std::string const& path) {
-  bool const path_starts_with_slash = !path.empty() && (path.front() == '/');
-  bool const endpoint_ends_with_slash =
-      !endpoint.empty() && (endpoint.back() == '/');
-  if ((endpoint_ends_with_slash && !path_starts_with_slash) ||
-      (!endpoint_ends_with_slash && path_starts_with_slash)) {
-    return absl::StrCat(endpoint, path);
-  }
-  if (!endpoint_ends_with_slash && !path_starts_with_slash) {
-    return absl::StrCat(endpoint, "/", path);
-  }
-  return absl::StrCat(endpoint, path.substr(1));
-}
 
 std::size_t SpillBuffer::CopyFrom(absl::Span<char const> src) {
   // capacity() is CURL_MAX_WRITE_SIZE, the maximum amount of data that
@@ -305,7 +291,8 @@ void CurlImpl::SetUrl(
       absl::StartsWithIgnoreCase(request.path(), "https://")) {
     url_ = request.path();
   } else {
-    url_ = ConcatenateEndpointAndPath(endpoint, request.path());
+    url_ = absl::StrCat(absl::StripSuffix(endpoint, "/"), "/",
+                        absl::StripPrefix(request.path(), "/"));
   }
 
   char const* query_parameter_separator = InitialQueryParameterSeparator(url_);

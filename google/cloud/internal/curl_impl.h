@@ -38,11 +38,6 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Ensures that resulting string has exactly one '/' character between the
-// provided `endpoint` and `path`.
-std::string ConcatenateEndpointAndPath(std::string const& endpoint,
-                                       std::string const& path);
-
 // libcurl will never pass a block larger than CURL_MAX_WRITE_SIZE to the
 // [write callback](https://curl.se/libcurl/c/CURLOPT_WRITEFUNCTION.html).
 // However, CurlImpl::Read() may not be given a buffer large enough to

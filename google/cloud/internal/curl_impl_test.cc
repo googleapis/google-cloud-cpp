@@ -26,34 +26,6 @@ namespace {
 using ::testing::ElementsAre;
 using ::testing::Eq;
 
-TEST(ConcatenateEndpointAndPath, OnlyEndpointContainsSlash) {
-  std::string endpoint = "https://foo.com/";
-  std::string path = "vN/parent/child";
-  EXPECT_THAT(ConcatenateEndpointAndPath(endpoint, path),
-              Eq(std::string("https://foo.com/vN/parent/child")));
-}
-
-TEST(ConcatenateEndpointAndPath, OnlyPathContainsSlash) {
-  std::string endpoint = "https://foo.com";
-  std::string path = "/vN/parent/child";
-  EXPECT_THAT(ConcatenateEndpointAndPath(endpoint, path),
-              Eq(std::string("https://foo.com/vN/parent/child")));
-}
-
-TEST(ConcatenateEndpointAndPath, BothContainSlash) {
-  std::string endpoint = "https://foo.com/";
-  std::string path = "/vN/parent/child";
-  EXPECT_THAT(ConcatenateEndpointAndPath(endpoint, path),
-              Eq(std::string("https://foo.com/vN/parent/child")));
-}
-
-TEST(ConcatenateEndpointAndPath, NeitherContainSlash) {
-  std::string endpoint = "https://foo.com";
-  std::string path = "vN/parent/child";
-  EXPECT_THAT(ConcatenateEndpointAndPath(endpoint, path),
-              Eq(std::string("https://foo.com/vN/parent/child")));
-}
-
 TEST(SpillBuffer, InitialState) {
   SpillBuffer sb;
   EXPECT_EQ(sb.capacity(), CURL_MAX_WRITE_SIZE);
