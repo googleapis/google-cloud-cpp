@@ -2911,7 +2911,8 @@ void DmlPartitionedDelete(google::cloud::spanner::Client client) {
   auto result = client.ExecutePartitionedDml(
       spanner::SqlStatement("DELETE FROM Singers WHERE SingerId > 10"));
   if (!result) throw std::move(result).status();
-  std::cout << "Delete was successful [spanner_dml_partitioned_delete]\n";
+  std::cout << "Deleted at least " << result->row_count_lower_bound
+            << " row(s) [spanner_dml_partitioned_delete]\n";
 }
 //! [execute-sql-partitioned] [END spanner_dml_partitioned_delete]
 
@@ -2922,7 +2923,8 @@ void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
       spanner::SqlStatement("UPDATE Albums SET MarketingBudget = 100000"
                             "  WHERE SingerId > 1"));
   if (!result) throw std::move(result).status();
-  std::cout << "Update was successful [spanner_dml_partitioned_update]\n";
+  std::cout << "Updated at least " << result->row_count_lower_bound
+            << " row(s) [spanner_dml_partitioned_update]\n";
 }
 //! [END spanner_dml_partitioned_update]
 
