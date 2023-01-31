@@ -21,7 +21,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 void StdClogBackend::Process(LogRecord const& lr) {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   if (lr.severity >= min_severity_) {
     std::cout << std::flush;
     std::cerr << std::flush;

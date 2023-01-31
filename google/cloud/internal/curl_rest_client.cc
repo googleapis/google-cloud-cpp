@@ -184,7 +184,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
     std::vector<std::pair<std::string, std::string>> const& form_data) {
   auto impl = CreateCurlImpl(request);
   if (!impl.ok()) return impl.status();
-  std::string form_payload = absl::StrJoin(
+  auto const form_payload = absl::StrJoin(
       form_data, "&",
       [&](std::string* out, std::pair<std::string, std::string> const& i) {
         out->append(

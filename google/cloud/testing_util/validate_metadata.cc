@@ -59,14 +59,14 @@ using RoutingHeaders = std::map<std::string, std::string>;
  */
 RoutingHeaders ExtractMDFromHeader(std::string header) {
   std::map<std::string, std::string> res;
-  std::regex pair_re("[^&]+");
+  auto const pair_re = std::regex("[^&]+");
   for (std::sregex_iterator i =
            std::sregex_iterator(header.begin(), header.end(), pair_re);
        i != std::sregex_iterator(); ++i) {
-    std::regex assign_re("([^=]+)=([^=]+)");
+    auto const assign_re = std::regex("([^=]+)=([^=]+)");
     std::smatch match_res;
-    std::string s = i->str();
-    bool const matched = std::regex_match(s, match_res, assign_re);
+    auto const s = i->str();
+    auto const matched = std::regex_match(s, match_res, assign_re);
     EXPECT_TRUE(matched)
         << "Bad header format. The header should be a series of \"a=b\" "
            "delimited with \"&\", but is \"" +
@@ -88,8 +88,8 @@ RoutingHeaders ExtractMDFromHeader(std::string header) {
  */
 MATCHER_P(MatchesGlob, glob, "matches the glob: \"" + glob + "\"") {
   // Translate the glob into a regex pattern.
-  std::regex regex(absl::StrReplaceAll(glob, {{"*", "[^/]+"}}));
-  return std::regex_match(arg, regex);
+  auto const re = std::regex(absl::StrReplaceAll(glob, {{"*", "[^/]+"}}));
+  return std::regex_match(arg, re);
 }
 
 // This method is recursive because dbolduc could not figure out the iterative
@@ -128,7 +128,7 @@ RoutingHeaders FromRoutingRule(google::api::RoutingRule const& routing,
     // `nested2` are generic Messages, and `value` is the string field we are to
     // match against. We must iterate over the nested messages to get to the
     // string value.
-    std::deque<std::string> fields = absl::StrSplit(rp.field(), '.');
+    std::deque<std::string> const fields = absl::StrSplit(rp.field(), '.');
     auto const& field = GetField(fields, method->input_type(), request);
 
     // We skip empty fields.
@@ -192,7 +192,7 @@ RoutingHeaders FromHttpRule(google::api::HttpRule const& http,
       << "Method has an http option with an empty pattern.";
   if (pattern.empty()) return headers;
 
-  std::regex subst_re("\\{([^{}=]+)=([^{}=]+)\\}");
+  auto const subst_re = std::regex("\\{([^{}=]+)=([^{}=]+)\\}");
   for (std::sregex_iterator i =
            std::sregex_iterator(pattern.begin(), pattern.end(), subst_re);
        i != std::sregex_iterator(); ++i) {

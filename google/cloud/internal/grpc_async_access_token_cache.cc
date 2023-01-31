@@ -74,7 +74,7 @@ void GrpcAsyncAccessTokenCache::StartRefresh(std::unique_lock<std::mutex> lk) {
 }
 
 void GrpcAsyncAccessTokenCache::OnRefresh(future<StatusOr<AccessToken>> f) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   refreshing_ = false;
   std::vector<WaiterType> waiting;
   waiting.swap(waiting_);

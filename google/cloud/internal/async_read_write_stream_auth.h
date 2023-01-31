@@ -55,18 +55,18 @@ class AsyncStreamingReadWriteRpcAuth
   }
 
   future<absl::optional<Response>> Read() override {
-    std::lock_guard<std::mutex> g{state_->mu};
+    std::lock_guard<std::mutex> const g{state_->mu};
     return state_->stream->Read();
   }
 
   future<bool> Write(Request const& request,
                      grpc::WriteOptions options) override {
-    std::lock_guard<std::mutex> g{state_->mu};
+    std::lock_guard<std::mutex> const g{state_->mu};
     return state_->stream->Write(request, std::move(options));
   }
 
   future<bool> WritesDone() override {
-    std::lock_guard<std::mutex> g{state_->mu};
+    std::lock_guard<std::mutex> const g{state_->mu};
     return state_->stream->WritesDone();
   }
 
@@ -83,13 +83,13 @@ class AsyncStreamingReadWriteRpcAuth
               Status(StatusCode::kInternal, "Stream is not yet started."))) {}
 
     std::unique_ptr<grpc::ClientContext> ReleaseInitialContext() {
-      std::lock_guard<std::mutex> g{mu};
+      std::lock_guard<std::mutex> const g{mu};
       return std::move(initial_context);
     }
 
     future<bool> OnStart(
         StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
-      std::lock_guard<std::mutex> g{mu};
+      std::lock_guard<std::mutex> const g{mu};
       if (cancelled) return make_ready_future(false);
       if (context) {
         stream = factory(*std::move(context));
@@ -102,13 +102,13 @@ class AsyncStreamingReadWriteRpcAuth
     }
 
     future<Status> Finish() {
-      std::lock_guard<std::mutex> g{mu};
+      std::lock_guard<std::mutex> const g{mu};
       cancelled = true;  // ensure stream is not recreated after Finish
       return stream->Finish();
     }
 
     void Cancel() {
-      std::lock_guard<std::mutex> g{mu};
+      std::lock_guard<std::mutex> const g{mu};
       if (cancelled) return;
       cancelled = true;
       if (initial_context) initial_context->TryCancel();

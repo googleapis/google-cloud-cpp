@@ -69,7 +69,7 @@ InstallSpanCatcher() {
   std::shared_ptr<opentelemetry::trace::TracerProvider> provider =
       opentelemetry::sdk::trace::TracerProviderFactory::Create(
           std::move(processor));
-  opentelemetry::trace::Provider::SetTracerProvider(provider);
+  opentelemetry::trace::Provider::SetTracerProvider(std::move(provider));
   return span_data;
 }
 

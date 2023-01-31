@@ -23,7 +23,6 @@
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
-#include "absl/strings/strip.h"
 #include <algorithm>
 #include <sstream>
 #include <thread>
@@ -51,6 +50,11 @@ std::string UserAgentSuffix() {
     return absl::StrCat(internal::UserAgentPrefix(), " ", curl_version());
   }());
   return *kUserAgentSuffix;
+}
+
+std::string NormalizeEndpoint(std::string endpoint) {
+  if (!endpoint.empty() && endpoint.back() != '/') endpoint.push_back('/');
+  return endpoint;
 }
 
 char const* InitialQueryParameterSeparator(std::string const& url) {
@@ -291,8 +295,7 @@ void CurlImpl::SetUrl(
       absl::StartsWithIgnoreCase(request.path(), "https://")) {
     url_ = request.path();
   } else {
-    url_ = absl::StrCat(absl::StripSuffix(endpoint, "/"), "/",
-                        absl::StripPrefix(request.path(), "/"));
+    url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
   }
 
   char const* query_parameter_separator = InitialQueryParameterSeparator(url_);
@@ -696,13 +699,13 @@ Status CurlImpl::WaitForHandles(int& repeats) {
   int const timeout_ms = 1000;
   int numfds = 0;
 #if CURL_AT_LEAST_VERSION(7, 66, 0)
-  CURLMcode result =
+  CURLMcode const result =
       curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats;
   if (result != CURLM_OK) return AsStatus(result, __func__);
 #else
-  CURLMcode result =
+  CURLMcode const result =
       curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
   TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
                 << ", repeats=" << repeats;

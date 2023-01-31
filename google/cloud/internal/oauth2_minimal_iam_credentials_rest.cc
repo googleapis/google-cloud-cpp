@@ -52,7 +52,7 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
   rest_request.AddHeader(auth_header.value());
   rest_request.AddHeader("Content-Type", "application/json");
   rest_request.SetPath(MakeRequestPath(request));
-  nlohmann::json payload{
+  auto const payload = nlohmann::json{
       {"delegates", request.delegates},
       {"scope", request.scopes},
       {"lifetime", std::to_string(request.lifetime.count()) + "s"},

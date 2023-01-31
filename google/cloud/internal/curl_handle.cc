@@ -79,10 +79,12 @@ extern "C" int RestCurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
         // NOLINTNEXTLINE(google-runtime-int) - setsockopt *requires* `long`
         auto size = static_cast<long>(options->recv_buffer_size_);
 #if _WIN32
-        int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF,
-                           reinterpret_cast<char const*>(&size), sizeof(size));
+        int const r =
+            setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF,
+                       reinterpret_cast<char const*>(&size), sizeof(size));
 #else
-        int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size));
+        int const r =
+            setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size));
 #endif  // WIN32
         if (r != 0) {
           GCP_LOG(ERROR) << __func__

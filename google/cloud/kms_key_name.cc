@@ -35,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, KmsKeyName const& key) {
 }
 
 StatusOr<KmsKeyName> MakeKmsKeyName(std::string const& full_name) {
-  std::regex re(
+  auto const re = std::regex(
       "projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)");
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {

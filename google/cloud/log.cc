@@ -101,25 +101,25 @@ LogSink& LogSink::Instance() {
 
 // NOLINTNEXTLINE(google-runtime-int)
 long LogSink::AddBackend(std::shared_ptr<LogBackend> backend) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   return AddBackendImpl(std::move(backend));
 }
 
 // NOLINTNEXTLINE(google-runtime-int)
 void LogSink::RemoveBackend(long id) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   RemoveBackendImpl(id);
 }
 
 void LogSink::ClearBackends() {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   backends_.clear();
   default_backend_id_ = 0;
   empty_.store(backends_.empty());
 }
 
 std::size_t LogSink::BackendCount() const {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   return backends_.size();
 }
 
@@ -145,14 +145,14 @@ void LogSink::Flush() {
 }
 
 void LogSink::EnableStdClogImpl(Severity min_severity) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   if (default_backend_id_ != 0) return;
   default_backend_id_ =
       AddBackendImpl(std::make_shared<internal::StdClogBackend>(min_severity));
 }
 
 void LogSink::DisableStdClogImpl() {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   if (default_backend_id_ == 0) return;
   // Note that the backend set by SetDefaultBackend() may be any LogBackend
   // subclass, and so not necessarily a StdClogBackend. But, by default, it
@@ -162,7 +162,7 @@ void LogSink::DisableStdClogImpl() {
 }
 
 void LogSink::SetDefaultBackend(std::shared_ptr<LogBackend> backend) {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   if (default_backend_id_ != 0) return;
   default_backend_id_ = AddBackendImpl(std::move(backend));
 }
@@ -189,7 +189,7 @@ void LogSink::RemoveBackendImpl(BackendId id) {
 // we are holding this lock, and soon deadlock occurs.
 std::map<LogSink::BackendId, std::shared_ptr<LogBackend>>
 LogSink::CopyBackends() {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   return backends_;
 }
 

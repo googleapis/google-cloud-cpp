@@ -69,7 +69,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   void Cancel() override {}
 
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    OptionsSpan const span(options_);
     if (!ok) {
       // `Finish()` always returns `true` for unary RPCs, so the only time we
       // get `!ok` is after `Shutdown()` was called; treat that as "cancelled".

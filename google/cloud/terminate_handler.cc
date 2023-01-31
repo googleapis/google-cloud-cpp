@@ -26,12 +26,12 @@ class TerminateFunction {
   explicit TerminateFunction(TerminateHandler f) : f_(std::move(f)) {}
 
   TerminateHandler Get() {
-    std::lock_guard<std::mutex> l(m_);
+    std::lock_guard<std::mutex> const l(m_);
     return f_;
   }
 
   TerminateHandler Set(TerminateHandler f) {
-    std::lock_guard<std::mutex> l(m_);
+    std::lock_guard<std::mutex> const l(m_);
     f.swap(f_);
     return f;
   }

@@ -84,7 +84,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   void CleanupMultiHandle(CurlMulti, HandleDisposition) override;
 
   std::string LastClientIpAddress() const override {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     return last_client_ip_address_;
   }
 
@@ -120,18 +120,18 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   void CleanupMultiHandle(CurlMulti, HandleDisposition) override;
 
   std::string LastClientIpAddress() const override {
-    std::lock_guard<std::mutex> lk(last_client_ip_address_mu_);
+    std::lock_guard<std::mutex> const lk(last_client_ip_address_mu_);
     return last_client_ip_address_;
   }
 
   // Test only
   std::size_t CurrentHandleCount() const {
-    std::lock_guard<std::mutex> lk(handles_mu_);
+    std::lock_guard<std::mutex> const lk(handles_mu_);
     return handles_.size();
   }
   // Test only
   std::size_t CurrentMultiHandleCount() const {
-    std::lock_guard<std::mutex> lk(multi_handles_mu_);
+    std::lock_guard<std::mutex> const lk(multi_handles_mu_);
     return multi_handles_.size();
   }
 

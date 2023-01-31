@@ -306,7 +306,7 @@ Options CurlInitializeOptions(Options options) {
 }
 
 void CurlInitializeOnce(Options const& options) {
-  static CurlInitializer curl_initializer;
+  static CurlInitializer const kCurlInitializer;
   static bool const kInitialized = [](Options const& options) {
     // The Google Cloud Storage C++ client library depends on libcurl, which
     // can use different SSL libraries. Depending on the SSL implementation,

@@ -77,12 +77,12 @@ std::string Timer::Annotations() const {
   now.ru_nvcsw -= start_usage_.ru_nvcsw;
   now.ru_nivcsw -= start_usage_.ru_nivcsw;
 #if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  std::string accounting =
+  std::string const accounting =
       accounting_ == CpuAccounting::kPerThread ? "per-thread" : "per-process";
 #else
-  std::string accounting = accounting_ == CpuAccounting::kPerThread
-                               ? "per-thread (but unsupported)"
-                               : "per-process";
+  std::string const accounting = accounting_ == CpuAccounting::kPerThread
+                                     ? "per-thread (but unsupported)"
+                                     : "per-process";
 #endif  //  GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 
   std::ostringstream os;

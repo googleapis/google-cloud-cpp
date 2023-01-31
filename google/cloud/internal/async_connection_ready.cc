@@ -65,7 +65,7 @@ void AsyncConnectionReadyFuture::RunIteration() {
   }
   NotifyOnStateChange::Start(cq_, channel_, deadline_, state)
       .then([s = shared_from_this(), o = std::move(options)](auto f) {
-        OptionsSpan span(o);
+        OptionsSpan const span(o);
         s->Notify(f.get());
       });
 }
@@ -91,7 +91,7 @@ future<bool> NotifyOnStateChange::Start(
 }
 
 bool NotifyOnStateChange::Notify(bool ok) {
-  OptionsSpan span(options_);
+  OptionsSpan const span(options_);
   promise_.set_value(ok);
   return true;
 }

@@ -149,10 +149,10 @@ std::string Base64Encoder::FlushAndPad() && {
 
 void Base64Decoder::Iterator::Fill() {
   if (pos_ != end_) {
-    unsigned char p0 = *pos_++;
-    unsigned char p1 = *pos_++;
-    unsigned char p2 = *pos_++;
-    unsigned char p3 = *pos_++;
+    unsigned char const p0 = *pos_++;
+    unsigned char const p1 = *pos_++;
+    unsigned char const p2 = *pos_++;
+    unsigned char const p3 = *pos_++;
     auto i0 = kCharToIndexExcessOne[p0] - 1;
     auto i1 = kCharToIndexExcessOne[p1] - 1;
     if (p3 == kPadding) {

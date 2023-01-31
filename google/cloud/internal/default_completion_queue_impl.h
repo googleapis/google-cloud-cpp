@@ -83,13 +83,13 @@ class DefaultCompletionQueueImpl final
   void ForgetOperation(void* tag);
 
   void RunStart() {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     ++thread_pool_size_;
     thread_pool_hwm_ = (std::max)(thread_pool_hwm_, thread_pool_size_);
   }
 
   void RunStop() {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     --thread_pool_size_;
   }
 

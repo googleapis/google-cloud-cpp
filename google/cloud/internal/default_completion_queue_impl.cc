@@ -70,7 +70,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
   void Cancel() override {
-    OptionsSpan span(options_);
+    OptionsSpan const span(options_);
     alarm_.Cancel();
   }
 
@@ -78,7 +78,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   explicit AsyncTimerFuture() : promise_(null_promise_t{}) {}
 
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    OptionsSpan const span(options_);
     promise_.set_value(ok ? ValueType(deadline_) : Canceled());
     return true;
   }
@@ -111,7 +111,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
 
  private:
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    OptionsSpan const span(options_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncLoop();
     return true;
@@ -138,7 +138,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
 
  private:
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    OptionsSpan const span(options_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncOnIdle();
     return true;
@@ -166,7 +166,7 @@ void DefaultCompletionQueueImpl::Run() {
 
    private:
     DefaultCompletionQueueImpl* self_;
-  } count(this);
+  } const count(this);
 
   auto deadline = [] {
     return std::chrono::system_clock::now() + kLoopTimeout;
@@ -192,7 +192,7 @@ void DefaultCompletionQueueImpl::Run() {
 
 void DefaultCompletionQueueImpl::Shutdown() {
   {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     shutdown_ = true;
     shutdown_guard_.reset();
   }
@@ -204,7 +204,7 @@ void DefaultCompletionQueueImpl::CancelAll() {
   // need the lock because canceling might trigger calls that invalidate the
   // iterators.
   auto pending = [this] {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     return pending_ops_;
   }();
   for (auto& kv : pending) {
@@ -279,7 +279,7 @@ void DefaultCompletionQueueImpl::StartOperation(
 
 std::shared_ptr<AsyncGrpcOperation> DefaultCompletionQueueImpl::FindOperation(
     void* tag) {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   auto loc = pending_ops_.find(tag);
   if (pending_ops_.end() == loc) {
     google::cloud::internal::ThrowRuntimeError(
@@ -289,7 +289,7 @@ std::shared_ptr<AsyncGrpcOperation> DefaultCompletionQueueImpl::FindOperation(
 }
 
 void DefaultCompletionQueueImpl::ForgetOperation(void* tag) {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   auto const num_erased = pending_ops_.erase(tag);
   if (num_erased != 1) {
     google::cloud::internal::ThrowRuntimeError(

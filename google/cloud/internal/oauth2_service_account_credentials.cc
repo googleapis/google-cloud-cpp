@@ -240,7 +240,8 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     return result;
   }(source);
 
-  std::unique_ptr<PKCS12, decltype(&PKCS12_free)> p12(p12_raw, &PKCS12_free);
+  auto const p12 =
+      std::unique_ptr<PKCS12, decltype(&PKCS12_free)>(p12_raw, &PKCS12_free);
 
   auto capture_openssl_errors = []() {
     std::string msg;
@@ -272,9 +273,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     return Status(StatusCode::kInvalidArgument, msg);
   }
 
-  std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)> pkey(pkey_raw,
-                                                           &EVP_PKEY_free);
-  std::unique_ptr<X509, decltype(&X509_free)> cert(cert_raw, &X509_free);
+  auto const pkey = std::unique_ptr<EVP_PKEY, decltype(&EVP_PKEY_free)>(
+      pkey_raw, &EVP_PKEY_free);
+  auto const cert =
+      std::unique_ptr<X509, decltype(&X509_free)>(cert_raw, &X509_free);
 
   if (pkey_raw == nullptr) {
     return Status(StatusCode::kInvalidArgument,
@@ -290,7 +292,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 
   std::string service_account_id = [&name]() -> std::string {
     auto openssl_free = [](void* addr) { OPENSSL_free(addr); };
-    std::unique_ptr<char, decltype(openssl_free)> oneline(
+    auto const oneline = std::unique_ptr<char, decltype(openssl_free)>(
         X509_NAME_oneline(name, nullptr, 0), openssl_free);
     // We expect the name to be simply CN/ followed by a (small) number of
     // digits.
@@ -308,8 +310,8 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
             "): service account id missing or not not formatted correctly");
   }
 
-  std::unique_ptr<BIO, decltype(&BIO_free)> mem_io(BIO_new(BIO_s_mem()),
-                                                   &BIO_free);
+  auto const mem_io = std::unique_ptr<BIO, decltype(&BIO_free)>(
+      BIO_new(BIO_s_mem()), &BIO_free);
 
   if (PEM_write_bio_PKCS8PrivateKey(mem_io.get(), pkey.get(), nullptr, nullptr,
                                     0, nullptr, nullptr) == 0) {

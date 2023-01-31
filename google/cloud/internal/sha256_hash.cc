@@ -59,7 +59,7 @@ std::vector<std::uint8_t> HexDecode(std::string const& str) {
   std::vector<std::uint8_t> result;
   result.reserve(str.size() / 2);
   for (char const* p = str.data(); p != str.data() + str.size(); p += 2) {
-    std::string s{p, p + 2};
+    auto const s = std::string{p, p + 2};
     std::size_t idx = 0;
     auto constexpr kBaseForHex = 16;
     auto v = std::stol(s, &idx, kBaseForHex);

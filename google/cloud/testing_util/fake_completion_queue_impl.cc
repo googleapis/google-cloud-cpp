@@ -33,7 +33,7 @@ class FakeAsyncTimer : public internal::AsyncGrpcOperation {
   void Cancel() override {}
 
   bool Notify(bool ok) override {
-    internal::OptionsSpan span(options_);
+    internal::OptionsSpan const span(options_);
     if (!ok) {
       promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
     } else {
@@ -57,7 +57,7 @@ class FakeAsyncFunction : public internal::AsyncGrpcOperation {
 
  private:
   bool Notify(bool ok) override {
-    internal::OptionsSpan span(options_);
+    internal::OptionsSpan const span(options_);
     auto f = std::move(function_);
     if (!ok) return true;
     f->exec();
@@ -90,7 +90,7 @@ void FakeCompletionQueueImpl::Shutdown() {
 
 void FakeCompletionQueueImpl::CancelAll() {
   auto ops = [this] {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     return pending_ops_;
   }();
   for (auto& op : ops) op->Cancel();
@@ -120,7 +120,7 @@ FakeCompletionQueueImpl::MakeRelativeTimer(std::chrono::nanoseconds duration) {
 void FakeCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   auto op = std::make_shared<FakeAsyncFunction>(std::move(function));
-  std::unique_lock<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   if (shutdown_) {
     return;
   }
@@ -142,7 +142,7 @@ void FakeCompletionQueueImpl::StartOperation(
 
 void FakeCompletionQueueImpl::SimulateCompletion(bool ok) {
   auto ops = [this] {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     std::vector<std::shared_ptr<internal::AsyncGrpcOperation>> ops;
     ops.swap(pending_ops_);
     return ops;

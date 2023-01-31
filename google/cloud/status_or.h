@@ -188,12 +188,16 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) reference to
    *     the underlying value.
    */
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
   T& operator*() & { return *value_; }
 
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
   T const& operator*() const& { return *value_; }
 
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
   T&& operator*() && { return *std::move(value_); }
 
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
   T const&& operator*() const&& { return *std::move(value_); }
   ///@}
 
@@ -207,8 +211,10 @@ class StatusOr final {
    * @return All these return a (properly ref and const-qualified) pointer to
    *     the underlying value.
    */
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
   T* operator->() & { return &*value_; }
 
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access)
   T const* operator->() const& { return &*value_; }
   ///@}
 

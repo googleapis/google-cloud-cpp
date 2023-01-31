@@ -47,7 +47,7 @@ class AsyncPollingLoopImpl
     auto const& options = CurrentOptions();
     promise_ = promise<StatusOr<Operation>>([w, options]() mutable {
       if (auto self = w.lock()) {
-        OptionsSpan span(std::move(options));
+        OptionsSpan const span(std::move(options));
         self->DoCancel();
       }
     });
@@ -65,7 +65,7 @@ class AsyncPollingLoopImpl
   void DoCancel() {
     google::longrunning::CancelOperationRequest request;
     {
-      std::unique_lock<std::mutex> lk(mu_);
+      std::lock_guard<std::mutex> const lk(mu_);
       if (op_name_.empty()) {
         delayed_cancel_ = true;  // Wait for OnStart() to set `op_name_`.
         return;
@@ -91,7 +91,7 @@ class AsyncPollingLoopImpl
                    << op->name();
     bool do_cancel = false;
     {
-      std::unique_lock<std::mutex> lk(mu_);
+      std::lock_guard<std::mutex> const lk(mu_);
       std::swap(delayed_cancel_, do_cancel);
       op_name_ = std::move(*op->mutable_name());
     }
@@ -100,9 +100,12 @@ class AsyncPollingLoopImpl
   }
 
   void Wait() {
-    std::chrono::milliseconds duration = polling_policy_->WaitPeriod();
+    auto const duration = polling_policy_->WaitPeriod();
     GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
-                   << duration.count() << "ms";
+                   << std::chrono::duration_cast<std::chrono::milliseconds>(
+                          duration)
+                          .count()
+                   << "ms";
     auto self = shared_from_this();
     cq_.MakeRelativeTimer(duration).then(
         [self](TimerResult f) { self->OnTimer(std::move(f)); });
@@ -114,7 +117,7 @@ class AsyncPollingLoopImpl
     if (!t) return promise_.set_value(std::move(t).status());
     google::longrunning::GetOperationRequest request;
     {
-      std::unique_lock<std::mutex> lk(mu_);
+      std::lock_guard<std::mutex> const lk(mu_);
       request.set_name(op_name_);
     }
     auto self = shared_from_this();

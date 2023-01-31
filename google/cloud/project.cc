@@ -35,7 +35,7 @@ std::ostream& operator<<(std::ostream& os, Project const& p) {
 }
 
 StatusOr<Project> MakeProject(std::string const& full_name) {
-  std::regex re("projects/([^/]+)");
+  auto const re = std::regex("projects/([^/]+)");
   std::smatch matches;
   if (!std::regex_match(full_name, matches, re)) {
     return Status(StatusCode::kInvalidArgument,

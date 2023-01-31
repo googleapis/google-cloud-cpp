@@ -24,7 +24,7 @@ namespace testing_util {
 std::vector<std::string> ScopedLog::Backend::ExtractLines() {
   std::vector<std::string> result;
   {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     result.swap(log_lines_);
   }
   return result;
@@ -33,7 +33,7 @@ std::vector<std::string> ScopedLog::Backend::ExtractLines() {
 void ScopedLog::Backend::Process(LogRecord const& lr) {
   // Break the record into lines. It is easier to analyze them as such.
   std::vector<std::string> result = absl::StrSplit(lr.message, '\n');
-  std::lock_guard<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   log_lines_.insert(log_lines_.end(), std::make_move_iterator(result.begin()),
                     std::make_move_iterator(result.end()));
 }

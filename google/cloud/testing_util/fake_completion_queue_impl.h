@@ -53,12 +53,12 @@ class FakeCompletionQueueImpl
   void SimulateCompletion(bool ok);
 
   bool empty() const {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     return pending_ops_.empty();
   }
 
   std::size_t size() const {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     return pending_ops_.size();
   }
 

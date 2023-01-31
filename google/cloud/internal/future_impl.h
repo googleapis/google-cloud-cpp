@@ -76,7 +76,7 @@ class future_shared_state_base {  // NOLINT(readability-identifier-naming)
         cancellation_callback_(std::move(cancellation_callback)) {}
   /// Return true if the shared state has a value or an exception.
   bool is_ready() const {
-    std::unique_lock<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     return is_ready_unlocked();
   }
 

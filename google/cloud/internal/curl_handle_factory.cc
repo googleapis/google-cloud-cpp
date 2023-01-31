@@ -58,7 +58,7 @@ void DefaultCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition) {
   char* ip;
   auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
-    std::lock_guard<std::mutex> lk(mu_);
+    std::lock_guard<std::mutex> const lk(mu_);
     last_client_ip_address_ = ip;
   }
   h.reset();
@@ -114,13 +114,13 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
   char* ip;
   auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
-    std::unique_lock<std::mutex> lk(last_client_ip_address_mu_);
+    std::lock_guard<std::mutex> const lk(last_client_ip_address_mu_);
     last_client_ip_address_ = ip;
   }
   // Use a temporary data structure to release any excess handles *after* the
   // lock is released.
   std::vector<CurlPtr> released;
-  std::unique_lock<std::mutex> lk(handles_mu_);
+  std::lock_guard<std::mutex> const lk(handles_mu_);
   if (d == HandleDisposition::kDiscard) {
     --active_handles_;
     return;
@@ -170,7 +170,7 @@ void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
   // Use a temporary data structure to release any excess handles *after* the
   // lock is released.
   std::vector<CurlMulti> released;
-  std::unique_lock<std::mutex> lk(multi_handles_mu_);
+  std::lock_guard<std::mutex> const lk(multi_handles_mu_);
   if (d == HandleDisposition::kDiscard) {
     --active_multi_handles_;
     return;

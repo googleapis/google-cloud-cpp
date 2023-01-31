@@ -202,10 +202,12 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
 StatusOr<internal::AccessToken>
 ExternalAccountCredentials::GetTokenImpersonation(
     std::string const& access_token, internal::ErrorContext const& ec) {
-  auto request = rest_internal::RestRequest(info_.impersonation_config->url);
+  // NOLINTNEXTLINE(bugprone-unchecked-optional-access) - checked by caller
+  auto const& config = *info_.impersonation_config;
+  auto request = rest_internal::RestRequest(config.url);
   request.AddHeader("Authorization", absl::StrCat("Bearer ", access_token));
   request.AddHeader("Content-Type", "application/json");
-  auto const lifetime = info_.impersonation_config->token_lifetime;
+  auto const lifetime = config.token_lifetime;
   auto request_payload = nlohmann::json{
       {"delegates", nlohmann::json::array()},
       {"scope", nlohmann::json::array({GoogleOAuthScopeCloudPlatform()})},

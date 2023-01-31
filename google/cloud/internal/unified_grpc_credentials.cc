@@ -109,7 +109,7 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
 
 absl::optional<std::string> LoadCAInfo(Options const& opts) {
   if (!opts.has<CARootsFilePathOption>()) return absl::nullopt;
-  std::ifstream is(opts.get<CARootsFilePathOption>());
+  std::ifstream const is(opts.get<CARootsFilePathOption>());
   return std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
 }
 

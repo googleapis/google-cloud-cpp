@@ -121,7 +121,7 @@ GrpcImpersonateServiceAccount::AsyncConfigureContext(
 
 std::shared_ptr<grpc::CallCredentials>
 GrpcImpersonateServiceAccount::UpdateCallCredentials(std::string token) {
-  std::lock_guard<std::mutex> lk(mu_);
+  std::lock_guard<std::mutex> const lk(mu_);
   if (access_token_ != token) {
     credentials_ = grpc::AccessTokenCredentials(token);
     access_token_ = std::move(token);

@@ -31,7 +31,7 @@ std::int64_t ParseSize(std::string const& val) {
   struct Match {
     char const* suffix;
     std::int64_t multiplier;
-  } matches[] = {
+  } const matches[] = {
       {"TiB", kTiB}, {"GiB", kGiB}, {"MiB", kMiB}, {"KiB", kKiB},
       {"TB", kTB},   {"GB", kGB},   {"MB", kMB},   {"KB", kKB},
   };
@@ -74,7 +74,7 @@ std::string FormatSize(std::uintmax_t size) {
     std::uintmax_t limit;
     std::uintmax_t resolution;
     char const* name;
-  } ranges[] = {
+  } const ranges[] = {
       {kKiB, 1, "B"},
       {kMiB, kKiB, "KiB"},
       {kGiB, kMiB, "MiB"},

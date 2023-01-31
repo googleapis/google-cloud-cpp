@@ -128,19 +128,19 @@ StatusOr<internal::AccessToken> ComputeEngineCredentials::GetToken(
 }
 
 std::string ComputeEngineCredentials::AccountEmail() const {
-  std::lock_guard<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> const lock(mu_);
   // Force a refresh on the account info.
   RetrieveServiceAccountInfo(lock);
   return service_account_email_;
 }
 
 std::string ComputeEngineCredentials::service_account_email() const {
-  std::unique_lock<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> const lock(mu_);
   return service_account_email_;
 }
 
 std::set<std::string> ComputeEngineCredentials::scopes() const {
-  std::unique_lock<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> const lock(mu_);
   return scopes_;
 }
 
