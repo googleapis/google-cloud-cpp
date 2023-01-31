@@ -138,7 +138,7 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs) {
   metadata.set_id(rhs.bucket_id());
   metadata.set_kind("storage#bucket");
   for (auto const& kv : rhs.labels()) {
-    metadata.mutable_labels().emplace(std::make_pair(kv.first, kv.second));
+    metadata.mutable_labels().emplace(kv.first, kv.second);
   }
   if (rhs.has_lifecycle()) {
     metadata.set_lifecycle(FromProto(rhs.lifecycle()));

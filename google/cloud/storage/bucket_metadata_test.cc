@@ -798,8 +798,8 @@ TEST(BucketMetadataTest, SetLifecycle) {
   auto copy = expected;
   EXPECT_TRUE(copy.has_lifecycle());
   auto updated = copy.lifecycle();
-  updated.rule.emplace_back(
-      LifecycleRule(LifecycleRule::MaxAge(365), LifecycleRule::Delete()));
+  updated.rule.emplace_back(LifecycleRule::MaxAge(365),
+                            LifecycleRule::Delete());
   copy.set_lifecycle(std::move(updated));
   EXPECT_NE(expected, copy);
 }

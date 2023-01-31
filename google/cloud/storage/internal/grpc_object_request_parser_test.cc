@@ -34,6 +34,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
 using ::testing::Pair;
+using ::testing::ResultOf;
 using ::testing::UnorderedElementsAre;
 
 // Use gsutil to obtain the CRC32C checksum (in base64):
@@ -768,12 +769,12 @@ TEST(GrpcObjectRequestParser, ListObjectsResponse) {
   auto actual = FromProto(response, Options{});
   EXPECT_EQ(actual.next_page_token, "test-only-invalid-token");
   EXPECT_THAT(actual.prefixes, ElementsAre("prefix1/", "prefix2/"));
-  std::vector<std::string> names;
-  for (auto const& o : actual.items) names.push_back(o.bucket());
-  EXPECT_THAT(names, ElementsAre("test-bucket", "test-bucket"));
-  names.clear();
-  for (auto const& o : actual.items) names.push_back(o.name());
-  EXPECT_THAT(names, ElementsAre("object1", "object2"));
+  auto get_bucket = [](auto const& o) { return o.bucket(); };
+  auto get_name = [](auto const& o) { return o.name(); };
+  EXPECT_THAT(actual.items, ElementsAre(ResultOf(get_bucket, "test-bucket"),
+                                        ResultOf(get_bucket, "test-bucket")));
+  EXPECT_THAT(actual.items, ElementsAre(ResultOf(get_name, "object1"),
+                                        ResultOf(get_name, "object2")));
 }
 
 TEST(GrpcObjectRequestParser, RewriteObjectRequestAllOptions) {

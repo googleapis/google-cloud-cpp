@@ -1009,15 +1009,15 @@ class Client {
         SpanOptions(std::forward<Options>(options)...));
     internal::ListObjectsRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
-    auto& client = raw_client_;
     return google::cloud::internal::MakePaginationRange<
         ListObjectsAndPrefixesReader>(
         request,
-        [client](internal::ListObjectsRequest const& r) {
+        [client = raw_client_](internal::ListObjectsRequest const& r) {
           return client->ListObjects(r);
         },
         [](internal::ListObjectsResponse r) {
           std::vector<ObjectOrPrefix> result;
+          result.reserve(r.items.size() + r.prefixes.size());
           for (auto& item : r.items) {
             result.emplace_back(std::move(item));
           }

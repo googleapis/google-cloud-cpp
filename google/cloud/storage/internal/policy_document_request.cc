@@ -165,15 +165,15 @@ void PolicyDocumentV4Request::SetOption(AddExtensionFieldOption const& o) {
   if (!o.has_value()) {
     return;
   }
-  extension_fields_.emplace_back(
-      std::make_pair(std::move(o.value().first), std::move(o.value().second)));
+  extension_fields_.emplace_back(std::move(o.value().first),
+                                 std::move(o.value().second));
 }
 
 void PolicyDocumentV4Request::SetOption(PredefinedAcl const& o) {
   if (!o.has_value()) {
     return;
   }
-  extension_fields_.emplace_back(std::make_pair("acl", o.HeaderName()));
+  extension_fields_.emplace_back("acl", o.HeaderName());
 }
 
 void PolicyDocumentV4Request::SetOption(BucketBoundHostname const& o) {
