@@ -69,6 +69,33 @@ TEST(RestStubHelpers, RestResponseToProtoErrorInfo) {
                                       std::string(kMalformedJsonRolePayload))));
 }
 
+auto constexpr kJsonRolePayloadWithUnknownField = R"(
+  {
+    "name":"role",
+    "title":"role_title",
+    "description":"role_description",
+    "my_unknown_field":"unknown"
+  }
+)";
+
+TEST(RestStubHelpers, RestResponseToProtoContainsUnknownField) {
+  auto mock_200_response = absl::make_unique<MockRestResponse>();
+  EXPECT_CALL(*mock_200_response, StatusCode()).WillOnce([]() {
+    return HttpStatusCode::kOk;
+  });
+  EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
+    return MakeMockHttpPayloadSuccess(
+        std::string(kJsonRolePayloadWithUnknownField));
+  });
+
+  google::iam::admin::v1::Role role;
+  auto status = RestResponseToProto(role, std::move(*mock_200_response));
+  ASSERT_THAT(status, IsOk());
+  EXPECT_THAT(role.name(), Eq("role"));
+  EXPECT_THAT(role.title(), Eq("role_title"));
+  EXPECT_THAT(role.description(), Eq("role_description"));
+}
+
 auto constexpr kJsonErrorPayload = R"(
     {
       "error": {
