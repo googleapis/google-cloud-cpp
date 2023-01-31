@@ -23,6 +23,7 @@
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
+#include "absl/strings/strip.h"
 #include <algorithm>
 #include <sstream>
 #include <thread>
@@ -50,11 +51,6 @@ std::string UserAgentSuffix() {
     return absl::StrCat(internal::UserAgentPrefix(), " ", curl_version());
   }());
   return *kUserAgentSuffix;
-}
-
-std::string NormalizeEndpoint(std::string endpoint) {
-  if (!endpoint.empty() && endpoint.back() != '/') endpoint.push_back('/');
-  return endpoint;
 }
 
 char const* InitialQueryParameterSeparator(std::string const& url) {
@@ -295,7 +291,8 @@ void CurlImpl::SetUrl(
       absl::StartsWithIgnoreCase(request.path(), "https://")) {
     url_ = request.path();
   } else {
-    url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
+    url_ = absl::StrCat(absl::StripSuffix(endpoint, "/"), "/",
+                        absl::StripPrefix(request.path(), "/"));
   }
 
   char const* query_parameter_separator = InitialQueryParameterSeparator(url_);
