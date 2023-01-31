@@ -90,7 +90,7 @@ TEST(RestStubHelpers, RestResponseToProtoContainsUnknownField) {
 
   google::iam::admin::v1::Role role;
   auto status = RestResponseToProto(role, std::move(*mock_200_response));
-  EXPECT_THAT(status, IsOk());
+  ASSERT_THAT(status, IsOk());
   EXPECT_THAT(role.name(), Eq("role"));
   EXPECT_THAT(role.title(), Eq("role_title"));
   EXPECT_THAT(role.description(), Eq("role_description"));
