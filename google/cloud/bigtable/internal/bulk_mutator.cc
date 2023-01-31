@@ -147,11 +147,9 @@ void BulkMutatorState::OnFinish(google::cloud::Status finish_status) {
             "stream didn't fail either. This is most likely a bug, please "
             "report it at "
             "https://github.com/googleapis/google-cloud-cpp/issues/new");
-        failures_.emplace_back(
-            FailedMutation(std::move(status), annotation.original_index));
+        failures_.emplace_back(std::move(status), annotation.original_index);
       } else {
-        failures_.emplace_back(
-            FailedMutation(last_status_, annotation.original_index));
+        failures_.emplace_back(last_status_, annotation.original_index);
       }
     }
     ++index;

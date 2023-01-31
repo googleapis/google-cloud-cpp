@@ -119,9 +119,9 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   /// Expect a row whose row key is equal to this function's argument.
   template <typename T>
   void ExpectRow(T const& row) {
-    row_promises_.emplace(promise<RowKeyType>());
+    row_promises_.emplace();
     row_futures_.emplace_back(row_promises_.back().get_future());
-    promises_from_user_cb_.emplace_back(promise<bool>());
+    promises_from_user_cb_.emplace_back();
     futures_from_user_cb_.emplace(promises_from_user_cb_.back().get_future());
     expected_rows_.push(RowKeyType(row));
   }

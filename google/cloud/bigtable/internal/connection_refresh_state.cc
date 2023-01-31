@@ -115,8 +115,7 @@ void OutstandingTimers::RegisterTimer(future<void> fut) {
     // satisfied.
     cq.RunAsync([self, id] { self->DeregisterTimer(id); });
   });
-  bool const inserted =
-      timers_.emplace(std::make_pair(id, std::move(timer))).second;
+  auto const inserted = timers_.emplace(id, std::move(timer)).second;
   if (!inserted) Terminate("Duplicate timer identifier");
 }
 

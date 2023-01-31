@@ -34,7 +34,7 @@ std::vector<bigtable::FailedMutation> MakeFailedMutations(Status const& status,
   std::vector<bigtable::FailedMutation> mutations;
   mutations.reserve(n);
   for (int i = 0; i != static_cast<int>(n); ++i) {
-    mutations.emplace_back(bigtable::FailedMutation(status, i));
+    mutations.emplace_back(status, i);
   }
   return mutations;
 }
