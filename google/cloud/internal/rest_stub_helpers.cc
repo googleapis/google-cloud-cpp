@@ -28,8 +28,10 @@ Status RestResponseToProto(google::protobuf::Message& destination,
   auto json_response =
       rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
   if (!json_response.ok()) return json_response.status();
-  auto json_to_proto_status =
-      google::protobuf::util::JsonStringToMessage(*json_response, &destination);
+  google::protobuf::util::JsonParseOptions parse_options;
+  parse_options.ignore_unknown_fields = true;
+  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+      *json_response, &destination, parse_options);
   if (!json_to_proto_status.ok()) {
     return Status(
         static_cast<StatusCode>(json_to_proto_status.code()),
