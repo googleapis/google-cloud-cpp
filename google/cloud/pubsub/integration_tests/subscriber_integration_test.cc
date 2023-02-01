@@ -492,6 +492,7 @@ TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
   EXPECT_FALSE(ids.empty());
 
   promise<void> ids_empty;
+  auto ids_empty_future = ids_empty.get_future();
   auto callback = [&](pubsub::Message const& m, ExactlyOnceAckHandler h) {
     SCOPED_TRACE("Search for message " + m.message_id());
     std::unique_lock<std::mutex> lk(mu);
@@ -520,7 +521,7 @@ TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
   auto result = subscriber.Subscribe(callback);
   // Wait until there are no more ids pending, then cancel the subscription and
   // get its status.
-  ids_empty.get_future().get();
+  ids_empty_future.get();
   result.cancel();
   EXPECT_STATUS_OK(result.get());
 }
