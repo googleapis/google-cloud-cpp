@@ -23,9 +23,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # NOTE: Update this version and SHA256 as needed.
 http_archive(
     name = "google_cloud_cpp",
-    sha256 = "56b2dcbb30c14335f2c0d9a77ac46a9ef780acf78eaa17a03db474c54a4acb2c",
-    strip_prefix = "google-cloud-cpp-2.6.0",
-    url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.6.0.tar.gz",
+    sha256 = "23b8ad92efed546139550853bd1ead2b9dbd93320c8e793c29fcb3858a0c2f6c",
+    strip_prefix = "google-cloud-cpp-2.7.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.7.0.tar.gz",
 )
 
 # Load indirect dependencies due to
