@@ -41,6 +41,19 @@ std::string CutoffDate() {
 }  // namespace
 
 Status CleanupStaleInstances(Project const& project) {
+  spanner_admin::InstanceAdminClient instance_admin_client(
+      spanner_admin::MakeInstanceAdminConnection());
+  spanner_admin::DatabaseAdminClient database_admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+  return CleanupStaleInstances(project, instance_admin_client,
+                               database_admin_client);
+}
+
+Status CleanupStaleInstances(
+    Project const& project,
+    spanner_admin::InstanceAdminClient& instance_admin_client,
+    spanner_admin::DatabaseAdminClient& database_admin_client) {
+  std::cout << __func__ << std::endl;
   std::regex name_regex(R"(projects/.+/instances/)"
                         R"(temporary-instance-(\d{4}-\d{2}-\d{2})-.+)");
 
@@ -58,14 +71,16 @@ Status CleanupStaleInstances(Project const& project) {
                   "Instance regex does not match a random instance name");
   }
 
-  spanner_admin::InstanceAdminClient instance_admin_client(
-      spanner_admin::MakeInstanceAdminConnection());
   auto cutoff_date = CutoffDate();
   std::vector<std::string> instances;
   for (auto const& instance :
        instance_admin_client.ListInstances(project.FullName())) {
-    if (!instance) break;
+    if (!instance) {
+      std::cout << __func__ << " no instance" << std::endl;
+      break;
+    }
     auto name = instance->name();
+    std::cout << __func__ << " listed instance=" << name << std::endl;
     std::smatch m;
     if (std::regex_match(name, m, name_regex)) {
       auto date_str = m[1];
@@ -76,8 +91,6 @@ Status CleanupStaleInstances(Project const& project) {
   }
 
   // We ignore failures here.
-  spanner_admin::DatabaseAdminClient database_admin_client(
-      spanner_admin::MakeDatabaseAdminConnection());
   for (auto const& instance : instances) {
     for (auto const& backup : database_admin_client.ListBackups(instance)) {
       database_admin_client.DeleteBackup(backup->name());
@@ -88,6 +101,13 @@ Status CleanupStaleInstances(Project const& project) {
 }
 
 Status CleanupStaleInstanceConfigs(Project const& project) {
+  spanner_admin::InstanceAdminClient instance_admin_client(
+      spanner_admin::MakeInstanceAdminConnection());
+  return CleanupStaleInstanceConfigs(project, instance_admin_client);
+}
+
+Status CleanupStaleInstanceConfigs(Project const& project,
+                                   spanner_admin::InstanceAdminClient& client) {
   std::regex name_regex(R"(projects/.+/instanceConfigs/)"
                         R"(custom-temporary-config-(\d{4}-\d{2}-\d{2})-.+)");
 
@@ -105,12 +125,9 @@ Status CleanupStaleInstanceConfigs(Project const& project) {
                   "Config regex does not match a random config name");
   }
 
-  spanner_admin::InstanceAdminClient instance_admin_client(
-      spanner_admin::MakeInstanceAdminConnection());
   auto cutoff_date = CutoffDate();
   std::vector<std::string> configs;
-  for (auto const& config :
-       instance_admin_client.ListInstanceConfigs(project.FullName())) {
+  for (auto const& config : client.ListInstanceConfigs(project.FullName())) {
     if (!config) break;
     auto name = config->name();
     std::smatch m;
@@ -124,7 +141,7 @@ Status CleanupStaleInstanceConfigs(Project const& project) {
 
   // We ignore failures here.
   for (auto const& config : configs) {
-    instance_admin_client.DeleteInstanceConfig(config);
+    client.DeleteInstanceConfig(config);
   }
   return Status();
 }
