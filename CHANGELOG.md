@@ -116,7 +116,14 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
-## v2.7.0 - TBD
+## v2.7.0
+
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Anthos Multi-Cloud API](/google/cloud/gkemulticloud/README.md)
 
 ### [Pub/Sub](/google/cloud/pubsub/README.md)
 
@@ -125,12 +132,16 @@ may elicit a deprecation warning. See [#9086] for more details.
   C++ applications using this code, and therefore we do not consider this a
   breaking change.
 
-### New Libraries
+### [Common Libraries](/google/cloud/README.md)
 
-We are happy to announce the following GA libraries.  Unless specifically noted,
-the APIs in these libraries are stable, and are ready for production use.
-
-- [Anthos Multi-Cloud API](/google/cloud/gkemulticloud/README.md)
+- fix reference links in documentation ([#10687](https://github.com/googleapis/google-cloud-cpp/pull/10687), [#10684](https://github.com/googleapis/google-cloud-cpp/pull/10687))
+- fix: interface proto libraries work with older CMake ([#10636](https://github.com/googleapis/google-cloud-cpp/pull/10636))
+- fix(common): missing Abseil deps in pkgconfig ([#10616](https://github.com/googleapis/google-cloud-cpp/pull/10616))
+- doc: declutter generated README files ([#10562](https://github.com/googleapis/google-cloud-cpp/pull/10562))
+- doc(common): in-depth guide for `StatusOr` ([#10555](https://github.com/googleapis/google-cloud-cpp/pull/10555))
+- doc: remove boilerplate from landing page snippet ([#10537](https://github.com/googleapis/google-cloud-cpp/pull/10537))
+- doc(common): use real Doxygen groups ([#10504](https://github.com/googleapis/google-cloud-cpp/pull/10504))
+- fix(generator): correct doxygen comments ([#10500](https://github.com/googleapis/google-cloud-cpp/pull/10500))
 
 ## v2.6.0 - 2023-01
 
