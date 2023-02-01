@@ -7,7 +7,7 @@ github:
 name: cxx14-ci
 substitutions:
   _BUILD_NAME: cxx14
-  _DISTRO: fedora-36-cxx14
+  _DISTRO: fedora-37-cxx14
   _TRIGGER_TYPE: ci
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
