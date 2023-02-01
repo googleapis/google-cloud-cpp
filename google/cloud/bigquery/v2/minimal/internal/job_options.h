@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,18 +13,15 @@
 // limitations under the License.
 
 // Internal interface for Bigquery V2 Job resource.
-// Source: //depot/google3/google/cloud/bigquery/v2/job.proto
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_OPTIONS_H
 
 namespace google {
 namespace cloud {
-namespace bigquery_v2_minimal {
-namespace internal {
+namespace bigquery_v2_minimal_internal {
 
-}  // internal
-}  // namespace bigquery_v2_minimal
+}  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
 
