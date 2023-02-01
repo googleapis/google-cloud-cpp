@@ -509,11 +509,12 @@ TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
     ids.erase(i);
     auto const empty = ids.empty();
     lk.unlock();
-    std::move(h).ack().then([id = m.message_id()](auto f) {
+    auto done = std::move(h).ack().then([id = m.message_id()](auto f) {
       auto status = f.get();
       ASSERT_STATUS_OK(status) << " ack() failed for id=" << id;
     });
-    if (empty) ids_empty.set_value();
+    if (!empty) return;
+    done.then([p = std::move(ids_empty)](auto f) mutable { p.set_value(); });
   };
 
   auto result = subscriber.Subscribe(callback);
