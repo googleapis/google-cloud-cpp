@@ -64,37 +64,12 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
               SpanAttribute<std::string>("grpc.version", grpc::Version())))));
 }
 
-class TestTextMapPropagator
-    : public opentelemetry::context::propagation::TextMapPropagator {
- public:
-  explicit TestTextMapPropagator() = default;
-
-  // Unused.
-  opentelemetry::context::Context Extract(
-      opentelemetry::context::propagation::TextMapCarrier const&,
-      opentelemetry::context::Context& context) noexcept override {
-    return context;
-  }
-
-  // Sets a fixed key/value pair for testing.
-  void Inject(opentelemetry::context::propagation::TextMapCarrier& carrier,
-              opentelemetry::context::Context const&) noexcept override {
-    carrier.Set("x-test-key", "test-value");
-  }
-
-  bool Fields(opentelemetry::nostd::function_ref<
-              bool(opentelemetry::nostd::string_view)>
-                  callback) const noexcept override {
-    return callback("x-test-key");
-  }
-};
-
 TEST(OpenTelemetry, InjectTraceContextGrpc) {
-  // Set the global propagator
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator = std::make_shared<TestTextMapPropagator>();
-  opentelemetry::context::propagation::GlobalTextMapPropagator::
-      SetGlobalPropagator(std::move(propagator));
+  auto mock_propagator = testing_util::InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject)
+      .WillOnce([](auto& carrier, auto const&) {
+        carrier.Set("x-test-key", "test-value");
+      });
 
   grpc::ClientContext context;
   InjectTraceContext(context, Options{});

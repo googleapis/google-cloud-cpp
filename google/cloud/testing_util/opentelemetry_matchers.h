@@ -18,6 +18,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/exporters/memory/in_memory_span_exporter.h>
 #include <opentelemetry/sdk/instrumentationscope/instrumentation_scope.h>
 #include <opentelemetry/sdk/trace/span_data.h>
@@ -52,6 +53,11 @@ std::string ToString(opentelemetry::trace::StatusCode c);
 
 bool ThereIsAnActiveSpan();
 
+/**
+ * Note that all spans created by a `NoopTracerProvider` will compare equal. To
+ * avoid this, ensure that a trace exporter is set by the test fixture, e.g. by
+ * calling `InstallSpanCatcher()`.
+ */
 MATCHER(IsActive, "") {
   return opentelemetry::trace::Tracer::GetCurrentSpan() == arg;
 }
@@ -117,9 +123,47 @@ SpanAttribute(std::string const& key, T value) {
  *
  * To extract the spans, call `InMemorySpanData::GetSpans()`. Note that each
  * call to `GetSpans()` will clear the previously collected spans.
+ *
+ * Also note that this sets the global trace exporter, which will persist from
+ * one test in a test fixture to the next. Thus it is important that:
+ * 1. a new exporter is installed for each test
+ * 2. the tests within a fixture do not execute in parallel
  */
 std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
 InstallSpanCatcher();
+
+class MockTextMapPropagator
+    : public opentelemetry::context::propagation::TextMapPropagator {
+ public:
+  explicit MockTextMapPropagator() = default;
+
+  // NOLINTNEXTLINE(bugprone-exception-escape)
+  MOCK_METHOD(opentelemetry::context::Context, Extract,
+              (opentelemetry::context::propagation::TextMapCarrier const&,
+               opentelemetry::context::Context&),
+              (noexcept, override));
+
+  // NOLINTNEXTLINE(bugprone-exception-escape)
+  MOCK_METHOD(void, Inject,
+              (opentelemetry::context::propagation::TextMapCarrier&,
+               opentelemetry::context::Context const&),
+              (noexcept, override));
+
+  // NOLINTNEXTLINE(bugprone-exception-escape)
+  MOCK_METHOD(bool, Fields,
+              (opentelemetry::nostd::function_ref<
+                  bool(opentelemetry::nostd::string_view)>
+                   callback),
+              (const, noexcept, override));
+};
+
+/**
+ * Note that this sets the global context propagator, which will persist from
+ * one test in a test fixture to the next. Thus it is important that:
+ * 1. a new propagator is installed for each test
+ * 2. the tests within a fixture do not execute in parallel
+ */
+std::shared_ptr<MockTextMapPropagator> InstallMockPropagator();
 
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

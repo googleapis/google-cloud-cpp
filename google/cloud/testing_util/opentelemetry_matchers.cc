@@ -15,6 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "absl/memory/memory.h"
+#include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/tracer.h>
 #include <opentelemetry/sdk/trace/tracer_provider_factory.h>
@@ -71,6 +72,14 @@ InstallSpanCatcher() {
           std::move(processor));
   opentelemetry::trace::Provider::SetTracerProvider(provider);
   return span_data;
+}
+
+std::shared_ptr<MockTextMapPropagator> InstallMockPropagator() {
+  namespace propagation = opentelemetry::context::propagation;
+  auto mock = std::make_shared<MockTextMapPropagator>();
+  propagation::GlobalTextMapPropagator::SetGlobalPropagator(
+      std::shared_ptr<propagation::TextMapPropagator>(mock));
+  return mock;
 }
 
 }  // namespace testing_util
