@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,16 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// TODO(#7356): Remove this file after the deprecation period expires
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
+#include "google/cloud/spanner/admin/instance_admin_client.h"
+#include "google/cloud/spanner/admin/internal/database_admin_option_defaults.h"
+#include "google/cloud/spanner/admin/internal/database_admin_rest_connection_impl.h"
+#include "google/cloud/spanner/admin/internal/database_admin_rest_stub_factory.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_option_defaults.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_rest_connection_impl.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_rest_stub_factory.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
-#include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/cleanup_stale_instances.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/match.h"
@@ -36,14 +42,7 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::AnyOf;
-using ::testing::HasSubstr;
-using ::testing::IsEmpty;
-using ::testing::Not;
-using ::testing::NotNull;
-using ::testing::UnorderedElementsAre;
 
 std::string const& ProjectId() {
   static std::string project_id =
@@ -67,33 +66,84 @@ bool RunSlowInstanceTests() {
 }
 
 bool Emulator() {
-  static bool emulator = internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+  static bool emulator =
+      internal::GetEnv("SPANNER_EMULATOR_REST_HOST").has_value();
   return emulator;
+}
+
+// We need to override stub creation to use an alternate emulator endpoint for
+// the InstanceAdmin.
+std::shared_ptr<google::cloud::spanner_admin::InstanceAdminConnection>
+MakeInstanceAdminConnectionRestEmulator() {
+  auto options = spanner_admin_internal::InstanceAdminDefaultOptions(Options{});
+  if (internal::GetEnv("SPANNER_EMULATOR_REST_HOST").has_value()) {
+    options.set<EndpointOption>(
+        internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
+  }
+  auto background = absl::make_unique<
+      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
+  auto stub =
+      spanner_admin_internal::CreateDefaultInstanceAdminRestStub(options);
+  return std::make_shared<
+      spanner_admin_internal::InstanceAdminRestConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options));
+}
+
+// We need to override stub creation to use an alternate emulator endpoint for
+// the DatabaseAdmin.
+std::shared_ptr<google::cloud::spanner_admin::DatabaseAdminConnection>
+MakeDatabaseAdminConnectionRestEmulator() {
+  auto options = spanner_admin_internal::DatabaseAdminDefaultOptions(Options{});
+  if (internal::GetEnv("SPANNER_EMULATOR_REST_HOST").has_value()) {
+    options.set<EndpointOption>(
+        internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
+  }
+  auto background = absl::make_unique<
+      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
+  auto stub =
+      spanner_admin_internal::CreateDefaultDatabaseAdminRestStub(options);
+  return std::make_shared<
+      spanner_admin_internal::DatabaseAdminRestConnectionImpl>(
+      std::move(background), std::move(stub), std::move(options));
 }
 
 class CleanupStaleInstances : public ::testing::Environment {
  public:
   void SetUp() override {
     spanner_admin::InstanceAdminClient instance_admin_client(
-        spanner_admin::MakeInstanceAdminConnection());
+        MakeInstanceAdminConnectionRestEmulator());
     spanner_admin::DatabaseAdminClient database_admin_client(
-        spanner_admin::MakeDatabaseAdminConnection());
+        MakeDatabaseAdminConnectionRestEmulator());
     EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstances(
         Project(ProjectId()), std::move(instance_admin_client),
         std::move(database_admin_client)));
   }
 };
 
-::testing::Environment* const kCleanupEnv =
-    ::testing::AddGlobalTestEnvironment(new CleanupStaleInstances);
+class CleanupStaleInstanceConfigs : public ::testing::Environment {
+ public:
+  void SetUp() override {
+    spanner_admin::InstanceAdminClient instance_admin_client(
+        MakeInstanceAdminConnectionRestEmulator());
+    EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstanceConfigs(
+        Project(ProjectId()), std::move(instance_admin_client)));
+  }
+};
 
-class InstanceAdminClientTest
+// Cleanup stale instances before instance configs.
+::testing::Environment* const kCleanupStaleInstancesEnv =
+    ::testing::AddGlobalTestEnvironment(new CleanupStaleInstances);
+::testing::Environment* const kCleanupStaleInstanceConfigsEnv =
+    ::testing::AddGlobalTestEnvironment(new CleanupStaleInstanceConfigs);
+
+class InstanceAdminClientRestTest
     : public ::google::cloud::testing_util::IntegrationTest {
  public:
-  InstanceAdminClientTest()
+  InstanceAdminClientRestTest()
       : generator_(internal::MakeDefaultPRNG()),
-        client_(MakeInstanceAdminConnection()) {
-    static_cast<void>(kCleanupEnv);
+        client_(MakeInstanceAdminConnectionRestEmulator()) {
+    static_cast<void>(kCleanupStaleInstancesEnv);
+    static_cast<void>(kCleanupStaleInstanceConfigsEnv);
   }
 
  protected:
@@ -102,36 +152,39 @@ class InstanceAdminClientTest
       // We expect test instances to exist when running against real services,
       // but if we are running against the emulator we're happy to create one.
       Instance in(ProjectId(), InstanceId());
+
       auto create_instance_request =
-          CreateInstanceRequestBuilder(in,
-                                       "projects/" + in.project_id() +
-                                           "/instanceConfigs/emulator-config")
+          CreateInstanceRequestBuilder(
+              in, in.project().FullName() + "/instanceConfigs/emulator-config")
               .Build();
       auto instance = client_.CreateInstance(create_instance_request).get();
       if (!instance) {
-        ASSERT_THAT(instance, StatusIs(StatusCode::kAlreadyExists));
+        ASSERT_THAT(instance,
+                    ::testing::AnyOf(StatusIs(StatusCode::kAlreadyExists),
+                                     StatusIs(StatusCode::kAborted)));
       }
     }
   }
 
   internal::DefaultPRNG generator_;
-  InstanceAdminClient client_;
+  spanner_admin::InstanceAdminClient client_;
 };
 
 /// @test Verify the basic read operations for instances work.
-TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
+TEST_F(InstanceAdminClientRestTest, InstanceReadOperations) {
   Instance in(ProjectId(), InstanceId());
   ASSERT_FALSE(in.project_id().empty());
   ASSERT_FALSE(in.instance_id().empty());
 
-  auto instance = client_.GetInstance(in);
+  auto instance = client_.GetInstance(in.FullName());
   ASSERT_STATUS_OK(instance);
   EXPECT_EQ(instance->name(), in.FullName());
   EXPECT_NE(instance->node_count(), 0);
 
   auto instance_names = [&in, this]() mutable {
     std::vector<std::string> names;
-    for (auto const& instance : client_.ListInstances(in.project_id(), "")) {
+    auto const parent = in.project().FullName();
+    for (auto const& instance : client_.ListInstances(parent)) {
       EXPECT_STATUS_OK(instance);
       if (!instance) break;
       names.push_back(instance->name());
@@ -143,7 +196,7 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 }
 
 /// @test Verify the basic CRUD operations for instances work.
-TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
+TEST_F(InstanceAdminClientRestTest, InstanceCRUDOperations) {
   if (!Emulator() && !RunSlowInstanceTests()) {
     GTEST_SKIP() << "skipping slow instance tests; set "
                  << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
@@ -196,74 +249,7 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
     }
   }
 
-  EXPECT_STATUS_OK(client_.DeleteInstance(in));
-}
-
-TEST_F(InstanceAdminClientTest, InstanceConfig) {
-  auto project_id = ProjectId();
-  ASSERT_FALSE(project_id.empty());
-
-  auto config_names = [&project_id, this]() mutable {
-    std::vector<std::string> names;
-    for (auto const& config : client_.ListInstanceConfigs(project_id)) {
-      EXPECT_STATUS_OK(config);
-      if (!config) break;
-      names.push_back(config->name());
-    }
-    return names;
-  }();
-  ASSERT_FALSE(config_names.empty());
-
-  // Use the name of the first element from the list of instance configs.
-  auto config = client_.GetInstanceConfig(config_names[0]);
-  ASSERT_STATUS_OK(config);
-  EXPECT_THAT(config->name(), HasSubstr(project_id));
-  EXPECT_EQ(
-      1, std::count(config_names.begin(), config_names.end(), config->name()));
-}
-
-TEST_F(InstanceAdminClientTest, InstanceIam) {
-  Instance in(ProjectId(), InstanceId());
-  ASSERT_FALSE(in.project_id().empty());
-  ASSERT_FALSE(in.instance_id().empty());
-
-  auto actual_policy = client_.GetIamPolicy(in);
-  if (Emulator() &&
-      actual_policy.status().code() == StatusCode::kUnimplemented) {
-    GTEST_SKIP() << "emulator does not support IAM policies";
-  }
-  ASSERT_STATUS_OK(actual_policy);
-  EXPECT_FALSE(actual_policy->etag().empty());
-
-  if (RunSlowInstanceTests()) {
-    // Set the policy to the existing value of the policy. While this
-    // changes nothing, it tests all the code in the client library.
-    auto updated_policy = client_.SetIamPolicy(in, *actual_policy);
-    ASSERT_THAT(updated_policy, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
-    if (updated_policy) {
-      EXPECT_THAT(updated_policy->etag(), Not(IsEmpty()));
-    }
-
-    // Repeat the test using the OCC API.
-    updated_policy =
-        client_.SetIamPolicy(in, [](google::iam::v1::Policy p) { return p; });
-    ASSERT_STATUS_OK(updated_policy);
-    EXPECT_THAT(updated_policy->etag(), Not(IsEmpty()));
-  }
-
-  auto actual = client_.TestIamPermissions(
-      in, {"spanner.databases.list", "spanner.databases.get"});
-  ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(
-      actual->permissions(),
-      UnorderedElementsAre("spanner.databases.list", "spanner.databases.get"));
-}
-
-/// @test Verify the backwards compatibility `v1` namespace still exists.
-TEST_F(InstanceAdminClientTest, BackwardsCompatibility) {
-  auto connection = ::google::cloud::spanner::v1::MakeInstanceAdminConnection();
-  EXPECT_THAT(connection, NotNull());
-  ASSERT_NO_FATAL_FAILURE(InstanceAdminClient(std::move(connection)));
+  EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
 }
 
 }  // namespace

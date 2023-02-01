@@ -42,5 +42,4 @@ trap spanner_emulator::kill EXIT
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="SPANNER_EMULATOR_HOST=${SPANNER_EMULATOR_HOST}" \
   --test_env="SPANNER_EMULATOR_REST_HOST=${SPANNER_EMULATOR_REST_HOST}" \
-  --test_tag_filters="integration-test" -- \
   "//google/cloud/spanner/...:all"
