@@ -342,8 +342,7 @@ void MutateDeleteColumns(std::vector<std::string> const& argv) {
       throw std::runtime_error("Invalid argument (" + *it +
                                ") should be in family:column format");
     }
-    columns.emplace_back(
-        std::make_pair(it->substr(0, pos), it->substr(pos + 1)));
+    columns.emplace_back(it->substr(0, pos), it->substr(pos + 1));
   }
   //! [connect data]
   google::cloud::bigtable::Table table(

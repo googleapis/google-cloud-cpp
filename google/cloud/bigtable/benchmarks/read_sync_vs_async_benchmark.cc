@@ -227,7 +227,7 @@ int main(int argc, char* argv[]) {
 namespace {
 
 void AsyncBenchmark::ActivateCompletionQueue() {
-  cq_threads_.emplace_back(std::thread([this] { cq_.Run(); }));
+  cq_threads_.emplace_back([this] { cq_.Run(); });
 }
 
 BenchmarkResult AsyncBenchmark::Run(std::chrono::seconds test_duration,

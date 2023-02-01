@@ -248,7 +248,7 @@ void MutationBatcher::Admit(PendingSingleRowMutation mut) {
   cur_batch_->requests_size += mut.request_size;
   cur_batch_->num_mutations += mut.num_mutations;
   cur_batch_->requests.emplace_back(std::move(mut.mut));
-  cur_batch_->mutation_data.emplace_back(MutationData(std::move(mut)));
+  cur_batch_->mutation_data.emplace_back(std::move(mut));
 }
 
 void MutationBatcher::SatisfyPromises(
