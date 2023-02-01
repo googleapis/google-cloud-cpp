@@ -112,17 +112,18 @@ def google_cloud_cpp_deps():
             sha256 = "22fdaf641b31655d4b2297f9981fa5203b2866f8332d3c6333f6b0107bb320de",
         )
 
-    # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by
-    # gRPC does not compile with GCC-11
+    # Load BoringSSL. This could be automatically loaded by gRPC. But as of
+    # 2023-02-01 the version loaded by gRPC-1.51 does not compile with Clang-15.
     if "boringssl" not in native.existing_rules():
         http_archive(
             name = "boringssl",
             # Use github mirror instead of https://boringssl.googlesource.com/boringssl
-            # to obtain a boringssl archive with consistent sha256
-            sha256 = "f0f433106f98f6f50ed6bbc2169f7c42dd73d13d0f09d431082519b5649903a6",
-            strip_prefix = "boringssl-56eb68f64215738552be452e311da12047934ab4",
+            # to obtain a boringssl archive with (more) consistent sha256.
+            sha256 = "9fd35463f2053a75818e02c7da980819a2d89f586f6add1b36957478d83536b9",
+            strip_prefix = "boringssl-487d3f153b0f5cf36ad4e2948c06f0bce76c100d",
             urls = [
-                "https://github.com/google/boringssl/archive/56eb68f64215738552be452e311da12047934ab4.tar.gz",
+                "https://github.com/google/boringssl/archive/487d3f153b0f5cf36ad4e2948c06f0bce76c100d.tar.gz",
+                "https://storage.googleapis.com/cloud-cpp-community-archive/boringssl/487d3f153b0f5cf36ad4e2948c06f0bce76c100d.tar.gz",
             ],
         )
 
