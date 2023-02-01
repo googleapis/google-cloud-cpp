@@ -514,7 +514,7 @@ TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
       ASSERT_STATUS_OK(status) << " ack() failed for id=" << id;
     });
     if (!empty) return;
-    done.then([p = std::move(ids_empty)](auto f) mutable { p.set_value(); });
+    done.then([p = std::move(ids_empty)](auto) mutable { p.set_value(); });
   };
 
   auto result = subscriber.Subscribe(callback);
