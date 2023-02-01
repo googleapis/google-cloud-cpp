@@ -234,6 +234,54 @@ add_library(google-cloud-cpp::spanner ALIAS google_cloud_cpp_spanner)
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_spanner YEAR "2019")
 
+if (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
+    add_library(
+        google_cloud_cpp_spanner_rest # cmake-format: sort
+        admin/database_admin_connection.h
+        admin/instance_admin_connection.h
+        admin/internal/database_admin_rest_connection_impl.cc
+        admin/internal/database_admin_rest_connection_impl.h
+        admin/internal/database_admin_rest_logging_decorator.cc
+        admin/internal/database_admin_rest_logging_decorator.h
+        admin/internal/database_admin_rest_metadata_decorator.cc
+        admin/internal/database_admin_rest_metadata_decorator.h
+        admin/internal/database_admin_rest_stub.cc
+        admin/internal/database_admin_rest_stub.h
+        admin/internal/database_admin_rest_stub_factory.cc
+        admin/internal/database_admin_rest_stub_factory.h
+        admin/internal/instance_admin_rest_connection_impl.cc
+        admin/internal/instance_admin_rest_connection_impl.h
+        admin/internal/instance_admin_rest_logging_decorator.cc
+        admin/internal/instance_admin_rest_logging_decorator.h
+        admin/internal/instance_admin_rest_metadata_decorator.cc
+        admin/internal/instance_admin_rest_metadata_decorator.h
+        admin/internal/instance_admin_rest_stub.cc
+        admin/internal/instance_admin_rest_stub.h
+        admin/internal/instance_admin_rest_stub_factory.cc
+        admin/internal/instance_admin_rest_stub_factory.h)
+    target_include_directories(
+        google_cloud_cpp_spanner_rest
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_link_libraries(
+        google_cloud_cpp_spanner_rest
+        PUBLIC google-cloud-cpp::rest_internal
+               google-cloud-cpp::rest_protobuf_internal
+               google-cloud-cpp::spanner)
+    set_target_properties(
+        google_cloud_cpp_spanner_rest
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::spanner_rest"
+                   VERSION "${PROJECT_VERSION}"
+                   SOVERSION "${PROJECT_VERSION_MAJOR}")
+    target_compile_options(google_cloud_cpp_spanner_rest
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    google_cloud_cpp_add_common_options(google_cloud_cpp_spanner_rest)
+    add_library(google-cloud-cpp::spanner_rest ALIAS
+                google_cloud_cpp_spanner_rest)
+    create_bazel_config(google_cloud_cpp_spanner_rest YEAR "2023")
+endif (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
+
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in

@@ -1452,6 +1452,7 @@ service {
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
 }
 
 service {
@@ -1462,6 +1463,7 @@ service {
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
 }
 
 # Speech
