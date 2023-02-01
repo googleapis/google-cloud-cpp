@@ -116,6 +116,8 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
+## v2.8.0 - TBD
+
 ## v2.7.0 - 2023-02
 
 ### New Libraries
