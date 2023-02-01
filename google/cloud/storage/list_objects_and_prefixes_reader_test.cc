@@ -87,6 +87,7 @@ TEST(ListObjectsAndPrefixesReaderTest, Basic) {
       [mock](ListObjectsRequest const& r) { return mock->ListObjects(r); },
       [](internal::ListObjectsResponse r) {
         std::vector<ObjectOrPrefix> result;
+        result.reserve(r.items.size() + r.prefixes.size());
         for (auto& item : r.items) {
           result.emplace_back(std::move(item));
         }

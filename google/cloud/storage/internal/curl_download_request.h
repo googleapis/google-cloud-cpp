@@ -66,7 +66,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   CurlDownloadRequest(CurlDownloadRequest const&) = delete;
   CurlDownloadRequest& operator=(CurlDownloadRequest const&) = delete;
 
-  bool IsOpen() const override { return !(curl_closed_ && spill_offset_ == 0); }
+  bool IsOpen() const override { return !curl_closed_ || spill_offset_ != 0; }
   StatusOr<HttpResponse> Close() override;
 
   /**
