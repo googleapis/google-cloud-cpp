@@ -54,12 +54,11 @@ DeterminePagination(MethodDescriptor const& method) {
     FieldDescriptor const* field = response_message->field(i);
     if (field->is_repeated() &&
         field->type() == FieldDescriptor::TYPE_MESSAGE) {
-      repeated_message_fields.emplace_back(std::make_tuple(
-          field->name(), field->message_type(), field->number()));
+      repeated_message_fields.emplace_back(field->name(), field->message_type(),
+                                           field->number());
     }
     if (field->is_repeated() && field->type() == FieldDescriptor::TYPE_STRING) {
-      repeated_string_fields.emplace_back(
-          std::make_pair(field->name(), nullptr));
+      repeated_string_fields.emplace_back(field->name(), nullptr);
     }
   }
 
