@@ -33,7 +33,6 @@ void ExampleStatusOr(std::vector<std::string> const& argv) {
   namespace iam = ::google::cloud::iam;
   [](std::string const& project_id) {
     iam::IAMClient client(iam::MakeIAMConnection());
-    int count = 0;
     // The actual type of `service_account` is
     // google::cloud::StatusOr<google::iam::admin::v1::ServiceAccount>, but
     // we expect it'll most often be declared with auto like this.
@@ -49,7 +48,6 @@ void ExampleStatusOr(std::vector<std::string> const& argv) {
       }
       std::cout << "ServiceAccount successfully retrieved: " << sa->name()
                 << "\n";
-      ++count;
     }
   }
   //! [example-status-or]
