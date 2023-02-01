@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Intenal interface for Bigquery V2 Job resource.
+// Internal interface for Bigquery V2 Job resource.
 // Source: //depot/google3/google/cloud/bigquery/v2/job.proto
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_STUB_FACTORY_H
