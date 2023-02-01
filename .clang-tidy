@@ -43,6 +43,10 @@
 #     Almost any expression of the form `2 * variable` or `long x = a_int * b_int;`
 #     generates an error.
 #
+#  -bugprone-unchecked-optional-access: too many false positives in tests.
+#     Despite what the documentation says, this warning appears after
+#     `ASSERT_TRUE(variable)` or `ASSERT_TRUE(variable.has_value())`.
+#
 Checks: >
   -*,
   abseil-*,
@@ -57,6 +61,7 @@ Checks: >
   -google-readability-namespace-comments,
   -google-runtime-references,
   -misc-non-private-member-variables-in-classes,
+  -misc-const-correctness,
   -modernize-return-braced-init-list,
   -modernize-use-trailing-return-type,
   -modernize-avoid-c-arrays,
@@ -69,7 +74,8 @@ Checks: >
   -readability-function-cognitive-complexity,
   -bugprone-narrowing-conversions,
   -bugprone-easily-swappable-parameters,
-  -bugprone-implicit-widening-of-multiplication-result
+  -bugprone-implicit-widening-of-multiplication-result,
+  -bugprone-unchecked-optional-access
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
