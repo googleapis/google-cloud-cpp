@@ -8,7 +8,7 @@ github:
 name: bazel-oldest-pr
 substitutions:
   _BUILD_NAME: bazel-oldest
-  _DISTRO: fedora-36-bazel
+  _DISTRO: fedora-37-bazel
   _TRIGGER_TYPE: pr
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
