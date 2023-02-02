@@ -19,7 +19,9 @@
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
