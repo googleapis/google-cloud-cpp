@@ -17,10 +17,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_METADATA_H
 
+#include "google/cloud/version.h"
+
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
