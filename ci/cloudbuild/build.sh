@@ -63,8 +63,8 @@
 # Advanced Examples:
 #
 # 1. Runs the ci/cloudbuild/builds/asan.sh script using the
-#    ci/cloudbuild/dockerfiles/fedora-36-bazel.Dockerfile distro.
-#    $ build.sh --build asan --distro fedora-36-bazel
+#    ci/cloudbuild/dockerfiles/fedora-37-bazel.Dockerfile distro.
+#    $ build.sh --build asan --distro fedora-37-bazel
 #
 # Note: Builds with the `--docker` flag inherit some (but not all) environment
 # variables from the calling process, such as USE_BAZEL_VERSION
