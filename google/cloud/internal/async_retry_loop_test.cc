@@ -401,7 +401,7 @@ TEST(AsyncRetryLoopTest, ConfigureContext) {
   OptionsSpan span(Options{}.set<GrpcSetupOption>(setup.AsStdFunction()));
 
   AutomaticallyCreatedBackgroundThreads background;
-  future<StatusOr<int>> actual = AsyncRetryLoop(
+  auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
       [&sequencer](auto, auto, auto) { return sequencer.PushBack(); }, 42,
@@ -411,7 +411,7 @@ TEST(AsyncRetryLoopTest, ConfigureContext) {
   OptionsSpan clear(Options{});
   sequencer.PopFront().set_value(Status(StatusCode::kUnavailable, "try again"));
   sequencer.PopFront().set_value(0);
-  (void)actual.get();
+  (void)pending.get();
 }
 
 TEST(AsyncRetryLoopTest, CallOptionsDuringCancel) {
@@ -421,15 +421,15 @@ TEST(AsyncRetryLoopTest, CallOptionsDuringCancel) {
   });
 
   AutomaticallyCreatedBackgroundThreads background;
-  future<StatusOr<int>> actual = AsyncRetryLoop(
+  auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      background.cq(), [&p](auto, auto, auto) { return p.get_future(); }, 42,
+      background.cq(), [&p](auto&, auto, auto) { return p.get_future(); }, 42,
       "error message");
 
   OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
-  actual.cancel();
+  pending.cancel();
   p.set_value(0);
-  (void)actual.get();
+  (void)pending.get();
 }
 
 TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
