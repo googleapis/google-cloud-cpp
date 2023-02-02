@@ -21,6 +21,7 @@ filegroup(
     srcs = glob([
         "*.cc",
         "internal/*.cc",
+        "v2/minimal/internal/*.cc",
     ]),
 )
 
@@ -29,6 +30,7 @@ filegroup(
     srcs = glob([
         "*.h",
         "internal/*.h",
+        "v2/minimal/internal/*.h",
     ]),
 )
 
