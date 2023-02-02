@@ -391,6 +391,47 @@ TEST(AsyncRetryLoopTest, SetsTimeout) {
   ASSERT_THAT(actual.status(), StatusIs(StatusCode::kUnavailable));
 }
 
+TEST(AsyncRetryLoopTest, ConfigureContext) {
+  AsyncSequencer<StatusOr<int>> sequencer;
+
+  // The original options should be used in the first attempt and in the retry
+  // attempt.
+  MockFunction<void(grpc::ClientContext&)> setup;
+  EXPECT_CALL(setup, Call).Times(2);
+  OptionsSpan span(Options{}.set<GrpcSetupOption>(setup.AsStdFunction()));
+
+  AutomaticallyCreatedBackgroundThreads background;
+  auto pending = AsyncRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(),
+      [&sequencer](auto, auto, auto) { return sequencer.PushBack(); }, 42,
+      "error message");
+
+  // Clear the current options before retrying.
+  OptionsSpan clear(Options{});
+  sequencer.PopFront().set_value(Status(StatusCode::kUnavailable, "try again"));
+  sequencer.PopFront().set_value(0);
+  (void)pending.get();
+}
+
+TEST(AsyncRetryLoopTest, CallOptionsDuringCancel) {
+  OptionsSpan span(Options{}.set<TestOption>("CallOptionsDuringCancel"));
+  promise<StatusOr<int>> p([] {
+    EXPECT_EQ(CurrentOptions().get<TestOption>(), "CallOptionsDuringCancel");
+  });
+
+  AutomaticallyCreatedBackgroundThreads background;
+  auto pending = AsyncRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(), [&p](auto&, auto, auto) { return p.get_future(); }, 42,
+      "error message");
+
+  OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
+  pending.cancel();
+  p.set_value(0);
+  (void)pending.get();
+}
+
 TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
   auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
@@ -522,29 +563,6 @@ TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
   EXPECT_THAT(value, StatusIs(StatusCode::kCancelled,
                               AllOf(HasSubstr("Timer failure in"),
                                     HasSubstr("test-location"))));
-}
-
-TEST(AsyncRetryLoopTest, ConfigureContext) {
-  AsyncSequencer<StatusOr<int>> sequencer;
-
-  // The original options should be used in the first attempt and in the retry
-  // attempt.
-  MockFunction<void(grpc::ClientContext&)> setup;
-  EXPECT_CALL(setup, Call).Times(2);
-  OptionsSpan span(Options{}.set<GrpcSetupOption>(setup.AsStdFunction()));
-
-  AutomaticallyCreatedBackgroundThreads background;
-  future<StatusOr<int>> actual = AsyncRetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      background.cq(),
-      [&sequencer](auto, auto, auto) { return sequencer.PushBack(); }, 42,
-      "error message");
-
-  // Clear the current options before retrying.
-  OptionsSpan clear(Options{});
-  sequencer.PopFront().set_value(Status(StatusCode::kUnavailable, "try again"));
-  sequencer.PopFront().set_value(0);
-  (void)actual.get();
 }
 
 }  // namespace

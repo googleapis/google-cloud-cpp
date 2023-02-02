@@ -392,6 +392,26 @@ TEST(AsyncRestRetryLoopTest, SetsTimeout) {
   ASSERT_THAT(actual.status(), StatusIs(StatusCode::kUnavailable));
 }
 
+TEST(AsyncRestRetryLoopTest, CallOptionsDuringCancel) {
+  internal::OptionsSpan span(
+      Options{}.set<TestOption>("CallOptionsDuringCancel"));
+  promise<StatusOr<int>> p([] {
+    EXPECT_EQ(internal::CurrentOptions().get<TestOption>(),
+              "CallOptionsDuringCancel");
+  });
+
+  AutomaticallyCreatedRestBackgroundThreads background;
+  auto pending = AsyncRestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(), [&p](auto&, auto, auto) { return p.get_future(); }, 42,
+      "error message");
+
+  internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
+  pending.cancel();
+  p.set_value(0);
+  (void)pending.get();
+}
+
 TEST_F(AsyncRestRetryLoopCancelTest, CancelAndSuccess) {
   auto const transient = Status(StatusCode::kUnavailable, "try-again");
 
