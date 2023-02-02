@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/stream_range.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <gmock/gmock.h>
@@ -241,6 +243,52 @@ TEST(StreamRange, ReaderDestructorOptionsSpan) {
   // reference to the `FakeResumableStreamingReadRpc`, and all of that should
   // happen with `CurrentOptions()` matching those at `StreamRange` ctor time.
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+using ::google::cloud::testing_util::IsActive;
+
+class FakeReader {
+ public:
+  explicit FakeReader(
+      opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>
+          expected_span)
+      : span_(std::move(expected_span)) {
+    EXPECT_THAT(span_, IsActive());
+  }
+
+  ~FakeReader() { EXPECT_THAT(span_, IsActive()); }
+
+  absl::variant<Status, int> operator()() {
+    EXPECT_THAT(span_, IsActive());
+    return 1;
+  }
+
+ private:
+  opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
+};
+
+TEST(StreamRange, CallSpanActiveThroughout) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto overlay = internal::MakeSpan("overlay");
+  auto scope = opentelemetry::trace::Scope(overlay);
+  auto sr = [] {
+    auto span = internal::MakeSpan("call span");
+    auto scope = opentelemetry::trace::Scope(span);
+    return internal::MakeStreamRange<int>(FakeReader(span));
+  }();
+
+  auto it = sr.begin();
+  for (auto i = 0; i != 3; ++i) {
+    EXPECT_THAT(overlay, IsActive());
+    ++it;
+  }
+  // `~StreamRange()` will now delete the reader, which should happen with
+  // the active span matching that at `StreamRange` ctor time.
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
