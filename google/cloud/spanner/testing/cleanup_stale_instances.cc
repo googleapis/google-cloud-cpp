@@ -40,20 +40,10 @@ std::string CutoffDate() {
 
 }  // namespace
 
-Status CleanupStaleInstances(Project const& project) {
-  spanner_admin::InstanceAdminClient instance_admin_client(
-      spanner_admin::MakeInstanceAdminConnection());
-  spanner_admin::DatabaseAdminClient database_admin_client(
-      spanner_admin::MakeDatabaseAdminConnection());
-  return CleanupStaleInstances(project, instance_admin_client,
-                               database_admin_client);
-}
-
 Status CleanupStaleInstances(
     Project const& project,
-    spanner_admin::InstanceAdminClient& instance_admin_client,
-    spanner_admin::DatabaseAdminClient& database_admin_client) {
-  std::cout << __func__ << std::endl;
+    spanner_admin::InstanceAdminClient instance_admin_client,
+    spanner_admin::DatabaseAdminClient database_admin_client) {
   std::regex name_regex(R"(projects/.+/instances/)"
                         R"(temporary-instance-(\d{4}-\d{2}-\d{2})-.+)");
 
@@ -76,11 +66,9 @@ Status CleanupStaleInstances(
   for (auto const& instance :
        instance_admin_client.ListInstances(project.FullName())) {
     if (!instance) {
-      std::cout << __func__ << " no instance" << std::endl;
       break;
     }
     auto name = instance->name();
-    std::cout << __func__ << " listed instance=" << name << std::endl;
     std::smatch m;
     if (std::regex_match(name, m, name_regex)) {
       auto date_str = m[1];
@@ -100,14 +88,8 @@ Status CleanupStaleInstances(
   return Status();
 }
 
-Status CleanupStaleInstanceConfigs(Project const& project) {
-  spanner_admin::InstanceAdminClient instance_admin_client(
-      spanner_admin::MakeInstanceAdminConnection());
-  return CleanupStaleInstanceConfigs(project, instance_admin_client);
-}
-
 Status CleanupStaleInstanceConfigs(Project const& project,
-                                   spanner_admin::InstanceAdminClient& client) {
+                                   spanner_admin::InstanceAdminClient client) {
   std::regex name_regex(R"(projects/.+/instanceConfigs/)"
                         R"(custom-temporary-config-(\d{4}-\d{2}-\d{2})-.+)");
 

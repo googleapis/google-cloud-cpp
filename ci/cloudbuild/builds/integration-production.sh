@@ -24,6 +24,7 @@ source module ci/lib/io.sh
 
 export CC=clang
 export CXX=clang++
+export HTTP_TRANSCODING_TEST=yes
 
 mapfile -t args < <(bazel::common_args)
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
