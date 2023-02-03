@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Pair;
@@ -92,10 +93,11 @@ TEST(OpenTelemetry, EndSpan) {
   auto spans = span_catcher->GetSpans();
   // It is too hard to mock a `grpc::ClientContext`. We will just check that the
   // expected attribute key is set.
-  EXPECT_THAT(spans,
-              ElementsAre(AllOf(
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                  SpanHasAttributes(SpanAttribute<std::string>("grpc.peer")))));
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)))));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
