@@ -17,11 +17,14 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GoldenThingAdminTracingStub::GoldenThingAdminTracingStub(
     std::shared_ptr<GoldenThingAdminStub> child)
@@ -30,7 +33,11 @@ GoldenThingAdminTracingStub::GoldenThingAdminTracingStub(
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse> GoldenThingAdminTracingStub::ListDatabases(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabasesRequest const& request) {
-  return child_->ListDatabases(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "ListDatabases");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDatabases(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -44,7 +51,11 @@ GoldenThingAdminTracingStub::AsyncCreateDatabase(
 StatusOr<google::test::admin::database::v1::Database> GoldenThingAdminTracingStub::GetDatabase(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  return child_->GetDatabase(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "GetDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDatabase(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -58,31 +69,51 @@ GoldenThingAdminTracingStub::AsyncUpdateDatabaseDdl(
 Status GoldenThingAdminTracingStub::DropDatabase(
     grpc::ClientContext& context,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  return child_->DropDatabase(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "DropDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DropDatabase(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GoldenThingAdminTracingStub::GetDatabaseDdl(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-  return child_->GetDatabaseDdl(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "GetDatabaseDdl");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDatabaseDdl(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> GoldenThingAdminTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> GoldenThingAdminTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse> GoldenThingAdminTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,25 +127,41 @@ GoldenThingAdminTracingStub::AsyncCreateBackup(
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminTracingStub::GetBackup(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GetBackupRequest const& request) {
-  return child_->GetBackup(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetBackup(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminTracingStub::UpdateBackup(
     grpc::ClientContext& context,
     google::test::admin::database::v1::UpdateBackupRequest const& request) {
-  return child_->UpdateBackup(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "UpdateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBackup(context, request));
 }
 
 Status GoldenThingAdminTracingStub::DeleteBackup(
     grpc::ClientContext& context,
     google::test::admin::database::v1::DeleteBackupRequest const& request) {
-  return child_->DeleteBackup(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBackup(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupsResponse> GoldenThingAdminTracingStub::ListBackups(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupsRequest const& request) {
-  return child_->ListBackups(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "ListBackups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBackups(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -128,13 +175,21 @@ GoldenThingAdminTracingStub::AsyncRestoreDatabase(
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> GoldenThingAdminTracingStub::ListDatabaseOperations(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-  return child_->ListDatabaseOperations(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "ListDatabaseOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDatabaseOperations(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> GoldenThingAdminTracingStub::ListBackupOperations(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-  return child_->ListBackupOperations(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "ListBackupOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBackupOperations(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -173,6 +228,8 @@ future<Status> GoldenThingAdminTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal

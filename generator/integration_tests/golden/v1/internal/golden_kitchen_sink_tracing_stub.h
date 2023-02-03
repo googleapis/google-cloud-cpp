@@ -27,6 +27,8 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class GoldenKitchenSinkTracingStub : public GoldenKitchenSinkStub {
  public:
   ~GoldenKitchenSinkTracingStub() override = default;
@@ -102,6 +104,8 @@ class GoldenKitchenSinkTracingStub : public GoldenKitchenSinkStub {
  private:
   std::shared_ptr<GoldenKitchenSinkStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal

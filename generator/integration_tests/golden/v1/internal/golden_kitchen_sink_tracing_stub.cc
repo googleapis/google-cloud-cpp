@@ -17,11 +17,14 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GoldenKitchenSinkTracingStub::GoldenKitchenSinkTracingStub(
     std::shared_ptr<GoldenKitchenSinkStub> child)
@@ -30,43 +33,71 @@ GoldenKitchenSinkTracingStub::GoldenKitchenSinkTracingStub(
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GoldenKitchenSinkTracingStub::GenerateAccessToken(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  return child_->GenerateAccessToken(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "GenerateAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateAccessToken(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GoldenKitchenSinkTracingStub::GenerateIdToken(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-  return child_->GenerateIdToken(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "GenerateIdToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateIdToken(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> GoldenKitchenSinkTracingStub::WriteLogEntries(
     grpc::ClientContext& context,
     google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-  return child_->WriteLogEntries(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "WriteLogEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->WriteLogEntries(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse> GoldenKitchenSinkTracingStub::ListLogs(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListLogsRequest const& request) {
-  return child_->ListLogs(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "ListLogs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListLogs(context, request));
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> GoldenKitchenSinkTracingStub::ListServiceAccountKeys(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  return child_->ListServiceAccountKeys(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "ListServiceAccountKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListServiceAccountKeys(context, request));
 }
 
 Status GoldenKitchenSinkTracingStub::DoNothing(
     grpc::ClientContext& context,
     google::protobuf::Empty const& request) {
-  return child_->DoNothing(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "DoNothing");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DoNothing(context, request));
 }
 
 Status GoldenKitchenSinkTracingStub::Deprecated2(
     grpc::ClientContext& context,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  return child_->Deprecated2(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "Deprecated2");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->Deprecated2(context, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
@@ -96,13 +127,21 @@ GoldenKitchenSinkTracingStub::AsyncStreamingReadWrite(
 Status GoldenKitchenSinkTracingStub::ExplicitRouting1(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return child_->ExplicitRouting1(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "ExplicitRouting1");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ExplicitRouting1(context, request));
 }
 
 Status GoldenKitchenSinkTracingStub::ExplicitRouting2(
     grpc::ClientContext& context,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return child_->ExplicitRouting2(context, request);
+  auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "ExplicitRouting2");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ExplicitRouting2(context, request));
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -121,6 +160,8 @@ GoldenKitchenSinkTracingStub::AsyncStreamingWrite(
     std::unique_ptr<grpc::ClientContext> context) {
   return child_->AsyncStreamingWrite(cq, std::move(context));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
