@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_KITCHEN_SINK_REST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_KITCHEN_SINK_REST_CONNECTION_H
 
+
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -32,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * A factory function to construct an object of type `GoldenKitchenSinkConnection`
  * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
- * only be used for services that do not support gRpc or if the existing network
+ * only be used for services that do not support gRPC or if the existing network
  * configuration precludes using gRPC.
  *
  * The returned connection object should not be used directly; instead it

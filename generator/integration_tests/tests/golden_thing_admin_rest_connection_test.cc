@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/integration_tests/golden/v1/golden_thing_admin_rest_connection.h"
 #include "generator/integration_tests/golden/golden_thing_admin_connection.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_connection_impl.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_rest_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/async_sequencer.h"
@@ -45,6 +47,7 @@ using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -1370,9 +1373,16 @@ TEST(GoldenThingAdminConnectionTest, CheckExpectedOptions) {
   };
   testing_util::ScopedLog log;
   auto opts = Options{}.set<UnexpectedOption>({});
-  auto conn = MakeGoldenThingAdminConnection(std::move(opts));
+  auto conn = golden_v1::MakeGoldenThingAdminConnectionRest(std::move(opts));
   EXPECT_THAT(log.ExtractLines(),
               Contains(ContainsRegex("Unexpected option.+UnexpectedOption")));
+}
+
+TEST(GoldenThingAdminConnectionTest, ConnectionCreatedWithOption) {
+  auto opts = Options{}.set<EndpointOption>("foo");
+  auto conn = golden_v1::MakeGoldenThingAdminConnectionRest(std::move(opts));
+  ASSERT_TRUE(conn->options().has<EndpointOption>());
+  EXPECT_THAT(conn->options().get<EndpointOption>(), Eq("foo"));
 }
 
 }  // namespace
