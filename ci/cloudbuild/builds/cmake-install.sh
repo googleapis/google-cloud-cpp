@@ -61,7 +61,6 @@ expected_dirs+=(
   ./include/google/appengine/logging/v1
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
-  ./include/google/cloud/bigquery/v2
   ./include/google/cloud/bigquery/v2/minimal
   ./include/google/cloud/bigquery/v2/minimal/internal
   ./include/google/cloud/bigtable/mocks
