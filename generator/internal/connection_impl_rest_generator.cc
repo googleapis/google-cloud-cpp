@@ -154,7 +154,6 @@ Status ConnectionImplRestGenerator::GenerateCc() {
   auto const needs_async_retry_loop = !async_methods().empty();
   CcLocalIncludes(
       {vars("connection_impl_rest_header_path"),
-       vars("option_defaults_header_path"),
        vars("stub_factory_rest_header_path"), "google/cloud/common_options.h",
        "google/cloud/credentials.h", "google/cloud/rest_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
@@ -166,68 +165,10 @@ Status ConnectionImplRestGenerator::GenerateCc() {
            : "",
        needs_async_retry_loop ? "google/cloud/internal/async_rest_retry_loop.h"
                               : "",
-       "google/cloud/internal/rest_background_threads_impl.h",
        "google/cloud/internal/rest_retry_loop.h", "absl/memory/memory.h"});
   CcSystemIncludes({"memory"});
 
-  auto result = CcOpenNamespaces(NamespaceType::kNormal);
-  if (!result.ok()) return result;
-  auto endpoint_location_style = EndpointLocationStyle();
-
-  CcPrint(R"""(
-std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
-)""");
-  CcPrint("    ");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      CcPrint("std::string const& location, ");
-      break;
-    default:
-      break;
-  }
-  CcPrint("Options options) {");
-  CcPrint(R"""(
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      $service_name$PolicyOptionList>(options, __func__);
-  options = $product_internal_namespace$::$service_name$DefaultOptions(
-)""");
-  CcPrint("      ");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      CcPrint("location, ");
-      break;
-    default:
-      break;
-  }
-  CcPrint("std::move(options));");
-  CcPrint(R"""(
-  auto background = absl::make_unique<
-      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = $product_internal_namespace$::CreateDefault$stub_rest_class_name$(
-    options);
-  return std::make_shared<$product_internal_namespace$::$connection_impl_rest_class_name$>(
-      std::move(background), std::move(stub), std::move(options));
-}
-)""");
-
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      CcPrint(R"""(
-std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
-    Options options) {
-  return Make$connection_class_name$(std::string{}, std::move(options));
-}
-)""");
-      break;
-    default:
-      break;
-  }
-
-  CcCloseNamespaces();
-  result = CcOpenNamespaces(NamespaceType::kInternal);
+  auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
   CcPrint(R"""(
