@@ -81,8 +81,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the
- * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
+ * contains the expected result. More information on the
+ * [Error Handling Guide](#spanner-error-handling).
  *
  * @code
  * namespace spanner = ::google::cloud::spanner;
@@ -374,13 +374,16 @@ class Client {
    * Can also execute a DML statement with a returning clause in a read/write
    * transaction.
    *
-   * @par Example with explicitly selected columns.
+   * ### Example with explicitly selected columns.
+   *
    * @snippet samples.cc spanner-query-data
    *
-   * @par Example using `SELECT *`.
+   * ## Example using `SELECT *`.
+   *
    * @snippet samples.cc spanner-query-data-select-star
    *
-   * @par Example using a DML statement with `THEN RETURN`.
+   * ### Example using a DML statement with `THEN RETURN`.
+   *
    * @snippet samples.cc spanner-update-dml-returning
    *
    * @param statement The SQL statement to execute.
@@ -423,7 +426,7 @@ class Client {
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    *
-   * @par Example
+   * ### Example
    * @snippet samples.cc execute-sql-query-partition
    */
   RowStream ExecuteQuery(QueryPartition const& partition, Options opts = {});
@@ -514,19 +517,21 @@ class Client {
    * or neither, in which case a single-use transaction with default options
    * is used.
    *
+   * @par Example
+   *
+   * @snippet samples.cc profile-query
+   *
    * @note Callers must consume all rows from the result before execution
    *     statistics and `ExecutionPlan` are available.
+   *
+   * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
+   *     no column value can exceed 10 MiB.
    *
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
    *
-   * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
-   *     no column value can exceed 10 MiB.
-   *
-   * @par Example
-   * @snippet samples.cc profile-query
    */
   ProfileQueryResult ProfileQuery(SqlStatement statement, Options opts = {});
 
