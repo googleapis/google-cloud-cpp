@@ -15,17 +15,6 @@
 # ~~~
 
 include(GoogleapisConfig)
-set(DOXYGEN_PROJECT_NAME "Grafeas API C++ Client")
-set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Grafeas API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "grafeas_internal" "grafeas_testing"
-                            "examples")
-# set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-# ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-
-include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("grafeas" DEPENDS cloud-docs
-                                 google-cloud-cpp::grafeas_protos)
 
 include(GoogleCloudCppCommon)
 
