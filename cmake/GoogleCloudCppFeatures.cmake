@@ -227,10 +227,10 @@ function (google_cloud_cpp_enable_features)
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
             endif ()
-        elseif ("${feature}" STREQUAL "http-transcoding")
+        elseif ("${feature}" STREQUAL "experimental-http-transcoding")
             option(
                 GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING
-                "Enable building gRPC/HTTP transcoding libraries and executing accompanying tests."
+                "Enable building gRPC/HTTP transcoding libraries and their tests."
                 ON)
         elseif ("${feature}" STREQUAL "experimental-opentelemetry")
 

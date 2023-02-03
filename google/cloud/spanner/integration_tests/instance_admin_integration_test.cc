@@ -74,8 +74,13 @@ bool Emulator() {
 class CleanupStaleInstances : public ::testing::Environment {
  public:
   void SetUp() override {
-    EXPECT_STATUS_OK(
-        spanner_testing::CleanupStaleInstances(Project(ProjectId())));
+    spanner_admin::InstanceAdminClient instance_client(
+        spanner_admin::MakeInstanceAdminConnection());
+    spanner_admin::DatabaseAdminClient database_client(
+        spanner_admin::MakeDatabaseAdminConnection());
+    EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstances(
+        Project(ProjectId()), std::move(instance_client),
+        std::move(database_client)));
   }
 };
 

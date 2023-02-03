@@ -39,8 +39,13 @@ spanner_emulator::start 8787
 popd >/dev/null
 trap spanner_emulator::kill EXIT
 
+test_tag_filters="integration-test,-http-transcoding-test"
+if [[ -n "${HTTP_TRANSCODING_TEST}" ]]; then
+  test_tag_filters="integration-test,http-transcoding-test"
+fi
+
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="SPANNER_EMULATOR_HOST=${SPANNER_EMULATOR_HOST}" \
   --test_env="SPANNER_EMULATOR_REST_HOST=${SPANNER_EMULATOR_REST_HOST}" \
-  --test_tag_filters="integration-test" -- \
+  --test_tag_filters="${test_tag_filters}" -- \
   "//google/cloud/spanner/...:all"

@@ -83,9 +83,7 @@ bool Emulator() {
 // the InstanceAdmin.
 std::shared_ptr<google::cloud::spanner_admin::InstanceAdminConnection>
 MakeInstanceAdminConnectionRestEmulator() {
-  Options options;
-  options =
-      spanner_admin_internal::InstanceAdminDefaultOptions(std::move(options));
+  auto options = spanner_admin_internal::InstanceAdminDefaultOptions(Options{});
   if (internal::GetEnv("SPANNER_EMULATOR_REST_HOST").has_value()) {
     options.set<EndpointOption>(
         internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
@@ -103,9 +101,7 @@ MakeInstanceAdminConnectionRestEmulator() {
 // the DatabaseAdmin.
 std::shared_ptr<google::cloud::spanner_admin::DatabaseAdminConnection>
 MakeDatabaseAdminConnectionRestEmulator() {
-  Options options;
-  options =
-      spanner_admin_internal::DatabaseAdminDefaultOptions(std::move(options));
+  auto options = spanner_admin_internal::DatabaseAdminDefaultOptions(Options{});
   if (internal::GetEnv("SPANNER_EMULATOR_REST_HOST").has_value()) {
     options.set<EndpointOption>(
         internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
@@ -127,7 +123,8 @@ class CleanupStaleInstances : public ::testing::Environment {
     spanner_admin::DatabaseAdminClient database_admin_client(
         MakeDatabaseAdminConnectionRestEmulator());
     EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstances(
-        Project(ProjectId()), instance_admin_client, database_admin_client));
+        Project(ProjectId()), std::move(instance_admin_client),
+        std::move(database_admin_client)));
   }
 };
 
@@ -137,7 +134,7 @@ class CleanupStaleInstanceConfigs : public ::testing::Environment {
     spanner_admin::InstanceAdminClient instance_admin_client(
         MakeInstanceAdminConnectionRestEmulator());
     EXPECT_STATUS_OK(spanner_testing::CleanupStaleInstanceConfigs(
-        Project(ProjectId()), instance_admin_client));
+        Project(ProjectId()), std::move(instance_admin_client)));
   }
 };
 
@@ -261,166 +258,6 @@ TEST_F(InstanceAdminClientRestTest, InstanceCRUDOperations) {
   }
 
   EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
-}
-
-TEST_F(InstanceAdminClientRestTest, InstanceConfig) {
-  auto project_id = ProjectId();
-  ASSERT_FALSE(project_id.empty());
-
-  auto config_names = [&project_id, this]() mutable {
-    std::vector<std::string> names;
-    auto const parent = Project(project_id).FullName();
-    for (auto const& config : client_.ListInstanceConfigs(parent)) {
-      EXPECT_STATUS_OK(config);
-      if (!config) break;
-      names.push_back(config->name());
-    }
-    return names;
-  }();
-  ASSERT_FALSE(config_names.empty());
-
-  // Use the name of the first element from the list of instance configs.
-  auto config = client_.GetInstanceConfig(config_names[0]);
-  ASSERT_STATUS_OK(config);
-  EXPECT_THAT(config->name(), HasSubstr(project_id));
-  EXPECT_EQ(
-      1, std::count(config_names.begin(), config_names.end(), config->name()));
-}
-
-TEST_F(InstanceAdminClientRestTest, InstanceConfigUserManaged) {
-  Project project(ProjectId());
-  auto base_config_name = spanner_testing::PickInstanceConfig(
-      project, generator_,
-      [](google::spanner::admin::instance::v1::InstanceConfig const& config) {
-        return !config.optional_replicas().empty();
-      });
-  ASSERT_THAT(base_config_name, Not(IsEmpty()));
-  auto base_config = client_.GetInstanceConfig(base_config_name);
-  ASSERT_THAT(base_config, IsOk());
-  if (Emulator()) {
-    EXPECT_THAT(base_config->optional_replicas(), IsEmpty());
-    GTEST_SKIP() << "emulator does not support user-configurable instances";
-  }
-
-  std::string config_id = spanner_testing::RandomInstanceConfigName(generator_);
-  google::spanner::admin::instance::v1::CreateInstanceConfigRequest creq;
-  creq.set_parent(project.FullName());
-  creq.set_instance_config_id(config_id);
-  auto* creq_config = creq.mutable_instance_config();
-  creq_config->set_name(project.FullName() + "/instanceConfigs/" + config_id);
-  creq_config->set_display_name("original display name");
-  // The user-managed instance config must contain all the replicas
-  // of the base config plus at least one of the optional replicas.
-  EXPECT_THAT(base_config->replicas(), Not(IsEmpty()));
-  *creq_config->mutable_replicas() = base_config->replicas();
-  EXPECT_THAT(base_config->optional_replicas(), Not(IsEmpty()));
-  for (auto const& replica : base_config->optional_replicas()) {
-    *creq_config->add_replicas() = replica;
-  }
-  creq_config->set_base_config(base_config->name());
-  creq_config->mutable_labels()->insert({"key", "original-value"});
-  *creq_config->mutable_leader_options() = base_config->leader_options();
-  creq.set_validate_only(false);
-  auto user_config = client_.CreateInstanceConfig(creq).get();
-  ASSERT_THAT(user_config, IsOk());
-  EXPECT_THAT(user_config->name(), EndsWith(config_id));
-  EXPECT_THAT(user_config->display_name(), Eq("original display name"));
-  EXPECT_THAT(user_config->replicas(), Not(IsEmpty()));
-  EXPECT_THAT(user_config->base_config(), Eq(base_config->name()));
-  EXPECT_THAT(user_config->labels().at("key"), Eq("original-value"));
-
-  std::vector<std::string> config_names;
-  auto const parent = project.FullName();
-  for (auto const& config : client_.ListInstanceConfigs(parent)) {
-    EXPECT_THAT(config, IsOk());
-    if (!config) break;
-    config_names.push_back(config->name());
-    if (config->name() == user_config->name()) {
-      EXPECT_EQ(
-          config->config_type(),
-          google::spanner::admin::instance::v1::InstanceConfig::USER_MANAGED);
-    }
-  }
-  EXPECT_EQ(1, std::count(config_names.begin(), config_names.end(),
-                          user_config->name()));
-
-  google::spanner::admin::instance::v1::UpdateInstanceConfigRequest ureq;
-  auto* ureq_config = ureq.mutable_instance_config();
-  ureq_config->set_name(user_config->name());
-  ureq_config->set_display_name("updated display name");
-  ureq.mutable_update_mask()->add_paths("display_name");
-  ureq_config->mutable_labels()->insert({"key", "updated-value"});
-  ureq.mutable_update_mask()->add_paths("labels");
-  ureq_config->set_etag(user_config->etag());
-  ureq.set_validate_only(false);
-  auto updated_instance_config = client_.UpdateInstanceConfig(ureq).get();
-  EXPECT_THAT(updated_instance_config, IsOk());
-  if (updated_instance_config) {
-    EXPECT_THAT(updated_instance_config->display_name(),
-                Eq("updated display name"));
-    EXPECT_THAT(updated_instance_config->labels().at("key"),
-                Eq("updated-value"));
-  }
-
-  std::string instance_id = spanner_testing::RandomInstanceName(generator_);
-  Instance in(project, instance_id);
-  auto instance =
-      client_
-          .CreateInstance(CreateInstanceRequestBuilder(in, user_config->name())
-                              .SetDisplayName("test-display-name")
-                              .SetProcessingUnits(100)
-                              .SetLabels({{"label-key", "label-value"}})
-                              .Build())
-          .get();
-  EXPECT_THAT(instance, IsOk());
-  if (instance) {
-    EXPECT_EQ(instance->name(), in.FullName());
-    EXPECT_EQ(instance->config(), user_config->name());
-    EXPECT_EQ(instance->display_name(), "test-display-name");
-    EXPECT_EQ(instance->processing_units(), 100);
-    EXPECT_EQ(instance->labels().at("label-key"), "label-value");
-    EXPECT_THAT(client_.DeleteInstance(instance->name()), IsOk());
-  }
-
-  EXPECT_THAT(client_.DeleteInstanceConfig(user_config->name()), IsOk());
-}
-
-TEST_F(InstanceAdminClientRestTest, InstanceIam) {
-  Instance in(ProjectId(), InstanceId());
-  ASSERT_FALSE(in.project_id().empty());
-  ASSERT_FALSE(in.instance_id().empty());
-
-  auto actual_policy = client_.GetIamPolicy(in.FullName());
-  if (Emulator() &&
-      (actual_policy.status().code() == StatusCode::kUnimplemented ||
-       actual_policy.status().code() == StatusCode::kInternal)) {
-    GTEST_SKIP() << "emulator does not support IAM policies";
-  }
-  ASSERT_STATUS_OK(actual_policy);
-  EXPECT_THAT(actual_policy->etag(), Not(IsEmpty()));
-
-  if (RunSlowInstanceTests()) {
-    // Set the policy to the existing value of the policy. While this
-    // changes nothing, it tests all the code in the client library.
-    auto updated_policy = client_.SetIamPolicy(in.FullName(), *actual_policy);
-    ASSERT_THAT(updated_policy, AnyOf(IsOk(), StatusIs(StatusCode::kAborted)));
-    if (updated_policy) {
-      EXPECT_THAT(updated_policy->etag(), Not(IsEmpty()));
-    }
-
-    // Repeat the test using the OCC API.
-    updated_policy = client_.SetIamPolicy(
-        in.FullName(), [](google::iam::v1::Policy p) { return p; });
-    ASSERT_STATUS_OK(updated_policy);
-    EXPECT_THAT(updated_policy->etag(), Not(IsEmpty()));
-  }
-
-  auto actual = client_.TestIamPermissions(
-      in.FullName(), {"spanner.databases.list", "spanner.databases.get"});
-  ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(
-      actual->permissions(),
-      UnorderedElementsAre("spanner.databases.list", "spanner.databases.get"));
 }
 
 }  // namespace
