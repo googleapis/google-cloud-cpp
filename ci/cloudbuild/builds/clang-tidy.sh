@@ -25,7 +25,7 @@ export CC=clang
 export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
 read -r ENABLED_FEATURES < <(features::always_build_cmake)
-ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc,generator,http-transcoding"
+ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc,generator,experimental-http-transcoding"
 mapfile -t cmake_args < <(cmake::common_args)
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
