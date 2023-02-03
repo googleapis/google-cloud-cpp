@@ -21,7 +21,7 @@ set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "bigquery_internal" "bigquery_testing"
-                            "examples")
+                            "examples" "bigquery_v2_minimal_internal")
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("bigquery" DEPENDS cloud-docs
@@ -32,7 +32,8 @@ include(GoogleCloudCppCommon)
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+    "*.h" "*.cc" "internal/*.h" "internal/*.cc" "v2/minimal/internal/*.h"
+    "v2/minimal/internal/*.cc")
 list(SORT source_files)
 add_library(google_cloud_cpp_bigquery ${source_files})
 target_include_directories(
