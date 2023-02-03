@@ -215,7 +215,7 @@ class FoldersClient {
   ///  `folders/123` as a parent resource.
   ///  * Query `parent=folders/123 AND state=ACTIVE` returns active
   ///  Folder resources that have `folders/123` as a parent resource.
-  ///  * Query `displayName=\\"Test String\\"` returns Folder resources with
+  ///  * Query `displayName="Test String"`) returns Folder resources with
   ///  display names that include both "Test" and "String".
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.

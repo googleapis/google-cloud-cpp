@@ -195,7 +195,7 @@ class AssetServiceClient {
   /// this feed
   ///  should be created in. It can only be an organization number (such as
   ///  "organizations/123"), a folder number (such as "folders/123"), a project
-  ///  ID (such as "projects/my-project-id")", or a project number (such as
+  ///  ID (such as "projects/my-project-id"), or a project number (such as
   ///  "projects/12345").
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -276,7 +276,7 @@ class AssetServiceClient {
   /// @param parent  Required. The parent project/folder/organization whose
   /// feeds are to be
   ///  listed. It can only be using project/folder/organization number (such as
-  ///  "folders/12345")", or a project ID (such as "projects/my-project-id").
+  ///  "folders/12345"), or a project ID (such as "projects/my-project-id").
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -719,7 +719,7 @@ class AssetServiceClient {
   /// this
   ///  saved_query should be created in. It can only be an organization number
   ///  (such as "organizations/123"), a folder number (such as "folders/123"), a
-  ///  project ID (such as "projects/my-project-id")", or a project number (such
+  ///  project ID (such as "projects/my-project-id"), or a project number (such
   ///  as "projects/12345").
   /// @param saved_query  Required. The saved_query details. The `name` field
   /// must be empty as it
@@ -812,7 +812,7 @@ class AssetServiceClient {
   /// @param parent  Required. The parent project/folder/organization whose
   /// savedQueries are to
   ///  be listed. It can only be using project/folder/organization number (such
-  ///  as "folders/12345")", or a project ID (such as "projects/my-project-id").
+  ///  as "folders/12345"), or a project ID (such as "projects/my-project-id").
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return

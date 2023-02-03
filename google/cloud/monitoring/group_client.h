@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// The Group API lets you inspect and manage your
-/// [groups](#google.monitoring.v3.Group).
+/// [groups][google.monitoring.v3.Group].
 ///
 /// A group is a named filter that is used to identify
 /// a collection of monitored resources. Groups are typically used to
@@ -68,6 +68,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// instance of this class is not guaranteed to work. Since copy-construction
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
+///
+/// [google.monitoring.v3.Group]:
+/// @googleapis_link_reference{google/monitoring/v3/group.proto#L55}
 ///
 class GroupServiceClient {
  public:

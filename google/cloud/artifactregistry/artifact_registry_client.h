@@ -661,7 +661,7 @@ class ArtifactRegistryClient {
   ///
   /// @param parent  The name of the repository whose files will be listed. For
   /// example:
-  ///  "projects/p1/locations/us-central1/repositories/repo1
+  ///  "projects/p1/locations/us-central1/repositories/repo1"
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
