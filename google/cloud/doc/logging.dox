@@ -6,29 +6,29 @@ An overview of logging in the Google Cloud C++ client libraries.
 ## Introduction
 
 The client libraries never use logging to report errors, but logging can be
-enabled to help troubleshoot problems when just the last error message does
-not provide a good enough indication of the root cause.
+enabled to help troubleshoot problems when the last error message does not
+provide a good enough indication of the root cause.
 
 In general, we abide by the following principles:
 
-- Logging should controlled by the application developer. Unless explicitly
+- Logging should be controlled by the application developer. Unless explicitly
   instructed, the libraries produce no output to the console, except
   to emit a message to `std::clog` immediately before a `GCP_LOG(FATAL)`
   terminates the process.
 - Logging should have very low cost:
-  - It should be possible to disable logs at compile time, they should
+  - It should be possible to disable logs at compile time. They should
     disappear as-if there were `#%ifdef`/`#%endif` directives around them.
   - A log line at a disabled log level should be about as expensive as an
     extra `if()` statement. At the very least it should not incur additional
     memory allocations or locks.
-- It should be easy to log complex objects: the logging library should play
-  well with the C++ iostream classes.
+- It should be easy to log complex objects.
+- The logging framework should play well with the C++ iostream classes.
 - The application should be able to intercept log records and re-direct them
   to their own logging framework.
 
 ## Enabling logs
 
-The application needs to turn two flags to enable logging:
+The application needs to do two things to enable logging:
 
 - First, to configure the destination of the logs you must add a backend (see
   [AddBackend](@ref google::cloud::LogSink::AddBackend)) to the default
@@ -73,21 +73,5 @@ void AppCode() {
 
 As previously noted, this can be switched at run-time using the
 `GOOGLE_CLOUD_CPP_ENABLE_CLOG` environment variable.
-
-## Example: Capture Logs
-
-The application can implement simple backends by wrapping a functor:
-
-@code
-void AppCode() {
-  auto id = google::cloud::LogSink::AttachFunctor(
-      [](google::cloud::LogRecord record) {
-          if (record.severity >= google::cloud::Severity::CRITICAL) {
-            std::cerr << record << "\n";
-          }
-      });
-  // Use "id" to remove the capture.
-}
-@endcode
 
 */
