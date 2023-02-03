@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -36,6 +37,8 @@ using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithStatus;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Pair;
@@ -77,6 +80,24 @@ TEST(OpenTelemetry, InjectTraceContextGrpc) {
   testing_util::ValidateMetadataFixture fixture;
   auto md = fixture.GetMetadata(context);
   EXPECT_THAT(md, ElementsAre(Pair("x-test-key", "test-value")));
+}
+
+TEST(OpenTelemetry, EndSpan) {
+  auto span_catcher = InstallSpanCatcher();
+
+  grpc::ClientContext context;
+  auto span = MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar");
+  auto status = EndSpan(context, *span, Status());
+  EXPECT_STATUS_OK(status);
+
+  auto spans = span_catcher->GetSpans();
+  // It is too hard to mock a `grpc::ClientContext`. We will just check that the
+  // expected attribute key is set.
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)))));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
