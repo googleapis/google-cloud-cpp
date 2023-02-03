@@ -607,7 +607,7 @@ class TableAdmin {
      *       * `table:prod` --> The table's name contains the string "prod".
      *       * `state:CREATING` --> The backup is pending creation.
      *       * `state:READY` --> The backup is fully created and ready for use.
-     *       * `(name:howl) AND (start_time < \"2018-03-28T14:50:00Z\")`
+     *       * `(name:howl) AND (start_time < "2018-03-28T14:50:00Z")`
      *          --> The backup name contains the string "howl" and start_time
      *              of the backup is before `2018-03-28T14:50:00Z`.
      *       * `size_bytes > 10000000000` --> The backup's size is greater than
