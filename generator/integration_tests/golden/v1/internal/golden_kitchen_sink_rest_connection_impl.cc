@@ -18,41 +18,14 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_connection_impl.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
 #include <memory>
-
-namespace google {
-namespace cloud {
-namespace golden_v1 {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnectionRest(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList,
-      GoldenKitchenSinkPolicyOptionList>(options, __func__);
-  options = golden_v1_internal::GoldenKitchenSinkDefaultOptions(
-      std::move(options));
-  auto background = absl::make_unique<
-      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = golden_v1_internal::CreateDefaultGoldenKitchenSinkRestStub(
-    options);
-  return std::make_shared<golden_v1_internal::GoldenKitchenSinkRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_v1
-}  // namespace cloud
-}  // namespace google
 
 namespace google {
 namespace cloud {
