@@ -349,6 +349,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     # Makes the generate-libraries build ONLY touch golden files in the
     # generator dir.
     "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY-}"
+    "--env=HTTP_TRANSCODING_TEST=${HTTP_TRANSCODING_TEST-}"
   )
   # All GOOGLE_CLOUD_* env vars will be passed to the docker container.
   for e in $(env); do
