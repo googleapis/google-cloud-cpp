@@ -242,6 +242,12 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_pair("connection_header_path",
                        "google/cloud/frobber/"
                        "frobber_connection.h"),
+        std::make_pair("connection_rest_cc_path",
+                       "google/cloud/frobber/"
+                       "frobber_rest_connection.cc"),
+        std::make_pair("connection_rest_header_path",
+                       "google/cloud/frobber/"
+                       "frobber_rest_connection.h"),
         std::make_pair("connection_options_name",
                        "FrobberServiceConnectionOptions"),
         std::make_pair("connection_options_traits_name",

@@ -16,12 +16,15 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_THING_ADMIN_REST_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_THING_ADMIN_REST_CONNECTION_H
+
+
 #include "generator/integration_tests/golden/v1/golden_thing_admin_rest_connection.h"
 #include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub_factory.h"
-#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_connection.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
