@@ -42,7 +42,7 @@ namespace internal {
  * `Status` indicating either success or an error. This function will not be
  * invoked any more after it returns any `Status`.
  *
- * @par Example `StreamReader` that returns the integers from 1-10.
+ * @par Example: returning the integers from 1-10.
  *
  * @code
  * int counter = 0;
