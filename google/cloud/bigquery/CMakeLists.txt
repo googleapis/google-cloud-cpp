@@ -32,8 +32,8 @@ include(GoogleCloudCppCommon)
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc"
-    "v2/minimal/internal/*.h" "v2/minimal/internal/*.cc")
+    "*.h" "*.cc" "internal/*.h" "internal/*.cc" "v2/minimal/internal/*.h"
+    "v2/minimal/internal/*.cc")
 list(SORT source_files)
 add_library(google_cloud_cpp_bigquery ${source_files})
 target_include_directories(
