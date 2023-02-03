@@ -61,6 +61,7 @@ expected_dirs+=(
   ./include/google/appengine/logging/v1
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
+  ./include/google/cloud/bigquery/v2/minimal/internal
   ./include/google/cloud/bigtable/mocks
   # no RPC services in google/cloud/certificatemanager/logging
   ./include/google/cloud/certificatemanager/logging
