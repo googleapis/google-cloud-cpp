@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:36
+FROM fedora:37
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -20,7 +20,7 @@ ARG ARCH=amd64
 # then compile our code.
 RUN dnf makecache && \
     dnf install -y ccache clang clang-tools-extra cmake findutils \
-        git llvm llvm-devel make ninja-build openssl-devel patch python \
+        git make ninja-build openssl-devel patch python \
         python3 python3-devel python3-lit python-pip tar unzip which wget xz
 
 # Install the Python modules needed to run the storage emulator
@@ -41,26 +41,29 @@ WORKDIR /var/tmp/build
 
 # Install instructions from:
 # https://github.com/google/sanitizers/wiki/MemorySanitizerLibcxxHowTo
-RUN git clone --depth=1 --branch llvmorg-14.0.0 https://github.com/llvm/llvm-project
+RUN git clone --depth=1 --branch llvmorg-15.0.7 https://github.com/llvm/llvm-project
 WORKDIR /var/tmp/build/llvm-project
 # configure cmake
 RUN cmake -GNinja -S llvm -B build \
     -DCMAKE_BUILD_TYPE=Release \
-    -DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi" \
+    -DLLVM_ENABLE_PROJECTS="libcxx;libcxxabi;libunwind" \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DLLVM_USE_SANITIZER=MemoryWithOrigins \
     -DCMAKE_INSTALL_PREFIX=/usr
 # build the libraries
-RUN cmake --build build -- cxx cxxabi
-RUN cmake --build build -- install-cxx install-cxxabi
+RUN cmake --build build -- cxx cxxabi unwind
+RUN cmake --build build -- install-cxx install-cxxabi install-unwind
+# The Fedora package for LLVM does something similar:
+#     https://src.fedoraproject.org/rpms/llvm/blob/rawhide/f/llvm.spec#_374
+RUN echo "/usr/lib/x86_64-unknown-linux-gnu" >/etc/ld.so.conf.d/msan.conf
 RUN ldconfig
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
-ENV CLOUDSDK_PYTHON=python3.10
+ENV CLOUDSDK_PYTHON=python3
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
