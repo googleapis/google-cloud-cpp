@@ -65,8 +65,7 @@ void InjectTraceContext(grpc::ClientContext& context, Options const& options);
  * The span is ended. The original value is returned, for the sake of
  * composition.
  *
- * Note that this function should be called after the server has filled in the
- * relevant information, such as the peer.
+ * Note that this function should be called after the RPC has finished.
  */
 template <typename T>
 T EndSpan(grpc::ClientContext& context, opentelemetry::trace::Span& span,
