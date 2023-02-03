@@ -149,7 +149,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2023-02-01.tar.gz | \
 
 WORKDIR /var/tmp/build/grpc
 RUN dnf makecache && dnf install -y c-ares-devel
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.51.1.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.52.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
