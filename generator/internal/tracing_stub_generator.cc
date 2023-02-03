@@ -51,6 +51,8 @@ Status TracingStubGenerator::GenerateHeader() {
   // Tracing stub class definition
   HeaderPrint(
       R"""(
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class $tracing_stub_class_name$ : public $stub_class_name$ {
  public:
   ~$tracing_stub_class_name$() override = default;
@@ -64,6 +66,8 @@ class $tracing_stub_class_name$ : public $stub_class_name$ {
  private:
   std::shared_ptr<$stub_class_name$> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 )""");
 
   HeaderCloseNamespaces();
@@ -83,7 +87,8 @@ Status TracingStubGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes({vars("tracing_stub_header_path")});
+  CcLocalIncludes({vars("tracing_stub_header_path"),
+                   "google/cloud/internal/grpc_opentelemetry.h"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -91,6 +96,8 @@ Status TracingStubGenerator::GenerateCc() {
   // constructor
   CcPrint(
       R"""(
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 $tracing_stub_class_name$::$tracing_stub_class_name$(
     std::shared_ptr<$stub_class_name$> child)
     : child_(std::move(child)) {}
@@ -133,7 +140,11 @@ StatusOr<$response_type$> $tracing_stub_class_name$::$method_name$()"""},
                         {R"""(
     grpc::ClientContext& context,
     $request_type$ const& request) {
-  return child_->$method_name$(context, request);
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->$method_name$(context, request));
 }
 )"""}},
                        And(IsNonStreaming, Not(IsLongrunningOperation))),
@@ -226,6 +237,9 @@ future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
 )""");
   }
 
+  CcPrint(R"""(
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+)""");
   CcCloseNamespaces();
   return {};
 }
