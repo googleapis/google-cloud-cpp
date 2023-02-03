@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_KITCHEN_SINK_REST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_KITCHEN_SINK_REST_CONNECTION_H
 
-
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_rest_connection.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_options.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"

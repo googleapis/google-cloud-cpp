@@ -19,7 +19,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_THING_ADMIN_REST_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_THING_ADMIN_REST_CONNECTION_H
 
-
 #include "generator/integration_tests/golden/v1/golden_thing_admin_rest_connection.h"
 #include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"

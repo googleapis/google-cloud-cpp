@@ -43,7 +43,6 @@ Status ConnectionRestGenerator::GenerateHeader() {
 
 #ifndef $header_include_guard$
 #define $header_include_guard$
-
 )""");
 
   auto endpoint_location_style = EndpointLocationStyle();
@@ -135,7 +134,6 @@ Status ConnectionRestGenerator::GenerateCc() {
 
 #ifndef $header_include_guard$
 #define $header_include_guard$
-
 )""");
 
   // includes
