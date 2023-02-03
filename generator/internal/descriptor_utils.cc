@@ -594,6 +594,14 @@ auto constexpr kDialogflowESSessionEntityTypeDisplayNameCpp = R"""(
  @endcode
 )""";
 
+// A missing closing quote confuses the parser in Doxygen.
+auto constexpr kArtifactRegistryRepositoryNameProto =
+    R"""("projects/p1/locations/us-central1/repositories/repo1
+)""";
+auto constexpr kArtifactRegistryRepositoryNameCpp =
+    R"""("projects/p1/locations/us-central1/repositories/repo1"
+)""";
+
 std::string FormatApiMethodSignatureParameters(
     google::protobuf::MethodDescriptor const& method,
     std::string const& signature) {
@@ -609,16 +617,20 @@ std::string FormatApiMethodSignatureParameters(
     parameter_descriptor->GetSourceLocation(&loc);
     auto comment = absl::StrReplaceAll(
         loc.leading_comments,
-        {{kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
-         {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
-         {kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
-         {kDialogflowCXTransitionRouteGroupIdProto,
-          kDialogflowCXTransitionRouteGroupIdCpp},
-         {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
-         {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
-         {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},
-         {kDialogflowESSessionEntityTypeDisplayNameProto,
-          kDialogflowESSessionEntityTypeDisplayNameCpp}});
+        {
+            {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
+            {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
+            {kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
+            {kDialogflowCXTransitionRouteGroupIdProto,
+             kDialogflowCXTransitionRouteGroupIdCpp},
+            {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
+            {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
+            {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},
+            {kDialogflowESSessionEntityTypeDisplayNameProto,
+             kDialogflowESSessionEntityTypeDisplayNameCpp},
+            {kArtifactRegistryRepositoryNameProto,
+             kArtifactRegistryRepositoryNameCpp},
+        });
     comment = absl::StrReplaceAll(
         EscapePrinterDelimiter(ChompByValue(comment)),
         {
@@ -638,6 +650,17 @@ std::string FormatApiMethodSignatureParameters(
             // Missing escaping in pubsub/v1/schema.proto
             {"Example: projects/123/schemas/my-schema@c7cfa2a8",
              "Example: `projects/123/schemas/my-schema@c7cfa2a8`"},
+            // Extra quote in google/cloud/asset/v1/asset_service.proto
+            {R"""( as "projects/my-project-id")")""",
+             R"""( as "projects/my-project-id"))"""},
+            {R"""( "folders/12345")", or a )""",
+             R"""( "folders/12345"), or a )"""},
+            // This triggers a bug (I think it is a bug) in Doxygen:
+            //    https://github.com/doxygen/doxygen/issues/8788
+            // from google/cloud/resourcemanager/v3/folders.proto
+            {R"""(`displayName=\\"Test String\\"`)""",
+             R"""(`displayName="Test String"`))"""},
+
         });
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));

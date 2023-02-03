@@ -64,7 +64,14 @@ std::string FormatClassCommentsFromServiceComments(
   } else {
     formatted_comments = absl::StrReplaceAll(
         absl::StripSuffix(service_source_location.leading_comments, "\n"),
-        {{"\n\n", "\n///\n/// "}, {"\n", "\n/// "}});
+        {
+            {"\n\n", "\n///\n/// "},
+            {"\n", "\n/// "},
+            // This uses a relative link, but we do not know how to resolve
+            // those.  Convert them back to an absolute link.
+            {"[groups](#google.monitoring.v3.Group)",
+             "[groups][google.monitoring.v3.Group]"},
+        });
   }
 
   auto const references =
