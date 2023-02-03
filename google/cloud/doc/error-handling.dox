@@ -1,6 +1,9 @@
 /**
 @page common-error-handling Error Handling
 
+An overview of error handling in the Google Cloud C++ client libraries.
+
+[Status]: @ref google::cloud::Status
 [StatusOr<T>]: @ref google::cloud::StatusOr
 [StatusOr<T>::value()]: @ref google::cloud::StatusOr::value()
 [StreamRange<S>]: @ref google::cloud::StreamRange
@@ -11,21 +14,21 @@
 [input iterators]: https://en.cppreference.com/w/cpp/named_req/InputIterator
 [iostream operator<<]: @ref google::cloud::operator<<(std::ostream&,google::cloud::Status const&)
 
-@par Overview
+## Overview
 
 In general, the `google-cloud-cpp` libraries return a [StatusOr<T>] if a
 function may fail and needs to signal an error. `StatusOr<T>` is an "outcome",
 it contains either the value returned on success, or a description of the
-error. Errors are represented by @ref google::cloud::Status, thus the name.
-If you are familiar with `std::expected` from C++23, `StatusOr<T>` plays a
-similar role, but does not attempt to be compatible with it.
+error. Errors are represented by [Status], thus the name. If you are familiar
+with `std::expected` from C++23, `StatusOr<T>` plays a similar role, but does
+not attempt to be compatible with it.
 
 If you are planning to log a `Status`, consider using the [iostream operator<<].
 A `Status` contains more than just the message, in particular, its
 [error_info()] member function may return additional information that is useful
 during troubleshooting.
 
-@par Stream Ranges
+## Stream Ranges
 
 Some functions return [StreamRange<S>], where `S` is a `StatusOr<T>`. These
 ranges provide [input iterators] that paginate or stream results from a service,
@@ -34,7 +37,7 @@ offering a more idiomatic API.  The value type in these iterators is
 some values. For example, if the request to obtain the next page of results
 fails, or if the underlying stream is interrupted by the service.
 
-@par Futures
+## Futures
 
 Some functions return a "future" ([future<T>]). These objects represent a value
 that will be obtained asynchronously. By the very nature of asynchronous
@@ -44,16 +47,20 @@ either incorrect (e.g. `StatusOr<future<T>>` can only handle errors detected
 before the function returns), or overly complex
 (`StatusOr<future<StatusOr<T>>>`).
 
-@par Values with specific error handling
+## Values with specific error handling
 
 Some functions return a value that already has a mechanism to signal failures.
-For example, some functions return [AsyncStreamingReadWriteRpc<T,U>] (or
-technically `std::unique_ptr<AsyncStreamingReadWriteRpc<T,U>>`). A small number
-of functions return classes derived from `std::istream` or `std::ostream.
+For example:
+
+- Some functions return [AsyncStreamingReadWriteRpc<T,U>]. Or to be technical,
+  they return `std::unique_ptr<AsyncStreamingReadWriteRpc<T,U>>`.
+- A small number of functions return classes derived from `std::istream` or
+ `std::ostream`.
+
 In such cases, the library does not wrap the result in a `StatusOr<T>` because
 the returned type already has mechanisms to signal errors.
 
-@par Example: Using StatusOr<T>
+## Example: Using StatusOr<T>
 
 You can check that a `StatusOr<T>` contains a value by calling the `.ok()`
 method, or by using `operator bool()` (like with other smart pointers). If
@@ -65,7 +72,7 @@ accessing the contained value.
 
 @snippet samples.cc status-or-usage
 
-@par Example: Using StatusOr<T> with exceptions
+## Example: Using StatusOr<T> with exceptions
 
 Some applications prefer to throw exceptions on errors. In this case, consider
 using [StatusOr<T>::value()].  This function throws a [RuntimeStatusError] if
@@ -77,7 +84,7 @@ instead of throwing.
 
 @snippet samples.cc status-or-exceptions
 
-@par Error Handling in google-cloud-cpp code samples
+## Error Handling in google-cloud-cpp code samples
 
 The code samples for `google-cloud-cpp` try to emphasize how to use specific
 APIs and often have minimal error handling.  A typical code sample may simply
@@ -102,6 +109,8 @@ of error handling code.
 @see @ref google::cloud::Status the class used to describe errors.
 @see @ref google::cloud::future for more details on the type returned
     by asynchronous operations.
+@see @ref google::cloud::AsyncStreamingReadWriteRpc for more details on error
+    handling for this class template.
 @see https://en.cppreference.com/w/cpp/utility/expected for more information
     about `std::expected`
 
