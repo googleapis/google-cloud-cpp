@@ -46,7 +46,8 @@ function Get-Released-Quickstarts {
         #   TODO(#8145) - asset (TRUE/FALSE macros)
         #   TODO(#8125) - channel (DOMAIN macro)
         #   TODO(#8785) - storagetransfer (UID_MAX/GID_MAX macros)
-        Where-Object { -not ("asset", "channel", "storagetransfer" -contains $_) } |
+        #   TODO(#10737) - dialogflow_es triggers bug in Bazel 6.0.0
+        Where-Object { -not ("asset", "channel", "dialogflow_es", "storagetransfer" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location
