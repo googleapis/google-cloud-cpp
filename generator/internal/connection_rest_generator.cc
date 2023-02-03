@@ -142,8 +142,7 @@ Status ConnectionRestGenerator::GenerateCc() {
        vars("connection_impl_rest_header_path"),
        vars("option_defaults_header_path"),
        vars("tracing_connection_header_path"),
-       vars("stub_factory_rest_header_path"),
-       "google/cloud/common_options.h",
+       vars("stub_factory_rest_header_path"), "google/cloud/common_options.h",
        "google/cloud/credentials.h",
        "google/cloud/internal/rest_background_threads_impl.h"});
   CcSystemIncludes({"memory"});
