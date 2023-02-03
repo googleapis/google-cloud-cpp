@@ -55,8 +55,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the
- * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
+ * contains the expected result. More information on the
+ * [Error Handling Guide](#spanner-error-handling).
  *
  * [spanner-doc-link]:
  * https://cloud.google.com/spanner/docs/api-libraries-overview

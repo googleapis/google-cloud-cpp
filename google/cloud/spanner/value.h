@@ -90,7 +90,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * using the `MakeNullValue<T>()` factory function or by passing an empty
  * `absl::optional<T>` to the Value constructor..
  *
- * @par Example with a non-null value
+ * ### Example with a non-null value
  *
  * @code
  * std::string msg = "hello";
@@ -101,7 +101,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * }
  * @endcode
  *
- * @par Example with a null
+ * ### Example with a null
  *
  * @code
  * spanner::Value v = spanner::MakeNullValue<std::int64_t>();
@@ -113,7 +113,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * assert(!j->has_value());  // v held no value.
  * @endcode
  *
- * @par Nullness
+ * ### Nullness
  *
  * All of the supported types (above) are "nullable". A null is created in one
  * of two ways:
@@ -126,7 +126,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * (indicating null) or it will contain the actual value. See the documentation
  * for `Value::get<T>` below for more details.
  *
- * @par Spanner Arrays (i.e., `std::vector<T>`)
+ * ### Spanner Arrays (i.e., std::vector<T>)
  *
  * Spanner arrays are represented in C++ as a `std::vector<T>`, where the type
  * `T` may be any of the other allowed Spanner types, such as `bool`,
@@ -142,7 +142,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * assert(vec == copy);
  * @endcode
  *
- * @par Spanner Structs (i.e., `std::tuple<Ts...>`)
+ * ### Spanner Structs (i.e., std::tuple<Ts...>)
  *
  * Spanner structs are represented in C++ as instances of `std::tuple` holding
  * zero or more of the allowed Spanner types, such as `bool`, `std::int64_t`,
