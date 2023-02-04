@@ -34,17 +34,13 @@ file="README.md"
 ) | sponge "${file}"
 
 (
-  mapfile -t libraries < <(bazelisk --batch query \
-    --noshow_progress --noshow_loading_progress \
-    'kind(cc_library, //:all) except filter("experimental|mocks|common|grpc_utils", kind(cc_library, //:all))' |
-    sed -e 's;//:;;' |
-    LC_ALL=C sort)
+  mapfile -t libraries < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1 | LC_ALL=C sort)
   sed '/<!-- inject-GA-libraries-start -->/q' "${file}"
   for library in "${libraries[@]}"; do
     description="$(sed -n '1 s/# \(.*\) C++ Client Library/\1/p' "google/cloud/${library}/README.md")"
-    printf '* [%s](google/cloud/%s/README.md)\n' "${description}" "${library}"
-    printf '  [[quickstart]](google/cloud/%s/quickstart/README.md)\n' "${library}"
-    printf '  [[reference]](https://googleapis.dev/cpp/google-cloud-%s/latest)\n' "${library}"
+    printf -- '- [%s](google/cloud/%s/README.md)\n' "${description}" "${library}"
+    printf -- '  [[quickstart]](google/cloud/%s/quickstart/README.md)\n' "${library}"
+    printf -- '  [[reference]](https://googleapis.dev/cpp/google-cloud-%s/latest)\n' "${library}"
   done
   sed -n '/<!-- inject-GA-libraries-end -->/,$p' "${file}"
 ) | sponge "${file}"

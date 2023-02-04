@@ -23,17 +23,6 @@ export CC=gcc
 export CXX=g++
 mapfile -t cmake_args < <(cmake::common_args)
 
-mapfile -t feature_list < <(bazelisk --batch query \
-  --noshow_progress --noshow_loading_progress \
-  'kind(cc_library, //:all)
-   except filter("experimental|mocks", kind(cc_library, //:all))' |
-  sed -e 's;//:;;')
-enabled="$(printf ";%s" "${feature_list[@]}")"
-# These two are not libraries that require enabling.
-enabled="${enabled/;common/}"
-enabled="${enabled/;grpc_utils/}"
-enabled="${enabled:1}"
-
 INSTALL_PREFIX=/var/tmp/google-cloud-cpp
 # abi-dumper wants us to use -Og, but that causes bogus warnings about
 # uninitialized values with GCC, so we disable that warning with
@@ -44,10 +33,14 @@ cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
   -DCMAKE_BUILD_TYPE=Debug \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${enabled}" \
+  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__" \
   -DCMAKE_CXX_FLAGS="-Og -Wno-maybe-uninitialized"
 cmake --build cmake-out
 cmake --install cmake-out >/dev/null
+
+mapfile -t ga_list < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" -P cmake/print-ga-libraries.cmake 2>&1)
+# These libraries are not "features", but they are part of the public API
+ga_list+=("common" "grpc_utils")
 
 # Uses `abi-dumper` to dump the ABI for the given library, which should
 # be installed at the given @p prefix, and `abi-compliance-checker` to
@@ -135,7 +128,7 @@ function check_abi() {
 }
 export -f check_abi # enables this function to be called from a subshell
 
-mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${feature_list[@]}")
+mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${ga_list[@]}")
 
 # Run the check_abi function for each library in parallel since it is slow.
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \

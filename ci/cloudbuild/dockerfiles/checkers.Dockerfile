@@ -24,6 +24,7 @@ ARG ARCH=amd64
 RUN dnf makecache && \
     dnf install -y \
         cargo \
+        cmake \
         clang-tools-extra \
         diffutils \
         findutils \
