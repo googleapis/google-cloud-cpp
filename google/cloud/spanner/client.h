@@ -171,6 +171,12 @@ class Client {
    * or neither, in which case a single-use transaction with default options
    * is used.
    *
+   * @note No individual row in the `ReadResult` can exceed 100 MiB, and no
+   *     column value can exceed 10 MiB.
+   *
+   * @par Example
+   * @snippet samples.cc read-data
+   *
    * @param table The name of the table in the database to be read.
    * @param keys Identifies the rows to be yielded. If `read_options.index_name`
    *     is set, names keys in that index; otherwise names keys in the primary
@@ -179,12 +185,6 @@ class Client {
    * @param columns The columns of `table` to be returned for each row matching
    *     this request.
    * @param opts `Options` used for this request.
-   *
-   * @par Example
-   * @snippet samples.cc read-data
-   *
-   * @note No individual row in the `ReadResult` can exceed 100 MiB, and no
-   *     column value can exceed 10 MiB.
    */
   RowStream Read(std::string table, KeySet keys,
                  std::vector<std::string> columns, Options opts = {});
@@ -276,15 +276,15 @@ class Client {
    * Reads rows from a subset of rows in a database. Requires a prior call
    * to `PartitionRead` to obtain the partition information; see the
    * documentation of that method for full details.
-   *
-   * @param partition A `ReadPartition`, obtained by calling `PartitionRead`.
-   * @param opts `Options` used for this request.
-   *
    * @note No individual row in the `ReadResult` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    *
    * @par Example
    * @snippet samples.cc read-read-partition
+   *
+   * @param partition A `ReadPartition`, obtained by calling `PartitionRead`.
+   * @param opts `Options` used for this request.
+   *
    */
   RowStream Read(ReadPartition const& partition, Options opts = {});
 
@@ -302,6 +302,9 @@ class Client {
    * any of these happen, it is not possible to resume the read, and the whole
    * operation must be restarted from the beginning.
    *
+   * @par Example
+   * @snippet samples.cc partition-read
+   *
    * @param transaction The transaction to execute the operation in.
    *     **Must** be a read-only snapshot transaction.
    * @param table The name of the table in the database to be read.
@@ -315,9 +318,6 @@ class Client {
    *
    * @return A `StatusOr` containing a vector of `ReadPartition` or error
    *     status on failure.
-   *
-   * @par Example
-   * @snippet samples.cc partition-read
    */
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       Transaction transaction, std::string table, KeySet keys,
@@ -374,31 +374,25 @@ class Client {
    * Can also execute a DML statement with a returning clause in a read/write
    * transaction.
    *
+   * @note No individual row in the `RowStream` can exceed 100 MiB, and no
+   *     column value can exceed 10 MiB.
+   *
    * @par Example
-   *
    * Query with explicitly selected columns.
-   *
    * @snippet samples.cc spanner-query-data
    *
    * @par Example
-   *
    * Using `SELECT *`.
-   *
    * @snippet samples.cc spanner-query-data-select-star
    *
    * @par Example
-   *
    * Using a DML statement with `THEN RETURN`.
-   *
    * @snippet samples.cc spanner-update-dml-returning
    *
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
-   *
-   * @note No individual row in the `RowStream` can exceed 100 MiB, and no
-   *     column value can exceed 10 MiB.
    */
   RowStream ExecuteQuery(SqlStatement statement, Options opts = {});
 
@@ -424,11 +418,11 @@ class Client {
    * call to `PartitionQuery` to obtain the partition information; see the
    * documentation of that method for full details.
    *
-   * @par Example
-   * @snippet samples.cc execute-sql-query-partition
-   *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
+   *
+   * @par Example
+   * @snippet samples.cc execute-sql-query-partition
    *
    * @param partition A `QueryPartition`, obtained by calling `PartitionQuery`.
    * @param opts (optional) The `Options` to use for this call. If given,
@@ -530,7 +524,6 @@ class Client {
    *     no column value can exceed 10 MiB.
    *
    * @par Example
-   *
    * @snippet samples.cc profile-query
    *
    * @param statement The SQL statement to execute.
@@ -980,10 +973,10 @@ class Client {
    * transaction so that the new attempt has a slightly better chance of
    * success).
    *
+   * @warning It is an error to call `Commit` with a read-only transaction.
+   *
    * @note Prefer the previous `Commit` overloads if you want to simply reapply
    *     mutations after a `kAborted` error.
-   *
-   * @warning It is an error to call `Commit` with a read-only transaction.
    *
    * @param transaction The transaction to commit.
    * @param mutations The mutations to be executed when this transaction
