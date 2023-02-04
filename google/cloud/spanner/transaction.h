@@ -175,7 +175,7 @@ class Transaction {
 /**
  * Create a read-only transaction configured with @p opts.
  *
- * @copydoc Transaction::Transaction(ReadOnlyOptions)
+ * @copydoc Transaction::Transaction(Transaction::ReadOnlyOptions)
  */
 inline Transaction MakeReadOnlyTransaction(
     Transaction::ReadOnlyOptions opts = {}) {
@@ -185,7 +185,7 @@ inline Transaction MakeReadOnlyTransaction(
 /**
  * Create a read-write transaction configured with @p opts.
  *
- * @copydoc Transaction::Transaction(ReadOnlyOptions)
+ * @copydoc Transaction::Transaction(Transaction::ReadOnlyOptions)
  */
 inline Transaction MakeReadWriteTransaction(
     Transaction::ReadWriteOptions opts = {}) {

@@ -60,6 +60,9 @@ using ListInstanceConfigsRange = ::google::cloud::internal::PaginationRange<
 /**
  * A connection to the Cloud Spanner instance administration service.
  *
+ * @deprecated Please use #google::cloud::spanner_admin::InstanceAdminClient
+ *     and #google::cloud::spanner_admin::InstanceAdminConnection instead.
+ *
  * This interface defines pure-virtual methods for each of the user-facing
  * overload sets in `InstanceAdminClient`.  This allows users to inject custom
  * behavior (e.g., with a Google Mock object) in a `InstanceAdminClient` object

@@ -39,6 +39,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Performs database administration operations on Spanner.
  *
+ * @deprecated Please use #google::cloud::spanner_admin::InstanceAdminClient
+ *     instead.
+ *
  * Applications use this class to perform administrative operations on spanner
  * [Databases][database-doc-link].
  *
@@ -61,8 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. Please consult the
- * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
+ * contains the expected result. For more information, see the
+ * [Error Handling Guide](#spanner-error-handling).
  *
  * @code
  * namespace spanner = ::google::cloud::spanner;
