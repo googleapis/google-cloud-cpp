@@ -81,7 +81,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. More information on the
+ * contains the expected result. More information, see the
  * [Error Handling Guide](#spanner-error-handling).
  *
  * @code
@@ -374,15 +374,21 @@ class Client {
    * Can also execute a DML statement with a returning clause in a read/write
    * transaction.
    *
-   * ### Example with explicitly selected columns.
+   * @par Example
+   *
+   * Query with explicitly selected columns.
    *
    * @snippet samples.cc spanner-query-data
    *
-   * ## Example using `SELECT *`.
+   * @par Example
+   *
+   * Using `SELECT *`.
    *
    * @snippet samples.cc spanner-query-data-select-star
    *
-   * ### Example using a DML statement with `THEN RETURN`.
+   * @par Example
+   *
+   * Using a DML statement with `THEN RETURN`.
    *
    * @snippet samples.cc spanner-update-dml-returning
    *
@@ -418,16 +424,16 @@ class Client {
    * call to `PartitionQuery` to obtain the partition information; see the
    * documentation of that method for full details.
    *
-   * @param partition A `QueryPartition`, obtained by calling `PartitionQuery`.
-   * @param opts (optional) The `Options` to use for this call. If given,
-   *     these will take precedence over the options set at the client and
-   *     environment levels.
+   * @par Example
+   * @snippet samples.cc execute-sql-query-partition
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    *
-   * ### Example
-   * @snippet samples.cc execute-sql-query-partition
+   * @param partition A `QueryPartition`, obtained by calling `PartitionQuery`.
+   * @param opts (optional) The `Options` to use for this call. If given,
+   *     these will take precedence over the options set at the client and
+   *     environment levels.
    */
   RowStream ExecuteQuery(QueryPartition const& partition, Options opts = {});
   ///@}
@@ -517,15 +523,15 @@ class Client {
    * or neither, in which case a single-use transaction with default options
    * is used.
    *
-   * @par Example
-   *
-   * @snippet samples.cc profile-query
-   *
    * @note Callers must consume all rows from the result before execution
    *     statistics and `ExecutionPlan` are available.
    *
    * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
    *     no column value can exceed 10 MiB.
+   *
+   * @par Example
+   *
+   * @snippet samples.cc profile-query
    *
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
@@ -623,6 +629,9 @@ class Client {
    * any of these happen, it is not possible to resume the query, and the whole
    * operation must be restarted from the beginning.
    *
+   * @par Example
+   * @snippet samples.cc partition-query
+   *
    * @param transaction The transaction to execute the operation in.
    *     **Must** be a read-only snapshot transaction.
    * @param statement The SQL statement to execute.
@@ -630,9 +639,6 @@ class Client {
    *
    * @return A `StatusOr` containing a vector of `QueryPartition`s or error
    *     status on failure.
-   *
-   * @par Example
-   * @snippet samples.cc partition-query
    */
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       Transaction transaction, SqlStatement statement,
@@ -669,14 +675,14 @@ class Client {
    *
    * @note Single-use transactions are not supported with DML statements.
    *
+   * @par Example
+   * @snippet samples.cc execute-dml
+   *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
-   *
-   * @par Example
-   * @snippet samples.cc execute-dml
    */
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
                                  SqlStatement statement, Options opts = {});
@@ -715,14 +721,14 @@ class Client {
    *
    * @note Single-use transactions are not supported with DML statements.
    *
+   * @par Example
+   * @snippet samples.cc profile-dml
+   *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
-   *
-   * @par Example:
-   * @snippet samples.cc profile-dml
    */
   StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
                                         SqlStatement statement,
@@ -754,14 +760,14 @@ class Client {
    *
    * @note Single-use transactions are not supported with DML statements.
    *
+   * @par Example
+   * @snippet samples.cc analyze-query
+   *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
-   *
-   * @par Example:
-   * @snippet samples.cc analyze-query
    */
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
                                      SqlStatement statement, Options opts = {});
@@ -805,6 +811,9 @@ class Client {
    *     all the statements were executed successfully. For that, you need to
    *     inspect the `BatchDmlResult::status` field.
    *
+   * @par Example
+   * @snippet samples.cc execute-batch-dml
+   *
    * @param transaction The read-write transaction to execute the operation in.
    * @param statements The list of statements to execute in this batch.
    *     Statements are executed serially, such that the effects of statement i
@@ -814,9 +823,6 @@ class Client {
    * @param opts (optional) The options to use for this call.  Expected options
    *     are any of the types in the following option lists.
    *       - `google::cloud::RequestOptionList`
-   *
-   * @par Example
-   * @snippet samples.cc execute-batch-dml
    */
   StatusOr<BatchDmlResult> ExecuteBatchDml(Transaction transaction,
                                            std::vector<SqlStatement> statements,
@@ -847,6 +853,9 @@ class Client {
    * the transaction is no longer usable (e.g., it was aborted). Otherwise
    * the transaction will be leaked.
    *
+   * @par Example
+   * @snippet samples.cc commit-with-policies
+   *
    * @param mutator the function called to create mutations
    * @param rerun_policy controls for how long (or how many times) the mutator
    *     will be rerun after the transaction aborts.
@@ -861,9 +870,6 @@ class Client {
    *     the transaction). However, a `RuntimeStatusError` exception is
    *     instead consumed and converted into a `mutator` return value of the
    *     enclosed `Status`.
-   *
-   * @par Example
-   * @snippet samples.cc commit-with-policies
    */
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
@@ -902,11 +908,11 @@ class Client {
    *
    * Same as above, but uses the default rerun and backoff policies.
    *
-   * @param mutator the function called to create mutations
-   * @param opts (optional) The options to use for this call.
-   *
    * @par Example
    * @snippet samples.cc commit-with-mutator
+   *
+   * @param mutator the function called to create mutations
+   * @param opts (optional) The options to use for this call.
    */
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
@@ -935,11 +941,11 @@ class Client {
   /**
    * Commits the @p mutations, using the @p options, atomically in order.
    *
-   * This function uses the re-run loop described above with the default
-   * policies.
-   *
    * @par Example
    * @snippet samples.cc commit-with-mutations
+   *
+   * This function uses the re-run loop described above with the default
+   * policies.
    */
   StatusOr<CommitResult> Commit(Mutations mutations, Options opts = {});
 
@@ -1033,15 +1039,15 @@ class Client {
   /**
    * Executes a Partitioned DML SQL query.
    *
+   * @par Example
+   * @snippet samples.cc execute-sql-partitioned
+   *
    * @param statement the SQL statement to execute. Please see the
    *     [spanner documentation][dml-partitioned] for the restrictions on the
    *     SQL statements supported by this function.
    * @param opts (optional) The `Options` to use for this call. If given,
    *     these will take precedence over the options set at the client and
    *     environment levels.
-   *
-   * @par Example
-   * @snippet samples.cc execute-sql-partitioned
    *
    * @see [Partitioned DML Transactions][txn-partitioned] for an overview of
    *     Partitioned DML transactions.
@@ -1135,14 +1141,14 @@ std::shared_ptr<Connection> MakeConnection(
  * @deprecated Please use the `MakeConnection()` overload that accepts
  *     `google::cloud::Options` instead.
  *
+ * @par Example
+ * @snippet samples.cc custom-retry-policy
+ *
  * @param retry_policy override the default `RetryPolicy`, controls how long
  *     the returned `Connection` object retries requests on transient
  *     failures.
  * @param backoff_policy override the default `BackoffPolicy`, controls how
  *     long the `Connection` object waits before retrying a failed request.
- *
- * @par Example
- * @snippet samples.cc custom-retry-policy
  */
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& connection_options,
