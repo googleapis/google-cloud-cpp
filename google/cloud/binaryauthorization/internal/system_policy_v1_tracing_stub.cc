@@ -17,11 +17,14 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/internal/system_policy_v1_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SystemPolicyV1TracingStub::SystemPolicyV1TracingStub(
     std::shared_ptr<SystemPolicyV1Stub> child)
@@ -32,8 +35,15 @@ SystemPolicyV1TracingStub::GetSystemPolicy(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
-  return child_->GetSystemPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.SystemPolicyV1", "GetSystemPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetSystemPolicy(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

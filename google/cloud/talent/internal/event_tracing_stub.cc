@@ -17,11 +17,14 @@
 // source: google/cloud/talent/v4/event_service.proto
 
 #include "google/cloud/talent/internal/event_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EventServiceTracingStub::EventServiceTracingStub(
     std::shared_ptr<EventServiceStub> child)
@@ -31,8 +34,15 @@ StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceTracingStub::CreateClientEvent(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  return child_->CreateClientEvent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.EventService",
+                                     "CreateClientEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateClientEvent(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal

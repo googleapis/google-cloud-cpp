@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/v2/knowledge_base.proto
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 KnowledgeBasesTracingStub::KnowledgeBasesTracingStub(
     std::shared_ptr<KnowledgeBasesStub> child)
@@ -31,35 +34,62 @@ StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesTracingStub::ListKnowledgeBases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
-  return child_->ListKnowledgeBases(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.KnowledgeBases", "ListKnowledgeBases");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListKnowledgeBases(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesTracingStub::GetKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-  return child_->GetKnowledgeBase(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.KnowledgeBases", "GetKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetKnowledgeBase(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesTracingStub::CreateKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-  return child_->CreateKnowledgeBase(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.KnowledgeBases", "CreateKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateKnowledgeBase(context, request));
 }
 
 Status KnowledgeBasesTracingStub::DeleteKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-  return child_->DeleteKnowledgeBase(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.KnowledgeBases", "DeleteKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteKnowledgeBase(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesTracingStub::UpdateKnowledgeBase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
-  return child_->UpdateKnowledgeBase(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.KnowledgeBases", "UpdateKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateKnowledgeBase(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

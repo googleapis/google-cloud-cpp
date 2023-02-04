@@ -27,6 +27,8 @@ namespace cloud {
 namespace iam_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class PoliciesTracingStub : public PoliciesStub {
  public:
   ~PoliciesTracingStub() override = default;
@@ -69,6 +71,8 @@ class PoliciesTracingStub : public PoliciesStub {
  private:
   std::shared_ptr<PoliciesStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v2_internal

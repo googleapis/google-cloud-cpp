@@ -27,6 +27,8 @@ namespace cloud {
 namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class LivestreamServiceTracingStub : public LivestreamServiceStub {
  public:
   ~LivestreamServiceTracingStub() override = default;
@@ -135,6 +137,8 @@ class LivestreamServiceTracingStub : public LivestreamServiceStub {
  private:
   std::shared_ptr<LivestreamServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class WebRiskServiceTracingStub : public WebRiskServiceStub {
  public:
   ~WebRiskServiceTracingStub() override = default;
@@ -55,6 +57,8 @@ class WebRiskServiceTracingStub : public WebRiskServiceStub {
  private:
   std::shared_ptr<WebRiskServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal

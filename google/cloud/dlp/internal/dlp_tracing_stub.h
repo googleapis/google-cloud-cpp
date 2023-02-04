@@ -27,6 +27,8 @@ namespace cloud {
 namespace dlp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class DlpServiceTracingStub : public DlpServiceStub {
  public:
   ~DlpServiceTracingStub() override = default;
@@ -201,6 +203,8 @@ class DlpServiceTracingStub : public DlpServiceStub {
  private:
   std::shared_ptr<DlpServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_internal

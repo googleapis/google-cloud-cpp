@@ -27,6 +27,8 @@ namespace cloud {
 namespace edgecontainer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class EdgeContainerTracingStub : public EdgeContainerStub {
  public:
   ~EdgeContainerTracingStub() override = default;
@@ -141,6 +143,8 @@ class EdgeContainerTracingStub : public EdgeContainerStub {
  private:
   std::shared_ptr<EdgeContainerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_internal

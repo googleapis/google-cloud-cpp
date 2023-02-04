@@ -27,6 +27,8 @@ namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class DataPolicyServiceTracingStub : public DataPolicyServiceStub {
  public:
   ~DataPolicyServiceTracingStub() override = default;
@@ -83,6 +85,8 @@ class DataPolicyServiceTracingStub : public DataPolicyServiceStub {
  private:
   std::shared_ptr<DataPolicyServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal

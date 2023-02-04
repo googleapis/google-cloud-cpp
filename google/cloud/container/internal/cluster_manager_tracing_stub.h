@@ -27,6 +27,8 @@ namespace cloud {
 namespace container_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ClusterManagerTracingStub : public ClusterManagerStub {
  public:
   ~ClusterManagerTracingStub() override = default;
@@ -176,6 +178,8 @@ class ClusterManagerTracingStub : public ClusterManagerStub {
  private:
   std::shared_ptr<ClusterManagerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_internal

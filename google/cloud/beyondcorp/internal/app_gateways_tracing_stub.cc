@@ -17,11 +17,14 @@
 // source: google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto
 
 #include "google/cloud/beyondcorp/internal/app_gateways_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AppGatewaysServiceTracingStub::AppGatewaysServiceTracingStub(
     std::shared_ptr<AppGatewaysServiceStub> child)
@@ -32,7 +35,13 @@ AppGatewaysServiceTracingStub::ListAppGateways(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
-  return child_->ListAppGateways(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appgateways.v1.AppGatewaysService",
+      "ListAppGateways");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAppGateways(context, request));
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
@@ -40,7 +49,13 @@ AppGatewaysServiceTracingStub::GetAppGateway(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
-  return child_->GetAppGateway(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appgateways.v1.AppGatewaysService",
+      "GetAppGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAppGateway(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -75,6 +90,8 @@ future<Status> AppGatewaysServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal

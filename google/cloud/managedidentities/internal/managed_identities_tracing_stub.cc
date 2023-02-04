@@ -17,11 +17,14 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/internal/managed_identities_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ManagedIdentitiesServiceTracingStub::ManagedIdentitiesServiceTracingStub(
     std::shared_ptr<ManagedIdentitiesServiceStub> child)
@@ -41,21 +44,38 @@ ManagedIdentitiesServiceTracingStub::ResetAdminPassword(
     grpc::ClientContext& context,
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request) {
-  return child_->ResetAdminPassword(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "ResetAdminPassword");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ResetAdminPassword(context, request));
 }
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 ManagedIdentitiesServiceTracingStub::ListDomains(
     grpc::ClientContext& context,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
-  return child_->ListDomains(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "ListDomains");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDomains(context, request));
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceTracingStub::GetDomain(
     grpc::ClientContext& context,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
-  return child_->GetDomain(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.managedidentities.v1.ManagedIdentitiesService",
+      "GetDomain");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetDomain(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -121,6 +141,8 @@ future<Status> ManagedIdentitiesServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal

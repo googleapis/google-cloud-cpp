@@ -27,6 +27,8 @@ namespace cloud {
 namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class Debugger2TracingStub : public Debugger2Stub {
  public:
   ~Debugger2TracingStub() override = default;
@@ -62,6 +64,8 @@ class Debugger2TracingStub : public Debugger2Stub {
  private:
   std::shared_ptr<Debugger2Stub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal

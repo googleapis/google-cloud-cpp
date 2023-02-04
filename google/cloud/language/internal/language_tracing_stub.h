@@ -27,6 +27,8 @@ namespace cloud {
 namespace language_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class LanguageServiceTracingStub : public LanguageServiceStub {
  public:
   ~LanguageServiceTracingStub() override = default;
@@ -66,6 +68,8 @@ class LanguageServiceTracingStub : public LanguageServiceStub {
  private:
   std::shared_ptr<LanguageServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_internal

@@ -17,11 +17,14 @@
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
 #include "google/cloud/datacatalog/internal/policy_tag_manager_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PolicyTagManagerTracingStub::PolicyTagManagerTracingStub(
     std::shared_ptr<PolicyTagManagerStub> child)
@@ -31,88 +34,155 @@ StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerTracingStub::CreateTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
-  return child_->CreateTaxonomy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "CreateTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateTaxonomy(context, request));
 }
 
 Status PolicyTagManagerTracingStub::DeleteTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
-  return child_->DeleteTaxonomy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "DeleteTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTaxonomy(context, request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerTracingStub::UpdateTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
-  return child_->UpdateTaxonomy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "UpdateTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTaxonomy(context, request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
 PolicyTagManagerTracingStub::ListTaxonomies(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
-  return child_->ListTaxonomies(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "ListTaxonomies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListTaxonomies(context, request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerTracingStub::GetTaxonomy(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
-  return child_->GetTaxonomy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "GetTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetTaxonomy(context, request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerTracingStub::CreatePolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
-  return child_->CreatePolicyTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "CreatePolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreatePolicyTag(context, request));
 }
 
 Status PolicyTagManagerTracingStub::DeletePolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
-  return child_->DeletePolicyTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "DeletePolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeletePolicyTag(context, request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerTracingStub::UpdatePolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
-  return child_->UpdatePolicyTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "UpdatePolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdatePolicyTag(context, request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
 PolicyTagManagerTracingStub::ListPolicyTags(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
-  return child_->ListPolicyTags(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "ListPolicyTags");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListPolicyTags(context, request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerTracingStub::GetPolicyTag(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
-  return child_->GetPolicyTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "GetPolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetPolicyTag(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyTagManagerTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.datacatalog.v1.PolicyTagManager", "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal

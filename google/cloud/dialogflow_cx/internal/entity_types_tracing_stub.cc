@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/entity_type.proto
 
 #include "google/cloud/dialogflow_cx/internal/entity_types_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EntityTypesTracingStub::EntityTypesTracingStub(
     std::shared_ptr<EntityTypesStub> child)
@@ -31,35 +34,62 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
 EntityTypesTracingStub::ListEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
-  return child_->ListEntityTypes(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "ListEntityTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEntityTypes(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesTracingStub::GetEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
-  return child_->GetEntityType(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "GetEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEntityType(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesTracingStub::CreateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
-  return child_->CreateEntityType(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "CreateEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateEntityType(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesTracingStub::UpdateEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
-  return child_->UpdateEntityType(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "UpdateEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateEntityType(context, request));
 }
 
 Status EntityTypesTracingStub::DeleteEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
-  return child_->DeleteEntityType(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "DeleteEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEntityType(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

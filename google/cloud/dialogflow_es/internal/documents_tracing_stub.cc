@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/v2/document.proto
 
 #include "google/cloud/dialogflow_es/internal/documents_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DocumentsTracingStub::DocumentsTracingStub(std::shared_ptr<DocumentsStub> child)
     : child_(std::move(child)) {}
@@ -30,14 +33,24 @@ StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DocumentsTracingStub::ListDocuments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
-  return child_->ListDocuments(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "ListDocuments");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDocuments(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Document>
 DocumentsTracingStub::GetDocument(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
-  return child_->GetDocument(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
+                                     "GetDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDocument(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -102,6 +115,8 @@ future<Status> DocumentsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

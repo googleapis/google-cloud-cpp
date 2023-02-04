@@ -17,11 +17,14 @@
 // source: google/cloud/dataplex/v1/service.proto
 
 #include "google/cloud/dataplex/internal/dataplex_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DataplexServiceTracingStub::DataplexServiceTracingStub(
     std::shared_ptr<DataplexServiceStub> child)
@@ -55,20 +58,33 @@ StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
 DataplexServiceTracingStub::ListLakes(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListLakesRequest const& request) {
-  return child_->ListLakes(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListLakes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListLakes(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Lake> DataplexServiceTracingStub::GetLake(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetLakeRequest const& request) {
-  return child_->GetLake(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "GetLake");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetLake(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceTracingStub::ListLakeActions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListLakeActionsRequest const& request) {
-  return child_->ListLakeActions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListLakeActions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListLakeActions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -99,20 +115,33 @@ StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
 DataplexServiceTracingStub::ListZones(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListZonesRequest const& request) {
-  return child_->ListZones(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListZones");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListZones(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Zone> DataplexServiceTracingStub::GetZone(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetZoneRequest const& request) {
-  return child_->GetZone(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "GetZone");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetZone(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceTracingStub::ListZoneActions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListZoneActionsRequest const& request) {
-  return child_->ListZoneActions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListZoneActions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListZoneActions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -143,21 +172,35 @@ StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
 DataplexServiceTracingStub::ListAssets(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListAssetsRequest const& request) {
-  return child_->ListAssets(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListAssets");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAssets(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Asset>
 DataplexServiceTracingStub::GetAsset(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetAssetRequest const& request) {
-  return child_->GetAsset(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "GetAsset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetAsset(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceTracingStub::ListAssetActions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListAssetActionsRequest const& request) {
-  return child_->ListAssetActions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListAssetActions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAssetActions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -188,32 +231,52 @@ StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
 DataplexServiceTracingStub::ListTasks(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListTasksRequest const& request) {
-  return child_->ListTasks(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListTasks");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListTasks(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Task> DataplexServiceTracingStub::GetTask(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetTaskRequest const& request) {
-  return child_->GetTask(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "GetTask");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetTask(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListJobsResponse>
 DataplexServiceTracingStub::ListJobs(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListJobsRequest const& request) {
-  return child_->ListJobs(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListJobs(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceTracingStub::GetJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetJobRequest const& request) {
-  return child_->GetJob(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "GetJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetJob(context, request));
 }
 
 Status DataplexServiceTracingStub::CancelJob(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::CancelJobRequest const& request) {
-  return child_->CancelJob(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "CancelJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->CancelJob(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -244,21 +307,36 @@ StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
 DataplexServiceTracingStub::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
-  return child_->ListEnvironments(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListEnvironments");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEnvironments(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Environment>
 DataplexServiceTracingStub::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEnvironment(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
 DataplexServiceTracingStub::ListSessions(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListSessionsRequest const& request) {
-  return child_->ListSessions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.DataplexService",
+                                     "ListSessions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSessions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -275,6 +353,8 @@ future<Status> DataplexServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal

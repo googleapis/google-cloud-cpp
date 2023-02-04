@@ -27,6 +27,8 @@ namespace cloud {
 namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class PublisherTracingStub : public PublisherStub {
  public:
   ~PublisherTracingStub() override = default;
@@ -49,6 +51,8 @@ class PublisherTracingStub : public PublisherStub {
  private:
   std::shared_ptr<PublisherStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal

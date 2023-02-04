@@ -27,6 +27,8 @@ namespace cloud {
 namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class DocumentProcessorServiceTracingStub
     : public DocumentProcessorServiceStub {
  public:
@@ -151,6 +153,8 @@ class DocumentProcessorServiceTracingStub
  private:
   std::shared_ptr<DocumentProcessorServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal

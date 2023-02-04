@@ -17,11 +17,14 @@
 // source: google/cloud/gaming/v1/realms_service.proto
 
 #include "google/cloud/gameservices/internal/realms_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RealmsServiceTracingStub::RealmsServiceTracingStub(
     std::shared_ptr<RealmsServiceStub> child)
@@ -31,13 +34,22 @@ StatusOr<google::cloud::gaming::v1::ListRealmsResponse>
 RealmsServiceTracingStub::ListRealms(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::ListRealmsRequest const& request) {
-  return child_->ListRealms(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.gaming.v1.RealmsService",
+                                     "ListRealms");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListRealms(context, request));
 }
 
 StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceTracingStub::GetRealm(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::GetRealmRequest const& request) {
-  return child_->GetRealm(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.gaming.v1.RealmsService",
+                                     "GetRealm");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetRealm(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -68,7 +80,12 @@ StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
 RealmsServiceTracingStub::PreviewRealmUpdate(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) {
-  return child_->PreviewRealmUpdate(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.gaming.v1.RealmsService",
+                                     "PreviewRealmUpdate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->PreviewRealmUpdate(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -85,6 +102,8 @@ future<Status> RealmsServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

@@ -17,11 +17,14 @@
 // source: google/devtools/cloudtrace/v2/tracing.proto
 
 #include "google/cloud/trace/internal/trace_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace trace_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TraceServiceTracingStub::TraceServiceTracingStub(
     std::shared_ptr<TraceServiceStub> child)
@@ -30,15 +33,27 @@ TraceServiceTracingStub::TraceServiceTracingStub(
 Status TraceServiceTracingStub::BatchWriteSpans(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  return child_->BatchWriteSpans(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudtrace.v2.TraceService", "BatchWriteSpans");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->BatchWriteSpans(context, request));
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceTracingStub::CreateSpan(
     grpc::ClientContext& context,
     google::devtools::cloudtrace::v2::Span const& request) {
-  return child_->CreateSpan(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.cloudtrace.v2.TraceService", "CreateSpan");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateSpan(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_internal

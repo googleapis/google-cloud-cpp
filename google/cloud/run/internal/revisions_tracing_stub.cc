@@ -17,11 +17,14 @@
 // source: google/cloud/run/v2/revision.proto
 
 #include "google/cloud/run/internal/revisions_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace run_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RevisionsTracingStub::RevisionsTracingStub(std::shared_ptr<RevisionsStub> child)
     : child_(std::move(child)) {}
@@ -29,14 +32,24 @@ RevisionsTracingStub::RevisionsTracingStub(std::shared_ptr<RevisionsStub> child)
 StatusOr<google::cloud::run::v2::Revision> RevisionsTracingStub::GetRevision(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetRevisionRequest const& request) {
-  return child_->GetRevision(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "GetRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetRevision(context, request));
 }
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 RevisionsTracingStub::ListRevisions(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
-  return child_->ListRevisions(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "ListRevisions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListRevisions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -61,6 +74,8 @@ future<Status> RevisionsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_internal

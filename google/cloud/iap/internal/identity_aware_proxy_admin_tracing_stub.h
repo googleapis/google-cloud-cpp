@@ -27,6 +27,8 @@ namespace cloud {
 namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class IdentityAwareProxyAdminServiceTracingStub
     : public IdentityAwareProxyAdminServiceStub {
  public:
@@ -84,6 +86,8 @@ class IdentityAwareProxyAdminServiceTracingStub
  private:
   std::shared_ptr<IdentityAwareProxyAdminServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal

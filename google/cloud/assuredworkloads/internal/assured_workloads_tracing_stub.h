@@ -27,6 +27,8 @@ namespace cloud {
 namespace assuredworkloads_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AssuredWorkloadsServiceTracingStub : public AssuredWorkloadsServiceStub {
  public:
   ~AssuredWorkloadsServiceTracingStub() override = default;
@@ -97,6 +99,8 @@ class AssuredWorkloadsServiceTracingStub : public AssuredWorkloadsServiceStub {
  private:
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal

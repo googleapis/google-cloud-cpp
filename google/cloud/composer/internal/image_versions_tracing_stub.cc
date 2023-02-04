@@ -17,11 +17,14 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/internal/image_versions_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ImageVersionsTracingStub::ImageVersionsTracingStub(
     std::shared_ptr<ImageVersionsStub> child)
@@ -33,8 +36,16 @@ ImageVersionsTracingStub::ListImageVersions(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
-  return child_->ListImageVersions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.ImageVersions",
+      "ListImageVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListImageVersions(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal

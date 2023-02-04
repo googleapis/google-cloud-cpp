@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/v2/session.proto
 
 #include "google/cloud/dialogflow_es/internal/sessions_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SessionsTracingStub::SessionsTracingStub(std::shared_ptr<SessionsStub> child)
     : child_(std::move(child)) {}
@@ -30,7 +33,12 @@ StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsTracingStub::DetectIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-  return child_->DetectIntent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Sessions",
+                                     "DetectIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DetectIntent(context, request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -41,6 +49,8 @@ SessionsTracingStub::AsyncStreamingDetectIntent(
     std::unique_ptr<grpc::ClientContext> context) {
   return child_->AsyncStreamingDetectIntent(cq, std::move(context));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

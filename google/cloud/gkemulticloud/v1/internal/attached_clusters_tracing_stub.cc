@@ -17,11 +17,14 @@
 // source: google/cloud/gkemulticloud/v1/attached_service.proto
 
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AttachedClustersTracingStub::AttachedClustersTracingStub(
     std::shared_ptr<AttachedClustersStub> child)
@@ -59,7 +62,12 @@ AttachedClustersTracingStub::GetAttachedCluster(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
         request) {
-  return child_->GetAttachedCluster(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AttachedClusters", "GetAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAttachedCluster(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
@@ -67,7 +75,12 @@ AttachedClustersTracingStub::ListAttachedClusters(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
         request) {
-  return child_->ListAttachedClusters(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AttachedClusters", "ListAttachedClusters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAttachedClusters(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -84,7 +97,13 @@ AttachedClustersTracingStub::GetAttachedServerConfig(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
         request) {
-  return child_->GetAttachedServerConfig(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AttachedClusters",
+                             "GetAttachedServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAttachedServerConfig(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::
@@ -93,7 +112,14 @@ AttachedClustersTracingStub::GenerateAttachedClusterInstallManifest(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterInstallManifestRequest const& request) {
-  return child_->GenerateAttachedClusterInstallManifest(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AttachedClusters",
+                             "GenerateAttachedClusterInstallManifest");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateAttachedClusterInstallManifest(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,6 +136,8 @@ future<Status> AttachedClustersTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal

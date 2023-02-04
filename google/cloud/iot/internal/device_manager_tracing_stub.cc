@@ -17,11 +17,14 @@
 // source: google/cloud/iot/v1/device_manager.proto
 
 #include "google/cloud/iot/internal/device_manager_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DeviceManagerTracingStub::DeviceManagerTracingStub(
     std::shared_ptr<DeviceManagerStub> child)
@@ -31,127 +34,223 @@ StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerTracingStub::CreateDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::CreateDeviceRegistryRequest const& request) {
-  return child_->CreateDeviceRegistry(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "CreateDeviceRegistry");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateDeviceRegistry(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerTracingStub::GetDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::GetDeviceRegistryRequest const& request) {
-  return child_->GetDeviceRegistry(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "GetDeviceRegistry");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDeviceRegistry(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerTracingStub::UpdateDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request) {
-  return child_->UpdateDeviceRegistry(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "UpdateDeviceRegistry");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDeviceRegistry(context, request));
 }
 
 Status DeviceManagerTracingStub::DeleteDeviceRegistry(
     grpc::ClientContext& context,
     google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request) {
-  return child_->DeleteDeviceRegistry(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "DeleteDeviceRegistry");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDeviceRegistry(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::ListDeviceRegistriesResponse>
 DeviceManagerTracingStub::ListDeviceRegistries(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDeviceRegistriesRequest const& request) {
-  return child_->ListDeviceRegistries(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "ListDeviceRegistries");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDeviceRegistries(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerTracingStub::CreateDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::CreateDeviceRequest const& request) {
-  return child_->CreateDevice(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "CreateDevice");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateDevice(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerTracingStub::GetDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::GetDeviceRequest const& request) {
-  return child_->GetDevice(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager", "GetDevice");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetDevice(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::Device> DeviceManagerTracingStub::UpdateDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::UpdateDeviceRequest const& request) {
-  return child_->UpdateDevice(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "UpdateDevice");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDevice(context, request));
 }
 
 Status DeviceManagerTracingStub::DeleteDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::DeleteDeviceRequest const& request) {
-  return child_->DeleteDevice(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "DeleteDevice");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDevice(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::ListDevicesResponse>
 DeviceManagerTracingStub::ListDevices(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDevicesRequest const& request) {
-  return child_->ListDevices(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "ListDevices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDevices(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::DeviceConfig>
 DeviceManagerTracingStub::ModifyCloudToDeviceConfig(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request) {
-  return child_->ModifyCloudToDeviceConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "ModifyCloudToDeviceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ModifyCloudToDeviceConfig(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>
 DeviceManagerTracingStub::ListDeviceConfigVersions(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request) {
-  return child_->ListDeviceConfigVersions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "ListDeviceConfigVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDeviceConfigVersions(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse>
 DeviceManagerTracingStub::ListDeviceStates(
     grpc::ClientContext& context,
     google::cloud::iot::v1::ListDeviceStatesRequest const& request) {
-  return child_->ListDeviceStates(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "ListDeviceStates");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDeviceStates(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> DeviceManagerTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DeviceManagerTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>
 DeviceManagerTracingStub::SendCommandToDevice(
     grpc::ClientContext& context,
     google::cloud::iot::v1::SendCommandToDeviceRequest const& request) {
-  return child_->SendCommandToDevice(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "SendCommandToDevice");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SendCommandToDevice(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>
 DeviceManagerTracingStub::BindDeviceToGateway(
     grpc::ClientContext& context,
     google::cloud::iot::v1::BindDeviceToGatewayRequest const& request) {
-  return child_->BindDeviceToGateway(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "BindDeviceToGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->BindDeviceToGateway(context, request));
 }
 
 StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>
 DeviceManagerTracingStub::UnbindDeviceFromGateway(
     grpc::ClientContext& context,
     google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request) {
-  return child_->UnbindDeviceFromGateway(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.iot.v1.DeviceManager",
+                                     "UnbindDeviceFromGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UnbindDeviceFromGateway(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal

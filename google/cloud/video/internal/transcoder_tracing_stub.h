@@ -27,6 +27,8 @@ namespace cloud {
 namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class TranscoderServiceTracingStub : public TranscoderServiceStub {
  public:
   ~TranscoderServiceTracingStub() override = default;
@@ -77,6 +79,8 @@ class TranscoderServiceTracingStub : public TranscoderServiceStub {
  private:
   std::shared_ptr<TranscoderServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal

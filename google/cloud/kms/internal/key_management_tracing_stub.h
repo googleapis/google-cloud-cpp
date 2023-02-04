@@ -27,6 +27,8 @@ namespace cloud {
 namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
  public:
   ~KeyManagementServiceTracingStub() override = default;
@@ -151,6 +153,8 @@ class KeyManagementServiceTracingStub : public KeyManagementServiceStub {
  private:
   std::shared_ptr<KeyManagementServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal

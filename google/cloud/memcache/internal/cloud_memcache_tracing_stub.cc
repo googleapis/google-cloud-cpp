@@ -17,11 +17,14 @@
 // source: google/cloud/memcache/v1/cloud_memcache.proto
 
 #include "google/cloud/memcache/internal/cloud_memcache_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudMemcacheTracingStub::CloudMemcacheTracingStub(
     std::shared_ptr<CloudMemcacheStub> child)
@@ -31,14 +34,24 @@ StatusOr<google::cloud::memcache::v1::ListInstancesResponse>
 CloudMemcacheTracingStub::ListInstances(
     grpc::ClientContext& context,
     google::cloud::memcache::v1::ListInstancesRequest const& request) {
-  return child_->ListInstances(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "ListInstances");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListInstances(context, request));
 }
 
 StatusOr<google::cloud::memcache::v1::Instance>
 CloudMemcacheTracingStub::GetInstance(
     grpc::ClientContext& context,
     google::cloud::memcache::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
+                                     "GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetInstance(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -103,6 +116,8 @@ future<Status> CloudMemcacheTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal

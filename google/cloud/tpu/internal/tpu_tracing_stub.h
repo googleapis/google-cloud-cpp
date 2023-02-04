@@ -27,6 +27,8 @@ namespace cloud {
 namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class TpuTracingStub : public TpuStub {
  public:
   ~TpuTracingStub() override = default;
@@ -101,6 +103,8 @@ class TpuTracingStub : public TpuStub {
  private:
   std::shared_ptr<TpuStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_internal

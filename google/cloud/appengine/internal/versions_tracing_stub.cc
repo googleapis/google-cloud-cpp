@@ -17,11 +17,14 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/versions_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 VersionsTracingStub::VersionsTracingStub(std::shared_ptr<VersionsStub> child)
     : child_(std::move(child)) {}
@@ -30,13 +33,23 @@ StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsTracingStub::ListVersions(
     grpc::ClientContext& context,
     google::appengine::v1::ListVersionsRequest const& request) {
-  return child_->ListVersions(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Versions", "ListVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListVersions(context, request));
 }
 
 StatusOr<google::appengine::v1::Version> VersionsTracingStub::GetVersion(
     grpc::ClientContext& context,
     google::appengine::v1::GetVersionRequest const& request) {
-  return child_->GetVersion(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Versions", "GetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetVersion(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -77,6 +90,8 @@ future<Status> VersionsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

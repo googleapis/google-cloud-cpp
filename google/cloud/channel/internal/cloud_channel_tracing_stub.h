@@ -27,6 +27,8 @@ namespace cloud {
 namespace channel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CloudChannelServiceTracingStub : public CloudChannelServiceStub {
  public:
   ~CloudChannelServiceTracingStub() override = default;
@@ -296,6 +298,8 @@ class CloudChannelServiceTracingStub : public CloudChannelServiceStub {
  private:
   std::shared_ptr<CloudChannelServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_internal

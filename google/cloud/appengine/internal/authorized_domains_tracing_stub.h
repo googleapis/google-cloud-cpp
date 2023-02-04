@@ -27,6 +27,8 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AuthorizedDomainsTracingStub : public AuthorizedDomainsStub {
  public:
   ~AuthorizedDomainsTracingStub() override = default;
@@ -43,6 +45,8 @@ class AuthorizedDomainsTracingStub : public AuthorizedDomainsStub {
  private:
   std::shared_ptr<AuthorizedDomainsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

@@ -17,11 +17,14 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/authorized_certificates_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AuthorizedCertificatesTracingStub::AuthorizedCertificatesTracingStub(
     std::shared_ptr<AuthorizedCertificatesStub> child)
@@ -31,35 +34,66 @@ StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 AuthorizedCertificatesTracingStub::ListAuthorizedCertificates(
     grpc::ClientContext& context,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
-  return child_->ListAuthorizedCertificates(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.AuthorizedCertificates",
+                             "ListAuthorizedCertificates");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->ListAuthorizedCertificates(context, request));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesTracingStub::GetAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
-  return child_->GetAuthorizedCertificate(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.appengine.v1.AuthorizedCertificates", "GetAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAuthorizedCertificate(context, request));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesTracingStub::CreateAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
-  return child_->CreateAuthorizedCertificate(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.AuthorizedCertificates",
+                             "CreateAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->CreateAuthorizedCertificate(context, request));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesTracingStub::UpdateAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
-  return child_->UpdateAuthorizedCertificate(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.AuthorizedCertificates",
+                             "UpdateAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->UpdateAuthorizedCertificate(context, request));
 }
 
 Status AuthorizedCertificatesTracingStub::DeleteAuthorizedCertificate(
     grpc::ClientContext& context,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
-  return child_->DeleteAuthorizedCertificate(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.AuthorizedCertificates",
+                             "DeleteAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->DeleteAuthorizedCertificate(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

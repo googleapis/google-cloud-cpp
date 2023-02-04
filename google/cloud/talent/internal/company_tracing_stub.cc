@@ -17,11 +17,14 @@
 // source: google/cloud/talent/v4/company_service.proto
 
 #include "google/cloud/talent/internal/company_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CompanyServiceTracingStub::CompanyServiceTracingStub(
     std::shared_ptr<CompanyServiceStub> child)
@@ -31,35 +34,62 @@ StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceTracingStub::CreateCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
-  return child_->CreateCompany(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.CompanyService",
+                                     "CreateCompany");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateCompany(context, request));
 }
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceTracingStub::GetCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
-  return child_->GetCompany(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.CompanyService",
+                                     "GetCompany");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetCompany(context, request));
 }
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceTracingStub::UpdateCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-  return child_->UpdateCompany(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.CompanyService",
+                                     "UpdateCompany");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCompany(context, request));
 }
 
 Status CompanyServiceTracingStub::DeleteCompany(
     grpc::ClientContext& context,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-  return child_->DeleteCompany(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.CompanyService",
+                                     "DeleteCompany");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteCompany(context, request));
 }
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 CompanyServiceTracingStub::ListCompanies(
     grpc::ClientContext& context,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
-  return child_->ListCompanies(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.CompanyService",
+                                     "ListCompanies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListCompanies(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal

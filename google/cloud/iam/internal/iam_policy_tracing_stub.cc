@@ -17,11 +17,14 @@
 // source: google/iam/v1/iam_policy.proto
 
 #include "google/cloud/iam/internal/iam_policy_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IAMPolicyTracingStub::IAMPolicyTracingStub(std::shared_ptr<IAMPolicyStub> child)
     : child_(std::move(child)) {}
@@ -29,21 +32,36 @@ IAMPolicyTracingStub::IAMPolicyTracingStub(std::shared_ptr<IAMPolicyStub> child)
 StatusOr<google::iam::v1::Policy> IAMPolicyTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> IAMPolicyTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IAMPolicyTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ContainerAnalysisTracingStub : public ContainerAnalysisStub {
  public:
   ~ContainerAnalysisTracingStub() override = default;
@@ -56,6 +58,8 @@ class ContainerAnalysisTracingStub : public ContainerAnalysisStub {
  private:
   std::shared_ptr<ContainerAnalysisStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal

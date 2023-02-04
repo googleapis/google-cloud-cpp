@@ -27,6 +27,8 @@ namespace cloud {
 namespace apigateway_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ApiGatewayServiceTracingStub : public ApiGatewayServiceStub {
  public:
   ~ApiGatewayServiceTracingStub() override = default;
@@ -125,6 +127,8 @@ class ApiGatewayServiceTracingStub : public ApiGatewayServiceStub {
  private:
   std::shared_ptr<ApiGatewayServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal

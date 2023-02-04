@@ -27,6 +27,8 @@ namespace cloud {
 namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class OsConfigServiceTracingStub : public OsConfigServiceStub {
  public:
   ~OsConfigServiceTracingStub() override = default;
@@ -98,6 +100,8 @@ class OsConfigServiceTracingStub : public OsConfigServiceStub {
  private:
   std::shared_ptr<OsConfigServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal

@@ -17,11 +17,14 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/internal/image_annotator_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ImageAnnotatorTracingStub::ImageAnnotatorTracingStub(
     std::shared_ptr<ImageAnnotatorStub> child)
@@ -31,14 +34,24 @@ StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorTracingStub::BatchAnnotateImages(
     grpc::ClientContext& context,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
-  return child_->BatchAnnotateImages(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
+                                     "BatchAnnotateImages");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->BatchAnnotateImages(context, request));
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorTracingStub::BatchAnnotateFiles(
     grpc::ClientContext& context,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-  return child_->BatchAnnotateFiles(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
+                                     "BatchAnnotateFiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->BatchAnnotateFiles(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -71,6 +84,8 @@ future<Status> ImageAnnotatorTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal

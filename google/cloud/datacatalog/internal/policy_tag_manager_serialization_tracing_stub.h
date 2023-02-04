@@ -27,6 +27,8 @@ namespace cloud {
 namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class PolicyTagManagerSerializationTracingStub
     : public PolicyTagManagerSerializationStub {
  public:
@@ -55,6 +57,8 @@ class PolicyTagManagerSerializationTracingStub
  private:
   std::shared_ptr<PolicyTagManagerSerializationStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal

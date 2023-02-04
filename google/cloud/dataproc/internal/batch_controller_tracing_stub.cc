@@ -17,11 +17,14 @@
 // source: google/cloud/dataproc/v1/batches.proto
 
 #include "google/cloud/dataproc/internal/batch_controller_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 BatchControllerTracingStub::BatchControllerTracingStub(
     std::shared_ptr<BatchControllerStub> child)
@@ -39,20 +42,34 @@ StatusOr<google::cloud::dataproc::v1::Batch>
 BatchControllerTracingStub::GetBatch(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
-  return child_->GetBatch(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
+                                     "GetBatch");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetBatch(context, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
 BatchControllerTracingStub::ListBatches(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListBatchesRequest const& request) {
-  return child_->ListBatches(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
+                                     "ListBatches");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBatches(context, request));
 }
 
 Status BatchControllerTracingStub::DeleteBatch(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
-  return child_->DeleteBatch(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
+                                     "DeleteBatch");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBatch(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -69,6 +86,8 @@ future<Status> BatchControllerTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal

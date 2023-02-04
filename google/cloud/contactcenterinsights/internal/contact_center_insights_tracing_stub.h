@@ -27,6 +27,8 @@ namespace cloud {
 namespace contactcenterinsights_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ContactCenterInsightsTracingStub : public ContactCenterInsightsStub {
  public:
   ~ContactCenterInsightsTracingStub() override = default;
@@ -253,6 +255,8 @@ class ContactCenterInsightsTracingStub : public ContactCenterInsightsStub {
  private:
   std::shared_ptr<ContactCenterInsightsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_internal

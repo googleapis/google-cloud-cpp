@@ -17,11 +17,14 @@
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
 #include "google/cloud/monitoring/internal/dashboards_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DashboardsServiceTracingStub::DashboardsServiceTracingStub(
     std::shared_ptr<DashboardsServiceStub> child)
@@ -31,35 +34,62 @@ StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceTracingStub::CreateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
-  return child_->CreateDashboard(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.monitoring.dashboard.v1.DashboardsService", "CreateDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateDashboard(context, request));
 }
 
 StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceTracingStub::ListDashboards(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
-  return child_->ListDashboards(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.monitoring.dashboard.v1.DashboardsService", "ListDashboards");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDashboards(context, request));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceTracingStub::GetDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
-  return child_->GetDashboard(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.monitoring.dashboard.v1.DashboardsService", "GetDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDashboard(context, request));
 }
 
 Status DashboardsServiceTracingStub::DeleteDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
-  return child_->DeleteDashboard(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.monitoring.dashboard.v1.DashboardsService", "DeleteDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteDashboard(context, request));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceTracingStub::UpdateDashboard(
     grpc::ClientContext& context,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
-  return child_->UpdateDashboard(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.monitoring.dashboard.v1.DashboardsService", "UpdateDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateDashboard(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

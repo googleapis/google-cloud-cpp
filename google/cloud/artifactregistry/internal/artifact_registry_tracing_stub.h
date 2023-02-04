@@ -27,6 +27,8 @@ namespace cloud {
 namespace artifactregistry_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
  public:
   ~ArtifactRegistryTracingStub() override = default;
@@ -191,6 +193,8 @@ class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
  private:
   std::shared_ptr<ArtifactRegistryStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal

@@ -17,11 +17,14 @@
 // source: google/cloud/gkemulticloud/v1/aws_service.proto
 
 #include "google/cloud/gkemulticloud/v1/internal/aws_clusters_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AwsClustersTracingStub::AwsClustersTracingStub(
     std::shared_ptr<AwsClustersStub> child)
@@ -47,14 +50,24 @@ StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
 AwsClustersTracingStub::GetAwsCluster(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
-  return child_->GetAwsCluster(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AwsClusters", "GetAwsCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAwsCluster(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsClustersResponse>
 AwsClustersTracingStub::ListAwsClusters(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request) {
-  return child_->ListAwsClusters(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AwsClusters", "ListAwsClusters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAwsClusters(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -70,7 +83,12 @@ AwsClustersTracingStub::GenerateAwsAccessToken(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
         request) {
-  return child_->GenerateAwsAccessToken(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AwsClusters", "GenerateAwsAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateAwsAccessToken(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -93,14 +111,24 @@ StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersTracingStub::GetAwsNodePool(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
-  return child_->GetAwsNodePool(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AwsClusters", "GetAwsNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAwsNodePool(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse>
 AwsClustersTracingStub::ListAwsNodePools(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request) {
-  return child_->ListAwsNodePools(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AwsClusters", "ListAwsNodePools");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAwsNodePools(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,7 +144,12 @@ AwsClustersTracingStub::GetAwsServerConfig(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
         request) {
-  return child_->GetAwsServerConfig(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AwsClusters", "GetAwsServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAwsServerConfig(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -133,6 +166,8 @@ future<Status> AwsClustersTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal

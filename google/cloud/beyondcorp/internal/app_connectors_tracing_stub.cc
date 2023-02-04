@@ -17,11 +17,14 @@
 // source: google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto
 
 #include "google/cloud/beyondcorp/internal/app_connectors_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AppConnectorsServiceTracingStub::AppConnectorsServiceTracingStub(
     std::shared_ptr<AppConnectorsServiceStub> child)
@@ -32,7 +35,13 @@ StatusOr<
 AppConnectorsServiceTracingStub::ListAppConnectors(
     grpc::ClientContext& context, google::cloud::beyondcorp::appconnectors::v1::
                                       ListAppConnectorsRequest const& request) {
-  return child_->ListAppConnectors(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ListAppConnectors");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAppConnectors(context, request));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
@@ -40,7 +49,13 @@ AppConnectorsServiceTracingStub::GetAppConnector(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
         request) {
-  return child_->GetAppConnector(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "GetAppConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAppConnector(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -93,6 +108,8 @@ future<Status> AppConnectorsServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal

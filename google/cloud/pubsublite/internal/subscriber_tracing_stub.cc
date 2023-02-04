@@ -17,11 +17,14 @@
 // source: google/cloud/pubsublite/v1/subscriber.proto
 
 #include "google/cloud/pubsublite/internal/subscriber_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SubscriberServiceTracingStub::SubscriberServiceTracingStub(
     std::shared_ptr<SubscriberServiceStub> child)
@@ -35,6 +38,8 @@ SubscriberServiceTracingStub::AsyncSubscribe(
     std::unique_ptr<grpc::ClientContext> context) {
   return child_->AsyncSubscribe(cq, std::move(context));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AdminServiceTracingStub : public AdminServiceStub {
  public:
   ~AdminServiceTracingStub() override = default;
@@ -149,6 +151,8 @@ class AdminServiceTracingStub : public AdminServiceStub {
  private:
   std::shared_ptr<AdminServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

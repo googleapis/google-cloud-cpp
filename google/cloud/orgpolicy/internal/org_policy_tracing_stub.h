@@ -27,6 +27,8 @@ namespace cloud {
 namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class OrgPolicyTracingStub : public OrgPolicyStub {
  public:
   ~OrgPolicyTracingStub() override = default;
@@ -69,6 +71,8 @@ class OrgPolicyTracingStub : public OrgPolicyStub {
  private:
   std::shared_ptr<OrgPolicyStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_internal

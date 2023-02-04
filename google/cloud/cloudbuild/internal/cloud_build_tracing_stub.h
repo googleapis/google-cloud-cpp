@@ -27,6 +27,8 @@ namespace cloud {
 namespace cloudbuild_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CloudBuildTracingStub : public CloudBuildStub {
  public:
   ~CloudBuildTracingStub() override = default;
@@ -146,6 +148,8 @@ class CloudBuildTracingStub : public CloudBuildStub {
  private:
   std::shared_ptr<CloudBuildStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal

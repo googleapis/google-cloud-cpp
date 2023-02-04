@@ -17,11 +17,14 @@
 // source: google/cloud/secretmanager/v1/service.proto
 
 #include "google/cloud/secretmanager/internal/secret_manager_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace secretmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SecretManagerServiceTracingStub::SecretManagerServiceTracingStub(
     std::shared_ptr<SecretManagerServiceStub> child)
@@ -31,41 +34,70 @@ StatusOr<google::cloud::secretmanager::v1::ListSecretsResponse>
 SecretManagerServiceTracingStub::ListSecrets(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::ListSecretsRequest const& request) {
-  return child_->ListSecrets(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "ListSecrets");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSecrets(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceTracingStub::CreateSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::CreateSecretRequest const& request) {
-  return child_->CreateSecret(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "CreateSecret");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateSecret(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceTracingStub::AddSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::AddSecretVersionRequest const& request) {
-  return child_->AddSecretVersion(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "AddSecretVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->AddSecretVersion(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceTracingStub::GetSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::GetSecretRequest const& request) {
-  return child_->GetSecret(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "GetSecret");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetSecret(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::Secret>
 SecretManagerServiceTracingStub::UpdateSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::UpdateSecretRequest const& request) {
-  return child_->UpdateSecret(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "UpdateSecret");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSecret(context, request));
 }
 
 Status SecretManagerServiceTracingStub::DeleteSecret(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::DeleteSecretRequest const& request) {
-  return child_->DeleteSecret(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "DeleteSecret");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSecret(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::ListSecretVersionsResponse>
@@ -73,14 +105,25 @@ SecretManagerServiceTracingStub::ListSecretVersions(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::ListSecretVersionsRequest const&
         request) {
-  return child_->ListSecretVersions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService",
+      "ListSecretVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSecretVersions(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
 SecretManagerServiceTracingStub::GetSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::GetSecretVersionRequest const& request) {
-  return child_->GetSecretVersion(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "GetSecretVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetSecretVersion(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::AccessSecretVersionResponse>
@@ -88,7 +131,13 @@ SecretManagerServiceTracingStub::AccessSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
         request) {
-  return child_->AccessSecretVersion(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService",
+      "AccessSecretVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->AccessSecretVersion(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -96,7 +145,13 @@ SecretManagerServiceTracingStub::DisableSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
         request) {
-  return child_->DisableSecretVersion(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService",
+      "DisableSecretVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DisableSecretVersion(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -104,7 +159,13 @@ SecretManagerServiceTracingStub::EnableSecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
         request) {
-  return child_->EnableSecretVersion(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService",
+      "EnableSecretVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->EnableSecretVersion(context, request));
 }
 
 StatusOr<google::cloud::secretmanager::v1::SecretVersion>
@@ -112,27 +173,51 @@ SecretManagerServiceTracingStub::DestroySecretVersion(
     grpc::ClientContext& context,
     google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
         request) {
-  return child_->DestroySecretVersion(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService",
+      "DestroySecretVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DestroySecretVersion(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> SecretManagerServiceTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> SecretManagerServiceTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecretManagerServiceTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.secretmanager.v1.SecretManagerService",
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_internal

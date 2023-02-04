@@ -17,11 +17,14 @@
 // source: google/cloud/gkemulticloud/v1/azure_service.proto
 
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AzureClustersTracingStub::AzureClustersTracingStub(
     std::shared_ptr<AzureClustersStub> child)
@@ -39,14 +42,24 @@ StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersTracingStub::GetAzureClient(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
-  return child_->GetAzureClient(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureClient");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAzureClient(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 AzureClustersTracingStub::ListAzureClients(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
-  return child_->ListAzureClients(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "ListAzureClients");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAzureClients(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -79,14 +92,24 @@ StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersTracingStub::GetAzureCluster(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
-  return child_->GetAzureCluster(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAzureCluster(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 AzureClustersTracingStub::ListAzureClusters(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
-  return child_->ListAzureClusters(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "ListAzureClusters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAzureClusters(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -103,7 +126,13 @@ AzureClustersTracingStub::GenerateAzureAccessToken(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
-  return child_->GenerateAzureAccessToken(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gkemulticloud.v1.AzureClusters",
+                             "GenerateAzureAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateAzureAccessToken(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -128,7 +157,12 @@ StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersTracingStub::GetAzureNodePool(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
-  return child_->GetAzureNodePool(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAzureNodePool(context, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
@@ -136,7 +170,12 @@ AzureClustersTracingStub::ListAzureNodePools(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
         request) {
-  return child_->ListAzureNodePools(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "ListAzureNodePools");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAzureNodePools(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -153,7 +192,12 @@ AzureClustersTracingStub::GetAzureServerConfig(
     grpc::ClientContext& context,
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
-  return child_->GetAzureServerConfig(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAzureServerConfig(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -170,6 +214,8 @@ future<Status> AzureClustersTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ContentServiceTracingStub : public ContentServiceStub {
  public:
   ~ContentServiceTracingStub() override = default;
@@ -70,6 +72,8 @@ class ContentServiceTracingStub : public ContentServiceStub {
  private:
   std::shared_ptr<ContentServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal

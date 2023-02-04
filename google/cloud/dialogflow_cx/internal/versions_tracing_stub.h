@@ -27,6 +27,8 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class VersionsTracingStub : public VersionsStub {
  public:
   ~VersionsTracingStub() override = default;
@@ -84,6 +86,8 @@ class VersionsTracingStub : public VersionsStub {
  private:
   std::shared_ptr<VersionsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

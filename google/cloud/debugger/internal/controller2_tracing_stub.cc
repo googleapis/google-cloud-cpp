@@ -17,11 +17,14 @@
 // source: google/devtools/clouddebugger/v2/controller.proto
 
 #include "google/cloud/debugger/internal/controller2_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 Controller2TracingStub::Controller2TracingStub(
     std::shared_ptr<Controller2Stub> child)
@@ -32,7 +35,12 @@ Controller2TracingStub::RegisterDebuggee(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
         request) {
-  return child_->RegisterDebuggee(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Controller2", "RegisterDebuggee");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->RegisterDebuggee(context, request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
@@ -40,7 +48,12 @@ Controller2TracingStub::ListActiveBreakpoints(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
         request) {
-  return child_->ListActiveBreakpoints(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Controller2", "ListActiveBreakpoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListActiveBreakpoints(context, request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
@@ -48,8 +61,15 @@ Controller2TracingStub::UpdateActiveBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
         request) {
-  return child_->UpdateActiveBreakpoint(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Controller2", "UpdateActiveBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateActiveBreakpoint(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal

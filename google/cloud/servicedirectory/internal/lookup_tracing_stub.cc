@@ -17,11 +17,14 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/internal/lookup_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 LookupServiceTracingStub::LookupServiceTracingStub(
     std::shared_ptr<LookupServiceStub> child)
@@ -31,8 +34,15 @@ StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceTracingStub::ResolveService(
     grpc::ClientContext& context,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
-  return child_->ResolveService(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.servicedirectory.v1.LookupService", "ResolveService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ResolveService(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal

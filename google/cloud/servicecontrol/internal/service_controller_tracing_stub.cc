@@ -17,11 +17,14 @@
 // source: google/api/servicecontrol/v1/service_controller.proto
 
 #include "google/cloud/servicecontrol/internal/service_controller_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ServiceControllerTracingStub::ServiceControllerTracingStub(
     std::shared_ptr<ServiceControllerStub> child)
@@ -31,15 +34,25 @@ StatusOr<google::api::servicecontrol::v1::CheckResponse>
 ServiceControllerTracingStub::Check(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::CheckRequest const& request) {
-  return child_->Check(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.api.servicecontrol.v1.ServiceController", "Check");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->Check(context, request));
 }
 
 StatusOr<google::api::servicecontrol::v1::ReportResponse>
 ServiceControllerTracingStub::Report(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::ReportRequest const& request) {
-  return child_->Report(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.api.servicecontrol.v1.ServiceController", "Report");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->Report(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal

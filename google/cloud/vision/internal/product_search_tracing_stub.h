@@ -27,6 +27,8 @@ namespace cloud {
 namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ProductSearchTracingStub : public ProductSearchStub {
  public:
   ~ProductSearchTracingStub() override = default;
@@ -138,6 +140,8 @@ class ProductSearchTracingStub : public ProductSearchStub {
  private:
   std::shared_ptr<ProductSearchStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal

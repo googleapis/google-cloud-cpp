@@ -27,6 +27,8 @@ namespace cloud {
 namespace connectors_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ConnectorsTracingStub : public ConnectorsStub {
  public:
   ~ConnectorsTracingStub() override = default;
@@ -128,6 +130,8 @@ class ConnectorsTracingStub : public ConnectorsStub {
  private:
   std::shared_ptr<ConnectorsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors_internal

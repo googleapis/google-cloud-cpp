@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/v2/session_entity_type.proto
 
 #include "google/cloud/dialogflow_es/internal/session_entity_types_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SessionEntityTypesTracingStub::SessionEntityTypesTracingStub(
     std::shared_ptr<SessionEntityTypesStub> child)
@@ -32,14 +35,25 @@ SessionEntityTypesTracingStub::ListSessionEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListSessionEntityTypesRequest const&
         request) {
-  return child_->ListSessionEntityTypes(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "ListSessionEntityTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSessionEntityTypes(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesTracingStub::GetSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
-  return child_->GetSessionEntityType(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.SessionEntityTypes", "GetSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetSessionEntityType(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
@@ -47,7 +61,13 @@ SessionEntityTypesTracingStub::CreateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
         request) {
-  return child_->CreateSessionEntityType(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "CreateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateSessionEntityType(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
@@ -55,15 +75,29 @@ SessionEntityTypesTracingStub::UpdateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
         request) {
-  return child_->UpdateSessionEntityType(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "UpdateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSessionEntityType(context, request));
 }
 
 Status SessionEntityTypesTracingStub::DeleteSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
         request) {
-  return child_->DeleteSessionEntityType(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.SessionEntityTypes",
+                             "DeleteSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSessionEntityType(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

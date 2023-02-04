@@ -17,11 +17,14 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/internal/services_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace run_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ServicesTracingStub::ServicesTracingStub(std::shared_ptr<ServicesStub> child)
     : child_(std::move(child)) {}
@@ -37,14 +40,24 @@ ServicesTracingStub::AsyncCreateService(
 StatusOr<google::cloud::run::v2::Service> ServicesTracingStub::GetService(
     grpc::ClientContext& context,
     google::cloud::run::v2::GetServiceRequest const& request) {
-  return child_->GetService(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Services", "GetService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetService(context, request));
 }
 
 StatusOr<google::cloud::run::v2::ListServicesResponse>
 ServicesTracingStub::ListServices(
     grpc::ClientContext& context,
     google::cloud::run::v2::ListServicesRequest const& request) {
-  return child_->ListServices(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Services", "ListServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListServices(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -66,20 +79,35 @@ ServicesTracingStub::AsyncDeleteService(
 StatusOr<google::iam::v1::Policy> ServicesTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Services", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> ServicesTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.run.v2.Services", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ServicesTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Services",
+                                     "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,6 +124,8 @@ future<Status> ServicesTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_internal

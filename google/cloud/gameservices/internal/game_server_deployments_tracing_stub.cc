@@ -17,11 +17,14 @@
 // source: google/cloud/gaming/v1/game_server_deployments_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_deployments_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GameServerDeploymentsServiceTracingStub::
     GameServerDeploymentsServiceTracingStub(
@@ -33,14 +36,26 @@ GameServerDeploymentsServiceTracingStub::ListGameServerDeployments(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::ListGameServerDeploymentsRequest const&
         request) {
-  return child_->ListGameServerDeployments(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gaming.v1.GameServerDeploymentsService",
+      "ListGameServerDeployments");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListGameServerDeployments(context, request));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceTracingStub::GetGameServerDeployment(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request) {
-  return child_->GetGameServerDeployment(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gaming.v1.GameServerDeploymentsService",
+      "GetGameServerDeployment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetGameServerDeployment(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -78,7 +93,13 @@ GameServerDeploymentsServiceTracingStub::GetGameServerDeploymentRollout(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
         request) {
-  return child_->GetGameServerDeploymentRollout(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gaming.v1.GameServerDeploymentsService",
+      "GetGameServerDeploymentRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->GetGameServerDeploymentRollout(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,14 +117,27 @@ GameServerDeploymentsServiceTracingStub::PreviewGameServerDeploymentRollout(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutRequest const&
         request) {
-  return child_->PreviewGameServerDeploymentRollout(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gaming.v1.GameServerDeploymentsService",
+      "PreviewGameServerDeploymentRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span,
+      child_->PreviewGameServerDeploymentRollout(context, request));
 }
 
 StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
 GameServerDeploymentsServiceTracingStub::FetchDeploymentState(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::FetchDeploymentStateRequest const& request) {
-  return child_->FetchDeploymentState(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gaming.v1.GameServerDeploymentsService",
+      "FetchDeploymentState");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->FetchDeploymentState(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,6 +154,8 @@ future<Status> GameServerDeploymentsServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

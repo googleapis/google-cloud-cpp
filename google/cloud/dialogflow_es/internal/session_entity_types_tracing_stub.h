@@ -27,6 +27,8 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class SessionEntityTypesTracingStub : public SessionEntityTypesStub {
  public:
   ~SessionEntityTypesTracingStub() override = default;
@@ -66,6 +68,8 @@ class SessionEntityTypesTracingStub : public SessionEntityTypesStub {
  private:
   std::shared_ptr<SessionEntityTypesStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

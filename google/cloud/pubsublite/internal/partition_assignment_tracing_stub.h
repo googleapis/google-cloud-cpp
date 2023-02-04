@@ -27,6 +27,8 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class PartitionAssignmentServiceTracingStub
     : public PartitionAssignmentServiceStub {
  public:
@@ -44,6 +46,8 @@ class PartitionAssignmentServiceTracingStub
  private:
   std::shared_ptr<PartitionAssignmentServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

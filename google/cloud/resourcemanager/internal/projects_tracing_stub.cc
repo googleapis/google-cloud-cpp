@@ -17,11 +17,14 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/internal/projects_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ProjectsTracingStub::ProjectsTracingStub(std::shared_ptr<ProjectsStub> child)
     : child_(std::move(child)) {}
@@ -30,21 +33,36 @@ StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsTracingStub::GetProject(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
-  return child_->GetProject(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "GetProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetProject(context, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
 ProjectsTracingStub::ListProjects(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
-  return child_->ListProjects(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "ListProjects");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListProjects(context, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
 ProjectsTracingStub::SearchProjects(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
-  return child_->SearchProjects(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "SearchProjects");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SearchProjects(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -90,20 +108,35 @@ ProjectsTracingStub::AsyncUndeleteProject(
 StatusOr<google::iam::v1::Policy> ProjectsTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ProjectsTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.Projects",
+                                     "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,6 +153,8 @@ future<Status> ProjectsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal

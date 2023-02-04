@@ -27,6 +27,8 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class IntentsTracingStub : public IntentsStub {
  public:
   ~IntentsTracingStub() override = default;
@@ -61,6 +63,8 @@ class IntentsTracingStub : public IntentsStub {
  private:
   std::shared_ptr<IntentsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

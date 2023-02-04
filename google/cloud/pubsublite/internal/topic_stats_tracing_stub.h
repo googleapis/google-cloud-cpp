@@ -27,6 +27,8 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class TopicStatsServiceTracingStub : public TopicStatsServiceStub {
  public:
   ~TopicStatsServiceTracingStub() override = default;
@@ -55,6 +57,8 @@ class TopicStatsServiceTracingStub : public TopicStatsServiceStub {
  private:
   std::shared_ptr<TopicStatsServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

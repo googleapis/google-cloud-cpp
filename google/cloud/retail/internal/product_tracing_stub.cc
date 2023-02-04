@@ -17,11 +17,14 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/internal/product_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ProductServiceTracingStub::ProductServiceTracingStub(
     std::shared_ptr<ProductServiceStub> child)
@@ -31,34 +34,59 @@ StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingStub::CreateProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CreateProductRequest const& request) {
-  return child_->CreateProduct(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "CreateProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateProduct(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingStub::GetProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetProductRequest const& request) {
-  return child_->GetProduct(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "GetProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetProduct(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::ListProductsResponse>
 ProductServiceTracingStub::ListProducts(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListProductsRequest const& request) {
-  return child_->ListProducts(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "ListProducts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListProducts(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingStub::UpdateProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateProductRequest const& request) {
-  return child_->UpdateProduct(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "UpdateProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateProduct(context, request));
 }
 
 Status ProductServiceTracingStub::DeleteProduct(
     grpc::ClientContext& context,
     google::cloud::retail::v2::DeleteProductRequest const& request) {
-  return child_->DeleteProduct(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "DeleteProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteProduct(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -123,6 +151,8 @@ future<Status> ProductServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal

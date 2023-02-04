@@ -17,11 +17,14 @@
 // source: google/cloud/retail/v2/catalog_service.proto
 
 #include "google/cloud/retail/internal/catalog_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CatalogServiceTracingStub::CatalogServiceTracingStub(
     std::shared_ptr<CatalogServiceStub> child)
@@ -31,77 +34,134 @@ StatusOr<google::cloud::retail::v2::ListCatalogsResponse>
 CatalogServiceTracingStub::ListCatalogs(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ListCatalogsRequest const& request) {
-  return child_->ListCatalogs(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "ListCatalogs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListCatalogs(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::Catalog>
 CatalogServiceTracingStub::UpdateCatalog(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateCatalogRequest const& request) {
-  return child_->UpdateCatalog(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "UpdateCatalog");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCatalog(context, request));
 }
 
 Status CatalogServiceTracingStub::SetDefaultBranch(
     grpc::ClientContext& context,
     google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
-  return child_->SetDefaultBranch(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "SetDefaultBranch");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetDefaultBranch(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
 CatalogServiceTracingStub::GetDefaultBranch(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
-  return child_->GetDefaultBranch(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "GetDefaultBranch");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDefaultBranch(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 CatalogServiceTracingStub::GetCompletionConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
-  return child_->GetCompletionConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "GetCompletionConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetCompletionConfig(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 CatalogServiceTracingStub::UpdateCompletionConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
-  return child_->UpdateCompletionConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "UpdateCompletionConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCompletionConfig(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingStub::GetAttributesConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
-  return child_->GetAttributesConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "GetAttributesConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAttributesConfig(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingStub::UpdateAttributesConfig(
     grpc::ClientContext& context,
     google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
-  return child_->UpdateAttributesConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "UpdateAttributesConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateAttributesConfig(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingStub::AddCatalogAttribute(
     grpc::ClientContext& context,
     google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
-  return child_->AddCatalogAttribute(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "AddCatalogAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->AddCatalogAttribute(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingStub::RemoveCatalogAttribute(
     grpc::ClientContext& context,
     google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
-  return child_->RemoveCatalogAttribute(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "RemoveCatalogAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->RemoveCatalogAttribute(context, request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingStub::ReplaceCatalogAttribute(
     grpc::ClientContext& context,
     google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
-  return child_->ReplaceCatalogAttribute(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CatalogService",
+                                     "ReplaceCatalogAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ReplaceCatalogAttribute(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal

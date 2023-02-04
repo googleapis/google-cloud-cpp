@@ -17,11 +17,14 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/internal/ekm_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EkmServiceTracingStub::EkmServiceTracingStub(
     std::shared_ptr<EkmServiceStub> child)
@@ -31,29 +34,51 @@ StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 EkmServiceTracingStub::ListEkmConnections(
     grpc::ClientContext& context,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
-  return child_->ListEkmConnections(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.EkmService",
+                                     "ListEkmConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEkmConnections(context, request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceTracingStub::GetEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-  return child_->GetEkmConnection(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.EkmService",
+                                     "GetEkmConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEkmConnection(context, request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceTracingStub::CreateEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-  return child_->CreateEkmConnection(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.EkmService",
+                                     "CreateEkmConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateEkmConnection(context, request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceTracingStub::UpdateEkmConnection(
     grpc::ClientContext& context,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-  return child_->UpdateEkmConnection(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.kms.v1.EkmService",
+                                     "UpdateEkmConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateEkmConnection(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal

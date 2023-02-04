@@ -27,6 +27,8 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class KnowledgeBasesTracingStub : public KnowledgeBasesStub {
  public:
   ~KnowledgeBasesTracingStub() override = default;
@@ -62,6 +64,8 @@ class KnowledgeBasesTracingStub : public KnowledgeBasesStub {
  private:
   std::shared_ptr<KnowledgeBasesStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

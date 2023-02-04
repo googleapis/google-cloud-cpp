@@ -17,11 +17,14 @@
 // source: google/cloud/clouddms/v1/clouddms.proto
 
 #include "google/cloud/datamigration/internal/data_migration_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DataMigrationServiceTracingStub::DataMigrationServiceTracingStub(
     std::shared_ptr<DataMigrationServiceStub> child)
@@ -31,14 +34,24 @@ StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
 DataMigrationServiceTracingStub::ListMigrationJobs(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::ListMigrationJobsRequest const& request) {
-  return child_->ListMigrationJobs(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "ListMigrationJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListMigrationJobs(context, request));
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceTracingStub::GetMigrationJob(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
-  return child_->GetMigrationJob(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "GetMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetMigrationJob(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -117,21 +130,37 @@ StatusOr<google::cloud::clouddms::v1::SshScript>
 DataMigrationServiceTracingStub::GenerateSshScript(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
-  return child_->GenerateSshScript(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "GenerateSshScript");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateSshScript(context, request));
 }
 
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DataMigrationServiceTracingStub::ListConnectionProfiles(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request) {
-  return child_->ListConnectionProfiles(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.clouddms.v1.DataMigrationService",
+                             "ListConnectionProfiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListConnectionProfiles(context, request));
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceTracingStub::GetConnectionProfile(
     grpc::ClientContext& context,
     google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
-  return child_->GetConnectionProfile(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.clouddms.v1.DataMigrationService", "GetConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetConnectionProfile(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -175,6 +204,8 @@ future<Status> DataMigrationServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal

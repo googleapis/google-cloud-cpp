@@ -27,6 +27,8 @@ namespace cloud {
 namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class InstanceAdminTracingStub : public InstanceAdminStub {
  public:
   ~InstanceAdminTracingStub() override = default;
@@ -122,6 +124,8 @@ class InstanceAdminTracingStub : public InstanceAdminStub {
  private:
   std::shared_ptr<InstanceAdminStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

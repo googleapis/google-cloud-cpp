@@ -27,6 +27,8 @@ namespace cloud {
 namespace apikeys_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ApiKeysTracingStub : public ApiKeysStub {
  public:
   ~ApiKeysTracingStub() override = default;
@@ -82,6 +84,8 @@ class ApiKeysTracingStub : public ApiKeysStub {
  private:
   std::shared_ptr<ApiKeysStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_internal

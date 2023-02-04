@@ -17,11 +17,14 @@
 // source: google/cloud/recommender/v1/recommender_service.proto
 
 #include "google/cloud/recommender/internal/recommender_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 RecommenderTracingStub::RecommenderTracingStub(
     std::shared_ptr<RecommenderStub> child)
@@ -31,35 +34,60 @@ StatusOr<google::cloud::recommender::v1::ListInsightsResponse>
 RecommenderTracingStub::ListInsights(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::ListInsightsRequest const& request) {
-  return child_->ListInsights(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "ListInsights");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListInsights(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderTracingStub::GetInsight(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::GetInsightRequest const& request) {
-  return child_->GetInsight(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "GetInsight");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetInsight(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderTracingStub::MarkInsightAccepted(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
-  return child_->MarkInsightAccepted(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "MarkInsightAccepted");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->MarkInsightAccepted(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse>
 RecommenderTracingStub::ListRecommendations(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
-  return child_->ListRecommendations(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "ListRecommendations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListRecommendations(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingStub::GetRecommendation(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::GetRecommendationRequest const& request) {
-  return child_->GetRecommendation(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "GetRecommendation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetRecommendation(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
@@ -67,7 +95,12 @@ RecommenderTracingStub::MarkRecommendationClaimed(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
         request) {
-  return child_->MarkRecommendationClaimed(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "MarkRecommendationClaimed");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->MarkRecommendationClaimed(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
@@ -75,7 +108,12 @@ RecommenderTracingStub::MarkRecommendationSucceeded(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
         request) {
-  return child_->MarkRecommendationSucceeded(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "MarkRecommendationSucceeded");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->MarkRecommendationSucceeded(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
@@ -83,7 +121,12 @@ RecommenderTracingStub::MarkRecommendationFailed(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
         request) {
-  return child_->MarkRecommendationFailed(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "MarkRecommendationFailed");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->MarkRecommendationFailed(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
@@ -91,7 +134,12 @@ RecommenderTracingStub::GetRecommenderConfig(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::GetRecommenderConfigRequest const&
         request) {
-  return child_->GetRecommenderConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "GetRecommenderConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetRecommenderConfig(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
@@ -99,7 +147,12 @@ RecommenderTracingStub::UpdateRecommenderConfig(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
         request) {
-  return child_->UpdateRecommenderConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "UpdateRecommenderConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateRecommenderConfig(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
@@ -107,7 +160,12 @@ RecommenderTracingStub::GetInsightTypeConfig(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
         request) {
-  return child_->GetInsightTypeConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "GetInsightTypeConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetInsightTypeConfig(context, request));
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
@@ -115,8 +173,15 @@ RecommenderTracingStub::UpdateInsightTypeConfig(
     grpc::ClientContext& context,
     google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
         request) {
-  return child_->UpdateInsightTypeConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.recommender.v1.Recommender",
+                                     "UpdateInsightTypeConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateInsightTypeConfig(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal

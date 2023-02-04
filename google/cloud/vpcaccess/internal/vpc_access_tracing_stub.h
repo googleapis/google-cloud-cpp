@@ -27,6 +27,8 @@ namespace cloud {
 namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class VpcAccessServiceTracingStub : public VpcAccessServiceStub {
  public:
   ~VpcAccessServiceTracingStub() override = default;
@@ -69,6 +71,8 @@ class VpcAccessServiceTracingStub : public VpcAccessServiceStub {
  private:
   std::shared_ptr<VpcAccessServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal

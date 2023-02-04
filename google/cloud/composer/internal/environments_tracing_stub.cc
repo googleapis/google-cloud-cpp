@@ -17,11 +17,14 @@
 // source: google/cloud/orchestration/airflow/service/v1/environments.proto
 
 #include "google/cloud/composer/internal/environments_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EnvironmentsTracingStub::EnvironmentsTracingStub(
     std::shared_ptr<EnvironmentsStub> child)
@@ -41,7 +44,13 @@ EnvironmentsTracingStub::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEnvironment(context, request));
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -50,7 +59,13 @@ EnvironmentsTracingStub::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::orchestration::airflow::service::v1::
         ListEnvironmentsRequest const& request) {
-  return child_->ListEnvironments(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.orchestration.airflow.service.v1.Environments",
+      "ListEnvironments");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEnvironments(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -103,6 +118,8 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal

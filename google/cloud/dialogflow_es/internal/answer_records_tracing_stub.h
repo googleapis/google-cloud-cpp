@@ -27,6 +27,8 @@ namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AnswerRecordsTracingStub : public AnswerRecordsStub {
  public:
   ~AnswerRecordsTracingStub() override = default;
@@ -47,6 +49,8 @@ class AnswerRecordsTracingStub : public AnswerRecordsStub {
  private:
   std::shared_ptr<AnswerRecordsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class BigtableInstanceAdminTracingStub : public BigtableInstanceAdminStub {
  public:
   ~BigtableInstanceAdminTracingStub() override = default;
@@ -149,6 +151,8 @@ class BigtableInstanceAdminTracingStub : public BigtableInstanceAdminStub {
  private:
   std::shared_ptr<BigtableInstanceAdminStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal

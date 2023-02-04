@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/security_settings.proto
 
 #include "google/cloud/dialogflow_cx/internal/security_settings_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SecuritySettingsServiceTracingStub::SecuritySettingsServiceTracingStub(
     std::shared_ptr<SecuritySettingsServiceStub> child)
@@ -32,7 +35,13 @@ SecuritySettingsServiceTracingStub::CreateSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
         request) {
-  return child_->CreateSecuritySettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
+      "CreateSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateSecuritySettings(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -40,7 +49,13 @@ SecuritySettingsServiceTracingStub::GetSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
         request) {
-  return child_->GetSecuritySettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
+      "GetSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetSecuritySettings(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -48,7 +63,13 @@ SecuritySettingsServiceTracingStub::UpdateSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
         request) {
-  return child_->UpdateSecuritySettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
+      "UpdateSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSecuritySettings(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
@@ -56,15 +77,29 @@ SecuritySettingsServiceTracingStub::ListSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
         request) {
-  return child_->ListSecuritySettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
+      "ListSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSecuritySettings(context, request));
 }
 
 Status SecuritySettingsServiceTracingStub::DeleteSecuritySettings(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
         request) {
-  return child_->DeleteSecuritySettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.SecuritySettingsService",
+      "DeleteSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSecuritySettings(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

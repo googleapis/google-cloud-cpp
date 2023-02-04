@@ -27,6 +27,8 @@ namespace cloud {
 namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
  public:
   ~DataMigrationServiceTracingStub() override = default;
@@ -145,6 +147,8 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
  private:
   std::shared_ptr<DataMigrationServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal

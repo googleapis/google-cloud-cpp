@@ -17,11 +17,14 @@
 // source: google/cloud/notebooks/v1/managed_service.proto
 
 #include "google/cloud/notebooks/internal/managed_notebook_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ManagedNotebookServiceTracingStub::ManagedNotebookServiceTracingStub(
     std::shared_ptr<ManagedNotebookServiceStub> child)
@@ -31,14 +34,24 @@ StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 ManagedNotebookServiceTracingStub::ListRuntimes(
     grpc::ClientContext& context,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
-  return child_->ListRuntimes(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.notebooks.v1.ManagedNotebookService", "ListRuntimes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListRuntimes(context, request));
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceTracingStub::GetRuntime(
     grpc::ClientContext& context,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
-  return child_->GetRuntime(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.notebooks.v1.ManagedNotebookService", "GetRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetRuntime(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -118,7 +131,13 @@ ManagedNotebookServiceTracingStub::RefreshRuntimeTokenInternal(
     grpc::ClientContext& context,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
-  return child_->RefreshRuntimeTokenInternal(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.notebooks.v1.ManagedNotebookService",
+                             "RefreshRuntimeTokenInternal");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->RefreshRuntimeTokenInternal(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -143,6 +162,8 @@ future<Status> ManagedNotebookServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal

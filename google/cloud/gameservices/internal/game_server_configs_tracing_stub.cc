@@ -17,11 +17,14 @@
 // source: google/cloud/gaming/v1/game_server_configs_service.proto
 
 #include "google/cloud/gameservices/internal/game_server_configs_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GameServerConfigsServiceTracingStub::GameServerConfigsServiceTracingStub(
     std::shared_ptr<GameServerConfigsServiceStub> child)
@@ -31,14 +34,25 @@ StatusOr<google::cloud::gaming::v1::ListGameServerConfigsResponse>
 GameServerConfigsServiceTracingStub::ListGameServerConfigs(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::ListGameServerConfigsRequest const& request) {
-  return child_->ListGameServerConfigs(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.gaming.v1.GameServerConfigsService",
+                             "ListGameServerConfigs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListGameServerConfigs(context, request));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerConfig>
 GameServerConfigsServiceTracingStub::GetGameServerConfig(
     grpc::ClientContext& context,
     google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
-  return child_->GetGameServerConfig(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.gaming.v1.GameServerConfigsService", "GetGameServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetGameServerConfig(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -71,6 +85,8 @@ future<Status> GameServerConfigsServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

@@ -17,11 +17,14 @@
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
 #include "google/cloud/cloudbuild/internal/cloud_build_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace cloudbuild_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudBuildTracingStub::CloudBuildTracingStub(
     std::shared_ptr<CloudBuildStub> child)
@@ -39,21 +42,35 @@ StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildTracingStub::GetBuild(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
-  return child_->GetBuild(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "GetBuild");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetBuild(context, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 CloudBuildTracingStub::ListBuilds(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
-  return child_->ListBuilds(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "ListBuilds");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBuilds(context, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildTracingStub::CancelBuild(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
-  return child_->CancelBuild(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "CancelBuild");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CancelBuild(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -77,28 +94,48 @@ CloudBuildTracingStub::CreateBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
-  return child_->CreateBuildTrigger(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "CreateBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateBuildTrigger(context, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildTracingStub::GetBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
-  return child_->GetBuildTrigger(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "GetBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetBuildTrigger(context, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 CloudBuildTracingStub::ListBuildTriggers(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
-  return child_->ListBuildTriggers(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "ListBuildTriggers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBuildTriggers(context, request));
 }
 
 Status CloudBuildTracingStub::DeleteBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
-  return child_->DeleteBuildTrigger(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "DeleteBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBuildTrigger(context, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -106,7 +143,12 @@ CloudBuildTracingStub::UpdateBuildTrigger(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
-  return child_->UpdateBuildTrigger(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "UpdateBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBuildTrigger(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -122,7 +164,12 @@ CloudBuildTracingStub::ReceiveTriggerWebhook(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
-  return child_->ReceiveTriggerWebhook(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "ReceiveTriggerWebhook");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ReceiveTriggerWebhook(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -137,7 +184,12 @@ StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildTracingStub::GetWorkerPool(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
-  return child_->GetWorkerPool(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "GetWorkerPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetWorkerPool(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -160,7 +212,12 @@ StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
 CloudBuildTracingStub::ListWorkerPools(
     grpc::ClientContext& context,
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
-  return child_->ListWorkerPools(context, request);
+  auto span = internal::MakeSpanGrpc("google.devtools.cloudbuild.v1.CloudBuild",
+                                     "ListWorkerPools");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListWorkerPools(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -177,6 +234,8 @@ future<Status> CloudBuildTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal

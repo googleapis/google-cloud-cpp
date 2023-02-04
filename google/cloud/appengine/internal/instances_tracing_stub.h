@@ -27,6 +27,8 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class InstancesTracingStub : public InstancesStub {
  public:
   ~InstancesTracingStub() override = default;
@@ -64,6 +66,8 @@ class InstancesTracingStub : public InstancesStub {
  private:
   std::shared_ptr<InstancesStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

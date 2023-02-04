@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/v2/conversation_dataset.proto
 
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ConversationDatasetsTracingStub::ConversationDatasetsTracingStub(
     std::shared_ptr<ConversationDatasetsStub> child)
@@ -42,7 +45,13 @@ ConversationDatasetsTracingStub::GetConversationDataset(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
-  return child_->GetConversationDataset(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationDatasets",
+                             "GetConversationDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetConversationDataset(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
@@ -50,7 +59,13 @@ ConversationDatasetsTracingStub::ListConversationDatasets(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
-  return child_->ListConversationDatasets(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationDatasets",
+                             "ListConversationDatasets");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListConversationDatasets(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -86,6 +101,8 @@ future<Status> ConversationDatasetsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

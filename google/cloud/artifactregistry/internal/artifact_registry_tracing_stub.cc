@@ -17,11 +17,14 @@
 // source: google/devtools/artifactregistry/v1/service.proto
 
 #include "google/cloud/artifactregistry/internal/artifact_registry_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace artifactregistry_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ArtifactRegistryTracingStub::ArtifactRegistryTracingStub(
     std::shared_ptr<ArtifactRegistryStub> child)
@@ -32,7 +35,13 @@ ArtifactRegistryTracingStub::ListDockerImages(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
         request) {
-  return child_->ListDockerImages(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "ListDockerImages");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDockerImages(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
@@ -40,7 +49,12 @@ ArtifactRegistryTracingStub::GetDockerImage(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetDockerImageRequest const&
         request) {
-  return child_->GetDockerImage(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetDockerImage");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDockerImage(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -66,7 +80,13 @@ ArtifactRegistryTracingStub::ListRepositories(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
         request) {
-  return child_->ListRepositories(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "ListRepositories");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListRepositories(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -74,7 +94,12 @@ ArtifactRegistryTracingStub::GetRepository(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetRepositoryRequest const&
         request) {
-  return child_->GetRepository(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetRepository(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -91,7 +116,13 @@ ArtifactRegistryTracingStub::UpdateRepository(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
         request) {
-  return child_->UpdateRepository(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "UpdateRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateRepository(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,14 +139,24 @@ ArtifactRegistryTracingStub::ListPackages(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListPackagesRequest const&
         request) {
-  return child_->ListPackages(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ListPackages");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListPackages(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryTracingStub::GetPackage(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
-  return child_->GetPackage(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetPackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetPackage(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,14 +173,24 @@ ArtifactRegistryTracingStub::ListVersions(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListVersionsRequest const&
         request) {
-  return child_->ListVersions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ListVersions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListVersions(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryTracingStub::GetVersion(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
-  return child_->GetVersion(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetVersion(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -155,67 +206,111 @@ StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 ArtifactRegistryTracingStub::ListFiles(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
-  return child_->ListFiles(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ListFiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListFiles(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryTracingStub::GetFile(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetFileRequest const& request) {
-  return child_->GetFile(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetFile(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
 ArtifactRegistryTracingStub::ListTags(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
-  return child_->ListTags(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "ListTags");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListTags(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryTracingStub::GetTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetTagRequest const& request) {
-  return child_->GetTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetTag(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryTracingStub::CreateTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
-  return child_->CreateTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "CreateTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->CreateTag(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryTracingStub::UpdateTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
-  return child_->UpdateTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "UpdateTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->UpdateTag(context, request));
 }
 
 Status ArtifactRegistryTracingStub::DeleteTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
-  return child_->DeleteTag(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeleteTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->DeleteTag(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> ArtifactRegistryTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> ArtifactRegistryTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ArtifactRegistryTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
@@ -223,7 +318,13 @@ ArtifactRegistryTracingStub::GetProjectSettings(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
         request) {
-  return child_->GetProjectSettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "GetProjectSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetProjectSettings(context, request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
@@ -231,7 +332,13 @@ ArtifactRegistryTracingStub::UpdateProjectSettings(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
         request) {
-  return child_->UpdateProjectSettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.artifactregistry.v1.ArtifactRegistry",
+      "UpdateProjectSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateProjectSettings(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -248,6 +355,8 @@ future<Status> ArtifactRegistryTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal

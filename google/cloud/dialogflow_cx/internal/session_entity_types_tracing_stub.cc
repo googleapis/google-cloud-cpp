@@ -17,11 +17,14 @@
 // source: google/cloud/dialogflow/cx/v3/session_entity_type.proto
 
 #include "google/cloud/dialogflow_cx/internal/session_entity_types_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SessionEntityTypesTracingStub::SessionEntityTypesTracingStub(
     std::shared_ptr<SessionEntityTypesStub> child)
@@ -32,7 +35,13 @@ SessionEntityTypesTracingStub::ListSessionEntityTypes(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
         request) {
-  return child_->ListSessionEntityTypes(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SessionEntityTypes",
+                             "ListSessionEntityTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSessionEntityTypes(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -40,7 +49,13 @@ SessionEntityTypesTracingStub::GetSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
-  return child_->GetSessionEntityType(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SessionEntityTypes",
+                             "GetSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetSessionEntityType(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -48,7 +63,13 @@ SessionEntityTypesTracingStub::CreateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
-  return child_->CreateSessionEntityType(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SessionEntityTypes",
+                             "CreateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateSessionEntityType(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -56,15 +77,29 @@ SessionEntityTypesTracingStub::UpdateSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
-  return child_->UpdateSessionEntityType(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SessionEntityTypes",
+                             "UpdateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSessionEntityType(context, request));
 }
 
 Status SessionEntityTypesTracingStub::DeleteSessionEntityType(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
-  return child_->DeleteSessionEntityType(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.SessionEntityTypes",
+                             "DeleteSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSessionEntityType(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

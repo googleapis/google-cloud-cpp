@@ -27,6 +27,8 @@ namespace cloud {
 namespace asset_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AssetServiceTracingStub : public AssetServiceStub {
  public:
   ~AssetServiceTracingStub() override = default;
@@ -159,6 +161,8 @@ class AssetServiceTracingStub : public AssetServiceStub {
  private:
   std::shared_ptr<AssetServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal

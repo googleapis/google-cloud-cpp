@@ -17,11 +17,14 @@
 // source: google/iam/v2/policy.proto
 
 #include "google/cloud/iam/v2/internal/policies_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace iam_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PoliciesTracingStub::PoliciesTracingStub(std::shared_ptr<PoliciesStub> child)
     : child_(std::move(child)) {}
@@ -30,13 +33,20 @@ StatusOr<google::iam::v2::ListPoliciesResponse>
 PoliciesTracingStub::ListPolicies(
     grpc::ClientContext& context,
     google::iam::v2::ListPoliciesRequest const& request) {
-  return child_->ListPolicies(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "ListPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListPolicies(context, request));
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesTracingStub::GetPolicy(
     grpc::ClientContext& context,
     google::iam::v2::GetPolicyRequest const& request) {
-  return child_->GetPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "GetPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetPolicy(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -77,6 +87,8 @@ future<Status> PoliciesTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_v2_internal

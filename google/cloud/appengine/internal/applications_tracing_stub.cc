@@ -17,11 +17,14 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/applications_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ApplicationsTracingStub::ApplicationsTracingStub(
     std::shared_ptr<ApplicationsStub> child)
@@ -31,7 +34,12 @@ StatusOr<google::appengine::v1::Application>
 ApplicationsTracingStub::GetApplication(
     grpc::ClientContext& context,
     google::appengine::v1::GetApplicationRequest const& request) {
-  return child_->GetApplication(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
+                                     "GetApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetApplication(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -72,6 +80,8 @@ future<Status> ApplicationsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

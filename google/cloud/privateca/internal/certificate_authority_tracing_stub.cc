@@ -17,11 +17,14 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/internal/certificate_authority_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CertificateAuthorityServiceTracingStub::CertificateAuthorityServiceTracingStub(
     std::shared_ptr<CertificateAuthorityServiceStub> child)
@@ -32,7 +35,13 @@ CertificateAuthorityServiceTracingStub::CreateCertificate(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::CreateCertificateRequest const&
         request) {
-  return child_->CreateCertificate(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "CreateCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateCertificate(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -40,7 +49,13 @@ CertificateAuthorityServiceTracingStub::GetCertificate(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::GetCertificateRequest const&
         request) {
-  return child_->GetCertificate(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "GetCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetCertificate(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCertificatesResponse>
@@ -48,7 +63,13 @@ CertificateAuthorityServiceTracingStub::ListCertificates(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::ListCertificatesRequest const&
         request) {
-  return child_->ListCertificates(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "ListCertificates");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListCertificates(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -56,7 +77,13 @@ CertificateAuthorityServiceTracingStub::RevokeCertificate(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::RevokeCertificateRequest const&
         request) {
-  return child_->RevokeCertificate(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "RevokeCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->RevokeCertificate(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -64,7 +91,13 @@ CertificateAuthorityServiceTracingStub::UpdateCertificate(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::UpdateCertificateRequest const&
         request) {
-  return child_->UpdateCertificate(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "UpdateCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateCertificate(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -113,7 +146,13 @@ CertificateAuthorityServiceTracingStub::FetchCertificateAuthorityCsr(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::
         FetchCertificateAuthorityCsrRequest const& request) {
-  return child_->FetchCertificateAuthorityCsr(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "FetchCertificateAuthorityCsr");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->FetchCertificateAuthorityCsr(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -121,7 +160,13 @@ CertificateAuthorityServiceTracingStub::GetCertificateAuthority(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::
         GetCertificateAuthorityRequest const& request) {
-  return child_->GetCertificateAuthority(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "GetCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetCertificateAuthority(context, request));
 }
 
 StatusOr<
@@ -130,7 +175,13 @@ CertificateAuthorityServiceTracingStub::ListCertificateAuthorities(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::
         ListCertificateAuthoritiesRequest const& request) {
-  return child_->ListCertificateAuthorities(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "ListCertificateAuthorities");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->ListCertificateAuthorities(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -185,14 +236,25 @@ StatusOr<google::cloud::security::privateca::v1::CaPool>
 CertificateAuthorityServiceTracingStub::GetCaPool(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
-  return child_->GetCaPool(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "GetCaPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetCaPool(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCaPoolsResponse>
 CertificateAuthorityServiceTracingStub::ListCaPools(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::ListCaPoolsRequest const& request) {
-  return child_->ListCaPools(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "ListCaPools");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListCaPools(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -209,7 +271,13 @@ CertificateAuthorityServiceTracingStub::FetchCaCerts(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::FetchCaCertsRequest const&
         request) {
-  return child_->FetchCaCerts(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "FetchCaCerts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->FetchCaCerts(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -217,7 +285,13 @@ CertificateAuthorityServiceTracingStub::GetCertificateRevocationList(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::
         GetCertificateRevocationListRequest const& request) {
-  return child_->GetCertificateRevocationList(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "GetCertificateRevocationList");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->GetCertificateRevocationList(context, request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::
@@ -226,7 +300,13 @@ CertificateAuthorityServiceTracingStub::ListCertificateRevocationLists(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::
         ListCertificateRevocationListsRequest const& request) {
-  return child_->ListCertificateRevocationLists(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "ListCertificateRevocationLists");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->ListCertificateRevocationLists(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -264,7 +344,13 @@ CertificateAuthorityServiceTracingStub::GetCertificateTemplate(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
         request) {
-  return child_->GetCertificateTemplate(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "GetCertificateTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetCertificateTemplate(context, request));
 }
 
 StatusOr<
@@ -273,7 +359,13 @@ CertificateAuthorityServiceTracingStub::ListCertificateTemplates(
     grpc::ClientContext& context,
     google::cloud::security::privateca::v1::
         ListCertificateTemplatesRequest const& request) {
-  return child_->ListCertificateTemplates(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.security.privateca.v1.CertificateAuthorityService",
+      "ListCertificateTemplates");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListCertificateTemplates(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -300,6 +392,8 @@ future<Status> CertificateAuthorityServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal

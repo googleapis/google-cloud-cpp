@@ -17,11 +17,14 @@
 // source: google/cloud/eventarc/v1/eventarc.proto
 
 #include "google/cloud/eventarc/internal/eventarc_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EventarcTracingStub::EventarcTracingStub(std::shared_ptr<EventarcStub> child)
     : child_(std::move(child)) {}
@@ -29,14 +32,24 @@ EventarcTracingStub::EventarcTracingStub(std::shared_ptr<EventarcStub> child)
 StatusOr<google::cloud::eventarc::v1::Trigger> EventarcTracingStub::GetTrigger(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetTriggerRequest const& request) {
-  return child_->GetTrigger(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc", "GetTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetTrigger(context, request));
 }
 
 StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>
 EventarcTracingStub::ListTriggers(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListTriggersRequest const& request) {
-  return child_->ListTriggers(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "ListTriggers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListTriggers(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -66,14 +79,24 @@ EventarcTracingStub::AsyncDeleteTrigger(
 StatusOr<google::cloud::eventarc::v1::Channel> EventarcTracingStub::GetChannel(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetChannelRequest const& request) {
-  return child_->GetChannel(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc", "GetChannel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetChannel(context, request));
 }
 
 StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
 EventarcTracingStub::ListChannels(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListChannelsRequest const& request) {
-  return child_->ListChannels(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "ListChannels");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListChannels(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -104,28 +127,48 @@ StatusOr<google::cloud::eventarc::v1::Provider>
 EventarcTracingStub::GetProvider(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetProviderRequest const& request) {
-  return child_->GetProvider(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "GetProvider");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetProvider(context, request));
 }
 
 StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
 EventarcTracingStub::ListProviders(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListProvidersRequest const& request) {
-  return child_->ListProviders(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "ListProviders");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListProviders(context, request));
 }
 
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcTracingStub::GetChannelConnection(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
-  return child_->GetChannelConnection(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "GetChannelConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetChannelConnection(context, request));
 }
 
 StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
 EventarcTracingStub::ListChannelConnections(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
-  return child_->ListChannelConnections(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "ListChannelConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListChannelConnections(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -150,7 +193,12 @@ StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcTracingStub::GetGoogleChannelConfig(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
-  return child_->GetGoogleChannelConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "GetGoogleChannelConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetGoogleChannelConfig(context, request));
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
@@ -158,7 +206,12 @@ EventarcTracingStub::UpdateGoogleChannelConfig(
     grpc::ClientContext& context,
     google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
         request) {
-  return child_->UpdateGoogleChannelConfig(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "UpdateGoogleChannelConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateGoogleChannelConfig(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -175,6 +228,8 @@ future<Status> EventarcTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CloudBillingTracingStub : public CloudBillingStub {
  public:
   ~CloudBillingTracingStub() override = default;
@@ -87,6 +89,8 @@ class CloudBillingTracingStub : public CloudBillingStub {
  private:
   std::shared_ptr<CloudBillingStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal

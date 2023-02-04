@@ -27,6 +27,8 @@ namespace cloud {
 namespace vmmigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class VmMigrationTracingStub : public VmMigrationStub {
  public:
   ~VmMigrationTracingStub() override = default;
@@ -311,6 +313,8 @@ class VmMigrationTracingStub : public VmMigrationStub {
  private:
   std::shared_ptr<VmMigrationStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal

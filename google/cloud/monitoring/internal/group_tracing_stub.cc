@@ -17,11 +17,14 @@
 // source: google/monitoring/v3/group_service.proto
 
 #include "google/cloud/monitoring/internal/group_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GroupServiceTracingStub::GroupServiceTracingStub(
     std::shared_ptr<GroupServiceStub> child)
@@ -31,39 +34,70 @@ StatusOr<google::monitoring::v3::ListGroupsResponse>
 GroupServiceTracingStub::ListGroups(
     grpc::ClientContext& context,
     google::monitoring::v3::ListGroupsRequest const& request) {
-  return child_->ListGroups(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.monitoring.v3.GroupService", "ListGroups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListGroups(context, request));
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceTracingStub::GetGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::GetGroupRequest const& request) {
-  return child_->GetGroup(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.monitoring.v3.GroupService", "GetGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetGroup(context, request));
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceTracingStub::CreateGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateGroupRequest const& request) {
-  return child_->CreateGroup(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
+                                     "CreateGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateGroup(context, request));
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceTracingStub::UpdateGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateGroupRequest const& request) {
-  return child_->UpdateGroup(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
+                                     "UpdateGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateGroup(context, request));
 }
 
 Status GroupServiceTracingStub::DeleteGroup(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteGroupRequest const& request) {
-  return child_->DeleteGroup(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
+                                     "DeleteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteGroup(context, request));
 }
 
 StatusOr<google::monitoring::v3::ListGroupMembersResponse>
 GroupServiceTracingStub::ListGroupMembers(
     grpc::ClientContext& context,
     google::monitoring::v3::ListGroupMembersRequest const& request) {
-  return child_->ListGroupMembers(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.GroupService",
+                                     "ListGroupMembers");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListGroupMembers(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

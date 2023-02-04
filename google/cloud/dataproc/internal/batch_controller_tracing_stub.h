@@ -27,6 +27,8 @@ namespace cloud {
 namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class BatchControllerTracingStub : public BatchControllerStub {
  public:
   ~BatchControllerTracingStub() override = default;
@@ -64,6 +66,8 @@ class BatchControllerTracingStub : public BatchControllerStub {
  private:
   std::shared_ptr<BatchControllerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
