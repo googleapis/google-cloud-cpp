@@ -81,7 +81,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class uses `StatusOr<T>` to report errors. When an operation fails to
  * perform its work the returned `StatusOr<T>` contains the error details. If
  * the `ok()` member function in the `StatusOr<T>` returns `true` then it
- * contains the expected result. More information, see the
+ * contains the expected result. For more information, see the
  * [Error Handling Guide](#spanner-error-handling).
  *
  * @code
@@ -284,7 +284,6 @@ class Client {
    *
    * @param partition A `ReadPartition`, obtained by calling `PartitionRead`.
    * @param opts `Options` used for this request.
-   *
    */
   RowStream Read(ReadPartition const& partition, Options opts = {});
 

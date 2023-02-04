@@ -102,7 +102,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @endcode
  *
  * @par Example
- * Using with a null value.
+ * Using a null value.
  * @code
  * spanner::Value v = spanner::MakeNullValue<std::int64_t>();
  * StatusOr<std::int64_t> i = v.get<std::int64_t>();
