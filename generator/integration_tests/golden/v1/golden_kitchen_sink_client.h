@@ -90,6 +90,24 @@ class GoldenKitchenSinkClient {
   ///  are requested, in the following format:
   ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
   ///  character is required; replacing it with a project ID is invalid.
+  /// @param not_used_anymore  Deprecated field for testing method signatures.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return @googleapis_link{google::test::admin::database::v1::GenerateAccessTokenResponse,generator/integration_tests/test.proto#L999}
+  ///
+  /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L959}
+  /// [google.test.admin.database.v1.GenerateAccessTokenResponse]: @googleapis_reference_link{generator/integration_tests/test.proto#L999}
+  ///
+  StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
+  GenerateAccessToken(std::string const& name, std::string const& not_used_anymore, Options opts = {});
+
+  ///
+  /// Generates an OAuth 2.0 access token for a service account.
+  ///
+  /// @param name  Required. The resource name of the service account for which the credentials
+  ///  are requested, in the following format:
+  ///  `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard
+  ///  character is required; replacing it with a project ID is invalid.
   /// @param delegates  The sequence of service accounts in a delegation chain. Each service
   ///  account must be granted the `roles/iam.serviceAccountTokenCreator` role
   ///  on its next service account in the chain. The last service account in the

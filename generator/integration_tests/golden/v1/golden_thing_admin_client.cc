@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/golden_thing_admin_client.h"
 #include <memory>
 #include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_client.h"
 #include <memory>
 
@@ -30,6 +31,15 @@ GoldenKitchenSinkClient::GoldenKitchenSinkClient(
       options_(internal::MergeOptions(std::move(opts),
       connection_->options())) {}
 GoldenKitchenSinkClient::~GoldenKitchenSinkClient() = default;
+
+StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
+GoldenKitchenSinkClient::GenerateAccessToken(std::string const& name, std::string const& not_used_anymore, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  request.set_name(name);
+  request.set_not_used_anymore(not_used_anymore);
+  return connection_->GenerateAccessToken(request);
+}
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkClient::GenerateAccessToken(std::string const& name, std::vector<std::string> const& delegates, std::vector<std::string> const& scope, google::protobuf::Duration const& lifetime, Options opts) {
