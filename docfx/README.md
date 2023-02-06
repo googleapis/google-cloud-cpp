@@ -6,4 +6,4 @@ when hosted at cloud.google.com.
 
 This is not a general-purpose tool. It is not expected to work for other C++
 projects. This tool is only used as part of the documentation pipeline for
-`google-cloud-cpp`. As such, it is only tested in a limited number of platforms.
+`google-cloud-cpp`. As such, it is only tested on a limited number of platforms.

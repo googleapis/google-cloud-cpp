@@ -29,6 +29,7 @@ std::string Usage(std::string const& cmd) {
 }  // namespace
 
 Config ParseArguments(std::vector<std::string> const& args) {
+  if (args.empty()) throw std::runtime_error(Usage("program-name-missing"));
   if (args.size() == 2 && args[1] == "--help") {
     std::cout << Usage(args[0]) << "\n";
     std::exit(0);

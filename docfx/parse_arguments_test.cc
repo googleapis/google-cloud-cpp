@@ -33,10 +33,20 @@ TEST(ParseArguments, Help) {
       "");
 }
 
+TEST(ParseArguments, NoCommand) {
+  EXPECT_THROW(
+      try { ParseArguments({}); } catch (std::exception const& ex) {
+        EXPECT_STREQ(ex.what(),
+                     "Usage: program-name-missing <infile> <library>");
+        throw;
+      },
+      std::runtime_error);
+}
+
 TEST(ParseArguments, NoArguments) {
   EXPECT_THROW(
       try { ParseArguments({"cmd"}); } catch (std::exception const& ex) {
-        EXPECT_EQ(ex.what(), std::string_view("Usage: cmd <infile> <library>"));
+        EXPECT_STREQ(ex.what(), "Usage: cmd <infile> <library>");
         throw;
       },
       std::runtime_error);
@@ -47,7 +57,7 @@ TEST(ParseArguments, TooFewArguments) {
       try {
         ParseArguments({"cmd", "1"});
       } catch (std::exception const& ex) {
-        EXPECT_EQ(ex.what(), std::string_view("Usage: cmd <infile> <library>"));
+        EXPECT_STREQ(ex.what(), "Usage: cmd <infile> <library>");
         throw;
       },
       std::runtime_error);
@@ -58,7 +68,7 @@ TEST(ParseArguments, TooManyArguments) {
       try {
         ParseArguments({"cmd", "1", "2", "3"});
       } catch (std::exception const& ex) {
-        EXPECT_EQ(ex.what(), std::string_view("Usage: cmd <infile> <library>"));
+        EXPECT_STREQ(ex.what(), "Usage: cmd <infile> <library>");
         throw;
       },
       std::runtime_error);
