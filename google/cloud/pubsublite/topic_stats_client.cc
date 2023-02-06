@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsublite/topic_stats_client.h"
 #include <memory>
 

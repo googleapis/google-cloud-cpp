@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/storagetransfer/v1/transfer.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/storagetransfer/storage_transfer_client.h"
 #include <memory>
 

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/servicedirectory/lookup_client.h"
 #include <memory>
 

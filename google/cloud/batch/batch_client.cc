@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/batch/v1/batch.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/batch/batch_client.h"
 #include <memory>
 

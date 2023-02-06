@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/datastream/datastream_client.h"
 #include <memory>
 

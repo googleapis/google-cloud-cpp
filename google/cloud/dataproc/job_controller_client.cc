@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataproc/v1/jobs.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dataproc/job_controller_client.h"
 #include <memory>
 

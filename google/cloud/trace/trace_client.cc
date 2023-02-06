@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudtrace/v2/tracing.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/trace/trace_client.h"
 #include <memory>
 

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/talent/v4/job_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/talent/job_client.h"
 #include <memory>
 

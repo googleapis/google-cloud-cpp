@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataproc/v1/clusters.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dataproc/cluster_controller_client.h"
 #include <memory>
 

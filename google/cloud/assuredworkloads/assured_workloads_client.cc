@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/assuredworkloads/assured_workloads_client.h"
 #include <memory>
 

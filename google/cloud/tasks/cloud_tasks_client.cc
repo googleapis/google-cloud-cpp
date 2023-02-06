@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/tasks/cloud_tasks_client.h"
 #include "google/cloud/tasks/cloud_tasks_options.h"
 #include <memory>

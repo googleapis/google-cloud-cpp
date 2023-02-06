@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/credentials/v1/iamcredentials.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/iam/iam_credentials_client.h"
 #include <memory>
 

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/workflows/executions/v1/executions.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/workflows/executions_client.h"
 #include <memory>
 

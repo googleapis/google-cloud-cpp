@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/bigtable/admin/v2/bigtable_table_admin.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
 #include <memory>

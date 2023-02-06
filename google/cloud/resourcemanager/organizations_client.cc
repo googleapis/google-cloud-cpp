@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/resourcemanager/organizations_client.h"
 #include <memory>
 

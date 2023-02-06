@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/environment.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dialogflow_es/environments_client.h"
 #include <memory>
 

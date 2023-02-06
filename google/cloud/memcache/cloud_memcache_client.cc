@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/memcache/v1/cloud_memcache.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/memcache/cloud_memcache_client.h"
 #include <memory>
 

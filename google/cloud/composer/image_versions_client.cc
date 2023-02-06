@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/composer/image_versions_client.h"
 #include <memory>
 

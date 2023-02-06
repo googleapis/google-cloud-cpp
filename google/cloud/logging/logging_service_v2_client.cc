@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/logging/logging_service_v2_client.h"
 #include <memory>
 

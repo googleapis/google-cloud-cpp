@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/pubsublite/v1/admin.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsublite/admin_client.h"
 #include <memory>
 

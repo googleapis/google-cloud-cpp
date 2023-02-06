@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/clouddebugger/v2/controller.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/debugger/controller2_client.h"
 #include <memory>
 

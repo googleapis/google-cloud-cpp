@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/api/servicecontrol/v1/quota_controller.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/servicecontrol/quota_controller_client.h"
 #include <memory>
 

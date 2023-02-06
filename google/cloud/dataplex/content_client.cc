@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataplex/v1/content.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dataplex/content_client.h"
 #include <memory>
 

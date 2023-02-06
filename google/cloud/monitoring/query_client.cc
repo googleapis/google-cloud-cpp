@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/query_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/monitoring/query_client.h"
 #include <memory>
 

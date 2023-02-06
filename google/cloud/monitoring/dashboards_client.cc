@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/monitoring/dashboards_client.h"
 #include <memory>
 

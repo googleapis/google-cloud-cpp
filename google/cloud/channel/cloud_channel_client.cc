@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/channel/cloud_channel_client.h"
 #include <memory>
 

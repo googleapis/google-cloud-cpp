@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/monitoring/metrics_scopes_client.h"
 #include <memory>
 

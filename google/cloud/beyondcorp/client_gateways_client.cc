@@ -17,6 +17,7 @@
 // source:
 // google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/beyondcorp/client_gateways_client.h"
 #include <memory>
 

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/eventarc/publisher_client.h"
 #include <memory>
 

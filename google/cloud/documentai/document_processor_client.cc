@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/documentai/document_processor_client.h"
 #include <memory>
 

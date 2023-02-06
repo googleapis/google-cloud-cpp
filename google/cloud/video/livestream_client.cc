@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/video/livestream/v1/service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/video/livestream_client.h"
 #include <memory>
 

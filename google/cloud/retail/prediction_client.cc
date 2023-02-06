@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/retail/v2/prediction_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/retail/prediction_client.h"
 #include <memory>
 

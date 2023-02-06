@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/filestore/cloud_filestore_manager_client.h"
 #include <memory>
 

@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/connection/v1/connection.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/connection_client.h"
 #include <memory>
 

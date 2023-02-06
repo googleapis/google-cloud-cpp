@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/servicemanagement/service_manager_client.h"
 #include <memory>
 

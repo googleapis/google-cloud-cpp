@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/videointelligence/video_intelligence_client.h"
 #include <memory>
 

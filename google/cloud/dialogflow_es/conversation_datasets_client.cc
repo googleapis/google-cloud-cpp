@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/v2/conversation_dataset.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dialogflow_es/conversation_datasets_client.h"
 #include <memory>
 

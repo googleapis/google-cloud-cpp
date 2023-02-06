@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/policytroubleshooter/iam_checker_client.h"
 #include <memory>
 

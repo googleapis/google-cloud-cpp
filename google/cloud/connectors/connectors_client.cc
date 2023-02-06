@@ -16,6 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/connectors/connectors_client.h"
 #include <memory>
 
