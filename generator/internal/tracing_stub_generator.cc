@@ -88,7 +88,8 @@ Status TracingStubGenerator::GenerateCc() {
   // includes
   CcPrint("\n");
   CcLocalIncludes({vars("tracing_stub_header_path"),
-                   "google/cloud/internal/grpc_opentelemetry.h"});
+                   "google/cloud/internal/grpc_opentelemetry.h",
+                   "google/cloud/options.h"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
