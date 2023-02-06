@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {

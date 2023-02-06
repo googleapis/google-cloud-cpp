@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicemanagement/internal/service_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {

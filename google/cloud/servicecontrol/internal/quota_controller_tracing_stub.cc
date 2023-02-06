@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicecontrol/internal/quota_controller_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
