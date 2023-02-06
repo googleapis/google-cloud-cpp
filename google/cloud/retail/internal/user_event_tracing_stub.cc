@@ -17,11 +17,15 @@
 // source: google/cloud/retail/v2/user_event_service.proto
 
 #include "google/cloud/retail/internal/user_event_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 UserEventServiceTracingStub::UserEventServiceTracingStub(
     std::shared_ptr<UserEventServiceStub> child)
@@ -31,13 +35,23 @@ StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceTracingStub::WriteUserEvent(
     grpc::ClientContext& context,
     google::cloud::retail::v2::WriteUserEventRequest const& request) {
-  return child_->WriteUserEvent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.UserEventService",
+                                     "WriteUserEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->WriteUserEvent(context, request));
 }
 
 StatusOr<google::api::HttpBody> UserEventServiceTracingStub::CollectUserEvent(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CollectUserEventRequest const& request) {
-  return child_->CollectUserEvent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.UserEventService",
+                                     "CollectUserEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CollectUserEvent(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -78,6 +92,8 @@ future<Status> UserEventServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal

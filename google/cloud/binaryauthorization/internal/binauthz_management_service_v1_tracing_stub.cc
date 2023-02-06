@@ -17,11 +17,15 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 BinauthzManagementServiceV1TracingStub::BinauthzManagementServiceV1TracingStub(
     std::shared_ptr<BinauthzManagementServiceV1Stub> child)
@@ -31,7 +35,12 @@ StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1TracingStub::GetPolicy(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
-  return child_->GetPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "GetPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetPolicy(context, request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
@@ -39,7 +48,13 @@ BinauthzManagementServiceV1TracingStub::UpdatePolicy(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
         request) {
-  return child_->UpdatePolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "UpdatePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdatePolicy(context, request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
@@ -47,14 +62,26 @@ BinauthzManagementServiceV1TracingStub::CreateAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
         request) {
-  return child_->CreateAttestor(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "CreateAttestor");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateAttestor(context, request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1TracingStub::GetAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
-  return child_->GetAttestor(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "GetAttestor");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAttestor(context, request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
@@ -62,7 +89,13 @@ BinauthzManagementServiceV1TracingStub::UpdateAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
         request) {
-  return child_->UpdateAttestor(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "UpdateAttestor");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateAttestor(context, request));
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse>
@@ -70,15 +103,29 @@ BinauthzManagementServiceV1TracingStub::ListAttestors(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
         request) {
-  return child_->ListAttestors(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "ListAttestors");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAttestors(context, request));
 }
 
 Status BinauthzManagementServiceV1TracingStub::DeleteAttestor(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
         request) {
-  return child_->DeleteAttestor(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.BinauthzManagementServiceV1",
+      "DeleteAttestor");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAttestor(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

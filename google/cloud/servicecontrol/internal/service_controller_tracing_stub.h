@@ -27,6 +27,8 @@ namespace cloud {
 namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ServiceControllerTracingStub : public ServiceControllerStub {
  public:
   ~ServiceControllerTracingStub() override = default;
@@ -45,6 +47,8 @@ class ServiceControllerTracingStub : public ServiceControllerStub {
  private:
   std::shared_ptr<ServiceControllerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal

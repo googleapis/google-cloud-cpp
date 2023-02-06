@@ -27,6 +27,8 @@ namespace cloud {
 namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
  public:
   ~ManagedNotebookServiceTracingStub() override = default;
@@ -121,6 +123,8 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
  private:
   std::shared_ptr<ManagedNotebookServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal

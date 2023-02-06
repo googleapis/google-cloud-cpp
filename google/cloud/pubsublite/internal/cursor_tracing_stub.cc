@@ -17,11 +17,15 @@
 // source: google/cloud/pubsublite/v1/cursor.proto
 
 #include "google/cloud/pubsublite/internal/cursor_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CursorServiceTracingStub::CursorServiceTracingStub(
     std::shared_ptr<CursorServiceStub> child)
@@ -40,15 +44,27 @@ StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 CursorServiceTracingStub::CommitCursor(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-  return child_->CommitCursor(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
+                                     "CommitCursor");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CommitCursor(context, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 CursorServiceTracingStub::ListPartitionCursors(
     grpc::ClientContext& context,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
-  return child_->ListPartitionCursors(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
+                                     "ListPartitionCursors");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListPartitionCursors(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

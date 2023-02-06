@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/v2/agent.proto
 
 #include "google/cloud/dialogflow_es/internal/agents_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AgentsTracingStub::AgentsTracingStub(std::shared_ptr<AgentsStub> child)
     : child_(std::move(child)) {}
@@ -29,26 +33,44 @@ AgentsTracingStub::AgentsTracingStub(std::shared_ptr<AgentsStub> child)
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsTracingStub::GetAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetAgentRequest const& request) {
-  return child_->GetAgent(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Agents", "GetAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetAgent(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsTracingStub::SetAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SetAgentRequest const& request) {
-  return child_->SetAgent(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Agents", "SetAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->SetAgent(context, request));
 }
 
 Status AgentsTracingStub::DeleteAgent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
-  return child_->DeleteAgent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Agents",
+                                     "DeleteAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAgent(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse>
 AgentsTracingStub::SearchAgents(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::SearchAgentsRequest const& request) {
-  return child_->SearchAgents(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Agents",
+                                     "SearchAgents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SearchAgents(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -87,7 +109,12 @@ StatusOr<google::cloud::dialogflow::v2::ValidationResult>
 AgentsTracingStub::GetValidationResult(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
-  return child_->GetValidationResult(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Agents",
+                                     "GetValidationResult");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetValidationResult(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -104,6 +131,8 @@ future<Status> AgentsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

@@ -17,11 +17,15 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/internal/iam_checker_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace policytroubleshooter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IamCheckerTracingStub::IamCheckerTracingStub(
     std::shared_ptr<IamCheckerStub> child)
@@ -32,8 +36,16 @@ IamCheckerTracingStub::TroubleshootIamPolicy(
     grpc::ClientContext& context,
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
-  return child_->TroubleshootIamPolicy(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.policytroubleshooter.v1.IamChecker",
+                             "TroubleshootIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TroubleshootIamPolicy(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_internal

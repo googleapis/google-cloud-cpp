@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/cx/v3/environment.proto
 
 #include "google/cloud/dialogflow_cx/internal/environments_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EnvironmentsTracingStub::EnvironmentsTracingStub(
     std::shared_ptr<EnvironmentsStub> child)
@@ -31,14 +35,24 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 EnvironmentsTracingStub::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
-  return child_->ListEnvironments(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "ListEnvironments");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEnvironments(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsTracingStub::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEnvironment(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -63,7 +77,12 @@ Status EnvironmentsTracingStub::DeleteEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
-  return child_->DeleteEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "DeleteEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEnvironment(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
@@ -71,7 +90,12 @@ EnvironmentsTracingStub::LookupEnvironmentHistory(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
         request) {
-  return child_->LookupEnvironmentHistory(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.Environments", "LookupEnvironmentHistory");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->LookupEnvironmentHistory(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -88,7 +112,13 @@ EnvironmentsTracingStub::ListContinuousTestResults(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
         request) {
-  return child_->ListContinuousTestResults(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Environments",
+                             "ListContinuousTestResults");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListContinuousTestResults(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -113,6 +143,8 @@ future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

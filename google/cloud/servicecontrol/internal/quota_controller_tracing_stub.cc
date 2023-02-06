@@ -17,11 +17,15 @@
 // source: google/api/servicecontrol/v1/quota_controller.proto
 
 #include "google/cloud/servicecontrol/internal/quota_controller_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 QuotaControllerTracingStub::QuotaControllerTracingStub(
     std::shared_ptr<QuotaControllerStub> child)
@@ -31,8 +35,15 @@ StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerTracingStub::AllocateQuota(
     grpc::ClientContext& context,
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  return child_->AllocateQuota(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.api.servicecontrol.v1.QuotaController", "AllocateQuota");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->AllocateQuota(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal

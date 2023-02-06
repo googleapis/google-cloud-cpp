@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/cx/v3/test_case.proto
 
 #include "google/cloud/dialogflow_cx/internal/test_cases_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TestCasesTracingStub::TestCasesTracingStub(std::shared_ptr<TestCasesStub> child)
     : child_(std::move(child)) {}
@@ -30,35 +34,60 @@ StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesTracingStub::ListTestCases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
-  return child_->ListTestCases(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "ListTestCases");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListTestCases(context, request));
 }
 
 Status TestCasesTracingStub::BatchDeleteTestCases(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
-  return child_->BatchDeleteTestCases(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "BatchDeleteTestCases");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->BatchDeleteTestCases(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingStub::GetTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
-  return child_->GetTestCase(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "GetTestCase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetTestCase(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingStub::CreateTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
-  return child_->CreateTestCase(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "CreateTestCase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateTestCase(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingStub::UpdateTestCase(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
-  return child_->UpdateTestCase(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "UpdateTestCase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateTestCase(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -83,7 +112,12 @@ TestCasesTracingStub::CalculateCoverage(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
-  return child_->CalculateCoverage(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "CalculateCoverage");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CalculateCoverage(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,7 +141,12 @@ TestCasesTracingStub::ListTestCaseResults(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
-  return child_->ListTestCaseResults(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "ListTestCaseResults");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListTestCaseResults(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
@@ -115,7 +154,12 @@ TestCasesTracingStub::GetTestCaseResult(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
-  return child_->GetTestCaseResult(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
+                                     "GetTestCaseResult");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetTestCaseResult(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,6 +176,8 @@ future<Status> TestCasesTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

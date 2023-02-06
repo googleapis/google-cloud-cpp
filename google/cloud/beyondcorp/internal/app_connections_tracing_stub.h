@@ -28,6 +28,8 @@ namespace cloud {
 namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AppConnectionsServiceTracingStub : public AppConnectionsServiceStub {
  public:
   ~AppConnectionsServiceTracingStub() override = default;
@@ -84,6 +86,8 @@ class AppConnectionsServiceTracingStub : public AppConnectionsServiceStub {
  private:
   std::shared_ptr<AppConnectionsServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace networkconnectivity_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class HubServiceTracingStub : public HubServiceStub {
  public:
   ~HubServiceTracingStub() override = default;
@@ -102,6 +104,8 @@ class HubServiceTracingStub : public HubServiceStub {
  private:
   std::shared_ptr<HubServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_internal

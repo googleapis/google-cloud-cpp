@@ -27,6 +27,8 @@ namespace cloud {
 namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CloudMemcacheTracingStub : public CloudMemcacheStub {
  public:
   ~CloudMemcacheTracingStub() override = default;
@@ -91,6 +93,8 @@ class CloudMemcacheTracingStub : public CloudMemcacheStub {
  private:
   std::shared_ptr<CloudMemcacheStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal

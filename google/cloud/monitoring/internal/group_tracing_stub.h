@@ -27,6 +27,8 @@ namespace cloud {
 namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class GroupServiceTracingStub : public GroupServiceStub {
  public:
   ~GroupServiceTracingStub() override = default;
@@ -60,6 +62,8 @@ class GroupServiceTracingStub : public GroupServiceStub {
  private:
   std::shared_ptr<GroupServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

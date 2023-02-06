@@ -27,6 +27,8 @@ namespace cloud {
 namespace baremetalsolution_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
  public:
   ~BareMetalSolutionTracingStub() override = default;
@@ -159,6 +161,8 @@ class BareMetalSolutionTracingStub : public BareMetalSolutionStub {
  private:
   std::shared_ptr<BareMetalSolutionStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_internal

@@ -17,11 +17,15 @@
 // source: google/iam/credentials/v1/iamcredentials.proto
 
 #include "google/cloud/iam/internal/iam_credentials_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IAMCredentialsTracingStub::IAMCredentialsTracingStub(
     std::shared_ptr<IAMCredentialsStub> child)
@@ -31,29 +35,49 @@ StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsTracingStub::GenerateAccessToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
-  return child_->GenerateAccessToken(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
+                                     "GenerateAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateAccessToken(context, request));
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsTracingStub::GenerateIdToken(
     grpc::ClientContext& context,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-  return child_->GenerateIdToken(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
+                                     "GenerateIdToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateIdToken(context, request));
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsTracingStub::SignBlob(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignBlobRequest const& request) {
-  return child_->SignBlob(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
+                                     "SignBlob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->SignBlob(context, request));
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsTracingStub::SignJwt(
     grpc::ClientContext& context,
     google::iam::credentials::v1::SignJwtRequest const& request) {
-  return child_->SignJwt(context, request);
+  auto span = internal::MakeSpanGrpc("google.iam.credentials.v1.IAMCredentials",
+                                     "SignJwt");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->SignJwt(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

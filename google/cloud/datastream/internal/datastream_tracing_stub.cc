@@ -17,11 +17,15 @@
 // source: google/cloud/datastream/v1/datastream.proto
 
 #include "google/cloud/datastream/internal/datastream_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DatastreamTracingStub::DatastreamTracingStub(
     std::shared_ptr<DatastreamStub> child)
@@ -32,14 +36,24 @@ DatastreamTracingStub::ListConnectionProfiles(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::ListConnectionProfilesRequest const&
         request) {
-  return child_->ListConnectionProfiles(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "ListConnectionProfiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListConnectionProfiles(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::ConnectionProfile>
 DatastreamTracingStub::GetConnectionProfile(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::GetConnectionProfileRequest const& request) {
-  return child_->GetConnectionProfile(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "GetConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetConnectionProfile(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -74,21 +88,35 @@ DatastreamTracingStub::DiscoverConnectionProfile(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
         request) {
-  return child_->DiscoverConnectionProfile(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "DiscoverConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DiscoverConnectionProfile(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamsResponse>
 DatastreamTracingStub::ListStreams(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::ListStreamsRequest const& request) {
-  return child_->ListStreams(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "ListStreams");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListStreams(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::Stream>
 DatastreamTracingStub::GetStream(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::GetStreamRequest const& request) {
-  return child_->GetStream(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "GetStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetStream(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -119,42 +147,72 @@ StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamTracingStub::GetStreamObject(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::GetStreamObjectRequest const& request) {
-  return child_->GetStreamObject(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "GetStreamObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetStreamObject(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamTracingStub::LookupStreamObject(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::LookupStreamObjectRequest const& request) {
-  return child_->LookupStreamObject(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "LookupStreamObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->LookupStreamObject(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamObjectsResponse>
 DatastreamTracingStub::ListStreamObjects(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::ListStreamObjectsRequest const& request) {
-  return child_->ListStreamObjects(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "ListStreamObjects");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListStreamObjects(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
 DatastreamTracingStub::StartBackfillJob(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::StartBackfillJobRequest const& request) {
-  return child_->StartBackfillJob(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "StartBackfillJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->StartBackfillJob(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
 DatastreamTracingStub::StopBackfillJob(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::StopBackfillJobRequest const& request) {
-  return child_->StopBackfillJob(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "StopBackfillJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->StopBackfillJob(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::FetchStaticIpsResponse>
 DatastreamTracingStub::FetchStaticIps(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::FetchStaticIpsRequest const& request) {
-  return child_->FetchStaticIps(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "FetchStaticIps");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->FetchStaticIps(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -170,7 +228,12 @@ StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamTracingStub::GetPrivateConnection(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::GetPrivateConnectionRequest const& request) {
-  return child_->GetPrivateConnection(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "GetPrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetPrivateConnection(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::ListPrivateConnectionsResponse>
@@ -178,7 +241,12 @@ DatastreamTracingStub::ListPrivateConnections(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::ListPrivateConnectionsRequest const&
         request) {
-  return child_->ListPrivateConnections(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "ListPrivateConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListPrivateConnections(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -201,14 +269,23 @@ DatastreamTracingStub::AsyncCreateRoute(
 StatusOr<google::cloud::datastream::v1::Route> DatastreamTracingStub::GetRoute(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::GetRouteRequest const& request) {
-  return child_->GetRoute(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "GetRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetRoute(context, request));
 }
 
 StatusOr<google::cloud::datastream::v1::ListRoutesResponse>
 DatastreamTracingStub::ListRoutes(
     grpc::ClientContext& context,
     google::cloud::datastream::v1::ListRoutesRequest const& request) {
-  return child_->ListRoutes(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.datastream.v1.Datastream",
+                                     "ListRoutes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListRoutes(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -233,6 +310,8 @@ future<Status> DatastreamTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal

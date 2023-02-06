@@ -17,11 +17,15 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/internal/vpc_access_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 VpcAccessServiceTracingStub::VpcAccessServiceTracingStub(
     std::shared_ptr<VpcAccessServiceStub> child)
@@ -39,14 +43,24 @@ StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceTracingStub::GetConnector(
     grpc::ClientContext& context,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-  return child_->GetConnector(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vpcaccess.v1.VpcAccessService", "GetConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetConnector(context, request));
 }
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 VpcAccessServiceTracingStub::ListConnectors(
     grpc::ClientContext& context,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
-  return child_->ListConnectors(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.vpcaccess.v1.VpcAccessService", "ListConnectors");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListConnectors(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -71,6 +85,8 @@ future<Status> VpcAccessServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal

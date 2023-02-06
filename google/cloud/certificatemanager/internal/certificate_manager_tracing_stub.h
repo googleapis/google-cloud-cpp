@@ -27,6 +27,8 @@ namespace cloud {
 namespace certificatemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CertificateManagerTracingStub : public CertificateManagerStub {
  public:
   ~CertificateManagerTracingStub() override = default;
@@ -197,6 +199,8 @@ class CertificateManagerTracingStub : public CertificateManagerStub {
  private:
   std::shared_ptr<CertificateManagerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_internal

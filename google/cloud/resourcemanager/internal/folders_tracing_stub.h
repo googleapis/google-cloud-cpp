@@ -27,6 +27,8 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class FoldersTracingStub : public FoldersStub {
  public:
   ~FoldersTracingStub() override = default;
@@ -103,6 +105,8 @@ class FoldersTracingStub : public FoldersStub {
  private:
   std::shared_ptr<FoldersStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal

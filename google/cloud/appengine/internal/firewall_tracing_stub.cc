@@ -17,11 +17,15 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/firewall_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 FirewallTracingStub::FirewallTracingStub(std::shared_ptr<FirewallStub> child)
     : child_(std::move(child)) {}
@@ -30,42 +34,74 @@ StatusOr<google::appengine::v1::ListIngressRulesResponse>
 FirewallTracingStub::ListIngressRules(
     grpc::ClientContext& context,
     google::appengine::v1::ListIngressRulesRequest const& request) {
-  return child_->ListIngressRules(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "ListIngressRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListIngressRules(context, request));
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 FirewallTracingStub::BatchUpdateIngressRules(
     grpc::ClientContext& context,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
-  return child_->BatchUpdateIngressRules(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "BatchUpdateIngressRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->BatchUpdateIngressRules(context, request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallTracingStub::CreateIngressRule(
     grpc::ClientContext& context,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
-  return child_->CreateIngressRule(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "CreateIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateIngressRule(context, request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallTracingStub::GetIngressRule(
     grpc::ClientContext& context,
     google::appengine::v1::GetIngressRuleRequest const& request) {
-  return child_->GetIngressRule(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Firewall", "GetIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIngressRule(context, request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallTracingStub::UpdateIngressRule(
     grpc::ClientContext& context,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
-  return child_->UpdateIngressRule(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "UpdateIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateIngressRule(context, request));
 }
 
 Status FirewallTracingStub::DeleteIngressRule(
     grpc::ClientContext& context,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
-  return child_->DeleteIngressRule(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.Firewall",
+                                     "DeleteIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteIngressRule(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

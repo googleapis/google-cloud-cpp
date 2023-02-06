@@ -27,6 +27,8 @@ namespace cloud {
 namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class MetricsScopesTracingStub : public MetricsScopesStub {
  public:
   ~MetricsScopesTracingStub() override = default;
@@ -70,6 +72,8 @@ class MetricsScopesTracingStub : public MetricsScopesStub {
  private:
   std::shared_ptr<MetricsScopesStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

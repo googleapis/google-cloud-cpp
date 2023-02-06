@@ -27,6 +27,8 @@ namespace cloud {
 namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class EkmServiceTracingStub : public EkmServiceStub {
  public:
   ~EkmServiceTracingStub() override = default;
@@ -55,6 +57,8 @@ class EkmServiceTracingStub : public EkmServiceStub {
  private:
   std::shared_ptr<EkmServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal

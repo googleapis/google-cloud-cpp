@@ -27,6 +27,8 @@ namespace cloud {
 namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class GkeHubTracingStub : public GkeHubStub {
  public:
   ~GkeHubTracingStub() override = default;
@@ -102,6 +104,8 @@ class GkeHubTracingStub : public GkeHubStub {
  private:
   std::shared_ptr<GkeHubStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal

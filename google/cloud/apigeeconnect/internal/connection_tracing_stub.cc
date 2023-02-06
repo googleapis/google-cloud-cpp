@@ -17,11 +17,15 @@
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
 #include "google/cloud/apigeeconnect/internal/connection_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ConnectionServiceTracingStub::ConnectionServiceTracingStub(
     std::shared_ptr<ConnectionServiceStub> child)
@@ -31,8 +35,15 @@ StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 ConnectionServiceTracingStub::ListConnections(
     grpc::ClientContext& context,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
-  return child_->ListConnections(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigeeconnect.v1.ConnectionService", "ListConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListConnections(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal

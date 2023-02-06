@@ -17,11 +17,15 @@
 // source: google/spanner/admin/database/v1/spanner_database_admin.proto
 
 #include "google/cloud/spanner/admin/internal/database_admin_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DatabaseAdminTracingStub::DatabaseAdminTracingStub(
     std::shared_ptr<DatabaseAdminStub> child)
@@ -31,7 +35,12 @@ StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DatabaseAdminTracingStub::ListDatabases(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
-  return child_->ListDatabases(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "ListDatabases");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDatabases(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -47,7 +56,12 @@ StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminTracingStub::GetDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
-  return child_->GetDatabase(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "GetDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDatabase(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -62,7 +76,12 @@ DatabaseAdminTracingStub::AsyncUpdateDatabaseDdl(
 Status DatabaseAdminTracingStub::DropDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  return child_->DropDatabase(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "DropDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DropDatabase(context, request));
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
@@ -70,26 +89,46 @@ DatabaseAdminTracingStub::GetDatabaseDdl(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
-  return child_->GetDatabaseDdl(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "GetDatabaseDdl");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDatabaseDdl(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,27 +151,46 @@ StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminTracingStub::GetBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
-  return child_->GetBackup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetBackup(context, request));
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminTracingStub::UpdateBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
-  return child_->UpdateBackup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "UpdateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBackup(context, request));
 }
 
 Status DatabaseAdminTracingStub::DeleteBackup(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  return child_->DeleteBackup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBackup(context, request));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DatabaseAdminTracingStub::ListBackups(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
-  return child_->ListBackups(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "ListBackups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBackups(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -149,7 +207,13 @@ DatabaseAdminTracingStub::ListDatabaseOperations(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
-  return child_->ListDatabaseOperations(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.admin.database.v1.DatabaseAdmin",
+                             "ListDatabaseOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDatabaseOperations(context, request));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
@@ -157,7 +221,12 @@ DatabaseAdminTracingStub::ListBackupOperations(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
-  return child_->ListBackupOperations(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "ListBackupOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBackupOperations(context, request));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
@@ -165,7 +234,12 @@ DatabaseAdminTracingStub::ListDatabaseRoles(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
-  return child_->ListDatabaseRoles(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "ListDatabaseRoles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDatabaseRoles(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -182,6 +256,8 @@ future<Status> DatabaseAdminTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

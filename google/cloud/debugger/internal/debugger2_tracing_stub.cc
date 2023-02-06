@@ -17,11 +17,15 @@
 // source: google/devtools/clouddebugger/v2/debugger.proto
 
 #include "google/cloud/debugger/internal/debugger2_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 Debugger2TracingStub::Debugger2TracingStub(std::shared_ptr<Debugger2Stub> child)
     : child_(std::move(child)) {}
@@ -30,21 +34,36 @@ StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
 Debugger2TracingStub::SetBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::SetBreakpointRequest const& request) {
-  return child_->SetBreakpoint(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Debugger2", "SetBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetBreakpoint(context, request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
 Debugger2TracingStub::GetBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::GetBreakpointRequest const& request) {
-  return child_->GetBreakpoint(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Debugger2", "GetBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetBreakpoint(context, request));
 }
 
 Status Debugger2TracingStub::DeleteBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
         request) {
-  return child_->DeleteBreakpoint(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Debugger2", "DeleteBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBreakpoint(context, request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::ListBreakpointsResponse>
@@ -52,15 +71,27 @@ Debugger2TracingStub::ListBreakpoints(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
         request) {
-  return child_->ListBreakpoints(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Debugger2", "ListBreakpoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBreakpoints(context, request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
 Debugger2TracingStub::ListDebuggees(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request) {
-  return child_->ListDebuggees(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.devtools.clouddebugger.v2.Debugger2", "ListDebuggees");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDebuggees(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal

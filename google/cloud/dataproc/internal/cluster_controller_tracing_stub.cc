@@ -17,11 +17,15 @@
 // source: google/cloud/dataproc/v1/clusters.proto
 
 #include "google/cloud/dataproc/internal/cluster_controller_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ClusterControllerTracingStub::ClusterControllerTracingStub(
     std::shared_ptr<ClusterControllerStub> child)
@@ -71,14 +75,24 @@ StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerTracingStub::GetCluster(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
-  return child_->GetCluster(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "GetCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetCluster(context, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
 ClusterControllerTracingStub::ListClusters(
     grpc::ClientContext& context,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
-  return child_->ListClusters(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dataproc.v1.ClusterController", "ListClusters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListClusters(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -103,6 +117,8 @@ future<Status> ClusterControllerTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal

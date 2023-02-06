@@ -17,11 +17,15 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/internal/cloud_redis_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudRedisTracingStub::CloudRedisTracingStub(
     std::shared_ptr<CloudRedisStub> child)
@@ -31,20 +35,35 @@ StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 CloudRedisTracingStub::ListInstances(
     grpc::ClientContext& context,
     google::cloud::redis::v1::ListInstancesRequest const& request) {
-  return child_->ListInstances(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "ListInstances");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListInstances(context, request));
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisTracingStub::GetInstance(
     grpc::ClientContext& context,
     google::cloud::redis::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis", "GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetInstance(context, request));
 }
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 CloudRedisTracingStub::GetInstanceAuthString(
     grpc::ClientContext& context,
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
-  return child_->GetInstanceAuthString(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "GetInstanceAuthString");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetInstanceAuthString(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -125,6 +144,8 @@ future<Status> CloudRedisTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_internal

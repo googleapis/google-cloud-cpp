@@ -17,11 +17,15 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/internal/cloud_shell_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace shell_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudShellServiceTracingStub::CloudShellServiceTracingStub(
     std::shared_ptr<CloudShellServiceStub> child)
@@ -31,7 +35,12 @@ StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceTracingStub::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.shell.v1.CloudShellService",
+                                     "GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEnvironment(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -80,6 +89,8 @@ future<Status> CloudShellServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AlertPolicyServiceTracingStub : public AlertPolicyServiceStub {
  public:
   ~AlertPolicyServiceTracingStub() override = default;
@@ -57,6 +59,8 @@ class AlertPolicyServiceTracingStub : public AlertPolicyServiceStub {
  private:
   std::shared_ptr<AlertPolicyServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

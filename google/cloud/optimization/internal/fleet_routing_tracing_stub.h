@@ -27,6 +27,8 @@ namespace cloud {
 namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class FleetRoutingTracingStub : public FleetRoutingStub {
  public:
   ~FleetRoutingTracingStub() override = default;
@@ -57,6 +59,8 @@ class FleetRoutingTracingStub : public FleetRoutingStub {
  private:
   std::shared_ptr<FleetRoutingStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal

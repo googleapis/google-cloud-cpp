@@ -17,11 +17,15 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/internal/validation_helper_v1_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ValidationHelperV1TracingStub::ValidationHelperV1TracingStub(
     std::shared_ptr<ValidationHelperV1Stub> child)
@@ -33,8 +37,16 @@ ValidationHelperV1TracingStub::ValidateAttestationOccurrence(
     grpc::ClientContext& context,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
-  return child_->ValidateAttestationOccurrence(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.binaryauthorization.v1.ValidationHelperV1",
+      "ValidateAttestationOccurrence");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->ValidateAttestationOccurrence(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

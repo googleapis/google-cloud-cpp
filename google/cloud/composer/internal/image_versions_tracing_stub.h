@@ -27,6 +27,8 @@ namespace cloud {
 namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ImageVersionsTracingStub : public ImageVersionsStub {
  public:
   ~ImageVersionsTracingStub() override = default;
@@ -42,6 +44,8 @@ class ImageVersionsTracingStub : public ImageVersionsStub {
  private:
   std::shared_ptr<ImageVersionsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal

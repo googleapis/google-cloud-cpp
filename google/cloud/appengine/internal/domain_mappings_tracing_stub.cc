@@ -17,11 +17,15 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/domain_mappings_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DomainMappingsTracingStub::DomainMappingsTracingStub(
     std::shared_ptr<DomainMappingsStub> child)
@@ -31,14 +35,24 @@ StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsTracingStub::ListDomainMappings(
     grpc::ClientContext& context,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
-  return child_->ListDomainMappings(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "ListDomainMappings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDomainMappings(context, request));
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsTracingStub::GetDomainMapping(
     grpc::ClientContext& context,
     google::appengine::v1::GetDomainMappingRequest const& request) {
-  return child_->GetDomainMapping(context, request);
+  auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
+                                     "GetDomainMapping");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDomainMapping(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -79,6 +93,8 @@ future<Status> DomainMappingsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

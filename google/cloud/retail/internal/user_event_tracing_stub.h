@@ -27,6 +27,8 @@ namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class UserEventServiceTracingStub : public UserEventServiceStub {
  public:
   ~UserEventServiceTracingStub() override = default;
@@ -74,6 +76,8 @@ class UserEventServiceTracingStub : public UserEventServiceStub {
  private:
   std::shared_ptr<UserEventServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal

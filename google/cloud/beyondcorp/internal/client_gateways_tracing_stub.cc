@@ -18,11 +18,15 @@
 // google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto
 
 #include "google/cloud/beyondcorp/internal/client_gateways_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ClientGatewaysServiceTracingStub::ClientGatewaysServiceTracingStub(
     std::shared_ptr<ClientGatewaysServiceStub> child)
@@ -34,7 +38,13 @@ ClientGatewaysServiceTracingStub::ListClientGateways(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientgateways::v1::
         ListClientGatewaysRequest const& request) {
-  return child_->ListClientGateways(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.clientgateways.v1.ClientGatewaysService",
+      "ListClientGateways");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListClientGateways(context, request));
 }
 
 StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
@@ -42,7 +52,13 @@ ClientGatewaysServiceTracingStub::GetClientGateway(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientgateways::v1::
         GetClientGatewayRequest const& request) {
-  return child_->GetClientGateway(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.clientgateways.v1.ClientGatewaysService",
+      "GetClientGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetClientGateway(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -77,6 +93,8 @@ future<Status> ClientGatewaysServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal

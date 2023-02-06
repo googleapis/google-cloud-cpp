@@ -27,6 +27,8 @@ namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class DomainMappingsTracingStub : public DomainMappingsStub {
  public:
   ~DomainMappingsTracingStub() override = default;
@@ -73,6 +75,8 @@ class DomainMappingsTracingStub : public DomainMappingsStub {
  private:
   std::shared_ptr<DomainMappingsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

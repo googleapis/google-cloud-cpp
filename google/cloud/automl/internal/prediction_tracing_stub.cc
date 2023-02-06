@@ -17,11 +17,15 @@
 // source: google/cloud/automl/v1/prediction_service.proto
 
 #include "google/cloud/automl/internal/prediction_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PredictionServiceTracingStub::PredictionServiceTracingStub(
     std::shared_ptr<PredictionServiceStub> child)
@@ -31,7 +35,11 @@ StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceTracingStub::Predict(
     grpc::ClientContext& context,
     google::cloud::automl::v1::PredictRequest const& request) {
-  return child_->Predict(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService",
+                                     "Predict");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->Predict(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -56,6 +64,8 @@ future<Status> PredictionServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal

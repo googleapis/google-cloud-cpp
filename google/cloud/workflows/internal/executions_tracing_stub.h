@@ -27,6 +27,8 @@ namespace cloud {
 namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ExecutionsTracingStub : public ExecutionsStub {
  public:
   ~ExecutionsTracingStub() override = default;
@@ -57,6 +59,8 @@ class ExecutionsTracingStub : public ExecutionsStub {
  private:
   std::shared_ptr<ExecutionsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal

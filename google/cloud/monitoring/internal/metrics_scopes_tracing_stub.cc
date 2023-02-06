@@ -17,11 +17,15 @@
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
 #include "google/cloud/monitoring/internal/metrics_scopes_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 MetricsScopesTracingStub::MetricsScopesTracingStub(
     std::shared_ptr<MetricsScopesStub> child)
@@ -32,7 +36,12 @@ MetricsScopesTracingStub::GetMetricsScope(
     grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
-  return child_->GetMetricsScope(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.monitoring.metricsscope.v1.MetricsScopes", "GetMetricsScope");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetMetricsScope(context, request));
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
@@ -41,7 +50,14 @@ MetricsScopesTracingStub::ListMetricsScopesByMonitoredProject(
     grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
-  return child_->ListMetricsScopesByMonitoredProject(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.monitoring.metricsscope.v1.MetricsScopes",
+                             "ListMetricsScopesByMonitoredProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span,
+      child_->ListMetricsScopesByMonitoredProject(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -76,6 +92,8 @@ future<Status> MetricsScopesTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

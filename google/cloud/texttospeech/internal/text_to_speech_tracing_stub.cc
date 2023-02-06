@@ -17,11 +17,15 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/internal/text_to_speech_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace texttospeech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TextToSpeechTracingStub::TextToSpeechTracingStub(
     std::shared_ptr<TextToSpeechStub> child)
@@ -31,15 +35,27 @@ StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechTracingStub::ListVoices(
     grpc::ClientContext& context,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-  return child_->ListVoices(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "ListVoices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListVoices(context, request));
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechTracingStub::SynthesizeSpeech(
     grpc::ClientContext& context,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-  return child_->SynthesizeSpeech(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.texttospeech.v1.TextToSpeech", "SynthesizeSpeech");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SynthesizeSpeech(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_internal

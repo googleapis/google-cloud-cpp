@@ -27,6 +27,8 @@ namespace cloud {
 namespace vmwareengine_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class VmwareEngineTracingStub : public VmwareEngineStub {
  public:
   ~VmwareEngineTracingStub() override = default;
@@ -226,6 +228,8 @@ class VmwareEngineTracingStub : public VmwareEngineStub {
  private:
   std::shared_ptr<VmwareEngineStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmwareengine_v1_internal

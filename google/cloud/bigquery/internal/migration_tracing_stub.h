@@ -27,6 +27,8 @@ namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class MigrationServiceTracingStub : public MigrationServiceStub {
  public:
   ~MigrationServiceTracingStub() override = default;
@@ -79,6 +81,8 @@ class MigrationServiceTracingStub : public MigrationServiceStub {
  private:
   std::shared_ptr<MigrationServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal

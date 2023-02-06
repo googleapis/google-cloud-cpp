@@ -27,6 +27,8 @@ namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class BigQueryWriteTracingStub : public BigQueryWriteStub {
  public:
   ~BigQueryWriteTracingStub() override = default;
@@ -70,6 +72,8 @@ class BigQueryWriteTracingStub : public BigQueryWriteStub {
  private:
   std::shared_ptr<BigQueryWriteStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal

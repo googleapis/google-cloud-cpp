@@ -899,6 +899,7 @@ VarsDictionary CreateServiceVars(
   vars["forwarding_options_header_path"] =
       absl::StrCat(vars["forwarding_product_path"],
                    ServiceNameToFilePath(descriptor.name()), "_options.h");
+  vars["grpc_service"] = descriptor.full_name();
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
   vars["idempotency_class_name"] =
       absl::StrCat(descriptor.name(), "ConnectionIdempotencyPolicy");

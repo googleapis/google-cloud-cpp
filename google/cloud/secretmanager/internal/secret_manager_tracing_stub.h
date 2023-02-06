@@ -27,6 +27,8 @@ namespace cloud {
 namespace secretmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class SecretManagerServiceTracingStub : public SecretManagerServiceStub {
  public:
   ~SecretManagerServiceTracingStub() override = default;
@@ -113,6 +115,8 @@ class SecretManagerServiceTracingStub : public SecretManagerServiceStub {
  private:
   std::shared_ptr<SecretManagerServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_internal

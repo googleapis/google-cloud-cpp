@@ -17,11 +17,15 @@
 // source: google/bigtable/admin/v2/bigtable_table_admin.proto
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 BigtableTableAdminTracingStub::BigtableTableAdminTracingStub(
     std::shared_ptr<BigtableTableAdminStub> child)
@@ -31,21 +35,35 @@ StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingStub::CreateTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
-  return child_->CreateTable(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CreateTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateTable(context, request));
 }
 
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminTracingStub::ListTables(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
-  return child_->ListTables(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "ListTables");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListTables(context, request));
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingStub::GetTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetTableRequest const& request) {
-  return child_->GetTable(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "GetTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetTable(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -59,7 +77,12 @@ BigtableTableAdminTracingStub::AsyncUpdateTable(
 Status BigtableTableAdminTracingStub::DeleteTable(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
-  return child_->DeleteTable(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "DeleteTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteTable(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -74,13 +97,23 @@ StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingStub::ModifyColumnFamilies(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
-  return child_->ModifyColumnFamilies(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "ModifyColumnFamilies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ModifyColumnFamilies(context, request));
 }
 
 Status BigtableTableAdminTracingStub::DropRowRange(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
-  return child_->DropRowRange(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "DropRowRange");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DropRowRange(context, request));
 }
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
@@ -88,14 +121,25 @@ BigtableTableAdminTracingStub::GenerateConsistencyToken(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
-  return child_->GenerateConsistencyToken(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.admin.v2.BigtableTableAdmin",
+                             "GenerateConsistencyToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateConsistencyToken(context, request));
 }
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminTracingStub::CheckConsistency(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  return child_->CheckConsistency(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CheckConsistency");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CheckConsistency(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,27 +154,46 @@ StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminTracingStub::GetBackup(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
-  return child_->GetBackup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetBackup(context, request));
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminTracingStub::UpdateBackup(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
-  return child_->UpdateBackup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateBackup(context, request));
 }
 
 Status BigtableTableAdminTracingStub::DeleteBackup(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
-  return child_->DeleteBackup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteBackup(context, request));
 }
 
 StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 BigtableTableAdminTracingStub::ListBackups(
     grpc::ClientContext& context,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
-  return child_->ListBackups(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "ListBackups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListBackups(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -144,20 +207,35 @@ BigtableTableAdminTracingStub::AsyncRestoreTable(
 StatusOr<google::iam::v1::Policy> BigtableTableAdminTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
@@ -182,6 +260,8 @@ future<Status> BigtableTableAdminTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal

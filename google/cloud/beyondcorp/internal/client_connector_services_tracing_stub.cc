@@ -18,11 +18,15 @@
 // google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto
 
 #include "google/cloud/beyondcorp/internal/client_connector_services_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ClientConnectorServicesServiceTracingStub::
     ClientConnectorServicesServiceTracingStub(
@@ -35,7 +39,14 @@ ClientConnectorServicesServiceTracingStub::ListClientConnectorServices(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         ListClientConnectorServicesRequest const& request) {
-  return child_->ListClientConnectorServices(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.clientconnectorservices.v1."
+      "ClientConnectorServicesService",
+      "ListClientConnectorServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->ListClientConnectorServices(context, request));
 }
 
 StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
@@ -44,7 +55,14 @@ ClientConnectorServicesServiceTracingStub::GetClientConnectorService(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         GetClientConnectorServiceRequest const& request) {
-  return child_->GetClientConnectorService(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.clientconnectorservices.v1."
+      "ClientConnectorServicesService",
+      "GetClientConnectorService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetClientConnectorService(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -91,6 +109,8 @@ future<Status> ClientConnectorServicesServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal

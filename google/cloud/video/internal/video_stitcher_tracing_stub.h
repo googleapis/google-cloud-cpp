@@ -27,6 +27,8 @@ namespace cloud {
 namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class VideoStitcherServiceTracingStub : public VideoStitcherServiceStub {
  public:
   ~VideoStitcherServiceTracingStub() override = default;
@@ -143,6 +145,8 @@ class VideoStitcherServiceTracingStub : public VideoStitcherServiceStub {
  private:
   std::shared_ptr<VideoStitcherServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal

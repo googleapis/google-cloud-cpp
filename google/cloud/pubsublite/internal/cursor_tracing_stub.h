@@ -27,6 +27,8 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CursorServiceTracingStub : public CursorServiceStub {
  public:
   ~CursorServiceTracingStub() override = default;
@@ -54,6 +56,8 @@ class CursorServiceTracingStub : public CursorServiceStub {
  private:
   std::shared_ptr<CursorServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

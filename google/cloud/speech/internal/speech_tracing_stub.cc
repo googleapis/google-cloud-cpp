@@ -17,11 +17,15 @@
 // source: google/cloud/speech/v1/cloud_speech.proto
 
 #include "google/cloud/speech/internal/speech_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace speech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SpeechTracingStub::SpeechTracingStub(std::shared_ptr<SpeechStub> child)
     : child_(std::move(child)) {}
@@ -30,7 +34,11 @@ StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechTracingStub::Recognize(
     grpc::ClientContext& context,
     google::cloud::speech::v1::RecognizeRequest const& request) {
-  return child_->Recognize(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.speech.v1.Speech", "Recognize");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->Recognize(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -64,6 +72,8 @@ future<Status> SpeechTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_internal

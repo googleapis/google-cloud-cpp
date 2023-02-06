@@ -27,6 +27,8 @@ namespace cloud {
 namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class LoggingServiceV2TracingStub : public LoggingServiceV2Stub {
  public:
   ~LoggingServiceV2TracingStub() override = default;
@@ -71,6 +73,8 @@ class LoggingServiceV2TracingStub : public LoggingServiceV2Stub {
  private:
   std::shared_ptr<LoggingServiceV2Stub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal

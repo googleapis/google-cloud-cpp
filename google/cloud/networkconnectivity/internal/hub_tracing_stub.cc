@@ -17,11 +17,15 @@
 // source: google/cloud/networkconnectivity/v1/hub.proto
 
 #include "google/cloud/networkconnectivity/internal/hub_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace networkconnectivity_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 HubServiceTracingStub::HubServiceTracingStub(
     std::shared_ptr<HubServiceStub> child)
@@ -31,14 +35,22 @@ StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
 HubServiceTracingStub::ListHubs(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListHubsRequest const& request) {
-  return child_->ListHubs(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "ListHubs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListHubs(context, request));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Hub>
 HubServiceTracingStub::GetHub(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
-  return child_->GetHub(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "GetHub");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetHub(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -69,14 +81,23 @@ StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceTracingStub::ListSpokes(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::ListSpokesRequest const& request) {
-  return child_->ListSpokes(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "ListSpokes");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSpokes(context, request));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceTracingStub::GetSpoke(
     grpc::ClientContext& context,
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
-  return child_->GetSpoke(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkconnectivity.v1.HubService", "GetSpoke");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetSpoke(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -117,6 +138,8 @@ future<Status> HubServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_internal

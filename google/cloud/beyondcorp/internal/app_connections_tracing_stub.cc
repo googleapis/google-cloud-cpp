@@ -18,11 +18,15 @@
 // google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto
 
 #include "google/cloud/beyondcorp/internal/app_connections_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AppConnectionsServiceTracingStub::AppConnectionsServiceTracingStub(
     std::shared_ptr<AppConnectionsServiceStub> child)
@@ -34,7 +38,13 @@ AppConnectionsServiceTracingStub::ListAppConnections(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         ListAppConnectionsRequest const& request) {
-  return child_->ListAppConnections(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnections.v1.AppConnectionsService",
+      "ListAppConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAppConnections(context, request));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
@@ -42,7 +52,13 @@ AppConnectionsServiceTracingStub::GetAppConnection(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
-  return child_->GetAppConnection(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnections.v1.AppConnectionsService",
+      "GetAppConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAppConnection(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -78,7 +94,13 @@ AppConnectionsServiceTracingStub::ResolveAppConnections(
     grpc::ClientContext& context,
     google::cloud::beyondcorp::appconnections::v1::
         ResolveAppConnectionsRequest const& request) {
-  return child_->ResolveAppConnections(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnections.v1.AppConnectionsService",
+      "ResolveAppConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ResolveAppConnections(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -95,6 +117,8 @@ future<Status> AppConnectionsServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal

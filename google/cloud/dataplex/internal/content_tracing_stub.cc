@@ -17,11 +17,15 @@
 // source: google/cloud/dataplex/v1/content.proto
 
 #include "google/cloud/dataplex/internal/content_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ContentServiceTracingStub::ContentServiceTracingStub(
     std::shared_ptr<ContentServiceStub> child)
@@ -31,54 +35,96 @@ StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceTracingStub::CreateContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::CreateContentRequest const& request) {
-  return child_->CreateContent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "CreateContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateContent(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceTracingStub::UpdateContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-  return child_->UpdateContent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "UpdateContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateContent(context, request));
 }
 
 Status ContentServiceTracingStub::DeleteContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-  return child_->DeleteContent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "DeleteContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteContent(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
 ContentServiceTracingStub::GetContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::GetContentRequest const& request) {
-  return child_->GetContent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "GetContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetContent(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceTracingStub::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceTracingStub::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SetIamPolicy(context, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContentServiceTracingStub::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TestIamPermissions(context, request));
 }
 
 StatusOr<google::cloud::dataplex::v1::ListContentResponse>
 ContentServiceTracingStub::ListContent(
     grpc::ClientContext& context,
     google::cloud::dataplex::v1::ListContentRequest const& request) {
-  return child_->ListContent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dataplex.v1.ContentService",
+                                     "ListContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListContent(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AccessContextManagerTracingStub : public AccessContextManagerStub {
  public:
   ~AccessContextManagerTracingStub() override = default;
@@ -202,6 +204,8 @@ class AccessContextManagerTracingStub : public AccessContextManagerStub {
  private:
   std::shared_ptr<AccessContextManagerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal

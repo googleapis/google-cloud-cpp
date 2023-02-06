@@ -17,11 +17,15 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/internal/publisher_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PublisherTracingStub::PublisherTracingStub(std::shared_ptr<PublisherStub> child)
     : child_(std::move(child)) {}
@@ -32,7 +36,13 @@ PublisherTracingStub::PublishChannelConnectionEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
-  return child_->PublishChannelConnectionEvents(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.eventarc.publishing.v1.Publisher",
+                             "PublishChannelConnectionEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->PublishChannelConnectionEvents(context, request));
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
@@ -40,8 +50,15 @@ PublisherTracingStub::PublishEvents(
     grpc::ClientContext& context,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
-  return child_->PublishEvents(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.eventarc.publishing.v1.Publisher", "PublishEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->PublishEvents(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal

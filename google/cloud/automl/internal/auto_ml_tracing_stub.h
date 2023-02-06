@@ -27,6 +27,8 @@ namespace cloud {
 namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AutoMlTracingStub : public AutoMlStub {
  public:
   ~AutoMlTracingStub() override = default;
@@ -131,6 +133,8 @@ class AutoMlTracingStub : public AutoMlStub {
  private:
   std::shared_ptr<AutoMlStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal

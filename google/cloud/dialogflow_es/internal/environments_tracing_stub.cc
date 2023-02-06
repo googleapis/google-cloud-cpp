@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/v2/environment.proto
 
 #include "google/cloud/dialogflow_es/internal/environments_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 EnvironmentsTracingStub::EnvironmentsTracingStub(
     std::shared_ptr<EnvironmentsStub> child)
@@ -31,34 +35,59 @@ StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
 EnvironmentsTracingStub::ListEnvironments(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) {
-  return child_->ListEnvironments(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Environments",
+                                     "ListEnvironments");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEnvironments(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsTracingStub::GetEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Environments",
+                                     "GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEnvironment(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsTracingStub::CreateEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
-  return child_->CreateEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Environments",
+                                     "CreateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateEnvironment(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsTracingStub::UpdateEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
-  return child_->UpdateEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Environments",
+                                     "UpdateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateEnvironment(context, request));
 }
 
 Status EnvironmentsTracingStub::DeleteEnvironment(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
-  return child_->DeleteEnvironment(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Environments",
+                                     "DeleteEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteEnvironment(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory>
@@ -66,8 +95,15 @@ EnvironmentsTracingStub::GetEnvironmentHistory(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
         request) {
-  return child_->GetEnvironmentHistory(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Environments",
+                                     "GetEnvironmentHistory");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEnvironmentHistory(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

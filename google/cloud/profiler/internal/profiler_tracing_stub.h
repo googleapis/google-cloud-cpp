@@ -27,6 +27,8 @@ namespace cloud {
 namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ProfilerServiceTracingStub : public ProfilerServiceStub {
  public:
   ~ProfilerServiceTracingStub() override = default;
@@ -52,6 +54,8 @@ class ProfilerServiceTracingStub : public ProfilerServiceStub {
  private:
   std::shared_ptr<ProfilerServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_internal

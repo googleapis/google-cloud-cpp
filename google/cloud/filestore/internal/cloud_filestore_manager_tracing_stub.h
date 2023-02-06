@@ -27,6 +27,8 @@ namespace cloud {
 namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
  public:
   ~CloudFilestoreManagerTracingStub() override = default;
@@ -106,6 +108,8 @@ class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
  private:
   std::shared_ptr<CloudFilestoreManagerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal

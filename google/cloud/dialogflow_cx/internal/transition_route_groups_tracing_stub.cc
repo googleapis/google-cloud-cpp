@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/cx/v3/transition_route_group.proto
 
 #include "google/cloud/dialogflow_cx/internal/transition_route_groups_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 TransitionRouteGroupsTracingStub::TransitionRouteGroupsTracingStub(
     std::shared_ptr<TransitionRouteGroupsStub> child)
@@ -32,7 +36,13 @@ TransitionRouteGroupsTracingStub::ListTransitionRouteGroups(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
         request) {
-  return child_->ListTransitionRouteGroups(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "ListTransitionRouteGroups");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListTransitionRouteGroups(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -40,7 +50,13 @@ TransitionRouteGroupsTracingStub::GetTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
         request) {
-  return child_->GetTransitionRouteGroup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "GetTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetTransitionRouteGroup(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -48,7 +64,13 @@ TransitionRouteGroupsTracingStub::CreateTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
         request) {
-  return child_->CreateTransitionRouteGroup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "CreateTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->CreateTransitionRouteGroup(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
@@ -56,15 +78,29 @@ TransitionRouteGroupsTracingStub::UpdateTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
         request) {
-  return child_->UpdateTransitionRouteGroup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "UpdateTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->UpdateTransitionRouteGroup(context, request));
 }
 
 Status TransitionRouteGroupsTracingStub::DeleteTransitionRouteGroup(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
         request) {
-  return child_->DeleteTransitionRouteGroup(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.TransitionRouteGroups",
+      "DeleteTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->DeleteTransitionRouteGroup(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

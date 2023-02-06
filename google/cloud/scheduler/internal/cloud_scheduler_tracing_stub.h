@@ -27,6 +27,8 @@ namespace cloud {
 namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CloudSchedulerTracingStub : public CloudSchedulerStub {
  public:
   ~CloudSchedulerTracingStub() override = default;
@@ -68,6 +70,8 @@ class CloudSchedulerTracingStub : public CloudSchedulerStub {
  private:
   std::shared_ptr<CloudSchedulerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal

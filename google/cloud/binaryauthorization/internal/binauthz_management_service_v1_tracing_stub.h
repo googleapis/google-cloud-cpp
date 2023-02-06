@@ -27,6 +27,8 @@ namespace cloud {
 namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class BinauthzManagementServiceV1TracingStub
     : public BinauthzManagementServiceV1Stub {
  public:
@@ -74,6 +76,8 @@ class BinauthzManagementServiceV1TracingStub
  private:
   std::shared_ptr<BinauthzManagementServiceV1Stub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

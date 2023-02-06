@@ -17,11 +17,15 @@
 // source: google/bigtable/v2/bigtable.proto
 
 #include "google/cloud/bigtable/internal/bigtable_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 BigtableTracingStub::BigtableTracingStub(std::shared_ptr<BigtableStub> child)
     : child_(std::move(child)) {}
@@ -46,7 +50,11 @@ StatusOr<google::bigtable::v2::MutateRowResponse>
 BigtableTracingStub::MutateRow(
     grpc::ClientContext& context,
     google::bigtable::v2::MutateRowRequest const& request) {
-  return child_->MutateRow(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->MutateRow(context, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -61,21 +69,36 @@ StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableTracingStub::CheckAndMutateRow(
     grpc::ClientContext& context,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-  return child_->CheckAndMutateRow(context, request);
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "CheckAndMutateRow");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CheckAndMutateRow(context, request));
 }
 
 StatusOr<google::bigtable::v2::PingAndWarmResponse>
 BigtableTracingStub::PingAndWarm(
     grpc::ClientContext& context,
     google::bigtable::v2::PingAndWarmRequest const& request) {
-  return child_->PingAndWarm(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PingAndWarm");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->PingAndWarm(context, request));
 }
 
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableTracingStub::ReadModifyWriteRow(
     grpc::ClientContext& context,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
-  return child_->ReadModifyWriteRow(context, request);
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "ReadModifyWriteRow");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ReadModifyWriteRow(context, request));
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -128,6 +151,8 @@ BigtableTracingStub::AsyncReadModifyWriteRow(
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   return child_->AsyncReadModifyWriteRow(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

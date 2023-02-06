@@ -17,11 +17,15 @@
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
 #include "google/cloud/deploy/internal/cloud_deploy_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace deploy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudDeployTracingStub::CloudDeployTracingStub(
     std::shared_ptr<CloudDeployStub> child)
@@ -31,14 +35,24 @@ StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
 CloudDeployTracingStub::ListDeliveryPipelines(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& request) {
-  return child_->ListDeliveryPipelines(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListDeliveryPipelines");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListDeliveryPipelines(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
 CloudDeployTracingStub::GetDeliveryPipeline(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request) {
-  return child_->GetDeliveryPipeline(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "GetDeliveryPipeline");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetDeliveryPipeline(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -69,13 +83,22 @@ StatusOr<google::cloud::deploy::v1::ListTargetsResponse>
 CloudDeployTracingStub::ListTargets(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListTargetsRequest const& request) {
-  return child_->ListTargets(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListTargets");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListTargets(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployTracingStub::GetTarget(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
-  return child_->GetTarget(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy", "GetTarget");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetTarget(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -106,13 +129,23 @@ StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 CloudDeployTracingStub::ListReleases(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListReleasesRequest const& request) {
-  return child_->ListReleases(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListReleases");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListReleases(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::Release> CloudDeployTracingStub::GetRelease(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetReleaseRequest const& request) {
-  return child_->GetRelease(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "GetRelease");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetRelease(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -127,27 +160,47 @@ StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
 CloudDeployTracingStub::AbandonRelease(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::AbandonReleaseRequest const& request) {
-  return child_->AbandonRelease(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "AbandonRelease");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->AbandonRelease(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployTracingStub::ApproveRollout(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ApproveRolloutRequest const& request) {
-  return child_->ApproveRollout(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ApproveRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ApproveRollout(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 CloudDeployTracingStub::ListRollouts(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListRolloutsRequest const& request) {
-  return child_->ListRollouts(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListRollouts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListRollouts(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::Rollout> CloudDeployTracingStub::GetRollout(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetRolloutRequest const& request) {
-  return child_->GetRollout(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "GetRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetRollout(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -162,26 +215,43 @@ StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployTracingStub::RetryJob(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::RetryJobRequest const& request) {
-  return child_->RetryJob(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy", "RetryJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->RetryJob(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::ListJobRunsResponse>
 CloudDeployTracingStub::ListJobRuns(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::ListJobRunsRequest const& request) {
-  return child_->ListJobRuns(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "ListJobRuns");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListJobRuns(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployTracingStub::GetJobRun(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
-  return child_->GetJobRun(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy", "GetJobRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetJobRun(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployTracingStub::GetConfig(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::GetConfigRequest const& request) {
-  return child_->GetConfig(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy", "GetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetConfig(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -198,6 +268,8 @@ future<Status> CloudDeployTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_internal

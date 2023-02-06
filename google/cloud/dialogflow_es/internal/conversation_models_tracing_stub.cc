@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/v2/conversation_model.proto
 
 #include "google/cloud/dialogflow_es/internal/conversation_models_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ConversationModelsTracingStub::ConversationModelsTracingStub(
     std::shared_ptr<ConversationModelsStub> child)
@@ -40,7 +44,12 @@ StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsTracingStub::GetConversationModel(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
-  return child_->GetConversationModel(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.v2.ConversationModels", "GetConversationModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetConversationModel(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
@@ -48,7 +57,13 @@ ConversationModelsTracingStub::ListConversationModels(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListConversationModelsRequest const&
         request) {
-  return child_->ListConversationModels(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "ListConversationModels");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListConversationModels(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -84,7 +99,13 @@ ConversationModelsTracingStub::GetConversationModelEvaluation(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
-  return child_->GetConversationModelEvaluation(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "GetConversationModelEvaluation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span, child_->GetConversationModelEvaluation(context, request));
 }
 
 StatusOr<
@@ -93,7 +114,14 @@ ConversationModelsTracingStub::ListConversationModelEvaluations(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::
         ListConversationModelEvaluationsRequest const& request) {
-  return child_->ListConversationModelEvaluations(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.dialogflow.v2.ConversationModels",
+                             "ListConversationModelEvaluations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(
+      context, *span,
+      child_->ListConversationModelEvaluations(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,6 +148,8 @@ future<Status> ConversationModelsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

@@ -17,11 +17,15 @@
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
 #include "google/cloud/optimization/internal/fleet_routing_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 FleetRoutingTracingStub::FleetRoutingTracingStub(
     std::shared_ptr<FleetRoutingStub> child)
@@ -31,7 +35,12 @@ StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingTracingStub::OptimizeTours(
     grpc::ClientContext& context,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  return child_->OptimizeTours(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.optimization.v1.FleetRouting", "OptimizeTours");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->OptimizeTours(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -56,6 +65,8 @@ future<Status> FleetRoutingTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal

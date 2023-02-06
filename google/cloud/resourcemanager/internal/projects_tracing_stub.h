@@ -27,6 +27,8 @@ namespace cloud {
 namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ProjectsTracingStub : public ProjectsStub {
  public:
   ~ProjectsTracingStub() override = default;
@@ -104,6 +106,8 @@ class ProjectsTracingStub : public ProjectsStub {
  private:
   std::shared_ptr<ProjectsStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal

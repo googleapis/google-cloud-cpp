@@ -252,6 +252,8 @@ INSTANTIATE_TEST_SUITE_P(
                        "FrobberServiceConnectionOptions"),
         std::make_pair("connection_options_traits_name",
                        "FrobberServiceConnectionOptionsTraits"),
+        std::make_pair("grpc_service",
+                       "google.cloud.frobber.v1.FrobberService"),
         std::make_pair("grpc_stub_fqn",
                        "google::cloud::frobber::v1::FrobberService"),
         std::make_pair("idempotency_class_name",

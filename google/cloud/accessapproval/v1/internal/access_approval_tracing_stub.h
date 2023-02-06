@@ -27,6 +27,8 @@ namespace cloud {
 namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AccessApprovalTracingStub : public AccessApprovalStub {
  public:
   ~AccessApprovalTracingStub() override = default;
@@ -89,6 +91,8 @@ class AccessApprovalTracingStub : public AccessApprovalStub {
  private:
   std::shared_ptr<AccessApprovalStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_v1_internal

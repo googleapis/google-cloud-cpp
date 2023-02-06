@@ -17,11 +17,15 @@
 // source: google/cloud/networkmanagement/v1/reachability.proto
 
 #include "google/cloud/networkmanagement/internal/reachability_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ReachabilityServiceTracingStub::ReachabilityServiceTracingStub(
     std::shared_ptr<ReachabilityServiceStub> child)
@@ -32,7 +36,13 @@ ReachabilityServiceTracingStub::ListConnectivityTests(
     grpc::ClientContext& context,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
-  return child_->ListConnectivityTests(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkmanagement.v1.ReachabilityService",
+      "ListConnectivityTests");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListConnectivityTests(context, request));
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
@@ -40,7 +50,13 @@ ReachabilityServiceTracingStub::GetConnectivityTest(
     grpc::ClientContext& context,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
-  return child_->GetConnectivityTest(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.networkmanagement.v1.ReachabilityService",
+      "GetConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetConnectivityTest(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -93,6 +109,8 @@ future<Status> ReachabilityServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal

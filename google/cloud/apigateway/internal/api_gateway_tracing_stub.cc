@@ -17,11 +17,15 @@
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
 #include "google/cloud/apigateway/internal/api_gateway_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace apigateway_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ApiGatewayServiceTracingStub::ApiGatewayServiceTracingStub(
     std::shared_ptr<ApiGatewayServiceStub> child)
@@ -31,14 +35,24 @@ StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 ApiGatewayServiceTracingStub::ListGateways(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
-  return child_->ListGateways(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "ListGateways");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListGateways(context, request));
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceTracingStub::GetGateway(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-  return child_->GetGateway(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "GetGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetGateway(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -69,14 +83,22 @@ StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 ApiGatewayServiceTracingStub::ListApis(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
-  return child_->ListApis(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "ListApis");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListApis(context, request));
 }
 
 StatusOr<google::cloud::apigateway::v1::Api>
 ApiGatewayServiceTracingStub::GetApi(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
-  return child_->GetApi(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "GetApi");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetApi(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,14 +129,24 @@ StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 ApiGatewayServiceTracingStub::ListApiConfigs(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
-  return child_->ListApiConfigs(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "ListApiConfigs");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListApiConfigs(context, request));
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceTracingStub::GetApiConfig(
     grpc::ClientContext& context,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-  return child_->GetApiConfig(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.apigateway.v1.ApiGatewayService", "GetApiConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetApiConfig(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -155,6 +187,8 @@ future<Status> ApiGatewayServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal

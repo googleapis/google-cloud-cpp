@@ -27,6 +27,8 @@ namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class IAMTracingStub : public IAMStub {
  public:
   ~IAMTracingStub() override = default;
@@ -169,6 +171,8 @@ class IAMTracingStub : public IAMStub {
  private:
   std::shared_ptr<IAMStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

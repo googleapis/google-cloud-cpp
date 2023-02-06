@@ -17,11 +17,15 @@
 // source: google/cloud/workflows/v1/workflows.proto
 
 #include "google/cloud/workflows/internal/workflows_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 WorkflowsTracingStub::WorkflowsTracingStub(std::shared_ptr<WorkflowsStub> child)
     : child_(std::move(child)) {}
@@ -30,14 +34,24 @@ StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsTracingStub::ListWorkflows(
     grpc::ClientContext& context,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
-  return child_->ListWorkflows(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "ListWorkflows");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListWorkflows(context, request));
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow>
 WorkflowsTracingStub::GetWorkflow(
     grpc::ClientContext& context,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-  return child_->GetWorkflow(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
+                                     "GetWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetWorkflow(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -78,6 +92,8 @@ future<Status> WorkflowsTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal

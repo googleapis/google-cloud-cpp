@@ -27,6 +27,8 @@ namespace cloud {
 namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class JobControllerTracingStub : public JobControllerStub {
  public:
   ~JobControllerTracingStub() override = default;
@@ -75,6 +77,8 @@ class JobControllerTracingStub : public JobControllerStub {
  private:
   std::shared_ptr<JobControllerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal

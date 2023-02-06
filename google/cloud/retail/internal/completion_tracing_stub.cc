@@ -17,11 +17,15 @@
 // source: google/cloud/retail/v2/completion_service.proto
 
 #include "google/cloud/retail/internal/completion_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CompletionServiceTracingStub::CompletionServiceTracingStub(
     std::shared_ptr<CompletionServiceStub> child)
@@ -31,7 +35,12 @@ StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceTracingStub::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
-  return child_->CompleteQuery(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CompletionService",
+                                     "CompleteQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CompleteQuery(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -56,6 +65,8 @@ future<Status> CompletionServiceTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal

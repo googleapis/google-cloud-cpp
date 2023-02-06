@@ -27,6 +27,8 @@ namespace cloud {
 namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class SpeechTracingStub : public SpeechStub {
  public:
   ~SpeechTracingStub() override = default;
@@ -168,6 +170,8 @@ class SpeechTracingStub : public SpeechStub {
  private:
   std::shared_ptr<SpeechStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2_internal

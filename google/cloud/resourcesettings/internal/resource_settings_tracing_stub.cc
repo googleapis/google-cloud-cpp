@@ -17,11 +17,15 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 #include "google/cloud/resourcesettings/internal/resource_settings_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace resourcesettings_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ResourceSettingsServiceTracingStub::ResourceSettingsServiceTracingStub(
     std::shared_ptr<ResourceSettingsServiceStub> child)
@@ -31,22 +35,41 @@ StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceTracingStub::ListSettings(
     grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
-  return child_->ListSettings(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcesettings.v1.ResourceSettingsService",
+      "ListSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSettings(context, request));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceTracingStub::GetSetting(
     grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  return child_->GetSetting(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcesettings.v1.ResourceSettingsService", "GetSetting");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetSetting(context, request));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceTracingStub::UpdateSetting(
     grpc::ClientContext& context,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  return child_->UpdateSetting(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.resourcesettings.v1.ResourceSettingsService",
+      "UpdateSetting");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSetting(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal

@@ -17,11 +17,15 @@
 // source: google/cloud/billing/v1/cloud_catalog.proto
 
 #include "google/cloud/billing/internal/cloud_catalog_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudCatalogTracingStub::CloudCatalogTracingStub(
     std::shared_ptr<CloudCatalogStub> child)
@@ -31,15 +35,26 @@ StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogTracingStub::ListServices(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListServicesRequest const& request) {
-  return child_->ListServices(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog",
+                                     "ListServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListServices(context, request));
 }
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogTracingStub::ListSkus(
     grpc::ClientContext& context,
     google::cloud::billing::v1::ListSkusRequest const& request) {
-  return child_->ListSkus(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.billing.v1.CloudCatalog",
+                                     "ListSkus");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListSkus(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal

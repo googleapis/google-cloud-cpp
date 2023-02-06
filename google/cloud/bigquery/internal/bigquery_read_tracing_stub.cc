@@ -17,11 +17,15 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/internal/bigquery_read_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 BigQueryReadTracingStub::BigQueryReadTracingStub(
     std::shared_ptr<BigQueryReadStub> child)
@@ -32,7 +36,12 @@ BigQueryReadTracingStub::CreateReadSession(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
-  return child_->CreateReadSession(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryRead", "CreateReadSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateReadSession(context, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -48,8 +57,15 @@ BigQueryReadTracingStub::SplitReadStream(
     grpc::ClientContext& context,
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
-  return child_->SplitReadStream(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryRead", "SplitReadStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->SplitReadStream(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

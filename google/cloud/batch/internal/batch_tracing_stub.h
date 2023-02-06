@@ -27,6 +27,8 @@ namespace cloud {
 namespace batch_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class BatchServiceTracingStub : public BatchServiceStub {
  public:
   ~BatchServiceTracingStub() override = default;
@@ -71,6 +73,8 @@ class BatchServiceTracingStub : public BatchServiceStub {
  private:
   std::shared_ptr<BatchServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_internal

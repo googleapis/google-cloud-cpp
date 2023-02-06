@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/v2/context.proto
 
 #include "google/cloud/dialogflow_es/internal/contexts_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ContextsTracingStub::ContextsTracingStub(std::shared_ptr<ContextsStub> child)
     : child_(std::move(child)) {}
@@ -30,41 +34,73 @@ StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
 ContextsTracingStub::ListContexts(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
-  return child_->ListContexts(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
+                                     "ListContexts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListContexts(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsTracingStub::GetContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
-  return child_->GetContext(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
+                                     "GetContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetContext(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsTracingStub::CreateContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
-  return child_->CreateContext(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
+                                     "CreateContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateContext(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsTracingStub::UpdateContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
-  return child_->UpdateContext(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
+                                     "UpdateContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateContext(context, request));
 }
 
 Status ContextsTracingStub::DeleteContext(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
-  return child_->DeleteContext(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
+                                     "DeleteContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteContext(context, request));
 }
 
 Status ContextsTracingStub::DeleteAllContexts(
     grpc::ClientContext& context,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
-  return child_->DeleteAllContexts(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Contexts",
+                                     "DeleteAllContexts");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAllContexts(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

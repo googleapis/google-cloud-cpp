@@ -27,6 +27,8 @@ namespace cloud {
 namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class MetadataServiceTracingStub : public MetadataServiceStub {
  public:
   ~MetadataServiceTracingStub() override = default;
@@ -76,6 +78,8 @@ class MetadataServiceTracingStub : public MetadataServiceStub {
  private:
   std::shared_ptr<MetadataServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal

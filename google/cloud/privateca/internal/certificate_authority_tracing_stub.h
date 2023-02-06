@@ -27,6 +27,8 @@ namespace cloud {
 namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class CertificateAuthorityServiceTracingStub
     : public CertificateAuthorityServiceStub {
  public:
@@ -234,6 +236,8 @@ class CertificateAuthorityServiceTracingStub
  private:
   std::shared_ptr<CertificateAuthorityServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal

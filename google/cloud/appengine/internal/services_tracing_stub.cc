@@ -17,11 +17,15 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/internal/services_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ServicesTracingStub::ServicesTracingStub(std::shared_ptr<ServicesStub> child)
     : child_(std::move(child)) {}
@@ -30,13 +34,23 @@ StatusOr<google::appengine::v1::ListServicesResponse>
 ServicesTracingStub::ListServices(
     grpc::ClientContext& context,
     google::appengine::v1::ListServicesRequest const& request) {
-  return child_->ListServices(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Services", "ListServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListServices(context, request));
 }
 
 StatusOr<google::appengine::v1::Service> ServicesTracingStub::GetService(
     grpc::ClientContext& context,
     google::appengine::v1::GetServiceRequest const& request) {
-  return child_->GetService(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.appengine.v1.Services", "GetService");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetService(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -69,6 +83,8 @@ future<Status> ServicesTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

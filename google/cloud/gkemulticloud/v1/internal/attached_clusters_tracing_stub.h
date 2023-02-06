@@ -27,6 +27,8 @@ namespace cloud {
 namespace gkemulticloud_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class AttachedClustersTracingStub : public AttachedClustersStub {
  public:
   ~AttachedClustersTracingStub() override = default;
@@ -97,6 +99,8 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
  private:
   std::shared_ptr<AttachedClustersStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal

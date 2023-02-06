@@ -27,6 +27,8 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class GoldenThingAdminTracingStub : public GoldenThingAdminStub {
  public:
   ~GoldenThingAdminTracingStub() override = default;
@@ -133,6 +135,8 @@ class GoldenThingAdminTracingStub : public GoldenThingAdminStub {
  private:
   std::shared_ptr<GoldenThingAdminStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal

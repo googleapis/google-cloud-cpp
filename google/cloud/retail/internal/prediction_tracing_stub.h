@@ -27,6 +27,8 @@ namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class PredictionServiceTracingStub : public PredictionServiceStub {
  public:
   ~PredictionServiceTracingStub() override = default;
@@ -41,6 +43,8 @@ class PredictionServiceTracingStub : public PredictionServiceStub {
  private:
   std::shared_ptr<PredictionServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal

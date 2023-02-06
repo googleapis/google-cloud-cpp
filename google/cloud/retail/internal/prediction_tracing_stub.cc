@@ -17,11 +17,15 @@
 // source: google/cloud/retail/v2/prediction_service.proto
 
 #include "google/cloud/retail/internal/prediction_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 PredictionServiceTracingStub::PredictionServiceTracingStub(
     std::shared_ptr<PredictionServiceStub> child)
@@ -31,8 +35,14 @@ StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceTracingStub::Predict(
     grpc::ClientContext& context,
     google::cloud::retail::v2::PredictRequest const& request) {
-  return child_->Predict(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.PredictionService",
+                                     "Predict");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->Predict(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal

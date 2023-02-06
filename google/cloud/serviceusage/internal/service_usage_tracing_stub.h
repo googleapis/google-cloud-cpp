@@ -27,6 +27,8 @@ namespace cloud {
 namespace serviceusage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ServiceUsageTracingStub : public ServiceUsageStub {
  public:
   ~ServiceUsageTracingStub() override = default;
@@ -78,6 +80,8 @@ class ServiceUsageTracingStub : public ServiceUsageStub {
  private:
   std::shared_ptr<ServiceUsageStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_internal

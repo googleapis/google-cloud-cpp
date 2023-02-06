@@ -17,11 +17,15 @@
 // source: google/cloud/talent/v4/completion_service.proto
 
 #include "google/cloud/talent/internal/completion_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CompletionTracingStub::CompletionTracingStub(
     std::shared_ptr<CompletionStub> child)
@@ -31,8 +35,15 @@ StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionTracingStub::CompleteQuery(
     grpc::ClientContext& context,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  return child_->CompleteQuery(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.Completion",
+                                     "CompleteQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CompleteQuery(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal

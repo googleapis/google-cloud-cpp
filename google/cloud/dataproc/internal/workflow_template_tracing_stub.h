@@ -27,6 +27,8 @@ namespace cloud {
 namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class WorkflowTemplateServiceTracingStub : public WorkflowTemplateServiceStub {
  public:
   ~WorkflowTemplateServiceTracingStub() override = default;
@@ -89,6 +91,8 @@ class WorkflowTemplateServiceTracingStub : public WorkflowTemplateServiceStub {
  private:
   std::shared_ptr<WorkflowTemplateServiceStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal

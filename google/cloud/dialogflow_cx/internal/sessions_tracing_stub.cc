@@ -17,11 +17,15 @@
 // source: google/cloud/dialogflow/cx/v3/session.proto
 
 #include "google/cloud/dialogflow_cx/internal/sessions_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SessionsTracingStub::SessionsTracingStub(std::shared_ptr<SessionsStub> child)
     : child_(std::move(child)) {}
@@ -30,7 +34,12 @@ StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsTracingStub::DetectIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
-  return child_->DetectIntent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
+                                     "DetectIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DetectIntent(context, request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -46,15 +55,27 @@ StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsTracingStub::MatchIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
-  return child_->MatchIntent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
+                                     "MatchIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->MatchIntent(context, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsTracingStub::FulfillIntent(
     grpc::ClientContext& context,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
-  return child_->FulfillIntent(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
+                                     "FulfillIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->FulfillIntent(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

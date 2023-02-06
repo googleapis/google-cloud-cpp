@@ -27,6 +27,8 @@ namespace cloud {
 namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class DeviceManagerTracingStub : public DeviceManagerStub {
  public:
   ~DeviceManagerTracingStub() override = default;
@@ -124,6 +126,8 @@ class DeviceManagerTracingStub : public DeviceManagerStub {
  private:
   std::shared_ptr<DeviceManagerStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal

@@ -27,6 +27,8 @@ namespace cloud {
 namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class ImageAnnotatorTracingStub : public ImageAnnotatorStub {
  public:
   ~ImageAnnotatorTracingStub() override = default;
@@ -70,6 +72,8 @@ class ImageAnnotatorTracingStub : public ImageAnnotatorStub {
  private:
   std::shared_ptr<ImageAnnotatorStub> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal

@@ -17,11 +17,15 @@
 // source: google/cloud/bigquery/v2/model.proto
 
 #include "google/cloud/bigquery/internal/model_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ModelServiceTracingStub::ModelServiceTracingStub(
     std::shared_ptr<ModelServiceStub> child)
@@ -30,28 +34,49 @@ ModelServiceTracingStub::ModelServiceTracingStub(
 StatusOr<google::cloud::bigquery::v2::Model> ModelServiceTracingStub::GetModel(
     grpc::ClientContext& context,
     google::cloud::bigquery::v2::GetModelRequest const& request) {
-  return child_->GetModel(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.v2.ModelService",
+                                     "GetModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetModel(context, request));
 }
 
 StatusOr<google::cloud::bigquery::v2::ListModelsResponse>
 ModelServiceTracingStub::ListModels(
     grpc::ClientContext& context,
     google::cloud::bigquery::v2::ListModelsRequest const& request) {
-  return child_->ListModels(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.v2.ModelService",
+                                     "ListModels");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListModels(context, request));
 }
 
 StatusOr<google::cloud::bigquery::v2::Model>
 ModelServiceTracingStub::PatchModel(
     grpc::ClientContext& context,
     google::cloud::bigquery::v2::PatchModelRequest const& request) {
-  return child_->PatchModel(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.v2.ModelService",
+                                     "PatchModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->PatchModel(context, request));
 }
 
 Status ModelServiceTracingStub::DeleteModel(
     grpc::ClientContext& context,
     google::cloud::bigquery::v2::DeleteModelRequest const& request) {
-  return child_->DeleteModel(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.bigquery.v2.ModelService",
+                                     "DeleteModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteModel(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal

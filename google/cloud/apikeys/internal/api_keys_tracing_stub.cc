@@ -17,11 +17,15 @@
 // source: google/api/apikeys/v2/apikeys.proto
 
 #include "google/cloud/apikeys/internal/api_keys_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace apikeys_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ApiKeysTracingStub::ApiKeysTracingStub(std::shared_ptr<ApiKeysStub> child)
     : child_(std::move(child)) {}
@@ -38,20 +42,32 @@ StatusOr<google::api::apikeys::v2::ListKeysResponse>
 ApiKeysTracingStub::ListKeys(
     grpc::ClientContext& context,
     google::api::apikeys::v2::ListKeysRequest const& request) {
-  return child_->ListKeys(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "ListKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->ListKeys(context, request));
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingStub::GetKey(
     grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyRequest const& request) {
-  return child_->GetKey(context, request);
+  auto span = internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->GetKey(context, request));
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysTracingStub::GetKeyString(
     grpc::ClientContext& context,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
-  return child_->GetKeyString(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKeyString");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetKeyString(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -82,7 +98,11 @@ StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysTracingStub::LookupKey(
     grpc::ClientContext& context,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
-  return child_->LookupKey(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "LookupKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->LookupKey(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -99,6 +119,8 @@ future<Status> ApiKeysTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_internal

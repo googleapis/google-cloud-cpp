@@ -17,11 +17,15 @@
 // source: google/cloud/ids/v1/ids.proto
 
 #include "google/cloud/ids/internal/ids_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IDSTracingStub::IDSTracingStub(std::shared_ptr<IDSStub> child)
     : child_(std::move(child)) {}
@@ -30,13 +34,22 @@ StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 IDSTracingStub::ListEndpoints(
     grpc::ClientContext& context,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
-  return child_->ListEndpoints(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "ListEndpoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEndpoints(context, request));
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingStub::GetEndpoint(
     grpc::ClientContext& context,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
-  return child_->GetEndpoint(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "GetEndpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEndpoint(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -69,6 +82,8 @@ future<Status> IDSTracingStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal

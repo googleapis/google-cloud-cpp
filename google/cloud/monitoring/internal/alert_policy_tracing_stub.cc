@@ -17,11 +17,15 @@
 // source: google/monitoring/v3/alert_service.proto
 
 #include "google/cloud/monitoring/internal/alert_policy_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AlertPolicyServiceTracingStub::AlertPolicyServiceTracingStub(
     std::shared_ptr<AlertPolicyServiceStub> child)
@@ -31,35 +35,62 @@ StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 AlertPolicyServiceTracingStub::ListAlertPolicies(
     grpc::ClientContext& context,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
-  return child_->ListAlertPolicies(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.AlertPolicyService",
+                                     "ListAlertPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListAlertPolicies(context, request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceTracingStub::GetAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
-  return child_->GetAlertPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.AlertPolicyService",
+                                     "GetAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetAlertPolicy(context, request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceTracingStub::CreateAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-  return child_->CreateAlertPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.AlertPolicyService",
+                                     "CreateAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CreateAlertPolicy(context, request));
 }
 
 Status AlertPolicyServiceTracingStub::DeleteAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-  return child_->DeleteAlertPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.AlertPolicyService",
+                                     "DeleteAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->DeleteAlertPolicy(context, request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceTracingStub::UpdateAlertPolicy(
     grpc::ClientContext& context,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-  return child_->UpdateAlertPolicy(context, request);
+  auto span = internal::MakeSpanGrpc("google.monitoring.v3.AlertPolicyService",
+                                     "UpdateAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->UpdateAlertPolicy(context, request));
 }
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
