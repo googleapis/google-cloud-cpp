@@ -98,8 +98,10 @@ function (spanner_admin_define_integration_tests_rest)
         endif ()
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(
-            ${target} PROPERTIES LABELS
-                                 "integration-test;integration-test-emulator")
+            ${target}
+            PROPERTIES
+                LABELS
+                "integration-test;integration-test-emulator;http-transcoding")
         add_dependencies(spanner-admin-integration-tests-rest ${target})
     endforeach ()
     if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

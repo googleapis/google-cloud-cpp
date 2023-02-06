@@ -17,6 +17,8 @@
 """Automatically generated source lists for google_cloud_cpp_spanner_rest - DO NOT EDIT."""
 
 google_cloud_cpp_spanner_rest_hdrs = [
+    "admin/database_admin_rest_connection.h",
+    "admin/instance_admin_rest_connection.h",
     "admin/internal/database_admin_rest_connection_impl.h",
     "admin/internal/database_admin_rest_logging_decorator.h",
     "admin/internal/database_admin_rest_metadata_decorator.h",
@@ -30,6 +32,8 @@ google_cloud_cpp_spanner_rest_hdrs = [
 ]
 
 google_cloud_cpp_spanner_rest_srcs = [
+    "admin/database_admin_rest_connection.cc",
+    "admin/instance_admin_rest_connection.cc",
     "admin/internal/database_admin_rest_connection_impl.cc",
     "admin/internal/database_admin_rest_logging_decorator.cc",
     "admin/internal/database_admin_rest_metadata_decorator.cc",
