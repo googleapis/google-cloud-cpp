@@ -24,10 +24,11 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 /**
- * Verify that a given functor raises `T` and run a test if it does.
+ * Verify that an expression raises an exception, and run a validator when
+ * it does.
  *
  * `EXPECT_THROW()` validates the type of an exception, but does not validate
- * its contents. Most of the time the type is enough, but in some tests need to
+ * its contents. Most of the time the type is enough, but some tests need to
  * be more detailed. The common idiom in that case is to write an explicit
  * try/catch to validate the values and then rethrow:
  *
@@ -35,7 +36,7 @@ namespace testing_util {
  * EXPECT_THROW(
  *     try { something_that_throws(); }
  *     catch(ExpectedException const& ex) {
- *       // Validate the contents of ex, e.g. EXPECT_EQ(..., ex.what());
+ *       // Validate the contents of ex, e.g. EXPECT_STREQ("...", ex.what());
  *       throw;
  *     }, ExpectedException);
  * @endcode
@@ -55,11 +56,10 @@ namespace testing_util {
  * ExpectException<MyException>(
  *     [&] { something_that_throws(); },
  *     [&](MyException const& ex) {
- *         EXPECT_EQ("everything is terrible", ex.what());
+ *         EXPECT_STREQ("everything is terrible", ex.what());
  *     },
  *     "terminating program: everything is terrible");
  * @endcode
- *
  *
  * @param expression the expression (typically a lambda) that is expected to
  *     raise an exception of type `ExpectedException`.
