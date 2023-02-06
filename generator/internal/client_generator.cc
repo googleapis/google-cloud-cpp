@@ -340,6 +340,9 @@ Status ClientGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
+  // We will access a deprecated field when a google::api::method_signature
+  // overload appears in `emitted_rpcs`, so ...
+  CcLocalIncludes({"google/cloud/internal/disable_deprecation_warnings.inc"});
   CcLocalIncludes({vars("client_header_path")});
   CcSystemIncludes({"memory"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
