@@ -15,7 +15,6 @@
 #include "docfx/parse_arguments.h"
 #include <gmock/gmock.h>
 #include <stdexcept>
-#include <string_view>
 
 namespace {
 
