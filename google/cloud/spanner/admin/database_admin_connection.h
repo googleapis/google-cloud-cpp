@@ -164,33 +164,6 @@ class DatabaseAdminConnection {
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options = {});
 
-/**
- * A factory function to construct an object of type `DatabaseAdminConnection`
- * that uses REST over HTTP as transport in lieu of gRPC. REST transport should
- * only be used for services that do not support gRpc or if the existing network
- * configuration precludes using gRPC.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DatabaseAdminClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `DatabaseAdminConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::RestOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::spanner_admin::DatabaseAdminPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `DatabaseAdminConnection` created by
- * this function.
- */
-std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnectionRest(
-    Options options = {});
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin

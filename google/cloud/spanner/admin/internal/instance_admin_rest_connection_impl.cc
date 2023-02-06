@@ -17,46 +17,16 @@
 // source: google/spanner/admin/instance/v1/spanner_instance_admin.proto
 
 #include "google/cloud/spanner/admin/internal/instance_admin_rest_connection_impl.h"
-#include "google/cloud/spanner/admin/internal/instance_admin_option_defaults.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/extract_long_running_result.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
 #include "absl/memory/memory.h"
 #include <memory>
-
-namespace google {
-namespace cloud {
-namespace spanner_admin {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnectionRest(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-                                 UnifiedCredentialsOptionList,
-                                 InstanceAdminPolicyOptionList>(options,
-                                                                __func__);
-  options =
-      spanner_admin_internal::InstanceAdminDefaultOptions(std::move(options));
-  auto background = absl::make_unique<
-      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub =
-      spanner_admin_internal::CreateDefaultInstanceAdminRestStub(options);
-  return std::make_shared<
-      spanner_admin_internal::InstanceAdminRestConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace spanner_admin
-}  // namespace cloud
-}  // namespace google
 
 namespace google {
 namespace cloud {

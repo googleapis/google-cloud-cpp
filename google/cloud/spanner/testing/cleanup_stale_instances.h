@@ -31,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * are named with a YYYY-MM-DD component prior to yesterday (in UTC).
  */
 Status CleanupStaleInstances(
-    Project const& project, spanner_admin::InstanceAdminClient client,
+    Project const& project,
+    spanner_admin::InstanceAdminClient instance_admin_client,
     spanner_admin::DatabaseAdminClient database_admin_client);
 
 /**

@@ -65,9 +65,7 @@ Status CleanupStaleInstances(
   std::vector<std::string> instances;
   for (auto const& instance :
        instance_admin_client.ListInstances(project.FullName())) {
-    if (!instance) {
-      break;
-    }
+    if (!instance) break;
     auto name = instance->name();
     std::smatch m;
     if (std::regex_match(name, m, name_regex)) {
@@ -88,8 +86,9 @@ Status CleanupStaleInstances(
   return Status();
 }
 
-Status CleanupStaleInstanceConfigs(Project const& project,
-                                   spanner_admin::InstanceAdminClient client) {
+Status CleanupStaleInstanceConfigs(
+    Project const& project,
+    spanner_admin::InstanceAdminClient instance_admin_client) {
   std::regex name_regex(R"(projects/.+/instanceConfigs/)"
                         R"(custom-temporary-config-(\d{4}-\d{2}-\d{2})-.+)");
 
@@ -109,7 +108,8 @@ Status CleanupStaleInstanceConfigs(Project const& project,
 
   auto cutoff_date = CutoffDate();
   std::vector<std::string> configs;
-  for (auto const& config : client.ListInstanceConfigs(project.FullName())) {
+  for (auto const& config :
+       instance_admin_client.ListInstanceConfigs(project.FullName())) {
     if (!config) break;
     auto name = config->name();
     std::smatch m;
@@ -123,7 +123,7 @@ Status CleanupStaleInstanceConfigs(Project const& project,
 
   // We ignore failures here.
   for (auto const& config : configs) {
-    client.DeleteInstanceConfig(config);
+    instance_admin_client.DeleteInstanceConfig(config);
   }
   return Status();
 }

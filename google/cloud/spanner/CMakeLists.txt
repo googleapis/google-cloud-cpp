@@ -237,6 +237,10 @@ create_bazel_config(google_cloud_cpp_spanner YEAR "2019")
 if (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
     add_library(
         google_cloud_cpp_spanner_rest # cmake-format: sort
+        admin/database_admin_rest_connection.cc
+        admin/database_admin_rest_connection.h
+        admin/instance_admin_rest_connection.cc
+        admin/instance_admin_rest_connection.h
         admin/internal/database_admin_rest_connection_impl.cc
         admin/internal/database_admin_rest_connection_impl.h
         admin/internal/database_admin_rest_logging_decorator.cc
