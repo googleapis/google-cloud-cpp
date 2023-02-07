@@ -267,4 +267,4 @@ git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
 ```
 
 [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
-[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
+[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/70147caca58ebf4c8cd7b96f5d569a72723e11c1/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80

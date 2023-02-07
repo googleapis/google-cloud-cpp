@@ -29,7 +29,7 @@ namespace internal {
 // These functions convert between an `absl::Time` and a
 // `google::protobuf::Timestamp` proto. The required format for the Timestamp
 // proto is documented in this file:
-// https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/timestamp.proto
+// https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/timestamp.proto
 //
 // In particular, the Timestamp proto must:
 // * be in the range ["0001-01-01T00:00:00Z", "9999-12-31T23:59:59.999999999Z"]

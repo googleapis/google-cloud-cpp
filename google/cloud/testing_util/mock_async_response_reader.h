@@ -35,8 +35,7 @@ namespace testing_util {
  * Destroy method below preserves that behavior even after
  * https://github.com/grpc/proposal/pull/238):
  *
- *
- *     https://github.com/grpc/grpc/blob/608188c680961b8506847c135b5170b41a9081e8/include/grpcpp/impl/codegen/async_unary_call.h#L305
+ *     https://github.com/grpc/grpc/blob/a3f10052090539cd3e19aa8e04f3bf8eceae2964/include/grpcpp/support/async_unary_call.h#L407
  *
  * No delete, no destructor, nothing. The gRPC library expects all
  * `grpc::ClientAsyncResponseReader<R>` objects to be allocated from a

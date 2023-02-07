@@ -38,7 +38,7 @@ namespace {
  *
  * This code originates from the following example:
  *
- * https://github.com/open-telemetry/opentelemetry-cpp/blob/a343da043e1351c3cc3003bfce94724345ee22f1/examples/grpc/tracer_common.h#L26-L45
+ * https://github.com/open-telemetry/opentelemetry-cpp/blob/d56a5c702fc2154ef82400df4801cd511ffb63ea/examples/grpc/tracer_common.h#L26-L45
  *
  * [carrier]:
  * https://opentelemetry.io/docs/reference/specification/context/api-propagators/#carrier
