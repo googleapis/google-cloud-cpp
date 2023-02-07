@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/uptime_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/monitoring/uptime_check_client.h"
 #include <memory>
 

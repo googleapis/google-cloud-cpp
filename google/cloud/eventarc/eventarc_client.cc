@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/eventarc/v1/eventarc.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/eventarc/eventarc_client.h"
 #include <memory>
 

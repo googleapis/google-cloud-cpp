@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vision/v1/image_annotator.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/vision/image_annotator_client.h"
 #include <memory>
 

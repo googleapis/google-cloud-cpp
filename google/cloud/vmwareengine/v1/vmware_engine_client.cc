@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/vmwareengine/v1/vmware_engine_client.h"
 #include <memory>
 

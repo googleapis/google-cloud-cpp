@@ -17,7 +17,6 @@
 // source:
 // google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/beyondcorp/app_connections_client.h"
 #include <memory>
 

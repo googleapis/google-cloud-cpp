@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dataproc/autoscaling_policy_client.h"
 #include <memory>
 

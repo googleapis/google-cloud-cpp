@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/billing/v1/cloud_catalog.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/billing/cloud_catalog_client.h"
 #include <memory>
 

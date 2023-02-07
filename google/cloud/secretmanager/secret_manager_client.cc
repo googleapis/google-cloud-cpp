@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/secretmanager/v1/service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/secretmanager/secret_manager_client.h"
 #include <memory>
 

@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/cloudbuild/cloud_build_client.h"
 #include <memory>
 

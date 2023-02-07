@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/v2/policy.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/iam/v2/policies_client.h"
 #include <memory>
 

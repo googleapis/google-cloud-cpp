@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/datapolicies/v1/datapolicy.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/data_policy_client.h"
 #include <memory>
 

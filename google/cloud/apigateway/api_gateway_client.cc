@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/apigateway/api_gateway_client.h"
 #include <memory>
 

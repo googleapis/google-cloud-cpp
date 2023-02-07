@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/gkehub/gke_hub_client.h"
 #include <memory>
 

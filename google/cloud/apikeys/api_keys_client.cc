@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/api/apikeys/v2/apikeys.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/apikeys/api_keys_client.h"
 #include <memory>
 

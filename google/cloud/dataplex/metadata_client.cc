@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dataplex/v1/metadata.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dataplex/metadata_client.h"
 #include <memory>
 

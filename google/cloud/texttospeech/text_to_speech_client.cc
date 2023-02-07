@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/texttospeech/text_to_speech_client.h"
 #include <memory>
 

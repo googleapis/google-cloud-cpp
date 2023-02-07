@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/tpu/tpu_client.h"
 #include <memory>
 

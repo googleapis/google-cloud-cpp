@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iap/v1/service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/iap/identity_aware_proxy_o_auth_client.h"
 #include <memory>
 

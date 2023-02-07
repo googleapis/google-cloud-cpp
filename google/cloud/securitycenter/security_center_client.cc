@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/securitycenter/security_center_client.h"
 #include "google/cloud/securitycenter/security_center_options.h"
 #include <memory>

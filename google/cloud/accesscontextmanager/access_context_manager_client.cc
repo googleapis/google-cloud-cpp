@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/accesscontextmanager/access_context_manager_client.h"
 #include <memory>
 

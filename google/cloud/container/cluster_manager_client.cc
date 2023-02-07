@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/container/cluster_manager_client.h"
 #include <memory>
 

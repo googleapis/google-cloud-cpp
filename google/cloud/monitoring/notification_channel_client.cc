@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/notification_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/monitoring/notification_channel_client.h"
 #include <memory>
 

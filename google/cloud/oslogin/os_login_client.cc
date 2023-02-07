@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/oslogin/v1/oslogin.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/oslogin/os_login_client.h"
 #include <memory>
 

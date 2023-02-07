@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/osconfig/os_config_client.h"
 #include <memory>
 

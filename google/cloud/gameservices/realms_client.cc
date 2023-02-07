@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gaming/v1/realms_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/gameservices/realms_client.h"
 #include <memory>
 

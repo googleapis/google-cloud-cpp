@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/admin/v1/iam.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/iam/iam_client.h"
 #include "google/cloud/iam/iam_options.h"
 #include <memory>

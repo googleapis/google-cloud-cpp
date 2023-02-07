@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/dialogflow/cx/v3/security_settings.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/dialogflow_cx/security_settings_client.h"
 #include <memory>
 

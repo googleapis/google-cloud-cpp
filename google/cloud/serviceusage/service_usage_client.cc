@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/api/serviceusage/v1/serviceusage.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/serviceusage/service_usage_client.h"
 #include <memory>
 

@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/datacatalog/data_catalog_client.h"
 #include "google/cloud/datacatalog/data_catalog_options.h"
 #include <memory>

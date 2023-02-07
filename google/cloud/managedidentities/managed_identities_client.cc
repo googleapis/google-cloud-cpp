@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/managedidentities/managed_identities_client.h"
 #include <memory>
 

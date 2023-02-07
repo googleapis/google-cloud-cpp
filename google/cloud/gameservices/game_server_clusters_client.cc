@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gaming/v1/game_server_clusters_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/gameservices/game_server_clusters_client.h"
 #include <memory>
 

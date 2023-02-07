@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/group_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/monitoring/group_client.h"
 #include <memory>
 

@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/vmmigration/vm_migration_client.h"
 #include <memory>
 

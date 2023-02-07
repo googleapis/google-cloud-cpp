@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/certificatemanager/certificate_manager_client.h"
 #include <memory>
 

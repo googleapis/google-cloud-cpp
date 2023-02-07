@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/functions/cloud_functions_client.h"
 #include <memory>
 

@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/vpcaccess/vpc_access_client.h"
 #include <memory>
 

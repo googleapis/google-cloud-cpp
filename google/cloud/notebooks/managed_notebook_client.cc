@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/notebooks/v1/managed_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/notebooks/managed_notebook_client.h"
 #include <memory>
 

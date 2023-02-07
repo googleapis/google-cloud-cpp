@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/bigquery_write_client.h"
 #include <memory>
 

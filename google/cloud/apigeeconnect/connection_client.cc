@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/apigeeconnect/connection_client.h"
 #include <memory>
 

@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/servicedirectory/v1/registration_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/servicedirectory/registration_client.h"
 #include <memory>
 

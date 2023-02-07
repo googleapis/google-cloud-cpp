@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/orgpolicy/org_policy_client.h"
 #include <memory>
 

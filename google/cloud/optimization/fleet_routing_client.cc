@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/optimization/fleet_routing_client.h"
 #include <memory>
 

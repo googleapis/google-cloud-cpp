@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/monitoring/v3/alert_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/monitoring/alert_policy_client.h"
 #include <memory>
 

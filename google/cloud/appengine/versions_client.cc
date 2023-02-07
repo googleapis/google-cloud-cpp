@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/appengine/v1/appengine.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/appengine/versions_client.h"
 #include <memory>
 

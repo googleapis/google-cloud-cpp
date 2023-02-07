@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/websecurityscanner/web_security_scanner_client.h"
 #include <memory>
 

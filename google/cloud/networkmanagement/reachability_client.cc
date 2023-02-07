@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/networkmanagement/v1/reachability.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/networkmanagement/reachability_client.h"
 #include <memory>
 

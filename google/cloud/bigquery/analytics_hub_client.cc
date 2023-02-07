@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/bigquery/analytics_hub_client.h"
 #include <memory>
 

@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/beyondcorp/app_gateways_client.h"
 #include <memory>
 

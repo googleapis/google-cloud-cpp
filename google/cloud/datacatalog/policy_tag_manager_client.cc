@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/datacatalog/policy_tag_manager_client.h"
 #include <memory>
 

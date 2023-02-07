@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/spanner/admin/database/v1/spanner_database_admin.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/admin/database_admin_options.h"
 #include <memory>

@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/binaryauthorization/v1/service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/binaryauthorization/binauthz_management_service_v1_client.h"
 #include <memory>
 

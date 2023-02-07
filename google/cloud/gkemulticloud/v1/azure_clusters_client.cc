@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkemulticloud/v1/azure_service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/gkemulticloud/v1/azure_clusters_client.h"
 #include <memory>
 

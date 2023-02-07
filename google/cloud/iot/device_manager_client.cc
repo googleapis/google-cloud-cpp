@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/iot/device_manager_client.h"
 #include "google/cloud/iot/device_manager_options.h"
 #include <memory>

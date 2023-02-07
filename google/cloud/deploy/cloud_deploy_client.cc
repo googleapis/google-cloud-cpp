@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/deploy/cloud_deploy_client.h"
 #include <memory>
 

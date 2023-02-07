@@ -16,7 +16,6 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/security/privateca/v1/service.proto
 
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/privateca/certificate_authority_client.h"
 #include <memory>
 
