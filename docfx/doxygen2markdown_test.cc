@@ -87,7 +87,8 @@ TEST(Doxygen2Markdown, ParagraphWithUnknownOutput) {
         AppendIfParagraph(os, selected.node());
       } catch (std::runtime_error const& ex) {
         EXPECT_THAT(ex.what(), Not(HasSubstr("\n")));
-        EXPECT_THAT(ex.what(), HasSubstr("<itemizedlist a1=\"attr1\" a2=\"attr2\">"));
+        EXPECT_THAT(ex.what(),
+                    HasSubstr("<itemizedlist a1=\"attr1\" a2=\"attr2\">"));
         EXPECT_THAT(ex.what(), HasSubstr("<listitem>1</listitem>"));
         EXPECT_THAT(ex.what(), HasSubstr("<listitem>2</listitem>"));
         EXPECT_THAT(ex.what(), HasSubstr("</itemizedlist>"));
