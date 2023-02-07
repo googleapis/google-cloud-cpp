@@ -25,7 +25,13 @@ export CC=clang
 export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
 read -r ENABLED_FEATURES < <(features::always_build_cmake)
-ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc,generator"
+# Add some features that we don't always build, but we want to run clang-tidy
+# over them.
+ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc"
+ENABLED_FEATURES="${ENABLED_FEATURES},generator"
+ENABLED_FEATURES="${ENABLED_FEATURES},internal-docfx"
+readonly ENABLED_FEATURES
+
 mapfile -t cmake_args < <(cmake::common_args)
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
