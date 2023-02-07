@@ -28,6 +28,7 @@ export CXX=g++
 instrumented_patterns=(
   "/examples[/:]"
   "/generator[/:]"
+  "/docfx[/:]"
   "/google/cloud:"
   "/google/cloud/testing_util:"
   "/google/cloud/bigtable[/:]"

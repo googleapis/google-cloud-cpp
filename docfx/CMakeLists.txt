@@ -35,6 +35,11 @@ target_include_directories(docfx PUBLIC "${PROJECT_SOURCE_DIR}")
 target_compile_features(docfx PUBLIC cxx_std_17)
 target_link_libraries(docfx PUBLIC pugixml::pugixml)
 
+# To avoid maintaining the list of files for the library, export them to a .bzl
+# file.
+include(CreateBazelConfig)
+create_bazel_config(docfx YEAR "2023")
+
 add_executable(doxygen2docfx doxygen2docfx.cc)
 target_link_libraries(doxygen2docfx PUBLIC docfx)
 
@@ -47,6 +52,10 @@ endif ()
 
 set(unit_tests # cmake-format: sort
                "doxygen2markdown_test.cc" "parse_arguments_test.cc")
+
+# Export the list of unit tests to a .bzl file so we do not need to maintain the
+# list in two places.
+export_list_to_bazel("unit_tests.bzl" "unit_tests" YEAR "2023")
 
 foreach (fname IN LISTS unit_tests)
     google_cloud_cpp_add_executable(target "docfx" "${fname}")

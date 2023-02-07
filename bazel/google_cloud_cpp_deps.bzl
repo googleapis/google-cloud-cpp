@@ -203,3 +203,15 @@ def google_cloud_cpp_deps(name = None):
         ],
         sha256 = "20fa97e507d067e9e2ab0c1accfc334f5a4b10d01312e55455dc3733748585f4",
     )
+
+    # PugiXML, this is only used in the docfx internal tool.
+    maybe(
+        repo_rule = http_archive,
+        name = "com_github_zeux_pugixml",
+        strip_prefix = "pugixml-1.13",
+        urls = [
+            "https://github.com/zeux/pugixml/archive/refs/tags/v1.13.tar.gz",
+        ],
+        sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
+        build_file = Label("//bazel:pugixml.BUILD"),
+    )
