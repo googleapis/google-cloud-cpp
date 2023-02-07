@@ -23,13 +23,17 @@ if (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     return()
 endif ()
 
+find_package(pugixml CONFIG REQUIRED)
+
 include(EnableWerror)
 
-add_library(docfx # cmake-format: sort
-            parse_arguments.cc parse_arguments.h)
+add_library(
+    docfx # cmake-format: sort
+    doxygen2markdown.cc doxygen2markdown.h parse_arguments.cc parse_arguments.h)
 google_cloud_cpp_add_common_options(docfx)
 target_include_directories(docfx PUBLIC "${PROJECT_SOURCE_DIR}")
 target_compile_features(docfx PUBLIC cxx_std_17)
+target_link_libraries(docfx PUBLIC pugixml::pugixml)
 
 add_executable(doxygen2docfx doxygen2docfx.cc)
 target_link_libraries(doxygen2docfx PUBLIC docfx)
@@ -42,7 +46,7 @@ if (NOT BUILD_TESTING)
 endif ()
 
 set(unit_tests # cmake-format: sort
-               "parse_arguments_test.cc")
+               "doxygen2markdown_test.cc" "parse_arguments_test.cc")
 
 foreach (fname IN LISTS unit_tests)
     google_cloud_cpp_add_executable(target "docfx" "${fname}")
