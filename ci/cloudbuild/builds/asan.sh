@@ -22,7 +22,6 @@ source module ci/cloudbuild/builds/lib/integration.sh
 
 export CC=clang
 export CXX=clang++
-export HTTP_TRANSCODING_TEST=yes
 
 mapfile -t args < <(bazel::common_args)
 args+=("--config=asan")
