@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_CLEANUP_STALE_INSTANCES_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_CLEANUP_STALE_INSTANCES_H
 
+#include "google/cloud/spanner/admin/database_admin_client.h"
+#include "google/cloud/spanner/admin/instance_admin_client.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/project.h"
 #include "google/cloud/status.h"
@@ -28,13 +30,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Deletes any instances (and their backups) within the @p project that
  * are named with a YYYY-MM-DD component prior to yesterday (in UTC).
  */
-Status CleanupStaleInstances(Project const& project);
+Status CleanupStaleInstances(
+    Project const& project,
+    spanner_admin::InstanceAdminClient instance_admin_client,
+    spanner_admin::DatabaseAdminClient database_admin_client);
 
 /**
  * Deletes any instance configs within @p project @p that are named with
  * a YYYY-MM-DD component prior to yesterday (in UTC).
  */
-Status CleanupStaleInstanceConfigs(Project const& project);
+Status CleanupStaleInstanceConfigs(
+    Project const& project,
+    spanner_admin::InstanceAdminClient instance_admin_client);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_testing

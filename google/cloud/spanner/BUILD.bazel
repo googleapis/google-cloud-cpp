@@ -17,6 +17,7 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":google_cloud_cpp_spanner.bzl", "google_cloud_cpp_spanner_hdrs", "google_cloud_cpp_spanner_srcs")
+load(":google_cloud_cpp_spanner_rest.bzl", "google_cloud_cpp_spanner_rest_hdrs", "google_cloud_cpp_spanner_rest_srcs")
 
 cc_library(
     name = "google_cloud_cpp_spanner",
@@ -40,6 +41,21 @@ cc_library(
         "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
         # Do not sort: grpc++ must come last
         "@com_github_grpc_grpc//:grpc++",
+    ],
+)
+
+cc_library(
+    name = "google_cloud_cpp_spanner_rest",
+    srcs = google_cloud_cpp_spanner_rest_srcs,
+    hdrs = google_cloud_cpp_spanner_rest_hdrs,
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
+    deps = [
+        ":google_cloud_cpp_spanner",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
     ],
 )
 
