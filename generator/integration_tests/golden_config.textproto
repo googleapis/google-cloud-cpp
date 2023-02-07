@@ -23,8 +23,7 @@ service {
     "Omitted1",
     "GoldenKitchenSink.Omitted2",
     "Deprecated1",
-    "Deprecated2(std::string const&)",
-    "GenerateAccessToken(std::string const&, std::string const&)"
+    "Deprecated2(std::string const&)"
   ]
   service_endpoint_env_var: "GOLDEN_KITCHEN_SINK_ENDPOINT"
   emulator_endpoint_env_var: "GOLDEN_KITCHEN_SINK_EMULATOR_HOST"
@@ -43,6 +42,7 @@ service {
   generate_rest_transport: true
   forwarding_product_path: "generator/integration_tests/golden"
   emitted_rpcs: [
-    "Deprecated2"
+    "Deprecated2",
+    "GenerateAccessToken(std::string const&, std::string const&)"
   ]
 }

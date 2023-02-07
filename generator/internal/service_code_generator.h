@@ -180,6 +180,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
 
   /**
+   * Determines if any emitted method signature uses a deprecated field.
+   */
+  bool MethodSignatureUsesDeprecatedField() const;
+
+  /**
    * Method signatures are omitted if they contain deprecated fields, or if the
    * overload set conflicts with a previous method signature.
    */
