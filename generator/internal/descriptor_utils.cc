@@ -1188,18 +1188,22 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service_vars.find("generate_rest_transport");
   if (generate_rest_transport != service_vars.end() &&
       generate_rest_transport->second == "true") {
+    // All REST interfaces postdate the change to the format of our inline
+    // namespace name, so we never need to add a backwards-compatibility alias.
+    auto rest_service_vars = service_vars;
+    rest_service_vars.erase("backwards_compatibility_namespace_alias");
     code_generators.push_back(absl::make_unique<ConnectionRestGenerator>(
-        service, service_vars, method_vars, context));
+        service, rest_service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<ConnectionImplRestGenerator>(
-        service, service_vars, method_vars, context));
+        service, rest_service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
-        service, service_vars, method_vars, context));
+        service, rest_service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(
-        service, service_vars, method_vars, context));
+        service, rest_service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<StubFactoryRestGenerator>(
-        service, service_vars, method_vars, context));
+        service, rest_service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<StubRestGenerator>(
-        service, service_vars, method_vars, context));
+        service, rest_service_vars, method_vars, context));
   }
 
   return code_generators;

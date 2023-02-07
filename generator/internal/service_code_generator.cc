@@ -273,7 +273,7 @@ Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
   HeaderPrint("\n");
-  CloseNamespaces(header_);
+  CloseNamespaces(header_, define_backwards_compatibility_namespace_alias_);
 }
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
@@ -283,7 +283,7 @@ Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
 
 void ServiceCodeGenerator::CcCloseNamespaces() {
   CcPrint("\n");
-  CloseNamespaces(cc_);
+  CloseNamespaces(cc_, false);
 }
 
 void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
@@ -372,12 +372,13 @@ Status ServiceCodeGenerator::OpenNamespaces(
   return {};
 }
 
-void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
+void ServiceCodeGenerator::CloseNamespaces(
+    Printer& p, bool define_backwards_compatibility_namespace_alias) {
   for (auto iter = namespaces_.rbegin(); iter != namespaces_.rend(); ++iter) {
     if (*iter == "GOOGLE_CLOUD_CPP_NS") {
       p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END\n");
       // TODO(#7463) - remove backwards compatibility namespaces
-      if (define_backwards_compatibility_namespace_alias_) {
+      if (define_backwards_compatibility_namespace_alias) {
         p.Print(
             "namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;"
             "  // NOLINT(misc-unused-alias-decls)\n");
