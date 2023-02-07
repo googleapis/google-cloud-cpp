@@ -203,7 +203,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
 
   Status OpenNamespaces(Printer& p, NamespaceType ns_type,
                         std::string const& product_path_var);
-  void CloseNamespaces(Printer& p);
+  void CloseNamespaces(Printer& p,
+                       bool define_backwards_compatibility_namespace_alias);
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;
   VarsDictionary service_vars_;
