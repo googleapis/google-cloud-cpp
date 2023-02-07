@@ -219,7 +219,7 @@ endfunction ()
 # additional samples that are enabled if needed.
 function (google_cloud_cpp_enable_features)
     foreach (feature ${GOOGLE_CLOUD_CPP_ENABLE})
-        if ("${feature}" STREQUAL "docfx")
+        if ("${feature}" STREQUAL "internal-docfx")
             add_subdirectory(docfx)
         elseif ("${feature}" STREQUAL "generator")
             add_subdirectory(generator)
