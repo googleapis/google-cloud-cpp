@@ -19,7 +19,6 @@
 namespace {
 
 using ::testing::HasSubstr;
-using ::testing::IsEmpty;
 using ::testing::Not;
 
 TEST(Doxygen2Markdown, PlainText) {
