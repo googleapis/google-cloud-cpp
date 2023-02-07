@@ -238,10 +238,8 @@ ValidateMetadataFixture::~ValidateMetadataFixture() {
   // Drain completion queues.
   void* placeholder;
   bool ok;
-  while (srv_cq_->Next(&placeholder, &ok))
-    ;
-  while (cli_cq_.Next(&placeholder, &ok))
-    ;
+  while (srv_cq_->Next(&placeholder, &ok)) continue;
+  while (cli_cq_.Next(&placeholder, &ok)) continue;
 }
 
 std::multimap<std::string, std::string> ValidateMetadataFixture::GetMetadata(

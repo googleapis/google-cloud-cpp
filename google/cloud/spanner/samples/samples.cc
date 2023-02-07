@@ -3724,7 +3724,6 @@ void PartitionQuery(google::cloud::spanner::Client client) {
       remote_connection.ReceiveQueryPartitionFromRemoteMachine();
   if (!partition) throw std::move(partition).status();
   for (auto& row : client.ExecuteQuery(*partition)) {
-    ;
     if (!row) throw std::move(row).status();
     ProcessRow(*row);
   }

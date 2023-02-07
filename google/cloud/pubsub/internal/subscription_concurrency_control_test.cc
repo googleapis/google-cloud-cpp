@@ -353,11 +353,9 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdown) {
   EXPECT_CALL(*source, AckMessage).Times(AtLeast(1)).WillRepeatedly([] {
     return make_ready_future(Status{});
   });
-  ;
   EXPECT_CALL(*source, NackMessage).Times(AtLeast(1)).WillRepeatedly([] {
     return make_ready_future(Status{});
   });
-  ;
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
 
@@ -425,7 +423,6 @@ TEST_F(SubscriptionConcurrencyControlTest, CleanShutdownEarlyAcks) {
   EXPECT_CALL(*source, AckMessage).Times(AtLeast(1)).WillRepeatedly([] {
     return make_ready_future(Status{});
   });
-  ;
 
   google::cloud::internal::AutomaticallyCreatedBackgroundThreads background(4);
 
