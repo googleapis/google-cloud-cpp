@@ -256,6 +256,7 @@ void SetMethodSignatureMethodVars(
                        << " must be listed in either omitted_rpcs"
                        << " or emitted_rpcs";
       }
+      method_vars["uses_deprecated_field"] = "true";
       // TODO(#8486): Add a @deprecated Doxygen comment and the
       // GOOGLE_CLOUD_CPP_DEPRECATED annotation to the generated RPC.
     }

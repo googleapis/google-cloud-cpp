@@ -207,6 +207,15 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   return include_paths;
 }
 
+bool ServiceCodeGenerator::MethodSignatureUsesDeprecatedField() const {
+  return std::any_of(
+      service_method_vars_.begin(), service_method_vars_.end(),
+      [](auto const& method_vars) {
+        return method_vars.second.find("uses_deprecated_field") !=
+               method_vars.second.end();
+      });
+}
+
 bool ServiceCodeGenerator::OmitMethodSignature(
     google::protobuf::MethodDescriptor const& method,
     int method_signature_number) const {
