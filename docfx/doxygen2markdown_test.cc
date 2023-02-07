@@ -18,6 +18,7 @@
 
 namespace {
 
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -67,6 +68,32 @@ TEST(Doxygen2Markdown, ParagraphWithUnknown) {
   auto selected = doc.select_node("//*[@id='test-node']");
   std::ostringstream os;
   EXPECT_THROW(AppendIfParagraph(os, selected.node()), std::runtime_error);
+}
+
+TEST(Doxygen2Markdown, ParagraphWithUnknownOutput) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-node'>Uh oh:
+          <itemizedlist a1="attr1" a2="attr2">
+            <listitem>1</listitem>
+            <listitem>2</listitem>
+          </itemizedlist></para>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  EXPECT_THROW(
+      try {
+        AppendIfParagraph(os, selected.node());
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), Not(HasSubstr("\n")));
+        EXPECT_THAT(ex.what(), HasSubstr("<itemizedlist a1=\"attr1\" a2=\"attr2\">"));
+        EXPECT_THAT(ex.what(), HasSubstr("<listitem>1</listitem>"));
+        EXPECT_THAT(ex.what(), HasSubstr("<listitem>2</listitem>"));
+        EXPECT_THAT(ex.what(), HasSubstr("</itemizedlist>"));
+        throw;
+      },
+      std::runtime_error);
 }
 
 }  // namespace

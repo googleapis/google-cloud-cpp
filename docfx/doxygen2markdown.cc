@@ -22,20 +22,15 @@ namespace {
 [[noreturn]] void UnknownChildType(std::string_view where,
                                    pugi::xml_node const& child) {
   std::ostringstream os;
-  os << "Unknown child in " << where << "(): name=" << child.name();
-  os << ", attributes=[";
-  for (auto const& a : child.attributes()) {
-    os << ", " << a.name() << "=" << a.as_string();
-  }
-  os << "]";
-  child.print(os);
+  os << "Unknown child in " << where << "(): node=";
+  child.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
   throw std::runtime_error(std::move(os).str());
 }
 
 }  // namespace
 
 bool AppendIfPlainText(std::ostream& os, pugi::xml_node const& node) {
-  if (node.name() != std::string_view{} || !node.attributes().empty()) {
+  if (!std::string_view{node.name()}.empty() || !node.attributes().empty()) {
     return false;
   }
   os << node.value();
@@ -43,13 +38,13 @@ bool AppendIfPlainText(std::ostream& os, pugi::xml_node const& node) {
 }
 
 bool AppendIfComputerOutput(std::ostream& os, pugi::xml_node const& node) {
-  if (node.name() != std::string_view{"computeroutput"}) return false;
+  if (std::string_view{node.name()} != "computeroutput") return false;
   os << '`' << node.child_value() << '`';
   return true;
 }
 
 bool AppendIfParagraph(std::ostream& os, pugi::xml_node const& node) {
-  if (node.name() != std::string_view{"para"}) return false;
+  if (std::string_view{node.name()} != "para") return false;
   for (auto const& child : node) {
     if (AppendIfPlainText(os, child)) continue;
     if (AppendIfComputerOutput(os, child)) continue;
