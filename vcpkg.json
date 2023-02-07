@@ -27,6 +27,10 @@
     "protobuf",
     "nlohmann-json",
     "benchmark",
-    "gtest"
+    "gtest",
+    {
+      "name": "pugixml",
+      "$description": "Only used for the docfx feature"
+    }
   ]
 }
