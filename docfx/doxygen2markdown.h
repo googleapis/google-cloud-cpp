@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2MARKDOWN_H
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2MARKDOWN_H
 
-#include <iosfwd>
 #include <pugixml.hpp>
+#include <iosfwd>
 
 bool AppendIfPlainText(std::ostream& os, pugi::xml_node const& node);
 bool AppendIfComputerOutput(std::ostream& os, pugi::xml_node const& node);
