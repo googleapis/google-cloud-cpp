@@ -65,6 +65,109 @@ ArtifactRegistryClient::GetDockerImage(
   return connection_->GetDockerImage(request);
 }
 
+StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryClient::ListMavenArtifacts(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request;
+  request.set_parent(parent);
+  return connection_->ListMavenArtifacts(request);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryClient::ListMavenArtifacts(
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListMavenArtifacts(std::move(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryClient::GetMavenArtifact(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::GetMavenArtifactRequest request;
+  request.set_name(name);
+  return connection_->GetMavenArtifact(request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryClient::GetMavenArtifact(
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetMavenArtifact(request);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryClient::ListNpmPackages(std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::ListNpmPackagesRequest request;
+  request.set_parent(parent);
+  return connection_->ListNpmPackages(request);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryClient::ListNpmPackages(
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListNpmPackages(std::move(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryClient::GetNpmPackage(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::GetNpmPackageRequest request;
+  request.set_name(name);
+  return connection_->GetNpmPackage(request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryClient::GetNpmPackage(
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetNpmPackage(request);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryClient::ListPythonPackages(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::ListPythonPackagesRequest request;
+  request.set_parent(parent);
+  return connection_->ListPythonPackages(request);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryClient::ListPythonPackages(
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListPythonPackages(std::move(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryClient::GetPythonPackage(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::GetPythonPackageRequest request;
+  request.set_name(name);
+  return connection_->GetPythonPackage(request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryClient::GetPythonPackage(
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetPythonPackage(request);
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryClient::ImportAptArtifacts(
@@ -449,6 +552,43 @@ ArtifactRegistryClient::UpdateProjectSettings(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateProjectSettings(request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryClient::GetVPCSCConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::GetVPCSCConfigRequest request;
+  request.set_name(name);
+  return connection_->GetVPCSCConfig(request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryClient::GetVPCSCConfig(
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetVPCSCConfig(request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryClient::UpdateVPCSCConfig(
+    google::devtools::artifactregistry::v1::VPCSCConfig const& vpcsc_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest request;
+  *request.mutable_vpcsc_config() = vpcsc_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateVPCSCConfig(request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryClient::UpdateVPCSCConfig(
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVPCSCConfig(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -89,6 +89,152 @@ ArtifactRegistryConnectionImpl::GetDockerImage(
       request, __func__);
 }
 
+StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryConnectionImpl::ListMavenArtifacts(
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListMavenArtifacts(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency,
+       function_name](google::devtools::artifactregistry::v1::
+                          ListMavenArtifactsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::devtools::artifactregistry::v1::
+                       ListMavenArtifactsRequest const& request) {
+              return stub->ListMavenArtifacts(context, request);
+            },
+            r, function_name);
+      },
+      [](google::devtools::artifactregistry::v1::ListMavenArtifactsResponse r) {
+        std::vector<google::devtools::artifactregistry::v1::MavenArtifact>
+            result(r.maven_artifacts().size());
+        auto& messages = *r.mutable_maven_artifacts();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryConnectionImpl::GetMavenArtifact(
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetMavenArtifact(request),
+      [this](
+          grpc::ClientContext& context,
+          google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+              request) { return stub_->GetMavenArtifact(context, request); },
+      request, __func__);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryConnectionImpl::ListNpmPackages(
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListNpmPackages(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::NpmPackage>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::devtools::artifactregistry::v1::
+                       ListNpmPackagesRequest const& request) {
+              return stub->ListNpmPackages(context, request);
+            },
+            r, function_name);
+      },
+      [](google::devtools::artifactregistry::v1::ListNpmPackagesResponse r) {
+        std::vector<google::devtools::artifactregistry::v1::NpmPackage> result(
+            r.npm_packages().size());
+        auto& messages = *r.mutable_npm_packages();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryConnectionImpl::GetNpmPackage(
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetNpmPackage(request),
+      [this](grpc::ClientContext& context,
+             google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+                 request) { return stub_->GetNpmPackage(context, request); },
+      request, __func__);
+}
+
+StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryConnectionImpl::ListPythonPackages(
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListPythonPackages(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::PythonPackage>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency,
+       function_name](google::devtools::artifactregistry::v1::
+                          ListPythonPackagesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::devtools::artifactregistry::v1::
+                       ListPythonPackagesRequest const& request) {
+              return stub->ListPythonPackages(context, request);
+            },
+            r, function_name);
+      },
+      [](google::devtools::artifactregistry::v1::ListPythonPackagesResponse r) {
+        std::vector<google::devtools::artifactregistry::v1::PythonPackage>
+            result(r.python_packages().size());
+        auto& messages = *r.mutable_python_packages();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryConnectionImpl::GetPythonPackage(
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetPythonPackage(request),
+      [this](
+          grpc::ClientContext& context,
+          google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+              request) { return stub_->GetPythonPackage(context, request); },
+      request, __func__);
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryConnectionImpl::ImportAptArtifacts(
@@ -619,6 +765,35 @@ ArtifactRegistryConnectionImpl::UpdateProjectSettings(
              google::devtools::artifactregistry::v1::
                  UpdateProjectSettingsRequest const& request) {
         return stub_->UpdateProjectSettings(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryConnectionImpl::GetVPCSCConfig(
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetVPCSCConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+              request) { return stub_->GetVPCSCConfig(context, request); },
+      request, __func__);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryConnectionImpl::UpdateVPCSCConfig(
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateVPCSCConfig(request),
+      [this](grpc::ClientContext& context,
+             google::devtools::artifactregistry::v1::
+                 UpdateVPCSCConfigRequest const& request) {
+        return stub_->UpdateVPCSCConfig(context, request);
       },
       request, __func__);
 }

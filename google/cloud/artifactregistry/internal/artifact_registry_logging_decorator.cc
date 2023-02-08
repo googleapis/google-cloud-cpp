@@ -60,6 +60,85 @@ ArtifactRegistryLogging::GetDockerImage(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
+ArtifactRegistryLogging::ListMavenArtifacts(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::devtools::artifactregistry::v1::
+                 ListMavenArtifactsRequest const& request) {
+        return child_->ListMavenArtifacts(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryLogging::GetMavenArtifact(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+              request) { return child_->GetMavenArtifact(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
+ArtifactRegistryLogging::ListNpmPackages(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+              request) { return child_->ListNpmPackages(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryLogging::GetNpmPackage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+                 request) { return child_->GetNpmPackage(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
+ArtifactRegistryLogging::ListPythonPackages(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::devtools::artifactregistry::v1::
+                 ListPythonPackagesRequest const& request) {
+        return child_->ListPythonPackages(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryLogging::GetPythonPackage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+              request) { return child_->GetPythonPackage(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryLogging::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -376,6 +455,33 @@ ArtifactRegistryLogging::UpdateProjectSettings(
              google::devtools::artifactregistry::v1::
                  UpdateProjectSettingsRequest const& request) {
         return child_->UpdateProjectSettings(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryLogging::GetVPCSCConfig(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+              request) { return child_->GetVPCSCConfig(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryLogging::UpdateVPCSCConfig(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::devtools::artifactregistry::v1::
+                 UpdateVPCSCConfigRequest const& request) {
+        return child_->UpdateVPCSCConfig(context, request);
       },
       context, request, __func__, tracing_options_);
 }

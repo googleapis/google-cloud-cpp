@@ -122,12 +122,12 @@ class FleetRoutingClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::optimization::v1::OptimizeToursResponse,google/cloud/optimization/v1/fleet_routing.proto#L357}
+  /// @googleapis_link{google::cloud::optimization::v1::OptimizeToursResponse,google/cloud/optimization/v1/fleet_routing.proto#L358}
   ///
   /// [google.cloud.optimization.v1.OptimizeToursRequest]:
   /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L109}
   /// [google.cloud.optimization.v1.OptimizeToursResponse]:
-  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L357}
+  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L358}
   ///
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
   OptimizeTours(
@@ -147,16 +147,16 @@ class FleetRoutingClient {
   /// vehicles minimizing the overall cost.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::optimization::v1::BatchOptimizeToursRequest,google/cloud/optimization/v1/fleet_routing.proto#L432}
+  /// @googleapis_link{google::cloud::optimization::v1::BatchOptimizeToursRequest,google/cloud/optimization/v1/fleet_routing.proto#L434}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::optimization::v1::BatchOptimizeToursResponse,google/cloud/optimization/v1/fleet_routing.proto#L471}
+  /// @googleapis_link{google::cloud::optimization::v1::BatchOptimizeToursResponse,google/cloud/optimization/v1/fleet_routing.proto#L473}
   ///
   /// [google.cloud.optimization.v1.BatchOptimizeToursRequest]:
-  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L432}
+  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L434}
   /// [google.cloud.optimization.v1.BatchOptimizeToursResponse]:
-  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L471}
+  /// @googleapis_reference_link{google/cloud/optimization/v1/fleet_routing.proto#L473}
   ///
   future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
   BatchOptimizeTours(

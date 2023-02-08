@@ -24,16 +24,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-google::storage::v2::DeleteNotificationRequest ToProto(
+google::storage::v2::DeleteNotificationConfigRequest ToProto(
     storage::internal::DeleteNotificationRequest const& rhs);
-google::storage::v2::GetNotificationRequest ToProto(
+google::storage::v2::GetNotificationConfigRequest ToProto(
     storage::internal::GetNotificationRequest const& rhs);
-google::storage::v2::CreateNotificationRequest ToProto(
+google::storage::v2::CreateNotificationConfigRequest ToProto(
     storage::internal::CreateNotificationRequest const& rhs);
-google::storage::v2::ListNotificationsRequest ToProto(
+google::storage::v2::ListNotificationConfigsRequest ToProto(
     storage::internal::ListNotificationsRequest const& rhs);
 storage::internal::ListNotificationsResponse FromProto(
-    google::storage::v2::ListNotificationsResponse const& rhs);
+    google::storage::v2::ListNotificationConfigsResponse const& rhs);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

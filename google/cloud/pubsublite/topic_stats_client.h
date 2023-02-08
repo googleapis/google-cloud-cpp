@@ -90,16 +90,16 @@ class TopicStatsServiceClient {
   /// partition.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsRequest,google/cloud/pubsublite/v1/topic_stats.proto#L72}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsRequest,google/cloud/pubsublite/v1/topic_stats.proto#L76}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsResponse,google/cloud/pubsublite/v1/topic_stats.proto#L94}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeMessageStatsResponse,google/cloud/pubsublite/v1/topic_stats.proto#L98}
   ///
   /// [google.cloud.pubsublite.v1.ComputeMessageStatsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L72}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L76}
   /// [google.cloud.pubsublite.v1.ComputeMessageStatsResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L94}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L98}
   ///
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
@@ -115,16 +115,16 @@ class TopicStatsServiceClient {
   /// partition.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L113}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L117}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L127}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeHeadCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L131}
   ///
   /// [google.cloud.pubsublite.v1.ComputeHeadCursorRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L113}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L117}
   /// [google.cloud.pubsublite.v1.ComputeHeadCursorResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L127}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L131}
   ///
   StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
   ComputeHeadCursor(
@@ -136,16 +136,16 @@ class TopicStatsServiceClient {
   /// partition.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L134}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorRequest,google/cloud/pubsublite/v1/topic_stats.proto#L138}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L153}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ComputeTimeCursorResponse,google/cloud/pubsublite/v1/topic_stats.proto#L157}
   ///
   /// [google.cloud.pubsublite.v1.ComputeTimeCursorRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L134}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L138}
   /// [google.cloud.pubsublite.v1.ComputeTimeCursorResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L153}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/topic_stats.proto#L157}
   ///
   StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
   ComputeTimeCursor(

@@ -76,22 +76,24 @@ class StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) = 0;
 
-  virtual Status DeleteNotification(
+  virtual Status DeleteNotificationConfig(
       grpc::ClientContext& context,
-      google::storage::v2::DeleteNotificationRequest const& request) = 0;
+      google::storage::v2::DeleteNotificationConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::storage::v2::Notification> GetNotification(
+  virtual StatusOr<google::storage::v2::NotificationConfig>
+  GetNotificationConfig(
       grpc::ClientContext& context,
-      google::storage::v2::GetNotificationRequest const& request) = 0;
+      google::storage::v2::GetNotificationConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::storage::v2::Notification> CreateNotification(
+  virtual StatusOr<google::storage::v2::NotificationConfig>
+  CreateNotificationConfig(
       grpc::ClientContext& context,
-      google::storage::v2::CreateNotificationRequest const& request) = 0;
+      google::storage::v2::CreateNotificationConfigRequest const& request) = 0;
 
-  virtual StatusOr<google::storage::v2::ListNotificationsResponse>
-  ListNotifications(
+  virtual StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+  ListNotificationConfigs(
       grpc::ClientContext& context,
-      google::storage::v2::ListNotificationsRequest const& request) = 0;
+      google::storage::v2::ListNotificationConfigsRequest const& request) = 0;
 
   virtual StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,
@@ -239,21 +241,26 @@ class DefaultStorageStub : public StorageStub {
       grpc::ClientContext& client_context,
       google::storage::v2::UpdateBucketRequest const& request) override;
 
-  Status DeleteNotification(
+  Status DeleteNotificationConfig(
       grpc::ClientContext& client_context,
-      google::storage::v2::DeleteNotificationRequest const& request) override;
+      google::storage::v2::DeleteNotificationConfigRequest const& request)
+      override;
 
-  StatusOr<google::storage::v2::Notification> GetNotification(
+  StatusOr<google::storage::v2::NotificationConfig> GetNotificationConfig(
       grpc::ClientContext& client_context,
-      google::storage::v2::GetNotificationRequest const& request) override;
+      google::storage::v2::GetNotificationConfigRequest const& request)
+      override;
 
-  StatusOr<google::storage::v2::Notification> CreateNotification(
+  StatusOr<google::storage::v2::NotificationConfig> CreateNotificationConfig(
       grpc::ClientContext& client_context,
-      google::storage::v2::CreateNotificationRequest const& request) override;
+      google::storage::v2::CreateNotificationConfigRequest const& request)
+      override;
 
-  StatusOr<google::storage::v2::ListNotificationsResponse> ListNotifications(
+  StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+  ListNotificationConfigs(
       grpc::ClientContext& client_context,
-      google::storage::v2::ListNotificationsRequest const& request) override;
+      google::storage::v2::ListNotificationConfigsRequest const& request)
+      override;
 
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& client_context,

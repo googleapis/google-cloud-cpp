@@ -61,6 +61,34 @@ class ArtifactRegistryConnectionImpl
       google::devtools::artifactregistry::v1::GetDockerImageRequest const&
           request) override;
 
+  StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+  ListMavenArtifacts(
+      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+  GetMavenArtifact(
+      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+          request) override;
+
+  StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+  ListNpmPackages(google::devtools::artifactregistry::v1::ListNpmPackagesRequest
+                      request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
+      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+          request) override;
+
+  StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+  ListPythonPackages(
+      google::devtools::artifactregistry::v1::ListPythonPackagesRequest request)
+      override;
+
+  StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+  GetPythonPackage(
+      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+          request) override;
+
   future<StatusOr<
       google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
   ImportAptArtifacts(
@@ -167,6 +195,15 @@ class ArtifactRegistryConnectionImpl
   UpdateProjectSettings(
       google::devtools::artifactregistry::v1::
           UpdateProjectSettingsRequest const& request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
+      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  UpdateVPCSCConfig(
+      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request) override;
 
  private:
   std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy>

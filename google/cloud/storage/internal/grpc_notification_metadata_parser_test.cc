@@ -31,7 +31,7 @@ using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
 TEST(GrpcNotificationMetadataParser, Roundtrip) {
-  storage_proto::Notification input;
+  storage_proto::NotificationConfig input;
   auto constexpr kProtoText = R"pb(
     name: "projects/_/buckets/test-bucket-name/notificationConfigs/test-notification-id"
     topic: "//pubsub.googleapis.com/projects/test-project-id/topics/test-topic-id"

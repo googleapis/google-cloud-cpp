@@ -120,12 +120,12 @@ class AzureClustersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L619}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L622}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -148,16 +148,16 @@ class AzureClustersClient {
   /// described to track the status of the operation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L619}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L622}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.CreateAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L619}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L622}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -181,12 +181,12 @@ class AzureClustersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L655}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
       std::string const& name, Options opts = {});
@@ -196,16 +196,16 @@ class AzureClustersClient {
   /// [AzureClient][google.cloud.gkemulticloud.v1.AzureClient] resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L655}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L658}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.GetAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L655}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L658}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
       google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request,
@@ -220,16 +220,16 @@ class AzureClustersClient {
   ///  Location names are formatted as
   ///  `projects/<project-id>/locations/<region>`. See [Resource
   ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on GCP resource names.
+  ///  details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L675}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L678}
   ///
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
       std::string const& parent, Options opts = {});
@@ -239,16 +239,16 @@ class AzureClustersClient {
   /// resources on a given Google Cloud project and region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureClientsRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L675}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureClientsRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L678}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureClient,google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.ListAzureClientsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L675}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L678}
   ///
   StreamRange<google::cloud::gkemulticloud::v1::AzureClient> ListAzureClients(
       google::cloud::gkemulticloud::v1::ListAzureClientsRequest request,
@@ -278,9 +278,9 @@ class AzureClustersClient {
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L717}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L720}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   /// [google.longrunning.Operation]:
@@ -301,16 +301,16 @@ class AzureClustersClient {
   /// described to track the status of the operation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L717}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureClientRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L720}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureClient]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L392}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L396}
   /// [google.cloud.gkemulticloud.v1.DeleteAzureClientRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L717}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L720}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   /// [google.longrunning.Operation]:
@@ -323,7 +323,7 @@ class AzureClustersClient {
 
   ///
   /// Creates a new [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
-  /// resource on a given GCP project and region.
+  /// resource on a given Google Cloud Platform project and region.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
@@ -366,7 +366,7 @@ class AzureClustersClient {
 
   ///
   /// Creates a new [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
-  /// resource on a given GCP project and region.
+  /// resource on a given Google Cloud Platform project and region.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
@@ -410,6 +410,9 @@ class AzureClustersClient {
   ///   *   `annotations`.
   ///   *   `authorization.admin_users`.
   ///   *   `control_plane.root_volume.size_gib`.
+  ///   *   `azure_services_authentication`.
+  ///   *   `azure_services_authentication.tenant_id`.
+  ///   *   `azure_services_authentication.application_id`.
   ///   *   `control_plane.proxy_config`.
   ///   *   `control_plane.proxy_config.resource_group_id`.
   ///   *   `control_plane.proxy_config.secret_id`.
@@ -462,7 +465,7 @@ class AzureClustersClient {
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
-  ///  for more details on GCP resource names.
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -471,7 +474,7 @@ class AzureClustersClient {
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L341}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L344}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
       std::string const& name, Options opts = {});
@@ -481,7 +484,7 @@ class AzureClustersClient {
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L341}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L344}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -490,7 +493,7 @@ class AzureClustersClient {
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.GetAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L341}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L344}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
       google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request,
@@ -505,7 +508,7 @@ class AzureClustersClient {
   ///  Location names are formatted as
   ///  `projects/<project-id>/locations/<region>`. See [Resource
   ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on GCP resource names.
+  ///  details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -514,7 +517,7 @@ class AzureClustersClient {
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L360}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L363}
   ///
   StreamRange<google::cloud::gkemulticloud::v1::AzureCluster> ListAzureClusters(
       std::string const& parent, Options opts = {});
@@ -524,7 +527,7 @@ class AzureClustersClient {
   /// resources on a given Google Cloud project and region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureClustersRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L360}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureClustersRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L363}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -533,7 +536,7 @@ class AzureClustersClient {
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.ListAzureClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L360}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L363}
   ///
   StreamRange<google::cloud::gkemulticloud::v1::AzureCluster> ListAzureClusters(
       google::cloud::gkemulticloud::v1::ListAzureClustersRequest request,
@@ -555,7 +558,7 @@ class AzureClustersClient {
   ///  `AzureCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/azureClusters/<cluster-id>`.
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
-  ///  for more details on GCP resource names.
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -564,9 +567,9 @@ class AzureClustersClient {
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L405}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   /// [google.longrunning.Operation]:
@@ -587,7 +590,7 @@ class AzureClustersClient {
   /// described to track the status of the operation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L402}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L405}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -596,9 +599,9 @@ class AzureClustersClient {
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.DeleteAzureClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L405}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   /// [google.longrunning.Operation]:
@@ -615,18 +618,18 @@ class AzureClustersClient {
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster] resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L747}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L750}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse,google/cloud/gkemulticloud/v1/azure_service.proto#L766}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse,google/cloud/gkemulticloud/v1/azure_service.proto#L769}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L747}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L750}
   /// [google.cloud.gkemulticloud.v1.GenerateAzureAccessTokenResponse]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L766}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L769}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
@@ -664,14 +667,14 @@ class AzureClustersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L440}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L443}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -691,18 +694,18 @@ class AzureClustersClient {
   /// described to track the status of the operation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L440}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L443}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.CreateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L440}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L443}
   /// [google.longrunning.Operation]:
   /// @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
@@ -731,12 +734,12 @@ class AzureClustersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L476}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L479}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(
@@ -747,16 +750,16 @@ class AzureClustersClient {
   /// Updates an [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L476}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L479}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.UpdateAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L476}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L479}
   ///
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(
@@ -778,12 +781,12 @@ class AzureClustersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L498}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L501}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
       std::string const& name, Options opts = {});
@@ -793,16 +796,16 @@ class AzureClustersClient {
   /// [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool] resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L498}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L501}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.GetAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L498}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L501}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
       google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request,
@@ -823,14 +826,14 @@ class AzureClustersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L517}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L520}
   ///
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
   ListAzureNodePools(std::string const& parent, Options opts = {});
@@ -841,18 +844,18 @@ class AzureClustersClient {
   /// [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L517}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L520}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureNodePool,google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureCluster]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.ListAzureNodePoolsRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L517}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L520}
   ///
   StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
   ListAzureNodePools(
@@ -879,9 +882,9 @@ class AzureClustersClient {
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L560}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L563}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   /// [google.longrunning.Operation]:
@@ -899,16 +902,16 @@ class AzureClustersClient {
   /// described to track the status of the operation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L560}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L563}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::gkemulticloud::v1::OperationMetadata,google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureNodePool]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L454}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L474}
   /// [google.cloud.gkemulticloud.v1.DeleteAzureNodePoolRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L560}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L563}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L50}
   /// [google.longrunning.Operation]:
@@ -934,12 +937,12 @@ class AzureClustersClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureServerConfig,google/cloud/gkemulticloud/v1/azure_resources.proto#L629}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureServerConfig,google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L629}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
   /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L600}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L603}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(std::string const& name, Options opts = {});
@@ -949,16 +952,16 @@ class AzureClustersClient {
   /// versions, on a given Google Cloud location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L600}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest,google/cloud/gkemulticloud/v1/azure_service.proto#L603}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureServerConfig,google/cloud/gkemulticloud/v1/azure_resources.proto#L629}
+  /// @googleapis_link{google::cloud::gkemulticloud::v1::AzureServerConfig,google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
   ///
   /// [google.cloud.gkemulticloud.v1.AzureServerConfig]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L629}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_resources.proto#L649}
   /// [google.cloud.gkemulticloud.v1.GetAzureServerConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L600}
+  /// @googleapis_reference_link{google/cloud/gkemulticloud/v1/azure_service.proto#L603}
   ///
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(

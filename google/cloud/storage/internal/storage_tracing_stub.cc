@@ -130,50 +130,51 @@ StatusOr<google::storage::v2::Bucket> StorageTracingStub::UpdateBucket(
                            child_->UpdateBucket(context, request));
 }
 
-Status StorageTracingStub::DeleteNotification(
+Status StorageTracingStub::DeleteNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::DeleteNotificationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteNotification");
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "DeleteNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
-                           child_->DeleteNotification(context, request));
+                           child_->DeleteNotificationConfig(context, request));
 }
 
-StatusOr<google::storage::v2::Notification> StorageTracingStub::GetNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageTracingStub::GetNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::GetNotificationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.storage.v2.Storage", "GetNotification");
+    google::storage::v2::GetNotificationConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "GetNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
-                           child_->GetNotification(context, request));
+                           child_->GetNotificationConfig(context, request));
 }
 
-StatusOr<google::storage::v2::Notification>
-StorageTracingStub::CreateNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageTracingStub::CreateNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::CreateNotificationRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.storage.v2.Storage", "CreateNotification");
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "CreateNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
-                           child_->CreateNotification(context, request));
+                           child_->CreateNotificationConfig(context, request));
 }
 
-StatusOr<google::storage::v2::ListNotificationsResponse>
-StorageTracingStub::ListNotifications(
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageTracingStub::ListNotificationConfigs(
     grpc::ClientContext& context,
-    google::storage::v2::ListNotificationsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.storage.v2.Storage", "ListNotifications");
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "ListNotificationConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span,
-                           child_->ListNotifications(context, request));
+                           child_->ListNotificationConfigs(context, request));
 }
 
 StatusOr<google::storage::v2::Object> StorageTracingStub::ComposeObject(

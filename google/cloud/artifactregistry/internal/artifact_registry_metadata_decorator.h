@@ -47,6 +47,41 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
       google::devtools::artifactregistry::v1::GetDockerImageRequest const&
           request) override;
 
+  StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
+  ListMavenArtifacts(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+  GetMavenArtifact(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
+  ListNpmPackages(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
+  ListPythonPackages(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+  GetPythonPackage(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncImportAptArtifacts(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -179,6 +214,17 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
       grpc::ClientContext& context,
       google::devtools::artifactregistry::v1::
           UpdateProjectSettingsRequest const& request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+          request) override;
+
+  StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  UpdateVPCSCConfig(
+      grpc::ClientContext& context,
+      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

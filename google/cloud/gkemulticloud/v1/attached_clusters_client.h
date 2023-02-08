@@ -92,7 +92,7 @@ class AttachedClustersClient {
   ///
   /// Creates a new
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
-  /// on a given GCP project and region.
+  /// on a given Google Cloud Platform project and region.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
@@ -138,7 +138,7 @@ class AttachedClustersClient {
   ///
   /// Creates a new
   /// [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource
-  /// on a given GCP project and region.
+  /// on a given Google Cloud Platform project and region.
   ///
   /// If successful, the response contains a newly created
   /// [Operation][google.longrunning.Operation] resource that can be
@@ -298,7 +298,7 @@ class AttachedClustersClient {
   ///  `AttachedCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
-  ///  for more details on GCP resource names.
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -343,7 +343,7 @@ class AttachedClustersClient {
   ///  resources. Location names are formatted as
   ///  `projects/<project-id>/locations/<region>`. See [Resource
   ///  Names](https://cloud.google.com/apis/design/resource_names) for more
-  ///  details on GCP resource names.
+  ///  details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -391,7 +391,7 @@ class AttachedClustersClient {
   ///  delete. `AttachedCluster` names are formatted as
   ///  `projects/<project-id>/locations/<region>/attachedClusters/<cluster-id>`.
   ///  See [Resource Names](https://cloud.google.com/apis/design/resource_names)
-  ///  for more details on GCP resource names.
+  ///  for more details on Google Cloud Platform resource names.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -495,8 +495,8 @@ class AttachedClustersClient {
   ///  `projects/<project-id>/locations/<region>`. See [Resource
   ///  Names](https://cloud.google.com/apis/design/resource_names) for more
   ///  details on Google Cloud resource names.
-  /// @param attached_cluster_id  Required. A client provided ID the resource.
-  /// Must be unique within the
+  /// @param attached_cluster_id  Required. A client provided ID of the
+  /// resource. Must be unique within the
   ///  parent resource.
   ///  The provided ID will be part of the
   ///  [AttachedCluster][google.cloud.gkemulticloud.v1.AttachedCluster] resource

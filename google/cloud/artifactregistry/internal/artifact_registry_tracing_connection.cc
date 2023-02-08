@@ -54,6 +54,72 @@ ArtifactRegistryTracingConnection::GetDockerImage(
   return internal::EndSpan(*span, child_->GetDockerImage(request));
 }
 
+StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryTracingConnection::ListMavenArtifacts(
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListMavenArtifacts");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListMavenArtifacts(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::MavenArtifact>(
+      std::move(span), std::move(scope), std::move(sr));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryTracingConnection::GetMavenArtifact(
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetMavenArtifact");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMavenArtifact(request));
+}
+
+StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryTracingConnection::ListNpmPackages(
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListNpmPackages");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListNpmPackages(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::NpmPackage>(
+      std::move(span), std::move(scope), std::move(sr));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryTracingConnection::GetNpmPackage(
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetNpmPackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNpmPackage(request));
+}
+
+StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryTracingConnection::ListPythonPackages(
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::ListPythonPackages");
+  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto sr = child_->ListPythonPackages(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::devtools::artifactregistry::v1::PythonPackage>(
+      std::move(span), std::move(scope), std::move(sr));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryTracingConnection::GetPythonPackage(
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetPythonPackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPythonPackage(request));
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryTracingConnection::ImportAptArtifacts(
@@ -285,6 +351,26 @@ ArtifactRegistryTracingConnection::UpdateProjectSettings(
       "artifactregistry::ArtifactRegistryConnection::UpdateProjectSettings");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateProjectSettings(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryTracingConnection::GetVPCSCConfig(
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetVPCSCConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVPCSCConfig(request));
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryTracingConnection::UpdateVPCSCConfig(
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::UpdateVPCSCConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateVPCSCConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -7,4 +7,5 @@
 @com_google_googleapis//google/devtools/artifactregistry/v1:settings.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:tag.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:version.proto
+@com_google_googleapis//google/devtools/artifactregistry/v1:vpcsc_config.proto
 @com_google_googleapis//google/devtools/artifactregistry/v1:yum_artifact.proto

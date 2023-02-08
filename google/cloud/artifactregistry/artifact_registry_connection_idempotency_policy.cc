@@ -46,6 +46,38 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetDockerImage(
   return Idempotency::kIdempotent;
 }
 
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListMavenArtifacts(
+    google::devtools::artifactregistry::v1::
+        ListMavenArtifactsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetMavenArtifact(
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListNpmPackages(
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetNpmPackage(
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListPythonPackages(
+    google::devtools::artifactregistry::v1::
+        ListPythonPackagesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetPythonPackage(
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportAptArtifacts(
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -171,6 +203,16 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetProjectSettings(
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateProjectSettings(
     google::devtools::artifactregistry::v1::
         UpdateProjectSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetVPCSCConfig(
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVPCSCConfig(
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

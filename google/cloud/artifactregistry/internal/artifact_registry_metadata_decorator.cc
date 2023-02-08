@@ -52,6 +52,60 @@ ArtifactRegistryMetadata::GetDockerImage(
   return child_->GetDockerImage(context, request);
 }
 
+StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
+ArtifactRegistryMetadata::ListMavenArtifacts(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListMavenArtifacts(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryMetadata::GetMavenArtifact(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetMavenArtifact(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
+ArtifactRegistryMetadata::ListNpmPackages(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListNpmPackages(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryMetadata::GetNpmPackage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetNpmPackage(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
+ArtifactRegistryMetadata::ListPythonPackages(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListPythonPackages(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryMetadata::GetPythonPackage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetPythonPackage(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -267,6 +321,24 @@ ArtifactRegistryMetadata::UpdateProjectSettings(
   SetMetadata(context,
               "project_settings.name=" + request.project_settings().name());
   return child_->UpdateProjectSettings(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryMetadata::GetVPCSCConfig(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetVPCSCConfig(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryMetadata::UpdateVPCSCConfig(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
+  SetMetadata(context, "vpcsc_config.name=" + request.vpcsc_config().name());
+  return child_->UpdateVPCSCConfig(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

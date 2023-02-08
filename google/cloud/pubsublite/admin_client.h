@@ -93,10 +93,11 @@ class AdminServiceClient {
   /// @param parent  Required. The parent location in which to create the topic.
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @param topic  Required. Configuration of the topic to create. Its `name`
-  /// field is ignored.
+  /// field is
+  ///  ignored.
   /// @param topic_id  Required. The ID to use for the topic, which will become
-  /// the final component of
-  ///  the topic's name.
+  /// the final
+  ///  component of the topic's name.
   ///  This value is structured like: `my-topic-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -104,7 +105,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L227}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L236}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -117,14 +118,14 @@ class AdminServiceClient {
   /// Creates a new topic.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L227}
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L236}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   /// [google.cloud.pubsublite.v1.CreateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L227}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L236}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -143,7 +144,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   /// [google.cloud.pubsublite.v1.GetTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L248}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L258}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -154,14 +155,14 @@ class AdminServiceClient {
   /// Returns the topic configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L248}
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicRequest,google/cloud/pubsublite/v1/admin.proto#L258}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   /// [google.cloud.pubsublite.v1.GetTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L248}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L258}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -176,12 +177,12 @@ class AdminServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
   /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
       std::string const& name, Options opts = {});
@@ -190,16 +191,16 @@ class AdminServiceClient {
   /// Returns the partition information for the requested topic.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L269}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
   /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
@@ -216,7 +217,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L276}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L286}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -227,14 +228,14 @@ class AdminServiceClient {
   /// Returns the list of topics for the given project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L276}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L286}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Topic,google/cloud/pubsublite/v1/common.proto#L102}
   ///
   /// [google.cloud.pubsublite.v1.ListTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L276}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L286}
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   ///
@@ -257,7 +258,7 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
   ///
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::Topic const& topic,
@@ -267,7 +268,7 @@ class AdminServiceClient {
   /// Updates properties of the specified topic.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L311}
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateTopicRequest,google/cloud/pubsublite/v1/admin.proto#L321}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -276,7 +277,7 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Topic]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L102}
   /// [google.cloud.pubsublite.v1.UpdateTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L311}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L321}
   ///
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
       google::cloud::pubsublite::v1::UpdateTopicRequest const& request,
@@ -290,7 +291,7 @@ class AdminServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L320}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
   ///
   Status DeleteTopic(std::string const& name, Options opts = {});
 
@@ -298,12 +299,12 @@ class AdminServiceClient {
   /// Deletes the specified topic.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L320}
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteTopicRequest,google/cloud/pubsublite/v1/admin.proto#L331}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.pubsublite.v1.DeleteTopicRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L320}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
   ///
   Status DeleteTopic(
       google::cloud::pubsublite::v1::DeleteTopicRequest const& request,
@@ -318,7 +319,7 @@ class AdminServiceClient {
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
   ///
   StreamRange<std::string> ListTopicSubscriptions(std::string const& name,
                                                   Options opts = {});
@@ -327,13 +328,13 @@ class AdminServiceClient {
   /// Lists the subscriptions attached to the specified topic.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L331}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L342}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListTopicSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L331}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L342}
   ///
   StreamRange<std::string> ListTopicSubscriptions(
       google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request,
@@ -346,10 +347,11 @@ class AdminServiceClient {
   /// subscription.
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @param subscription  Required. Configuration of the subscription to
-  /// create. Its `name` field is ignored.
+  /// create. Its `name` field is
+  ///  ignored.
   /// @param subscription_id  Required. The ID to use for the subscription,
-  /// which will become the final component
-  ///  of the subscription's name.
+  /// which will become the final
+  ///  component of the subscription's name.
   ///  This value is structured like: `my-sub-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -357,7 +359,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L365}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L376}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -370,14 +372,14 @@ class AdminServiceClient {
   /// Creates a new subscription.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L365}
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L376}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   /// [google.cloud.pubsublite.v1.CreateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L365}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L376}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -396,7 +398,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L391}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L403}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -407,14 +409,14 @@ class AdminServiceClient {
   /// Returns the subscription configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L391}
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L403}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   /// [google.cloud.pubsublite.v1.GetSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L391}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L403}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -433,7 +435,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L402}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L414}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -444,14 +446,14 @@ class AdminServiceClient {
   /// Returns the list of subscriptions for the given project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L402}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListSubscriptionsRequest,google/cloud/pubsublite/v1/admin.proto#L414}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Subscription,google/cloud/pubsublite/v1/common.proto#L186}
   ///
   /// [google.cloud.pubsublite.v1.ListSubscriptionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L402}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L414}
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   ///
@@ -475,7 +477,7 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L437}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
   ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::Subscription const& subscription,
@@ -485,7 +487,7 @@ class AdminServiceClient {
   /// Updates properties of the specified subscription.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L437}
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L449}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -494,7 +496,7 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Subscription]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L186}
   /// [google.cloud.pubsublite.v1.UpdateSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L437}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L449}
   ///
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request,
@@ -508,7 +510,7 @@ class AdminServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L447}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
   ///
   Status DeleteSubscription(std::string const& name, Options opts = {});
 
@@ -516,12 +518,12 @@ class AdminServiceClient {
   /// Deletes the specified subscription.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L447}
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L460}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.pubsublite.v1.DeleteSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L447}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L460}
   ///
   Status DeleteSubscription(
       google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request,
@@ -551,16 +553,16 @@ class AdminServiceClient {
   /// and the new invocation of seek will supersede it.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L458}
+  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionRequest,google/cloud/pubsublite/v1/admin.proto#L471}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionResponse,google/cloud/pubsublite/v1/admin.proto#L493}
+  /// @googleapis_link{google::cloud::pubsublite::v1::SeekSubscriptionResponse,google/cloud/pubsublite/v1/admin.proto#L506}
   ///
   /// [google.cloud.pubsublite.v1.SeekSubscriptionRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L458}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L471}
   /// [google.cloud.pubsublite.v1.SeekSubscriptionResponse]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L493}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L506}
   ///
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
   SeekSubscription(
@@ -574,10 +576,11 @@ class AdminServiceClient {
   /// reservation.
   ///  Structured like `projects/{project_number}/locations/{location}`.
   /// @param reservation  Required. Configuration of the reservation to create.
-  /// Its `name` field is ignored.
+  /// Its `name` field is
+  ///  ignored.
   /// @param reservation_id  Required. The ID to use for the reservation, which
-  /// will become the final component of
-  ///  the reservation's name.
+  /// will become the final
+  ///  component of the reservation's name.
   ///  This value is structured like: `my-reservation-name`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -585,7 +588,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L516}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L527}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -598,14 +601,14 @@ class AdminServiceClient {
   /// Creates a new reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L516}
+  /// @googleapis_link{google::cloud::pubsublite::v1::CreateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L527}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   /// [google.cloud.pubsublite.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L516}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L527}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -626,7 +629,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   /// [google.cloud.pubsublite.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L537}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L549}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -637,14 +640,14 @@ class AdminServiceClient {
   /// Returns the reservation configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetReservationRequest,google/cloud/pubsublite/v1/admin.proto#L537}
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetReservationRequest,google/cloud/pubsublite/v1/admin.proto#L549}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   /// [google.cloud.pubsublite.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L537}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L549}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -663,7 +666,7 @@ class AdminServiceClient {
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L550}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L562}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -674,14 +677,14 @@ class AdminServiceClient {
   /// Returns the list of reservations for the given project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L550}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationsRequest,google/cloud/pubsublite/v1/admin.proto#L562}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::pubsublite::v1::Reservation,google/cloud/pubsublite/v1/common.proto#L80}
   ///
   /// [google.cloud.pubsublite.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L550}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L562}
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   ///
@@ -704,7 +707,7 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
   ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::Reservation const& reservation,
@@ -714,7 +717,7 @@ class AdminServiceClient {
   /// Updates properties of the specified reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L585}
+  /// @googleapis_link{google::cloud::pubsublite::v1::UpdateReservationRequest,google/cloud/pubsublite/v1/admin.proto#L597}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -723,7 +726,7 @@ class AdminServiceClient {
   /// [google.cloud.pubsublite.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/pubsublite/v1/common.proto#L80}
   /// [google.cloud.pubsublite.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L585}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L597}
   ///
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
       google::cloud::pubsublite::v1::UpdateReservationRequest const& request,
@@ -739,7 +742,7 @@ class AdminServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L594}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
   ///
   Status DeleteReservation(std::string const& name, Options opts = {});
 
@@ -747,12 +750,12 @@ class AdminServiceClient {
   /// Deletes the specified reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L594}
+  /// @googleapis_link{google::cloud::pubsublite::v1::DeleteReservationRequest,google/cloud/pubsublite/v1/admin.proto#L607}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.pubsublite.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L594}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
   ///
   Status DeleteReservation(
       google::cloud::pubsublite::v1::DeleteReservationRequest const& request,
@@ -769,7 +772,7 @@ class AdminServiceClient {
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
   ///
   StreamRange<std::string> ListReservationTopics(std::string const& name,
                                                  Options opts = {});
@@ -778,13 +781,13 @@ class AdminServiceClient {
   /// Lists the topics attached to the specified reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L607}
+  /// @googleapis_link{google::cloud::pubsublite::v1::ListReservationTopicsRequest,google/cloud/pubsublite/v1/admin.proto#L620}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return std::string
   ///
   /// [google.cloud.pubsublite.v1.ListReservationTopicsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L607}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L620}
   ///
   StreamRange<std::string> ListReservationTopics(
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request,
@@ -797,12 +800,12 @@ class AdminServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
   /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
   AsyncGetTopicPartitions(std::string const& name, Options opts = {});
@@ -811,16 +814,16 @@ class AdminServiceClient {
   /// Returns the partition information for the requested topic.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L269}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L269}
   /// [google.cloud.pubsublite.v1.TopicPartitions]:
-  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L280}
   ///
   future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
   AsyncGetTopicPartitions(

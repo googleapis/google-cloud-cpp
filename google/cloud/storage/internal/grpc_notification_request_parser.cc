@@ -21,41 +21,42 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-google::storage::v2::DeleteNotificationRequest ToProto(
+google::storage::v2::DeleteNotificationConfigRequest ToProto(
     storage::internal::DeleteNotificationRequest const& rhs) {
-  google::storage::v2::DeleteNotificationRequest request;
+  google::storage::v2::DeleteNotificationConfigRequest request;
   request.set_name(GrpcBucketIdToName(rhs.bucket_name()) +
                    "/notificationConfigs/" + rhs.notification_id());
   return request;
 }
 
-google::storage::v2::GetNotificationRequest ToProto(
+google::storage::v2::GetNotificationConfigRequest ToProto(
     storage::internal::GetNotificationRequest const& rhs) {
-  google::storage::v2::GetNotificationRequest request;
+  google::storage::v2::GetNotificationConfigRequest request;
   request.set_name(GrpcBucketIdToName(rhs.bucket_name()) +
                    "/notificationConfigs/" + rhs.notification_id());
   return request;
 }
 
-google::storage::v2::CreateNotificationRequest ToProto(
+google::storage::v2::CreateNotificationConfigRequest ToProto(
     storage::internal::CreateNotificationRequest const& rhs) {
-  google::storage::v2::CreateNotificationRequest request;
+  google::storage::v2::CreateNotificationConfigRequest request;
   request.set_parent(GrpcBucketIdToName(rhs.bucket_name()));
-  *request.mutable_notification() = storage_internal::ToProto(rhs.metadata());
+  *request.mutable_notification_config() =
+      storage_internal::ToProto(rhs.metadata());
   return request;
 }
 
-google::storage::v2::ListNotificationsRequest ToProto(
+google::storage::v2::ListNotificationConfigsRequest ToProto(
     storage::internal::ListNotificationsRequest const& rhs) {
-  google::storage::v2::ListNotificationsRequest request;
+  google::storage::v2::ListNotificationConfigsRequest request;
   request.set_parent(GrpcBucketIdToName(rhs.bucket_name()));
   return request;
 }
 
 storage::internal::ListNotificationsResponse FromProto(
-    google::storage::v2::ListNotificationsResponse const& rhs) {
+    google::storage::v2::ListNotificationConfigsResponse const& rhs) {
   storage::internal::ListNotificationsResponse response;
-  for (auto const& i : rhs.notifications()) {
+  for (auto const& i : rhs.notification_configs()) {
     response.items.push_back(storage_internal::FromProto(i));
   }
   return response;

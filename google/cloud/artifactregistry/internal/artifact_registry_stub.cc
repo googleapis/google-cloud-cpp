@@ -57,6 +57,89 @@ DefaultArtifactRegistryStub::GetDockerImage(
   return response;
 }
 
+StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
+DefaultArtifactRegistryStub::ListMavenArtifacts(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListMavenArtifactsResponse response;
+  auto status =
+      grpc_stub_->ListMavenArtifacts(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+DefaultArtifactRegistryStub::GetMavenArtifact(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::MavenArtifact response;
+  auto status =
+      grpc_stub_->GetMavenArtifact(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
+DefaultArtifactRegistryStub::ListNpmPackages(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListNpmPackagesResponse response;
+  auto status =
+      grpc_stub_->ListNpmPackages(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+DefaultArtifactRegistryStub::GetNpmPackage(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::NpmPackage response;
+  auto status = grpc_stub_->GetNpmPackage(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
+DefaultArtifactRegistryStub::ListPythonPackages(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::ListPythonPackagesResponse response;
+  auto status =
+      grpc_stub_->ListPythonPackages(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+DefaultArtifactRegistryStub::GetPythonPackage(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::PythonPackage response;
+  auto status =
+      grpc_stub_->GetPythonPackage(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -386,6 +469,33 @@ DefaultArtifactRegistryStub::UpdateProjectSettings(
   google::devtools::artifactregistry::v1::ProjectSettings response;
   auto status =
       grpc_stub_->UpdateProjectSettings(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+DefaultArtifactRegistryStub::GetVPCSCConfig(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::VPCSCConfig response;
+  auto status = grpc_stub_->GetVPCSCConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+DefaultArtifactRegistryStub::UpdateVPCSCConfig(
+    grpc::ClientContext& client_context,
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
+  google::devtools::artifactregistry::v1::VPCSCConfig response;
+  auto status =
+      grpc_stub_->UpdateVPCSCConfig(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

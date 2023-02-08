@@ -139,47 +139,52 @@ StatusOr<google::storage::v2::Bucket> StorageLogging::UpdateBucket(
       context, request, __func__, tracing_options_);
 }
 
-Status StorageLogging::DeleteNotification(
+Status StorageLogging::DeleteNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::DeleteNotificationRequest const& request) {
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::storage::v2::DeleteNotificationRequest const& request) {
-        return child_->DeleteNotification(context, request);
+      [this](
+          grpc::ClientContext& context,
+          google::storage::v2::DeleteNotificationConfigRequest const& request) {
+        return child_->DeleteNotificationConfig(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Notification> StorageLogging::GetNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageLogging::GetNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::GetNotificationRequest const& request) {
+    google::storage::v2::GetNotificationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::storage::v2::GetNotificationRequest const& request) {
-        return child_->GetNotification(context, request);
+             google::storage::v2::GetNotificationConfigRequest const& request) {
+        return child_->GetNotificationConfig(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::Notification> StorageLogging::CreateNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageLogging::CreateNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::CreateNotificationRequest const& request) {
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::storage::v2::CreateNotificationRequest const& request) {
-        return child_->CreateNotification(context, request);
+      [this](
+          grpc::ClientContext& context,
+          google::storage::v2::CreateNotificationConfigRequest const& request) {
+        return child_->CreateNotificationConfig(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::v2::ListNotificationsResponse>
-StorageLogging::ListNotifications(
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageLogging::ListNotificationConfigs(
     grpc::ClientContext& context,
-    google::storage::v2::ListNotificationsRequest const& request) {
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::storage::v2::ListNotificationsRequest const& request) {
-        return child_->ListNotifications(context, request);
+      [this](
+          grpc::ClientContext& context,
+          google::storage::v2::ListNotificationConfigsRequest const& request) {
+        return child_->ListNotificationConfigs(context, request);
       },
       context, request, __func__, tracing_options_);
 }
