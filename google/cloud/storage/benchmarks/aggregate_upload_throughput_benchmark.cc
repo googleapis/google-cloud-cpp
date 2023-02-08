@@ -320,7 +320,9 @@ UploadDetail UploadOneObject(gcs::Client& client,
   while (object_bytes < upload.object_size) {
     auto n = std::min(static_cast<std::uint64_t>(buffer_size),
                       upload.object_size - object_bytes);
-    if (!stream.write(write_block.data(), n)) break;
+    if (!stream.write(write_block.data(), static_cast<std::streamsize>(n))) {
+      break;
+    }
     object_bytes += n;
   }
   stream.Close();
