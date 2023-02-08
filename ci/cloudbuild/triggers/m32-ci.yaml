@@ -1,0 +1,14 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  push:
+    branch: ^main$
+name: m32-ci
+substitutions:
+  _BUILD_NAME: m32
+  _DISTRO: fedora-m32
+  _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
+tags:
+- ci

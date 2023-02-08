@@ -1,0 +1,15 @@
+filename: ci/cloudbuild/cloudbuild.yaml
+github:
+  name: google-cloud-cpp
+  owner: googleapis
+  pullRequest:
+    branch: ^main$
+    commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
+name: m32-pr
+substitutions:
+  _BUILD_NAME: m32
+  _DISTRO: fedora-m32
+  _TRIGGER_TYPE: pr
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
+tags:
+- pr
