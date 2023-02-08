@@ -39,8 +39,29 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
-absl::Time MakeTime(std::time_t sec, int nanos) {
-  return absl::FromTimeT(sec) + absl::Nanoseconds(nanos);
+absl::Time MakeTime(std::int64_t sec, int nanos) {
+  return absl::FromUnixSeconds(sec) + absl::Nanoseconds(nanos);
+}
+
+std::vector<Timestamp> TestTimes() {
+  std::vector<Timestamp> times;
+  for (auto s : {
+           std::int64_t{-9223372035LL},  // near the limit of 64-bit/ns clock
+           std::int64_t{-2147483649LL},  // below min 32-bit value
+           std::int64_t{-2147483648LL},  // min 32-bit value
+           std::int64_t{-1},             // just before Unix epoch
+           std::int64_t{0},              // Unix epoch
+           std::int64_t{1},              // just after Unix epoch
+           std::int64_t{1561147549LL},   // contemporary
+           std::int64_t{2147483647LL},   // max 32-bit value
+           std::int64_t{2147483648LL},   // above max 32-bit value
+           std::int64_t{9223372036LL},   // near the limit of 64-bit/ns clock
+       }) {
+    for (auto nanos : {-1, 0, 1}) {
+      times.push_back(MakeTimestamp(MakeTime(s, nanos)).value());
+    }
+  }
+  return times;
 }
 
 template <typename T>
@@ -177,27 +198,15 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
-  for (time_t t : {
-           -9223372035LL,   // near the limit of 64-bit/ns system_clock
-           -2147483649LL,   // below min 32-bit int
-           -2147483648LL,   // min 32-bit int
-           -1LL, 0LL, 1LL,  // around the unix epoch
-           1561147549LL,    // contemporary
-           2147483647LL,    // max 32-bit int
-           2147483648LL,    // above max 32-bit int
-           9223372036LL     // near the limit of 64-bit/ns system_clock
-       }) {
-    for (auto nanos : {-1, 0, 1}) {
-      auto ts = MakeTimestamp(MakeTime(t, nanos)).value();
-      SCOPED_TRACE("Testing: google::cloud::spanner::Timestamp " +
-                   spanner_internal::TimestampToRFC3339(ts));
-      TestBasicSemantics(ts);
-      std::vector<Timestamp> v(5, ts);
-      TestBasicSemantics(v);
-      std::vector<absl::optional<Timestamp>> ov(5, ts);
-      ov.resize(10);
-      TestBasicSemantics(ov);
-    }
+  for (auto ts : TestTimes()) {
+    SCOPED_TRACE("Testing: google::cloud::spanner::Timestamp " +
+                 spanner_internal::TimestampToRFC3339(ts));
+    TestBasicSemantics(ts);
+    std::vector<Timestamp> v(5, ts);
+    TestBasicSemantics(v);
+    std::vector<absl::optional<Timestamp>> ov(5, ts);
+    ov.resize(10);
+    TestBasicSemantics(ov);
   }
 
   for (auto x : {
@@ -751,25 +760,13 @@ TEST(Value, ProtoConversionNumeric) {
 }
 
 TEST(Value, ProtoConversionTimestamp) {
-  for (time_t t : {
-           -9223372035LL,   // near the limit of 64-bit/ns system_clock
-           -2147483649LL,   // below min 32-bit int
-           -2147483648LL,   // min 32-bit int
-           -1LL, 0LL, 1LL,  // around the unix epoch
-           1561147549LL,    // contemporary
-           2147483647LL,    // max 32-bit int
-           2147483648LL,    // above max 32-bit int
-           9223372036LL     // near the limit of 64-bit/ns system_clock
-       }) {
-    for (auto nanos : {-1, 0, 1}) {
-      auto ts = MakeTimestamp(MakeTime(t, nanos)).value();
-      Value const v(ts);
-      auto const p = spanner_internal::ToProto(v);
-      EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
-      EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, p.first.code());
-      EXPECT_EQ(spanner_internal::TimestampToRFC3339(ts),
-                p.second.string_value());
-    }
+  for (auto ts : TestTimes()) {
+    Value const v(ts);
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, p.first.code());
+    EXPECT_EQ(spanner_internal::TimestampToRFC3339(ts),
+              p.second.string_value());
   }
 }
 
