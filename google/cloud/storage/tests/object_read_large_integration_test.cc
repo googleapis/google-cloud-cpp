@@ -40,7 +40,7 @@ std::size_t CurrentRss() {
   std::vector<std::string> fields = absl::StrSplit(
       std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}}, ' ');
   // The fields are documented in proc(5).
-  return std::stoull(fields[1]) * 4096;
+  return static_cast<std::size_t>(std::stoull(fields[1])) * 4096;
 }
 
 std::string DebugRss() {
