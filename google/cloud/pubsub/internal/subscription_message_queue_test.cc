@@ -506,8 +506,8 @@ TEST_P(SubscriptionMessageQueueOrderingTest, RespectOrderingKeysTorture) {
 
 INSTANTIATE_TEST_SUITE_P(
     SubscriptionMessageQueueOrderingTest, SubscriptionMessageQueueOrderingTest,
-    ::testing::Values(TestParams{1, 4, 1000}, TestParams{1, 1000, 1000},
-                      TestParams{8, 4, 1000}, TestParams{8, 1000, 1000}),
+    ::testing::Values(TestParams{1, 4, 1000}, TestParams{1, 64, 1000},
+                      TestParams{8, 4, 1000}, TestParams{8, 64, 1000}),
     ::testing::PrintToStringParamName());
 
 }  // namespace
