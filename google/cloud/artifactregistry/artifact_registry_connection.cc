@@ -50,6 +50,48 @@ ArtifactRegistryConnection::GetDockerImage(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryConnection::ListMavenArtifacts(
+    google::devtools::artifactregistry::v1::
+        ListMavenArtifactsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>>();
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryConnection::GetMavenArtifact(
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryConnection::ListNpmPackages(
+    google::devtools::artifactregistry::v1::
+        ListNpmPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::NpmPackage>>();
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryConnection::GetNpmPackage(
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryConnection::ListPythonPackages(
+    google::devtools::artifactregistry::v1::
+        ListPythonPackagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::devtools::artifactregistry::v1::PythonPackage>>();
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryConnection::GetPythonPackage(
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryConnection::ImportAptArtifacts(
@@ -219,6 +261,18 @@ StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryConnection::UpdateProjectSettings(
     google::devtools::artifactregistry::v1::
         UpdateProjectSettingsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryConnection::GetVPCSCConfig(
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryConnection::UpdateVPCSCConfig(
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

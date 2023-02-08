@@ -76,6 +76,35 @@ class ArtifactRegistryConnection {
       google::devtools::artifactregistry::v1::GetDockerImageRequest const&
           request);
 
+  virtual StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>
+  ListMavenArtifacts(
+      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest
+          request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+  GetMavenArtifact(
+      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+          request);
+
+  virtual StreamRange<google::devtools::artifactregistry::v1::NpmPackage>
+  ListNpmPackages(
+      google::devtools::artifactregistry::v1::ListNpmPackagesRequest request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+  GetNpmPackage(
+      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+          request);
+
+  virtual StreamRange<google::devtools::artifactregistry::v1::PythonPackage>
+  ListPythonPackages(
+      google::devtools::artifactregistry::v1::ListPythonPackagesRequest
+          request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+  GetPythonPackage(
+      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+          request);
+
   virtual future<StatusOr<
       google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
   ImportAptArtifacts(
@@ -177,6 +206,16 @@ class ArtifactRegistryConnection {
   virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
   UpdateProjectSettings(google::devtools::artifactregistry::v1::
                             UpdateProjectSettingsRequest const& request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  GetVPCSCConfig(
+      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+          request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+  UpdateVPCSCConfig(
+      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request);
 };
 
 /**

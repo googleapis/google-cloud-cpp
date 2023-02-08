@@ -137,50 +137,51 @@ StatusOr<google::storage::v2::Bucket> DefaultStorageStub::UpdateBucket(
   return response;
 }
 
-Status DefaultStorageStub::DeleteNotification(
+Status DefaultStorageStub::DeleteNotificationConfig(
     grpc::ClientContext& client_context,
-    google::storage::v2::DeleteNotificationRequest const& request) {
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
   google::protobuf::Empty response;
   auto status =
-      grpc_stub_->DeleteNotification(&client_context, request, &response);
+      grpc_stub_->DeleteNotificationConfig(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return google::cloud::Status();
 }
 
-StatusOr<google::storage::v2::Notification> DefaultStorageStub::GetNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+DefaultStorageStub::GetNotificationConfig(
     grpc::ClientContext& client_context,
-    google::storage::v2::GetNotificationRequest const& request) {
-  google::storage::v2::Notification response;
+    google::storage::v2::GetNotificationConfigRequest const& request) {
+  google::storage::v2::NotificationConfig response;
   auto status =
-      grpc_stub_->GetNotification(&client_context, request, &response);
+      grpc_stub_->GetNotificationConfig(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
 }
 
-StatusOr<google::storage::v2::Notification>
-DefaultStorageStub::CreateNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+DefaultStorageStub::CreateNotificationConfig(
     grpc::ClientContext& client_context,
-    google::storage::v2::CreateNotificationRequest const& request) {
-  google::storage::v2::Notification response;
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
+  google::storage::v2::NotificationConfig response;
   auto status =
-      grpc_stub_->CreateNotification(&client_context, request, &response);
+      grpc_stub_->CreateNotificationConfig(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
 }
 
-StatusOr<google::storage::v2::ListNotificationsResponse>
-DefaultStorageStub::ListNotifications(
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+DefaultStorageStub::ListNotificationConfigs(
     grpc::ClientContext& client_context,
-    google::storage::v2::ListNotificationsRequest const& request) {
-  google::storage::v2::ListNotificationsResponse response;
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
+  google::storage::v2::ListNotificationConfigsResponse response;
   auto status =
-      grpc_stub_->ListNotifications(&client_context, request, &response);
+      grpc_stub_->ListNotificationConfigs(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

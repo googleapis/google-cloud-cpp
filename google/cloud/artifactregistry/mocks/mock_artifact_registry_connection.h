@@ -61,6 +61,47 @@ class MockArtifactRegistryConnection
       (override));
 
   MOCK_METHOD(
+      StreamRange<google::devtools::artifactregistry::v1::MavenArtifact>,
+      ListMavenArtifacts,
+      (google::devtools::artifactregistry::v1::ListMavenArtifactsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>,
+      GetMavenArtifact,
+      (google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::devtools::artifactregistry::v1::NpmPackage>,
+      ListNpmPackages,
+      (google::devtools::artifactregistry::v1::ListNpmPackagesRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::NpmPackage>,
+      GetNpmPackage,
+      (google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::devtools::artifactregistry::v1::PythonPackage>,
+      ListPythonPackages,
+      (google::devtools::artifactregistry::v1::ListPythonPackagesRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::PythonPackage>,
+      GetPythonPackage,
+      (google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>,
       ImportAptArtifacts,
@@ -211,6 +252,20 @@ class MockArtifactRegistryConnection
               (google::devtools::artifactregistry::v1::
                    UpdateProjectSettingsRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>,
+      GetVPCSCConfig,
+      (google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>,
+      UpdateVPCSCConfig,
+      (google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

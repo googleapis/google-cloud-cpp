@@ -45,6 +45,29 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
       google::devtools::artifactregistry::v1::GetDockerImageRequest const&
           request);
 
+  virtual google::cloud::Idempotency ListMavenArtifacts(
+      google::devtools::artifactregistry::v1::ListMavenArtifactsRequest
+          request);
+
+  virtual google::cloud::Idempotency GetMavenArtifact(
+      google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListNpmPackages(
+      google::devtools::artifactregistry::v1::ListNpmPackagesRequest request);
+
+  virtual google::cloud::Idempotency GetNpmPackage(
+      google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListPythonPackages(
+      google::devtools::artifactregistry::v1::ListPythonPackagesRequest
+          request);
+
+  virtual google::cloud::Idempotency GetPythonPackage(
+      google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+          request);
+
   virtual google::cloud::Idempotency ImportAptArtifacts(
       google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
           request);
@@ -129,6 +152,14 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency UpdateProjectSettings(
       google::devtools::artifactregistry::v1::
           UpdateProjectSettingsRequest const& request);
+
+  virtual google::cloud::Idempotency GetVPCSCConfig(
+      google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateVPCSCConfig(
+      google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+          request);
 };
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>

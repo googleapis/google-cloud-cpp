@@ -50,6 +50,66 @@ ArtifactRegistryAuth::GetDockerImage(
   return child_->GetDockerImage(context, request);
 }
 
+StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
+ArtifactRegistryAuth::ListMavenArtifacts(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListMavenArtifacts(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
+ArtifactRegistryAuth::GetMavenArtifact(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetMavenArtifact(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
+ArtifactRegistryAuth::ListNpmPackages(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListNpmPackages(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
+ArtifactRegistryAuth::GetNpmPackage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetNpmPackage(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
+ArtifactRegistryAuth::ListPythonPackages(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListPythonPackages(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
+ArtifactRegistryAuth::GetPythonPackage(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetPythonPackage(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryAuth::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
@@ -343,6 +403,26 @@ ArtifactRegistryAuth::UpdateProjectSettings(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateProjectSettings(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryAuth::GetVPCSCConfig(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetVPCSCConfig(context, request);
+}
+
+StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
+ArtifactRegistryAuth::UpdateVPCSCConfig(
+    grpc::ClientContext& context,
+    google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateVPCSCConfig(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

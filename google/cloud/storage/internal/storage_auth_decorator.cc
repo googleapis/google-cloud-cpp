@@ -106,37 +106,39 @@ StatusOr<google::storage::v2::Bucket> StorageAuth::UpdateBucket(
   return child_->UpdateBucket(context, request);
 }
 
-Status StorageAuth::DeleteNotification(
+Status StorageAuth::DeleteNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::DeleteNotificationRequest const& request) {
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteNotification(context, request);
+  return child_->DeleteNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::Notification> StorageAuth::GetNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageAuth::GetNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::GetNotificationRequest const& request) {
+    google::storage::v2::GetNotificationConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNotification(context, request);
+  return child_->GetNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::Notification> StorageAuth::CreateNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageAuth::CreateNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::CreateNotificationRequest const& request) {
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateNotification(context, request);
+  return child_->CreateNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::ListNotificationsResponse>
-StorageAuth::ListNotifications(
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageAuth::ListNotificationConfigs(
     grpc::ClientContext& context,
-    google::storage::v2::ListNotificationsRequest const& request) {
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNotifications(context, request);
+  return child_->ListNotificationConfigs(context, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageAuth::ComposeObject(

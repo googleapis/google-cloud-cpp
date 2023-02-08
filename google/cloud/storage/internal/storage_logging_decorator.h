@@ -75,21 +75,26 @@ class StorageLogging : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) override;
 
-  Status DeleteNotification(
+  Status DeleteNotificationConfig(
       grpc::ClientContext& context,
-      google::storage::v2::DeleteNotificationRequest const& request) override;
+      google::storage::v2::DeleteNotificationConfigRequest const& request)
+      override;
 
-  StatusOr<google::storage::v2::Notification> GetNotification(
+  StatusOr<google::storage::v2::NotificationConfig> GetNotificationConfig(
       grpc::ClientContext& context,
-      google::storage::v2::GetNotificationRequest const& request) override;
+      google::storage::v2::GetNotificationConfigRequest const& request)
+      override;
 
-  StatusOr<google::storage::v2::Notification> CreateNotification(
+  StatusOr<google::storage::v2::NotificationConfig> CreateNotificationConfig(
       grpc::ClientContext& context,
-      google::storage::v2::CreateNotificationRequest const& request) override;
+      google::storage::v2::CreateNotificationConfigRequest const& request)
+      override;
 
-  StatusOr<google::storage::v2::ListNotificationsResponse> ListNotifications(
+  StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+  ListNotificationConfigs(
       grpc::ClientContext& context,
-      google::storage::v2::ListNotificationsRequest const& request) override;
+      google::storage::v2::ListNotificationConfigsRequest const& request)
+      override;
 
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,

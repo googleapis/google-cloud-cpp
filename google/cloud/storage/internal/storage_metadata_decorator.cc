@@ -77,7 +77,9 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::CreateBucket(
   std::vector<std::string> params;
   params.reserve(1);
 
-  if (!request.parent().empty()) {
+  if (!request.bucket().project().empty()) {
+    params.push_back("project=" + request.bucket().project());
+  } else if (!request.parent().empty()) {
     params.push_back("project=" + request.parent());
   }
 
@@ -235,19 +237,19 @@ StatusOr<google::storage::v2::Bucket> StorageMetadata::UpdateBucket(
   return child_->UpdateBucket(context, request);
 }
 
-Status StorageMetadata::DeleteNotification(
+Status StorageMetadata::DeleteNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::DeleteNotificationRequest const& request) {
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   static auto* bucket_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
-        google::storage::v2::DeleteNotificationRequest>{
+        google::storage::v2::DeleteNotificationConfigRequest>{
         "bucket=",
         {
-            {[](google::storage::v2::DeleteNotificationRequest const& request)
-                 -> std::string const& { return request.name(); },
+            {[](google::storage::v2::DeleteNotificationConfigRequest const&
+                    request) -> std::string const& { return request.name(); },
              std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
                         std::regex::optimize}},
         }};
@@ -259,22 +261,23 @@ Status StorageMetadata::DeleteNotification(
   } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
-  return child_->DeleteNotification(context, request);
+  return child_->DeleteNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::Notification> StorageMetadata::GetNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageMetadata::GetNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::GetNotificationRequest const& request) {
+    google::storage::v2::GetNotificationConfigRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   static auto* bucket_matcher = [] {
     return new google::cloud::internal::RoutingMatcher<
-        google::storage::v2::GetNotificationRequest>{
+        google::storage::v2::GetNotificationConfigRequest>{
         "bucket=",
         {
-            {[](google::storage::v2::GetNotificationRequest const& request)
-                 -> std::string const& { return request.name(); },
+            {[](google::storage::v2::GetNotificationConfigRequest const&
+                    request) -> std::string const& { return request.name(); },
              std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
                         std::regex::optimize}},
         }};
@@ -286,12 +289,13 @@ StatusOr<google::storage::v2::Notification> StorageMetadata::GetNotification(
   } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
-  return child_->GetNotification(context, request);
+  return child_->GetNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::Notification> StorageMetadata::CreateNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageMetadata::CreateNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::CreateNotificationRequest const& request) {
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
@@ -304,13 +308,13 @@ StatusOr<google::storage::v2::Notification> StorageMetadata::CreateNotification(
   } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
-  return child_->CreateNotification(context, request);
+  return child_->CreateNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::ListNotificationsResponse>
-StorageMetadata::ListNotifications(
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageMetadata::ListNotificationConfigs(
     grpc::ClientContext& context,
-    google::storage::v2::ListNotificationsRequest const& request) {
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
@@ -323,7 +327,7 @@ StorageMetadata::ListNotifications(
   } else {
     SetMetadata(context, absl::StrJoin(params, "&"));
   }
-  return child_->ListNotifications(context, request);
+  return child_->ListNotificationConfigs(context, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageMetadata::ComposeObject(
