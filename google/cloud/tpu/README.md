@@ -4,8 +4,8 @@ This directory contains an idiomatic C++ client library for
 [Cloud TPU][cloud-service], a service that provides customers with access to
 Google TPU technology.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -13,9 +13,6 @@ The [quickstart/](quickstart/README.md) directory contains a minimal environment
 to get started using this client library in a larger project. The following
 "Hello World" program is used in this quickstart, and should give you a taste of
 this library.
-
-For detailed instructions on how to build and install this library, see the
-top-level [README](/README.md#building-and-installing).
 
 <!-- inject-quickstart-start -->
 

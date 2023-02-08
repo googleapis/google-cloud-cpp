@@ -1563,8 +1563,16 @@ service {
 # TPU
 service {
   service_proto_path: "google/cloud/tpu/v1/cloud_tpu.proto"
-  product_path: "google/cloud/tpu"
+  product_path: "google/cloud/tpu/v1"
   initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+  forwarding_product_path: "google/cloud/tpu"
+}
+
+service {
+  service_proto_path: "google/cloud/tpu/v2/cloud_tpu.proto"
+  product_path: "google/cloud/tpu/v2"
+  initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }
 

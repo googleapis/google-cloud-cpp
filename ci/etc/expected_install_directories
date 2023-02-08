@@ -388,9 +388,13 @@
 ./include/google/cloud/texttospeech/mocks
 ./include/google/cloud/texttospeech/v1
 ./include/google/cloud/tpu
-./include/google/cloud/tpu/internal
 ./include/google/cloud/tpu/mocks
 ./include/google/cloud/tpu/v1
+./include/google/cloud/tpu/v1/internal
+./include/google/cloud/tpu/v1/mocks
+./include/google/cloud/tpu/v2
+./include/google/cloud/tpu/v2/internal
+./include/google/cloud/tpu/v2/mocks
 ./include/google/cloud/trace
 ./include/google/cloud/trace/internal
 ./include/google/cloud/trace/mocks

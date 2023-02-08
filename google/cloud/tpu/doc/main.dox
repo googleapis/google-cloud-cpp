@@ -5,7 +5,8 @@
 An idiomatic C++ client library for [Cloud TPU][cloud-service], a service
 that provides customers with access to Google TPU technology.
 
-While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
@@ -41,6 +42,10 @@ which should give you a taste of the Cloud TPU API C++ client library API.
 ## Environment Variables
 
 <!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_TPU_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "tpu.googleapis.com")
+  used by `MakeTpuConnection()`.
 
 - `GOOGLE_CLOUD_CPP_TPU_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "tpu.googleapis.com")
@@ -96,6 +101,11 @@ For example, this will override the default endpoint for `tpu::TpuClient`:
 
 @snippet tpu_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [tpu::TpuClient](@ref tpu::TpuClient-endpoint-snippet)
+ [tpu_v1::TpuClient](@ref tpu_v1::TpuClient-endpoint-snippet)
+ [tpu_v2::TpuClient](@ref tpu_v2::TpuClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +117,11 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet tpu_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [tpu::TpuClient](@ref tpu::TpuClient-service-account-snippet)
+ [tpu_v1::TpuClient](@ref tpu_v1::TpuClient-service-account-snippet)
+ [tpu_v2::TpuClient](@ref tpu_v2::TpuClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +161,30 @@ can override the default policies.
 /*! @page tpu::TpuClient-service-account-snippet Override tpu::TpuClient Authentication Defaults
 
 @snippet google/cloud/tpu/samples/tpu_client_samples.cc with-service-account
+
+*/
+
+/*! @page tpu_v1::TpuClient-endpoint-snippet Override tpu_v1::TpuClient Endpoint Configuration
+
+@snippet google/cloud/tpu/v1/samples/tpu_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page tpu_v1::TpuClient-service-account-snippet Override tpu_v1::TpuClient Authentication Defaults
+
+@snippet google/cloud/tpu/v1/samples/tpu_client_samples.cc with-service-account
+
+*/
+
+/*! @page tpu_v2::TpuClient-endpoint-snippet Override tpu_v2::TpuClient Endpoint Configuration
+
+@snippet google/cloud/tpu/v2/samples/tpu_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page tpu_v2::TpuClient-service-account-snippet Override tpu_v2::TpuClient Authentication Defaults
+
+@snippet google/cloud/tpu/v2/samples/tpu_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

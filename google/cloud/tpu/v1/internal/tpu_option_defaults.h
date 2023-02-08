@@ -16,35 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_TPU_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_TPU_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_INTERNAL_TPU_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_INTERNAL_TPU_OPTION_DEFAULTS_H
 
-#include "google/cloud/tpu/tpu_connection_idempotency_policy.h"
-#include "google/cloud/tpu/v1/tpu_connection.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace tpu {
+namespace tpu_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use tpu_v1::MakeTpuConnection directly.
-using ::google::cloud::tpu_v1::MakeTpuConnection;
-
-/// @deprecated Use tpu_v1::TpuConnection directly.
-using ::google::cloud::tpu_v1::TpuConnection;
-
-/// @deprecated Use tpu_v1::TpuLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::tpu_v1::TpuLimitedErrorCountRetryPolicy;
-
-/// @deprecated Use tpu_v1::TpuLimitedTimeRetryPolicy directly.
-using ::google::cloud::tpu_v1::TpuLimitedTimeRetryPolicy;
-
-/// @deprecated Use tpu_v1::TpuRetryPolicy directly.
-using ::google::cloud::tpu_v1::TpuRetryPolicy;
+Options TpuDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace tpu
+}  // namespace tpu_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_TPU_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_INTERNAL_TPU_OPTION_DEFAULTS_H
