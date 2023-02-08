@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,11 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-service_dirs = ["v2/"]
+service_dirs = [
+    "",
+    "v1/",
+    "v2/",
+]
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
@@ -43,6 +47,7 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
+        "@com_google_googleapis//google/cloud/tpu/v1:tpu_cc_grpc",
         "@com_google_googleapis//google/cloud/tpu/v2:tpu_cc_grpc",
     ],
 )

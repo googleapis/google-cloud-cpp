@@ -1,7 +1,8 @@
 # Cloud TPU API C++ Client Library
 
-This directory contains an idiomatic C++ client library for the
-[Cloud TPU API][cloud-service-docs], a service to TPU API provides customers with access to Google TPU technology.
+This directory contains an idiomatic C++ client library for
+[Cloud TPU][cloud-service], a service that provides customers with access to
+Google TPU technology.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,8 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/tpu/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/tpu/tpu_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -27,12 +27,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace tpu = ::google::cloud::tpu;
-  auto client = tpu::Client(tpu::MakeConnection());
+  auto client = tpu::TpuClient(tpu::MakeTpuConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto n : client.ListNodes(parent)) {
+    if (!n) throw std::move(n).status();
+    std::cout << n->DebugString() << "\n";
   }
 
   return 0;
@@ -51,6 +51,7 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/tpu
+[cloud-service]: https://cloud.google.com/tpu
+[cloud-service-docs]: https://cloud.google.com/tpu/docs
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-tpu/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/tpu

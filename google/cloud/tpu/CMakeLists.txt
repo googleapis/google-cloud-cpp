@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2023 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 unset(mocks_globs)
 unset(source_globs)
-set(service_dirs "v2/")
+set(service_dirs "" "v1/" "v2/")
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
@@ -112,11 +112,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(tpu_quickstart)
     add_test(
         NAME tpu_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:tpu_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:tpu_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(tpu_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
