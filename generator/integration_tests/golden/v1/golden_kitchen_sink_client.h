@@ -409,7 +409,7 @@ class GoldenKitchenSinkClient {
   /// An RPC to test that explicit routing headers are supported.
   ///
   /// We copy the most testing example given in the `google.api.routing` proto:
-  /// https://github.com/googleapis/googleapis/blob/f46dc249e1987a6bef1a70a371e8288ea4c17481/google/api/routing.proto#L353-L385
+  /// https://github.com/googleapis/googleapis/blob/70147caca58ebf4c8cd7b96f5d569a72723e11c1/google/api/routing.proto#L353-L385
   ///
   /// Our integration test should verify that, given the message:
   ///

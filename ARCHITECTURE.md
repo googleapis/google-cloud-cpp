@@ -234,7 +234,7 @@ which sadly forces our users to reach into the `internal` namespace to mock
 things.  Furthermore, some of the `RawClient` decorators should be called
 `*Stub`.
 
-[check-expected-example-link]: https://github.com/googleapis/google-cloud-cpp/blob/6bd0fae69af98939a1ba4fedea7bb20366ad15d9/google/cloud/spanner/client.cc#L358-L360
+[check-expected-example-link]: https://github.com/googleapis/google-cloud-cpp/blob/0288f8c00dd21de2fb012c517155b300667edc5c/google/cloud/spanner/client.cc#L335-L338
 [client-options-link]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/storage/client_options.h
 [common-options-link]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/common_options.h
 [grpc-options-link]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/grpc_options.h

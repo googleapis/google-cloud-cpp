@@ -29,7 +29,7 @@ https://github.com/bazelbuild/rules_cc/blob/main/examples/my_c_compile/my_c_comp
 
 I found this fragment particularly useful:
 
-https://github.com/bazelbuild/rules_cc/blob/58f8e026c00a8a20767e3dc669f46ba23bc93bdb/examples/my_c_compile/my_c_compile.bzl#L40-L51
+https://github.com/bazelbuild/rules_cc/blob/0d68932a68bcd6f332b14ccc561990586de2318d/examples/my_c_compile/my_c_compile.bzl#L40-L51
 """
 
 load("@rules_cc//cc:action_names.bzl", "CPP_COMPILE_ACTION_NAME")

@@ -25,7 +25,7 @@ parser.
 
 Usage:
   curl -L \
-   https://raw.githubusercontent.com/googleapis/conformance-tests/master/bigtable/v2/readrows.json |
+   https://raw.githubusercontent.com/googleapis/conformance-tests/main/bigtable/v2/readrows.json |
   python3 ../tools/convert_acceptance_tests.py |
   clang-format >readrowsparser_acceptance_tests.inc
 

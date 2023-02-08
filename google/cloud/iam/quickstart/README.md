@@ -156,7 +156,7 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
 [bazel-grpc-macos-bug]: https://github.com/bazelbuild/bazel/issues/4341
-[bazel-install]: https://docs.bazel.build/versions/master/install.html
+[bazel-install]: https://docs.bazel.build/versions/main/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

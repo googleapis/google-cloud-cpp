@@ -33,7 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * See documentation in [spanner.proto][spanner-proto].
  *
  * [spanner-proto]:
- * https://github.com/googleapis/googleapis/blob/0ed34e9fdf601dfc37eb24c40e17495b86771ff4/google/spanner/v1/spanner.proto#L651
+ * https://github.com/googleapis/googleapis/blob/70147caca58ebf4c8cd7b96f5d569a72723e11c1/google/spanner/v1/spanner.proto#L758
  */
 struct PartitionOptions {
   /**
