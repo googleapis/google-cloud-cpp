@@ -831,11 +831,11 @@ TEST_F(GrpcClientTest, UpdateHmacKey) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST_F(GrpcClientTest, ListNotifications) {
+TEST_F(GrpcClientTest, ListNotificationConfigs) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, ListNotifications)
+  EXPECT_CALL(*mock, ListNotificationConfigs)
       .WillOnce([this](grpc::ClientContext& context,
-                       v2::ListNotificationsRequest const& request) {
+                       v2::ListNotificationConfigsRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -851,11 +851,11 @@ TEST_F(GrpcClientTest, ListNotifications) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST_F(GrpcClientTest, CreateNotification) {
+TEST_F(GrpcClientTest, CreateNotificationConfig) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, CreateNotification)
+  EXPECT_CALL(*mock, CreateNotificationConfig)
       .WillOnce([this](grpc::ClientContext& context,
-                       v2::CreateNotificationRequest const& request) {
+                       v2::CreateNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -872,11 +872,11 @@ TEST_F(GrpcClientTest, CreateNotification) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST_F(GrpcClientTest, GetNotification) {
+TEST_F(GrpcClientTest, GetNotificationConfig) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, GetNotification)
+  EXPECT_CALL(*mock, GetNotificationConfig)
       .WillOnce([this](grpc::ClientContext& context,
-                       v2::GetNotificationRequest const& request) {
+                       v2::GetNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -895,11 +895,11 @@ TEST_F(GrpcClientTest, GetNotification) {
   EXPECT_EQ(response.status(), PermanentError());
 }
 
-TEST_F(GrpcClientTest, DeleteNotification) {
+TEST_F(GrpcClientTest, DeleteNotificationConfig) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, DeleteNotification)
+  EXPECT_CALL(*mock, DeleteNotificationConfig)
       .WillOnce([this](grpc::ClientContext& context,
-                       v2::DeleteNotificationRequest const& request) {
+                       v2::DeleteNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),

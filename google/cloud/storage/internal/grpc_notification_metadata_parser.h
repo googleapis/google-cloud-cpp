@@ -25,10 +25,10 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 storage::NotificationMetadata FromProto(
-    google::storage::v2::Notification const& rhs);
-google::storage::v2::Notification ToProto(
+    google::storage::v2::NotificationConfig const& rhs);
+google::storage::v2::NotificationConfig ToProto(
     storage::NotificationMetadata const& rhs);
-google::storage::v2::Notification ToProto(
+google::storage::v2::NotificationConfig ToProto(
     storage::NotificationMetadata const& rhs, std::string const& bucket_name);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

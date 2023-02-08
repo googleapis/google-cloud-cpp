@@ -95,30 +95,31 @@ StatusOr<google::storage::v2::Bucket> StorageRoundRobin::UpdateBucket(
   return Child()->UpdateBucket(context, request);
 }
 
-Status StorageRoundRobin::DeleteNotification(
+Status StorageRoundRobin::DeleteNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::DeleteNotificationRequest const& request) {
-  return Child()->DeleteNotification(context, request);
+    google::storage::v2::DeleteNotificationConfigRequest const& request) {
+  return Child()->DeleteNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::Notification> StorageRoundRobin::GetNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageRoundRobin::GetNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::GetNotificationRequest const& request) {
-  return Child()->GetNotification(context, request);
+    google::storage::v2::GetNotificationConfigRequest const& request) {
+  return Child()->GetNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::Notification>
-StorageRoundRobin::CreateNotification(
+StatusOr<google::storage::v2::NotificationConfig>
+StorageRoundRobin::CreateNotificationConfig(
     grpc::ClientContext& context,
-    google::storage::v2::CreateNotificationRequest const& request) {
-  return Child()->CreateNotification(context, request);
+    google::storage::v2::CreateNotificationConfigRequest const& request) {
+  return Child()->CreateNotificationConfig(context, request);
 }
 
-StatusOr<google::storage::v2::ListNotificationsResponse>
-StorageRoundRobin::ListNotifications(
+StatusOr<google::storage::v2::ListNotificationConfigsResponse>
+StorageRoundRobin::ListNotificationConfigs(
     grpc::ClientContext& context,
-    google::storage::v2::ListNotificationsRequest const& request) {
-  return Child()->ListNotifications(context, request);
+    google::storage::v2::ListNotificationConfigsRequest const& request) {
+  return Child()->ListNotificationConfigs(context, request);
 }
 
 StatusOr<google::storage::v2::Object> StorageRoundRobin::ComposeObject(

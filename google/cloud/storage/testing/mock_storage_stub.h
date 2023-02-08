@@ -62,22 +62,24 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::UpdateBucketRequest const&),
               (override));
-  MOCK_METHOD(Status, DeleteNotification,
+  MOCK_METHOD(Status, DeleteNotificationConfig,
               (grpc::ClientContext&,
-               google::storage::v2::DeleteNotificationRequest const&),
+               google::storage::v2::DeleteNotificationConfigRequest const&),
               (override));
-  MOCK_METHOD(StatusOr<google::storage::v2::Notification>, GetNotification,
+  MOCK_METHOD(StatusOr<google::storage::v2::NotificationConfig>,
+              GetNotificationConfig,
               (grpc::ClientContext&,
-               google::storage::v2::GetNotificationRequest const&),
+               google::storage::v2::GetNotificationConfigRequest const&),
               (override));
-  MOCK_METHOD(StatusOr<google::storage::v2::Notification>, CreateNotification,
+  MOCK_METHOD(StatusOr<google::storage::v2::NotificationConfig>,
+              CreateNotificationConfig,
               (grpc::ClientContext&,
-               google::storage::v2::CreateNotificationRequest const&),
+               google::storage::v2::CreateNotificationConfigRequest const&),
               (override));
-  MOCK_METHOD(StatusOr<google::storage::v2::ListNotificationsResponse>,
-              ListNotifications,
+  MOCK_METHOD(StatusOr<google::storage::v2::ListNotificationConfigsResponse>,
+              ListNotificationConfigs,
               (grpc::ClientContext&,
-               google::storage::v2::ListNotificationsRequest const&),
+               google::storage::v2::ListNotificationConfigsRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, ComposeObject,
               (grpc::ClientContext&,

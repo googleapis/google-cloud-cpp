@@ -269,12 +269,12 @@ TEST(StorageRoundRobinTest, UpdateBucket) {
   }
 }
 
-TEST(StorageRoundRobinTest, DeleteNotification) {
+TEST(StorageRoundRobinTest, DeleteNotificationConfig) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, DeleteNotification)
+      EXPECT_CALL(*m, DeleteNotificationConfig)
           .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
     }
   }
@@ -282,18 +282,18 @@ TEST(StorageRoundRobinTest, DeleteNotification) {
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    google::storage::v2::DeleteNotificationRequest request;
-    auto response = under_test.DeleteNotification(context, request);
+    google::storage::v2::DeleteNotificationConfigRequest request;
+    auto response = under_test.DeleteNotificationConfig(context, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
   }
 }
 
-TEST(StorageRoundRobinTest, GetNotification) {
+TEST(StorageRoundRobinTest, GetNotificationConfig) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, GetNotification)
+      EXPECT_CALL(*m, GetNotificationConfig)
           .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
     }
   }
@@ -301,18 +301,18 @@ TEST(StorageRoundRobinTest, GetNotification) {
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    google::storage::v2::GetNotificationRequest request;
-    auto response = under_test.GetNotification(context, request);
+    google::storage::v2::GetNotificationConfigRequest request;
+    auto response = under_test.GetNotificationConfig(context, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
   }
 }
 
-TEST(StorageRoundRobinTest, CreateNotification) {
+TEST(StorageRoundRobinTest, CreateNotificationConfig) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, CreateNotification)
+      EXPECT_CALL(*m, CreateNotificationConfig)
           .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
     }
   }
@@ -320,18 +320,18 @@ TEST(StorageRoundRobinTest, CreateNotification) {
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    google::storage::v2::CreateNotificationRequest request;
-    auto response = under_test.CreateNotification(context, request);
+    google::storage::v2::CreateNotificationConfigRequest request;
+    auto response = under_test.CreateNotificationConfig(context, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
   }
 }
 
-TEST(StorageRoundRobinTest, ListNotifications) {
+TEST(StorageRoundRobinTest, ListNotificationConfigs) {
   auto mocks = MakeMocks();
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, ListNotifications)
+      EXPECT_CALL(*m, ListNotificationConfigs)
           .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
     }
   }
@@ -339,8 +339,8 @@ TEST(StorageRoundRobinTest, ListNotifications) {
   StorageRoundRobin under_test(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    google::storage::v2::ListNotificationsRequest request;
-    auto response = under_test.ListNotifications(context, request);
+    google::storage::v2::ListNotificationConfigsRequest request;
+    auto response = under_test.ListNotificationConfigs(context, request);
     EXPECT_THAT(response, StatusIs(StatusCode::kPermissionDenied));
   }
 }

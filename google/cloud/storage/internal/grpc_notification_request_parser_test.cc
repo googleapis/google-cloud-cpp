@@ -29,7 +29,7 @@ using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::ElementsAre;
 
 TEST(GrpcNotificationRequestParser, DeleteNotification) {
-  v2::DeleteNotificationRequest expected;
+  v2::DeleteNotificationConfigRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         name: "projects/_/buckets/test-bucket-name/notificationConfigs/test-notification-id"
@@ -44,7 +44,7 @@ TEST(GrpcNotificationRequestParser, DeleteNotification) {
 }
 
 TEST(GrpcNotificationRequestParser, GetNotification) {
-  v2::GetNotificationRequest expected;
+  v2::GetNotificationConfigRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         name: "projects/_/buckets/test-bucket-name/notificationConfigs/test-notification-id"
@@ -59,11 +59,11 @@ TEST(GrpcNotificationRequestParser, GetNotification) {
 }
 
 TEST(GrpcNotificationRequestParser, CreateNotification) {
-  v2::CreateNotificationRequest expected;
+  v2::CreateNotificationConfigRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         parent: "projects/_/buckets/test-bucket-name"
-        notification {
+        notification_config {
           topic: "//pubsub.googleapis.com/projects/test-topic-project/topics/test-topic-id"
           event_types: "OBJECT_DELETE"
           event_types: "OBJECT_ARCHIVE"
@@ -92,7 +92,7 @@ TEST(GrpcNotificationRequestParser, CreateNotification) {
 }
 
 TEST(GrpcNotificationRequestParser, ListNotifications) {
-  v2::ListNotificationsRequest expected;
+  v2::ListNotificationConfigsRequest expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
         parent: "projects/_/buckets/test-bucket-name"
@@ -106,10 +106,10 @@ TEST(GrpcNotificationRequestParser, ListNotifications) {
 }
 
 TEST(GrpcNotificationRequestParser, ListNotificationsResponse) {
-  v2::ListNotificationsResponse input;
+  v2::ListNotificationConfigsResponse input;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
       R"pb(
-        notifications {
+        notification_configs {
           name: "projects/_/buckets/test-bucket-name/notificationConfigs/test-id-1"
           etag: "test-etag-1"
           topic: "//pubsub.googleapis.com/projects/test-topic-project/topics/test-topic-id-1"
@@ -120,7 +120,7 @@ TEST(GrpcNotificationRequestParser, ListNotificationsResponse) {
           object_name_prefix: "test-object-name-prefix/"
           payload_format: "JSON_API_V1"
         }
-        notifications {
+        notification_configs {
           name: "projects/_/buckets/test-bucket-name/notificationConfigs/test-id-2"
           etag: "test-etag-2"
           topic: "//pubsub.googleapis.com/projects/test-topic-project/topics/test-topic-id-2"
