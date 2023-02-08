@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,25 +16,23 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
+service_dirs = ["v2/"]
+
+src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+
 filegroup(
     name = "srcs",
-    srcs = glob([
-        "*.cc",
-        "internal/*.cc",
-    ]),
+    srcs = glob([d + "*.cc" for d in src_dirs]),
 )
 
 filegroup(
     name = "hdrs",
-    srcs = glob([
-        "*.h",
-        "internal/*.h",
-    ]),
+    srcs = glob([d + "*.h" for d in src_dirs]),
 )
 
 filegroup(
     name = "mocks",
-    srcs = glob(["mocks/*.h"]),
+    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
 )
 
 cc_library(
@@ -45,7 +43,7 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
-        "@com_google_googleapis//google/cloud/tpu/v1:tpu_cc_grpc",
+        "@com_google_googleapis//google/cloud/tpu/v2:tpu_cc_grpc",
     ],
 )
 
@@ -58,3 +56,13 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 )
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:tpu",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([d + "samples/*.cc" for d in service_dirs])]

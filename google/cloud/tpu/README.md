@@ -1,11 +1,10 @@
 # Cloud TPU API C++ Client Library
 
-This directory contains an idiomatic C++ client library for
-[Cloud TPU][cloud-service], a service that provides customers with access to
-Google TPU technology.
+This directory contains an idiomatic C++ client library for the
+[Cloud TPU API][cloud-service-docs], a service to TPU API provides customers with access to Google TPU technology.
 
-While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note that the Google Cloud C++ client
+libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Quickstart
 
@@ -14,13 +13,11 @@ to get started using this client library in a larger project. The following
 "Hello World" program is used in this quickstart, and should give you a taste of
 this library.
 
-For detailed instructions on how to build and install this library, see the
-top-level [README](/README.md#building-and-installing).
-
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/tpu/tpu_client.h"
+#include "google/cloud/tpu/ EDIT HERE .h"
+#include "google/cloud/project.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,12 +27,12 @@ int main(int argc, char* argv[]) try {
   }
 
   namespace tpu = ::google::cloud::tpu;
-  auto client = tpu::TpuClient(tpu::MakeTpuConnection());
+  auto client = tpu::Client(tpu::MakeConnection());
 
-  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
-  for (auto n : client.ListNodes(parent)) {
-    if (!n) throw std::move(n).status();
-    std::cout << n->DebugString() << "\n";
+  auto const project = google::cloud::Project(argv[1]);
+  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+    if (!r) throw std::move(r).status();
+    std::cout << r->DebugString() << "\n";
   }
 
   return 0;
@@ -54,7 +51,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service]: https://cloud.google.com/tpu
-[cloud-service-docs]: https://cloud.google.com/tpu/docs
+[cloud-service-docs]: https://cloud.google.com/tpu
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-tpu/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/tpu

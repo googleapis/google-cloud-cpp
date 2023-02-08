@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2022 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,13 +18,23 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud TPU API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud TPU API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "tpu_internal" "tpu_testing" "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "v2/")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "${dir}")
+    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND mocks_globs "${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXAMPLE_PATH
+         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "tpu_${ns}internal")
+endforeach ()
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("tpu" DEPENDS cloud-docs
-                                 google-cloud-cpp::tpu_protos)
+google_cloud_cpp_doxygen_targets("tpu" DEPENDS google-cloud-cpp::tpu_protos)
 
 include(GoogleCloudCppCommon)
 
@@ -44,7 +54,7 @@ target_link_libraries(google_cloud_cpp_tpu_protos PUBLIC ${proto_deps})
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+    ${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_tpu ${source_files})
 target_include_directories(
@@ -74,7 +84,7 @@ add_library(google-cloud-cpp::tpu ALIAS google_cloud_cpp_tpu)
 file(
     GLOB relative_mock_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "mocks/*.h")
+    ${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
@@ -102,8 +112,11 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(tpu_quickstart)
     add_test(
         NAME tpu_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:tpu_quickstart> GOOGLE_CLOUD_PROJECT)
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:tpu_quickstart> GOOGLE_CLOUD_PROJECT
+            # EDIT HERE
+    )
     set_tests_properties(tpu_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
@@ -168,3 +181,10 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_tpu_protos")
+
+# google-cloud-cpp::tpu must be defined before we can add the samples.
+foreach (dir IN LISTS service_dirs)
+    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        google_cloud_cpp_add_samples_relative("tpu" "${dir}samples/")
+    endif ()
+endforeach ()
