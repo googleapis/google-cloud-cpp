@@ -46,16 +46,16 @@ absl::Time MakeTime(std::int64_t sec, int nanos) {
 std::vector<Timestamp> TestTimes() {
   std::vector<Timestamp> times;
   for (auto s : {
-           std::int64_t{-9223372035},  // near the limit of 64-bit/ns clock
-           std::int64_t{-2147483649},  // below min 32-bit value
-           std::int64_t{-2147483648},  // min 32-bit value
-           std::int64_t{-1},           // just before Unix epoch
-           std::int64_t{0},            // Unix epoch
-           std::int64_t{1},            // just after Unix epoch
-           std::int64_t{1561147549},   // contemporary
-           std::int64_t{2147483647},   // max 32-bit value
-           std::int64_t{2147483648},   // above max 32-bit value
-           std::int64_t{9223372036},   // near the limit of 64-bit/ns clock
+           std::int64_t{-9223372035LL},  // near the limit of 64-bit/ns clock
+           std::int64_t{-2147483649LL},  // below min 32-bit value
+           std::int64_t{-2147483648LL},  // min 32-bit value
+           std::int64_t{-1},             // just before Unix epoch
+           std::int64_t{0},              // Unix epoch
+           std::int64_t{1},              // just after Unix epoch
+           std::int64_t{1561147549LL},   // contemporary
+           std::int64_t{2147483647LL},   // max 32-bit value
+           std::int64_t{2147483648LL},   // above max 32-bit value
+           std::int64_t{9223372036LL},   // near the limit of 64-bit/ns clock
        }) {
     for (auto nanos : {-1, 0, 1}) {
       times.push_back(MakeTimestamp(MakeTime(s, nanos)).value());
