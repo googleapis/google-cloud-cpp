@@ -34,7 +34,8 @@ foreach (dir IN LISTS service_dirs)
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("tpu" DEPENDS google-cloud-cpp::tpu_protos)
+google_cloud_cpp_doxygen_targets("tpu" DEPENDS cloud-docs
+                                 google-cloud-cpp::tpu_protos)
 
 include(GoogleCloudCppCommon)
 
