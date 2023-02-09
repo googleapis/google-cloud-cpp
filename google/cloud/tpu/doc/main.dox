@@ -47,10 +47,6 @@ which should give you a taste of the Cloud TPU API C++ client library API.
   `EndpointOption` (which defaults to "tpu.googleapis.com")
   used by `MakeTpuConnection()`.
 
-- `GOOGLE_CLOUD_CPP_TPU_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "tpu.googleapis.com")
-  used by `MakeTpuConnection()`.
-
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
