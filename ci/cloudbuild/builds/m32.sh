@@ -38,5 +38,5 @@ cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
-# TODO(#10775) - run the integration tests too
-# integration::ctest_with_emulators "cmake-out" || true
+# TODO(#10775) - enable failures on integration tests
+integration::ctest_with_emulators "cmake-out" || true
