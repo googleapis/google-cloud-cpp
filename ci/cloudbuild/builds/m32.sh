@@ -34,11 +34,9 @@ cmake_args+=(
 )
 
 io::run cmake "${cmake_args[@]}"
-# TODO(#10775) - have the script fail if the build has errors
-cmake --build cmake-out -- -k 0 || true
+cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
-# TODO(#10775) - have the script fail if the unit tests have errors
-env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test" || true
+env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"
 
 # TODO(#10775) - run the integration tests too
 # integration::ctest_with_emulators "cmake-out" || true
