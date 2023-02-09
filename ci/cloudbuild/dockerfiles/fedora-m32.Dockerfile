@@ -17,8 +17,8 @@ ARG NCPU=4
 
 # Install the minimal development tools:
 RUN dnf makecache && \
-    dnf install -y ccache cmake curl findutils gcc-c++ git make ninja-build \
-        patch unzip tar wget zip
+    dnf install -y ccache cmake curl diffutils findutils gcc-c++ git make \
+        ninja-build patch tar unzip wget which zip
 
 # Fedora 37 includes packages, with recent enough versions, for most of the
 # direct dependencies of `google-cloud-cpp`. We will install those directly.
