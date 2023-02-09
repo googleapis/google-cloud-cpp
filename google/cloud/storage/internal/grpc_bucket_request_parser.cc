@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
+#include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 
@@ -176,8 +177,8 @@ Status PatchRetentionPolicy(Bucket& b, nlohmann::json const& r) {
   if (r.is_null()) {
     b.clear_retention_policy();
   } else {
-    b.mutable_retention_policy()->set_retention_period(
-        r.value("retentionPeriod", int64_t{0}));
+    b.mutable_retention_policy()->mutable_retention_duration()->set_seconds(
+        r.value("retentionPeriod", std::int64_t{0}));
   }
   return Status{};
 }
@@ -292,8 +293,9 @@ void UpdateBilling(Bucket& bucket, storage::BucketMetadata const& metadata) {
 void UpdateRetentionPolicy(Bucket& bucket,
                            storage::BucketMetadata const& metadata) {
   if (!metadata.has_retention_policy()) return;
-  bucket.mutable_retention_policy()->set_retention_period(
-      metadata.retention_policy().retention_period.count());
+  *bucket.mutable_retention_policy()->mutable_retention_duration() =
+      google::cloud::internal::ToDurationProto(
+          metadata.retention_policy().retention_period);
 }
 
 void UpdateIamConfig(Bucket& bucket, storage::BucketMetadata const& metadata) {
