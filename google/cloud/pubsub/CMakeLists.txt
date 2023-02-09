@@ -453,7 +453,7 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_pubsub"
     COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_add_pkgconfig_interface(
+google_cloud_cpp_add_pkgconfig(
     pubsub_mocks "Google Cloud C++ Pub/Sub Mocks"
     "Mocks for the Google Cloud Pub/Sub C++ Client Library"
     "google_cloud_cpp_pubsub" " gmock_main")

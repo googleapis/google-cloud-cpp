@@ -90,7 +90,7 @@ google_cloud_cpp_install_headers(google_cloud_cpp_rest_protobuf_internal
                                  include/google/cloud)
 
 google_cloud_cpp_add_pkgconfig(
-    rest_protobuf
+    rest_protobuf_internal
     "REST/Protobuf Utilities for the Google Cloud C++ Client Library"
     "Provides REST and Protobuf Utilities for the Google Cloud C++ Client Library."
     "google_cloud_cpp_common")
