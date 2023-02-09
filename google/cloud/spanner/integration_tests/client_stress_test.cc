@@ -48,7 +48,7 @@ struct Config {
   std::chrono::seconds duration = std::chrono::seconds(5);
 
   int threads = 0;  // 0 means use the threads_per_core setting.
-  int threads_per_core = 4;
+  int threads_per_core = 3;
 
   bool show_help = false;
 };
