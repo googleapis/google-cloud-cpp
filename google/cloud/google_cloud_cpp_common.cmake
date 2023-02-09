@@ -291,7 +291,7 @@ install(
     DESTINATION "include/google/cloud/mocks"
     COMPONENT google_cloud_cpp_development)
 
-google_cloud_cpp_add_pkgconfig_interface(
+google_cloud_cpp_add_pkgconfig(
     "mocks" "Google Cloud C++ Testing Library"
     "Helpers for testing the Google Cloud C++ Client Libraries"
     "google_cloud_cpp_common" " gmock_main")
