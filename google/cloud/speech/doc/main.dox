@@ -46,10 +46,6 @@ which should give you a taste of the Cloud Speech-to-Text API C++ client library
   `EndpointOption` (which defaults to "speech.googleapis.com")
   used by `MakeSpeechConnection()`.
 
-- `GOOGLE_CLOUD_CPP_SPEECH_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "speech.googleapis.com")
-  used by `MakeSpeechConnection()`.
-
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC

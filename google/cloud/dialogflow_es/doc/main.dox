@@ -57,6 +57,10 @@ which should give you a taste of the Dialogflow API C++ client library API.
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeContextsConnection()`.
 
+- `GOOGLE_CLOUD_CPP_CONVERSATIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeConversationsConnection()`.
+
 - `GOOGLE_CLOUD_CPP_CONVERSATION_DATASETS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeConversationDatasetsConnection()`.
@@ -69,9 +73,13 @@ which should give you a taste of the Dialogflow API C++ client library API.
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeConversationProfilesConnection()`.
 
-- `GOOGLE_CLOUD_CPP_CONVERSATIONS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
-  used by `MakeConversationsConnection()`.
+  used by `MakeEnvironmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeVersionsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_DOCUMENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
@@ -80,10 +88,6 @@ which should give you a taste of the Dialogflow API C++ client library API.
 - `GOOGLE_CLOUD_CPP_ENTITY_TYPES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeEntityTypesConnection()`.
-
-- `GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENTS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
-  used by `MakeEnvironmentsConnection()`.
 
 - `GOOGLE_CLOUD_CPP_FULFILLMENTS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
@@ -101,17 +105,13 @@ which should give you a taste of the Dialogflow API C++ client library API.
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeParticipantsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
-  used by `MakeSessionEntityTypesConnection()`.
-
 - `GOOGLE_CLOUD_CPP_SESSIONS_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
   used by `MakeSessionsConnection()`.
 
-- `GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT=...` overrides the
+- `GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
-  used by `MakeVersionsConnection()`.
+  used by `MakeSessionEntityTypesConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 

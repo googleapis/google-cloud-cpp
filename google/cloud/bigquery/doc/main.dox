@@ -61,6 +61,10 @@ behaviors in the library.
   `EndpointOption` (which defaults to "analyticshub.googleapis.com")
   used by `MakeAnalyticsHubServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigqueryconnection.googleapis.com")
+  used by `MakeConnection()`.
+
 - `GOOGLE_CLOUD_CPP_BIGQUERY_READ_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "bigquerystorage.googleapis.com")
   used by `MakeBigQueryReadConnection()`.
@@ -68,10 +72,6 @@ behaviors in the library.
 - `GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "bigquerystorage.googleapis.com")
   used by `MakeBigQueryWriteConnection()`.
-
-- `GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "bigqueryconnection.googleapis.com")
-  used by `MakeConnection()`.
 
 - `GOOGLE_CLOUD_CPP_DATA_POLICY_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "bigquerydatapolicy.googleapis.com")

@@ -35,7 +35,7 @@ fi
 
 inject_start="<!-- inject-endpoint-env-vars-start -->"
 inject_end="<!-- inject-endpoint-env-vars-end -->"
-env_vars=("")
+declare -A env_vars
 while IFS= read -r -d $'\0' option_defaults_cc; do
   service="$(basename "${option_defaults_cc}" _option_defaults.cc)"
   service_dir="$(dirname "$(dirname "${option_defaults_cc}")")"
@@ -50,16 +50,18 @@ while IFS= read -r -d $'\0' option_defaults_cc; do
   fi
   make_connection_re='Make.*?Connection()'
   make_connection=$(grep -Pom1 "${make_connection_re}" "${connection_h}")
-  env_vars+=("- \`${variable}=...\` overrides the")
-  env_vars+=("  \`EndpointOption\` (which defaults to ${endpoint})")
-  env_vars+=("  used by \`${make_connection}()\`.")
-  env_vars+=("")
+  env_var=("")
+  env_var+=("- \`${variable}=...\` overrides the")
+  env_var+=("  \`EndpointOption\` (which defaults to ${endpoint})")
+  env_var+=("  used by \`${make_connection}()\`.")
+  env_vars[$(printf '%s\\\n' "${env_var[@]}")]=""
 done < <(git ls-files -z -- "${LIB}/*_option_defaults.cc")
-
+mapfile -d '' sorted_env_vars < <(printf '%s\0' "${!env_vars[@]}" | sort -z)
 sed -i -f - "${MAIN_DOX}" <<EOT
 /${inject_start}/,/${inject_end}/c \\
 ${inject_start}\\
-$(printf '%s\\\n' "${env_vars[@]}")
+$(printf '%s\n' "${sorted_env_vars[@]}")
+\\
 ${inject_end}
 EOT
 

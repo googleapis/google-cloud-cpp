@@ -43,13 +43,13 @@ which should give you a taste of the Cloud AutoML API C++ client library API.
 
 <!-- inject-endpoint-env-vars-start -->
 
-- `GOOGLE_CLOUD_CPP_AUTO_ML_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "automl.googleapis.com")
-  used by `MakeAutoMlConnection()`.
-
 - `GOOGLE_CLOUD_CPP_AUTOML_PREDICTION_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "automl.googleapis.com")
   used by `MakePredictionServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_AUTO_ML_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "automl.googleapis.com")
+  used by `MakeAutoMlConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 

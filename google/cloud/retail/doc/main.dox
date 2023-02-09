@@ -52,13 +52,13 @@ which should give you a taste of the Retail API C++ client library API.
   `EndpointOption` (which defaults to "retail.googleapis.com")
   used by `MakeCompletionServiceConnection()`.
 
-- `GOOGLE_CLOUD_CPP_RETAIL_PREDICTION_SERVICE_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "retail.googleapis.com")
-  used by `MakePredictionServiceConnection()`.
-
 - `GOOGLE_CLOUD_CPP_PRODUCT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "retail.googleapis.com")
   used by `MakeProductServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RETAIL_PREDICTION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "retail.googleapis.com")
+  used by `MakePredictionServiceConnection()`.
 
 - `GOOGLE_CLOUD_CPP_SEARCH_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "retail.googleapis.com")
