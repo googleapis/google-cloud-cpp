@@ -161,6 +161,7 @@ def google_cloud_cpp_deps(name = None):
         name = "com_github_curl_curl",
         urls = [
             "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_curl_curl/curl-7.69.1.tar.gz",
         ],
         strip_prefix = "curl-7.69.1",
         sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",
