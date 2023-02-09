@@ -434,7 +434,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           encryption { default_kms_key: "test-only-kms-key" }
           autoclass { enabled: true }
           billing { requester_pays: true }
-          retention_policy { retention_period: 123000 }
+          retention_policy { retention_duration { seconds: 123000 } }
           iam_config {
             uniform_bucket_level_access { enabled: true }
             public_access_prevention: "enforced"
@@ -635,7 +635,7 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
           encryption { default_kms_key: "test-only-kms-key" }
           autoclass { enabled: true }
           billing { requester_pays: true }
-          retention_policy { retention_period: 123000 }
+          retention_policy { retention_duration { seconds: 123000 } }
           iam_config {
             uniform_bucket_level_access { enabled: true }
             public_access_prevention: "enforced"

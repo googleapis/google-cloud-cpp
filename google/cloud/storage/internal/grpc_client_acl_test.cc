@@ -117,7 +117,7 @@ auto constexpr kBucketProtoText = R"pb(
   retention_policy {
     effective_time { seconds: 1565194926 nanos: 123456000 }
     is_locked: true
-    retention_period: 86400
+    retention_duration { seconds: 86400 }
   }
   iam_config {
     uniform_bucket_level_access {

@@ -109,7 +109,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     retention_policy {
       effective_time { seconds: 1565194926 nanos: 123456000 }
       is_locked: true
-      retention_period: 86400
+      retention_duration { seconds: 86400 }
     }
     iam_config {
       uniform_bucket_level_access {
@@ -470,7 +470,7 @@ TEST(GrpcBucketMetadataParser, BucketLoggingRoundtrip) {
 
 TEST(GrpcBucketMetadataParser, BucketRetentionPolicyRoundtrip) {
   auto constexpr kText = R"pb(
-    retention_period: 3600
+    retention_duration { seconds: 3600 }
     effective_time { seconds: 1234 nanos: 5678000 }
     is_locked: true
   )pb";

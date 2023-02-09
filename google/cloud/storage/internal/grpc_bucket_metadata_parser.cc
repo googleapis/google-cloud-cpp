@@ -469,7 +469,8 @@ google::storage::v2::Bucket::RetentionPolicy ToProto(
   *result.mutable_effective_time() =
       google::cloud::internal::ToProtoTimestamp(rhs.effective_time);
   result.set_is_locked(rhs.is_locked);
-  result.set_retention_period(rhs.retention_period.count());
+  *result.mutable_retention_duration() =
+      google::cloud::internal::ToDurationProto(rhs.retention_period);
   return result;
 }
 
@@ -479,7 +480,9 @@ storage::BucketRetentionPolicy FromProto(
   result.effective_time =
       google::cloud::internal::ToChronoTimePoint(rhs.effective_time());
   result.is_locked = rhs.is_locked();
-  result.retention_period = std::chrono::seconds(rhs.retention_period());
+  result.retention_period = std::chrono::duration_cast<std::chrono::seconds>(
+      std::chrono::seconds(rhs.retention_duration().seconds()) +
+      std::chrono::nanoseconds(rhs.retention_duration().nanos()));
   return result;
 }
 
