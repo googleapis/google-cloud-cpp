@@ -23,4 +23,4 @@ Requires: @GOOGLE_CLOUD_CPP_PC_REQUIRES@
 Version: @DOXYGEN_PROJECT_NUMBER@
 
 Libs: -L${libdir} @GOOGLE_CLOUD_CPP_PC_LIBS@
-Cflags: -I${includedir}
+Cflags: -I${includedir} @GOOGLE_CLOUD_CPP_PC_CFLAGS@
