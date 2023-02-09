@@ -36,6 +36,10 @@ using ms = std::chrono::milliseconds;
 
 std::size_t DefaultThreadCount() {
   auto constexpr kDefaultThreadCount = 4;
+  // On 32-bit machines the address space is quickly consumed by background
+  // threads. Create just a few threads by default on such platforms. If the
+  // application needs more threads, it can override this default.
+  if (std::numeric_limits<std::size_t>::digits < 64) return kDefaultThreadCount;
   auto const n = std::thread::hardware_concurrency();
   return n == 0 ? kDefaultThreadCount : n;
 }
