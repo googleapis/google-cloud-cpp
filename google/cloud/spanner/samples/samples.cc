@@ -2876,6 +2876,9 @@ void DmlWriteThenRead(google::cloud::spanner::Client client) {
             "SELECT FirstName, LastName FROM Singers where SingerId = 11");
         using RowType = std::tuple<std::string, std::string>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(select));
+        // Note: This mutator might be re-run, or its effects discarded, so
+        // changing non-transactional state (e.g., by producing output) is,
+        // in general, not something to be imitated.
         for (auto const& row : spanner::StreamOf<RowType>(rows)) {
           if (!row) return std::move(row).status();
           std::cout << "FirstName: " << std::get<0>(*row) << "\t";
@@ -2945,6 +2948,9 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
                                   "  WHERE SingerId = 1 and AlbumId = 3")};
         auto result = client.ExecuteBatchDml(txn, statements);
         if (!result) return std::move(result).status();
+        // Note: This mutator might be re-run, or its effects discarded, so
+        // changing non-transactional state (e.g., by producing output) is,
+        // in general, not something to be imitated.
         for (std::size_t i = 0; i < result->stats.size(); ++i) {
           std::cout << result->stats[i].row_count << " rows affected"
                     << " for the statement " << (i + 1) << ".\n";
@@ -3294,6 +3300,9 @@ void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
         )""");
         using RowType = std::tuple<absl::optional<std::int64_t>>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        // Note: This mutator might be re-run, or its effects discarded, so
+        // changing non-transactional state (e.g., by producing output) is,
+        // in general, not something to be imitated.
         for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
           if (!row) return std::move(row).status();
           std::cout << "MarketingBudget: ";
@@ -3328,6 +3337,9 @@ void InsertUsingDmlReturning(google::cloud::spanner::Client client) {
         )""");
         using RowType = std::tuple<std::string>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        // Note: This mutator might be re-run, or its effects discarded, so
+        // changing non-transactional state (e.g., by producing output) is,
+        // in general, not something to be imitated.
         for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
           if (!row) return std::move(row).status();
           std::cout << "FullName: " << std::get<0>(*row) << "\n";
@@ -3354,6 +3366,9 @@ void DeleteUsingDmlReturning(google::cloud::spanner::Client client) {
         )""");
         using RowType = std::tuple<std::int64_t, std::string>;
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        // Note: This mutator might be re-run, or its effects discarded, so
+        // changing non-transactional state (e.g., by producing output) is,
+        // in general, not something to be imitated.
         for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
           if (!row) return std::move(row).status();
           std::cout << "SingerId: " << std::get<0>(*row) << " ";

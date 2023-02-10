@@ -611,6 +611,7 @@ TEST_F(DataTypeIntegrationTest, DmlReturning) {
         )""");
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
+        insert_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
           if (row) insert_actual.push_back(*std::move(row));
         }
@@ -631,6 +632,7 @@ TEST_F(DataTypeIntegrationTest, DmlReturning) {
         )""");
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
+        update_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
           if (row) update_actual.push_back(*std::move(row));
         }
@@ -651,6 +653,7 @@ TEST_F(DataTypeIntegrationTest, DmlReturning) {
         )""");
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
+        delete_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
           if (row) delete_actual.push_back(*std::move(row));
         }
@@ -683,6 +686,7 @@ TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
         )""");
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
+        insert_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
           if (row) insert_actual.push_back(*std::move(row));
         }
@@ -703,6 +707,7 @@ TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
         )""");
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
+        update_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
           if (row) update_actual.push_back(*std::move(row));
         }
@@ -723,6 +728,7 @@ TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
         )""");
         auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
         EXPECT_EQ(rows.RowsModified(), 4);
+        delete_actual.clear();  // may be a re-run
         for (auto& row : StreamOf<RowType>(rows)) {
           if (row) delete_actual.push_back(*std::move(row));
         }
