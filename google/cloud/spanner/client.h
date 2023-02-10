@@ -328,31 +328,6 @@ class Client {
   RowStream ExecuteQuery(QueryPartition const& partition, Options opts = {});
 
   /**
-   * Creates a set of partitions that can be used to execute a query
-   * operation in parallel.  Each of the returned partitions can be passed
-   * to `ExecuteQuery` to specify a subset of the query result to read.
-   *
-   * Partitions become invalid when the session used to create them is deleted,
-   * is idle for too long, begins a new transaction, or becomes too old. When
-   * any of these happen, it is not possible to resume the query, and the whole
-   * operation must be restarted from the beginning.
-   *
-   * @par Example
-   * @snippet samples.cc partition-query
-   *
-   * @param transaction The transaction to execute the operation in.
-   *     **Must** be a read-only snapshot transaction.
-   * @param statement The SQL statement to execute.
-   * @param opts `Options` used for this request.
-   *
-   * @return A `StatusOr` containing a vector of `QueryPartition`s or error
-   *     status on failure.
-   */
-  StatusOr<std::vector<QueryPartition>> PartitionQuery(
-      Transaction transaction, SqlStatement statement,
-      Options opts = Options{});
-
-  /**
    * Profiles a SQL query.
    *
    * Profiling executes the query, provides the resulting rows, `ExecutionPlan`,
@@ -400,6 +375,31 @@ class Client {
    */
   ProfileQueryResult ProfileQuery(Transaction transaction,
                                   SqlStatement statement, Options opts = {});
+
+  /**
+   * Creates a set of partitions that can be used to execute a query
+   * operation in parallel.  Each of the returned partitions can be passed
+   * to `ExecuteQuery` to specify a subset of the query result to read.
+   *
+   * Partitions become invalid when the session used to create them is deleted,
+   * is idle for too long, begins a new transaction, or becomes too old. When
+   * any of these happen, it is not possible to resume the query, and the whole
+   * operation must be restarted from the beginning.
+   *
+   * @par Example
+   * @snippet samples.cc partition-query
+   *
+   * @param transaction The transaction to execute the operation in.
+   *     **Must** be a read-only snapshot transaction.
+   * @param statement The SQL statement to execute.
+   * @param opts `Options` used for this request.
+   *
+   * @return A `StatusOr` containing a vector of `QueryPartition`s or error
+   *     status on failure.
+   */
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      Transaction transaction, SqlStatement statement,
+      Options opts = Options{});
 
   /**
    * Executes a SQL DML statement.
