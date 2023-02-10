@@ -36,8 +36,6 @@ namespace internal {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-bool TracingEnabled(Options const& options);
-
 /**
  * Returns a [tracer] to use for creating [spans].
  *
@@ -117,6 +115,8 @@ StatusOr<T> EndSpan(opentelemetry::trace::Span& span,
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+bool TracingEnabled(Options const& options);
 
 /// Wraps the sleeper in a span, if tracing is enabled.
 std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(

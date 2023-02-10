@@ -54,17 +54,6 @@ TEST(OpenTelemetry, IsUsable) {
   EXPECT_EQ(span.ToString(), "DefaultSpan");
 }
 
-TEST(OpenTelemetry, TracingEnabled) {
-  auto options = Options{};
-  EXPECT_FALSE(TracingEnabled(options));
-
-  options.set<OpenTelemetryTracingOption>(false);
-  EXPECT_FALSE(TracingEnabled(options));
-
-  options.set<OpenTelemetryTracingOption>(true);
-  EXPECT_TRUE(TracingEnabled(options));
-}
-
 TEST(OpenTelemetry, GetTracer) {
   auto span_catcher = InstallSpanCatcher();
 
@@ -232,6 +221,17 @@ TEST(OpenTelemetry, EndSpanStatusOr) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
 }
 
+TEST(OpenTelemetry, TracingEnabled) {
+  auto options = Options{};
+  EXPECT_FALSE(TracingEnabled(options));
+
+  options.set<OpenTelemetryTracingOption>(false);
+  EXPECT_FALSE(TracingEnabled(options));
+
+  options.set<OpenTelemetryTracingOption>(true);
+  EXPECT_TRUE(TracingEnabled(options));
+}
+
 TEST(OpenTelemetry, MakeTracedSleeperEnabled) {
   auto span_catcher = InstallSpanCatcher();
 
@@ -265,6 +265,10 @@ TEST(OpenTelemetry, MakeTracedSleeperDisabled) {
 }
 
 #else
+
+TEST(NoOpenTelemetry, TracingEnabled) {
+  EXPECT_FALSE(TracingEnabled(Options{}));
+}
 
 TEST(NoOpenTelemetry, MakeTracedSleeper) {
   MockFunction<void(ms)> mock_sleeper;
