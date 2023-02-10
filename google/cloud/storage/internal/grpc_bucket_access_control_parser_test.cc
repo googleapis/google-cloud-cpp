@@ -58,11 +58,12 @@ TEST(GrpcBucketAccessControlParser, FromProto) {
        "projectNumber": "test-project-number",
        "team": "test-team"
      },
-     "etag": "test-etag"
+     "etag": "test-etag",
+     "selfLink": "https://test-prefix/acl/test-entity"
   })""");
   ASSERT_STATUS_OK(expected);
 
-  auto actual = FromProto(input, "test-bucket");
+  auto actual = FromProto(input, "test-bucket", "https://test-prefix");
   EXPECT_EQ(*expected, actual);
 }
 

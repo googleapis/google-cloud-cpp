@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/grpc_service_account_parser.h"
 #include "google/cloud/storage/internal/grpc_sign_blob_request_parser.h"
+#include "google/cloud/storage/internal/grpc_synthetic_self_link.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/big_endian.h"
@@ -67,11 +68,12 @@ StatusOr<google::protobuf::RepeatedPtrField<AccessControl>> UpsertAcl(
 
 // Used in the implementation of `*BucketAcl()`.
 StatusOr<storage::BucketAccessControl> FindBucketAccessControl(
-    StatusOr<google::storage::v2::Bucket> response, std::string const& entity) {
+    StatusOr<google::storage::v2::Bucket> response, std::string const& entity,
+    std::string const& bucket_self_link) {
   if (!response) return std::move(response).status();
   for (auto const& acl : response->acl()) {
     if (acl.entity() != entity && acl.entity_alt() != entity) continue;
-    return FromProto(acl, response->bucket_id());
+    return FromProto(acl, response->bucket_id(), bucket_self_link);
   }
   return Status(
       StatusCode::kNotFound,
@@ -80,12 +82,14 @@ StatusOr<storage::BucketAccessControl> FindBucketAccessControl(
 
 // Used in the implementation of `*ObjectAcl()`.
 StatusOr<storage::ObjectAccessControl> FindObjectAccessControl(
-    StatusOr<google::storage::v2::Object> response, std::string const& entity) {
+    StatusOr<google::storage::v2::Object> response, std::string const& entity,
+    std::string const& object_self_link) {
   if (!response) return std::move(response).status();
   auto bucket_id = GrpcBucketNameToId(response->bucket());
   for (auto const& acl : response->acl()) {
     if (acl.entity() != entity && acl.entity_alt() != entity) continue;
-    return FromProto(acl, bucket_id, response->name(), response->generation());
+    return FromProto(acl, bucket_id, response->name(), response->generation(),
+                     object_self_link);
   }
   return Status(StatusCode::kNotFound, "cannot find entity <" + entity +
                                            "> in bucket/object " + bucket_id +
@@ -98,9 +102,7 @@ StatusOr<storage::ObjectAccessControl> FindDefaultObjectAccessControl(
   if (!response) return std::move(response).status();
   for (auto const& acl : response->default_object_acl()) {
     if (acl.entity() != entity && acl.entity_alt() != entity) continue;
-    return FromProto(acl, response->bucket_id(),
-                     /*object_name=*/std::string{},
-                     /*generation=*/0);
+    return FromProtoDefaultObjectAccessControl(acl, response->bucket_id());
   }
   return Status(
       StatusCode::kNotFound,
@@ -293,7 +295,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::CreateBucket(
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->CreateBucket(context, proto);
-  if (response) return FromProto(*response);
+  if (response) return FromProto(*response, internal::CurrentOptions());
   // GCS returns kFailedPrecondition when the bucket already exists. I filed
   // a bug to change this to kAborted, for consistency with JSON.  In either
   // case, the error is confusing for customers. We normalize it here, just
@@ -310,7 +312,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::GetBucketMetadata(
     storage::internal::GetBucketMetadataRequest const& request) {
   auto response = GetBucketMetadataImpl(request);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return FromProto(*response, CurrentOptions());
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucket(
@@ -330,14 +332,14 @@ StatusOr<storage::BucketMetadata> GrpcClient::UpdateBucket(
   ApplyQueryParameters(context, request);
   auto response = stub_->UpdateBucket(context, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return FromProto(*response, internal::CurrentOptions());
 }
 
 StatusOr<storage::BucketMetadata> GrpcClient::PatchBucket(
     storage::internal::PatchBucketRequest const& request) {
   auto response = PatchBucketImpl(request);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return FromProto(*response, CurrentOptions());
 }
 
 StatusOr<storage::NativeIamPolicy> GrpcClient::GetNativeBucketIamPolicy(
@@ -378,7 +380,7 @@ StatusOr<storage::BucketMetadata> GrpcClient::LockBucketRetentionPolicy(
   ApplyQueryParameters(context, request);
   auto response = stub_->LockBucketRetentionPolicy(context, proto);
   if (!response) return std::move(response).status();
-  return FromProto(*response);
+  return FromProto(*response, CurrentOptions());
 }
 
 StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
@@ -470,7 +472,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
 
   if (!response) return std::move(response).status();
   if (response->has_resource()) {
-    return FromProto(response->resource(), options());
+    return FromProto(response->resource(), CurrentOptions());
   }
   return storage::ObjectMetadata{};
 }
@@ -630,7 +632,7 @@ GrpcClient::QueryResumableUpload(
   }
   auto response = stub_->QueryWriteStatus(context, ToProto(request));
   if (!response) return std::move(response).status();
-  return FromProto(*response, options());
+  return FromProto(*response, CurrentOptions());
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteResumableUpload(
@@ -769,7 +771,10 @@ StatusOr<storage::BucketAccessControl> GrpcClient::GetBucketAcl(
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
   auto get = GetBucketMetadataImpl(get_request);
-  return FindBucketAccessControl(std::move(get), request.entity());
+  auto const bucket_self_link =
+      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
+  return FindBucketAccessControl(std::move(get), request.entity(),
+                                 bucket_self_link);
 }
 
 StatusOr<storage::BucketAccessControl> GrpcClient::CreateBucketAcl(
@@ -782,8 +787,11 @@ StatusOr<storage::BucketAccessControl> GrpcClient::CreateBucketAcl(
   auto updater = [&request](BucketAccessControlList acl) {
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
+  auto const bucket_self_link =
+      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
   return FindBucketAccessControl(
-      ModifyBucketAccessControl(get_request, updater), request.entity());
+      ModifyBucketAccessControl(get_request, updater), request.entity(),
+      bucket_self_link);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteBucketAcl(
@@ -824,8 +832,11 @@ StatusOr<storage::BucketAccessControl> GrpcClient::UpdateBucketAcl(
   auto updater = [&request](BucketAccessControlList acl) {
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
+  auto const bucket_self_link =
+      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
   return FindBucketAccessControl(
-      ModifyBucketAccessControl(get_request, updater), request.entity());
+      ModifyBucketAccessControl(get_request, updater), request.entity(),
+      bucket_self_link);
 }
 
 StatusOr<storage::BucketAccessControl> GrpcClient::PatchBucketAcl(
@@ -837,8 +848,11 @@ StatusOr<storage::BucketAccessControl> GrpcClient::PatchBucketAcl(
   auto updater = [&request](BucketAccessControlList acl) {
     return UpsertAcl(std::move(acl), request.entity(), Role(request.patch()));
   };
+  auto const bucket_self_link =
+      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
   return FindBucketAccessControl(
-      ModifyBucketAccessControl(get_request, updater), request.entity());
+      ModifyBucketAccessControl(get_request, updater), request.entity(),
+      bucket_self_link);
 }
 
 StatusOr<storage::internal::ListObjectAclResponse> GrpcClient::ListObjectAcl(
@@ -863,8 +877,11 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::CreateObjectAcl(
   auto updater = [&request](ObjectAccessControlList acl) {
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
+  auto const object_self_link = SyntheticSelfLinkObject(
+      CurrentOptions(), request.bucket_name(), request.object_name());
   return FindObjectAccessControl(
-      ModifyObjectAccessControl(get_request, updater), request.entity());
+      ModifyObjectAccessControl(get_request, updater), request.entity(),
+      object_self_link);
 }
 
 StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteObjectAcl(
@@ -901,7 +918,10 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::GetObjectAcl(
   request.ForEachOption(CopyCommonOptions(get_request));
   get_request.set_option(storage::Projection("full"));
   auto get = GetObjectMetadataImpl(get_request);
-  return FindObjectAccessControl(std::move(get), request.entity());
+  auto const object_self_link = SyntheticSelfLinkObject(
+      CurrentOptions(), request.bucket_name(), request.object_name());
+  return FindObjectAccessControl(std::move(get), request.entity(),
+                                 object_self_link);
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateObjectAcl(
@@ -913,8 +933,11 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::UpdateObjectAcl(
   auto updater = [&request](ObjectAccessControlList acl) {
     return UpsertAcl(std::move(acl), request.entity(), request.role());
   };
+  auto const object_self_link = SyntheticSelfLinkObject(
+      CurrentOptions(), request.bucket_name(), request.object_name());
   return FindObjectAccessControl(
-      ModifyObjectAccessControl(get_request, updater), request.entity());
+      ModifyObjectAccessControl(get_request, updater), request.entity(),
+      object_self_link);
 }
 
 StatusOr<storage::ObjectAccessControl> GrpcClient::PatchObjectAcl(
@@ -926,8 +949,11 @@ StatusOr<storage::ObjectAccessControl> GrpcClient::PatchObjectAcl(
   auto updater = [&request](ObjectAccessControlList acl) {
     return UpsertAcl(std::move(acl), request.entity(), Role(request.patch()));
   };
+  auto const object_self_link = SyntheticSelfLinkObject(
+      CurrentOptions(), request.bucket_name(), request.object_name());
   return FindObjectAccessControl(
-      ModifyObjectAccessControl(get_request, updater), request.entity());
+      ModifyObjectAccessControl(get_request, updater), request.entity(),
+      object_self_link);
 }
 
 StatusOr<storage::internal::ListDefaultObjectAclResponse>
@@ -1174,10 +1200,12 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyBucketAccessControl(
   auto acl = updater(std::move(*response->mutable_acl()));
   if (!acl) return std::move(acl).status();
 
+  auto const bucket_self_link =
+      SyntheticSelfLinkBucket(CurrentOptions(), request.bucket_name());
   std::vector<storage::BucketAccessControl> updated(acl->size());
   std::transform(acl->begin(), acl->end(), updated.begin(),
-                 [&request](auto const& p) {
-                   return FromProto(p, request.bucket_name());
+                 [&request, &bucket_self_link](auto const& p) {
+                   return FromProto(p, request.bucket_name(), bucket_self_link);
                  });
   auto patch_request = storage::internal::PatchBucketRequest(
       request.bucket_name(),
@@ -1205,9 +1233,11 @@ StatusOr<google::storage::v2::Object> GrpcClient::ModifyObjectAccessControl(
   if (!acl) return std::move(acl).status();
 
   std::vector<storage::ObjectAccessControl> updated(acl->size());
+  auto const object_self_link = SyntheticSelfLinkObject(
+      CurrentOptions(), request.bucket_name(), request.object_name());
   std::transform(acl->begin(), acl->end(), updated.begin(), [&](auto const& p) {
     return FromProto(p, request.bucket_name(), response->name(),
-                     response->generation());
+                     response->generation(), object_self_link);
   });
   auto patch_request = storage::internal::PatchObjectRequest(
       request.bucket_name(), request.object_name(),
@@ -1237,9 +1267,7 @@ StatusOr<google::storage::v2::Bucket> GrpcClient::ModifyDefaultAccessControl(
 
   std::vector<storage::ObjectAccessControl> updated(acl->size());
   std::transform(acl->begin(), acl->end(), updated.begin(), [&](auto const& p) {
-    return FromProto(p, request.bucket_name(),
-                     /*object_name=*/std::string{},
-                     /*generation=*/0);
+    return FromProtoDefaultObjectAccessControl(p, request.bucket_name());
   });
 
   auto patch_request = storage::internal::PatchBucketRequest(

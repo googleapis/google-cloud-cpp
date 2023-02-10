@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/grpc_bucket_name.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_owner_parser.h"
+#include "google/cloud/storage/internal/grpc_synthetic_self_link.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/time_utils.h"
 #include "absl/algorithm/container.h"
@@ -108,15 +109,18 @@ google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
   return result;
 }
 
-storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs) {
+storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs,
+                                  Options const& options) {
   storage::BucketMetadata metadata;
 
   // These are sorted as the fields in the BucketMetadata class, to make them
   // easier to find in the future.
+  auto bucket_self_link = SyntheticSelfLinkBucket(options, rhs.bucket_id());
   for (auto const& v : rhs.acl()) {
     metadata.mutable_acl().push_back(
-        storage_internal::FromProto(v, rhs.bucket_id()));
+        storage_internal::FromProto(v, rhs.bucket_id(), bucket_self_link));
   }
+  metadata.set_self_link(std::move(bucket_self_link));
   if (rhs.has_billing()) metadata.set_billing(FromProto(rhs.billing()));
   metadata.set_default_event_based_hold(rhs.default_event_based_hold());
   for (auto const& v : rhs.cors()) {
@@ -124,9 +128,7 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs) {
   }
   for (auto const& v : rhs.default_object_acl()) {
     metadata.mutable_default_acl().push_back(
-        storage_internal::FromProto(v, rhs.bucket_id(),
-                                    /*object_name*/ std::string{},
-                                    /*generation=*/0));
+        FromProtoDefaultObjectAccessControl(v, rhs.bucket_id()));
   }
   if (rhs.has_encryption()) {
     metadata.set_encryption(FromProto(rhs.encryption()));

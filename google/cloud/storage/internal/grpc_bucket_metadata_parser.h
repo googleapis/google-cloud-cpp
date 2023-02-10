@@ -25,7 +25,8 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs);
-storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs);
+storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs,
+                                  Options const& options);
 
 google::storage::v2::Bucket::Autoclass ToProto(
     storage::BucketAutoclass const& rhs);
