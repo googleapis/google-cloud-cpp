@@ -79,9 +79,11 @@ Status StubFactoryGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes({vars("stub_factory_header_path"), vars("auth_header_path"),
                    vars("logging_header_path"), vars("metadata_header_path"),
-                   vars("stub_header_path"), "google/cloud/common_options.h",
+                   vars("stub_header_path"), vars("tracing_stub_header_path"),
+                   "google/cloud/common_options.h",
                    "google/cloud/grpc_options.h",
                    "google/cloud/internal/algorithm.h",
+                   "google/cloud/internal/opentelemetry.h",
                    "google/cloud/options.h", "google/cloud/log.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
@@ -125,6 +127,9 @@ CreateDefault$stub_class_name$(
         std::move(stub),
         options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = Make$tracing_stub_class_name$(std::move(stub));
   }
   return stub;
 }
