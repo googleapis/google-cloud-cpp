@@ -33,11 +33,8 @@ class TracedStreamRange {
  public:
   explicit TracedStreamRange(
       opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-      std::unique_ptr<opentelemetry::trace::Scope> scope, StreamRange<T> sr)
-      : span_(std::move(span)),
-        scope_(std::move(scope)),
-        sr_(std::move(sr)),
-        it_(sr_.begin()) {}
+      StreamRange<T> sr)
+      : span_(std::move(span)), sr_(std::move(sr)), it_(sr_.begin()) {}
 
   ~TracedStreamRange() {
     // It is ok not to iterate the full range. We should still end our span.
@@ -53,17 +50,9 @@ class TracedStreamRange {
   }
 
  private:
-  Status End(Status s) {
-    if (scope_ != nullptr) {
-      s = EndSpan(*span_, std::move(s));
-      scope_.reset();
-    }
-    return s;
-  }
+  Status End(Status const& s) { return EndSpan(*span_, s); }
 
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
-  // We use a unique_ptr for finer control over when the Scope is destroyed.
-  std::unique_ptr<opentelemetry::trace::Scope> scope_;
   StreamRange<T> sr_;
   typename StreamRange<T>::iterator it_;
 };
@@ -76,17 +65,15 @@ class TracedStreamRange {
  *
  * Note that when a `StreamRange<>` is constructed, it preloads the first value.
  * In order for any sub-operations to be tied to the parent `span`, it must be
- * made active (by creating a `Scope` object). This API accepts a `Scope` to:
- *   1. remind the caller to create that `Scope`
- *   2. save a map look up
+ * made active (by creating a `Scope` object).
  */
 template <typename T>
 StreamRange<T> MakeTracedStreamRange(
     opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
-    std::unique_ptr<opentelemetry::trace::Scope> scope, StreamRange<T> sr) {
+    StreamRange<T> sr) {
   // StreamRange is not copyable, but a shared ptr to one is.
-  auto impl = std::make_shared<TracedStreamRange<T>>(
-      std::move(span), std::move(scope), std::move(sr));
+  auto impl =
+      std::make_shared<TracedStreamRange<T>>(std::move(span), std::move(sr));
   auto reader = [impl = std::move(impl)] { return impl->Advance(); };
   return internal::MakeStreamRange<T>(std::move(reader));
 }
