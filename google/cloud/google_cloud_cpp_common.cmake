@@ -127,6 +127,8 @@ add_library(
     internal/tuple.h
     internal/type_list.h
     internal/type_traits.h
+    internal/url_encode.cc
+    internal/url_encode.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
     internal/utility.h

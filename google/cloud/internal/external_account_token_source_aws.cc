@@ -23,11 +23,11 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/internal/sha256_hmac.h"
+#include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
-#include <array>
 #include <chrono>
 #include <utility>
 
@@ -89,16 +89,7 @@ StatusOr<internal::SubjectToken> Source(
   auto const subject =
       ComputeSubjectToken(info, *region, *secrets, now, audience).dump();
   // We need to URL-encode the string.
-  using CharMapping = std::pair<absl::string_view, absl::string_view>;
-  auto const mappings = std::array<CharMapping, 25>{{
-      {" ", "%20"}, {"\"", "%22"}, {"#", "%23"},  {"$", "%24"}, {"%", "%25"},
-      {"&", "%26"}, {"+", "%2B"},  {",", "%2C"},  {"/", "%2F"}, {":", "%3A"},
-      {";", "%3B"}, {"<", "%3C"},  {"=", "%3D"},  {">", "%3E"}, {"?", "%3F"},
-      {"@", "%40"}, {"[", "%5B"},  {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},
-      {"`", "%60"}, {"{", "%7B"},  {"|", "%7C"},  {"}", "%7D"}, {"\177", "%7F"},
-  }};
-
-  return internal::SubjectToken{absl::StrReplaceAll(subject, mappings)};
+  return internal::SubjectToken{google::cloud::internal::UrlEncode(subject)};
 }
 
 }  // namespace
