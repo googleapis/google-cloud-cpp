@@ -291,7 +291,12 @@ void StorageRoundRobin::Refresh(
   // An invalid index, stop the loop.  There is no need to lock the mutex, as
   // the channels do not change after the class is initialized.
   if (index >= channels_.size()) return;
-  GCP_LOG(INFO) << "Refreshing channel [" << index << "]";
+  if (index == 0) {
+    // We create hundreds of channels in some VMs. That can create a lot of
+    // noise in the logs. Logging only one channel is a good tradeoff, it shows
+    // "progress" without consuming all the log output with uninteresting lines.
+    GCP_LOG(INFO) << "Refreshing channel [" << index << "]";
+  }
   (void)google::cloud::internal::NotifyOnStateChange::Start(
       std::move(cq), channels_.at(index), deadline)
       .then(
