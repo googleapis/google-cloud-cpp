@@ -293,7 +293,7 @@ void StorageRoundRobin::Refresh(
   if (index >= channels_.size()) return;
   if (index == 0) {
     // We create hundreds of channels in some VMs. That can create a lot of
-    // noise in the logs. Logging only one channel is a good tradeoff, it shows
+    // noise in the logs. Logging only one channel is a good tradeoff. It shows
     // "progress" without consuming all the log output with uninteresting lines.
     GCP_LOG(INFO) << "Refreshing channel [" << index << "]";
   }
