@@ -79,9 +79,10 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
   v2::CreateBucketRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
-        parent: "projects/test-project"
+        parent: "projects/_"
         bucket_id: "test-bucket"
         bucket {
+          project: "projects/test-project"
           location: "us-central1"
           storage_class: "NEARLINE"
           rpo: "ASYNC_TURBO"
