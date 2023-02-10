@@ -38,7 +38,7 @@ GoldenThingAdminTracingConnection::ListDatabases(google::test::admin::database::
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDatabases(std::move(request));
   return internal::MakeTracedStreamRange<google::test::admin::database::v1::Database>(
-        std::move(span), std::move(scope), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -125,7 +125,7 @@ GoldenThingAdminTracingConnection::ListBackups(google::test::admin::database::v1
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::test::admin::database::v1::Backup>(
-        std::move(span), std::move(scope), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -139,7 +139,7 @@ GoldenThingAdminTracingConnection::ListDatabaseOperations(google::test::admin::d
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDatabaseOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(scope), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
@@ -148,7 +148,7 @@ GoldenThingAdminTracingConnection::ListBackupOperations(google::test::admin::dat
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListBackupOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(scope), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
