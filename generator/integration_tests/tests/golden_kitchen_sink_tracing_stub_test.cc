@@ -30,6 +30,9 @@ namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Return;
+
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 using ::google::cloud::testing_util::InstallMockPropagator;
@@ -40,18 +43,18 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::_;
 using ::testing::ByMove;
-using ::testing::Return;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::VariantWith;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateAccessToken) {
+TEST(GoldenKitchenSinkTracingStubTest, GenerateAccessToken) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -81,7 +84,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateAccessToken) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateIdToken) {
+TEST(GoldenKitchenSinkTracingStubTest, GenerateIdToken) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -111,7 +114,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateIdToken) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, WriteLogEntries) {
+TEST(GoldenKitchenSinkTracingStubTest, WriteLogEntries) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -141,7 +144,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, WriteLogEntries) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, ListLogs) {
+TEST(GoldenKitchenSinkTracingStubTest, ListLogs) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -170,7 +173,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListLogs) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingRead) {
+TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
       ::google::cloud::internal::StreamingReadRpcError<Response>;
@@ -185,7 +188,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingRead) {
   EXPECT_THAT(v, VariantWith<Status>(StatusIs(StatusCode::kAborted)));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
+TEST(GoldenKitchenSinkTracingStubTest, ListServiceAccountKeys) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -215,7 +218,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, DoNothing) {
+TEST(GoldenKitchenSinkTracingStubTest, DoNothing) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -245,7 +248,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, DoNothing) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingWrite) {
+TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, StreamingWrite)
       .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
@@ -265,7 +268,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingWrite) {
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingRead) {
+TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
       ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
@@ -283,7 +286,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingRead) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingWrite) {
+TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
       ::google::cloud::internal::AsyncStreamingWriteRpcError<Request, Response>;
@@ -302,7 +305,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingWrite) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingReadWrite) {
+TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<Request,
@@ -322,7 +325,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingReadWrite) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, ExplicitRouting1) {
+TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting1) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -352,7 +355,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ExplicitRouting1) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenKitchenSinkAuthDecoratorTest, ExplicitRouting2) {
+TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting2) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -380,6 +383,37 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ExplicitRouting2) {
           SpanHasAttributes(
               SpanAttribute<std::string>("grpc.peer", _),
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
+}
+
+TEST(MakeGoldenKitchenSinkTracingStub, OpenTelemetry) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock_propagator = InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  EXPECT_CALL(*mock, DoNothing)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = MakeGoldenKitchenSinkTracingStub(mock);
+  grpc::ClientContext context;
+  auto result = under_test->DoNothing(context, {});
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Not(IsEmpty()));
+}
+
+#else
+
+TEST(MakeGoldenKitchenSinkTracingStub, NoOpenTelemetry) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
+  EXPECT_CALL(*mock, DoNothing)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = MakeGoldenKitchenSinkTracingStub(mock);
+  grpc::ClientContext context;
+  auto result = under_test->DoNothing(context, {});
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

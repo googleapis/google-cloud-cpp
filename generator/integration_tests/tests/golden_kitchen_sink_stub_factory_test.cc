@@ -14,6 +14,8 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub_factory.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -27,6 +29,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::test::admin::database::v1::GenerateIdTokenRequest;
+using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
@@ -65,6 +68,48 @@ TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithAuth) {
   EXPECT_THAT(response, Not(IsOk()));
   EXPECT_THAT(context.credentials(), Not(IsNull()));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto options = Options{}
+                     .set<internal::OpenTelemetryTracingOption>(true)
+                     .set<EndpointOption>("localhost:1");
+  auto stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
+  grpc::ClientContext context;
+  (void)stub->DoNothing(context, {});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, Contains(SpanNamed(
+                 "google.test.admin.database.v1.GoldenKitchenSink/DoNothing")));
+}
+
+TEST_F(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingDisabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  using ::testing::Not;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto options = Options{}
+                     .set<internal::OpenTelemetryTracingOption>(false)
+                     .set<EndpointOption>("localhost:1");
+  auto stub =
+      CreateDefaultGoldenKitchenSinkStub(CompletionQueue{}, std::move(options));
+  grpc::ClientContext context;
+  (void)stub->DoNothing(context, {});
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      Not(Contains(SpanNamed(
+          "google.test.admin.database.v1.GoldenKitchenSink/DoNothing"))));
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
