@@ -46,10 +46,10 @@ ProductSearchTracingConnection::ListProductSets(
     google::cloud::vision::v1::ListProductSetsRequest request) {
   auto span =
       internal::MakeSpan("vision::ProductSearchConnection::ListProductSets");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProductSets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::ProductSet>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
@@ -92,10 +92,10 @@ ProductSearchTracingConnection::ListProducts(
     google::cloud::vision::v1::ListProductsRequest request) {
   auto span =
       internal::MakeSpan("vision::ProductSearchConnection::ListProducts");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProducts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::Product>
@@ -145,11 +145,11 @@ ProductSearchTracingConnection::ListReferenceImages(
     google::cloud::vision::v1::ListReferenceImagesRequest request) {
   auto span = internal::MakeSpan(
       "vision::ProductSearchConnection::ListReferenceImages");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListReferenceImages(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vision::v1::ReferenceImage>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vision::v1::ReferenceImage>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
@@ -183,10 +183,10 @@ ProductSearchTracingConnection::ListProductsInProductSet(
     google::cloud::vision::v1::ListProductsInProductSetRequest request) {
   auto span = internal::MakeSpan(
       "vision::ProductSearchConnection::ListProductsInProductSet");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProductsInProductSet(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>

@@ -37,11 +37,11 @@ ServiceManagerTracingConnection::ListServices(
     google::api::servicemanagement::v1::ListServicesRequest request) {
   auto span = internal::MakeSpan(
       "servicemanagement::ServiceManagerConnection::ListServices");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::api::servicemanagement::v1::ManagedService>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::api::servicemanagement::v1::ManagedService>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
@@ -76,10 +76,10 @@ ServiceManagerTracingConnection::ListServiceConfigs(
     google::api::servicemanagement::v1::ListServiceConfigsRequest request) {
   auto span = internal::MakeSpan(
       "servicemanagement::ServiceManagerConnection::ListServiceConfigs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServiceConfigs(std::move(request));
-  return internal::MakeTracedStreamRange<google::api::Service>(
-      std::move(span), std::move(scope), std::move(sr));
+  return internal::MakeTracedStreamRange<google::api::Service>(std::move(span),
+                                                               std::move(sr));
 }
 
 StatusOr<google::api::Service>
@@ -114,11 +114,11 @@ ServiceManagerTracingConnection::ListServiceRollouts(
     google::api::servicemanagement::v1::ListServiceRolloutsRequest request) {
   auto span = internal::MakeSpan(
       "servicemanagement::ServiceManagerConnection::ListServiceRollouts");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServiceRollouts(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::api::servicemanagement::v1::Rollout>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::api::servicemanagement::v1::Rollout>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::api::servicemanagement::v1::Rollout>

@@ -39,11 +39,11 @@ GameServerConfigsServiceTracingConnection::ListGameServerConfigs(
   auto span = internal::MakeSpan(
       "gameservices::GameServerConfigsServiceConnection::"
       "ListGameServerConfigs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListGameServerConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::gaming::v1::GameServerConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::gaming::v1::GameServerConfig>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerConfig>

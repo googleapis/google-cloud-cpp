@@ -68,11 +68,11 @@ AttachedClustersTracingConnection::ListAttachedClusters(
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request) {
   auto span = internal::MakeSpan(
       "gkemulticloud_v1::AttachedClustersConnection::ListAttachedClusters");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAttachedClusters(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::gkemulticloud::v1::AttachedCluster>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::gkemulticloud::v1::AttachedCluster>(std::move(span),
+                                                         std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>

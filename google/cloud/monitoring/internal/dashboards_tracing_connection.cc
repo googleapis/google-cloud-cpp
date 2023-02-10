@@ -46,11 +46,11 @@ DashboardsServiceTracingConnection::ListDashboards(
     google::monitoring::dashboard::v1::ListDashboardsRequest request) {
   auto span = internal::MakeSpan(
       "monitoring::DashboardsServiceConnection::ListDashboards");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDashboards(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::monitoring::dashboard::v1::Dashboard>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::monitoring::dashboard::v1::Dashboard>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>

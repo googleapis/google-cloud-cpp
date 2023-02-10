@@ -43,10 +43,10 @@ SpeechTracingConnection::ListRecognizers(
     google::cloud::speech::v2::ListRecognizersRequest request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::ListRecognizers");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRecognizers(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::speech::v2::Recognizer>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v2::Recognizer>
@@ -122,11 +122,10 @@ SpeechTracingConnection::ListCustomClasses(
     google::cloud::speech::v2::ListCustomClassesRequest request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::ListCustomClasses");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCustomClasses(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::speech::v2::CustomClass>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::speech::v2::CustomClass>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v2::CustomClass>
@@ -165,10 +164,10 @@ StreamRange<google::cloud::speech::v2::PhraseSet>
 SpeechTracingConnection::ListPhraseSets(
     google::cloud::speech::v2::ListPhraseSetsRequest request) {
   auto span = internal::MakeSpan("speech_v2::SpeechConnection::ListPhraseSets");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListPhraseSets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::speech::v2::PhraseSet>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet>

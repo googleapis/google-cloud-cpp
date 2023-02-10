@@ -39,11 +39,11 @@ ClientGatewaysServiceTracingConnection::ListClientGateways(
         request) {
   auto span = internal::MakeSpan(
       "beyondcorp::ClientGatewaysServiceConnection::ListClientGateways");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListClientGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::clientgateways::v1::ClientGateway>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>

@@ -36,11 +36,11 @@ StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 SearchServiceTracingConnection::Search(
     google::cloud::retail::v2::SearchRequest request) {
   auto span = internal::MakeSpan("retail::SearchServiceConnection::Search");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->Search(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::retail::v2::SearchResponse::SearchResult>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::retail::v2::SearchResponse::SearchResult>(std::move(span),
+                                                               std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -37,11 +37,10 @@ VersionsTracingConnection::ListVersions(
     google::cloud::dialogflow::v2::ListVersionsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_es::VersionsConnection::ListVersions");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListVersions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Version>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::dialogflow::v2::Version>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>

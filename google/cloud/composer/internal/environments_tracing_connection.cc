@@ -56,11 +56,11 @@ EnvironmentsTracingConnection::ListEnvironments(
         request) {
   auto span =
       internal::MakeSpan("composer::EnvironmentsConnection::ListEnvironments");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::orchestration::airflow::service::v1::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<

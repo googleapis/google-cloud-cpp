@@ -35,10 +35,10 @@ TpuTracingConnection::TpuTracingConnection(
 StreamRange<google::cloud::tpu::v2::Node> TpuTracingConnection::ListNodes(
     google::cloud::tpu::v2::ListNodesRequest request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::ListNodes");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNodes(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tpu::v2::Node>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v2::Node> TpuTracingConnection::GetNode(
@@ -87,11 +87,10 @@ StreamRange<google::cloud::tpu::v2::AcceleratorType>
 TpuTracingConnection::ListAcceleratorTypes(
     google::cloud::tpu::v2::ListAcceleratorTypesRequest request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::ListAcceleratorTypes");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAcceleratorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::tpu::v2::AcceleratorType>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::tpu::v2::AcceleratorType>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v2::AcceleratorType>
@@ -106,11 +105,10 @@ StreamRange<google::cloud::tpu::v2::RuntimeVersion>
 TpuTracingConnection::ListRuntimeVersions(
     google::cloud::tpu::v2::ListRuntimeVersionsRequest request) {
   auto span = internal::MakeSpan("tpu_v2::TpuConnection::ListRuntimeVersions");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRuntimeVersions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::tpu::v2::RuntimeVersion>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::tpu::v2::RuntimeVersion>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v2::RuntimeVersion>

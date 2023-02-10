@@ -37,10 +37,10 @@ RealmsServiceTracingConnection::ListRealms(
     google::cloud::gaming::v1::ListRealmsRequest request) {
   auto span =
       internal::MakeSpan("gameservices::RealmsServiceConnection::ListRealms");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRealms(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::gaming::v1::Realm>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::gaming::v1::Realm>

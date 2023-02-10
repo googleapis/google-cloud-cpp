@@ -39,11 +39,11 @@ NotificationChannelServiceTracingConnection::ListNotificationChannelDescriptors(
   auto span = internal::MakeSpan(
       "monitoring::NotificationChannelServiceConnection::"
       "ListNotificationChannelDescriptors");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNotificationChannelDescriptors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::monitoring::v3::NotificationChannelDescriptor>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::monitoring::v3::NotificationChannelDescriptor>(std::move(span),
+                                                             std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
@@ -64,11 +64,11 @@ NotificationChannelServiceTracingConnection::ListNotificationChannels(
   auto span = internal::MakeSpan(
       "monitoring::NotificationChannelServiceConnection::"
       "ListNotificationChannels");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNotificationChannels(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::monitoring::v3::NotificationChannel>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::monitoring::v3::NotificationChannel>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>

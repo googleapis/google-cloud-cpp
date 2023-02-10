@@ -93,11 +93,11 @@ BinauthzManagementServiceV1TracingConnection::ListAttestors(
   auto span = internal::MakeSpan(
       "binaryauthorization::BinauthzManagementServiceV1Connection::"
       "ListAttestors");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAttestors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::binaryauthorization::v1::Attestor>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::binaryauthorization::v1::Attestor>(std::move(span),
+                                                        std::move(sr));
 }
 
 Status BinauthzManagementServiceV1TracingConnection::DeleteAttestor(

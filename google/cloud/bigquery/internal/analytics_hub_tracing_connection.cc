@@ -38,11 +38,11 @@ AnalyticsHubServiceTracingConnection::ListDataExchanges(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::AnalyticsHubServiceConnection::ListDataExchanges");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDataExchanges(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::analyticshub::v1::DataExchange>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::bigquery::analyticshub::v1::DataExchange>(std::move(span),
+                                                               std::move(sr));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -51,11 +51,11 @@ AnalyticsHubServiceTracingConnection::ListOrgDataExchanges(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::AnalyticsHubServiceConnection::ListOrgDataExchanges");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListOrgDataExchanges(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::analyticshub::v1::DataExchange>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::bigquery::analyticshub::v1::DataExchange>(std::move(span),
+                                                               std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -102,11 +102,11 @@ AnalyticsHubServiceTracingConnection::ListListings(
     google::cloud::bigquery::analyticshub::v1::ListListingsRequest request) {
   auto span = internal::MakeSpan(
       "bigquery::AnalyticsHubServiceConnection::ListListings");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListListings(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::analyticshub::v1::Listing>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::bigquery::analyticshub::v1::Listing>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>

@@ -38,11 +38,11 @@ ConversationProfilesTracingConnection::ListConversationProfiles(
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationProfilesConnection::"
       "ListConversationProfiles");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListConversationProfiles(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::ConversationProfile>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::ConversationProfile>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>

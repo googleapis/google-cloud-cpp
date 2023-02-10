@@ -46,11 +46,11 @@ OrganizationsTracingConnection::SearchOrganizations(
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
   auto span = internal::MakeSpan(
       "resourcemanager::OrganizationsConnection::SearchOrganizations");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->SearchOrganizations(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::resourcemanager::v3::Organization>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::resourcemanager::v3::Organization>(std::move(span),
+                                                        std::move(sr));
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsTracingConnection::GetIamPolicy(

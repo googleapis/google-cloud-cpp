@@ -323,11 +323,10 @@ ClusterManagerTracingConnection::ListUsableSubnetworks(
     google::container::v1::ListUsableSubnetworksRequest request) {
   auto span = internal::MakeSpan(
       "container::ClusterManagerConnection::ListUsableSubnetworks");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListUsableSubnetworks(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::container::v1::UsableSubnetwork>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::container::v1::UsableSubnetwork>(std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -35,10 +35,10 @@ PoliciesTracingConnection::PoliciesTracingConnection(
 StreamRange<google::iam::v2::Policy> PoliciesTracingConnection::ListPolicies(
     google::iam::v2::ListPoliciesRequest request) {
   auto span = internal::MakeSpan("iam_v2::PoliciesConnection::ListPolicies");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListPolicies(std::move(request));
   return internal::MakeTracedStreamRange<google::iam::v2::Policy>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesTracingConnection::GetPolicy(

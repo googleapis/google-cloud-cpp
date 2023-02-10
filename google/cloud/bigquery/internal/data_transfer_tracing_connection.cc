@@ -47,11 +47,11 @@ DataTransferServiceTracingConnection::ListDataSources(
     google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request) {
   auto span = internal::MakeSpan(
       "bigquery::DataTransferServiceConnection::ListDataSources");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDataSources(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::datatransfer::v1::DataSource>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::bigquery::datatransfer::v1::DataSource>(std::move(span),
+                                                             std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
@@ -99,11 +99,11 @@ DataTransferServiceTracingConnection::ListTransferConfigs(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::DataTransferServiceConnection::ListTransferConfigs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTransferConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::datatransfer::v1::TransferConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<
@@ -153,11 +153,11 @@ DataTransferServiceTracingConnection::ListTransferRuns(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::DataTransferServiceConnection::ListTransferRuns");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTransferRuns(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::datatransfer::v1::TransferRun>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::bigquery::datatransfer::v1::TransferRun>(std::move(span),
+                                                              std::move(sr));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
@@ -166,11 +166,11 @@ DataTransferServiceTracingConnection::ListTransferLogs(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::DataTransferServiceConnection::ListTransferLogs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTransferLogs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::datatransfer::v1::TransferMessage>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>

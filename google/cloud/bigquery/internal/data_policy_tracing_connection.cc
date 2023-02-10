@@ -87,11 +87,11 @@ DataPolicyServiceTracingConnection::ListDataPolicies(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::DataPolicyServiceConnection::ListDataPolicies");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDataPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::datapolicies::v1::DataPolicy>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::bigquery::datapolicies::v1::DataPolicy>(std::move(span),
+                                                             std::move(sr));
 }
 
 StatusOr<google::iam::v1::Policy>

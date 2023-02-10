@@ -56,10 +56,10 @@ ServiceMonitoringServiceTracingConnection::ListServices(
     google::monitoring::v3::ListServicesRequest request) {
   auto span = internal::MakeSpan(
       "monitoring::ServiceMonitoringServiceConnection::ListServices");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::Service>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::Service>
@@ -105,11 +105,11 @@ ServiceMonitoringServiceTracingConnection::ListServiceLevelObjectives(
   auto span = internal::MakeSpan(
       "monitoring::ServiceMonitoringServiceConnection::"
       "ListServiceLevelObjectives");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServiceLevelObjectives(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::monitoring::v3::ServiceLevelObjective>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::monitoring::v3::ServiceLevelObjective>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>

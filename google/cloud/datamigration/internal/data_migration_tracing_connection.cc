@@ -37,11 +37,11 @@ DataMigrationServiceTracingConnection::ListMigrationJobs(
     google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
   auto span = internal::MakeSpan(
       "datamigration::DataMigrationServiceConnection::ListMigrationJobs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMigrationJobs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::clouddms::v1::MigrationJob>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::clouddms::v1::MigrationJob>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
@@ -121,11 +121,11 @@ DataMigrationServiceTracingConnection::ListConnectionProfiles(
     google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
   auto span = internal::MakeSpan(
       "datamigration::DataMigrationServiceConnection::ListConnectionProfiles");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListConnectionProfiles(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::clouddms::v1::ConnectionProfile>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::clouddms::v1::ConnectionProfile>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>

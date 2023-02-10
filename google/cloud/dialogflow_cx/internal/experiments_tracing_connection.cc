@@ -37,11 +37,11 @@ ExperimentsTracingConnection::ListExperiments(
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::ExperimentsConnection::ListExperiments");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListExperiments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Experiment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::Experiment>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>

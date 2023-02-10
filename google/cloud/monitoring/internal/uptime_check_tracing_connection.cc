@@ -37,11 +37,11 @@ UptimeCheckServiceTracingConnection::ListUptimeCheckConfigs(
     google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
   auto span = internal::MakeSpan(
       "monitoring::UptimeCheckServiceConnection::ListUptimeCheckConfigs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListUptimeCheckConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::monitoring::v3::UptimeCheckConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::monitoring::v3::UptimeCheckConfig>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
@@ -84,10 +84,10 @@ UptimeCheckServiceTracingConnection::ListUptimeCheckIps(
     google::monitoring::v3::ListUptimeCheckIpsRequest request) {
   auto span = internal::MakeSpan(
       "monitoring::UptimeCheckServiceConnection::ListUptimeCheckIps");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListUptimeCheckIps(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::UptimeCheckIp>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

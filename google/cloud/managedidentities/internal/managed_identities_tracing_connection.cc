@@ -57,11 +57,11 @@ ManagedIdentitiesServiceTracingConnection::ListDomains(
     google::cloud::managedidentities::v1::ListDomainsRequest request) {
   auto span = internal::MakeSpan(
       "managedidentities::ManagedIdentitiesServiceConnection::ListDomains");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDomains(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::managedidentities::v1::Domain>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::managedidentities::v1::Domain>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>

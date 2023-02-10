@@ -53,10 +53,10 @@ SchemaServiceTracingConnection::ListSchemas(
     google::pubsub::v1::ListSchemasRequest request) {
   auto span =
       internal::MakeSpan("pubsub::SchemaServiceConnection::ListSchemas");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListSchemas(std::move(request));
   return internal::MakeTracedStreamRange<google::pubsub::v1::Schema>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::pubsub::v1::Schema>
@@ -64,10 +64,10 @@ SchemaServiceTracingConnection::ListSchemaRevisions(
     google::pubsub::v1::ListSchemaRevisionsRequest request) {
   auto span = internal::MakeSpan(
       "pubsub::SchemaServiceConnection::ListSchemaRevisions");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListSchemaRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::pubsub::v1::Schema>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::pubsub::v1::Schema>

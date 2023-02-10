@@ -37,11 +37,11 @@ EnvironmentsTracingConnection::ListEnvironments(
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::ListEnvironments");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::Environment>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
@@ -82,11 +82,11 @@ EnvironmentsTracingConnection::LookupEnvironmentHistory(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::LookupEnvironmentHistory");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->LookupEnvironmentHistory(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::Environment>(std::move(span),
+                                                      std::move(sr));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
@@ -102,11 +102,11 @@ EnvironmentsTracingConnection::ListContinuousTestResults(
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::EnvironmentsConnection::ListContinuousTestResults");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListContinuousTestResults(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::ContinuousTestResult>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::ContinuousTestResult>(std::move(span),
+                                                               std::move(sr));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>

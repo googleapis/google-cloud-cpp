@@ -55,10 +55,10 @@ ProductServiceTracingConnection::ListProducts(
     google::cloud::retail::v2::ListProductsRequest request) {
   auto span =
       internal::MakeSpan("retail::ProductServiceConnection::ListProducts");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProducts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Product>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::retail::v2::Product>

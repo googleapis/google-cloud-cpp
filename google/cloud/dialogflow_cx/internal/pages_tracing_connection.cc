@@ -36,11 +36,10 @@ StreamRange<google::cloud::dialogflow::cx::v3::Page>
 PagesTracingConnection::ListPages(
     google::cloud::dialogflow::cx::v3::ListPagesRequest request) {
   auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::ListPages");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListPages(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Page>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::Page>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
