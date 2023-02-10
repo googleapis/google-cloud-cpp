@@ -112,7 +112,7 @@ storage::ObjectMetadata FromProto(google::storage::v2::Object object,
   acl.reserve(object.acl_size());
   for (auto& item : *object.mutable_acl()) {
     acl.push_back(FromProto(std::move(item), metadata.bucket(), metadata.name(),
-                            metadata.generation()));
+                            metadata.generation(), metadata.self_link()));
   }
   metadata.set_acl(std::move(acl));
   metadata.set_cache_control(std::move(*object.mutable_cache_control()));

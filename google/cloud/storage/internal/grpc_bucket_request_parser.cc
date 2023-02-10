@@ -401,10 +401,11 @@ storage::internal::ListBucketsResponse FromProto(
   storage::internal::ListBucketsResponse result;
   result.next_page_token = response.next_page_token();
   result.items.reserve(response.buckets_size());
+  auto const& current_options = internal::CurrentOptions();
   std::transform(response.buckets().begin(), response.buckets().end(),
                  std::back_inserter(result.items),
-                 [](google::storage::v2::Bucket const& b) {
-                   return storage_internal::FromProto(b);
+                 [&](google::storage::v2::Bucket const& b) {
+                   return storage_internal::FromProto(b, current_options);
                  });
   return result;
 }

@@ -42,7 +42,7 @@ google::storage::v2::BucketAccessControl ToProto(
 
 storage::BucketAccessControl FromProto(
     google::storage::v2::BucketAccessControl acl,
-    std::string const& bucket_name) {
+    std::string const& bucket_name, std::string const& bucket_self_link) {
   storage::BucketAccessControl result;
   result.set_kind("storage#bucketAccessControl");
   result.set_bucket(bucket_name);
@@ -59,6 +59,7 @@ storage::BucketAccessControl FromProto(
   }
   result.set_role(std::move(*acl.mutable_role()));
   result.set_etag(std::move(*acl.mutable_etag()));
+  result.set_self_link(bucket_self_link + "/acl/" + result.entity());
 
   return result;
 }

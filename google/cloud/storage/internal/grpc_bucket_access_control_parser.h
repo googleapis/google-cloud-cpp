@@ -28,7 +28,7 @@ google::storage::v2::BucketAccessControl ToProto(
     storage::BucketAccessControl const& acl);
 storage::BucketAccessControl FromProto(
     google::storage::v2::BucketAccessControl acl,
-    std::string const& bucket_name);
+    std::string const& bucket_name, std::string const& bucket_self_link);
 std::string Role(storage::BucketAccessControlPatchBuilder const&);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
