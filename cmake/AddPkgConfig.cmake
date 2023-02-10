@@ -55,6 +55,12 @@ function (google_cloud_cpp_add_pkgconfig library name description)
     else ()
         set(GOOGLE_CLOUD_CPP_PC_LIBS "-l${target}")
     endif ()
+    get_target_property(target_defs ${target} INTERFACE_COMPILE_DEFINITIONS)
+    if (target_defs)
+        foreach (def ${target_defs})
+            string(APPEND GOOGLE_CLOUD_CPP_PC_CFLAGS " -D${def}")
+        endforeach ()
+    endif ()
 
     # Create and install the pkg-config files.
     configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"

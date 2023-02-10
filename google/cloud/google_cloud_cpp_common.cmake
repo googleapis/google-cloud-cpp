@@ -170,7 +170,9 @@ if (experimental-opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         target_compile_definitions(
             google_cloud_cpp_common
             PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
-                   GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+                   GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+                   # TODO(#10975) - install separate opentelemetry .pc file
+                   HAVE_ABSEIL)
         set(GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES
             "find_dependency(opentelemetry-cpp)")
     endif ()
