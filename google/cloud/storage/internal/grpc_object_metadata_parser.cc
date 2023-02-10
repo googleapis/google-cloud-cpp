@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_object_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_owner_parser.h"
+#include "google/cloud/storage/internal/grpc_synthetic_self_link.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/big_endian.h"
@@ -89,24 +90,10 @@ storage::ObjectMetadata FromProto(google::storage::v2::Object object,
   metadata.set_etag(object.etag());
   metadata.set_id(metadata.bucket() + "/" + metadata.name() + "/" +
                   std::to_string(metadata.generation()));
-  auto const metadata_endpoint = [&options]() -> std::string {
-    if (options.get<storage::RestEndpointOption>() !=
-        "https://storage.googleapis.com") {
-      return options.get<storage::RestEndpointOption>();
-    }
-    return "https://www.googleapis.com";
-  }();
-  auto const path = [&options]() -> std::string {
-    if (!options.has<storage::internal::TargetApiVersionOption>())
-      return "/storage/v1";
-    return "/storage/" +
-           options.get<storage::internal::TargetApiVersionOption>();
-  }();
-  auto const rel_path = "/b/" + metadata.bucket() + "/o/" + metadata.name();
-  metadata.set_self_link(metadata_endpoint + path + rel_path);
-  metadata.set_media_link(options.get<storage::RestEndpointOption>() +
-                          "/download" + path + rel_path + "?generation=" +
-                          std::to_string(metadata.generation()) + "&alt=media");
+  metadata.set_self_link(
+      SyntheticSelfLinkObject(options, metadata.bucket(), metadata.name()));
+  metadata.set_media_link(SyntheticSelfLinkDownload(
+      options, metadata.bucket(), metadata.name(), metadata.generation()));
 
   metadata.set_metageneration(object.metageneration());
   if (object.has_owner()) {
