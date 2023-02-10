@@ -40,8 +40,7 @@ OrgPolicyTracingConnection::ListConstraints(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListConstraints(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::orgpolicy::v2::Constraint>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::orgpolicy::v2::Constraint>(std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
@@ -52,7 +51,7 @@ OrgPolicyTracingConnection::ListPolicies(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListPolicies(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::orgpolicy::v2::Policy>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>

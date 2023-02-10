@@ -43,7 +43,7 @@ AppConnectionsServiceTracingConnection::ListAppConnections(
   auto sr = child_->ListAppConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appconnections::v1::AppConnection>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
@@ -89,8 +89,8 @@ AppConnectionsServiceTracingConnection::ResolveAppConnections(
   auto sr = child_->ResolveAppConnections(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appconnections::v1::
-          ResolveAppConnectionsResponse::AppConnectionDetails>(
-      std::move(span), std::move(scope), std::move(sr));
+          ResolveAppConnectionsResponse::AppConnectionDetails>(std::move(span),
+                                                               std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

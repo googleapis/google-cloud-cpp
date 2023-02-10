@@ -41,8 +41,8 @@ AppGatewaysServiceTracingConnection::ListAppGateways(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAppGateways(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::beyondcorp::appgateways::v1::AppGateway>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::beyondcorp::appgateways::v1::AppGateway>(std::move(span),
+                                                              std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>

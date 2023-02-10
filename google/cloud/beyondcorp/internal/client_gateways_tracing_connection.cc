@@ -43,7 +43,7 @@ ClientGatewaysServiceTracingConnection::ListClientGateways(
   auto sr = child_->ListClientGateways(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::clientgateways::v1::ClientGateway>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>

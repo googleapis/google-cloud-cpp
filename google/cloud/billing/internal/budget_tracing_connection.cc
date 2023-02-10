@@ -66,8 +66,8 @@ BudgetServiceTracingConnection::ListBudgets(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListBudgets(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::billing::budgets::v1::Budget>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::billing::budgets::v1::Budget>(std::move(span),
+                                                   std::move(sr));
 }
 
 Status BudgetServiceTracingConnection::DeleteBudget(

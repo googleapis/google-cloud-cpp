@@ -40,8 +40,7 @@ VmMigrationTracingConnection::ListSources(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListSources(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::Source>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::vmmigration::v1::Source>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::Source>
@@ -88,8 +87,8 @@ VmMigrationTracingConnection::ListUtilizationReports(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListUtilizationReports(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::UtilizationReport>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vmmigration::v1::UtilizationReport>(std::move(span),
+                                                         std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
@@ -124,8 +123,8 @@ VmMigrationTracingConnection::ListDatacenterConnectors(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDatacenterConnectors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::DatacenterConnector>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vmmigration::v1::DatacenterConnector>(std::move(span),
+                                                           std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -172,8 +171,8 @@ VmMigrationTracingConnection::ListMigratingVms(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListMigratingVms(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::MigratingVm>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vmmigration::v1::MigratingVm>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
@@ -241,8 +240,7 @@ VmMigrationTracingConnection::ListCloneJobs(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCloneJobs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::CloneJob>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vmmigration::v1::CloneJob>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
@@ -274,8 +272,8 @@ VmMigrationTracingConnection::ListCutoverJobs(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCutoverJobs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::CutoverJob>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vmmigration::v1::CutoverJob>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
@@ -295,7 +293,7 @@ VmMigrationTracingConnection::ListGroups(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListGroups(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vmmigration::v1::Group>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::Group>
@@ -346,8 +344,8 @@ VmMigrationTracingConnection::ListTargetProjects(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTargetProjects(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::TargetProject>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vmmigration::v1::TargetProject>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
@@ -385,8 +383,8 @@ VmMigrationTracingConnection::ListReplicationCycles(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListReplicationCycles(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vmmigration::v1::ReplicationCycle>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vmmigration::v1::ReplicationCycle>(std::move(span),
+                                                        std::move(sr));
 }
 
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>

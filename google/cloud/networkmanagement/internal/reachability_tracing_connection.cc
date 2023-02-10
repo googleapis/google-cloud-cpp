@@ -42,8 +42,8 @@ ReachabilityServiceTracingConnection::ListConnectivityTests(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListConnectivityTests(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::networkmanagement::v1::ConnectivityTest>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::networkmanagement::v1::ConnectivityTest>(std::move(span),
+                                                              std::move(sr));
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>

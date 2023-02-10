@@ -40,8 +40,7 @@ AuthorizedDomainsTracingConnection::ListAuthorizedDomains(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAuthorizedDomains(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::appengine::v1::AuthorizedDomain>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::appengine::v1::AuthorizedDomain>(std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

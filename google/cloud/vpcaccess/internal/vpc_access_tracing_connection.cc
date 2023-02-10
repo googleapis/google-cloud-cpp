@@ -55,8 +55,7 @@ VpcAccessServiceTracingConnection::ListConnectors(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListConnectors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vpcaccess::v1::Connector>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::vpcaccess::v1::Connector>(std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>

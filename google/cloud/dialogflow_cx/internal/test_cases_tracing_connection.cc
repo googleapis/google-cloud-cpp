@@ -40,8 +40,8 @@ TestCasesTracingConnection::ListTestCases(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTestCases(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::TestCase>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::TestCase>(std::move(span),
+                                                   std::move(sr));
 }
 
 Status TestCasesTracingConnection::BatchDeleteTestCases(
@@ -123,8 +123,8 @@ TestCasesTracingConnection::ListTestCaseResults(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTestCaseResults(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::TestCaseResult>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::TestCaseResult>(std::move(span),
+                                                         std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>

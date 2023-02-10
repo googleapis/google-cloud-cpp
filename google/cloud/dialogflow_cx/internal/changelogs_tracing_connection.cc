@@ -40,8 +40,8 @@ ChangelogsTracingConnection::ListChangelogs(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListChangelogs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Changelog>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::Changelog>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Changelog>

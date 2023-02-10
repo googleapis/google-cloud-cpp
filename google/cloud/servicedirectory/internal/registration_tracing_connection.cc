@@ -50,8 +50,8 @@ RegistrationServiceTracingConnection::ListNamespaces(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListNamespaces(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::servicedirectory::v1::Namespace>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::servicedirectory::v1::Namespace>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
@@ -99,8 +99,8 @@ RegistrationServiceTracingConnection::ListServices(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::servicedirectory::v1::Service>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::servicedirectory::v1::Service>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
@@ -146,8 +146,8 @@ RegistrationServiceTracingConnection::ListEndpoints(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::servicedirectory::v1::Endpoint>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::servicedirectory::v1::Endpoint>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>

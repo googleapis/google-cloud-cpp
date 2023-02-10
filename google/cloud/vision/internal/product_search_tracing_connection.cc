@@ -49,7 +49,7 @@ ProductSearchTracingConnection::ListProductSets(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListProductSets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::ProductSet>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
@@ -95,7 +95,7 @@ ProductSearchTracingConnection::ListProducts(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListProducts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::Product>
@@ -148,8 +148,8 @@ ProductSearchTracingConnection::ListReferenceImages(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListReferenceImages(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::vision::v1::ReferenceImage>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::vision::v1::ReferenceImage>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
@@ -186,7 +186,7 @@ ProductSearchTracingConnection::ListProductsInProductSet(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListProductsInProductSet(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::vision::v1::Product>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>

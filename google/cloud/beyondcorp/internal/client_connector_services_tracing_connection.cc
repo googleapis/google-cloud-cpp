@@ -47,8 +47,7 @@ ClientConnectorServicesServiceTracingConnection::ListClientConnectorServices(
   auto sr = child_->ListClientConnectorServices(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::clientconnectorservices::v1::
-          ClientConnectorService>(std::move(span), std::move(scope),
-                                  std::move(sr));
+          ClientConnectorService>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::

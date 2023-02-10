@@ -38,7 +38,7 @@ StreamRange<google::cloud::tpu::v1::Node> TpuTracingConnection::ListNodes(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListNodes(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tpu::v1::Node>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v1::Node> TpuTracingConnection::GetNode(
@@ -82,8 +82,8 @@ TpuTracingConnection::ListTensorFlowVersions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTensorFlowVersions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::tpu::v1::TensorFlowVersion>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::tpu::v1::TensorFlowVersion>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
@@ -101,8 +101,7 @@ TpuTracingConnection::ListAcceleratorTypes(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAcceleratorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::tpu::v1::AcceleratorType>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::tpu::v1::AcceleratorType>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType>

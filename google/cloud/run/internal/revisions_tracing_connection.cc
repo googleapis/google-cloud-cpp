@@ -47,7 +47,7 @@ RevisionsTracingConnection::ListRevisions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListRevisions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Revision>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>

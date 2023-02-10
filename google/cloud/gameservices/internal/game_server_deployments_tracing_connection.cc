@@ -43,8 +43,8 @@ GameServerDeploymentsServiceTracingConnection::ListGameServerDeployments(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListGameServerDeployments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::gaming::v1::GameServerDeployment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::gaming::v1::GameServerDeployment>(std::move(span),
+                                                       std::move(sr));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeployment>

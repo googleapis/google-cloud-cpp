@@ -47,7 +47,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasTracingConnection::ListOccurrences(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListOccurrences(std::move(request));
   return internal::MakeTracedStreamRange<grafeas::v1::Occurrence>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 Status GrafeasTracingConnection::DeleteOccurrence(
@@ -105,8 +105,8 @@ StreamRange<grafeas::v1::Note> GrafeasTracingConnection::ListNotes(
       internal::MakeSpan("containeranalysis::GrafeasConnection::ListNotes");
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListNotes(std::move(request));
-  return internal::MakeTracedStreamRange<grafeas::v1::Note>(
-      std::move(span), std::move(scope), std::move(sr));
+  return internal::MakeTracedStreamRange<grafeas::v1::Note>(std::move(span),
+                                                            std::move(sr));
 }
 
 Status GrafeasTracingConnection::DeleteNote(
@@ -150,7 +150,7 @@ GrafeasTracingConnection::ListNoteOccurrences(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListNoteOccurrences(std::move(request));
   return internal::MakeTracedStreamRange<grafeas::v1::Occurrence>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -75,8 +75,7 @@ DeviceManagerTracingConnection::ListDeviceRegistries(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDeviceRegistries(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::iot::v1::DeviceRegistry>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::iot::v1::DeviceRegistry>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::iot::v1::Device>
@@ -117,7 +116,7 @@ DeviceManagerTracingConnection::ListDevices(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDevices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::iot::v1::Device>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::iot::v1::DeviceConfig>

@@ -40,8 +40,8 @@ DatabaseAdminTracingConnection::ListDatabases(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDatabases(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::spanner::admin::database::v1::Database>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::spanner::admin::database::v1::Database>(std::move(span),
+                                                      std::move(sr));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -157,8 +157,8 @@ DatabaseAdminTracingConnection::ListBackups(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::spanner::admin::database::v1::Backup>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::spanner::admin::database::v1::Backup>(std::move(span),
+                                                    std::move(sr));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -177,7 +177,7 @@ DatabaseAdminTracingConnection::ListDatabaseOperations(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDatabaseOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::longrunning::Operation>
@@ -188,7 +188,7 @@ DatabaseAdminTracingConnection::ListBackupOperations(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListBackupOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::spanner::admin::database::v1::DatabaseRole>
@@ -199,8 +199,8 @@ DatabaseAdminTracingConnection::ListDatabaseRoles(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDatabaseRoles(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::spanner::admin::database::v1::DatabaseRole>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::spanner::admin::database::v1::DatabaseRole>(std::move(span),
+                                                          std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

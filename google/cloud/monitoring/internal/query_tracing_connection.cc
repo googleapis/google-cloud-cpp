@@ -40,8 +40,7 @@ QueryServiceTracingConnection::QueryTimeSeries(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->QueryTimeSeries(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::monitoring::v3::TimeSeriesData>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::monitoring::v3::TimeSeriesData>(std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

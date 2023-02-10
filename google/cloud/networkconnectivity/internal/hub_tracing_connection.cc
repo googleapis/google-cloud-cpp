@@ -40,8 +40,8 @@ HubServiceTracingConnection::ListHubs(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListHubs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::networkconnectivity::v1::Hub>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::networkconnectivity::v1::Hub>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Hub>
@@ -79,8 +79,8 @@ HubServiceTracingConnection::ListSpokes(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListSpokes(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::networkconnectivity::v1::Spoke>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::networkconnectivity::v1::Spoke>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Spoke>

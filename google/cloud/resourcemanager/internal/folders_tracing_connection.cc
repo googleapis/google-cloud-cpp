@@ -49,8 +49,8 @@ FoldersTracingConnection::ListFolders(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListFolders(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::resourcemanager::v3::Folder>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::resourcemanager::v3::Folder>(std::move(span),
+                                                  std::move(sr));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
@@ -61,8 +61,8 @@ FoldersTracingConnection::SearchFolders(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->SearchFolders(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::resourcemanager::v3::Folder>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::resourcemanager::v3::Folder>(std::move(span),
+                                                  std::move(sr));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>

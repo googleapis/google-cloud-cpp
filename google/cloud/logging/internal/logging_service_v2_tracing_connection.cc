@@ -57,7 +57,7 @@ LoggingServiceV2TracingConnection::ListLogEntries(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListLogEntries(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogEntry>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::api::MonitoredResourceDescriptor>
@@ -68,8 +68,7 @@ LoggingServiceV2TracingConnection::ListMonitoredResourceDescriptors(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::api::MonitoredResourceDescriptor>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::api::MonitoredResourceDescriptor>(std::move(span), std::move(sr));
 }
 
 StreamRange<std::string> LoggingServiceV2TracingConnection::ListLogs(
@@ -78,8 +77,8 @@ StreamRange<std::string> LoggingServiceV2TracingConnection::ListLogs(
       internal::MakeSpan("logging::LoggingServiceV2Connection::ListLogs");
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListLogs(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(
-      std::move(span), std::move(scope), std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(std::move(span),
+                                                      std::move(sr));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

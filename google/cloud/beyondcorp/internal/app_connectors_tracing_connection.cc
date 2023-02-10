@@ -42,7 +42,7 @@ AppConnectorsServiceTracingConnection::ListAppConnectors(
   auto sr = child_->ListAppConnectors(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>

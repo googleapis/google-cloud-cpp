@@ -100,7 +100,7 @@ ContentServiceTracingConnection::ListContent(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListContent(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Content>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

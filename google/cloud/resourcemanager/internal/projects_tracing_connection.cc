@@ -49,8 +49,8 @@ ProjectsTracingConnection::ListProjects(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListProjects(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::resourcemanager::v3::Project>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::resourcemanager::v3::Project>(std::move(span),
+                                                   std::move(sr));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
@@ -61,8 +61,8 @@ ProjectsTracingConnection::SearchProjects(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->SearchProjects(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::resourcemanager::v3::Project>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::resourcemanager::v3::Project>(std::move(span),
+                                                   std::move(sr));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>

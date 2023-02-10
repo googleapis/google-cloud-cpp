@@ -61,8 +61,8 @@ CertificateAuthorityServiceTracingConnection::ListCertificates(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCertificates(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::security::privateca::v1::Certificate>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::security::privateca::v1::Certificate>(std::move(span),
+                                                           std::move(sr));
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -148,7 +148,7 @@ CertificateAuthorityServiceTracingConnection::ListCertificateAuthorities(
   auto sr = child_->ListCertificateAuthorities(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -203,8 +203,8 @@ CertificateAuthorityServiceTracingConnection::ListCaPools(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCaPools(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::security::privateca::v1::CaPool>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::security::privateca::v1::CaPool>(std::move(span),
+                                                      std::move(sr));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -247,7 +247,7 @@ CertificateAuthorityServiceTracingConnection::ListCertificateRevocationLists(
   auto sr = child_->ListCertificateRevocationLists(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::security::privateca::v1::CertificateRevocationList>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<
@@ -294,7 +294,7 @@ CertificateAuthorityServiceTracingConnection::ListCertificateTemplates(
   auto sr = child_->ListCertificateTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::security::privateca::v1::CertificateTemplate>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>

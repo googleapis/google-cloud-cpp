@@ -60,7 +60,7 @@ EnvironmentsTracingConnection::ListEnvironments(
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::orchestration::airflow::service::v1::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<

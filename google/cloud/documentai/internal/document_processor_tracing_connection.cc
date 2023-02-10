@@ -65,8 +65,8 @@ DocumentProcessorServiceTracingConnection::ListProcessorTypes(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListProcessorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::ProcessorType>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::documentai::v1::ProcessorType>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
@@ -86,8 +86,7 @@ DocumentProcessorServiceTracingConnection::ListProcessors(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListProcessors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::Processor>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::documentai::v1::Processor>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
@@ -116,8 +115,8 @@ DocumentProcessorServiceTracingConnection::ListProcessorVersions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListProcessorVersions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::ProcessorVersion>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::documentai::v1::ProcessorVersion>(std::move(span),
+                                                       std::move(sr));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>

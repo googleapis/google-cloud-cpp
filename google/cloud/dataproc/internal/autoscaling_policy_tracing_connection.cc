@@ -70,8 +70,8 @@ AutoscalingPolicyServiceTracingConnection::ListAutoscalingPolicies(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAutoscalingPolicies(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dataproc::v1::AutoscalingPolicy>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dataproc::v1::AutoscalingPolicy>(std::move(span),
+                                                      std::move(sr));
 }
 
 Status AutoscalingPolicyServiceTracingConnection::DeleteAutoscalingPolicy(

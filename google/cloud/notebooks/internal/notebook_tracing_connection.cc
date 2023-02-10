@@ -40,8 +40,7 @@ NotebookServiceTracingConnection::ListInstances(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Instance>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::notebooks::v1::Instance>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Instance>
@@ -189,8 +188,8 @@ NotebookServiceTracingConnection::ListEnvironments(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::notebooks::v1::Environment>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Environment>
@@ -222,8 +221,7 @@ NotebookServiceTracingConnection::ListSchedules(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListSchedules(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Schedule>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::notebooks::v1::Schedule>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Schedule>
@@ -261,8 +259,7 @@ NotebookServiceTracingConnection::ListExecutions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListExecutions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Execution>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::notebooks::v1::Execution>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Execution>

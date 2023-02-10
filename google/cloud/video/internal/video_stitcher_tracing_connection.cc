@@ -49,8 +49,8 @@ VideoStitcherServiceTracingConnection::ListCdnKeys(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCdnKeys(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::stitcher::v1::CdnKey>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::stitcher::v1::CdnKey>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>
@@ -106,8 +106,8 @@ VideoStitcherServiceTracingConnection::ListVodStitchDetails(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListVodStitchDetails(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::stitcher::v1::VodStitchDetail>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::stitcher::v1::VodStitchDetail>(std::move(span),
+                                                           std::move(sr));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
@@ -128,8 +128,8 @@ VideoStitcherServiceTracingConnection::ListVodAdTagDetails(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListVodAdTagDetails(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::stitcher::v1::VodAdTagDetail>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::stitcher::v1::VodAdTagDetail>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -150,8 +150,8 @@ VideoStitcherServiceTracingConnection::ListLiveAdTagDetails(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListLiveAdTagDetails(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::stitcher::v1::LiveAdTagDetail>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::stitcher::v1::LiveAdTagDetail>(std::move(span),
+                                                           std::move(sr));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
@@ -181,8 +181,8 @@ VideoStitcherServiceTracingConnection::ListSlates(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListSlates(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::stitcher::v1::Slate>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::stitcher::v1::Slate>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::Slate>

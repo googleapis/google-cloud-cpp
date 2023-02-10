@@ -58,8 +58,8 @@ ConversationDatasetsTracingConnection::ListConversationDatasets(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListConversationDatasets(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::ConversationDataset>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::ConversationDataset>(std::move(span),
+                                                          std::move(sr));
 }
 
 future<StatusOr<

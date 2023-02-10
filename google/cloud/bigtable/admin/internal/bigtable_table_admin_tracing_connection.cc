@@ -49,7 +49,7 @@ BigtableTableAdminTracingConnection::ListTables(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTables(std::move(request));
   return internal::MakeTracedStreamRange<google::bigtable::admin::v2::Table>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -157,7 +157,7 @@ BigtableTableAdminTracingConnection::ListBackups(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::bigtable::admin::v2::Backup>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>

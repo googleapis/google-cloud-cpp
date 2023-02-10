@@ -39,7 +39,7 @@ ServicesTracingConnection::ListServices(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::Service>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::Service> ServicesTracingConnection::GetService(

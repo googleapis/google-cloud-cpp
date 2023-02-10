@@ -40,8 +40,8 @@ CloudDeployTracingConnection::ListDeliveryPipelines(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDeliveryPipelines(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::deploy::v1::DeliveryPipeline>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::deploy::v1::DeliveryPipeline>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
@@ -78,7 +78,7 @@ CloudDeployTracingConnection::ListTargets(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTargets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::Target>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::Target>
@@ -114,7 +114,7 @@ CloudDeployTracingConnection::ListReleases(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListReleases(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::Release>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::Release>
@@ -156,7 +156,7 @@ CloudDeployTracingConnection::ListRollouts(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListRollouts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::Rollout>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::Rollout>
@@ -188,7 +188,7 @@ CloudDeployTracingConnection::ListJobRuns(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListJobRuns(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::JobRun>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::JobRun>

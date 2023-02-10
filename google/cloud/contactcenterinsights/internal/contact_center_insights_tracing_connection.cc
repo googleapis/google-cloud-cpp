@@ -76,8 +76,8 @@ ContactCenterInsightsTracingConnection::ListConversations(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListConversations(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::contactcenterinsights::v1::Conversation>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::contactcenterinsights::v1::Conversation>(std::move(span),
+                                                              std::move(sr));
 }
 
 Status ContactCenterInsightsTracingConnection::DeleteConversation(
@@ -115,8 +115,8 @@ ContactCenterInsightsTracingConnection::ListAnalyses(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAnalyses(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::contactcenterinsights::v1::Analysis>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::contactcenterinsights::v1::Analysis>(std::move(span),
+                                                          std::move(sr));
 }
 
 Status ContactCenterInsightsTracingConnection::DeleteAnalysis(
@@ -297,8 +297,8 @@ ContactCenterInsightsTracingConnection::ListPhraseMatchers(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListPhraseMatchers(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::contactcenterinsights::v1::PhraseMatcher>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::contactcenterinsights::v1::PhraseMatcher>(std::move(span),
+                                                               std::move(sr));
 }
 
 Status ContactCenterInsightsTracingConnection::DeletePhraseMatcher(
@@ -379,8 +379,8 @@ ContactCenterInsightsTracingConnection::ListViews(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListViews(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::contactcenterinsights::v1::View>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::contactcenterinsights::v1::View>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>

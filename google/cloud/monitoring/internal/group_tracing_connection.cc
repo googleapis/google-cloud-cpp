@@ -40,7 +40,7 @@ GroupServiceTracingConnection::ListGroups(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListGroups(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::Group>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceTracingConnection::GetGroup(
@@ -85,7 +85,7 @@ GroupServiceTracingConnection::ListGroupMembers(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListGroupMembers(std::move(request));
   return internal::MakeTracedStreamRange<google::api::MonitoredResource>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

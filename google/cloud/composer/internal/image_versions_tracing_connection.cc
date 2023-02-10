@@ -42,7 +42,7 @@ ImageVersionsTracingConnection::ListImageVersions(
   auto sr = child_->ListImageVersions(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::orchestration::airflow::service::v1::ImageVersion>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

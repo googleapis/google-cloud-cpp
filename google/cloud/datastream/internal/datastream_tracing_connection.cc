@@ -40,8 +40,8 @@ DatastreamTracingConnection::ListConnectionProfiles(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListConnectionProfiles(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::datastream::v1::ConnectionProfile>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::datastream::v1::ConnectionProfile>(std::move(span),
+                                                        std::move(sr));
 }
 
 StatusOr<google::cloud::datastream::v1::ConnectionProfile>
@@ -92,7 +92,7 @@ DatastreamTracingConnection::ListStreams(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListStreams(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::datastream::v1::Stream>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::datastream::v1::Stream>
@@ -147,8 +147,8 @@ DatastreamTracingConnection::ListStreamObjects(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListStreamObjects(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::datastream::v1::StreamObject>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::datastream::v1::StreamObject>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
@@ -175,8 +175,8 @@ StreamRange<std::string> DatastreamTracingConnection::FetchStaticIps(
       internal::MakeSpan("datastream::DatastreamConnection::FetchStaticIps");
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->FetchStaticIps(std::move(request));
-  return internal::MakeTracedStreamRange<std::string>(
-      std::move(span), std::move(scope), std::move(sr));
+  return internal::MakeTracedStreamRange<std::string>(std::move(span),
+                                                      std::move(sr));
 }
 
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
@@ -203,8 +203,8 @@ DatastreamTracingConnection::ListPrivateConnections(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListPrivateConnections(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::datastream::v1::PrivateConnection>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::datastream::v1::PrivateConnection>(std::move(span),
+                                                        std::move(sr));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
@@ -236,7 +236,7 @@ DatastreamTracingConnection::ListRoutes(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListRoutes(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::datastream::v1::Route>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>

@@ -66,8 +66,7 @@ PolicyTagManagerTracingConnection::ListTaxonomies(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTaxonomies(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::datacatalog::v1::Taxonomy>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::datacatalog::v1::Taxonomy>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
@@ -113,8 +112,8 @@ PolicyTagManagerTracingConnection::ListPolicyTags(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListPolicyTags(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::datacatalog::v1::PolicyTag>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::datacatalog::v1::PolicyTag>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>

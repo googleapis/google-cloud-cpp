@@ -69,8 +69,8 @@ WebSecurityScannerTracingConnection::ListScanConfigs(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListScanConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::ScanConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::websecurityscanner::v1::ScanConfig>(std::move(span),
+                                                         std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
@@ -109,8 +109,8 @@ WebSecurityScannerTracingConnection::ListScanRuns(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListScanRuns(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::ScanRun>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::websecurityscanner::v1::ScanRun>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
@@ -130,8 +130,8 @@ WebSecurityScannerTracingConnection::ListCrawledUrls(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCrawledUrls(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::CrawledUrl>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::websecurityscanner::v1::CrawledUrl>(std::move(span),
+                                                         std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
@@ -151,8 +151,8 @@ WebSecurityScannerTracingConnection::ListFindings(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListFindings(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::websecurityscanner::v1::Finding>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::websecurityscanner::v1::Finding>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>

@@ -55,8 +55,8 @@ AzureClustersTracingConnection::ListAzureClients(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAzureClients(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::gkemulticloud::v1::AzureClient>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::gkemulticloud::v1::AzureClient>(std::move(span),
+                                                     std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -96,8 +96,8 @@ AzureClustersTracingConnection::ListAzureClusters(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAzureClusters(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::gkemulticloud::v1::AzureCluster>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::gkemulticloud::v1::AzureCluster>(std::move(span),
+                                                      std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -148,8 +148,8 @@ AzureClustersTracingConnection::ListAzureNodePools(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAzureNodePools(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::gkemulticloud::v1::AzureNodePool>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::gkemulticloud::v1::AzureNodePool>(std::move(span),
+                                                       std::move(sr));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>

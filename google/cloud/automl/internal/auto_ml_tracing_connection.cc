@@ -53,7 +53,7 @@ AutoMlTracingConnection::ListDatasets(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDatasets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::automl::v1::Dataset>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::automl::v1::Dataset>
@@ -110,7 +110,7 @@ AutoMlTracingConnection::ListModels(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListModels(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::automl::v1::Model>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -161,8 +161,8 @@ AutoMlTracingConnection::ListModelEvaluations(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListModelEvaluations(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::automl::v1::ModelEvaluation>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::automl::v1::ModelEvaluation>(std::move(span),
+                                                  std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

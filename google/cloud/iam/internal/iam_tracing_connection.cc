@@ -39,8 +39,7 @@ IAMTracingConnection::ListServiceAccounts(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListServiceAccounts(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::iam::admin::v1::ServiceAccount>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::iam::admin::v1::ServiceAccount>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -179,7 +178,7 @@ IAMTracingConnection::QueryGrantableRoles(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->QueryGrantableRoles(std::move(request));
   return internal::MakeTracedStreamRange<google::iam::admin::v1::Role>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMTracingConnection::ListRoles(
@@ -188,7 +187,7 @@ StreamRange<google::iam::admin::v1::Role> IAMTracingConnection::ListRoles(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListRoles(std::move(request));
   return internal::MakeTracedStreamRange<google::iam::admin::v1::Role>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingConnection::GetRole(
@@ -234,7 +233,7 @@ IAMTracingConnection::QueryTestablePermissions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->QueryTestablePermissions(std::move(request));
   return internal::MakeTracedStreamRange<google::iam::admin::v1::Permission>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>

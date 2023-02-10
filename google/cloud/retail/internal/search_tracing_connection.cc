@@ -39,8 +39,8 @@ SearchServiceTracingConnection::Search(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->Search(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::retail::v2::SearchResponse::SearchResult>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::retail::v2::SearchResponse::SearchResult>(std::move(span),
+                                                               std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

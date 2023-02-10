@@ -40,8 +40,8 @@ CertificateManagerTracingConnection::ListCertificates(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCertificates(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::certificatemanager::v1::Certificate>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::certificatemanager::v1::Certificate>(std::move(span),
+                                                          std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
@@ -83,8 +83,8 @@ CertificateManagerTracingConnection::ListCertificateMaps(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListCertificateMaps(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::certificatemanager::v1::CertificateMap>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::certificatemanager::v1::CertificateMap>(std::move(span),
+                                                             std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
@@ -129,7 +129,7 @@ CertificateManagerTracingConnection::ListCertificateMapEntries(
   auto sr = child_->ListCertificateMapEntries(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::certificatemanager::v1::CertificateMapEntry>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
@@ -174,8 +174,8 @@ CertificateManagerTracingConnection::ListDnsAuthorizations(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDnsAuthorizations(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::certificatemanager::v1::DnsAuthorization>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::certificatemanager::v1::DnsAuthorization>(std::move(span),
+                                                               std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
@@ -220,7 +220,7 @@ CertificateManagerTracingConnection::ListCertificateIssuanceConfigs(
   auto sr = child_->ListCertificateIssuanceConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>

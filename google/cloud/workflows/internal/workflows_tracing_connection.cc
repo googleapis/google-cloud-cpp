@@ -40,8 +40,7 @@ WorkflowsTracingConnection::ListWorkflows(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListWorkflows(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::workflows::v1::Workflow>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::workflows::v1::Workflow>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow>

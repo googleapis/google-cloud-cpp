@@ -39,7 +39,7 @@ CloudTasksTracingConnection::ListQueues(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListQueues(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tasks::v2::Queue>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::tasks::v2::Queue> CloudTasksTracingConnection::GetQueue(
@@ -126,7 +126,7 @@ CloudTasksTracingConnection::ListTasks(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTasks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::tasks::v2::Task>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingConnection::GetTask(

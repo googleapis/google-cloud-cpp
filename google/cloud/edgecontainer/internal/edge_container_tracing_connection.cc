@@ -40,8 +40,8 @@ EdgeContainerTracingConnection::ListClusters(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListClusters(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::Cluster>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::Cluster>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
@@ -89,8 +89,8 @@ EdgeContainerTracingConnection::ListNodePools(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListNodePools(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::NodePool>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::NodePool>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
@@ -128,8 +128,8 @@ EdgeContainerTracingConnection::ListMachines(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListMachines(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::Machine>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::Machine>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
@@ -149,8 +149,8 @@ EdgeContainerTracingConnection::ListVpnConnections(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListVpnConnections(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::VpnConnection>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::VpnConnection>(std::move(span),
+                                                       std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>

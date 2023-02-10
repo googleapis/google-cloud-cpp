@@ -80,8 +80,7 @@ StorageTransferServiceTracingConnection::ListTransferJobs(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTransferJobs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::storagetransfer::v1::TransferJob>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::storagetransfer::v1::TransferJob>(std::move(span), std::move(sr));
 }
 
 Status StorageTransferServiceTracingConnection::PauseTransferOperation(
@@ -152,8 +151,7 @@ StorageTransferServiceTracingConnection::ListAgentPools(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAgentPools(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::storagetransfer::v1::AgentPool>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::storagetransfer::v1::AgentPool>(std::move(span), std::move(sr));
 }
 
 Status StorageTransferServiceTracingConnection::DeleteAgentPool(

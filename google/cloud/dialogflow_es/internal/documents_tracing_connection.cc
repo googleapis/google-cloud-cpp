@@ -40,8 +40,7 @@ DocumentsTracingConnection::ListDocuments(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListDocuments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Document>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::Document>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Document>

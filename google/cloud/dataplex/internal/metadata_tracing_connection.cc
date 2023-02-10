@@ -75,7 +75,7 @@ MetadataServiceTracingConnection::ListEntities(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListEntities(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Entity>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
@@ -112,8 +112,7 @@ MetadataServiceTracingConnection::ListPartitions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListPartitions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dataplex::v1::Partition>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::dataplex::v1::Partition>(std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

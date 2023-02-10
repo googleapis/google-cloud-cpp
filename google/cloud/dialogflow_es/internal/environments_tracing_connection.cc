@@ -40,8 +40,8 @@ EnvironmentsTracingConnection::ListEnvironments(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::Environment>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
@@ -87,8 +87,8 @@ EnvironmentsTracingConnection::GetEnvironmentHistory(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->GetEnvironmentHistory(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::EnvironmentHistory::Entry>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::EnvironmentHistory::Entry>(std::move(span),
+                                                                std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

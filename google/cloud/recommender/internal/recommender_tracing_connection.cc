@@ -40,8 +40,7 @@ RecommenderTracingConnection::ListInsights(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListInsights(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::recommender::v1::Insight>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::recommender::v1::Insight>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
@@ -70,8 +69,8 @@ RecommenderTracingConnection::ListRecommendations(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListRecommendations(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::recommender::v1::Recommendation>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::recommender::v1::Recommendation>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>

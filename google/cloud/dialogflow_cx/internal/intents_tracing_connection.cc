@@ -40,8 +40,8 @@ IntentsTracingConnection::ListIntents(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListIntents(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::cx::v3::Intent>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::cx::v3::Intent>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>

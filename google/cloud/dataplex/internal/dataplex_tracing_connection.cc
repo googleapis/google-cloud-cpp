@@ -58,7 +58,7 @@ DataplexServiceTracingConnection::ListLakes(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListLakes(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Lake>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Lake>
@@ -78,7 +78,7 @@ DataplexServiceTracingConnection::ListLakeActions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListLakeActions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Action>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Zone>>
@@ -107,7 +107,7 @@ DataplexServiceTracingConnection::ListZones(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListZones(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Zone>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Zone>
@@ -127,7 +127,7 @@ DataplexServiceTracingConnection::ListZoneActions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListZoneActions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Action>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Asset>>
@@ -156,7 +156,7 @@ DataplexServiceTracingConnection::ListAssets(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAssets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Asset>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Asset>
@@ -176,7 +176,7 @@ DataplexServiceTracingConnection::ListAssetActions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListAssetActions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Action>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Task>>
@@ -205,7 +205,7 @@ DataplexServiceTracingConnection::ListTasks(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListTasks(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Task>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Task>
@@ -225,7 +225,7 @@ DataplexServiceTracingConnection::ListJobs(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Job>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Job>
@@ -270,8 +270,7 @@ DataplexServiceTracingConnection::ListEnvironments(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dataplex::v1::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dataplex::v1::Environment>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataplex::v1::Environment>
@@ -291,7 +290,7 @@ DataplexServiceTracingConnection::ListSessions(
   auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = child_->ListSessions(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataplex::v1::Session>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
