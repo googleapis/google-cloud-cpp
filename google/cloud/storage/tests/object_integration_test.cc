@@ -454,9 +454,6 @@ TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
-  // TODO(#9800) - enable in production.
-  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
