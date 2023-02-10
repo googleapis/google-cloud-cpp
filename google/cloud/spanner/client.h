@@ -134,15 +134,6 @@ class Client {
       : conn_(std::move(conn)),
         opts_(internal::MergeOptions(std::move(opts), conn_->options())) {}
 
-  /// @name Backwards compatibility for ClientOptions.
-  ///@{
-  explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
-      : Client(std::move(conn), Options(opts)) {}
-  explicit Client(std::shared_ptr<Connection> conn,
-                  std::initializer_list<internal::NonConstructible>)
-      : Client(std::move(conn)) {}
-  ///@}
-
   /// No default construction.
   Client() = delete;
 
@@ -207,71 +198,6 @@ class Client {
   RowStream Read(Transaction transaction, std::string table, KeySet keys,
                  std::vector<std::string> columns, Options opts = {});
 
-  ///@{
-  /// @name Backwards compatibility for ReadOptions.
-  /**
-   * @copybrief Read(std::string,KeySet,std::vector<std::string>,Options)
-   * @see Read(std::string,KeySet,std::vector<std::string>,Options)
-   */
-  RowStream Read(std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 ReadOptions const& read_options) {
-    return Read(std::move(table), std::move(keys), std::move(columns),
-                ToOptions(read_options));
-  }
-  /**
-   * @copybrief Read(std::string,KeySet,std::vector<std::string>,Options)
-   * @see Read(std::string,KeySet,std::vector<std::string>,Options)
-   */
-  RowStream Read(std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 std::initializer_list<internal::NonConstructible>) {
-    return Read(std::move(table), std::move(keys), std::move(columns));
-  }
-  /**
-   * @copybrief Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
-   * @see Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
-   */
-  RowStream Read(Transaction::SingleUseOptions transaction_options,
-                 std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 ReadOptions const& read_options) {
-    return Read(std::move(transaction_options), std::move(table),
-                std::move(keys), std::move(columns), ToOptions(read_options));
-  }
-  /**
-   * @copybrief Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
-   * @see Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
-   */
-  RowStream Read(Transaction::SingleUseOptions transaction_options,
-                 std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 std::initializer_list<internal::NonConstructible>) {
-    return Read(std::move(transaction_options), std::move(table),
-                std::move(keys), std::move(columns));
-  }
-  /**
-   * @copybrief Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   * @see Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   */
-  RowStream Read(Transaction transaction, std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 ReadOptions const& read_options) {
-    return Read(std::move(transaction), std::move(table), std::move(keys),
-                std::move(columns), ToOptions(read_options));
-  }
-  /**
-   * @copybrief Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   * @see Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   */
-  RowStream Read(Transaction transaction, std::string table, KeySet keys,
-                 std::vector<std::string> columns,
-                 std::initializer_list<internal::NonConstructible>) {
-    return Read(std::move(transaction), std::move(table), std::move(keys),
-                std::move(columns));
-  }
-  ///@}
-
   /**
    * Reads rows from a subset of rows in a database. Requires a prior call
    * to `PartitionRead` to obtain the partition information; see the
@@ -322,35 +248,6 @@ class Client {
       Transaction transaction, std::string table, KeySet keys,
       std::vector<std::string> columns, Options opts = {});
 
-  ///@{
-  /// @name Backwards compatibility for ReadOptions and PartitionOptions.
-  /**
-   * @copybrief PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   * @see PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   */
-  StatusOr<std::vector<ReadPartition>> PartitionRead(
-      Transaction transaction, std::string table, KeySet keys,
-      std::vector<std::string> columns, ReadOptions const& read_options,
-      PartitionOptions const& partition_options) {
-    return PartitionRead(std::move(transaction), std::move(table),
-                         std::move(keys), std::move(columns),
-                         internal::MergeOptions(ToOptions(read_options),
-                                                ToOptions(partition_options)));
-  }
-  /**
-   * @copybrief PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   * @see PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
-   */
-  StatusOr<std::vector<ReadPartition>> PartitionRead(
-      Transaction transaction, std::string table, KeySet keys,
-      std::vector<std::string> columns,
-      std::initializer_list<internal::NonConstructible>) {
-    return PartitionRead(std::move(transaction), std::move(table),
-                         std::move(keys), std::move(columns));
-  }
-  ///@}
-
-  ///@{
   /**
    * Executes a SQL query.
    *
@@ -429,79 +326,7 @@ class Client {
    *     environment levels.
    */
   RowStream ExecuteQuery(QueryPartition const& partition, Options opts = {});
-  ///@}
 
-  ///@{
-  /// @name Backwards compatibility for QueryOptions.
-  /**
-   * @copybrief ExecuteQuery(SqlStatement,Options)
-   * @see ExecuteQuery(SqlStatement,Options)
-   */
-  RowStream ExecuteQuery(SqlStatement statement, QueryOptions const& opts) {
-    return ExecuteQuery(std::move(statement), Options(opts));
-  }
-  /**
-   * @copybrief ExecuteQuery(SqlStatement,Options)
-   * @see ExecuteQuery(SqlStatement,Options)
-   */
-  RowStream ExecuteQuery(SqlStatement statement,
-                         std::initializer_list<internal::NonConstructible>) {
-    return ExecuteQuery(std::move(statement));
-  }
-  /**
-   * @copybrief ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   * @see ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   */
-  RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
-                         SqlStatement statement, QueryOptions const& opts) {
-    return ExecuteQuery(std::move(transaction_options), std::move(statement),
-                        Options(opts));
-  }
-  /**
-   * @copybrief ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   * @see ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   */
-  RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
-                         SqlStatement statement,
-                         std::initializer_list<internal::NonConstructible>) {
-    return ExecuteQuery(std::move(transaction_options), std::move(statement));
-  }
-  /**
-   * @copybrief ExecuteQuery(Transaction,SqlStatement,Options)
-   * @see ExecuteQuery(Transaction,SqlStatement,Options)
-   */
-  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
-                         QueryOptions const& opts) {
-    return ExecuteQuery(std::move(transaction), std::move(statement),
-                        Options(opts));
-  }
-  /**
-   * @copybrief ExecuteQuery(Transaction,SqlStatement,Options)
-   * @see ExecuteQuery(Transaction,SqlStatement,Options)
-   */
-  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
-                         std::initializer_list<internal::NonConstructible>) {
-    return ExecuteQuery(std::move(transaction), std::move(statement));
-  }
-  /**
-   * @copybrief ExecuteQuery(QueryPartition const&,Options)
-   * @see ExecuteQuery(QueryPartition const&,Options)
-   */
-  RowStream ExecuteQuery(QueryPartition const& partition,
-                         QueryOptions const& opts) {
-    return ExecuteQuery(partition, Options(opts));
-  }
-  /**
-   * @copybrief ExecuteQuery(QueryPartition const&,Options)
-   * @see ExecuteQuery(QueryPartition const&,Options)
-   */
-  RowStream ExecuteQuery(QueryPartition const& partition,
-                         std::initializer_list<internal::NonConstructible>) {
-    return ExecuteQuery(partition);
-  }
-  ///@}
-
-  ///@{
   /**
    * Profiles a SQL query.
    *
@@ -550,66 +375,6 @@ class Client {
    */
   ProfileQueryResult ProfileQuery(Transaction transaction,
                                   SqlStatement statement, Options opts = {});
-  ///@}
-
-  ///@{
-  /// @name Backwards compatibility for QueryOptions.
-  /**
-   * @copybrief ProfileQuery(SqlStatement,Options)
-   * @see ProfileQuery(SqlStatement,Options)
-   */
-  ProfileQueryResult ProfileQuery(SqlStatement statement,
-                                  QueryOptions const& opts) {
-    return ProfileQuery(std::move(statement), Options(opts));
-  }
-  /**
-   * @copybrief ProfileQuery(SqlStatement,Options)
-   * @see ProfileQuery(SqlStatement,Options)
-   */
-  ProfileQueryResult ProfileQuery(
-      SqlStatement statement,
-      std::initializer_list<internal::NonConstructible>) {
-    return ProfileQuery(std::move(statement));
-  }
-  /**
-   * @copybrief ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   * @see ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   */
-  ProfileQueryResult ProfileQuery(
-      Transaction::SingleUseOptions transaction_options, SqlStatement statement,
-      QueryOptions const& opts) {
-    return ProfileQuery(std::move(transaction_options), std::move(statement),
-                        Options(opts));
-  }
-  /**
-   * @copybrief ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   * @see ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
-   */
-  ProfileQueryResult ProfileQuery(
-      Transaction::SingleUseOptions transaction_options, SqlStatement statement,
-      std::initializer_list<internal::NonConstructible>) {
-    return ProfileQuery(std::move(transaction_options), std::move(statement));
-  }
-  /**
-   * @copybrief ProfileQuery(Transaction,SqlStatement,Options)
-   * @see ProfileQuery(Transaction,SqlStatement,Options)
-   */
-  ProfileQueryResult ProfileQuery(Transaction transaction,
-                                  SqlStatement statement,
-                                  QueryOptions const& opts) {
-    return ProfileQuery(std::move(transaction), std::move(statement),
-                        Options(opts));
-  }
-  /**
-   * @copybrief ProfileQuery(Transaction,SqlStatement,Options)
-   * @see ProfileQuery(Transaction,SqlStatement,Options)
-   */
-  ProfileQueryResult ProfileQuery(
-      Transaction transaction, SqlStatement statement,
-      std::initializer_list<internal::NonConstructible>) {
-    return ProfileQuery(std::move(transaction), std::move(statement));
-  }
-  ///@}
 
   /**
    * Creates a set of partitions that can be used to execute a query
@@ -636,29 +401,6 @@ class Client {
       Transaction transaction, SqlStatement statement,
       Options opts = Options{});
 
-  ///@{
-  /// @name Backwards compatibility for PartitionOptions.
-  /**
-   * @copybrief PartitionQuery(Transaction,SqlStatement,Options)
-   * @see PartitionQuery(Transaction,SqlStatement,Options)
-   */
-  StatusOr<std::vector<QueryPartition>> PartitionQuery(
-      Transaction transaction, SqlStatement statement,
-      PartitionOptions const& partition_options) {
-    return PartitionQuery(std::move(transaction), std::move(statement),
-                          ToOptions(partition_options));
-  }
-  /**
-   * @copybrief PartitionQuery(Transaction,SqlStatement,Options)
-   * @see PartitionQuery(Transaction,SqlStatement,Options)
-   */
-  StatusOr<std::vector<QueryPartition>> PartitionQuery(
-      Transaction transaction, SqlStatement statement,
-      std::initializer_list<internal::NonConstructible>) {
-    return PartitionQuery(std::move(transaction), std::move(statement));
-  }
-  ///@}
-
   /**
    * Executes a SQL DML statement.
    *
@@ -678,29 +420,6 @@ class Client {
    */
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
                                  SqlStatement statement, Options opts = {});
-
-  ///@{
-  /// @name Backwards compatibility for QueryOptions.
-  /**
-   * @copybrief ExecuteDml(Transaction,SqlStatement,Options)
-   * @see ExecuteDml(Transaction,SqlStatement,Options)
-   */
-  StatusOr<DmlResult> ExecuteDml(Transaction transaction,
-                                 SqlStatement statement,
-                                 QueryOptions const& opts) {
-    return ExecuteDml(std::move(transaction), std::move(statement),
-                      Options(opts));
-  }
-  /**
-   * @copybrief ExecuteDml(Transaction,SqlStatement,Options)
-   * @see ExecuteDml(Transaction,SqlStatement,Options)
-   */
-  StatusOr<DmlResult> ExecuteDml(
-      Transaction transaction, SqlStatement statement,
-      std::initializer_list<internal::NonConstructible>) {
-    return ExecuteDml(std::move(transaction), std::move(statement));
-  }
-  ///@}
 
   /**
    * Profiles a SQL DML statement.
@@ -726,21 +445,6 @@ class Client {
                                         SqlStatement statement,
                                         Options opts = {});
 
-  ///@{
-  /// @name Backwards compatibility for QueryOptions.
-  StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
-                                        SqlStatement statement,
-                                        QueryOptions const& opts) {
-    return ProfileDml(std::move(transaction), std::move(statement),
-                      Options(opts));
-  }
-  StatusOr<ProfileDmlResult> ProfileDml(
-      Transaction transaction, SqlStatement statement,
-      std::initializer_list<internal::NonConstructible>) {
-    return ProfileDml(std::move(transaction), std::move(statement));
-  }
-  ///@}
-
   /**
    * Analyzes the execution plan of a SQL statement.
    *
@@ -763,29 +467,6 @@ class Client {
    */
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
                                      SqlStatement statement, Options opts = {});
-
-  ///@{
-  /// @name Backwards compatibility for QueryOptions.
-  /**
-   * @copybrief AnalyzeSql(Transaction,SqlStatement,Options)
-   * @see AnalyzeSql(Transaction,SqlStatement,Options)
-   */
-  StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
-                                     SqlStatement statement,
-                                     QueryOptions const& opts) {
-    return AnalyzeSql(std::move(transaction), std::move(statement),
-                      Options(opts));
-  }
-  /**
-   * @copybrief AnalyzeSql(Transaction,SqlStatement,Options)
-   * @see AnalyzeSql(Transaction,SqlStatement,Options)
-   */
-  StatusOr<ExecutionPlan> AnalyzeSql(
-      Transaction transaction, SqlStatement statement,
-      std::initializer_list<internal::NonConstructible>) {
-    return AnalyzeSql(std::move(transaction), std::move(statement));
-  }
-  ///@}
 
   /**
    * Executes a batch of SQL DML statements. This method allows many statements
@@ -868,33 +549,6 @@ class Client {
       std::unique_ptr<TransactionRerunPolicy> rerun_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy, Options opts = {});
 
-  ///@{
-  /// @name Backwards compatibility for CommitOptions.
-  /**
-   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
-   * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
-   */
-  StatusOr<CommitResult> Commit(
-      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
-      CommitOptions const& commit_options) {
-    return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy),
-                  Options(commit_options));
-  }
-  /**
-   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
-   * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
-   */
-  StatusOr<CommitResult> Commit(
-      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
-      std::unique_ptr<BackoffPolicy> backoff_policy,
-      std::initializer_list<internal::NonConstructible>) {
-    return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy));
-  }
-  ///@}
-
   /**
    * Commits a read-write transaction.
    *
@@ -910,26 +564,6 @@ class Client {
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
       Options opts = {});
 
-  ///@{
-  /// @name Backwards compatibility for CommitOptions.
-  /**
-   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,Options)
-   */
-  StatusOr<CommitResult> Commit(
-      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-      CommitOptions const& commit_options) {
-    return Commit(mutator, Options(commit_options));
-  }
-  /**
-   * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,Options)
-   */
-  StatusOr<CommitResult> Commit(
-      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
-      std::initializer_list<internal::NonConstructible>) {
-    return Commit(mutator);
-  }
-  ///@}
-
   /**
    * Commits the @p mutations, using the @p options, atomically in order.
    *
@@ -940,26 +574,6 @@ class Client {
    * policies.
    */
   StatusOr<CommitResult> Commit(Mutations mutations, Options opts = {});
-
-  ///@{
-  /// @name Backwards compatibility for CommitOptions.
-  /**
-   * @copybrief Commit(Mutations,Options)
-   * @see Commit(Mutations,Options)
-   */
-  StatusOr<CommitResult> Commit(Mutations mutations,
-                                CommitOptions const& commit_options) {
-    return Commit(std::move(mutations), Options(commit_options));
-  }
-  /**
-   * @copybrief Commit(Mutations,Options)
-   * @see Commit(Mutations,Options)
-   */
-  StatusOr<CommitResult> Commit(
-      Mutations mutations, std::initializer_list<internal::NonConstructible>) {
-    return Commit(std::move(mutations));
-  }
-  ///@}
 
   /**
    * Commits a read-write transaction.
@@ -988,28 +602,6 @@ class Client {
    */
   StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
                                 Options opts = {});
-
-  ///@{
-  /// @name Backwards compatibility for CommitOptions.
-  /**
-   * @copybrief Commit(Transaction,Mutations,Options)
-   * @see Commit(Transaction,Mutations,Options)
-   */
-  StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
-                                CommitOptions const& commit_options) {
-    return Commit(std::move(transaction), std::move(mutations),
-                  Options(commit_options));
-  }
-  /**
-   * @copybrief Commit(Transaction,Mutations,Options)
-   * @see Commit(Transaction,Mutations,Options)
-   */
-  StatusOr<CommitResult> Commit(
-      Transaction transaction, Mutations mutations,
-      std::initializer_list<internal::NonConstructible>) {
-    return Commit(std::move(transaction), std::move(mutations));
-  }
-  ///@}
 
   /**
    * Rolls back a read-write transaction, releasing any locks it holds.
@@ -1051,6 +643,410 @@ class Client {
    */
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement,
                                                        Options opts = {});
+
+  /// @name Backwards compatibility for ClientOptions.
+  ///@{
+  explicit Client(std::shared_ptr<Connection> conn, ClientOptions const& opts)
+      : Client(std::move(conn), Options(opts)) {}
+  explicit Client(std::shared_ptr<Connection> conn,
+                  std::initializer_list<internal::NonConstructible>)
+      : Client(std::move(conn)) {}
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for ReadOptions.
+  /**
+   * @copybrief Read(std::string,KeySet,std::vector<std::string>,Options)
+   * @see Read(std::string,KeySet,std::vector<std::string>,Options)
+   */
+  RowStream Read(std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions const& read_options) {
+    return Read(std::move(table), std::move(keys), std::move(columns),
+                ToOptions(read_options));
+  }
+  /**
+   * @copybrief Read(std::string,KeySet,std::vector<std::string>,Options)
+   * @see Read(std::string,KeySet,std::vector<std::string>,Options)
+   */
+  RowStream Read(std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 std::initializer_list<internal::NonConstructible>) {
+    return Read(std::move(table), std::move(keys), std::move(columns));
+  }
+  /**
+   * @copybrief Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
+   * @see Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
+   */
+  RowStream Read(Transaction::SingleUseOptions transaction_options,
+                 std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions const& read_options) {
+    return Read(std::move(transaction_options), std::move(table),
+                std::move(keys), std::move(columns), ToOptions(read_options));
+  }
+  /**
+   * @copybrief Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
+   * @see Read(Transaction::SingleUseOptions,std::string,KeySet,std::vector<std::string>,Options)
+   */
+  RowStream Read(Transaction::SingleUseOptions transaction_options,
+                 std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 std::initializer_list<internal::NonConstructible>) {
+    return Read(std::move(transaction_options), std::move(table),
+                std::move(keys), std::move(columns));
+  }
+  /**
+   * @copybrief Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   * @see Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   */
+  RowStream Read(Transaction transaction, std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions const& read_options) {
+    return Read(std::move(transaction), std::move(table), std::move(keys),
+                std::move(columns), ToOptions(read_options));
+  }
+  /**
+   * @copybrief Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   * @see Read(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   */
+  RowStream Read(Transaction transaction, std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 std::initializer_list<internal::NonConstructible>) {
+    return Read(std::move(transaction), std::move(table), std::move(keys),
+                std::move(columns));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for ReadOptions and PartitionOptions.
+  /**
+   * @copybrief PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   * @see PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   */
+  StatusOr<std::vector<ReadPartition>> PartitionRead(
+      Transaction transaction, std::string table, KeySet keys,
+      std::vector<std::string> columns, ReadOptions const& read_options,
+      PartitionOptions const& partition_options) {
+    return PartitionRead(std::move(transaction), std::move(table),
+                         std::move(keys), std::move(columns),
+                         internal::MergeOptions(ToOptions(read_options),
+                                                ToOptions(partition_options)));
+  }
+  /**
+   * @copybrief PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   * @see PartitionRead(Transaction,std::string,KeySet,std::vector<std::string>,Options)
+   */
+  StatusOr<std::vector<ReadPartition>> PartitionRead(
+      Transaction transaction, std::string table, KeySet keys,
+      std::vector<std::string> columns,
+      std::initializer_list<internal::NonConstructible>) {
+    return PartitionRead(std::move(transaction), std::move(table),
+                         std::move(keys), std::move(columns));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for QueryOptions.
+  /**
+   * @copybrief ExecuteQuery(SqlStatement,Options)
+   * @see ExecuteQuery(SqlStatement,Options)
+   */
+  RowStream ExecuteQuery(SqlStatement statement, QueryOptions const& opts) {
+    return ExecuteQuery(std::move(statement), Options(opts));
+  }
+  /**
+   * @copybrief ExecuteQuery(SqlStatement,Options)
+   * @see ExecuteQuery(SqlStatement,Options)
+   */
+  RowStream ExecuteQuery(SqlStatement statement,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(std::move(statement));
+  }
+  /**
+   * @copybrief ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   * @see ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   */
+  RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
+                         SqlStatement statement, QueryOptions const& opts) {
+    return ExecuteQuery(std::move(transaction_options), std::move(statement),
+                        Options(opts));
+  }
+  /**
+   * @copybrief ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   * @see ExecuteQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   */
+  RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
+                         SqlStatement statement,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(std::move(transaction_options), std::move(statement));
+  }
+  /**
+   * @copybrief ExecuteQuery(Transaction,SqlStatement,Options)
+   * @see ExecuteQuery(Transaction,SqlStatement,Options)
+   */
+  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
+                         QueryOptions const& opts) {
+    return ExecuteQuery(std::move(transaction), std::move(statement),
+                        Options(opts));
+  }
+  /**
+   * @copybrief ExecuteQuery(Transaction,SqlStatement,Options)
+   * @see ExecuteQuery(Transaction,SqlStatement,Options)
+   */
+  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(std::move(transaction), std::move(statement));
+  }
+  /**
+   * @copybrief ExecuteQuery(QueryPartition const&,Options)
+   * @see ExecuteQuery(QueryPartition const&,Options)
+   */
+  RowStream ExecuteQuery(QueryPartition const& partition,
+                         QueryOptions const& opts) {
+    return ExecuteQuery(partition, Options(opts));
+  }
+  /**
+   * @copybrief ExecuteQuery(QueryPartition const&,Options)
+   * @see ExecuteQuery(QueryPartition const&,Options)
+   */
+  RowStream ExecuteQuery(QueryPartition const& partition,
+                         std::initializer_list<internal::NonConstructible>) {
+    return ExecuteQuery(partition);
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for QueryOptions.
+  /**
+   * @copybrief ProfileQuery(SqlStatement,Options)
+   * @see ProfileQuery(SqlStatement,Options)
+   */
+  ProfileQueryResult ProfileQuery(SqlStatement statement,
+                                  QueryOptions const& opts) {
+    return ProfileQuery(std::move(statement), Options(opts));
+  }
+  /**
+   * @copybrief ProfileQuery(SqlStatement,Options)
+   * @see ProfileQuery(SqlStatement,Options)
+   */
+  ProfileQueryResult ProfileQuery(
+      SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileQuery(std::move(statement));
+  }
+  /**
+   * @copybrief ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   * @see ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   */
+  ProfileQueryResult ProfileQuery(
+      Transaction::SingleUseOptions transaction_options, SqlStatement statement,
+      QueryOptions const& opts) {
+    return ProfileQuery(std::move(transaction_options), std::move(statement),
+                        Options(opts));
+  }
+  /**
+   * @copybrief ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   * @see ProfileQuery(Transaction::SingleUseOptions,SqlStatement,Options)
+   */
+  ProfileQueryResult ProfileQuery(
+      Transaction::SingleUseOptions transaction_options, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileQuery(std::move(transaction_options), std::move(statement));
+  }
+  /**
+   * @copybrief ProfileQuery(Transaction,SqlStatement,Options)
+   * @see ProfileQuery(Transaction,SqlStatement,Options)
+   */
+  ProfileQueryResult ProfileQuery(Transaction transaction,
+                                  SqlStatement statement,
+                                  QueryOptions const& opts) {
+    return ProfileQuery(std::move(transaction), std::move(statement),
+                        Options(opts));
+  }
+  /**
+   * @copybrief ProfileQuery(Transaction,SqlStatement,Options)
+   * @see ProfileQuery(Transaction,SqlStatement,Options)
+   */
+  ProfileQueryResult ProfileQuery(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileQuery(std::move(transaction), std::move(statement));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for PartitionOptions.
+  /**
+   * @copybrief PartitionQuery(Transaction,SqlStatement,Options)
+   * @see PartitionQuery(Transaction,SqlStatement,Options)
+   */
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      Transaction transaction, SqlStatement statement,
+      PartitionOptions const& partition_options) {
+    return PartitionQuery(std::move(transaction), std::move(statement),
+                          ToOptions(partition_options));
+  }
+  /**
+   * @copybrief PartitionQuery(Transaction,SqlStatement,Options)
+   * @see PartitionQuery(Transaction,SqlStatement,Options)
+   */
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return PartitionQuery(std::move(transaction), std::move(statement));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for QueryOptions.
+  /**
+   * @copybrief ExecuteDml(Transaction,SqlStatement,Options)
+   * @see ExecuteDml(Transaction,SqlStatement,Options)
+   */
+  StatusOr<DmlResult> ExecuteDml(Transaction transaction,
+                                 SqlStatement statement,
+                                 QueryOptions const& opts) {
+    return ExecuteDml(std::move(transaction), std::move(statement),
+                      Options(opts));
+  }
+  /**
+   * @copybrief ExecuteDml(Transaction,SqlStatement,Options)
+   * @see ExecuteDml(Transaction,SqlStatement,Options)
+   */
+  StatusOr<DmlResult> ExecuteDml(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ExecuteDml(std::move(transaction), std::move(statement));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for QueryOptions.
+  StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
+                                        SqlStatement statement,
+                                        QueryOptions const& opts) {
+    return ProfileDml(std::move(transaction), std::move(statement),
+                      Options(opts));
+  }
+  StatusOr<ProfileDmlResult> ProfileDml(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return ProfileDml(std::move(transaction), std::move(statement));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for QueryOptions.
+  /**
+   * @copybrief AnalyzeSql(Transaction,SqlStatement,Options)
+   * @see AnalyzeSql(Transaction,SqlStatement,Options)
+   */
+  StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
+                                     SqlStatement statement,
+                                     QueryOptions const& opts) {
+    return AnalyzeSql(std::move(transaction), std::move(statement),
+                      Options(opts));
+  }
+  /**
+   * @copybrief AnalyzeSql(Transaction,SqlStatement,Options)
+   * @see AnalyzeSql(Transaction,SqlStatement,Options)
+   */
+  StatusOr<ExecutionPlan> AnalyzeSql(
+      Transaction transaction, SqlStatement statement,
+      std::initializer_list<internal::NonConstructible>) {
+    return AnalyzeSql(std::move(transaction), std::move(statement));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for CommitOptions.
+  /**
+   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
+   * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
+   */
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      CommitOptions const& commit_options) {
+    return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy),
+                  Options(commit_options));
+  }
+  /**
+   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
+   * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,std::unique_ptr<TransactionRerunPolicy>,std::unique_ptr<BackoffPolicy>,Options)
+   */
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      std::initializer_list<internal::NonConstructible>) {
+    return Commit(mutator, std::move(rerun_policy), std::move(backoff_policy));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for CommitOptions.
+  /**
+   * @copybrief Commit(std::function<StatusOr<Mutations>(Transaction)> const&,Options)
+   */
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      CommitOptions const& commit_options) {
+    return Commit(mutator, Options(commit_options));
+  }
+  /**
+   * @see Commit(std::function<StatusOr<Mutations>(Transaction)> const&,Options)
+   */
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      std::initializer_list<internal::NonConstructible>) {
+    return Commit(mutator);
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for CommitOptions.
+  /**
+   * @copybrief Commit(Mutations,Options)
+   * @see Commit(Mutations,Options)
+   */
+  StatusOr<CommitResult> Commit(Mutations mutations,
+                                CommitOptions const& commit_options) {
+    return Commit(std::move(mutations), Options(commit_options));
+  }
+  /**
+   * @copybrief Commit(Mutations,Options)
+   * @see Commit(Mutations,Options)
+   */
+  StatusOr<CommitResult> Commit(
+      Mutations mutations, std::initializer_list<internal::NonConstructible>) {
+    return Commit(std::move(mutations));
+  }
+  ///@}
+
+  ///@{
+  /// @name Backwards compatibility for CommitOptions.
+  /**
+   * @copybrief Commit(Transaction,Mutations,Options)
+   * @see Commit(Transaction,Mutations,Options)
+   */
+  StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations,
+                                CommitOptions const& commit_options) {
+    return Commit(std::move(transaction), std::move(mutations),
+                  Options(commit_options));
+  }
+  /**
+   * @copybrief Commit(Transaction,Mutations,Options)
+   * @see Commit(Transaction,Mutations,Options)
+   */
+  StatusOr<CommitResult> Commit(
+      Transaction transaction, Mutations mutations,
+      std::initializer_list<internal::NonConstructible>) {
+    return Commit(std::move(transaction), std::move(mutations));
+  }
+  ///@}
 
   ///@{
   /// @name Backwards compatibility for QueryOptions.
