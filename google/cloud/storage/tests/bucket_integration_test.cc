@@ -633,9 +633,6 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
-  // TODO(#9800) - enable in production.
-  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -707,9 +704,6 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
-  // TODO(#9800) - enable in production
-  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);

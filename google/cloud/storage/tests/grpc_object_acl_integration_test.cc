@@ -42,9 +42,6 @@ class GrpcObjectAclIntegrationTest
 TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
-  // TODO(#9800) - restore gRPC integration tests against production
-  if (!UsingEmulator()) GTEST_SKIP();
-
   auto const bucket_name =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
@@ -92,11 +89,14 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   auto c2 = client->CreateObjectAcl(bucket_name, object_name, viewers,
                                     BucketAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(c2);
+  // There is no guarantee that the ETag remains unchanged, even if the
+  // operation has no effect.  Reset the one field that might change.
+  create_acl->set_etag(c2->etag());
   EXPECT_EQ(*create_acl, *c2);
 
   auto get_acl = client->GetObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(get_acl);
-  EXPECT_EQ(*create_acl, *get_acl);
+  EXPECT_EQ(*c2, *get_acl);
 
   auto not_found_acl =
       client->GetObjectAcl(bucket_name, object_name, "not-found-entity");

@@ -42,9 +42,6 @@ class GrpcBucketAclIntegrationTest
 TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
-  // TODO(#9800) - restore gRPC integration tests against production
-  if (!UsingEmulator()) GTEST_SKIP();
-
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
 
@@ -96,6 +93,9 @@ TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
   auto c2 = client->CreateBucketAcl(bucket_name, viewers,
                                     BucketAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(c2);
+  // There is no guarantee that the ETag remains unchanged, even if the
+  // operation has no effect.  Reset the one field that might change.
+  create_acl->set_etag(c2->etag());
   EXPECT_EQ(*create_acl, *c2);
 
   auto updated_acl = client->UpdateBucketAcl(
