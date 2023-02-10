@@ -293,8 +293,17 @@ StatusOr<storage::BucketMetadata> GrpcClient::CreateBucket(
   grpc::ClientContext context;
   ApplyQueryParameters(context, request);
   auto response = stub_->CreateBucket(context, proto);
-  if (!response) return std::move(response).status();
-  return FromProto(*response);
+  if (response) return FromProto(*response);
+  // GCS returns kFailedPrecondition when the bucket already exists. I filed
+  // a bug to change this to kAborted, for consistency with JSON.  In either
+  // case, the error is confusing for customers. We normalize it here, just
+  // as we do for the JSON transport.
+  auto const code = response.status().code();
+  if (code == StatusCode::kFailedPrecondition || code == StatusCode::kAborted) {
+    return Status(StatusCode::kAlreadyExists, response.status().message(),
+                  response.status().error_info());
+  }
+  return std::move(response).status();
 }
 
 StatusOr<storage::BucketMetadata> GrpcClient::GetBucketMetadata(
