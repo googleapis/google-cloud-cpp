@@ -286,9 +286,6 @@ TEST_F(BucketIntegrationTest, PatchLifecycleConditions) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
-  // TODO(#9801) - enable in production.
-  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -365,10 +362,10 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   desired_state.set_storage_class(storage_class::Coldline());
 
   // versioning()
-  if (!desired_state.has_versioning()) {
-    desired_state.enable_versioning();
-  } else {
+  if (desired_state.has_versioning() && desired_state.versioning()->enabled) {
     desired_state.reset_versioning();
+  } else {
+    desired_state.enable_versioning();
   }
 
   // website()
@@ -496,9 +493,6 @@ TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
 
 /// @test Verify that we can set the RPO in a Bucket.
 TEST_F(BucketIntegrationTest, RpoPatch) {
-  // TODO(#9802) - enable in production.
-  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
