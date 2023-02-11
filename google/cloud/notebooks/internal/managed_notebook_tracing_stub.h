@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_INTERNAL_MANAGED_NOTEBOOK_TRACING_STUB_H
 
 #include "google/cloud/notebooks/internal/managed_notebook_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -125,6 +126,16 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ManagedNotebookServiceStub>
+MakeManagedNotebookServiceTracingStub(
+    std::shared_ptr<ManagedNotebookServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal

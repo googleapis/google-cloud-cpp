@@ -18,7 +18,6 @@
 
 #include "google/cloud/video/internal/video_stitcher_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -284,6 +283,15 @@ VideoStitcherServiceTracingStub::GetLiveSession(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<VideoStitcherServiceStub> MakeVideoStitcherServiceTracingStub(
+    std::shared_ptr<VideoStitcherServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<VideoStitcherServiceTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal

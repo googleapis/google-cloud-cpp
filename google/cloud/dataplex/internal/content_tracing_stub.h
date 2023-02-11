@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_INTERNAL_CONTENT_TRACING_STUB_H
 
 #include "google/cloud/dataplex/internal/content_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -74,6 +75,15 @@ class ContentServiceTracingStub : public ContentServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ContentServiceStub> MakeContentServiceTracingStub(
+    std::shared_ptr<ContentServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal

@@ -18,7 +18,6 @@
 
 #include "google/cloud/dialogflow_es/internal/sessions_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -52,6 +51,15 @@ SessionsTracingStub::AsyncStreamingDetectIntent(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<SessionsStub> MakeSessionsTracingStub(
+    std::shared_ptr<SessionsStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<SessionsTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

@@ -18,7 +18,6 @@
 
 #include "google/cloud/kms/internal/ekm_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -80,6 +79,15 @@ EkmServiceTracingStub::UpdateEkmConnection(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<EkmServiceStub> MakeEkmServiceTracingStub(
+    std::shared_ptr<EkmServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<EkmServiceTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal

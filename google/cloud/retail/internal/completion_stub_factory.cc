@@ -21,9 +21,11 @@
 #include "google/cloud/retail/internal/completion_logging_decorator.h"
 #include "google/cloud/retail/internal/completion_metadata_decorator.h"
 #include "google/cloud/retail/internal/completion_stub.h"
+#include "google/cloud/retail/internal/completion_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/retail/v2/completion_service.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<CompletionServiceStub> CreateDefaultCompletionServiceStub(
     stub = std::make_shared<CompletionServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeCompletionServiceTracingStub(std::move(stub));
   }
   return stub;
 }

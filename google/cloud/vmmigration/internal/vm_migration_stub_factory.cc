@@ -21,9 +21,11 @@
 #include "google/cloud/vmmigration/internal/vm_migration_logging_decorator.h"
 #include "google/cloud/vmmigration/internal/vm_migration_metadata_decorator.h"
 #include "google/cloud/vmmigration/internal/vm_migration_stub.h"
+#include "google/cloud/vmmigration/internal/vm_migration_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<VmMigrationStub> CreateDefaultVmMigrationStub(
     stub = std::make_shared<VmMigrationLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeVmMigrationTracingStub(std::move(stub));
   }
   return stub;
 }

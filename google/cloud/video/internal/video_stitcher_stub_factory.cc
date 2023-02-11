@@ -21,9 +21,11 @@
 #include "google/cloud/video/internal/video_stitcher_logging_decorator.h"
 #include "google/cloud/video/internal/video_stitcher_metadata_decorator.h"
 #include "google/cloud/video/internal/video_stitcher_stub.h"
+#include "google/cloud/video/internal/video_stitcher_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/video/stitcher/v1/video_stitcher_service.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<VideoStitcherServiceStub> CreateDefaultVideoStitcherServiceStub(
     stub = std::make_shared<VideoStitcherServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeVideoStitcherServiceTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -18,7 +18,6 @@
 
 #include "google/cloud/dialogflow_cx/internal/security_settings_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -101,6 +100,16 @@ Status SecuritySettingsServiceTracingStub::DeleteSecuritySettings(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<SecuritySettingsServiceStub>
+MakeSecuritySettingsServiceTracingStub(
+    std::shared_ptr<SecuritySettingsServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<SecuritySettingsServiceTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal

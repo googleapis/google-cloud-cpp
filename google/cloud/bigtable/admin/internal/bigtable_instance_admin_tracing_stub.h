@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_INTERNAL_BIGTABLE_INSTANCE_ADMIN_TRACING_STUB_H
 
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -153,6 +154,15 @@ class BigtableInstanceAdminTracingStub : public BigtableInstanceAdminStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<BigtableInstanceAdminStub> MakeBigtableInstanceAdminTracingStub(
+    std::shared_ptr<BigtableInstanceAdminStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal

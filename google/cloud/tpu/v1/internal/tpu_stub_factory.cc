@@ -21,9 +21,11 @@
 #include "google/cloud/tpu/v1/internal/tpu_logging_decorator.h"
 #include "google/cloud/tpu/v1/internal/tpu_metadata_decorator.h"
 #include "google/cloud/tpu/v1/internal/tpu_stub.h"
+#include "google/cloud/tpu/v1/internal/tpu_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/tpu/v1/cloud_tpu.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<TpuStub> CreateDefaultTpuStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<TpuLogging>(std::move(stub),
                                         options.get<GrpcTracingOptionsOption>(),
                                         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeTpuTracingStub(std::move(stub));
   }
   return stub;
 }

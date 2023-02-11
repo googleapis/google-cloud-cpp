@@ -21,9 +21,11 @@
 #include "google/cloud/documentai/internal/document_processor_logging_decorator.h"
 #include "google/cloud/documentai/internal/document_processor_metadata_decorator.h"
 #include "google/cloud/documentai/internal/document_processor_stub.h"
+#include "google/cloud/documentai/internal/document_processor_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
@@ -58,6 +60,9 @@ CreateDefaultDocumentProcessorServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<DocumentProcessorServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeDocumentProcessorServiceTracingStub(std::move(stub));
   }
   return stub;
 }

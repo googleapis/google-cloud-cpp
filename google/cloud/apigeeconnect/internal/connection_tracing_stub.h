@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_INTERNAL_CONNECTION_TRACING_STUB_H
 
 #include "google/cloud/apigeeconnect/internal/connection_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -47,6 +48,15 @@ class ConnectionServiceTracingStub : public ConnectionServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ConnectionServiceStub> MakeConnectionServiceTracingStub(
+    std::shared_ptr<ConnectionServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal

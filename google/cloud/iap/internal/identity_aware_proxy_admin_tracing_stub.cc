@@ -18,7 +18,6 @@
 
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -159,6 +158,17 @@ IdentityAwareProxyAdminServiceTracingStub::UpdateTunnelDestGroup(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<IdentityAwareProxyAdminServiceStub>
+MakeIdentityAwareProxyAdminServiceTracingStub(
+    std::shared_ptr<IdentityAwareProxyAdminServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<IdentityAwareProxyAdminServiceTracingStub>(
+      std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal

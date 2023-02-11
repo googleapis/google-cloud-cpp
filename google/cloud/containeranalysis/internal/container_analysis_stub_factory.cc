@@ -21,9 +21,11 @@
 #include "google/cloud/containeranalysis/internal/container_analysis_logging_decorator.h"
 #include "google/cloud/containeranalysis/internal/container_analysis_metadata_decorator.h"
 #include "google/cloud/containeranalysis/internal/container_analysis_stub.h"
+#include "google/cloud/containeranalysis/internal/container_analysis_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<ContainerAnalysisStub> CreateDefaultContainerAnalysisStub(
     stub = std::make_shared<ContainerAnalysisLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeContainerAnalysisTracingStub(std::move(stub));
   }
   return stub;
 }

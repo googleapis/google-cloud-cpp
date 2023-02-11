@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_INTERNAL_CONTROLLER2_TRACING_STUB_H
 
 #include "google/cloud/debugger/internal/controller2_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -58,6 +59,15 @@ class Controller2TracingStub : public Controller2Stub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<Controller2Stub> MakeController2TracingStub(
+    std::shared_ptr<Controller2Stub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal

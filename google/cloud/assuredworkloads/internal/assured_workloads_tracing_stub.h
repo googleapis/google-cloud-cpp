@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_TRACING_STUB_H
 
 #include "google/cloud/assuredworkloads/internal/assured_workloads_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -101,6 +102,16 @@ class AssuredWorkloadsServiceTracingStub : public AssuredWorkloadsServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<AssuredWorkloadsServiceStub>
+MakeAssuredWorkloadsServiceTracingStub(
+    std::shared_ptr<AssuredWorkloadsServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal

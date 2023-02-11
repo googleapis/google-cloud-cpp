@@ -21,9 +21,11 @@
 #include "google/cloud/shell/internal/cloud_shell_logging_decorator.h"
 #include "google/cloud/shell/internal/cloud_shell_metadata_decorator.h"
 #include "google/cloud/shell/internal/cloud_shell_stub.h"
+#include "google/cloud/shell/internal/cloud_shell_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<CloudShellServiceStub> CreateDefaultCloudShellServiceStub(
     stub = std::make_shared<CloudShellServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeCloudShellServiceTracingStub(std::move(stub));
   }
   return stub;
 }

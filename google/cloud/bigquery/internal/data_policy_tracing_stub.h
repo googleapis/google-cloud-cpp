@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_DATA_POLICY_TRACING_STUB_H
 
 #include "google/cloud/bigquery/internal/data_policy_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -87,6 +88,15 @@ class DataPolicyServiceTracingStub : public DataPolicyServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<DataPolicyServiceStub> MakeDataPolicyServiceTracingStub(
+    std::shared_ptr<DataPolicyServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal

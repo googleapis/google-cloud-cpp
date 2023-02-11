@@ -21,9 +21,11 @@
 #include "google/cloud/beyondcorp/internal/app_connectors_logging_decorator.h"
 #include "google/cloud/beyondcorp/internal/app_connectors_metadata_decorator.h"
 #include "google/cloud/beyondcorp/internal/app_connectors_stub.h"
+#include "google/cloud/beyondcorp/internal/app_connectors_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<AppConnectorsServiceStub> CreateDefaultAppConnectorsServiceStub(
     stub = std::make_shared<AppConnectorsServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAppConnectorsServiceTracingStub(std::move(stub));
   }
   return stub;
 }

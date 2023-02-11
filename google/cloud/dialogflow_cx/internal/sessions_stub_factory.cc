@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_cx/internal/sessions_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/sessions_stub.h"
+#include "google/cloud/dialogflow_cx/internal/sessions_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<SessionsStub> CreateDefaultSessionsStub(
     stub = std::make_shared<SessionsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeSessionsTracingStub(std::move(stub));
   }
   return stub;
 }

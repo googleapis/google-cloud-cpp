@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_INTERNAL_AGENT_ENDPOINT_TRACING_STUB_H
 
 #include "google/cloud/osconfig/internal/agent_endpoint_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -79,6 +80,15 @@ class AgentEndpointServiceTracingStub : public AgentEndpointServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<AgentEndpointServiceStub> MakeAgentEndpointServiceTracingStub(
+    std::shared_ptr<AgentEndpointServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal

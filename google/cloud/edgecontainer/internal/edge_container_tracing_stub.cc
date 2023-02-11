@@ -18,7 +18,6 @@
 
 #include "google/cloud/edgecontainer/internal/edge_container_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -223,6 +222,15 @@ future<Status> EdgeContainerTracingStub::AsyncCancelOperation(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<EdgeContainerStub> MakeEdgeContainerTracingStub(
+    std::shared_ptr<EdgeContainerStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<EdgeContainerTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_internal

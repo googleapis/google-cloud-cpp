@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_TRACING_STUB_H
 
 #include "google/cloud/cloudbuild/internal/cloud_build_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -150,6 +151,15 @@ class CloudBuildTracingStub : public CloudBuildStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<CloudBuildStub> MakeCloudBuildTracingStub(
+    std::shared_ptr<CloudBuildStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal

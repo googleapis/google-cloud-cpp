@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_INTERNAL_GAME_SERVER_DEPLOYMENTS_TRACING_STUB_H
 
 #include "google/cloud/gameservices/internal/game_server_deployments_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -111,6 +112,16 @@ class GameServerDeploymentsServiceTracingStub
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<GameServerDeploymentsServiceStub>
+MakeGameServerDeploymentsServiceTracingStub(
+    std::shared_ptr<GameServerDeploymentsServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

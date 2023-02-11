@@ -21,9 +21,11 @@
 #include "google/cloud/profiler/internal/profiler_logging_decorator.h"
 #include "google/cloud/profiler/internal/profiler_metadata_decorator.h"
 #include "google/cloud/profiler/internal/profiler_stub.h"
+#include "google/cloud/profiler/internal/profiler_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<ProfilerServiceStub> CreateDefaultProfilerServiceStub(
     stub = std::make_shared<ProfilerServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeProfilerServiceTracingStub(std::move(stub));
   }
   return stub;
 }

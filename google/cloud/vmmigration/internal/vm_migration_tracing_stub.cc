@@ -18,7 +18,6 @@
 
 #include "google/cloud/vmmigration/internal/vm_migration_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -501,6 +500,15 @@ future<Status> VmMigrationTracingStub::AsyncCancelOperation(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<VmMigrationStub> MakeVmMigrationTracingStub(
+    std::shared_ptr<VmMigrationStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<VmMigrationTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal

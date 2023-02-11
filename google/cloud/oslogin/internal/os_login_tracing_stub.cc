@@ -18,7 +18,6 @@
 
 #include "google/cloud/oslogin/internal/os_login_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -114,6 +113,15 @@ OsLoginServiceTracingStub::UpdateSshPublicKey(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<OsLoginServiceStub> MakeOsLoginServiceTracingStub(
+    std::shared_ptr<OsLoginServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<OsLoginServiceTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_internal

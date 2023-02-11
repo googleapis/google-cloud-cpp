@@ -18,7 +18,6 @@
 
 #include "google/cloud/scheduler/internal/cloud_scheduler_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -116,6 +115,15 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerTracingStub::RunJob(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<CloudSchedulerStub> MakeCloudSchedulerTracingStub(
+    std::shared_ptr<CloudSchedulerStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<CloudSchedulerTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal

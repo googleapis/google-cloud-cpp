@@ -18,7 +18,6 @@
 
 #include "google/cloud/accessapproval/v1/internal/access_approval_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -156,6 +155,15 @@ AccessApprovalTracingStub::GetAccessApprovalServiceAccount(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<AccessApprovalStub> MakeAccessApprovalTracingStub(
+    std::shared_ptr<AccessApprovalStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<AccessApprovalTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_v1_internal

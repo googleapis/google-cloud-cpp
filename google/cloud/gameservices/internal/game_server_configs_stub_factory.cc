@@ -21,9 +21,11 @@
 #include "google/cloud/gameservices/internal/game_server_configs_logging_decorator.h"
 #include "google/cloud/gameservices/internal/game_server_configs_metadata_decorator.h"
 #include "google/cloud/gameservices/internal/game_server_configs_stub.h"
+#include "google/cloud/gameservices/internal/game_server_configs_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/gaming/v1/game_server_configs_service.grpc.pb.h>
@@ -58,6 +60,9 @@ CreateDefaultGameServerConfigsServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<GameServerConfigsServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeGameServerConfigsServiceTracingStub(std::move(stub));
   }
   return stub;
 }

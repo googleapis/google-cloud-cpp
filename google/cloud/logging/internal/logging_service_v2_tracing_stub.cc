@@ -18,7 +18,6 @@
 
 #include "google/cloud/logging/internal/logging_service_v2_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -108,6 +107,15 @@ LoggingServiceV2TracingStub::AsyncWriteLogEntries(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<LoggingServiceV2Stub> MakeLoggingServiceV2TracingStub(
+    std::shared_ptr<LoggingServiceV2Stub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<LoggingServiceV2TracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal

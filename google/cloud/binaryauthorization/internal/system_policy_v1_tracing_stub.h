@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_INTERNAL_SYSTEM_POLICY_V1_TRACING_STUB_H
 
 #include "google/cloud/binaryauthorization/internal/system_policy_v1_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -45,6 +46,15 @@ class SystemPolicyV1TracingStub : public SystemPolicyV1Stub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<SystemPolicyV1Stub> MakeSystemPolicyV1TracingStub(
+    std::shared_ptr<SystemPolicyV1Stub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

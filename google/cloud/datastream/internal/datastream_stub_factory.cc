@@ -21,9 +21,11 @@
 #include "google/cloud/datastream/internal/datastream_logging_decorator.h"
 #include "google/cloud/datastream/internal/datastream_metadata_decorator.h"
 #include "google/cloud/datastream/internal/datastream_stub.h"
+#include "google/cloud/datastream/internal/datastream_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/datastream/v1/datastream.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<DatastreamStub> CreateDefaultDatastreamStub(
     stub = std::make_shared<DatastreamLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeDatastreamTracingStub(std::move(stub));
   }
   return stub;
 }

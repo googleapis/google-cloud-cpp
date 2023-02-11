@@ -21,9 +21,11 @@
 #include "google/cloud/dataplex/internal/content_logging_decorator.h"
 #include "google/cloud/dataplex/internal/content_metadata_decorator.h"
 #include "google/cloud/dataplex/internal/content_stub.h"
+#include "google/cloud/dataplex/internal/content_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dataplex/v1/content.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<ContentServiceStub> CreateDefaultContentServiceStub(
     stub = std::make_shared<ContentServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeContentServiceTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -21,9 +21,11 @@
 #include "google/cloud/assuredworkloads/internal/assured_workloads_logging_decorator.h"
 #include "google/cloud/assuredworkloads/internal/assured_workloads_metadata_decorator.h"
 #include "google/cloud/assuredworkloads/internal/assured_workloads_stub.h"
+#include "google/cloud/assuredworkloads/internal/assured_workloads_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
@@ -59,6 +61,9 @@ CreateDefaultAssuredWorkloadsServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<AssuredWorkloadsServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAssuredWorkloadsServiceTracingStub(std::move(stub));
   }
   return stub;
 }

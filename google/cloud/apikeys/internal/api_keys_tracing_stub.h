@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_INTERNAL_API_KEYS_TRACING_STUB_H
 
 #include "google/cloud/apikeys/internal/api_keys_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -86,6 +87,15 @@ class ApiKeysTracingStub : public ApiKeysStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ApiKeysStub> MakeApiKeysTracingStub(
+    std::shared_ptr<ApiKeysStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_internal

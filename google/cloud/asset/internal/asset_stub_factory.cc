@@ -21,9 +21,11 @@
 #include "google/cloud/asset/internal/asset_logging_decorator.h"
 #include "google/cloud/asset/internal/asset_metadata_decorator.h"
 #include "google/cloud/asset/internal/asset_stub.h"
+#include "google/cloud/asset/internal/asset_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/asset/v1/asset_service.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<AssetServiceStub> CreateDefaultAssetServiceStub(
     stub = std::make_shared<AssetServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAssetServiceTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INTERNAL_AUTHORIZED_CERTIFICATES_TRACING_STUB_H
 
 #include "google/cloud/appengine/internal/authorized_certificates_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -70,6 +71,16 @@ class AuthorizedCertificatesTracingStub : public AuthorizedCertificatesStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<AuthorizedCertificatesStub>
+MakeAuthorizedCertificatesTracingStub(
+    std::shared_ptr<AuthorizedCertificatesStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

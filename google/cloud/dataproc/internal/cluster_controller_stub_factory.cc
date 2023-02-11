@@ -21,9 +21,11 @@
 #include "google/cloud/dataproc/internal/cluster_controller_logging_decorator.h"
 #include "google/cloud/dataproc/internal/cluster_controller_metadata_decorator.h"
 #include "google/cloud/dataproc/internal/cluster_controller_stub.h"
+#include "google/cloud/dataproc/internal/cluster_controller_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dataproc/v1/clusters.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<ClusterControllerStub> CreateDefaultClusterControllerStub(
     stub = std::make_shared<ClusterControllerLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeClusterControllerTracingStub(std::move(stub));
   }
   return stub;
 }

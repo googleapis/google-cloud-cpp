@@ -21,9 +21,11 @@
 #include "google/cloud/pubsublite/internal/subscriber_logging_decorator.h"
 #include "google/cloud/pubsublite/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/pubsublite/internal/subscriber_stub.h"
+#include "google/cloud/pubsublite/internal/subscriber_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<SubscriberServiceStub> CreateDefaultSubscriberServiceStub(
     stub = std::make_shared<SubscriberServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeSubscriberServiceTracingStub(std::move(stub));
   }
   return stub;
 }

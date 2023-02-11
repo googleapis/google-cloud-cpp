@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_cx/internal/intents_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/intents_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/intents_stub.h"
+#include "google/cloud/dialogflow_cx/internal/intents_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/intent.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<IntentsStub> CreateDefaultIntentsStub(
     stub = std::make_shared<IntentsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeIntentsTracingStub(std::move(stub));
   }
   return stub;
 }

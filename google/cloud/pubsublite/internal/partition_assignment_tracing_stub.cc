@@ -18,7 +18,6 @@
 
 #include "google/cloud/pubsublite/internal/partition_assignment_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -41,6 +40,17 @@ PartitionAssignmentServiceTracingStub::AsyncAssignPartitions(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<PartitionAssignmentServiceStub>
+MakePartitionAssignmentServiceTracingStub(
+    std::shared_ptr<PartitionAssignmentServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<PartitionAssignmentServiceTracingStub>(
+      std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_INTERNAL_BATCH_CONTROLLER_TRACING_STUB_H
 
 #include "google/cloud/dataproc/internal/batch_controller_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -68,6 +69,15 @@ class BatchControllerTracingStub : public BatchControllerStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<BatchControllerStub> MakeBatchControllerTracingStub(
+    std::shared_ptr<BatchControllerStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal

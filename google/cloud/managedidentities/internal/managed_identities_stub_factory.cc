@@ -21,9 +21,11 @@
 #include "google/cloud/managedidentities/internal/managed_identities_logging_decorator.h"
 #include "google/cloud/managedidentities/internal/managed_identities_metadata_decorator.h"
 #include "google/cloud/managedidentities/internal/managed_identities_stub.h"
+#include "google/cloud/managedidentities/internal/managed_identities_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h>
@@ -59,6 +61,9 @@ CreateDefaultManagedIdentitiesServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<ManagedIdentitiesServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeManagedIdentitiesServiceTracingStub(std::move(stub));
   }
   return stub;
 }

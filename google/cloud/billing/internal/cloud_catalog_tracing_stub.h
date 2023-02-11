@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_INTERNAL_CLOUD_CATALOG_TRACING_STUB_H
 
 #include "google/cloud/billing/internal/cloud_catalog_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -48,6 +49,15 @@ class CloudCatalogTracingStub : public CloudCatalogStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<CloudCatalogStub> MakeCloudCatalogTracingStub(
+    std::shared_ptr<CloudCatalogStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal

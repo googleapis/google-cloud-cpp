@@ -21,9 +21,11 @@
 #include "google/cloud/talent/internal/job_logging_decorator.h"
 #include "google/cloud/talent/internal/job_metadata_decorator.h"
 #include "google/cloud/talent/internal/job_stub.h"
+#include "google/cloud/talent/internal/job_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/talent/v4/job_service.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<JobServiceStub> CreateDefaultJobServiceStub(
     stub = std::make_shared<JobServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeJobServiceTracingStub(std::move(stub));
   }
   return stub;
 }

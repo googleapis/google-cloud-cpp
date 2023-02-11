@@ -22,9 +22,11 @@
 #include "google/cloud/beyondcorp/internal/app_connections_logging_decorator.h"
 #include "google/cloud/beyondcorp/internal/app_connections_metadata_decorator.h"
 #include "google/cloud/beyondcorp/internal/app_connections_stub.h"
+#include "google/cloud/beyondcorp/internal/app_connections_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/beyondcorp/appconnections/v1/app_connections_service.grpc.pb.h>
@@ -59,6 +61,9 @@ CreateDefaultAppConnectionsServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<AppConnectionsServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAppConnectionsServiceTracingStub(std::move(stub));
   }
   return stub;
 }

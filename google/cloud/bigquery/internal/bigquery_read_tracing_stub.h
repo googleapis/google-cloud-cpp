@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_BIGQUERY_READ_TRACING_STUB_H
 
 #include "google/cloud/bigquery/internal/bigquery_read_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -57,6 +58,15 @@ class BigQueryReadTracingStub : public BigQueryReadStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<BigQueryReadStub> MakeBigQueryReadTracingStub(
+    std::shared_ptr<BigQueryReadStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

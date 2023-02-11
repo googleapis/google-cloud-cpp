@@ -21,9 +21,11 @@
 #include "google/cloud/servicedirectory/internal/lookup_logging_decorator.h"
 #include "google/cloud/servicedirectory/internal/lookup_metadata_decorator.h"
 #include "google/cloud/servicedirectory/internal/lookup_stub.h"
+#include "google/cloud/servicedirectory/internal/lookup_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<LookupServiceStub> CreateDefaultLookupServiceStub(
     stub = std::make_shared<LookupServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeLookupServiceTracingStub(std::move(stub));
   }
   return stub;
 }

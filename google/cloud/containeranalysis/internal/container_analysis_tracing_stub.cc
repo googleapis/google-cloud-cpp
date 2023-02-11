@@ -18,7 +18,6 @@
 
 #include "google/cloud/containeranalysis/internal/container_analysis_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -83,6 +82,15 @@ ContainerAnalysisTracingStub::GetVulnerabilityOccurrencesSummary(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<ContainerAnalysisStub> MakeContainerAnalysisTracingStub(
+    std::shared_ptr<ContainerAnalysisStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<ContainerAnalysisTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal

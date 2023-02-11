@@ -21,9 +21,11 @@
 #include "google/cloud/servicecontrol/internal/quota_controller_logging_decorator.h"
 #include "google/cloud/servicecontrol/internal/quota_controller_metadata_decorator.h"
 #include "google/cloud/servicecontrol/internal/quota_controller_stub.h"
+#include "google/cloud/servicecontrol/internal/quota_controller_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<QuotaControllerStub> CreateDefaultQuotaControllerStub(
     stub = std::make_shared<QuotaControllerLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeQuotaControllerTracingStub(std::move(stub));
   }
   return stub;
 }

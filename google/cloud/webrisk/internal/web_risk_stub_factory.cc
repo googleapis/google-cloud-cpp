@@ -21,9 +21,11 @@
 #include "google/cloud/webrisk/internal/web_risk_logging_decorator.h"
 #include "google/cloud/webrisk/internal/web_risk_metadata_decorator.h"
 #include "google/cloud/webrisk/internal/web_risk_stub.h"
+#include "google/cloud/webrisk/internal/web_risk_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<WebRiskServiceStub> CreateDefaultWebRiskServiceStub(
     stub = std::make_shared<WebRiskServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeWebRiskServiceTracingStub(std::move(stub));
   }
   return stub;
 }

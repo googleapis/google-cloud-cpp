@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_INTERNAL_ATTACHED_CLUSTERS_TRACING_STUB_H
 
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -101,6 +102,15 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<AttachedClustersStub> MakeAttachedClustersTracingStub(
+    std::shared_ptr<AttachedClustersStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkemulticloud_v1_internal

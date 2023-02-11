@@ -21,9 +21,11 @@
 #include "google/cloud/osconfig/internal/agent_endpoint_logging_decorator.h"
 #include "google/cloud/osconfig/internal/agent_endpoint_metadata_decorator.h"
 #include "google/cloud/osconfig/internal/agent_endpoint_stub.h"
+#include "google/cloud/osconfig/internal/agent_endpoint_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<AgentEndpointServiceStub> CreateDefaultAgentEndpointServiceStub(
     stub = std::make_shared<AgentEndpointServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAgentEndpointServiceTracingStub(std::move(stub));
   }
   return stub;
 }

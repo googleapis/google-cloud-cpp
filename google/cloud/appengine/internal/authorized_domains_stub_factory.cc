@@ -21,9 +21,11 @@
 #include "google/cloud/appengine/internal/authorized_domains_logging_decorator.h"
 #include "google/cloud/appengine/internal/authorized_domains_metadata_decorator.h"
 #include "google/cloud/appengine/internal/authorized_domains_stub.h"
+#include "google/cloud/appengine/internal/authorized_domains_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<AuthorizedDomainsStub> CreateDefaultAuthorizedDomainsStub(
     stub = std::make_shared<AuthorizedDomainsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAuthorizedDomainsTracingStub(std::move(stub));
   }
   return stub;
 }
