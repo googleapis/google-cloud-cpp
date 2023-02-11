@@ -22,6 +22,9 @@ namespace internal {
 
 void StreamingReadRpcReportUnhandledError(Status const& status,
                                           char const* tname) {
+  // Getting a kCancelled here is expected, this is only called after cancelling
+  // the RPC.
+  if (status.ok() || status.code() == StatusCode::kCancelled) return;
   GCP_LOG(WARNING) << "unhandled error for StreamingReadRpcImpl< " << tname
                    << " > - status=" << status;
 }

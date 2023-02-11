@@ -85,8 +85,6 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
     if (finished_) return;
     Cancel();
     auto status = Finish();
-    // Getting a kCancelled here is expected, as we just canceled the RPC.
-    if (status.ok() && status.code() != StatusCode::kCancelled) return;
     StreamingReadRpcReportUnhandledError(status, typeid(ResponseType).name());
   }
 
