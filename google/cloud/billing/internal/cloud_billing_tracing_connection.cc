@@ -46,11 +46,11 @@ CloudBillingTracingConnection::ListBillingAccounts(
     google::cloud::billing::v1::ListBillingAccountsRequest request) {
   auto span = internal::MakeSpan(
       "billing::CloudBillingConnection::ListBillingAccounts");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListBillingAccounts(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::billing::v1::BillingAccount>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::billing::v1::BillingAccount>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
@@ -76,11 +76,11 @@ CloudBillingTracingConnection::ListProjectBillingInfo(
     google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
   auto span = internal::MakeSpan(
       "billing::CloudBillingConnection::ListProjectBillingInfo");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProjectBillingInfo(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::billing::v1::ProjectBillingInfo>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::billing::v1::ProjectBillingInfo>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>

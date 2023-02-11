@@ -39,11 +39,11 @@ AuthorizedCertificatesTracingConnection::ListAuthorizedCertificates(
   auto span = internal::MakeSpan(
       "appengine::AuthorizedCertificatesConnection::"
       "ListAuthorizedCertificates");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAuthorizedCertificates(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::appengine::v1::AuthorizedCertificate>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::appengine::v1::AuthorizedCertificate>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>

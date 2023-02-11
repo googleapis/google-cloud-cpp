@@ -37,20 +37,20 @@ CloudCatalogTracingConnection::ListServices(
     google::cloud::billing::v1::ListServicesRequest request) {
   auto span =
       internal::MakeSpan("billing::CloudCatalogConnection::ListServices");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::billing::v1::Service>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::billing::v1::Sku>
 CloudCatalogTracingConnection::ListSkus(
     google::cloud::billing::v1::ListSkusRequest request) {
   auto span = internal::MakeSpan("billing::CloudCatalogConnection::ListSkus");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListSkus(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::billing::v1::Sku>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

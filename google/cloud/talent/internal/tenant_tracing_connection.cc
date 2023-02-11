@@ -71,10 +71,10 @@ TenantServiceTracingConnection::ListTenants(
     google::cloud::talent::v4::ListTenantsRequest request) {
   auto span =
       internal::MakeSpan("talent::TenantServiceConnection::ListTenants");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTenants(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::talent::v4::Tenant>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

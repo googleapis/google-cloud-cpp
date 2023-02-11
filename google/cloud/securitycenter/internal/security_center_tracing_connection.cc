@@ -153,11 +153,11 @@ SecurityCenterTracingConnection::GroupAssets(
     google::cloud::securitycenter::v1::GroupAssetsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::GroupAssets");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->GroupAssets(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::securitycenter::v1::GroupResult>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::securitycenter::v1::GroupResult>(std::move(span),
+                                                      std::move(sr));
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
@@ -165,11 +165,11 @@ SecurityCenterTracingConnection::GroupFindings(
     google::cloud::securitycenter::v1::GroupFindingsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::GroupFindings");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->GroupFindings(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::securitycenter::v1::GroupResult>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::securitycenter::v1::GroupResult>(std::move(span),
+                                                      std::move(sr));
 }
 
 StreamRange<
@@ -178,11 +178,11 @@ SecurityCenterTracingConnection::ListAssets(
     google::cloud::securitycenter::v1::ListAssetsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::ListAssets");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAssets(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<
@@ -191,11 +191,11 @@ SecurityCenterTracingConnection::ListFindings(
     google::cloud::securitycenter::v1::ListFindingsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::ListFindings");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListFindings(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::securitycenter::v1::ListFindingsResponse::
-          ListFindingsResult>(std::move(span), std::move(scope), std::move(sr));
+          ListFindingsResult>(std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::securitycenter::v1::MuteConfig>
@@ -203,11 +203,11 @@ SecurityCenterTracingConnection::ListMuteConfigs(
     google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::ListMuteConfigs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMuteConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::securitycenter::v1::MuteConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::securitycenter::v1::MuteConfig>(std::move(span),
+                                                     std::move(sr));
 }
 
 StreamRange<google::cloud::securitycenter::v1::NotificationConfig>
@@ -215,11 +215,11 @@ SecurityCenterTracingConnection::ListNotificationConfigs(
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::ListNotificationConfigs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNotificationConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::securitycenter::v1::NotificationConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::securitycenter::v1::NotificationConfig>(std::move(span),
+                                                             std::move(sr));
 }
 
 StreamRange<google::cloud::securitycenter::v1::Source>
@@ -227,11 +227,11 @@ SecurityCenterTracingConnection::ListSources(
     google::cloud::securitycenter::v1::ListSourcesRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::ListSources");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListSources(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::securitycenter::v1::Source>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::securitycenter::v1::Source>(std::move(span),
+                                                 std::move(sr));
 }
 
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
@@ -377,11 +377,11 @@ SecurityCenterTracingConnection::ListBigQueryExports(
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest request) {
   auto span = internal::MakeSpan(
       "securitycenter::SecurityCenterConnection::ListBigQueryExports");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListBigQueryExports(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::securitycenter::v1::BigQueryExport>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::securitycenter::v1::BigQueryExport>(std::move(span),
+                                                         std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

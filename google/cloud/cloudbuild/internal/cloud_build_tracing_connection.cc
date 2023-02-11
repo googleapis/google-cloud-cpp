@@ -51,11 +51,10 @@ CloudBuildTracingConnection::ListBuilds(
     google::devtools::cloudbuild::v1::ListBuildsRequest request) {
   auto span =
       internal::MakeSpan("cloudbuild::CloudBuildConnection::ListBuilds");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListBuilds(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::devtools::cloudbuild::v1::Build>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::devtools::cloudbuild::v1::Build>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
@@ -103,11 +102,11 @@ CloudBuildTracingConnection::ListBuildTriggers(
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest request) {
   auto span =
       internal::MakeSpan("cloudbuild::CloudBuildConnection::ListBuildTriggers");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListBuildTriggers(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::devtools::cloudbuild::v1::BuildTrigger>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::devtools::cloudbuild::v1::BuildTrigger>(std::move(span),
+                                                      std::move(sr));
 }
 
 Status CloudBuildTracingConnection::DeleteBuildTrigger(
@@ -178,11 +177,11 @@ CloudBuildTracingConnection::ListWorkerPools(
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request) {
   auto span =
       internal::MakeSpan("cloudbuild::CloudBuildConnection::ListWorkerPools");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListWorkerPools(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::devtools::cloudbuild::v1::WorkerPool>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::devtools::cloudbuild::v1::WorkerPool>(std::move(span),
+                                                    std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

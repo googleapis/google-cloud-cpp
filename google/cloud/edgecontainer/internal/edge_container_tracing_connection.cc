@@ -37,11 +37,11 @@ EdgeContainerTracingConnection::ListClusters(
     google::cloud::edgecontainer::v1::ListClustersRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer::EdgeContainerConnection::ListClusters");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListClusters(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::Cluster>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::Cluster>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
@@ -86,11 +86,11 @@ EdgeContainerTracingConnection::ListNodePools(
     google::cloud::edgecontainer::v1::ListNodePoolsRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer::EdgeContainerConnection::ListNodePools");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListNodePools(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::NodePool>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::NodePool>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
@@ -125,11 +125,11 @@ EdgeContainerTracingConnection::ListMachines(
     google::cloud::edgecontainer::v1::ListMachinesRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer::EdgeContainerConnection::ListMachines");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMachines(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::Machine>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::Machine>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
@@ -146,11 +146,11 @@ EdgeContainerTracingConnection::ListVpnConnections(
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request) {
   auto span = internal::MakeSpan(
       "edgecontainer::EdgeContainerConnection::ListVpnConnections");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListVpnConnections(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::edgecontainer::v1::VpnConnection>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::edgecontainer::v1::VpnConnection>(std::move(span),
+                                                       std::move(sr));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>

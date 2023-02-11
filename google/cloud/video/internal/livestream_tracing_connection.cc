@@ -43,11 +43,11 @@ LivestreamServiceTracingConnection::ListChannels(
     google::cloud::video::livestream::v1::ListChannelsRequest request) {
   auto span =
       internal::MakeSpan("video::LivestreamServiceConnection::ListChannels");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListChannels(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::livestream::v1::Channel>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::livestream::v1::Channel>(std::move(span),
+                                                     std::move(sr));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
@@ -94,11 +94,11 @@ LivestreamServiceTracingConnection::ListInputs(
     google::cloud::video::livestream::v1::ListInputsRequest request) {
   auto span =
       internal::MakeSpan("video::LivestreamServiceConnection::ListInputs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInputs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::livestream::v1::Input>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::livestream::v1::Input>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Input>
@@ -136,11 +136,11 @@ LivestreamServiceTracingConnection::ListEvents(
     google::cloud::video::livestream::v1::ListEventsRequest request) {
   auto span =
       internal::MakeSpan("video::LivestreamServiceConnection::ListEvents");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEvents(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::livestream::v1::Event>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::livestream::v1::Event>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>

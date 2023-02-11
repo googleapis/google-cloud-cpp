@@ -59,10 +59,10 @@ StreamRange<google::cloud::dataproc::v1::Job>
 JobControllerTracingConnection::ListJobs(
     google::cloud::dataproc::v1::ListJobsRequest request) {
   auto span = internal::MakeSpan("dataproc::JobControllerConnection::ListJobs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Job>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job>

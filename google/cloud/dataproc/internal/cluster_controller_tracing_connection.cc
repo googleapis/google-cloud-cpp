@@ -76,10 +76,10 @@ ClusterControllerTracingConnection::ListClusters(
     google::cloud::dataproc::v1::ListClustersRequest request) {
   auto span =
       internal::MakeSpan("dataproc::ClusterControllerConnection::ListClusters");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListClusters(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dataproc::v1::Cluster>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>

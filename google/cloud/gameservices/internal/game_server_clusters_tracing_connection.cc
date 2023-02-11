@@ -40,11 +40,11 @@ GameServerClustersServiceTracingConnection::ListGameServerClusters(
   auto span = internal::MakeSpan(
       "gameservices::GameServerClustersServiceConnection::"
       "ListGameServerClusters");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListGameServerClusters(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::gaming::v1::GameServerCluster>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::gaming::v1::GameServerCluster>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerCluster>

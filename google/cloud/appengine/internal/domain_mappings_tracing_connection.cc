@@ -37,10 +37,10 @@ DomainMappingsTracingConnection::ListDomainMappings(
     google::appengine::v1::ListDomainMappingsRequest request) {
   auto span = internal::MakeSpan(
       "appengine::DomainMappingsConnection::ListDomainMappings");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDomainMappings(std::move(request));
   return internal::MakeTracedStreamRange<google::appengine::v1::DomainMapping>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::appengine::v1::DomainMapping>

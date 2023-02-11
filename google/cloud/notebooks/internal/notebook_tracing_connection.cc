@@ -37,11 +37,10 @@ NotebookServiceTracingConnection::ListInstances(
     google::cloud::notebooks::v1::ListInstancesRequest request) {
   auto span =
       internal::MakeSpan("notebooks::NotebookServiceConnection::ListInstances");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Instance>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::notebooks::v1::Instance>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Instance>
@@ -186,11 +185,11 @@ NotebookServiceTracingConnection::ListEnvironments(
     google::cloud::notebooks::v1::ListEnvironmentsRequest request) {
   auto span = internal::MakeSpan(
       "notebooks::NotebookServiceConnection::ListEnvironments");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEnvironments(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Environment>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::notebooks::v1::Environment>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Environment>
@@ -219,11 +218,10 @@ NotebookServiceTracingConnection::ListSchedules(
     google::cloud::notebooks::v1::ListSchedulesRequest request) {
   auto span =
       internal::MakeSpan("notebooks::NotebookServiceConnection::ListSchedules");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListSchedules(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Schedule>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::notebooks::v1::Schedule>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Schedule>
@@ -258,11 +256,10 @@ NotebookServiceTracingConnection::ListExecutions(
     google::cloud::notebooks::v1::ListExecutionsRequest request) {
   auto span = internal::MakeSpan(
       "notebooks::NotebookServiceConnection::ListExecutions");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListExecutions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::notebooks::v1::Execution>(std::move(span),
-                                               std::move(scope), std::move(sr));
+      google::cloud::notebooks::v1::Execution>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Execution>

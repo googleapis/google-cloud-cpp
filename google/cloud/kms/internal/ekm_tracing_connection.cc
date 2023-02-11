@@ -37,10 +37,10 @@ EkmServiceTracingConnection::ListEkmConnections(
     google::cloud::kms::v1::ListEkmConnectionsRequest request) {
   auto span =
       internal::MakeSpan("kms::EkmServiceConnection::ListEkmConnections");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEkmConnections(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::EkmConnection>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>

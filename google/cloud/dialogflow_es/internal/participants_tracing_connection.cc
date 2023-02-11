@@ -55,11 +55,11 @@ ParticipantsTracingConnection::ListParticipants(
     google::cloud::dialogflow::v2::ListParticipantsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ParticipantsConnection::ListParticipants");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListParticipants(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Participant>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::Participant>(std::move(span),
+                                                  std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>

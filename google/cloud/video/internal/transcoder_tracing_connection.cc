@@ -46,11 +46,11 @@ TranscoderServiceTracingConnection::ListJobs(
     google::cloud::video::transcoder::v1::ListJobsRequest request) {
   auto span =
       internal::MakeSpan("video::TranscoderServiceConnection::ListJobs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::transcoder::v1::Job>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::transcoder::v1::Job>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
@@ -84,11 +84,11 @@ TranscoderServiceTracingConnection::ListJobTemplates(
     google::cloud::video::transcoder::v1::ListJobTemplatesRequest request) {
   auto span = internal::MakeSpan(
       "video::TranscoderServiceConnection::ListJobTemplates");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListJobTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::video::transcoder::v1::JobTemplate>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::video::transcoder::v1::JobTemplate>(std::move(span),
+                                                         std::move(sr));
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>

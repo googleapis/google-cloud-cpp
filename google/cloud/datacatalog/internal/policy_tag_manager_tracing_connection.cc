@@ -63,11 +63,10 @@ PolicyTagManagerTracingConnection::ListTaxonomies(
     google::cloud::datacatalog::v1::ListTaxonomiesRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog::PolicyTagManagerConnection::ListTaxonomies");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTaxonomies(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::datacatalog::v1::Taxonomy>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::datacatalog::v1::Taxonomy>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
@@ -110,11 +109,11 @@ PolicyTagManagerTracingConnection::ListPolicyTags(
     google::cloud::datacatalog::v1::ListPolicyTagsRequest request) {
   auto span = internal::MakeSpan(
       "datacatalog::PolicyTagManagerConnection::ListPolicyTags");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListPolicyTags(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::datacatalog::v1::PolicyTag>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::datacatalog::v1::PolicyTag>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>

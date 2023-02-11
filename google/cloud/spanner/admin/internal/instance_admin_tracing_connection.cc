@@ -37,11 +37,11 @@ InstanceAdminTracingConnection::ListInstanceConfigs(
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::ListInstanceConfigs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInstanceConfigs(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::spanner::admin::instance::v1::InstanceConfig>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::spanner::admin::instance::v1::InstanceConfig>(std::move(span),
+                                                            std::move(sr));
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
@@ -83,10 +83,10 @@ InstanceAdminTracingConnection::ListInstanceConfigOperations(
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::ListInstanceConfigOperations");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInstanceConfigOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::spanner::admin::instance::v1::Instance>
@@ -94,11 +94,11 @@ InstanceAdminTracingConnection::ListInstances(
     google::spanner::admin::instance::v1::ListInstancesRequest request) {
   auto span = internal::MakeSpan(
       "spanner_admin::InstanceAdminConnection::ListInstances");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::spanner::admin::instance::v1::Instance>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::spanner::admin::instance::v1::Instance>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>

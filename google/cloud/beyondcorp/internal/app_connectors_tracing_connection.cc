@@ -38,11 +38,11 @@ AppConnectorsServiceTracingConnection::ListAppConnectors(
         request) {
   auto span = internal::MakeSpan(
       "beyondcorp::AppConnectorsServiceConnection::ListAppConnectors");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAppConnectors(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>

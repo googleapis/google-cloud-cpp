@@ -62,11 +62,11 @@ DocumentProcessorServiceTracingConnection::ListProcessorTypes(
     google::cloud::documentai::v1::ListProcessorTypesRequest request) {
   auto span = internal::MakeSpan(
       "documentai::DocumentProcessorServiceConnection::ListProcessorTypes");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProcessorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::ProcessorType>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::documentai::v1::ProcessorType>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
@@ -83,11 +83,10 @@ DocumentProcessorServiceTracingConnection::ListProcessors(
     google::cloud::documentai::v1::ListProcessorsRequest request) {
   auto span = internal::MakeSpan(
       "documentai::DocumentProcessorServiceConnection::ListProcessors");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProcessors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::Processor>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::documentai::v1::Processor>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
@@ -113,11 +112,11 @@ DocumentProcessorServiceTracingConnection::ListProcessorVersions(
     google::cloud::documentai::v1::ListProcessorVersionsRequest request) {
   auto span = internal::MakeSpan(
       "documentai::DocumentProcessorServiceConnection::ListProcessorVersions");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProcessorVersions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::documentai::v1::ProcessorVersion>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::documentai::v1::ProcessorVersion>(std::move(span),
+                                                       std::move(sr));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>

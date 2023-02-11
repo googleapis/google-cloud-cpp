@@ -61,10 +61,10 @@ AgentsTracingConnection::SearchAgents(
     google::cloud::dialogflow::v2::SearchAgentsRequest request) {
   auto span =
       internal::MakeSpan("dialogflow_es::AgentsConnection::SearchAgents");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->SearchAgents(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::dialogflow::v2::Agent>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsTracingConnection::TrainAgent(

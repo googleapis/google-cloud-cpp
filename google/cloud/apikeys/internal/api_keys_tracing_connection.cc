@@ -41,10 +41,10 @@ ApiKeysTracingConnection::CreateKey(
 StreamRange<google::api::apikeys::v2::Key> ApiKeysTracingConnection::ListKeys(
     google::api::apikeys::v2::ListKeysRequest request) {
   auto span = internal::MakeSpan("apikeys::ApiKeysConnection::ListKeys");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListKeys(std::move(request));
   return internal::MakeTracedStreamRange<google::api::apikeys::v2::Key>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingConnection::GetKey(

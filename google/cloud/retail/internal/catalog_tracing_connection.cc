@@ -37,10 +37,10 @@ CatalogServiceTracingConnection::ListCatalogs(
     google::cloud::retail::v2::ListCatalogsRequest request) {
   auto span =
       internal::MakeSpan("retail::CatalogServiceConnection::ListCatalogs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCatalogs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::retail::v2::Catalog>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::retail::v2::Catalog>

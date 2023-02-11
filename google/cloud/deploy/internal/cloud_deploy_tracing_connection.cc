@@ -37,11 +37,11 @@ CloudDeployTracingConnection::ListDeliveryPipelines(
     google::cloud::deploy::v1::ListDeliveryPipelinesRequest request) {
   auto span = internal::MakeSpan(
       "deploy::CloudDeployConnection::ListDeliveryPipelines");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDeliveryPipelines(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::deploy::v1::DeliveryPipeline>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::deploy::v1::DeliveryPipeline>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
@@ -75,10 +75,10 @@ StreamRange<google::cloud::deploy::v1::Target>
 CloudDeployTracingConnection::ListTargets(
     google::cloud::deploy::v1::ListTargetsRequest request) {
   auto span = internal::MakeSpan("deploy::CloudDeployConnection::ListTargets");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTargets(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::Target>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::Target>
@@ -111,10 +111,10 @@ StreamRange<google::cloud::deploy::v1::Release>
 CloudDeployTracingConnection::ListReleases(
     google::cloud::deploy::v1::ListReleasesRequest request) {
   auto span = internal::MakeSpan("deploy::CloudDeployConnection::ListReleases");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListReleases(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::Release>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::Release>
@@ -153,10 +153,10 @@ StreamRange<google::cloud::deploy::v1::Rollout>
 CloudDeployTracingConnection::ListRollouts(
     google::cloud::deploy::v1::ListRolloutsRequest request) {
   auto span = internal::MakeSpan("deploy::CloudDeployConnection::ListRollouts");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRollouts(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::Rollout>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::Rollout>
@@ -185,10 +185,10 @@ StreamRange<google::cloud::deploy::v1::JobRun>
 CloudDeployTracingConnection::ListJobRuns(
     google::cloud::deploy::v1::ListJobRunsRequest request) {
   auto span = internal::MakeSpan("deploy::CloudDeployConnection::ListJobRuns");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListJobRuns(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::deploy::v1::JobRun>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::deploy::v1::JobRun>

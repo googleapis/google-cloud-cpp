@@ -37,11 +37,11 @@ ConnectionServiceTracingConnection::ListConnections(
     google::cloud::apigeeconnect::v1::ListConnectionsRequest request) {
   auto span = internal::MakeSpan(
       "apigeeconnect::ConnectionServiceConnection::ListConnections");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListConnections(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::apigeeconnect::v1::Connection>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::apigeeconnect::v1::Connection>(std::move(span),
+                                                    std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

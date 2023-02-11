@@ -58,11 +58,11 @@ MigrationServiceTracingConnection::ListMigrationWorkflows(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::MigrationServiceConnection::ListMigrationWorkflows");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMigrationWorkflows(std::move(request));
   return internal::MakeTracedStreamRange<
       google::cloud::bigquery::migration::v2::MigrationWorkflow>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 Status MigrationServiceTracingConnection::DeleteMigrationWorkflow(
@@ -99,11 +99,11 @@ MigrationServiceTracingConnection::ListMigrationSubtasks(
         request) {
   auto span = internal::MakeSpan(
       "bigquery::MigrationServiceConnection::ListMigrationSubtasks");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMigrationSubtasks(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::bigquery::migration::v2::MigrationSubtask>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::bigquery::migration::v2::MigrationSubtask>(std::move(span),
+                                                                std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

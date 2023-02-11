@@ -264,10 +264,10 @@ $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
 StreamRange<$range_output_type$>
 $tracing_connection_class_name$::$method_name$($request_type$ request) {
   auto span = internal::MakeSpan("$product_namespace$::$connection_class_name$::$method_name$");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->$method_name$(std::move(request));
   return internal::MakeTracedStreamRange<$range_output_type$>(
-        std::move(span), std::move(scope), std::move(sr));
+        std::move(span), std::move(sr));
 }
 )""";
   }

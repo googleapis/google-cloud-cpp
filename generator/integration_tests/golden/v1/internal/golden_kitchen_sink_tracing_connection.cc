@@ -56,10 +56,10 @@ GoldenKitchenSinkTracingConnection::WriteLogEntries(google::test::admin::databas
 StreamRange<std::string>
 GoldenKitchenSinkTracingConnection::ListLogs(google::test::admin::database::v1::ListLogsRequest request) {
   auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ListLogs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListLogs(std::move(request));
   return internal::MakeTracedStreamRange<std::string>(
-        std::move(span), std::move(scope), std::move(sr));
+        std::move(span), std::move(sr));
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>

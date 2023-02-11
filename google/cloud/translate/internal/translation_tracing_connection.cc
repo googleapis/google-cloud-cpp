@@ -93,11 +93,10 @@ TranslationServiceTracingConnection::ListGlossaries(
     google::cloud::translation::v3::ListGlossariesRequest request) {
   auto span = internal::MakeSpan(
       "translate::TranslationServiceConnection::ListGlossaries");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListGlossaries(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::translation::v3::Glossary>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::translation::v3::Glossary>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::translation::v3::Glossary>

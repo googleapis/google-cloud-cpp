@@ -82,10 +82,10 @@ StreamRange<google::cloud::talent::v4::Job>
 JobServiceTracingConnection::ListJobs(
     google::cloud::talent::v4::ListJobsRequest request) {
   auto span = internal::MakeSpan("talent::JobServiceConnection::ListJobs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::talent::v4::Job>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>

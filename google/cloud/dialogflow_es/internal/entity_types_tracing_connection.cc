@@ -37,11 +37,11 @@ EntityTypesTracingConnection::ListEntityTypes(
     google::cloud::dialogflow::v2::ListEntityTypesRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::EntityTypesConnection::ListEntityTypes");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEntityTypes(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::EntityType>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::EntityType>(std::move(span),
+                                                 std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>

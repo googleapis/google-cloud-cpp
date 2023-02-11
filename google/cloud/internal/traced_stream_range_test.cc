@@ -28,7 +28,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
@@ -37,18 +36,17 @@ using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 
-struct StringOption {
-  using Type = std::string;
-};
+StreamRange<int> MakeTestStreamRange(StreamRange<int> sr) {
+  auto span = MakeSpan("span");
+  auto scope = opentelemetry::trace::Scope(span);
+  return MakeTracedStreamRange(std::move(span), std::move(sr));
+}
 
 TEST(TracedStreamRange, Success) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto span = MakeSpan("span");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = mocks::MakeStreamRange<int>({1, 2, 3});
-  auto traced =
-      MakeTracedStreamRange(std::move(span), std::move(scope), std::move(sr));
+  auto traced = MakeTestStreamRange(std::move(sr));
 
   std::vector<int> actual;
   for (auto& v : traced) {
@@ -56,7 +54,6 @@ TEST(TracedStreamRange, Success) {
     actual.push_back(*std::move(v));
   }
   EXPECT_THAT(actual, ElementsAre(1, 2, 3));
-  EXPECT_FALSE(ThereIsAnActiveSpan());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -68,15 +65,11 @@ TEST(TracedStreamRange, Success) {
 TEST(TracedStreamRange, Error) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto span = MakeSpan("span");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = mocks::MakeStreamRange<int>({}, AbortedError("fail"));
-  auto traced =
-      MakeTracedStreamRange(std::move(span), std::move(scope), std::move(sr));
+  auto traced = MakeTestStreamRange(std::move(sr));
   for (auto const& v : traced) {
     EXPECT_THAT(v, StatusIs(StatusCode::kAborted));
   }
-  EXPECT_FALSE(ThereIsAnActiveSpan());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -89,11 +82,8 @@ TEST(TracedStreamRange, Error) {
 TEST(TracedStreamRange, SpanEndsWhenRangeEnds) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto span = MakeSpan("span");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
   auto sr = mocks::MakeStreamRange<int>({1, 2, 3});
-  auto traced = MakeTracedStreamRange<int>(std::move(span), std::move(scope),
-                                           std::move(sr));
+  auto traced = MakeTestStreamRange(std::move(sr));
 
   for (auto const& v : traced) {
     EXPECT_STATUS_OK(v);
@@ -105,43 +95,12 @@ TEST(TracedStreamRange, SpanEndsWhenRangeEnds) {
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
 }
 
-TEST(TracedStreamRange, SpanActiveDuringSubOperations) {
-  auto span = MakeSpan("span");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
-
-  ::testing::MockFunction<absl::variant<Status, int>()> mock;
-  EXPECT_CALL(mock, Call)
-      .WillOnce([span] {
-        EXPECT_THAT(span, IsActive());
-        return 1;
-      })
-      .WillOnce([span] {
-        EXPECT_THAT(span, IsActive());
-        return 2;
-      })
-      .WillOnce([span] {
-        EXPECT_THAT(span, IsActive());
-        return Status();
-      });
-
-  auto sr = MakeStreamRange<int>(mock.AsStdFunction());
-  auto traced = MakeTracedStreamRange(span, std::move(scope), std::move(sr));
-  for (auto const& v : traced) {
-    EXPECT_STATUS_OK(v);
-    EXPECT_THAT(span, IsActive());
-  }
-  EXPECT_FALSE(ThereIsAnActiveSpan());
-}
-
 TEST(TracedStreamRange, SpanEndsWithSuccessOnUnfinishedRange) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   {
-    auto span = MakeSpan("span");
-    auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
     auto sr = mocks::MakeStreamRange<int>({1, 2, 3});
-    auto traced =
-        MakeTracedStreamRange(std::move(span), std::move(scope), std::move(sr));
+    auto traced = MakeTestStreamRange(std::move(sr));
   }
   EXPECT_FALSE(ThereIsAnActiveSpan());
 
@@ -150,6 +109,20 @@ TEST(TracedStreamRange, SpanEndsWithSuccessOnUnfinishedRange) {
       spans, ElementsAre(
                  AllOf(SpanNamed("span"),
                        SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
+}
+
+TEST(TracedStreamRange, SpanInactiveWhileIterating) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto sr = mocks::MakeStreamRange<int>({1, 2, 3});
+  auto traced = MakeTestStreamRange(std::move(sr));
+
+  EXPECT_FALSE(ThereIsAnActiveSpan());
+  for (auto const& v : traced) {
+    EXPECT_STATUS_OK(v);
+    EXPECT_FALSE(ThereIsAnActiveSpan());
+  }
+  EXPECT_FALSE(ThereIsAnActiveSpan());
 }
 
 }  // namespace

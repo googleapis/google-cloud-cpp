@@ -36,10 +36,10 @@ StreamRange<google::cloud::ids::v1::Endpoint>
 IDSTracingConnection::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {
   auto span = internal::MakeSpan("ids::IDSConnection::ListEndpoints");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::ids::v1::Endpoint>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingConnection::GetEndpoint(

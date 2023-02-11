@@ -37,11 +37,10 @@ MetricServiceTracingConnection::ListMonitoredResourceDescriptors(
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
   auto span = internal::MakeSpan(
       "monitoring::MetricServiceConnection::ListMonitoredResourceDescriptors");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::api::MonitoredResourceDescriptor>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::api::MonitoredResourceDescriptor>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
@@ -60,10 +59,10 @@ MetricServiceTracingConnection::ListMetricDescriptors(
     google::monitoring::v3::ListMetricDescriptorsRequest request) {
   auto span = internal::MakeSpan(
       "monitoring::MetricServiceConnection::ListMetricDescriptors");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMetricDescriptors(std::move(request));
   return internal::MakeTracedStreamRange<google::api::MetricDescriptor>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::api::MetricDescriptor>
@@ -97,10 +96,10 @@ MetricServiceTracingConnection::ListTimeSeries(
     google::monitoring::v3::ListTimeSeriesRequest request) {
   auto span =
       internal::MakeSpan("monitoring::MetricServiceConnection::ListTimeSeries");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListTimeSeries(std::move(request));
   return internal::MakeTracedStreamRange<google::monitoring::v3::TimeSeries>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 Status MetricServiceTracingConnection::CreateTimeSeries(

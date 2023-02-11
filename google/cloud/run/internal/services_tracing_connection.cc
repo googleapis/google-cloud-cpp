@@ -49,10 +49,10 @@ StreamRange<google::cloud::run::v2::Service>
 ServicesTracingConnection::ListServices(
     google::cloud::run::v2::ListServicesRequest request) {
   auto span = internal::MakeSpan("run::ServicesConnection::ListServices");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServices(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::run::v2::Service>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::cloud::run::v2::Service>>

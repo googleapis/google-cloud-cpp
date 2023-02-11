@@ -38,10 +38,10 @@ ManagedNotebookServiceTracingConnection::ListRuntimes(
     google::cloud::notebooks::v1::ListRuntimesRequest request) {
   auto span = internal::MakeSpan(
       "notebooks::ManagedNotebookServiceConnection::ListRuntimes");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRuntimes(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::notebooks::v1::Runtime>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>

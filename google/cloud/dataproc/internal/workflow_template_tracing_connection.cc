@@ -79,11 +79,11 @@ WorkflowTemplateServiceTracingConnection::ListWorkflowTemplates(
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest request) {
   auto span = internal::MakeSpan(
       "dataproc::WorkflowTemplateServiceConnection::ListWorkflowTemplates");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListWorkflowTemplates(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dataproc::v1::WorkflowTemplate>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dataproc::v1::WorkflowTemplate>(std::move(span),
+                                                     std::move(sr));
 }
 
 Status WorkflowTemplateServiceTracingConnection::DeleteWorkflowTemplate(

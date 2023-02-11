@@ -37,10 +37,10 @@ KeyManagementServiceTracingConnection::ListKeyRings(
     google::cloud::kms::v1::ListKeyRingsRequest request) {
   auto span =
       internal::MakeSpan("kms::KeyManagementServiceConnection::ListKeyRings");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListKeyRings(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::KeyRing>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
@@ -48,10 +48,10 @@ KeyManagementServiceTracingConnection::ListCryptoKeys(
     google::cloud::kms::v1::ListCryptoKeysRequest request) {
   auto span =
       internal::MakeSpan("kms::KeyManagementServiceConnection::ListCryptoKeys");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCryptoKeys(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::CryptoKey>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
@@ -59,11 +59,10 @@ KeyManagementServiceTracingConnection::ListCryptoKeyVersions(
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) {
   auto span = internal::MakeSpan(
       "kms::KeyManagementServiceConnection::ListCryptoKeyVersions");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCryptoKeyVersions(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::kms::v1::CryptoKeyVersion>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::kms::v1::CryptoKeyVersion>(std::move(span), std::move(sr));
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
@@ -71,10 +70,10 @@ KeyManagementServiceTracingConnection::ListImportJobs(
     google::cloud::kms::v1::ListImportJobsRequest request) {
   auto span =
       internal::MakeSpan("kms::KeyManagementServiceConnection::ListImportJobs");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListImportJobs(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::kms::v1::ImportJob>(
-      std::move(span), std::move(scope), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>

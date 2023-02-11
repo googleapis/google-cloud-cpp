@@ -46,11 +46,11 @@ ConversationsTracingConnection::ListConversations(
     google::cloud::dialogflow::v2::ListConversationsRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationsConnection::ListConversations");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListConversations(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Conversation>(
-      std::move(span), std::move(scope), std::move(sr));
+      google::cloud::dialogflow::v2::Conversation>(std::move(span),
+                                                   std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
@@ -76,11 +76,10 @@ ConversationsTracingConnection::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::ConversationsConnection::ListMessages");
-  auto scope = absl::make_unique<opentelemetry::trace::Scope>(span);
+  auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMessages(std::move(request));
   return internal::MakeTracedStreamRange<
-      google::cloud::dialogflow::v2::Message>(std::move(span), std::move(scope),
-                                              std::move(sr));
+      google::cloud::dialogflow::v2::Message>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
