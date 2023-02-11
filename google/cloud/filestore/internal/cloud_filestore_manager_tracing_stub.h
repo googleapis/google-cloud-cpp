@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_STUB_H
 
 #include "google/cloud/filestore/internal/cloud_filestore_manager_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -110,6 +111,15 @@ class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<CloudFilestoreManagerStub> MakeCloudFilestoreManagerTracingStub(
+    std::shared_ptr<CloudFilestoreManagerStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal

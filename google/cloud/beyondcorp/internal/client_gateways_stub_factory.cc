@@ -22,9 +22,11 @@
 #include "google/cloud/beyondcorp/internal/client_gateways_logging_decorator.h"
 #include "google/cloud/beyondcorp/internal/client_gateways_metadata_decorator.h"
 #include "google/cloud/beyondcorp/internal/client_gateways_stub.h"
+#include "google/cloud/beyondcorp/internal/client_gateways_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.grpc.pb.h>
@@ -59,6 +61,9 @@ CreateDefaultClientGatewaysServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<ClientGatewaysServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeClientGatewaysServiceTracingStub(std::move(stub));
   }
   return stub;
 }

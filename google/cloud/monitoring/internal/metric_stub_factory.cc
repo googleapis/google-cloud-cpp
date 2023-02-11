@@ -21,9 +21,11 @@
 #include "google/cloud/monitoring/internal/metric_logging_decorator.h"
 #include "google/cloud/monitoring/internal/metric_metadata_decorator.h"
 #include "google/cloud/monitoring/internal/metric_stub.h"
+#include "google/cloud/monitoring/internal/metric_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/monitoring/v3/metric_service.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<MetricServiceStub> CreateDefaultMetricServiceStub(
     stub = std::make_shared<MetricServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeMetricServiceTracingStub(std::move(stub));
   }
   return stub;
 }

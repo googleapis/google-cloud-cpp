@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INTERNAL_DOMAIN_MAPPINGS_TRACING_STUB_H
 
 #include "google/cloud/appengine/internal/domain_mappings_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -77,6 +78,15 @@ class DomainMappingsTracingStub : public DomainMappingsStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<DomainMappingsStub> MakeDomainMappingsTracingStub(
+    std::shared_ptr<DomainMappingsStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

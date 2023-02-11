@@ -21,9 +21,11 @@
 #include "google/cloud/monitoring/internal/alert_policy_logging_decorator.h"
 #include "google/cloud/monitoring/internal/alert_policy_metadata_decorator.h"
 #include "google/cloud/monitoring/internal/alert_policy_stub.h"
+#include "google/cloud/monitoring/internal/alert_policy_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/monitoring/v3/alert_service.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<AlertPolicyServiceStub> CreateDefaultAlertPolicyServiceStub(
     stub = std::make_shared<AlertPolicyServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAlertPolicyServiceTracingStub(std::move(stub));
   }
   return stub;
 }

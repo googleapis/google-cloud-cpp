@@ -21,9 +21,11 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_logging_decorator.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_metadata_decorator.h"
 #include "google/cloud/spanner/admin/internal/instance_admin_stub.h"
+#include "google/cloud/spanner/admin/internal/instance_admin_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
     stub = std::make_shared<InstanceAdminLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeInstanceAdminTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -21,9 +21,11 @@
 #include "google/cloud/containeranalysis/internal/grafeas_logging_decorator.h"
 #include "google/cloud/containeranalysis/internal/grafeas_metadata_decorator.h"
 #include "google/cloud/containeranalysis/internal/grafeas_stub.h"
+#include "google/cloud/containeranalysis/internal/grafeas_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <grafeas/v1/grafeas.grpc.pb.h>
@@ -53,6 +55,9 @@ std::shared_ptr<GrafeasStub> CreateDefaultGrafeasStub(
     stub = std::make_shared<GrafeasLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeGrafeasTracingStub(std::move(stub));
   }
   return stub;
 }

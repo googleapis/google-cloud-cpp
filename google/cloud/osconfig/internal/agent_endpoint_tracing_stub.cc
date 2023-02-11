@@ -18,7 +18,6 @@
 
 #include "google/cloud/osconfig/internal/agent_endpoint_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -112,6 +111,15 @@ AgentEndpointServiceTracingStub::ReportInventory(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<AgentEndpointServiceStub> MakeAgentEndpointServiceTracingStub(
+    std::shared_ptr<AgentEndpointServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<AgentEndpointServiceTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal

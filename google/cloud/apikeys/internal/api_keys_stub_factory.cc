@@ -21,9 +21,11 @@
 #include "google/cloud/apikeys/internal/api_keys_logging_decorator.h"
 #include "google/cloud/apikeys/internal/api_keys_metadata_decorator.h"
 #include "google/cloud/apikeys/internal/api_keys_stub.h"
+#include "google/cloud/apikeys/internal/api_keys_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/api/apikeys/v2/apikeys.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<ApiKeysStub> CreateDefaultApiKeysStub(
     stub = std::make_shared<ApiKeysLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeApiKeysTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -21,9 +21,11 @@
 #include "google/cloud/serviceusage/internal/service_usage_logging_decorator.h"
 #include "google/cloud/serviceusage/internal/service_usage_metadata_decorator.h"
 #include "google/cloud/serviceusage/internal/service_usage_stub.h"
+#include "google/cloud/serviceusage/internal/service_usage_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<ServiceUsageStub> CreateDefaultServiceUsageStub(
     stub = std::make_shared<ServiceUsageLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeServiceUsageTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -21,9 +21,11 @@
 #include "google/cloud/composer/internal/image_versions_logging_decorator.h"
 #include "google/cloud/composer/internal/image_versions_metadata_decorator.h"
 #include "google/cloud/composer/internal/image_versions_stub.h"
+#include "google/cloud/composer/internal/image_versions_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<ImageVersionsStub> CreateDefaultImageVersionsStub(
     stub = std::make_shared<ImageVersionsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeImageVersionsTracingStub(std::move(stub));
   }
   return stub;
 }

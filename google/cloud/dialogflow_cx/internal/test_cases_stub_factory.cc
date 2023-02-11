@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_cx/internal/test_cases_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/test_cases_stub.h"
+#include "google/cloud/dialogflow_cx/internal/test_cases_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/test_case.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<TestCasesStub> CreateDefaultTestCasesStub(
     stub = std::make_shared<TestCasesLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeTestCasesTracingStub(std::move(stub));
   }
   return stub;
 }

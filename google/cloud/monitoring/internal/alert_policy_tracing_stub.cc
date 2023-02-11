@@ -18,7 +18,6 @@
 
 #include "google/cloud/monitoring/internal/alert_policy_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -91,6 +90,15 @@ AlertPolicyServiceTracingStub::UpdateAlertPolicy(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<AlertPolicyServiceStub> MakeAlertPolicyServiceTracingStub(
+    std::shared_ptr<AlertPolicyServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<AlertPolicyServiceTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

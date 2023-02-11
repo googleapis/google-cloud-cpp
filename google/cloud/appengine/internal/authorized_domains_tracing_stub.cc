@@ -18,7 +18,6 @@
 
 #include "google/cloud/appengine/internal/authorized_domains_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -44,6 +43,15 @@ AuthorizedDomainsTracingStub::ListAuthorizedDomains(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<AuthorizedDomainsStub> MakeAuthorizedDomainsTracingStub(
+    std::shared_ptr<AuthorizedDomainsStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<AuthorizedDomainsTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal

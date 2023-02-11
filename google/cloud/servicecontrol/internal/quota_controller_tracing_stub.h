@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_INTERNAL_QUOTA_CONTROLLER_TRACING_STUB_H
 
 #include "google/cloud/servicecontrol/internal/quota_controller_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -46,6 +47,15 @@ class QuotaControllerTracingStub : public QuotaControllerStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<QuotaControllerStub> MakeQuotaControllerTracingStub(
+    std::shared_ptr<QuotaControllerStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal

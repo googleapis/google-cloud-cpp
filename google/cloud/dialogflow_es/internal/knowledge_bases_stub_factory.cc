@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_logging_decorator.h"
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_metadata_decorator.h"
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_stub.h"
+#include "google/cloud/dialogflow_es/internal/knowledge_bases_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<KnowledgeBasesStub> CreateDefaultKnowledgeBasesStub(
     stub = std::make_shared<KnowledgeBasesLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeKnowledgeBasesTracingStub(std::move(stub));
   }
   return stub;
 }

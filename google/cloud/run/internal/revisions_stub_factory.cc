@@ -21,9 +21,11 @@
 #include "google/cloud/run/internal/revisions_logging_decorator.h"
 #include "google/cloud/run/internal/revisions_metadata_decorator.h"
 #include "google/cloud/run/internal/revisions_stub.h"
+#include "google/cloud/run/internal/revisions_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/run/v2/revision.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<RevisionsStub> CreateDefaultRevisionsStub(
     stub = std::make_shared<RevisionsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeRevisionsTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -21,9 +21,11 @@
 #include "google/cloud/dataproc/internal/autoscaling_policy_logging_decorator.h"
 #include "google/cloud/dataproc/internal/autoscaling_policy_metadata_decorator.h"
 #include "google/cloud/dataproc/internal/autoscaling_policy_stub.h"
+#include "google/cloud/dataproc/internal/autoscaling_policy_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
@@ -57,6 +59,9 @@ CreateDefaultAutoscalingPolicyServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<AutoscalingPolicyServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAutoscalingPolicyServiceTracingStub(std::move(stub));
   }
   return stub;
 }

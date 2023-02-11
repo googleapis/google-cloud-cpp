@@ -18,7 +18,6 @@
 
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -272,6 +271,15 @@ future<Status> BigtableInstanceAdminTracingStub::AsyncCancelOperation(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<BigtableInstanceAdminStub> MakeBigtableInstanceAdminTracingStub(
+    std::shared_ptr<BigtableInstanceAdminStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<BigtableInstanceAdminTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal

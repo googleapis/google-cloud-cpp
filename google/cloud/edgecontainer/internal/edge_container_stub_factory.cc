@@ -21,9 +21,11 @@
 #include "google/cloud/edgecontainer/internal/edge_container_logging_decorator.h"
 #include "google/cloud/edgecontainer/internal/edge_container_metadata_decorator.h"
 #include "google/cloud/edgecontainer/internal/edge_container_stub.h"
+#include "google/cloud/edgecontainer/internal/edge_container_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/edgecontainer/v1/service.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<EdgeContainerStub> CreateDefaultEdgeContainerStub(
     stub = std::make_shared<EdgeContainerLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeEdgeContainerTracingStub(std::move(stub));
   }
   return stub;
 }

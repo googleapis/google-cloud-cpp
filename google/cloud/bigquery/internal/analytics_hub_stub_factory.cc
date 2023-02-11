@@ -21,9 +21,11 @@
 #include "google/cloud/bigquery/internal/analytics_hub_logging_decorator.h"
 #include "google/cloud/bigquery/internal/analytics_hub_metadata_decorator.h"
 #include "google/cloud/bigquery/internal/analytics_hub_stub.h"
+#include "google/cloud/bigquery/internal/analytics_hub_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<AnalyticsHubServiceStub> CreateDefaultAnalyticsHubServiceStub(
     stub = std::make_shared<AnalyticsHubServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAnalyticsHubServiceTracingStub(std::move(stub));
   }
   return stub;
 }

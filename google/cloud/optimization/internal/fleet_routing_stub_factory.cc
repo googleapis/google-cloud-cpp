@@ -21,9 +21,11 @@
 #include "google/cloud/optimization/internal/fleet_routing_logging_decorator.h"
 #include "google/cloud/optimization/internal/fleet_routing_metadata_decorator.h"
 #include "google/cloud/optimization/internal/fleet_routing_stub.h"
+#include "google/cloud/optimization/internal/fleet_routing_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<FleetRoutingStub> CreateDefaultFleetRoutingStub(
     stub = std::make_shared<FleetRoutingLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeFleetRoutingTracingStub(std::move(stub));
   }
   return stub;
 }

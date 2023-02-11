@@ -18,7 +18,6 @@
 
 #include "google/cloud/dialogflow_es/internal/knowledge_bases_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -91,6 +90,15 @@ KnowledgeBasesTracingStub::UpdateKnowledgeBase(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<KnowledgeBasesStub> MakeKnowledgeBasesTracingStub(
+    std::shared_ptr<KnowledgeBasesStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<KnowledgeBasesTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal

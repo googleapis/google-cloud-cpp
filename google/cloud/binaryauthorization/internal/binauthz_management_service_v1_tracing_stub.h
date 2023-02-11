@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_INTERNAL_BINAUTHZ_MANAGEMENT_SERVICE_V1_TRACING_STUB_H
 
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -78,6 +79,16 @@ class BinauthzManagementServiceV1TracingStub
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<BinauthzManagementServiceV1Stub>
+MakeBinauthzManagementServiceV1TracingStub(
+    std::shared_ptr<BinauthzManagementServiceV1Stub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

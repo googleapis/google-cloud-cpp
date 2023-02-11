@@ -21,9 +21,11 @@
 #include "google/cloud/eventarc/internal/eventarc_logging_decorator.h"
 #include "google/cloud/eventarc/internal/eventarc_metadata_decorator.h"
 #include "google/cloud/eventarc/internal/eventarc_stub.h"
+#include "google/cloud/eventarc/internal/eventarc_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/eventarc/v1/eventarc.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<EventarcStub> CreateDefaultEventarcStub(
     stub = std::make_shared<EventarcLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeEventarcTracingStub(std::move(stub));
   }
   return stub;
 }

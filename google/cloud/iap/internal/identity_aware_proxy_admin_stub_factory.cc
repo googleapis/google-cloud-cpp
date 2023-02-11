@@ -21,9 +21,11 @@
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_logging_decorator.h"
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_metadata_decorator.h"
 #include "google/cloud/iap/internal/identity_aware_proxy_admin_stub.h"
+#include "google/cloud/iap/internal/identity_aware_proxy_admin_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/iap/v1/service.grpc.pb.h>
@@ -58,6 +60,9 @@ CreateDefaultIdentityAwareProxyAdminServiceStub(
     stub = std::make_shared<IdentityAwareProxyAdminServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeIdentityAwareProxyAdminServiceTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -21,9 +21,11 @@
 #include "google/cloud/logging/internal/logging_service_v2_logging_decorator.h"
 #include "google/cloud/logging/internal/logging_service_v2_metadata_decorator.h"
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
+#include "google/cloud/logging/internal/logging_service_v2_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/logging/v2/logging.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
     stub = std::make_shared<LoggingServiceV2Logging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeLoggingServiceV2TracingStub(std::move(stub));
   }
   return stub;
 }

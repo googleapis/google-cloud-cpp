@@ -21,9 +21,11 @@
 #include "google/cloud/monitoring/internal/notification_channel_logging_decorator.h"
 #include "google/cloud/monitoring/internal/notification_channel_metadata_decorator.h"
 #include "google/cloud/monitoring/internal/notification_channel_stub.h"
+#include "google/cloud/monitoring/internal/notification_channel_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
@@ -57,6 +59,9 @@ CreateDefaultNotificationChannelServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<NotificationChannelServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeNotificationChannelServiceTracingStub(std::move(stub));
   }
   return stub;
 }

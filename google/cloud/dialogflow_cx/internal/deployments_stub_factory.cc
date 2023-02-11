@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_cx/internal/deployments_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/deployments_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/deployments_stub.h"
+#include "google/cloud/dialogflow_cx/internal/deployments_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<DeploymentsStub> CreateDefaultDeploymentsStub(
     stub = std::make_shared<DeploymentsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeDeploymentsTracingStub(std::move(stub));
   }
   return stub;
 }

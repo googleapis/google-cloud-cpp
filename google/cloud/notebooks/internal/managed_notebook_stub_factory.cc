@@ -21,9 +21,11 @@
 #include "google/cloud/notebooks/internal/managed_notebook_logging_decorator.h"
 #include "google/cloud/notebooks/internal/managed_notebook_metadata_decorator.h"
 #include "google/cloud/notebooks/internal/managed_notebook_stub.h"
+#include "google/cloud/notebooks/internal/managed_notebook_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/notebooks/v1/managed_service.grpc.pb.h>
@@ -58,6 +60,9 @@ CreateDefaultManagedNotebookServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<ManagedNotebookServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeManagedNotebookServiceTracingStub(std::move(stub));
   }
   return stub;
 }

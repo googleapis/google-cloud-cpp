@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_INTERNAL_POLICY_TAG_MANAGER_SERIALIZATION_TRACING_STUB_H
 
 #include "google/cloud/datacatalog/internal/policy_tag_manager_serialization_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -59,6 +60,16 @@ class PolicyTagManagerSerializationTracingStub
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<PolicyTagManagerSerializationStub>
+MakePolicyTagManagerSerializationTracingStub(
+    std::shared_ptr<PolicyTagManagerSerializationStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal

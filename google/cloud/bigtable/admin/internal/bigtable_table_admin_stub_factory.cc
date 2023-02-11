@@ -21,9 +21,11 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_logging_decorator.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_metadata_decorator.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub.h"
+#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<BigtableTableAdminStub> CreateDefaultBigtableTableAdminStub(
     stub = std::make_shared<BigtableTableAdminLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeBigtableTableAdminTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -18,7 +18,6 @@
 
 #include "google/cloud/gameservices/internal/game_server_clusters_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -139,6 +138,17 @@ future<Status> GameServerClustersServiceTracingStub::AsyncCancelOperation(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<GameServerClustersServiceStub>
+MakeGameServerClustersServiceTracingStub(
+    std::shared_ptr<GameServerClustersServiceStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<GameServerClustersServiceTracingStub>(
+      std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal

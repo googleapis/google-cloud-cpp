@@ -21,9 +21,11 @@
 #include "google/cloud/automl/internal/auto_ml_logging_decorator.h"
 #include "google/cloud/automl/internal/auto_ml_metadata_decorator.h"
 #include "google/cloud/automl/internal/auto_ml_stub.h"
+#include "google/cloud/automl/internal/auto_ml_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/automl/v1/service.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<AutoMlStub> CreateDefaultAutoMlStub(
     stub = std::make_shared<AutoMlLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAutoMlTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_TRACING_STUB_H
 
 #include "google/cloud/iap/internal/identity_aware_proxy_o_auth_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -83,6 +84,16 @@ class IdentityAwareProxyOAuthServiceTracingStub
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<IdentityAwareProxyOAuthServiceStub>
+MakeIdentityAwareProxyOAuthServiceTracingStub(
+    std::shared_ptr<IdentityAwareProxyOAuthServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal

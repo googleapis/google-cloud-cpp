@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_INTERNAL_CLIENT_GATEWAYS_TRACING_STUB_H
 
 #include "google/cloud/beyondcorp/internal/client_gateways_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -75,6 +76,15 @@ class ClientGatewaysServiceTracingStub : public ClientGatewaysServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ClientGatewaysServiceStub> MakeClientGatewaysServiceTracingStub(
+    std::shared_ptr<ClientGatewaysServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal

@@ -21,9 +21,11 @@
 #include "google/cloud/appengine/internal/authorized_certificates_logging_decorator.h"
 #include "google/cloud/appengine/internal/authorized_certificates_metadata_decorator.h"
 #include "google/cloud/appengine/internal/authorized_certificates_stub.h"
+#include "google/cloud/appengine/internal/authorized_certificates_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -57,6 +59,9 @@ CreateDefaultAuthorizedCertificatesStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<AuthorizedCertificatesLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAuthorizedCertificatesTracingStub(std::move(stub));
   }
   return stub;
 }

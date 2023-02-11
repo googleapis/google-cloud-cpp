@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_INTERNAL_FLEET_ROUTING_TRACING_STUB_H
 
 #include "google/cloud/optimization/internal/fleet_routing_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -61,6 +62,15 @@ class FleetRoutingTracingStub : public FleetRoutingStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<FleetRoutingStub> MakeFleetRoutingTracingStub(
+    std::shared_ptr<FleetRoutingStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal

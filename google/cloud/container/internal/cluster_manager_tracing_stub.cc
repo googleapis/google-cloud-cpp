@@ -18,7 +18,6 @@
 
 #include "google/cloud/container/internal/cluster_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -423,6 +422,15 @@ ClusterManagerTracingStub::ListUsableSubnetworks(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<ClusterManagerStub> MakeClusterManagerTracingStub(
+    std::shared_ptr<ClusterManagerStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<ClusterManagerTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_internal

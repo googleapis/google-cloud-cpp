@@ -21,9 +21,11 @@
 #include "google/cloud/bigquery/internal/reservation_logging_decorator.h"
 #include "google/cloud/bigquery/internal/reservation_metadata_decorator.h"
 #include "google/cloud/bigquery/internal/reservation_stub.h"
+#include "google/cloud/bigquery/internal/reservation_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<ReservationServiceStub> CreateDefaultReservationServiceStub(
     stub = std::make_shared<ReservationServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeReservationServiceTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_stub.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -24,6 +25,9 @@ namespace cloud {
 namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
+
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::Return;
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
@@ -35,11 +39,11 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::_;
 using ::testing::ByMove;
-using ::testing::Return;
+using ::testing::IsEmpty;
+using ::testing::Not;
 using ::testing::Unused;
 
 auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
@@ -51,7 +55,7 @@ future<StatusOr<google::longrunning::Operation>> LongrunningError(Unused,
       StatusOr<google::longrunning::Operation>(internal::AbortedError("fail")));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, ListDatabases) {
+TEST(GoldenThingAdminTracingStubTest, ListDatabases) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -81,7 +85,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListDatabases) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateDatabase) {
+TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateDatabase).WillOnce(LongrunningError);
 
@@ -93,7 +97,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateDatabase) {
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, GetDatabase) {
+TEST(GoldenThingAdminTracingStubTest, GetDatabase) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -123,7 +127,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetDatabase) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncUpdateDatabaseDdl) {
+TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl).WillOnce(LongrunningError);
 
@@ -135,7 +139,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncUpdateDatabaseDdl) {
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, DropDatabase) {
+TEST(GoldenThingAdminTracingStubTest, DropDatabase) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -165,7 +169,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, DropDatabase) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, GetDatabaseDdl) {
+TEST(GoldenThingAdminTracingStubTest, GetDatabaseDdl) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -195,7 +199,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetDatabaseDdl) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, SetIamPolicy) {
+TEST(GoldenThingAdminTracingStubTest, SetIamPolicy) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -225,7 +229,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, SetIamPolicy) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, GetIamPolicy) {
+TEST(GoldenThingAdminTracingStubTest, GetIamPolicy) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -255,7 +259,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetIamPolicy) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, TestIamPermissions) {
+TEST(GoldenThingAdminTracingStubTest, TestIamPermissions) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -285,7 +289,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, TestIamPermissions) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateBackup) {
+TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCreateBackup).WillOnce(LongrunningError);
 
@@ -297,7 +301,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateBackup) {
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, GetBackup) {
+TEST(GoldenThingAdminTracingStubTest, GetBackup) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -326,7 +330,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, GetBackup) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, UpdateBackup) {
+TEST(GoldenThingAdminTracingStubTest, UpdateBackup) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -356,7 +360,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, UpdateBackup) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, DeleteBackup) {
+TEST(GoldenThingAdminTracingStubTest, DeleteBackup) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -386,7 +390,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, DeleteBackup) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, ListBackups) {
+TEST(GoldenThingAdminTracingStubTest, ListBackups) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -416,7 +420,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListBackups) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncRestoreDatabase) {
+TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncRestoreDatabase).WillOnce(LongrunningError);
 
@@ -428,7 +432,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncRestoreDatabase) {
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, ListDatabaseOperations) {
+TEST(GoldenThingAdminTracingStubTest, ListDatabaseOperations) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -458,7 +462,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListDatabaseOperations) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, ListBackupOperations) {
+TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
   auto span_catcher = InstallSpanCatcher();
   auto mock_propagator = InstallMockPropagator();
   EXPECT_CALL(*mock_propagator, Inject);
@@ -488,7 +492,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, ListBackupOperations) {
               SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetDatabase) {
+TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .WillOnce(Return(ByMove(make_ready_future(
@@ -503,7 +507,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetDatabase) {
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncDropDatabase) {
+TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncDropDatabase)
       .WillOnce(
@@ -517,7 +521,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncDropDatabase) {
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetOperation) {
+TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetOperation).WillOnce(LongrunningError);
 
@@ -529,7 +533,7 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetOperation) {
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
-TEST(GoldenThingAdminAuthDecoratorTest, AsyncCancelOperation) {
+TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce(
@@ -541,6 +545,37 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCancelOperation) {
   auto result = under_test.AsyncCancelOperation(
       cq, absl::make_unique<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
+}
+
+TEST(MakeGoldenThingAdminTracingStub, OpenTelemetry) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock_propagator = InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, DropDatabase)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = MakeGoldenThingAdminTracingStub(mock);
+  grpc::ClientContext context;
+  auto result = under_test->DropDatabase(context, {});
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, Not(IsEmpty()));
+}
+
+#else
+
+TEST(MakeGoldenThingAdminTracingStub, NoOpenTelemetry) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, DropDatabase)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = MakeGoldenThingAdminTracingStub(mock);
+  grpc::ClientContext context;
+  auto result = under_test->DropDatabase(context, {});
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

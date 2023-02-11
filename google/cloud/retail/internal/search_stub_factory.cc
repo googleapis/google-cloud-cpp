@@ -21,9 +21,11 @@
 #include "google/cloud/retail/internal/search_logging_decorator.h"
 #include "google/cloud/retail/internal/search_metadata_decorator.h"
 #include "google/cloud/retail/internal/search_stub.h"
+#include "google/cloud/retail/internal/search_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/retail/v2/search_service.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<SearchServiceStub> CreateDefaultSearchServiceStub(
     stub = std::make_shared<SearchServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeSearchServiceTracingStub(std::move(stub));
   }
   return stub;
 }

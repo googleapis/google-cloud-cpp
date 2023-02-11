@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_INTERNAL_NOTIFICATION_CHANNEL_TRACING_STUB_H
 
 #include "google/cloud/monitoring/internal/notification_channel_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -102,6 +103,16 @@ class NotificationChannelServiceTracingStub
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<NotificationChannelServiceStub>
+MakeNotificationChannelServiceTracingStub(
+    std::shared_ptr<NotificationChannelServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

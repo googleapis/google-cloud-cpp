@@ -18,7 +18,6 @@
 
 #include "google/cloud/iot/internal/device_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -252,6 +251,15 @@ DeviceManagerTracingStub::UnbindDeviceFromGateway(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<DeviceManagerStub> MakeDeviceManagerTracingStub(
+    std::shared_ptr<DeviceManagerStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<DeviceManagerTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal

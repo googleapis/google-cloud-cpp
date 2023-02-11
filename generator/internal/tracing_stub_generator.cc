@@ -43,7 +43,8 @@ Status TracingStubGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/version.h"});
+  HeaderLocalIncludes({vars("stub_header_path"), "google/cloud/options.h",
+                       "google/cloud/version.h"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -68,6 +69,15 @@ class $tracing_stub_class_name$ : public $stub_class_name$ {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
+    std::shared_ptr<$stub_class_name$> stub);
 )""");
 
   HeaderCloseNamespaces();
@@ -88,8 +98,7 @@ Status TracingStubGenerator::GenerateCc() {
   // includes
   CcPrint("\n");
   CcLocalIncludes({vars("tracing_stub_header_path"),
-                   "google/cloud/internal/grpc_opentelemetry.h",
-                   "google/cloud/options.h"});
+                   "google/cloud/internal/grpc_opentelemetry.h"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
@@ -240,6 +249,15 @@ future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
 
   CcPrint(R"""(
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<$stub_class_name$> Make$tracing_stub_class_name$(
+    std::shared_ptr<$stub_class_name$> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<$tracing_stub_class_name$>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 )""");
   CcCloseNamespaces();
   return {};

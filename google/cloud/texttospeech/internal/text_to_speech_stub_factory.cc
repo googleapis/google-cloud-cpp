@@ -21,9 +21,11 @@
 #include "google/cloud/texttospeech/internal/text_to_speech_logging_decorator.h"
 #include "google/cloud/texttospeech/internal/text_to_speech_metadata_decorator.h"
 #include "google/cloud/texttospeech/internal/text_to_speech_stub.h"
+#include "google/cloud/texttospeech/internal/text_to_speech_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<TextToSpeechStub> CreateDefaultTextToSpeechStub(
     stub = std::make_shared<TextToSpeechLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeTextToSpeechTracingStub(std::move(stub));
   }
   return stub;
 }

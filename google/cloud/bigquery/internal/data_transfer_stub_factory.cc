@@ -21,9 +21,11 @@
 #include "google/cloud/bigquery/internal/data_transfer_logging_decorator.h"
 #include "google/cloud/bigquery/internal/data_transfer_metadata_decorator.h"
 #include "google/cloud/bigquery/internal/data_transfer_stub.h"
+#include "google/cloud/bigquery/internal/data_transfer_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<DataTransferServiceStub> CreateDefaultDataTransferServiceStub(
     stub = std::make_shared<DataTransferServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeDataTransferServiceTracingStub(std::move(stub));
   }
   return stub;
 }

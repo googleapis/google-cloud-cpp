@@ -21,9 +21,11 @@
 #include "google/cloud/kms/internal/ekm_logging_decorator.h"
 #include "google/cloud/kms/internal/ekm_metadata_decorator.h"
 #include "google/cloud/kms/internal/ekm_stub.h"
+#include "google/cloud/kms/internal/ekm_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
@@ -53,6 +55,9 @@ std::shared_ptr<EkmServiceStub> CreateDefaultEkmServiceStub(
     stub = std::make_shared<EkmServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeEkmServiceTracingStub(std::move(stub));
   }
   return stub;
 }

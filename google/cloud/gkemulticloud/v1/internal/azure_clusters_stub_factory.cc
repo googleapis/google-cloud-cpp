@@ -21,9 +21,11 @@
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_logging_decorator.h"
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_metadata_decorator.h"
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_stub.h"
+#include "google/cloud/gkemulticloud/v1/internal/azure_clusters_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/gkemulticloud/v1/azure_service.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<AzureClustersStub> CreateDefaultAzureClustersStub(
     stub = std::make_shared<AzureClustersLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAzureClustersTracingStub(std::move(stub));
   }
   return stub;
 }

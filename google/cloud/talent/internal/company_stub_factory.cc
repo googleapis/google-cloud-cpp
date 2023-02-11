@@ -21,9 +21,11 @@
 #include "google/cloud/talent/internal/company_logging_decorator.h"
 #include "google/cloud/talent/internal/company_metadata_decorator.h"
 #include "google/cloud/talent/internal/company_stub.h"
+#include "google/cloud/talent/internal/company_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<CompanyServiceStub> CreateDefaultCompanyServiceStub(
     stub = std::make_shared<CompanyServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeCompanyServiceTracingStub(std::move(stub));
   }
   return stub;
 }

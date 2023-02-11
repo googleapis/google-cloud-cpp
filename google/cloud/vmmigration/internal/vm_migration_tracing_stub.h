@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_INTERNAL_VM_MIGRATION_TRACING_STUB_H
 
 #include "google/cloud/vmmigration/internal/vm_migration_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -315,6 +316,15 @@ class VmMigrationTracingStub : public VmMigrationStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<VmMigrationStub> MakeVmMigrationTracingStub(
+    std::shared_ptr<VmMigrationStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal

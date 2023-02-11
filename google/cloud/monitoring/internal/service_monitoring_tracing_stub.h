@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_INTERNAL_SERVICE_MONITORING_TRACING_STUB_H
 
 #include "google/cloud/monitoring/internal/service_monitoring_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -91,6 +92,16 @@ class ServiceMonitoringServiceTracingStub
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ServiceMonitoringServiceStub>
+MakeServiceMonitoringServiceTracingStub(
+    std::shared_ptr<ServiceMonitoringServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal

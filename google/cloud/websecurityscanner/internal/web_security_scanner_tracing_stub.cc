@@ -18,7 +18,6 @@
 
 #include "google/cloud/websecurityscanner/internal/web_security_scanner_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -200,6 +199,15 @@ WebSecurityScannerTracingStub::ListFindingTypeStats(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<WebSecurityScannerStub> MakeWebSecurityScannerTracingStub(
+    std::shared_ptr<WebSecurityScannerStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<WebSecurityScannerTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal

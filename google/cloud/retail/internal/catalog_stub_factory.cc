@@ -21,9 +21,11 @@
 #include "google/cloud/retail/internal/catalog_logging_decorator.h"
 #include "google/cloud/retail/internal/catalog_metadata_decorator.h"
 #include "google/cloud/retail/internal/catalog_stub.h"
+#include "google/cloud/retail/internal/catalog_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/retail/v2/catalog_service.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<CatalogServiceStub> CreateDefaultCatalogServiceStub(
     stub = std::make_shared<CatalogServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeCatalogServiceTracingStub(std::move(stub));
   }
   return stub;
 }

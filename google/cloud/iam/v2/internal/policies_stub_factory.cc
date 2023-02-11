@@ -21,9 +21,11 @@
 #include "google/cloud/iam/v2/internal/policies_logging_decorator.h"
 #include "google/cloud/iam/v2/internal/policies_metadata_decorator.h"
 #include "google/cloud/iam/v2/internal/policies_stub.h"
+#include "google/cloud/iam/v2/internal/policies_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/iam/v2/policy.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<PoliciesStub> CreateDefaultPoliciesStub(
     stub = std::make_shared<PoliciesLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakePoliciesTracingStub(std::move(stub));
   }
   return stub;
 }

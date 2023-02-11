@@ -21,9 +21,11 @@
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_logging_decorator.h"
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_metadata_decorator.h"
 #include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub.h"
+#include "google/cloud/baremetalsolution/internal/bare_metal_solution_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<BareMetalSolutionStub> CreateDefaultBareMetalSolutionStub(
     stub = std::make_shared<BareMetalSolutionLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeBareMetalSolutionTracingStub(std::move(stub));
   }
   return stub;
 }

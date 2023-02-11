@@ -21,9 +21,11 @@
 #include "google/cloud/scheduler/internal/cloud_scheduler_logging_decorator.h"
 #include "google/cloud/scheduler/internal/cloud_scheduler_metadata_decorator.h"
 #include "google/cloud/scheduler/internal/cloud_scheduler_stub.h"
+#include "google/cloud/scheduler/internal/cloud_scheduler_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<CloudSchedulerStub> CreateDefaultCloudSchedulerStub(
     stub = std::make_shared<CloudSchedulerLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeCloudSchedulerTracingStub(std::move(stub));
   }
   return stub;
 }

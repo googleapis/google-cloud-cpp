@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_es/internal/versions_logging_decorator.h"
 #include "google/cloud/dialogflow_es/internal/versions_metadata_decorator.h"
 #include "google/cloud/dialogflow_es/internal/versions_stub.h"
+#include "google/cloud/dialogflow_es/internal/versions_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/v2/version.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<VersionsStub> CreateDefaultVersionsStub(
     stub = std::make_shared<VersionsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeVersionsTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -18,7 +18,6 @@
 
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -126,6 +125,17 @@ Status BinauthzManagementServiceV1TracingStub::DeleteAttestor(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<BinauthzManagementServiceV1Stub>
+MakeBinauthzManagementServiceV1TracingStub(
+    std::shared_ptr<BinauthzManagementServiceV1Stub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<BinauthzManagementServiceV1TracingStub>(
+      std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

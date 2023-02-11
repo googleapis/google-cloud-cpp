@@ -21,9 +21,11 @@
 #include "google/cloud/dlp/internal/dlp_logging_decorator.h"
 #include "google/cloud/dlp/internal/dlp_metadata_decorator.h"
 #include "google/cloud/dlp/internal/dlp_stub.h"
+#include "google/cloud/dlp/internal/dlp_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/privacy/dlp/v2/dlp.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<DlpServiceStub> CreateDefaultDlpServiceStub(
     stub = std::make_shared<DlpServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeDlpServiceTracingStub(std::move(stub));
   }
   return stub;
 }

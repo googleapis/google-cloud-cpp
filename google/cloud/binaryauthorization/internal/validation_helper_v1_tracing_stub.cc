@@ -18,7 +18,6 @@
 
 #include "google/cloud/binaryauthorization/internal/validation_helper_v1_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -47,6 +46,15 @@ ValidationHelperV1TracingStub::ValidateAttestationOccurrence(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<ValidationHelperV1Stub> MakeValidationHelperV1TracingStub(
+    std::shared_ptr<ValidationHelperV1Stub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<ValidationHelperV1TracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal

@@ -21,9 +21,11 @@
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_logging_decorator.h"
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_metadata_decorator.h"
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub.h"
+#include "google/cloud/contactcenterinsights/internal/contact_center_insights_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
@@ -59,6 +61,9 @@ CreateDefaultContactCenterInsightsStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<ContactCenterInsightsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeContactCenterInsightsTracingStub(std::move(stub));
   }
   return stub;
 }

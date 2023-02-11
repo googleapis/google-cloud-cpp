@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_INTERNAL_REGISTRATION_TRACING_STUB_H
 
 #include "google/cloud/servicedirectory/internal/registration_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -129,6 +130,15 @@ class RegistrationServiceTracingStub : public RegistrationServiceStub {
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<RegistrationServiceStub> MakeRegistrationServiceTracingStub(
+    std::shared_ptr<RegistrationServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal

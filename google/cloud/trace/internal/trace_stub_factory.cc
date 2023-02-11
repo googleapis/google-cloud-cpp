@@ -21,9 +21,11 @@
 #include "google/cloud/trace/internal/trace_logging_decorator.h"
 #include "google/cloud/trace/internal/trace_metadata_decorator.h"
 #include "google/cloud/trace/internal/trace_stub.h"
+#include "google/cloud/trace/internal/trace_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/devtools/cloudtrace/v2/tracing.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<TraceServiceStub> CreateDefaultTraceServiceStub(
     stub = std::make_shared<TraceServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeTraceServiceTracingStub(std::move(stub));
   }
   return stub;
 }

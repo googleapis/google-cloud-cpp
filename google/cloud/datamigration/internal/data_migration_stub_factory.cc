@@ -21,9 +21,11 @@
 #include "google/cloud/datamigration/internal/data_migration_logging_decorator.h"
 #include "google/cloud/datamigration/internal/data_migration_metadata_decorator.h"
 #include "google/cloud/datamigration/internal/data_migration_stub.h"
+#include "google/cloud/datamigration/internal/data_migration_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/clouddms/v1/clouddms.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<DataMigrationServiceStub> CreateDefaultDataMigrationServiceStub(
     stub = std::make_shared<DataMigrationServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeDataMigrationServiceTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_INTERNAL_MANAGED_IDENTITIES_TRACING_STUB_H
 
 #include "google/cloud/managedidentities/internal/managed_identities_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
@@ -110,6 +111,16 @@ class ManagedIdentitiesServiceTracingStub
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ManagedIdentitiesServiceStub>
+MakeManagedIdentitiesServiceTracingStub(
+    std::shared_ptr<ManagedIdentitiesServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal

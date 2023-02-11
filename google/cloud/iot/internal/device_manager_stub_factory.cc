@@ -21,9 +21,11 @@
 #include "google/cloud/iot/internal/device_manager_logging_decorator.h"
 #include "google/cloud/iot/internal/device_manager_metadata_decorator.h"
 #include "google/cloud/iot/internal/device_manager_stub.h"
+#include "google/cloud/iot/internal/device_manager_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/iot/v1/device_manager.grpc.pb.h>
@@ -55,6 +57,9 @@ std::shared_ptr<DeviceManagerStub> CreateDefaultDeviceManagerStub(
     stub = std::make_shared<DeviceManagerLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeDeviceManagerTracingStub(std::move(stub));
   }
   return stub;
 }

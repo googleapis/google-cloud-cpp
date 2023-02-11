@@ -21,9 +21,11 @@
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_logging_decorator.h"
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_metadata_decorator.h"
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_stub.h"
+#include "google/cloud/accesscontextmanager/internal/access_context_manager_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
@@ -58,6 +60,9 @@ std::shared_ptr<AccessContextManagerStub> CreateDefaultAccessContextManagerStub(
     stub = std::make_shared<AccessContextManagerLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeAccessContextManagerTracingStub(std::move(stub));
   }
   return stub;
 }

@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_logging_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_metadata_decorator.h"
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_stub.h"
+#include "google/cloud/dialogflow_es/internal/conversation_datasets_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/v2/conversation_dataset.grpc.pb.h>
@@ -57,6 +59,9 @@ std::shared_ptr<ConversationDatasetsStub> CreateDefaultConversationDatasetsStub(
     stub = std::make_shared<ConversationDatasetsLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeConversationDatasetsTracingStub(std::move(stub));
   }
   return stub;
 }

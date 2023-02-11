@@ -21,9 +21,11 @@
 #include "google/cloud/dialogflow_cx/internal/security_settings_logging_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_metadata_decorator.h"
 #include "google/cloud/dialogflow_cx/internal/security_settings_stub.h"
+#include "google/cloud/dialogflow_cx/internal/security_settings_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/security_settings.grpc.pb.h>
@@ -58,6 +60,9 @@ CreateDefaultSecuritySettingsServiceStub(google::cloud::CompletionQueue cq,
     stub = std::make_shared<SecuritySettingsServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeSecuritySettingsServiceTracingStub(std::move(stub));
   }
   return stub;
 }

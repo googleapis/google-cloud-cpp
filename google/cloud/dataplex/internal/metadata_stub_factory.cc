@@ -21,9 +21,11 @@
 #include "google/cloud/dataplex/internal/metadata_logging_decorator.h"
 #include "google/cloud/dataplex/internal/metadata_metadata_decorator.h"
 #include "google/cloud/dataplex/internal/metadata_stub.h"
+#include "google/cloud/dataplex/internal/metadata_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
@@ -56,6 +58,9 @@ std::shared_ptr<MetadataServiceStub> CreateDefaultMetadataServiceStub(
     stub = std::make_shared<MetadataServiceLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeMetadataServiceTracingStub(std::move(stub));
   }
   return stub;
 }

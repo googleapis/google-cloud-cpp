@@ -21,9 +21,11 @@
 #include "google/cloud/debugger/internal/controller2_logging_decorator.h"
 #include "google/cloud/debugger/internal/controller2_metadata_decorator.h"
 #include "google/cloud/debugger/internal/controller2_stub.h"
+#include "google/cloud/debugger/internal/controller2_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <google/devtools/clouddebugger/v2/controller.grpc.pb.h>
@@ -54,6 +56,9 @@ std::shared_ptr<Controller2Stub> CreateDefaultController2Stub(
     stub = std::make_shared<Controller2Logging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeController2TracingStub(std::move(stub));
   }
   return stub;
 }

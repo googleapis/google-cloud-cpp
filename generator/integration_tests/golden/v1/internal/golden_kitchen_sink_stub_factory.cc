@@ -21,9 +21,11 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_logging_decorator.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_metadata_decorator.h"
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include <generator/integration_tests/test.grpc.pb.h>
@@ -57,6 +59,9 @@ CreateDefaultGoldenKitchenSinkStub(
         std::move(stub),
         options.get<GrpcTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
+  }
+  if (internal::TracingEnabled(options)) {
+    stub = MakeGoldenKitchenSinkTracingStub(std::move(stub));
   }
   return stub;
 }

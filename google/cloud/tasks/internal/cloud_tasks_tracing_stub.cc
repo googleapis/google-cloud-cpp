@@ -18,7 +18,6 @@
 
 #include "google/cloud/tasks/internal/cloud_tasks_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
-#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
@@ -207,6 +206,15 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksTracingStub::RunTask(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+std::shared_ptr<CloudTasksStub> MakeCloudTasksTracingStub(
+    std::shared_ptr<CloudTasksStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<CloudTasksTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
