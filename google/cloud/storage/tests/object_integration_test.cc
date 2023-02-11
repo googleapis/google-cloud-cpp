@@ -737,8 +737,6 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
-  // TODO(#9804) - enable in production.
-  if (!UsingEmulator()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient(
       absl::make_unique<LimitedErrorCountRetryPolicy>(1));
   ASSERT_STATUS_OK(client);
