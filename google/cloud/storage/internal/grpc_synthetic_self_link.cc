@@ -43,7 +43,7 @@ std::string SelfLinkPath(Options const& options) {
 }  // namespace
 
 std::string SyntheticSelfLinkRoot(Options const& options) {
-  return SelfLinkEndpoint(options) + SelfLinkPath(options);
+  return absl::StrCat(SelfLinkEndpoint(options), SelfLinkPath(options));
 }
 
 std::string SyntheticSelfLinkDownloadRoot(Options const& options) {
