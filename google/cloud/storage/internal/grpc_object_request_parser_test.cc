@@ -383,12 +383,12 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
-  EXPECT_THAT(
-      actual->update_mask().paths(),
-      UnorderedElementsAre("acl", "content_encoding", "content_disposition",
-                           "cache_control", "content_language", "content_type",
-                           "metadata", "temporary_hold", "event_based_hold",
-                           "custom_time"));
+  EXPECT_THAT(actual->update_mask().paths(),
+              UnorderedElementsAre(
+                  "acl", "content_encoding", "content_disposition",
+                  "cache_control", "content_language", "content_type",
+                  "metadata.test-metadata-key1", "metadata.test-metadata-key2",
+                  "temporary_hold", "event_based_hold", "custom_time"));
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));
@@ -426,6 +426,57 @@ TEST(GrpcObjectRequestParser, PatchObjectRequestAllResets) {
                            "cache_control", "content_language", "content_type",
                            "metadata", "temporary_hold", "event_based_hold",
                            "custom_time"));
+  // Clear the paths, which we already compared, and compare the proto.
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, PatchObjectRequestMetadata) {
+  auto constexpr kTextProto = R"pb(
+    object {
+      bucket: "projects/_/buckets/bucket-name"
+      name: "object-name"
+      metadata { key: "key0" value: "v0" }
+    }
+    update_mask {}
+  )pb";
+  google::storage::v2::UpdateObjectRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::internal::PatchObjectRequest req(
+      "bucket-name", "object-name",
+      storage::ObjectMetadataPatchBuilder{}
+          .SetMetadata("key0", "v0")
+          .ResetMetadata("key1"));
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths. We do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(actual->update_mask().paths(),
+              UnorderedElementsAre("metadata.key0", "metadata.key1"));
+  // Clear the paths, which we already compared, and compare the proto.
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, PatchObjectRequestResetMetadata) {
+  auto constexpr kTextProto = R"pb(
+    object { bucket: "projects/_/buckets/bucket-name" name: "object-name" }
+    update_mask {}
+  )pb";
+  google::storage::v2::UpdateObjectRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::internal::PatchObjectRequest req(
+      "bucket-name", "object-name",
+      storage::ObjectMetadataPatchBuilder{}.ResetMetadata());
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths. We do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(actual->update_mask().paths(), UnorderedElementsAre("metadata"));
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
   EXPECT_THAT(*actual, IsProtoEqual(expected));

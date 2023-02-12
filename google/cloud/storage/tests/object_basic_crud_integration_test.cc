@@ -118,8 +118,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 
   ObjectMetadata desired_patch = *updated_meta;
   desired_patch.set_content_language("en");
-  // TODO(#9803) - enable once gRPC supports partial metadata updates.
-  if (!UsingGrpc()) desired_patch.mutable_metadata().erase("updated");
+  desired_patch.mutable_metadata().erase("updated");
   desired_patch.mutable_metadata().emplace("patched", "true");
   StatusOr<ObjectMetadata> patched_meta =
       client->PatchObject(bucket_name_, object_name, *updated_meta,

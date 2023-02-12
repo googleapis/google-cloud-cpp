@@ -27,6 +27,7 @@ namespace {
 
 namespace v2 = ::google::storage::v2;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::protobuf::TextFormat;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
@@ -35,7 +36,7 @@ using ::testing::UnorderedElementsAre;
 
 TEST(GrpcBucketRequestParser, DeleteBucketMetadataAllOptions) {
   v2::DeleteBucketRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/_/buckets/test-bucket"
         if_metageneration_match: 1
@@ -55,7 +56,7 @@ TEST(GrpcBucketRequestParser, DeleteBucketMetadataAllOptions) {
 
 TEST(GrpcBucketRequestParser, GetBucketMetadataAllOptions) {
   v2::GetBucketRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         name: "projects/_/buckets/test-bucket"
         if_metageneration_match: 1
@@ -76,7 +77,7 @@ TEST(GrpcBucketRequestParser, GetBucketMetadataAllOptions) {
 
 TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
   v2::CreateBucketRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         parent: "projects/test-project"
         bucket_id: "test-bucket"
@@ -177,7 +178,7 @@ TEST(GrpcBucketRequestParser, CreateBucketMetadataAllOptions) {
 
 TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
   google::storage::v2::ListBucketsRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         parent: "projects/test-project"
         page_size: 123
@@ -200,7 +201,7 @@ TEST(GrpcBucketRequestParser, ListBucketsRequestAllOptions) {
 
 TEST(GrpcBucketRequestParser, ListBucketsResponse) {
   google::storage::v2::ListBucketsResponse input;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         buckets {
           name: "projects/_/buckets/test-bucket-1"
@@ -225,7 +226,7 @@ TEST(GrpcBucketRequestParser, ListBucketsResponse) {
 
 TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {
   google::storage::v2::LockBucketRetentionPolicyRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         bucket: "projects/_/buckets/test-bucket" if_metageneration_match: 7
       )pb",
@@ -243,7 +244,7 @@ TEST(GrpcBucketRequestParser, LockBucketRetentionPolicyRequestAllOptions) {
 
 TEST(GrpcBucketRequestParser, GetIamPolicyRequest) {
   google::iam::v1::GetIamPolicyRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         resource: "projects/_/buckets/test-bucket"
         options { requested_policy_version: 3 }
@@ -261,7 +262,7 @@ TEST(GrpcBucketRequestParser, GetIamPolicyRequest) {
 
 TEST(GrpcBucketRequestParser, NativeIamPolicy) {
   google::iam::v1::Policy input;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         version: 7
         bindings {
@@ -310,7 +311,7 @@ TEST(GrpcBucketRequestParser, NativeIamPolicy) {
 
 TEST(GrpcBucketRequestParser, SetNativeBucketIamPolicyRequest) {
   google::iam::v1::SetIamPolicyRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         resource: "projects/_/buckets/test-bucket"
         policy {
@@ -348,7 +349,7 @@ TEST(GrpcBucketRequestParser, SetNativeBucketIamPolicyRequest) {
 
 TEST(GrpcBucketRequestParser, TestBucketIamPermissionsRequest) {
   google::iam::v1::TestIamPermissionsRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         resource: "projects/_/buckets/test-bucket"
         permissions: "test-only.permission.1"
@@ -367,7 +368,7 @@ TEST(GrpcBucketRequestParser, TestBucketIamPermissionsRequest) {
 
 TEST(GrpcBucketRequestParser, TestBucketIamPermissionsResponse) {
   google::iam::v1::TestIamPermissionsResponse input;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         permissions: "test-only.permission.1"
         permissions: "test-only.permission.2"
@@ -381,7 +382,7 @@ TEST(GrpcBucketRequestParser, TestBucketIamPermissionsResponse) {
 
 TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
   google::storage::v2::UpdateBucketRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         bucket {
           name: "projects/_/buckets/bucket-name"
@@ -526,12 +527,13 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
-  EXPECT_THAT(actual->update_mask().paths(),
-              UnorderedElementsAre(
-                  "storage_class", "rpo", "acl", "default_object_acl",
-                  "lifecycle", "cors", "default_event_based_hold", "labels",
-                  "website", "versioning", "logging", "encryption", "autoclass",
-                  "billing", "retention_policy", "iam_config"));
+  EXPECT_THAT(
+      actual->update_mask().paths(),
+      UnorderedElementsAre("storage_class", "rpo", "acl", "default_object_acl",
+                           "lifecycle", "cors", "default_event_based_hold",
+                           "labels.key0", "website", "versioning", "logging",
+                           "encryption", "autoclass", "billing",
+                           "retention_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
@@ -540,7 +542,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
 
 TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
   google::storage::v2::UpdateBucketRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         bucket { name: "projects/_/buckets/bucket-name" }
         update_mask {}
@@ -583,9 +585,57 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcBucketRequestParser, PatchBucketRequestLabels) {
+  auto constexpr kTextProto = R"pb(
+    bucket {
+      name: "projects/_/buckets/bucket-name"
+      labels { key: "key0" value: "v0" }
+    }
+    update_mask {}
+  )pb";
+  google::storage::v2::UpdateBucketRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::internal::PatchBucketRequest req(
+      "bucket-name", storage::BucketMetadataPatchBuilder{}
+                         .SetLabel("key0", "v0")
+                         .ResetLabel("key1"));
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths. We do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(actual->update_mask().paths(),
+              UnorderedElementsAre("labels.key0", "labels.key1"));
+  // Clear the paths, which we already compared, and compare the proto.
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcBucketRequestParser, PatchBucketRequestResetLabels) {
+  auto constexpr kTextProto = R"pb(
+    bucket { name: "projects/_/buckets/bucket-name" }
+    update_mask {}
+  )pb";
+  google::storage::v2::UpdateBucketRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
+
+  storage::internal::PatchBucketRequest req(
+      "bucket-name", storage::BucketMetadataPatchBuilder{}.ResetLabels());
+
+  auto actual = ToProto(req);
+  ASSERT_STATUS_OK(actual);
+  // First check the paths. We do not care about their order, so checking them
+  // with IsProtoEqual does not work.
+  EXPECT_THAT(actual->update_mask().paths(), UnorderedElementsAre("labels"));
+  // Clear the paths, which we already compared, and compare the proto.
+  actual->mutable_update_mask()->clear_paths();
+  EXPECT_THAT(*actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
   google::storage::v2::UpdateBucketRequest expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         bucket {
           name: "projects/_/buckets/bucket-name"
