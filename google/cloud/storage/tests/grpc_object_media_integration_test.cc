@@ -39,9 +39,6 @@ class GrpcObjectMediaIntegrationTest
 TEST_F(GrpcObjectMediaIntegrationTest, CancelResumableUpload) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
-  // TODO(#9804) - restore gRPC integration tests against production
-  if (!UsingEmulator()) GTEST_SKIP();
-
   auto const bucket_name =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
