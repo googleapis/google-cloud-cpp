@@ -135,13 +135,15 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       "bucket": "test-bucket-id",
       "role": "test-role1",
       "entity": "test-entity1",
-      "etag": "test-etag1"
+      "etag": "test-etag1",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-id/acl/test-entity1"
     }, {
       "kind": "storage#bucketAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role2",
       "entity": "test-entity2",
-      "etag": "test-etag2"
+      "etag": "test-etag2",
+      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-id/acl/test-entity2"
     }],
     "defaultObjectAcl": [{
       "kind": "storage#objectAccessControl",
@@ -229,6 +231,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       "publicAccessPrevention": "inherited"
     },
     "etag": "test-etag",
+    "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-id",
     "autoclass": {
       "enabled": true,
       "toggleTime": "2022-10-07T02:03:04.123456000Z"
@@ -236,7 +239,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
   })""");
   ASSERT_THAT(expected, IsOk());
 
-  auto const middle = FromProto(input);
+  auto const middle = FromProto(input, Options{});
   EXPECT_EQ(middle, *expected);
 
   auto const p1 = ToProto(middle);

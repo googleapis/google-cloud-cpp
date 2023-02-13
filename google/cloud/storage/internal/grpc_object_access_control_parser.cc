@@ -20,26 +20,9 @@ namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
 
-google::storage::v2::ObjectAccessControl ToProto(
-    storage::ObjectAccessControl const& acl) {
-  google::storage::v2::ObjectAccessControl result;
-  result.set_role(acl.role());
-  result.set_id(acl.id());
-  result.set_entity(acl.entity());
-  result.set_entity_id(acl.entity_id());
-  result.set_email(acl.email());
-  result.set_domain(acl.domain());
-  if (acl.has_project_team()) {
-    result.mutable_project_team()->set_project_number(
-        acl.project_team().project_number);
-    result.mutable_project_team()->set_team(acl.project_team().team);
-  }
-  result.set_etag(acl.etag());
-  return result;
-}
-
-storage::ObjectAccessControl FromProto(
+storage::ObjectAccessControl FromProtoImpl(
     google::storage::v2::ObjectAccessControl acl,
     std::string const& bucket_name, std::string const& object_name,
     std::uint64_t generation) {
@@ -61,7 +44,42 @@ storage::ObjectAccessControl FromProto(
   }
   result.set_role(std::move(*acl.mutable_role()));
   result.set_etag(std::move(*acl.mutable_etag()));
+  return result;
+}
 
+}  // namespace
+
+google::storage::v2::ObjectAccessControl ToProto(
+    storage::ObjectAccessControl const& acl) {
+  google::storage::v2::ObjectAccessControl result;
+  result.set_role(acl.role());
+  result.set_id(acl.id());
+  result.set_entity(acl.entity());
+  result.set_entity_id(acl.entity_id());
+  result.set_email(acl.email());
+  result.set_domain(acl.domain());
+  if (acl.has_project_team()) {
+    result.mutable_project_team()->set_project_number(
+        acl.project_team().project_number);
+    result.mutable_project_team()->set_team(acl.project_team().team);
+  }
+  result.set_etag(acl.etag());
+  return result;
+}
+
+storage::ObjectAccessControl FromProtoDefaultObjectAccessControl(
+    google::storage::v2::ObjectAccessControl acl,
+    std::string const& bucket_name) {
+  return FromProtoImpl(std::move(acl), bucket_name, std::string{}, 0);
+}
+
+storage::ObjectAccessControl FromProto(
+    google::storage::v2::ObjectAccessControl acl,
+    std::string const& bucket_name, std::string const& object_name,
+    std::uint64_t generation, std::string const& object_self_link) {
+  auto result =
+      FromProtoImpl(std::move(acl), bucket_name, object_name, generation);
+  result.set_self_link(object_self_link + "/acl/" + result.entity());
   return result;
 }
 

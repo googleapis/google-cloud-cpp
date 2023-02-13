@@ -107,7 +107,8 @@ TEST(GrpcClientFromProto, ObjectSimple) {
        "kind": "storage#objectAccessControl",
        "role": "OWNER",
        "entity": "user:test-user@gmail.com",
-       "etag": "test-etag-acl"
+       "etag": "test-etag-acl",
+       "selfLink":  "https://www.googleapis.com/storage/v1/b/test-bucket/o/test-object-name/acl/user:test-user@gmail.com"
       }
     ],
     "contentEncoding": "test-content-encoding",

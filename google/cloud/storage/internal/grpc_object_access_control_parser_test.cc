@@ -61,11 +61,52 @@ TEST(GrpcObjectAccessControlParser, FromProto) {
        "projectNumber": "test-project-number",
        "team": "test-team"
      },
+     "etag": "test-etag",
+     "selfLink": "https://prefix/acl/test-entity"
+  })""");
+  ASSERT_STATUS_OK(expected);
+
+  auto actual =
+      FromProto(input, "test-bucket", "test-object", 42, "https://prefix");
+  EXPECT_EQ(*expected, actual);
+}
+
+TEST(GrpcObjectAccessControlParser, FromProtoDefaultObjectAccessControl) {
+  storage_proto::ObjectAccessControl input;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+     role: "test-role"
+     id: "test-id"
+     entity: "test-entity"
+     entity_id: "test-entity-id"
+     email: "test-email"
+     domain: "test-domain"
+     project_team: {
+       project_number: "test-project-number"
+       team: "test-team"
+     }
+     etag: "test-etag"
+     )""",
+                                                            &input));
+
+  auto const expected =
+      storage::internal::ObjectAccessControlParser::FromString(R"""({
+     "role": "test-role",
+     "id": "test-id",
+     "kind": "storage#objectAccessControl",
+     "bucket": "test-bucket",
+     "entity": "test-entity",
+     "entityId": "test-entity-id",
+     "email": "test-email",
+     "domain": "test-domain",
+     "projectTeam": {
+       "projectNumber": "test-project-number",
+       "team": "test-team"
+     },
      "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(expected);
 
-  auto actual = FromProto(input, "test-bucket", "test-object", 42);
+  auto actual = FromProtoDefaultObjectAccessControl(input, "test-bucket");
   EXPECT_EQ(*expected, actual);
 }
 
