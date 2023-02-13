@@ -1,7 +1,8 @@
 # Advisory Notifications API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Advisory Notifications API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+[Advisory Notifications API][cloud-service-docs], a service to
+manage Security and Privacy Notifications.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,24 +17,26 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/advisorynotifications/ EDIT HERE .h"
+#include "google/cloud/advisorynotifications/advisory_notifications_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " organization-id location-id\n";
     return 1;
   }
 
   namespace advisorynotifications = ::google::cloud::advisorynotifications;
-  auto client =
-      advisorynotifications::Client(advisorynotifications::MakeConnection());
+  auto client = advisorynotifications::AdvisoryNotificationsServiceClient(
+      advisorynotifications::MakeAdvisoryNotificationsServiceConnection());
+  auto const parent =
+      std::string("organizations/") + argv[1] + "/locations/" + argv[2];
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto n : client.ListNotifications(parent)) {
+    if (!n) throw std::move(n).status();
+    std::cout << n->DebugString() << "\n";
   }
 
   return 0;
@@ -52,6 +55,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/advisorynotifications
+[cloud-service-docs]: https://cloud.google.com/advisory-notifications
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-advisorynotifications/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/advisorynotifications

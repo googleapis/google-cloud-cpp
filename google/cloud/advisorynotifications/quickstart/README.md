@@ -1,9 +1,9 @@
 # HOWTO: using the Advisory Notifications API C++ client in your project
 
-This directory contains small examples showing how to use the Advisory Notifications API C++
-client library in your own project. These instructions assume that you have
-some experience as a C++ developer and that you have a working C++ toolchain
-(compiler, linker, etc.) installed on your platform.
+This directory contains small examples showing how to use the Advisory
+Notifications API C++ client library in your own project. These instructions
+assume that you have some experience as a C++ developer and that you have a
+working C++ toolchain (compiler, linker, etc.) installed on your platform.
 
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
@@ -163,4 +163,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[quickstart-link]: https://cloud.google.com/advisorynotifications/docs/quickstart
+[quickstart-link]: https://cloud.google.com/advisory-notifications/docs/quickstart

@@ -13,24 +13,26 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/advisorynotifications/ EDIT HERE .h"
+#include "google/cloud/advisorynotifications/advisory_notifications_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " organization-id location-id\n";
     return 1;
   }
 
   namespace advisorynotifications = ::google::cloud::advisorynotifications;
-  auto client =
-      advisorynotifications::Client(advisorynotifications::MakeConnection());
+  auto client = advisorynotifications::AdvisoryNotificationsServiceClient(
+      advisorynotifications::MakeAdvisoryNotificationsServiceConnection());
+  auto const parent =
+      std::string("organizations/") + argv[1] + "/locations/" + argv[2];
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto n : client.ListNotifications(parent)) {
+    if (!n) throw std::move(n).status();
+    std::cout << n->DebugString() << "\n";
   }
 
   return 0;
