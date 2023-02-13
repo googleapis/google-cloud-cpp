@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_option_defaults.h"
-#include "google/cloud/advisorynotifications/advisory_notifications_connection.h"
-#include "google/cloud/advisorynotifications/advisory_notifications_options.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_option_defaults.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -40,30 +40,30 @@ Options AdvisoryNotificationsServiceDefaultOptions(Options options) {
       "advisorynotifications.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<advisorynotifications::
+  if (!options.has<advisorynotifications_v1::
                        AdvisoryNotificationsServiceRetryPolicyOption>()) {
-    options.set<
-        advisorynotifications::AdvisoryNotificationsServiceRetryPolicyOption>(
-        advisorynotifications::
+    options.set<advisorynotifications_v1::
+                    AdvisoryNotificationsServiceRetryPolicyOption>(
+        advisorynotifications_v1::
             AdvisoryNotificationsServiceLimitedTimeRetryPolicy(
                 std::chrono::minutes(30))
                 .clone());
   }
-  if (!options.has<advisorynotifications::
+  if (!options.has<advisorynotifications_v1::
                        AdvisoryNotificationsServiceBackoffPolicyOption>()) {
-    options.set<
-        advisorynotifications::AdvisoryNotificationsServiceBackoffPolicyOption>(
+    options.set<advisorynotifications_v1::
+                    AdvisoryNotificationsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<
-          advisorynotifications::
+          advisorynotifications_v1::
               AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()) {
     options.set<
-        advisorynotifications::
+        advisorynotifications_v1::
             AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>(
-        advisorynotifications::
+        advisorynotifications_v1::
             MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy());
   }
 
@@ -71,6 +71,6 @@ Options AdvisoryNotificationsServiceDefaultOptions(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google

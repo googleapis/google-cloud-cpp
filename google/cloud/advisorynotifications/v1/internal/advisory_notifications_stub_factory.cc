@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_stub_factory.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_auth_decorator.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_logging_decorator.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_metadata_decorator.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_stub.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_tracing_stub.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub_factory.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_auth_decorator.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_logging_decorator.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_metadata_decorator.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<AdvisoryNotificationsServiceStub>
@@ -68,6 +68,6 @@ CreateDefaultAdvisoryNotificationsServiceStub(google::cloud::CompletionQueue cq,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_ADVISORY_NOTIFICATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_ADVISORY_NOTIFICATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_ADVISORY_NOTIFICATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_ADVISORY_NOTIFICATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications {
+namespace advisorynotifications_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AdvisoryNotificationsServiceConnectionIdempotencyPolicy {
@@ -52,8 +52,8 @@ std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
 MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications
+}  // namespace advisorynotifications_v1
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_ADVISORY_NOTIFICATIONS_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_ADVISORY_NOTIFICATIONS_CONNECTION_IDEMPOTENCY_POLICY_H

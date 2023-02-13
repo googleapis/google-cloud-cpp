@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/advisorynotifications/advisory_notifications_connection.h"
-#include "google/cloud/advisorynotifications/advisory_notifications_connection_idempotency_policy.h"
-#include "google/cloud/advisorynotifications/advisory_notifications_options.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_retry_traits.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_stub.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection_idempotency_policy.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_options.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_retry_traits.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -34,18 +34,18 @@
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AdvisoryNotificationsServiceConnectionImpl
-    : public advisorynotifications::AdvisoryNotificationsServiceConnection {
+    : public advisorynotifications_v1::AdvisoryNotificationsServiceConnection {
  public:
   ~AdvisoryNotificationsServiceConnectionImpl() override = default;
 
   AdvisoryNotificationsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<
-          advisorynotifications_internal::AdvisoryNotificationsServiceStub>
+          advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub>
           stub,
       Options options);
 
@@ -63,67 +63,67 @@ class AdvisoryNotificationsServiceConnectionImpl
 
  private:
   std::unique_ptr<
-      advisorynotifications::AdvisoryNotificationsServiceRetryPolicy>
+      advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<advisorynotifications::
+    if (options.has<advisorynotifications_v1::
                         AdvisoryNotificationsServiceRetryPolicyOption>()) {
       return options
-          .get<advisorynotifications::
+          .get<advisorynotifications_v1::
                    AdvisoryNotificationsServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<advisorynotifications::
+        .get<advisorynotifications_v1::
                  AdvisoryNotificationsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<advisorynotifications::
+    if (options.has<advisorynotifications_v1::
                         AdvisoryNotificationsServiceBackoffPolicyOption>()) {
       return options
-          .get<advisorynotifications::
+          .get<advisorynotifications_v1::
                    AdvisoryNotificationsServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<advisorynotifications::
+        .get<advisorynotifications_v1::
                  AdvisoryNotificationsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<advisorynotifications::
+  std::unique_ptr<advisorynotifications_v1::
                       AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            advisorynotifications::
+            advisorynotifications_v1::
                 AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()) {
       return options
           .get<
-              advisorynotifications::
+              advisorynotifications_v1::
                   AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
         .get<
-            advisorynotifications::
+            advisorynotifications_v1::
                 AdvisoryNotificationsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<
-      advisorynotifications_internal::AdvisoryNotificationsServiceStub>
+      advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub>
       stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_CONNECTION_IMPL_H

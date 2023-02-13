@@ -16,24 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_STUB_H
 
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_stub.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AdvisoryNotificationsServiceMetadata
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class AdvisoryNotificationsServiceTracingStub
     : public AdvisoryNotificationsServiceStub {
  public:
-  ~AdvisoryNotificationsServiceMetadata() override = default;
-  explicit AdvisoryNotificationsServiceMetadata(
+  ~AdvisoryNotificationsServiceTracingStub() override = default;
+
+  explicit AdvisoryNotificationsServiceTracingStub(
       std::shared_ptr<AdvisoryNotificationsServiceStub> child);
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
@@ -49,17 +51,24 @@ class AdvisoryNotificationsServiceMetadata
           request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
   std::shared_ptr<AdvisoryNotificationsServiceStub> child_;
-  std::string api_client_header_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<AdvisoryNotificationsServiceStub>
+MakeAdvisoryNotificationsServiceTracingStub(
+    std::shared_ptr<AdvisoryNotificationsServiceStub> stub);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_STUB_H

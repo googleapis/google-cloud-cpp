@@ -16,28 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_CONNECTION_H
 
-#include "google/cloud/advisorynotifications/advisory_notifications_connection.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class AdvisoryNotificationsServiceTracingConnection
-    : public advisorynotifications::AdvisoryNotificationsServiceConnection {
+    : public advisorynotifications_v1::AdvisoryNotificationsServiceConnection {
  public:
   ~AdvisoryNotificationsServiceTracingConnection() override = default;
 
   explicit AdvisoryNotificationsServiceTracingConnection(
       std::shared_ptr<
-          advisorynotifications::AdvisoryNotificationsServiceConnection>
+          advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
           child);
 
   Options options() override { return child_->options(); }
@@ -53,7 +53,8 @@ class AdvisoryNotificationsServiceTracingConnection
           request) override;
 
  private:
-  std::shared_ptr<advisorynotifications::AdvisoryNotificationsServiceConnection>
+  std::shared_ptr<
+      advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
       child_;
 };
 
@@ -65,15 +66,16 @@ class AdvisoryNotificationsServiceTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<advisorynotifications::AdvisoryNotificationsServiceConnection>
+std::shared_ptr<
+    advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
 MakeAdvisoryNotificationsServiceTracingConnection(
     std::shared_ptr<
-        advisorynotifications::AdvisoryNotificationsServiceConnection>
+        advisorynotifications_v1::AdvisoryNotificationsServiceConnection>
         conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_TRACING_CONNECTION_H

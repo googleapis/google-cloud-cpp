@@ -34,7 +34,7 @@ service {
 # Advisory Notifications
 service {
   service_proto_path: "google/cloud/advisorynotifications/v1/service.proto"
-  product_path: "google/cloud/advisorynotifications"
+  product_path: "google/cloud/advisorynotifications/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
 }

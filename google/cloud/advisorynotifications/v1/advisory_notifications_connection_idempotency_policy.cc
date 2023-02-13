@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#include "google/cloud/advisorynotifications/advisory_notifications_connection_idempotency_policy.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications {
+namespace advisorynotifications_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -56,6 +56,6 @@ MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications
+}  // namespace advisorynotifications_v1
 }  // namespace cloud
 }  // namespace google

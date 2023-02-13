@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_connection_impl.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_option_defaults.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_connection_impl.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -27,14 +27,14 @@
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdvisoryNotificationsServiceConnectionImpl::
     AdvisoryNotificationsServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
         std::shared_ptr<
-            advisorynotifications_internal::AdvisoryNotificationsServiceStub>
+            advisorynotifications_v1_internal::AdvisoryNotificationsServiceStub>
             stub,
         Options options)
     : background_(std::move(background)),
@@ -50,7 +50,7 @@ AdvisoryNotificationsServiceConnectionImpl::ListNotifications(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      advisorynotifications::AdvisoryNotificationsServiceRetryPolicy const>(
+      advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNotifications(request);
@@ -96,6 +96,6 @@ AdvisoryNotificationsServiceConnectionImpl::GetNotification(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google

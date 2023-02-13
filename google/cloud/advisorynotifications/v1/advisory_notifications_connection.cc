@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#include "google/cloud/advisorynotifications/advisory_notifications_connection.h"
-#include "google/cloud/advisorynotifications/advisory_notifications_options.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_connection_impl.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_option_defaults.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_stub_factory.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_tracing_connection.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_options.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_connection_impl.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_option_defaults.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub_factory.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications {
+namespace advisorynotifications_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AdvisoryNotificationsServiceConnection::
@@ -57,19 +57,19 @@ MakeAdvisoryNotificationsServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AdvisoryNotificationsServicePolicyOptionList>(
       options, __func__);
-  options = advisorynotifications_internal::
+  options = advisorynotifications_v1_internal::
       AdvisoryNotificationsServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = advisorynotifications_internal::
+  auto stub = advisorynotifications_v1_internal::
       CreateDefaultAdvisoryNotificationsServiceStub(background->cq(), options);
-  return advisorynotifications_internal::
+  return advisorynotifications_v1_internal::
       MakeAdvisoryNotificationsServiceTracingConnection(
-          std::make_shared<advisorynotifications_internal::
+          std::make_shared<advisorynotifications_v1_internal::
                                AdvisoryNotificationsServiceConnectionImpl>(
               std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications
+}  // namespace advisorynotifications_v1
 }  // namespace cloud
 }  // namespace google

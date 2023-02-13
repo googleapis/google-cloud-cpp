@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_LOGGING_DECORATOR_H
 
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -28,16 +28,16 @@
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AdvisoryNotificationsServiceAuth
+class AdvisoryNotificationsServiceLogging
     : public AdvisoryNotificationsServiceStub {
  public:
-  ~AdvisoryNotificationsServiceAuth() override = default;
-  AdvisoryNotificationsServiceAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<AdvisoryNotificationsServiceStub> child);
+  ~AdvisoryNotificationsServiceLogging() override = default;
+  AdvisoryNotificationsServiceLogging(
+      std::shared_ptr<AdvisoryNotificationsServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> components);
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
   ListNotifications(
@@ -52,13 +52,14 @@ class AdvisoryNotificationsServiceAuth
           request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<AdvisoryNotificationsServiceStub> child_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // AdvisoryNotificationsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_INTERNAL_ADVISORY_NOTIFICATIONS_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_INTERNAL_ADVISORY_NOTIFICATIONS_LOGGING_DECORATOR_H

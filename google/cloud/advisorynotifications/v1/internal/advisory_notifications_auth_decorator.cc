@@ -16,61 +16,41 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_metadata_decorator.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_auth_decorator.h"
 #include <google/cloud/advisorynotifications/v1/service.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications_internal {
+namespace advisorynotifications_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AdvisoryNotificationsServiceMetadata::AdvisoryNotificationsServiceMetadata(
+AdvisoryNotificationsServiceAuth::AdvisoryNotificationsServiceAuth(
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<AdvisoryNotificationsServiceStub> child)
-    : child_(std::move(child)),
-      api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+    : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
-AdvisoryNotificationsServiceMetadata::ListNotifications(
+AdvisoryNotificationsServiceAuth::ListNotifications(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ListNotifications(context, request);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
-AdvisoryNotificationsServiceMetadata::GetNotification(
+AdvisoryNotificationsServiceAuth::GetNotification(
     grpc::ClientContext& context,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->GetNotification(context, request);
 }
 
-void AdvisoryNotificationsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context, std::string const& request_params) {
-  context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
-}
-
-void AdvisoryNotificationsServiceMetadata::SetMetadata(
-    grpc::ClientContext& context) {
-  context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
-  if (options.has<UserProjectOption>()) {
-    context.AddMetadata("x-goog-user-project",
-                        options.get<UserProjectOption>());
-  }
-  auto const& authority = options.get<AuthorityOption>();
-  if (!authority.empty()) context.set_authority(authority);
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications_internal
+}  // namespace advisorynotifications_v1_internal
 }  // namespace cloud
 }  // namespace google

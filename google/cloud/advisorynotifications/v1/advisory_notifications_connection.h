@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/advisorynotifications/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_ADVISORY_NOTIFICATIONS_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_ADVISORY_NOTIFICATIONS_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_ADVISORY_NOTIFICATIONS_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_ADVISORY_NOTIFICATIONS_CONNECTION_H
 
-#include "google/cloud/advisorynotifications/advisory_notifications_connection_idempotency_policy.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_retry_traits.h"
-#include "google/cloud/advisorynotifications/internal/advisory_notifications_stub.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection_idempotency_policy.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_retry_traits.h"
+#include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_stub.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -31,22 +31,22 @@
 
 namespace google {
 namespace cloud {
-namespace advisorynotifications {
+namespace advisorynotifications_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using AdvisoryNotificationsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        advisorynotifications_internal::
+        advisorynotifications_v1_internal::
             AdvisoryNotificationsServiceRetryTraits>;
 
 using AdvisoryNotificationsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        advisorynotifications_internal::
+        advisorynotifications_v1_internal::
             AdvisoryNotificationsServiceRetryTraits>;
 
 using AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        advisorynotifications_internal::
+        advisorynotifications_v1_internal::
             AdvisoryNotificationsServiceRetryTraits>;
 
 /**
@@ -62,7 +62,7 @@ using AdvisoryNotificationsServiceLimitedErrorCountRetryPolicy =
  * `MakeAdvisoryNotificationsServiceConnection()`.
  *
  * For mocking, see
- * `advisorynotifications_mocks::MockAdvisoryNotificationsServiceConnection`.
+ * `advisorynotifications_v1_mocks::MockAdvisoryNotificationsServiceConnection`.
  */
 class AdvisoryNotificationsServiceConnection {
  public:
@@ -97,7 +97,7 @@ class AdvisoryNotificationsServiceConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
  * -
- * `google::cloud::advisorynotifications::AdvisoryNotificationsServicePolicyOptionList`
+ * `google::cloud::advisorynotifications_v1::AdvisoryNotificationsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -109,8 +109,8 @@ std::shared_ptr<AdvisoryNotificationsServiceConnection>
 MakeAdvisoryNotificationsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace advisorynotifications
+}  // namespace advisorynotifications_v1
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_ADVISORY_NOTIFICATIONS_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_V1_ADVISORY_NOTIFICATIONS_CONNECTION_H

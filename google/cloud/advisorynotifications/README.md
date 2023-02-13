@@ -17,7 +17,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/advisorynotifications/advisory_notifications_client.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 #include <string>
@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace advisorynotifications = ::google::cloud::advisorynotifications;
+  namespace advisorynotifications = ::google::cloud::advisorynotifications_v1;
   auto client = advisorynotifications::AdvisoryNotificationsServiceClient(
       advisorynotifications::MakeAdvisoryNotificationsServiceConnection());
   auto const parent =
