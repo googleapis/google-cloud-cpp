@@ -18,8 +18,54 @@
 #include <pugixml.hpp>
 #include <iosfwd>
 
-bool AppendIfPlainText(std::ostream& os, pugi::xml_node const& node);
-bool AppendIfComputerOutput(std::ostream& os, pugi::xml_node const& node);
-bool AppendIfParagraph(std::ostream& os, pugi::xml_node const& node);
+/**
+ * Keeps the state for markdown generation.
+ *
+ * As we recurse through the XML tree, we need to keep some information to
+ * generate valid Markdown text. At the moment, this is just the indentation
+ * level for new paragraphs, but we use a `struct` in anticipation of more
+ * state.
+ */
+struct MarkdownContext {
+  std::string paragraph_start = "\n\n";
+  std::string paragraph_indent = "";
+};
+
+/**
+ * Handle plain text nodes.
+ *
+ * pugixml adds such nodes to represent the text between the markups. For
+ * example, something like:
+ *
+ * <foo>Some text<bar>more stuff</bar>hopefully the end</foo>
+ *
+ * Would have a node for "foo", which 3 children:
+ * 1. The first child is plain text, with value "Some text".
+ * 2. The second child has name "bar", and contains another child with
+ *     one with value "more stuff".
+ * 3. Finally, the third child has value "hopefully the end", and it is also
+ *    plain text.
+ *
+ * This is rather convenient when converting the XML nodes to the markdown
+ * representation.
+ */
+bool AppendIfPlainText(std::ostream& os, MarkdownContext const& ctx,
+                       pugi::xml_node const& node);
+
+/// Handle nodes with `computer output`.
+bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& ctx,
+                            pugi::xml_node const& node);
+
+/// Handle full paragraphs.
+bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
+                       pugi::xml_node const& node);
+
+/// Handle itemized lists
+bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
+                          pugi::xml_node const& node);
+
+/// Handle a single list item.
+bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node);
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2MARKDOWN_H

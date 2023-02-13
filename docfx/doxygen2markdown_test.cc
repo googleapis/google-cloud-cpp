@@ -14,7 +14,6 @@
 
 #include "docfx/doxygen2markdown.h"
 #include <gmock/gmock.h>
-#include <sstream>
 
 namespace {
 
@@ -30,7 +29,7 @@ TEST(Doxygen2Markdown, PlainText) {
   auto selected = doc.select_node("//*[@id='plain-text']");
   ASSERT_TRUE(selected);
   std::ostringstream os;
-  ASSERT_TRUE(AppendIfPlainText(os, *selected.node().children().begin()));
+  ASSERT_TRUE(AppendIfPlainText(os, {}, *selected.node().children().begin()));
   EXPECT_EQ(os.str(), "test-only-value 42");
 }
 
@@ -42,7 +41,7 @@ TEST(Doxygen2Markdown, ComputerOutput) {
     </doxygen>)xml");
   auto selected = doc.select_node("//*[@id='test-node']");
   std::ostringstream os;
-  ASSERT_TRUE(AppendIfComputerOutput(os, selected.node()));
+  ASSERT_TRUE(AppendIfComputerOutput(os, {}, selected.node()));
   EXPECT_EQ(os.str(), "`int f() { return 42; }`");
 }
 
@@ -54,19 +53,19 @@ TEST(Doxygen2Markdown, Paragraph) {
     </doxygen>)xml");
   auto selected = doc.select_node("//*[@id='test-node']");
   std::ostringstream os;
-  ASSERT_TRUE(AppendIfParagraph(os, selected.node()));
-  EXPECT_EQ(os.str(), "Try using `int f() { return 42; }` in your code.\n");
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "\n\nTry using `int f() { return 42; }` in your code.");
 }
 
 TEST(Doxygen2Markdown, ParagraphWithUnknown) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
-        <para id='test-node'>Uh oh: <itemizedlist></itemizedlist></para>
+        <para id='test-node'>Uh oh: <unknown></unknown></para>
     </doxygen>)xml");
   auto selected = doc.select_node("//*[@id='test-node']");
   std::ostringstream os;
-  EXPECT_THROW(AppendIfParagraph(os, selected.node()), std::runtime_error);
+  EXPECT_THROW(AppendIfParagraph(os, {}, selected.node()), std::runtime_error);
 }
 
 TEST(Doxygen2Markdown, ParagraphWithUnknownOutput) {
@@ -74,26 +73,103 @@ TEST(Doxygen2Markdown, ParagraphWithUnknownOutput) {
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
         <para id='test-node'>Uh oh:
-          <itemizedlist a1="attr1" a2="attr2">
-            <listitem>1</listitem>
-            <listitem>2</listitem>
-          </itemizedlist></para>
+          <unknown a1="attr1" a2="attr2">
+            <child>1</child><child>2</child>
+          </unknown></para>
     </doxygen>)xml");
   auto selected = doc.select_node("//*[@id='test-node']");
   std::ostringstream os;
   EXPECT_THROW(
       try {
-        AppendIfParagraph(os, selected.node());
+        AppendIfParagraph(os, {}, selected.node());
       } catch (std::runtime_error const& ex) {
         EXPECT_THAT(ex.what(), Not(HasSubstr("\n")));
         EXPECT_THAT(ex.what(),
-                    HasSubstr("<itemizedlist a1=\"attr1\" a2=\"attr2\">"));
-        EXPECT_THAT(ex.what(), HasSubstr("<listitem>1</listitem>"));
-        EXPECT_THAT(ex.what(), HasSubstr("<listitem>2</listitem>"));
-        EXPECT_THAT(ex.what(), HasSubstr("</itemizedlist>"));
+                    HasSubstr("<unknown a1=\"attr1\" a2=\"attr2\">"));
+        EXPECT_THAT(ex.what(), HasSubstr("<child>1</child>"));
+        EXPECT_THAT(ex.what(), HasSubstr("<child>2</child>"));
+        EXPECT_THAT(ex.what(), HasSubstr("</unknown>"));
         throw;
       },
       std::runtime_error);
+}
+
+TEST(Doxygen2Markdown, ItemizedListSimple) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <itemizedlist id='test-node'>
+        <listitem><para>Item 1</para></listitem>
+        <listitem><para>Item 2: <computeroutput>brrr</computeroutput></para></listitem>
+        </itemizedlist>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfItemizedList(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), R"md(
+- Item 1
+- Item 2: `brrr`)md");
+}
+
+TEST(Doxygen2Markdown, ItemizedListSimpleWithParagraphs) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <itemizedlist id='test-node'>
+        <listitem><para>Item 1</para><para>More about Item 1</para></listitem>
+        <listitem><para>Item 2: <computeroutput>brrr</computeroutput></para></listitem>
+        </itemizedlist>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfItemizedList(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), R"md(
+- Item 1
+
+  More about Item 1
+- Item 2: `brrr`)md");
+}
+
+TEST(Doxygen2Markdown, ItemizedListNested) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <itemizedlist id='test-node'>
+        <listitem><para>Item 1</para><para>More about Item 1</para></listitem>
+        <listitem><para>Item 2: <computeroutput>brrr</computeroutput>
+          <itemizedlist>
+            <listitem>
+              <para>Sub 1</para>
+            </listitem>
+            <listitem><para>Sub 2</para>
+              <para>More about Sub 2<itemizedlist>
+                  <listitem><para>Sub 2.1</para></listitem>
+                  <listitem><para>Sub 2.2</para><para>More about Sub 2.2</para></listitem>
+                </itemizedlist>
+               </para>
+            </listitem>
+            <listitem><para>Sub 3</para></listitem>
+          </itemizedlist></para>
+        </listitem>
+        </itemizedlist>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfItemizedList(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), R"md(
+- Item 1
+
+  More about Item 1
+- Item 2: `brrr`
+  - Sub 1
+  - Sub 2
+
+    More about Sub 2
+    - Sub 2.1
+    - Sub 2.2
+
+      More about Sub 2.2
+  - Sub 3)md");
 }
 
 }  // namespace

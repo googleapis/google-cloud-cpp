@@ -29,7 +29,8 @@ namespace {
 
 }  // namespace
 
-bool AppendIfPlainText(std::ostream& os, pugi::xml_node const& node) {
+bool AppendIfPlainText(std::ostream& os, MarkdownContext const& /*ctx*/,
+                       pugi::xml_node const& node) {
   if (!std::string_view{node.name()}.empty() || !node.attributes().empty()) {
     return false;
   }
@@ -37,19 +38,54 @@ bool AppendIfPlainText(std::ostream& os, pugi::xml_node const& node) {
   return true;
 }
 
-bool AppendIfComputerOutput(std::ostream& os, pugi::xml_node const& node) {
+bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& /*ctx*/,
+                            pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "computeroutput") return false;
   os << '`' << node.child_value() << '`';
   return true;
 }
 
-bool AppendIfParagraph(std::ostream& os, pugi::xml_node const& node) {
+bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
+                       pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "para") return false;
+  os << ctx.paragraph_start << ctx.paragraph_indent;
   for (auto const& child : node) {
-    if (AppendIfPlainText(os, child)) continue;
-    if (AppendIfComputerOutput(os, child)) continue;
+    if (AppendIfItemizedList(os, ctx, child)) continue;
+    if (AppendIfPlainText(os, ctx, child)) continue;
+    if (AppendIfComputerOutput(os, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
-  os << "\n";
+  return true;
+}
+
+bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
+                          pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "itemizedlist") return false;
+  auto nested = ctx;
+  nested.paragraph_indent = std::string(ctx.paragraph_indent.size(), ' ');
+  for (auto const& child : node) {
+    if (AppendIfListItem(os, nested, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "listitem") return false;
+  // The first paragraph is the list item is indented as needed, and starts
+  // with a "- "
+  auto nested = ctx;
+  nested.paragraph_start = "\n";
+  nested.paragraph_indent = ctx.paragraph_indent + "- ";
+  for (auto const& child : node) {
+    if (AppendIfParagraph(os, nested, child)) {
+      // Subsequence paragraphs within the same list item require a blank line
+      nested.paragraph_start = "\n\n";
+      nested.paragraph_indent = ctx.paragraph_indent + "  ";
+      continue;
+    }
+    UnknownChildType(__func__, child);
+  }
   return true;
 }
