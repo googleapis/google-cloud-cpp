@@ -28,6 +28,7 @@
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/grpc_service_account_parser.h"
 #include "google/cloud/storage/internal/grpc_sign_blob_request_parser.h"
+#include "google/cloud/storage/internal/grpc_split_write_object_data.h"
 #include "google/cloud/storage/internal/grpc_synthetic_self_link.h"
 #include "google/cloud/storage/internal/storage_stub_factory.h"
 #include "google/cloud/grpc_options.h"
@@ -109,15 +110,26 @@ StatusOr<storage::ObjectAccessControl> FindDefaultObjectAccessControl(
       "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
 }
 
+// If this is the last `Write()` call of the last `InsertObjectMedia()` set the
+// flags to finalize the request
+void MaybeFinalize(
+    google::storage::v2::WriteObjectRequest& write_request,
+    grpc::WriteOptions& options,
+    storage::internal::InsertObjectMediaRequest const& /*request*/,
+    bool chunk_has_more) {
+  if (!chunk_has_more) options.set_last_message();
+  write_request.set_finish_write(!chunk_has_more);
+}
+
 // If this is the last `Write()` call of the last `UploadChunk()` set the flags
 // to finalize the request
 void MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
                    grpc::WriteOptions& options,
                    storage::internal::UploadChunkRequest const& request,
-                   bool has_more) {
-  if (!request.last_chunk() || has_more) return;
+                   bool chunk_has_more) {
+  if (!chunk_has_more) options.set_last_message();
+  if (!request.last_chunk() || chunk_has_more) return;
   write_request.set_finish_write(true);
-  options.set_last_message();
   auto const& hashes = request.full_object_hashes();
   if (!hashes.md5.empty()) {
     auto md5 = MD5ToProto(hashes.md5);
@@ -148,26 +160,48 @@ Status TimeoutError(std::chrono::milliseconds timeout, std::string const& op) {
 }
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
+HandleWriteObjectError(std::chrono::milliseconds timeout,
+                       std::function<future<bool>()> const& create_watchdog,
+                       std::unique_ptr<GrpcClient::WriteObjectStream> writer,
+                       google::cloud::Options const& options) {
+  auto watchdog = create_watchdog().then([&writer](auto f) {
+    if (!f.get()) return false;
+    writer->Cancel();
+    return true;
+  });
+  auto close = writer->Close();
+  watchdog.cancel();
+  if (watchdog.get()) return TimeoutError(timeout, "Close()");
+  if (!close) return std::move(close).status();
+  return FromProto(*std::move(close), options, writer->GetRequestMetadata());
+}
+
+StatusOr<storage::internal::QueryResumableUploadResponse>
+HandleUploadChunkError(std::chrono::milliseconds timeout,
+                       std::function<future<bool>()> const& create_watchdog,
+                       std::unique_ptr<GrpcClient::WriteObjectStream> writer,
+                       google::cloud::Options const& options) {
+  return HandleWriteObjectError(timeout, create_watchdog, std::move(writer),
+                                options);
+}
+
+StatusOr<storage::ObjectMetadata> HandleInsertObjectMediaError(
+    std::chrono::milliseconds timeout,
+    std::function<future<bool>()> const& create_watchdog,
+    std::unique_ptr<GrpcClient::WriteObjectStream> writer,
+    google::cloud::Options const& options) {
+  auto response = HandleWriteObjectError(timeout, create_watchdog,
+                                         std::move(writer), options);
+  if (!response) return std::move(response).status();
+  if (response->payload) return std::move(*response->payload);
+  return storage::ObjectMetadata{};
+}
+
+StatusOr<storage::internal::QueryResumableUploadResponse>
 CloseWriteObjectStream(std::chrono::milliseconds timeout,
                        std::function<future<bool>()> const& create_watchdog,
                        std::unique_ptr<GrpcClient::WriteObjectStream> writer,
-                       bool sent_last_message,
                        google::cloud::Options const& options) {
-  if (!writer) return TimeoutError(timeout, "Write()");
-  if (!sent_last_message) {
-    auto watchdog = create_watchdog().then([&writer](auto f) {
-      if (!f.get()) return false;
-      writer->Cancel();
-      return true;
-    });
-    (void)writer->Write(google::storage::v2::WriteObjectRequest{},
-                        grpc::WriteOptions().set_last_message());
-    watchdog.cancel();
-    if (watchdog.get()) {
-      writer->Close();
-      return TimeoutError(timeout, "WritesDone()");
-    }
-  }
   auto watchdog = create_watchdog().then([&writer](auto f) {
     if (!f.get()) return false;
     writer->Cancel();
@@ -387,13 +421,14 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
     storage::internal::InsertObjectMediaRequest const& request) {
   auto r = ToProto(request);
   if (!r) return std::move(r).status();
-  auto proto_request = *r;
+  auto proto_request = *std::move(r);
 
   auto const& current = google::cloud::internal::CurrentOptions();
   auto timeout = ScaleStallTimeout(
       current.get<storage::TransferStallTimeoutOption>(),
       current.get<storage::TransferStallMinimumRateOption>(),
       google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+
   auto create_watchdog = [cq = background_->cq(), timeout]() mutable {
     if (timeout == std::chrono::seconds(0)) {
       return make_ready_future(false);
@@ -411,69 +446,50 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
   ApplyRoutingHeaders(*context, request);
   auto stream = stub_->WriteObject(std::move(context));
 
-  auto const& contents = request.contents();
-  auto const contents_size = static_cast<std::int64_t>(contents.size());
-  std::int64_t const maximum_buffer_size =
-      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
+  using ContentType = std::remove_const_t<std::remove_reference_t<
+      decltype(std::declval<google::storage::v2::ChecksummedData>()
+                   .content())>>;
+  auto splitter = SplitObjectWriteData<ContentType>(request.contents());
+  std::int64_t offset = 0;
 
   // This loop must run at least once because we need to send at least one
   // Write() call for empty objects.
-  std::int64_t n;
-  for (std::int64_t offset = 0; offset <= contents_size; offset += n) {
+  do {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
-    n = (std::min)(contents_size - offset, maximum_buffer_size);
-    data.set_content(
-        contents.substr(static_cast<std::string::size_type>(offset),
-                        static_cast<std::string::size_type>(n)));
+    data.set_content(splitter.Next());
     data.set_crc32c(crc32c::Crc32c(data.content()));
+    offset += data.content().size();
 
-    auto write_options = grpc::WriteOptions{};
-    if (offset + n >= contents_size) {
-      proto_request.set_finish_write(true);
-      write_options.set_last_message();
-    }
+    auto options = grpc::WriteOptions{};
+    MaybeFinalize(proto_request, options, request, !splitter.Done());
     auto watchdog = create_watchdog().then([&stream](auto f) {
       if (!f.get()) return false;
       stream->Cancel();
       return true;
     });
-    auto success = stream->Write(proto_request, write_options);
+    auto success = stream->Write(proto_request, options);
     watchdog.cancel();
     if (watchdog.get()) {
-      // The stream is cancelled, but we need to close it explicitly.
-      stream->Close();
-      return Status(StatusCode::kDeadlineExceeded,
-                    "timeout [" +
-                        absl::FormatDuration(absl::FromChrono(timeout)) +
-                        "] while waiting for Write()");
+      // The stream is cancelled by the watchdog. We still need to close it.
+      (void)stream->Close();
+      stream.reset();
+      return TimeoutError(timeout, "Write()");
     }
-
-    if (!success || proto_request.finish_write()) break;
+    if (!success) {
+      return HandleInsertObjectMediaError(timeout, create_watchdog,
+                                          std::move(stream), current);
+    }
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
     proto_request.clear_write_object_spec();
+    proto_request.clear_upload_id();
     proto_request.clear_object_checksums();
-  }
-
-  auto watchdog = create_watchdog().then([&stream](auto f) {
-    if (!f.get()) return false;
-    stream->Cancel();
-    return true;
-  });
-  auto response = stream->Close();
-  watchdog.cancel();
-  if (watchdog.get()) {
-    return Status(StatusCode::kDeadlineExceeded,
-                  "timeout [" +
-                      absl::FormatDuration(absl::FromChrono(timeout)) +
-                      "] while waiting for Finish()");
-  }
-
+  } while (!splitter.Done());
+  auto response = CloseWriteObjectStream(timeout, create_watchdog,
+                                         std::move(stream), current);
   if (!response) return std::move(response).status();
-  if (response->has_resource()) {
-    return FromProto(response->resource(), CurrentOptions());
-  }
+  if (response->payload) return std::move(*response->payload);
   return storage::ObjectMetadata{};
 }
 
@@ -651,6 +667,9 @@ StatusOr<storage::internal::EmptyResponse> GrpcClient::DeleteResumableUpload(
 
 StatusOr<storage::internal::QueryResumableUploadResponse>
 GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
+  auto proto_request = google::storage::v2::WriteObjectRequest{};
+  proto_request.set_upload_id(request.upload_session_url());
+
   auto const& current = google::cloud::internal::CurrentOptions();
   auto const timeout = ScaleStallTimeout(
       current.get<storage::TransferStallTimeoutOption>(),
@@ -666,89 +685,57 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
   };
 
   auto context = absl::make_unique<grpc::ClientContext>();
+  // The REST response is just the object metadata (aka the "resource"). In the
+  // gRPC response the object metadata is in a "resource" field. Passing an
+  // extra prefix to ApplyQueryParameters sends the right
+  // filtering instructions to the gRPC API.
   ApplyQueryParameters(*context, request, "resource");
   ApplyRoutingHeaders(*context, request);
-  auto writer = stub_->WriteObject(std::move(context));
+  auto stream = stub_->WriteObject(std::move(context));
 
-  std::size_t const maximum_chunk_size =
-      google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES;
-  std::string chunk;
-  chunk.reserve(maximum_chunk_size);
-  auto offset = static_cast<google::protobuf::int64>(request.offset());
+  using ContentType = std::remove_const_t<std::remove_reference_t<
+      decltype(std::declval<google::storage::v2::ChecksummedData>()
+                   .content())>>;
+  auto splitter = SplitObjectWriteData<ContentType>(request.payload());
+  std::int64_t offset = 0;
 
-  bool sent_last_message = false;
-  bool on_first_message = true;
-  auto flush_chunk = [&](bool has_more) {
-    if (chunk.size() < maximum_chunk_size && has_more) return true;
-    if (chunk.empty() && !request.last_chunk()) return true;
-
-    google::storage::v2::WriteObjectRequest write_request;
-    write_request.set_write_offset(offset);
-    write_request.set_finish_write(false);
-    // Only the first message requires the upload id.
-    if (on_first_message) {
-      write_request.set_upload_id(request.upload_session_url());
-      on_first_message = false;
-    }
-    auto write_size = chunk.size();
-
-    auto& data = *write_request.mutable_checksummed_data();
-    data.set_content(std::move(chunk));
-    chunk.clear();
-    chunk.reserve(maximum_chunk_size);
+  // This loop must run at least once because we need to send at least one
+  // Write() call for empty objects.
+  do {
+    proto_request.set_write_offset(offset);
+    auto& data = *proto_request.mutable_checksummed_data();
+    data.set_content(splitter.Next());
     data.set_crc32c(crc32c::Crc32c(data.content()));
+    offset += data.content().size();
 
     auto options = grpc::WriteOptions();
-    MaybeFinalize(write_request, options, request, has_more);
+    MaybeFinalize(proto_request, options, request, !splitter.Done());
 
-    auto watchdog = create_watchdog().then([&writer](auto f) {
+    auto watchdog = create_watchdog().then([&stream](auto f) {
       if (!f.get()) return false;
-      writer->Cancel();
+      stream->Cancel();
       return true;
     });
-    auto success = writer->Write(write_request, options);
+    auto success = stream->Write(proto_request, options);
     watchdog.cancel();
     if (watchdog.get()) {
-      // The stream is cancelled, but we need to close it explicitly.
-      writer->Close();
-      writer.reset();
-      return false;
+      // The stream is cancelled by the watchdog. We still need to close it.
+      (void)stream->Close();
+      stream.reset();
+      return TimeoutError(timeout, "Write()");
     }
-
-    sent_last_message = options.is_last_message();
-    if (!success) return false;
+    if (!success) {
+      return HandleUploadChunkError(timeout, create_watchdog, std::move(stream),
+                                    current);
+    }
     // After the first message, clear the object specification and checksums,
     // there is no need to resend it.
-    write_request.clear_write_object_spec();
-    write_request.clear_object_checksums();
-    offset += write_size;
-
-    return true;
-  };
-
-  auto close_writer =
-      [&]() -> StatusOr<storage::internal::QueryResumableUploadResponse> {
-    return CloseWriteObjectStream(timeout, create_watchdog, std::move(writer),
-                                  sent_last_message, options());
-  };
-
-  auto buffers = request.payload();
-  do {
-    std::size_t consumed = 0;
-    for (auto const& b : buffers) {
-      // flush_chunk() guarantees that maximum_chunk_size < chunk.size()
-      auto capacity = maximum_chunk_size - chunk.size();
-      if (capacity == 0) break;
-      auto n = (std::min)(capacity, b.size());
-      chunk.append(b.data(), b.data() + n);
-      consumed += n;
-    }
-    storage::internal::PopFrontBytes(buffers, consumed);
-
-    if (!flush_chunk(!buffers.empty())) return close_writer();
-  } while (!buffers.empty());
-
-  return close_writer();
+    proto_request.clear_write_object_spec();
+    proto_request.clear_upload_id();
+    proto_request.clear_object_checksums();
+  } while (!splitter.Done());
+  return CloseWriteObjectStream(timeout, create_watchdog, std::move(stream),
+                                current);
 }
 
 StatusOr<storage::internal::ListBucketAclResponse> GrpcClient::ListBucketAcl(

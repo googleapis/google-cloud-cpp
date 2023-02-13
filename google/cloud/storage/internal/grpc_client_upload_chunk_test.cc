@@ -39,6 +39,12 @@ using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
+auto constexpr kExpectedWriteSize = static_cast<std::size_t>(
+    google::storage::v2::ServiceConstants::MAX_WRITE_CHUNK_BYTES);
+static_assert(
+    kExpectedWriteSize % UploadChunkRequest::kChunkSizeQuantum == 0,
+    "expected the write size to be a multiple of the upload chunk quantum");
+
 /// @verify that stall timeouts are reported correctly.
 TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
   auto mock = std::make_shared<MockStorageStub>();
@@ -105,11 +111,12 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
                 .set<GrpcCompletionQueueOption>(cq));
   google::cloud::internal::OptionsSpan const span(
       Options{}.set<TransferStallTimeoutOption>(expected));
-  auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
+  auto const payload = std::string(
+      kExpectedWriteSize + UploadChunkRequest::kChunkSizeQuantum, 'A');
   auto response = client->UploadChunk(UploadChunkRequest(
       "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
-  EXPECT_THAT(response, StatusIs(StatusCode::kDeadlineExceeded,
-                                 HasSubstr("WritesDone()")));
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Write()")));
 }
 
 /// @verify that stall timeouts are reported correctly.
@@ -146,7 +153,8 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutClose) {
                 .set<GrpcCompletionQueueOption>(cq));
   google::cloud::internal::OptionsSpan const span(
       Options{}.set<TransferStallTimeoutOption>(expected));
-  auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
+  auto const payload = std::string(
+      kExpectedWriteSize + UploadChunkRequest::kChunkSizeQuantum, 'A');
   auto response = client->UploadChunk(UploadChunkRequest(
       "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
   EXPECT_THAT(response,
