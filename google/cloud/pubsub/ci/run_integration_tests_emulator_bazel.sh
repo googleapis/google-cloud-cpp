@@ -35,8 +35,7 @@ production_only_targets=(
   "//google/cloud/pubsub/samples:iam_samples"
 )
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
-  --test_tag_filters="integration-test" -- \
-  "${production_only_targets[@]}"
+  -- "${production_only_targets[@]}"
 
 # Start the emulator and arranges to kill it, run in $HOME because
 # pubsub_emulator::start creates unsightly *.log files in the workspace
@@ -53,6 +52,4 @@ done
 
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   --test_env="PUBSUB_EMULATOR_HOST=${PUBSUB_EMULATOR_HOST}" \
-  --test_tag_filters="integration-test" -- \
-  "//google/cloud/pubsub/...:all" \
-  "${excluded_targets[@]}"
+  -- "//google/cloud/pubsub/...:all" "${excluded_targets[@]}"

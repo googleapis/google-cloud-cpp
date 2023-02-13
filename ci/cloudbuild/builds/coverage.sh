@@ -48,7 +48,9 @@ args+=("--instrument_test_targets")
 # Based on the recommendations from:
 #     https://github.com/bazelbuild/bazel/issues/3236
 args+=("--sandbox_tmpfs_path=/tmp")
+io::log_h2 "Running coverage on non-integration tests."
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
+
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
@@ -56,7 +58,8 @@ integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
 io::log_h2 "Running Storage integration tests (with emulator and Legacy http)"
 "google/cloud/storage/ci/run_integration_tests_emulator_bazel.sh" \
   bazel coverage "${args[@]}" "${integration_args[@]}" \
-  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP=yes"
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP=yes" \
+  "--test_tag_filters=integration-test"
 
 # Where does this token come from? For triggered ci/pr builds GCB will securely
 # inject this into the environment. See the "secretEnv" setting in the
