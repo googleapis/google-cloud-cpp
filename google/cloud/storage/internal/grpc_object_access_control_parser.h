@@ -30,10 +30,12 @@ google::storage::v2::ObjectAccessControl ToProto(
 storage::ObjectAccessControl FromProtoDefaultObjectAccessControl(
     google::storage::v2::ObjectAccessControl acl,
     std::string const& bucket_name);
+
 storage::ObjectAccessControl FromProto(
     google::storage::v2::ObjectAccessControl acl,
     std::string const& bucket_name, std::string const& object_name,
     std::uint64_t generation, std::string const& object_self_link);
+
 std::string Role(storage::ObjectAccessControlPatchBuilder const&);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

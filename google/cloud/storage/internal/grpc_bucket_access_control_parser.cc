@@ -16,6 +16,7 @@
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 
 namespace google {
 namespace cloud {
@@ -59,7 +60,8 @@ storage::BucketAccessControl FromProto(
   }
   result.set_role(std::move(*acl.mutable_role()));
   result.set_etag(std::move(*acl.mutable_etag()));
-  result.set_self_link(bucket_self_link + "/acl/" + result.entity());
+  result.set_self_link(
+      absl::StrCat(bucket_self_link, "/acl/", result.entity()));
 
   return result;
 }
