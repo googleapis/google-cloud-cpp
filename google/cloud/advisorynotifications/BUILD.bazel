@@ -16,7 +16,7 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-service_dirs = [""]
+service_dirs = ["v1/"]
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
