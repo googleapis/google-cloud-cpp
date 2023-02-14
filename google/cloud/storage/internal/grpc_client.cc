@@ -697,7 +697,7 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
       decltype(std::declval<google::storage::v2::ChecksummedData>()
                    .content())>>;
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
-  std::int64_t offset = 0;
+  auto offset = request.offset();
 
   // This loop must run at least once because we need to send at least one
   // Write() call for empty objects.
