@@ -100,8 +100,8 @@ the scope of this document, but here are a few highlights:
     only using this library can remove the build steps to compile these
     dependencies.
 
-To find out about other configuration options, consider using
-[`ccmake`][ccmake], or `cmake -L`.
+For more information about `google-cloud-cpp` configuration options, see the
+[Compile time configuration](/doc/compile-time-configuration.md) guide.
 
 ## Using `google-cloud-cpp` after it is installed
 
@@ -1954,7 +1954,9 @@ that all dependencies are thus compiled. See [abseil/abseil-cpp#696], and the
 
 Now configure, build, and install the `google-cloud-cpp` libraries that you need.
 In this example, we install the [storage][storage-link] and
-[spanner][spanner-link] libraries.
+[spanner][spanner-link] libraries. Please see the
+[Compile time configuration](/doc/compile-time-configuration.md) guide for more
+details about how to configure the `google-cloud-cpp` builds.
 
 ```bash
 cmake -S . -B cmake-out \
@@ -1973,7 +1975,6 @@ cmake --build cmake-out --target install
 
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [abseil/abseil-cpp#696]: https://github.com/abseil/abseil-cpp/issues/696
-[ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
 [crc32c-gh]: https://github.com/google/crc32c
 [grpc-gh]: https://github.com/grpc/grpc
 [homebrew formula]: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/abseil.rb
