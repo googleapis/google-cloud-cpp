@@ -22,6 +22,7 @@ namespace internal {
 
 void StreamingWriteRpcReportUnhandledError(Status const& status,
                                            char const* tname) {
+  if (status.ok() || status.code() == StatusCode::kCancelled) return;
   GCP_LOG(WARNING) << "unhandled error for StreamingWriteRpcImpl< " << tname
                    << " > - status=" << status;
 }

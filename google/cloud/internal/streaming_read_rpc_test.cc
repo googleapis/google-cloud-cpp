@@ -166,6 +166,34 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
                              HasSubstr("uh-oh"))));
 }
 
+TEST(StreamingReadRpcImpl, HandleUnfinishedExpected) {
+  for (auto const& status : {grpc::Status::OK, grpc::Status::CANCELLED}) {
+    auto mock = absl::make_unique<MockReader>();
+    EXPECT_CALL(*mock, Read)
+        .WillOnce([](FakeResponse* r) {
+          r->value = "value-0";
+          return true;
+        })
+        .WillOnce([](FakeResponse* r) {
+          r->value = "value-1";
+          return true;
+        });
+    EXPECT_CALL(*mock, Finish).WillOnce(Return(status));
+
+    testing_util::ScopedLog log;
+    {
+      StreamingReadRpcImpl<FakeResponse> impl(
+          absl::make_unique<grpc::ClientContext>(), std::move(mock));
+      std::vector<std::string> values;
+      values.push_back(absl::get<FakeResponse>(impl.Read()).value);
+      values.push_back(absl::get<FakeResponse>(impl.Read()).value);
+      EXPECT_THAT(values, ElementsAre("value-0", "value-1"));
+    }
+    EXPECT_THAT(log.ExtractLines(),
+                Not(Contains(HasSubstr("unhandled error"))));
+  }
+}
+
 TEST(StreamingReadRpcImpl, ErrorStream) {
   auto under_test = StreamingReadRpcError<FakeResponse>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));

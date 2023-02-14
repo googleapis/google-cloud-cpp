@@ -56,7 +56,6 @@ class StreamingWriteRpcImpl
     if (finished_) return;
     Cancel();
     auto status = Finish();
-    if (status.ok()) return;
     StreamingWriteRpcReportUnhandledError(status, typeid(ResponseType).name());
   }
 
