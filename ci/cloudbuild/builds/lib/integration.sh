@@ -162,34 +162,36 @@ function integration::bazel_with_emulators() {
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )
 
-  tag_filters="integration-test"
+  production_tests_tag_filters="integration-test"
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
-    tag_filters="integration-test,-no-msan"
+    production_tests_tag_filters="integration-test,-no-msan"
   fi
 
   io::log_h2 "Running integration tests that require production access"
-  bazel "${verb}" "${args[@]}" --test_tag_filters="${tag_filters}" \
+  bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="${production_tests_tag_filters}" \
     "${production_integration_tests[@]}"
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
 
   io::log_h2 "Running Storage integration tests (with emulator)"
   "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
 
   io::log_h2 "Running Spanner integration tests (with emulator)"
   "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}" --test_tag_filters=integration-test,-http-transcoding-test
+    bazel "${verb}" "${args[@]}" \
+    --test_tag_filters="integration-test,-http-transcoding-test"
 
   io::log_h2 "Running Bigtable integration tests (with emulator)"
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
 
   io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
+    bazel "${verb}" "${args[@]}" --test_tag_filters="integration-test"
 
   # This test is run separately because the access token changes every time and
   # that would mess up bazel's test cache for all the other tests.

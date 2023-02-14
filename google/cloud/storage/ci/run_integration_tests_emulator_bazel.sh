@@ -55,8 +55,7 @@ production_only_targets=(
   "//google/cloud/storage/tests:unified_credentials_integration_test"
 )
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
-  --test_tag_filters="integration-test" -- \
-  "${production_only_targets[@]}" "${excluded_targets[@]}"
+  -- "${production_only_targets[@]}" "${excluded_targets[@]}"
 
 # `start_emulator` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the
@@ -109,9 +108,7 @@ emulator_args=(
 # the emulator. Note that the HMAC service account is completely invalid and
 # it is not unique to each test, neither is a problem when using the emulator.
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${emulator_args[@]}" \
-  --test_tag_filters="integration-test" -- \
-  "//google/cloud/storage/...:all" \
-  "${excluded_targets[@]}"
+  -- "//google/cloud/storage/...:all" "${excluded_targets[@]}"
 exit_status=$?
 
 if [[ "$exit_status" -ne 0 ]]; then
