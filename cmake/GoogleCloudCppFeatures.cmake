@@ -198,8 +198,9 @@ function (google_cloud_cpp_enable_cleanup)
     endif ()
 
     set(GOOGLE_CLOUD_CPP_ENABLE_REST OFF)
-    if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR (generator IN_LIST
-                                                      GOOGLE_CLOUD_CPP_ENABLE))
+    if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        OR (bigquery_v2_minimal IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        OR (generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()
 
@@ -226,6 +227,10 @@ function (google_cloud_cpp_enable_features)
         elseif ("${feature}" STREQUAL "experimental-storage-grpc")
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
+            endif ()
+        elseif ("${feature}" STREQUAL "bigquery_v2_minimal")
+            if (NOT ("bigquery" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+                add_subdirectory(google/cloud/bigquery)
             endif ()
         elseif ("${feature}" STREQUAL "experimental-http-transcoding")
             option(
