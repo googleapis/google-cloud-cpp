@@ -28,6 +28,7 @@ GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
 GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "accessapproval",
     "accesscontextmanager",
+    "advisorynotifications",
     "apigateway",
     "apigeeconnect",
     "appengine",

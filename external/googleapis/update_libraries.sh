@@ -22,6 +22,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/identity/accesscontextmanager/type:type_cc_grpc" \
       "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_cc_grpc"
   )"
+  ["advisorynotifications"]="@com_google_googleapis//google/cloud/advisorynotifications/v1:advisorynotifications_cc_grpc"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
   ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
   ["apikeys"]="@com_google_googleapis//google/api/apikeys/v2:apikeys_cc_grpc"

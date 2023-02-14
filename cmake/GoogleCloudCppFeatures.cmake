@@ -38,6 +38,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sorted
     "accessapproval"
     "accesscontextmanager"
+    "advisorynotifications"
     "apigateway"
     "apigeeconnect"
     "appengine"
