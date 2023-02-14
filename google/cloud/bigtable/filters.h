@@ -500,7 +500,7 @@ class Filter {
   /**
    * Returns a filter that applies a label to each value.
    *
-   * Each value accepted by previous filters in modified to include the @p
+   * Each value accepted by previous filters is modified to include the @p
    * label.
    *
    * @note Currently, it is not possible to apply more than one label in a
