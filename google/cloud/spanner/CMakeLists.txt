@@ -234,7 +234,7 @@ add_library(google-cloud-cpp::spanner ALIAS google_cloud_cpp_spanner)
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_spanner YEAR "2019")
 
-if ("experimental-http-transcoding" IN LIST GOOGLE_CLOUD_CPP_ENABLE)
+if ("experimental-http-transcoding" IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     add_library(
         google_cloud_cpp_spanner_rest # cmake-format: sort
         admin/database_admin_rest_connection.cc

@@ -117,6 +117,6 @@ if (NOT BUILD_TESTING)
 endif ()
 
 spanner_admin_define_integration_tests()
-if ("experimental-http-transcoding" IN LIST GOOGLE_CLOUD_CPP_ENABLE)
+if ("experimental-http-transcoding" IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     spanner_admin_define_integration_tests_rest()
 endif ()
