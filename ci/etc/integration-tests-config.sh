@@ -30,6 +30,8 @@ export GOOGLE_CLOUD_CPP_USER_PROJECT="${GOOGLE_CLOUD_PROJECT}"
 export GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
 export GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
+# Some quickstart programs require an organization.
+export GOOGLE_CLOUD_CPP_TEST_ORGANIZATION="1006341795026"
 
 # This file contains an invalidated service account key.  That is, the file is
 # in the right format for a service account, but it is not associated with a

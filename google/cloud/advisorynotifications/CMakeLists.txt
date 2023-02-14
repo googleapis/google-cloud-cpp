@@ -126,8 +126,8 @@ if (BUILD_TESTING)
         NAME advisorynotifications_quickstart
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:advisorynotifications_quickstart> "invalid"
-            GOOGLE_CLOUD_CPP_TEST_REGION)
+            $<TARGET_FILE:advisorynotifications_quickstart>
+            GOOGLE_CLOUD_CPP_TEST_ORGANIZATION GOOGLE_CLOUD_CPP_TEST_REGION)
     set_tests_properties(advisorynotifications_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
