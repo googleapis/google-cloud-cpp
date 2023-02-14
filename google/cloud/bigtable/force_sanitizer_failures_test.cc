@@ -17,19 +17,6 @@
 /// @test a trivial test to keep the compiler happy when all tests are disabled.
 TEST(ForceSanitizerFailuresTest, Trivial) {}
 
-#ifdef BIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS
-TEST(ForceScanBuildDiagnostic, Test) {
-  int r = std::rand();
-  if (r != 0) {
-    int x = std::numeric_limits<int>::max() / r;
-    EXPECT_LE(0, x);
-  } else {
-    int x = std::numeric_limits<int>::min() / r;
-    EXPECT_GE(0, x);
-  }
-}
-#endif  // BIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS
-
 // These tests are only used when testing the CI scripts, we want to keep them
 // as documentation and a quick way to exercise the tests.  It might be
 // interesting to figure out a way to always enable these tests.
