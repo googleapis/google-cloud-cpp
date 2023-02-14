@@ -26,7 +26,9 @@ export CXX=g++
 
 cmake -GNinja -H. -Bcmake-out \
   -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)" \
-  -DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
+  -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
+  -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON \
+  -DBUILD_SHARED_LIBS=yes
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 # Cannot use `env -C` as the version of env on Ubuntu:16.04 this does not

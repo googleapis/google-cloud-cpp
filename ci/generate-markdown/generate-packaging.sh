@@ -27,7 +27,7 @@ file="doc/packaging.md"
   # Extracts the part of a file between the BEGIN/DONE tags.
   function extract() {
     sed -e '0,/^.*\[BEGIN packaging.md\].*$/d' \
-      -e '/^.*\[DONE packaging.md\].*$/,$d' "$1"
+      -e '/^.*\[DONE packaging.md\].*$/,$d' "$1" | sed -e '/testing_details/d'
   }
 
   # A "map" (comma separated) of dockerfile -> summary.

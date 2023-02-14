@@ -208,7 +208,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -307,7 +306,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -484,7 +482,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -636,7 +633,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -806,7 +802,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -973,7 +968,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -1130,7 +1124,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -1298,7 +1291,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -1497,7 +1489,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -1702,7 +1693,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
@@ -1908,7 +1898,6 @@ We can now compile and install `google-cloud-cpp`:
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__

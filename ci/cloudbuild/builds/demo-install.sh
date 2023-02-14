@@ -32,12 +32,17 @@ source module ci/lib/io.sh
 # in CMake == 3.15, and we use (and tell folks to use this code)
 # with versions as old as 3.5.
 
+cmake_config_testing_details=(
+  -DCMAKE_INSTALL_MESSAGE=NEVER
+  -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
+  -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
+)
 ## [BEGIN packaging.md]
 # Pick a location to install the artifacts, e.g., `/usr/local` or `/opt`
 PREFIX="${HOME}/google-cloud-cpp-installed"
 cmake -H. -Bcmake-out \
+  "${cmake_config_testing_details[@]}" \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
-  -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
