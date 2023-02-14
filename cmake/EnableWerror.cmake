@@ -15,7 +15,7 @@
 # ~~~
 
 option(GOOGLE_CLOUD_CPP_ENABLE_WERROR
-       "If set, compiles the library with -Werror and /WX (MSVC)." ON)
+       "If set, compiles the library with -Werror and /WX (MSVC)." OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_WERROR)
 
 # Find out what flags turn on all available warnings and turn those warnings

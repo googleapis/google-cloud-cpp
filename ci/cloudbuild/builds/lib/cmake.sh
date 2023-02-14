@@ -52,6 +52,8 @@ function cmake::common_args() {
   local args
   args=(
     -DGOOGLE_CLOUD_CPP_ENABLE="$(features::always_build_cmake)"
+    -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
+    -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
   )
   args+=(-GNinja -S . -B cmake-out)
   printf "%s\n" "${args[@]}"

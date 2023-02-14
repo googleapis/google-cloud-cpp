@@ -55,7 +55,15 @@ function quickstart::build_one_quickstart() {
 
   io::log "[ CMake ]"
   local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-${bin_dir_suffix}"
-  cmake -H"${src_dir}" -B"${cmake_bin_dir}" "-DCMAKE_PREFIX_PATH=${prefix}"
+  local configure_args=(
+    # We still need to support CMake == 3.10 which does not have the -S option.
+    "-H${src_dir}"
+    "-B${cmake_bin_dir}"
+    -DCMAKE_PREFIX_PATH="${prefix}"
+    -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON
+    -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON
+  )
+  cmake "${configure_args[@]}"
   cmake --build "${cmake_bin_dir}"
 
   echo
