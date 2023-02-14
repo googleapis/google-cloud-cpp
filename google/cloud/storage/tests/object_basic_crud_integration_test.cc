@@ -43,9 +43,6 @@ using ObjectBasicCRUDIntegrationTest =
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
-  // TODO(#9805) - restore gRPC integration tests against production
-  if (!UsingEmulator()) GTEST_SKIP();
-
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

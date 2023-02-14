@@ -75,14 +75,7 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
 
   auto get = client->GetHmacKey(metadata.access_id());
   ASSERT_STATUS_OK(get);
-  // Compare member-by-member as the ETag field is missing in the protos:
-  EXPECT_EQ(get->id(), metadata.id());
-  EXPECT_EQ(get->access_id(), metadata.access_id());
-  EXPECT_EQ(get->project_id(), metadata.project_id());
-  EXPECT_EQ(get->service_account_email(), metadata.service_account_email());
-  EXPECT_EQ(get->state(), metadata.state());
-  EXPECT_EQ(get->time_created(), metadata.time_created());
-  EXPECT_EQ(get->updated(), metadata.updated());
+  EXPECT_EQ(*get, metadata);
 
   // Before we can delete the HmacKey we need to move it to the inactive state.
   auto update = metadata;
