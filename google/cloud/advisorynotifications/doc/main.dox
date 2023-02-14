@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `advisorynotifications::AdvisoryNotificationsServiceClient`:
+For example, this will override the default endpoint for `advisorynotifications_v1::AdvisoryNotificationsServiceClient`:
 
 @snippet advisory_notifications_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [advisorynotifications::AdvisoryNotificationsServiceClient](@ref advisorynotifications::AdvisoryNotificationsServiceClient-endpoint-snippet)
- [advisorynotifications_v1::AdvisoryNotificationsServiceClient](@ref advisorynotifications_v1::AdvisoryNotificationsServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet advisory_notifications_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [advisorynotifications::AdvisoryNotificationsServiceClient](@ref advisorynotifications::AdvisoryNotificationsServiceClient-service-account-snippet)
- [advisorynotifications_v1::AdvisoryNotificationsServiceClient](@ref advisorynotifications_v1::AdvisoryNotificationsServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page advisorynotifications::AdvisoryNotificationsServiceClient-endpoint-snippet Override advisorynotifications::AdvisoryNotificationsServiceClient Endpoint Configuration
-
-@snippet google/cloud/advisorynotifications/samples/advisory_notifications_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page advisorynotifications::AdvisoryNotificationsServiceClient-service-account-snippet Override advisorynotifications::AdvisoryNotificationsServiceClient Authentication Defaults
-
-@snippet google/cloud/advisorynotifications/samples/advisory_notifications_client_samples.cc with-service-account
-
-*/
 
 /*! @page advisorynotifications_v1::AdvisoryNotificationsServiceClient-endpoint-snippet Override advisorynotifications_v1::AdvisoryNotificationsServiceClient Endpoint Configuration
 
