@@ -70,6 +70,11 @@ example, [here][retryable-status-codes].
 
 Manually edit `generator/generator_config.textproto` and add the new service.
 
+> **Note:**
+> While older service definitions may not include the version specification
+> in the `product_path` field, all new services are required to include the
+> version.
+
 <details>
 <summary>Expand for an example</summary>
 
