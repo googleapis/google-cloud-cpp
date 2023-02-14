@@ -372,8 +372,8 @@ foreach (dir IN LISTS service_dirs)
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("$library$"
-                                 DEPENDS google-cloud-cpp::$library$_protos)
+google_cloud_cpp_doxygen_targets("$library$" DEPENDS cloud-docs
+                                 google-cloud-cpp::$library$_protos)
 
 include(GoogleCloudCppCommon)
 
