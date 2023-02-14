@@ -1,4 +1,4 @@
-# Compile time configuration for \`google-cloud-cpp
+# Compile time configuration for google-cloud-cpp
 
 The `google-cloud-cpp` libraries have a number of compile-time configuration
 options. This document describes these options and provides some motivation
@@ -35,12 +35,12 @@ customers will need to use these. If you have specific questions please start
 a [GitHub Discussion]. With that said:
 
 - `internal-docfx` enables an internal-only tool to generate documentation.
-- `generator` enables an internal-only too to generate new libraries.
+- `generator` enables an internal-only tool to generate new libraries.
 - `experimental-storage-grpc` enables the GCS+gRPC plugin. Contact your account
   team if you want to use this feature or are interested in the GA timeline.
 - `experimental-http-transcoding` enables support for HTTP/1.1 transport (as
   opposed to gRPC over HTTP/2) in some libraries.
-- `experimental-opentelemetry` enables support for [Open Telemetry].
+- `experimental-opentelemetry` enables support for [OpenTelemetry].
 
 ### Disabling C++ Exceptions
 
@@ -71,25 +71,26 @@ We expect that application developers using Bazel will include
 ### The C++ Standard
 
 The default Bazel toolchain forces C++11 on Linux and macOS. `google-cloud-cpp`
-requires C++14, you will need to update the C++ standard version. You must
+requires C++14, so you will need to update the C++ standard version. You must
 either:
 
 - Provide your own C++ toolchain configuration for Bazel. Consult the Bazel
-  documentation if you want to attempt this approach
+  documentation if you want to attempt this approach.
 - Add `--cxxopt=-std=c++14` and `--host_cxxopt=-std=c++14` (or higher) in your
-  Bazel command-line
+  Bazel command-line.
 - Add the same options in your Bazel `.bazelrc` file.
 
 The `--host_cxxopt` may be unfamiliar. This is required to support Protobuf
-and gRPC, where the
+and gRPC, which compile code generators for the "host" environment, and
+generate libraries for the "target" environment.
 
 ### Disabling OpenTelemetry
 
-[Open Telemetry] is enabled by default.  Turning this off may reduce your build
+[OpenTelemetry] is enabled by default.  Turning this off may reduce your build
 times but will also lose the benefits of instrumenting the libraries for
 distributed tracing.  Add `--//:experimental-opentelementry=false` to your
 Bazel command-line parameters to disable Open Telemetry.
 
 [ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
 [github discussion]: https://github.com/googleapis/google-cloud-cpp/discussions
-[open telemetry]: https://opentelemetry.io/
+[opentelemetry]: https://opentelemetry.io/
