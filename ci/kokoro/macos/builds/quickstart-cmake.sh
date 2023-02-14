@@ -48,6 +48,8 @@ install_vcpkg "${vcpkg_dir}"
 export NINJA_STATUS="T+%es [%f/%t] "
 cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
+  "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
+  "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
 )
 
 build_quickstart() {

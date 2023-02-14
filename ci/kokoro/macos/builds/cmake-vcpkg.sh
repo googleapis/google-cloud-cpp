@@ -58,6 +58,7 @@ cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
   "-DCMAKE_INSTALL_PREFIX=${HOME}/staging"
   "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
+  "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
 )
 
 # The downloads can fail, therefore require a retry loop.

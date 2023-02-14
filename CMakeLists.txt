@@ -82,10 +82,10 @@ endif ()
 
 # If ccache is installed use it for the build.
 option(GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available"
-       ON)
+       OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
 
-if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
+if (GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
     find_program(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM ccache NAMES /usr/bin/ccache)
     mark_as_advanced(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
     if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
