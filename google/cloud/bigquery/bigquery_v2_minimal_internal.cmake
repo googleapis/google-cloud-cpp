@@ -14,12 +14,8 @@
 # limitations under the License.
 # ~~~
 
-file(
-    GLOB v2_source_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "v2/minimal/internal/*.h" "v2/minimal/internal/*.cc")
-list(SORT v2_source_files)
-add_library(bigquery_v2_minimal_internal ${v2_source_files})
+add_library(bigquery_v2_minimal_internal # cmake-format: sort
+            bigquery_http_response.cc bigquery_http_response.h)
 target_include_directories(
     bigquery_v2_minimal_internal
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

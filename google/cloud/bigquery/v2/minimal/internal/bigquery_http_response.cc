@@ -25,7 +25,6 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
   auto payload =
       rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
   if (!payload.ok()) return payload.status();
-  // TODO(jsrinnn): Implement.
   return response;
 }
 

@@ -85,9 +85,9 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_bigquery_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-# Include bigquery_v2_minimal target for rest transport. TODO : Add ability to
-# conditionally include the cmake file.
-include("${CMAKE_CURRENT_SOURCE_DIR}/bigquery_v2_minimal_internal.cmake")
+# Include bigquery_v2_minimal target for rest transport. Ideally this should be
+# conditional include.
+# include("${CMAKE_CURRENT_SOURCE_DIR}/bigquery_v2_minimal_internal.cmake")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.

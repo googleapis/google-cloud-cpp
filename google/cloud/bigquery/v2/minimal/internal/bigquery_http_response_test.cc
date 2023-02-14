@@ -20,13 +20,9 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TEST(BigQueryHttpResponseTest, BuildFromRestResponseSuccess) {
-  // TODO(jsrinnn): Implement.
-}
+TEST(BigQueryHttpResponseTest, BuildFromRestResponseSuccess) {}
 
-TEST(BigQueryHttpResponseTest, BuildFromRestResponseFailure) {
-  // TODO(jsrinnn): Implement.
-}
+TEST(BigQueryHttpResponseTest, BuildFromRestResponseFailure) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
