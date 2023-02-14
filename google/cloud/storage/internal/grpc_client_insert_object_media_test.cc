@@ -161,7 +161,7 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutClose) {
       InsertObjectMediaRequest("test-bucket", "test-object",
                                "The quick brown fox jumps over the lazy dog"));
   EXPECT_THAT(metadata,
-              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Finish()")));
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Close()")));
 }
 
 }  // namespace
