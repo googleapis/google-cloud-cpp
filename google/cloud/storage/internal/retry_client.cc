@@ -134,19 +134,12 @@ Status ValidateCommittedSize(UploadChunkRequest const& request,
 
 // For resumable uploads over gRPC we need to treat some non-retryable errors
 // as retryable.
-bool UploadChunkOnFailure(RetryPolicy& retry_policy, int& count,
-                          Status const& status) {
+bool UploadChunkOnFailure(RetryPolicy& retry_policy, Status const& status) {
   // TODO(#9273) - use ErrorInfo when it becomes available
   if (status.code() == StatusCode::kAborted &&
       absl::StartsWith(status.message(), "Concurrent requests received.")) {
     return retry_policy.OnFailure(Status(
         StatusCode::kUnavailable, "TODO(#9273) - workaround service problems"));
-  }
-  // TODO(#9563) - kAlreadyExist is sometimes spurious
-  if (status.code() == StatusCode::kAlreadyExists &&
-      status.message() == "Requested entity already exists" && ++count == 1) {
-    return retry_policy.OnFailure(Status(
-        StatusCode::kUnavailable, "TODO(#9563) - workaround service problems"));
   }
   return retry_policy.OnFailure(status);
 }
@@ -554,7 +547,6 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
   auto const expected_committed_size =
       request.offset() + request.payload_size();
 
-  int count_workaround_9563 = 0;
   int error_count = 0;
 
   while (!retry_policy->IsExhausted()) {
@@ -565,8 +557,7 @@ StatusOr<QueryResumableUploadResponse> RetryClient::UploadChunk(
       // retrying.  If so, we backoff, and switch to calling
       // QueryResumableUpload().
       last_status = std::move(result).status();
-      if (!UploadChunkOnFailure(*retry_policy, count_workaround_9563,
-                                last_status)) {
+      if (!UploadChunkOnFailure(*retry_policy, last_status)) {
         return RetryError(std::move(last_status), *retry_policy, __func__);
       }
 

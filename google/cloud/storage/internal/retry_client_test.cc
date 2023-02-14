@@ -241,37 +241,6 @@ TEST(RetryClientTest, UploadChunkAbortedMaybeIsTransient) {
                                  HasSubstr("Concurrent requests received.")));
 }
 
-// TODO(#9563) - remove this test once it is not needed
-Status Error9563() {
-  return Status(StatusCode::kAlreadyExists, "Requested entity already exists");
-}
-
-/// @test Verify that transient failures are handled as expected.
-TEST(RetryClientTest, UploadChunkWorkaround9563) {
-  auto mock = std::make_shared<testing::MockClient>();
-  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
-  google::cloud::internal::OptionsSpan const span(
-      BasicTestPolicies().set<IdempotencyPolicyOption>(
-          StrictIdempotencyPolicy().clone()));
-
-  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
-  std::string const payload(quantum, '0');
-
-  // Verify that the workaround for "transients" (as defined in #9563) results
-  // in calls to QueryResumableUpload().
-  ::testing::InSequence sequence;
-  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(Error9563()));
-  EXPECT_CALL(*mock, QueryResumableUpload)
-      .WillOnce(Return(QueryResumableUploadResponse{0, absl::nullopt}));
-  // The second error should be a permanent failure
-  EXPECT_CALL(*mock, UploadChunk).WillOnce(Return(Error9563()));
-
-  auto response = client->UploadChunk(
-      UploadChunkRequest("test-only-session-id", 0, {{payload}}));
-  EXPECT_THAT(response, StatusIs(StatusCode::kAlreadyExists,
-                                 HasSubstr("Requested entity already exists")));
-}
-
 /// @test Verify that we can restore a session and continue writing.
 TEST(RetryClientTest, UploadChunkRestoreSession) {
   auto mock = std::make_shared<testing::MockClient>();
