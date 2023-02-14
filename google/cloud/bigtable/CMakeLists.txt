@@ -433,16 +433,6 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-option(GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS
-       "If set, enable tests that force errors detected by the static analyzer."
-       "")
-mark_as_advanced(GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS)
-if (GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS)
-    target_compile_definitions(
-        bigtable_client_force_sanitizer_failures_test
-        PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
-endif ()
-
 # Only compile integration tests and benchmarks if testing is enabled.
 if (BUILD_TESTING)
     add_subdirectory(admin/integration_tests)
