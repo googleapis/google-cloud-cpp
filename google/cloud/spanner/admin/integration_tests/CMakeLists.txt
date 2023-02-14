@@ -112,9 +112,11 @@ endfunction ()
 # Only define the tests if testing is enabled. Package maintainers may not want
 # to build all the tests everytime they create a new package or when the package
 # is installed from source.
-if (BUILD_TESTING)
-    spanner_admin_define_integration_tests()
-    if (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
-        spanner_admin_define_integration_tests_rest()
-    endif (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
-endif (BUILD_TESTING)
+if (NOT BUILD_TESTING)
+    return()
+endif ()
+
+spanner_admin_define_integration_tests()
+if ("experimental-http-transcoding" IN LIST GOOGLE_CLOUD_CPP_ENABLE)
+    spanner_admin_define_integration_tests_rest()
+endif ()

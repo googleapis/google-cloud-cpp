@@ -234,7 +234,7 @@ add_library(google-cloud-cpp::spanner ALIAS google_cloud_cpp_spanner)
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_spanner YEAR "2019")
 
-if (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
+if ("experimental-http-transcoding" IN LIST GOOGLE_CLOUD_CPP_ENABLE)
     add_library(
         google_cloud_cpp_spanner_rest # cmake-format: sort
         admin/database_admin_rest_connection.cc
@@ -282,7 +282,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
     add_library(google-cloud-cpp::spanner_rest ALIAS
                 google_cloud_cpp_spanner_rest)
     create_bazel_config(google_cloud_cpp_spanner_rest YEAR "2023")
-endif (GOOGLE_CLOUD_CPP_ENABLE_HTTP_TRANSCODING)
+endif ()
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
