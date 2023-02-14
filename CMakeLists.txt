@@ -29,21 +29,6 @@ if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
     set(PROJECT_VERSION "${PROJECT_VERSION}-${PROJECT_VERSION_PRE_RELEASE}")
 endif ()
 
-if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
-    # AppleClang defaults to C++98, so we bump it to C++14.
-    message(
-        WARNING
-            "CMAKE_CXX_STANDARD was undefined, defaulting to C++14."
-            "To select the desired standard use something like the following:"
-            "\n"
-            "    cmake -DCMAKE_CXX_STANDARD=17 ..."
-            "\n"
-            "For more details, see "
-            "https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html"
-    )
-    set(CMAKE_CXX_STANDARD 14)
-endif ()
-
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.3)
         message(
@@ -162,7 +147,7 @@ set(GOOGLE_CLOUD_CPP_ENABLE
     CACHE STRING "The list of libraries to build.")
 string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
 
-# We use some functions to enable the features configured in 
+# We use some functions to enable the features configured in
 # `GOOGLE_CLOUD_CPP_ENABLE`. Using functions makes it easier to keep the code
 # structured, and documents what some of these things are doing.
 google_cloud_cpp_define_legacy_feature_options()
