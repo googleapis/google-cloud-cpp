@@ -19,7 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_MOCKS_MOCK_ADVISORY_NOTIFICATIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ADVISORYNOTIFICATIONS_MOCKS_MOCK_ADVISORY_NOTIFICATIONS_CONNECTION_H
 
-#include "google/cloud/advisorynotifications/advisory_notifications_connection.h"
+#include "google/cloud/advisorynotifications/v1/advisory_notifications_connection.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockAdvisoryNotificationsServiceConnection
-    : public advisorynotifications::AdvisoryNotificationsServiceConnection {
+    : public advisorynotifications_v1::AdvisoryNotificationsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
