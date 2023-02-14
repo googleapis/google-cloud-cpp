@@ -35,7 +35,7 @@ foreach (dir IN LISTS service_dirs)
 endforeach ()
 
 include(GoogleCloudCppDoxygen)
-google_cloud_cpp_doxygen_targets("advisorynotifications" DEPENDS
+google_cloud_cpp_doxygen_targets("advisorynotifications" DEPENDS cloud-docs
                                  google-cloud-cpp::advisorynotifications_protos)
 
 include(GoogleCloudCppCommon)
