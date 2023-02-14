@@ -369,11 +369,11 @@ StatusOr<google::storage::v2::UpdateObjectRequest> ToProto(
     result.mutable_update_mask()->add_paths("metadata");
   } else {
     for (auto const& kv : subpatch.items()) {
+      result.mutable_update_mask()->add_paths("metadata." + kv.key());
       auto const& v = kv.value();
       if (!v.is_string()) continue;
       (*object.mutable_metadata())[kv.key()] = v.get<std::string>();
     }
-    if (!subpatch.empty()) result.mutable_update_mask()->add_paths("metadata");
   }
 
   // We need to check each modifiable field.

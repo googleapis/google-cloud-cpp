@@ -29,9 +29,12 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::Pair;
 
 // When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
 // actually just run against the regular GCS REST API. That is fine.
@@ -111,6 +114,47 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
 
   get = client->GetObjectMetadata(bucket_name, object_name);
   EXPECT_THAT(get, StatusIs(StatusCode::kNotFound));
+}
+
+TEST_F(GrpcObjectMetadataIntegrationTest, PatchMetadata) {
+  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                "metadata");
+  auto const bucket_name =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
+  ASSERT_THAT(bucket_name, Not(IsEmpty()))
+      << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
+
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+
+  // Use the full projection to get consistent behavior out of gRPC and REST.
+  auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
+                                     IfGenerationMatch(0), Projection::Full());
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  auto patch = client->PatchObject(bucket_name, object_name,
+                                   ObjectMetadataPatchBuilder{}
+                                       .SetMetadata("test-key0", "v0")
+                                       .SetMetadata("test-key1", "v1")
+                                       .SetMetadata("test-key2", "v2"));
+  ASSERT_STATUS_OK(patch);
+  EXPECT_THAT(patch->metadata(), AllOf(Contains(Pair("test-key0", "v0")),
+                                       Contains(Pair("test-key1", "v1")),
+                                       Contains(Pair("test-key2", "v2"))));
+
+  patch = client->PatchObject(bucket_name, object_name,
+                              ObjectMetadataPatchBuilder{}
+                                  .SetMetadata("test-key0", "new-v0")
+                                  .ResetMetadata("test-key1")
+                                  .SetMetadata("test-key3", "v3"));
+  ASSERT_STATUS_OK(patch);
+  EXPECT_THAT(patch->metadata(), AllOf(Contains(Pair("test-key0", "new-v0")),
+                                       Not(Contains(Pair("test-key1", _))),
+                                       Contains(Pair("test-key2", "v2")),
+                                       Contains(Pair("test-key3", "v3"))));
 }
 
 }  // namespace

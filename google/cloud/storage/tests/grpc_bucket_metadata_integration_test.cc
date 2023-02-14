@@ -30,6 +30,8 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
+using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
@@ -41,7 +43,7 @@ using ::testing::UnorderedElementsAre;
 class GrpcBucketMetadataIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
-TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
+TEST_F(GrpcBucketMetadataIntegrationTest, BucketMetadataCRUD) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
 
@@ -134,6 +136,45 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
 
   auto post_delete = client->GetBucketMetadata(bucket_name);
   EXPECT_THAT(post_delete, StatusIs(StatusCode::kNotFound));
+}
+
+TEST_F(GrpcBucketMetadataIntegrationTest, PatchLabels) {
+  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                "metadata");
+
+  auto const project_name = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  ASSERT_THAT(project_name, Not(IsEmpty()))
+      << "GOOGLE_CLOUD_PROJECT is not set";
+
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto bucket_name = MakeRandomBucketName();
+  auto insert = client->CreateBucketForProject(bucket_name, project_name,
+                                               BucketMetadata());
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+  EXPECT_EQ(insert->name(), bucket_name);
+
+  auto patch =
+      client->PatchBucket(bucket_name, BucketMetadataPatchBuilder{}
+                                           .SetLabel("test-key0", "v0")
+                                           .SetLabel("test-key1", "v1")
+                                           .SetLabel("test-key2", "v2"));
+  ASSERT_STATUS_OK(patch);
+  EXPECT_THAT(patch->labels(), AllOf(Contains(Pair("test-key0", "v0")),
+                                     Contains(Pair("test-key1", "v1")),
+                                     Contains(Pair("test-key2", "v2"))));
+
+  patch = client->PatchBucket(bucket_name, BucketMetadataPatchBuilder{}
+                                               .SetLabel("test-key0", "new-v0")
+                                               .ResetLabel("test-key1")
+                                               .SetLabel("test-key3", "v3"));
+  ASSERT_STATUS_OK(patch);
+  EXPECT_THAT(patch->labels(), AllOf(Contains(Pair("test-key0", "new-v0")),
+                                     Not(Contains(Pair("test-key1", _))),
+                                     Contains(Pair("test-key2", "v2")),
+                                     Contains(Pair("test-key3", "v3"))));
 }
 
 }  // namespace

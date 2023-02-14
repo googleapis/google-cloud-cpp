@@ -509,11 +509,11 @@ StatusOr<google::storage::v2::UpdateBucketRequest> ToProto(
   } else {
     // The semantics in gRPC are to replace any labels.
     for (auto const& kv : subpatch.items()) {
+      result.mutable_update_mask()->add_paths("labels." + kv.key());
       auto const& v = kv.value();
       if (!v.is_string()) continue;
       (*bucket.mutable_labels())[kv.key()] = v.get<std::string>();
     }
-    if (!subpatch.empty()) result.mutable_update_mask()->add_paths("labels");
   }
 
   // This struct and the vector refactors some common code to create patches for
