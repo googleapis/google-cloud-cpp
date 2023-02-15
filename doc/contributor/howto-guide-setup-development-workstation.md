@@ -154,7 +154,9 @@ option to compile the `google-cloud-cpp` code, and tell it to use `vcpkg` to
 build all the dependencies.
 
 ```shell
-cmake -H. -B.build -GNinja \
+cmake -S . -B .build -G Ninja \
+  -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON \
+  -DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
   -DCMAKE_TOOLCHAIN_FILE="${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
 cmake --build .build
