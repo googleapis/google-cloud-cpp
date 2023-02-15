@@ -33,33 +33,8 @@ filegroup(
 )
 
 filegroup(
-    name = "v2_srcs",
-    srcs = [
-        "v2/minimal/internal/bigquery_http_response.cc",
-    ],
-)
-
-filegroup(
-    name = "v2_hdrs",
-    srcs = [
-        "v2/minimal/internal/bigquery_http_response.h",
-    ],
-)
-
-filegroup(
     name = "mocks",
     srcs = glob(["mocks/*.h"]),
-)
-
-cc_library(
-    name = "bigquery_v2_minimal_internal",
-    srcs = [":v2_srcs"],
-    hdrs = [":v2_hdrs"],
-    visibility = ["//:__pkg__"],
-    deps = [
-        "//:common",
-        "//google/cloud:google_cloud_cpp_rest_internal",
-    ],
 )
 
 cc_library(
@@ -117,14 +92,27 @@ mock_samples_glob = ["samples/mock_*.cc"]
     ],
 ) for sample in glob(mock_samples_glob)]
 
-cc_test(
-    name = "bigquery_v2_minimal_internal_test",
-    srcs = [
-        "v2/minimal/internal/bigquery_http_response_test.cc",
-    ],
+load(":google_cloud_cpp_bigquery_rest.bzl", "google_cloud_cpp_bigquery_rest_hdrs", "google_cloud_cpp_bigquery_rest_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_bigquery_rest",
+    srcs = google_cloud_cpp_bigquery_rest_srcs,
+    hdrs = google_cloud_cpp_bigquery_rest_hdrs,
+    visibility = ["//:__pkg__"],
     deps = [
-        ":bigquery_v2_minimal_internal",
+        "//:common",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+    ],
+)
+
+load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_bigquery_rest",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest",
     ],
-)
+) for test in bigquery_rest_unit_tests]

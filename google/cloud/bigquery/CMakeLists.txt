@@ -33,5 +33,6 @@ if (bigquery IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     include(bigquery_grpc.cmake)
 endif ()
 
-# TODO(#10830) - Include bigquery_v2_minimal target for rest transport.
-# include("${CMAKE_CURRENT_SOURCE_DIR}/bigquery_v2_minimal_internal.cmake")
+if (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    include(bigquery_rest.cmake)
+endif ()
