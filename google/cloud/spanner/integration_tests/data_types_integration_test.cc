@@ -29,9 +29,6 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAreArray;
 
 absl::Time MakeTime(std::time_t sec, int nanos) {
