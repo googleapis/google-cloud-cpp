@@ -59,8 +59,11 @@ expected_dirs+=(
   # no RPC services in google/cloud/appengine/logging
   ./include/google/appengine/logging
   ./include/google/appengine/logging/v1
+  # no RPC services in google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
+  ./include/google/cloud/bigquery/v2/minimal
+  ./include/google/cloud/bigquery/v2/minimal/internal
   ./include/google/cloud/bigtable/mocks
   # no RPC services in google/cloud/certificatemanager/logging
   ./include/google/cloud/certificatemanager/logging
@@ -104,6 +107,7 @@ expected_dirs+=(
   ./include/google/type
   ./include/grafeas
   ./include/grafeas/v1
+  ./lib64/cmake/google_cloud_cpp_bigquery_rest
   ./lib64/cmake/google_cloud_cpp_common
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
