@@ -15,6 +15,7 @@
 """Load dependencies needed to compile and test the google-cloud-cpp library."""
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
 
 def google_cloud_cpp_deps():
     """Loads dependencies need to compile the google-cloud-cpp library.
@@ -111,19 +112,18 @@ def google_cloud_cpp_deps():
             sha256 = "dbb16fdbca8f277c9a194d9a837395cde408ca136738d94743130dd0de015efd",
         )
 
-    # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by
-    # gRPC does not compile with GCC-11
-    if "boringssl" not in native.existing_rules():
-        http_archive(
-            name = "boringssl",
-            # Use github mirror instead of https://boringssl.googlesource.com/boringssl
-            # to obtain a boringssl archive with consistent sha256
-            sha256 = "f0f433106f98f6f50ed6bbc2169f7c42dd73d13d0f09d431082519b5649903a6",
-            strip_prefix = "boringssl-56eb68f64215738552be452e311da12047934ab4",
-            urls = [
-                "https://github.com/google/boringssl/archive/56eb68f64215738552be452e311da12047934ab4.tar.gz",
-            ],
-        )
+    maybe(
+        repo_rule = http_archive,
+        name = "boringssl",
+        # Use github mirror instead of https://boringssl.googlesource.com/boringssl
+        # to obtain a boringssl archive with (more) consistent sha256.
+        sha256 = "ad0b806b6c5cbd6cae121c608945d5fed468748e330632e8d53315089ad52c67",
+        strip_prefix = "boringssl-6195bf8242156c9a2fa75702eee058f91b86a88b",
+        urls = [
+            "https://github.com/google/boringssl/archive/6195bf8242156c9a2fa75702eee058f91b86a88b.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/boringssl/6195bf8242156c9a2fa75702eee058f91b86a88b.tar.gz",
+        ],
+    )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
     if "com_github_grpc_grpc" not in native.existing_rules():
