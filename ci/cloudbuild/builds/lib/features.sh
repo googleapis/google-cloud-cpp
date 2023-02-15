@@ -27,6 +27,7 @@ function features::always_build() {
   list=(
     # These have hand-crafted code, therefore we always want to build them.
     bigtable
+    experimental-bigquery_rest
     spanner
     storage
     pubsub
@@ -38,7 +39,6 @@ function features::always_build() {
     logging
     # By default, build the library with OpenTelemetry in our CI.
     experimental-opentelemetry
-    # TODO(#10830) - add experimental-bigquery_rest
   )
   printf "%s\n" "${list[@]}" | sort -u
 }

@@ -19,10 +19,9 @@ project(verify-exported-targets CXX)
 
 # We list the common libraries first because we want to load their packages
 # early.
-set(common_libraries common grpc_utils mocks)
+set(common_libraries common grpc_utils mocks rest_internal)
 
-# Add GA libraries to this list, the only difference is the name of the CMake
-# targets
+# Define GA libraries.
 set(ga_libraries
     # cmake-format: sortable
     bigquery
@@ -33,6 +32,11 @@ set(ga_libraries
     pubsub_mocks
     spanner
     storage)
+
+# Define experimental libraries. The only difference is the name of the CMake
+# targets.
+set(experimental_libraries # cmake-format: sortable
+                           bigquery_rest)
 
 # CMake can use pkg-config to find dependencies. We recommend using CMake
 # targets, but we want to verify our pkg-config files remain usable and
@@ -47,7 +51,7 @@ function (add_test_case name)
     add_test(NAME "${name}" COMMAND "${name}")
 endfunction ()
 
-foreach (library ${common_libraries} ${ga_libraries})
+foreach (library ${common_libraries} ${ga_libraries} ${experimental_libraries})
     find_package("google_cloud_cpp_${library}" REQUIRED)
 endforeach ()
 
@@ -55,7 +59,12 @@ foreach (library ${common_libraries} ${ga_libraries})
     add_test_case(test_cmake_${library} google-cloud-cpp::${library})
 endforeach ()
 
-foreach (library ${common_libraries} ${ga_libraries})
+foreach (library ${experimental_libraries})
+    add_test_case(test_cmake_${library}
+                  google-cloud-cpp::experimental-${library})
+endforeach ()
+
+foreach (library ${common_libraries} ${ga_libraries} ${experimental_libraries})
     message("library=${library}")
     pkg_check_modules(${library} IMPORTED_TARGET REQUIRED
                       google_cloud_cpp_${library})

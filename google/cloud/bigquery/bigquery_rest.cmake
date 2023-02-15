@@ -99,6 +99,61 @@ function (bigquery_rest_define_tests)
     endforeach ()
 endfunction ()
 
+# Get the destination directories based on the GNU recommendations.
+include(GNUInstallDirs)
+
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT google_cloud_cpp_bigquery_rest-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_rest"
+    COMPONENT google_cloud_cpp_development)
+
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(
+    TARGETS google_cloud_cpp_bigquery_rest
+    EXPORT google_cloud_cpp_bigquery_rest-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(
+    TARGETS google_cloud_cpp_bigquery_rest
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_install_headers("google_cloud_cpp_bigquery_rest"
+                                 "include/google/cloud/bigquery")
+
+google_cloud_cpp_add_pkgconfig(
+    bigquery_rest "Experimental BigQuery REST client library"
+    "An experimental BigQuery C++ client library using REST for transport."
+    " google_cloud_cpp_rest_internal")
+
+# Create and install the CMake configuration files.
+include(CMakePackageConfigHelpers)
+configure_file("config-rest.cmake.in"
+               "google_cloud_cpp_bigquery_rest-config.cmake" @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_bigquery_rest-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_rest-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_rest-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_rest"
+    COMPONENT google_cloud_cpp_development)
+
 if (BUILD_TESTING)
     bigquery_rest_define_tests()
 endif ()
