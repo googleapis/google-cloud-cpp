@@ -18,6 +18,7 @@ add_library(
     google_cloud_cpp_bigquery_rest # cmake-format: sort
     v2/minimal/internal/bigquery_http_response.cc
     v2/minimal/internal/bigquery_http_response.h
+    v2/minimal/internal/job.h
     v2/minimal/internal/job_idempotency_policy.cc
     v2/minimal/internal/job_idempotency_policy.h
     v2/minimal/internal/job_logging.cc
@@ -26,6 +27,10 @@ add_library(
     v2/minimal/internal/job_metadata.h
     v2/minimal/internal/job_options.cc
     v2/minimal/internal/job_options.h
+    v2/minimal/internal/job_request.cc
+    v2/minimal/internal/job_request.h
+    v2/minimal/internal/job_response.cc
+    v2/minimal/internal/job_response.h
     v2/minimal/internal/job_rest_connection_impl.cc
     v2/minimal/internal/job_rest_connection_impl.h
     v2/minimal/internal/job_rest_stub.cc
@@ -68,7 +73,10 @@ function (bigquery_rest_define_tests)
 
     set(bigquery_rest_unit_tests
         # cmake-format: sort
-        v2/minimal/internal/bigquery_http_response_test.cc)
+        v2/minimal/internal/bigquery_http_response_test.cc
+        v2/minimal/internal/job_request_test.cc
+        v2/minimal/internal/job_response_test.cc
+        v2/minimal/internal/job_rest_stub_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

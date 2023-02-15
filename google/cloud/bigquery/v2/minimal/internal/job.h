@@ -12,36 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
-#include "google/cloud/log.h"
-#include "google/cloud/status_or.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
+
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigQueryJobStub::~BigQueryJobStub() = default;
+// Custom class for V2 Job proto fields.
 
-StatusOr<GetJobResponse> DefaultBigQueryJobStub::GetJob(
-    GetJobRequest const& request) {
-  GetJobResponse response;
-  if (request.project_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Project Id is empty");
-  }
-  if (request.job_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Job Id is empty");
-  }
-  // Not Implemented Yet: Call the rest client to get job details from the
-  // server.
-  return response;
-}
+struct JobConfiguration {
+  // Not Implemented Yet.
+};
+
+struct JobReference {
+  // Not Implemented Yet.
+};
+
+struct JobStatistics {
+  // Not Implemented Yet.
+};
+
+struct JobStatus {
+  // Not Implemented Yet.
+};
+
+struct Job {
+  std::string kind;
+  std::string etag;
+  std::string id;
+  std::string self_link;
+  std::string user_email;
+
+  JobStatus status;
+  JobConfiguration configuration;
+  JobStatistics stats;
+  JobReference reference;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
