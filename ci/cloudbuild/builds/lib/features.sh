@@ -38,6 +38,8 @@ function features::always_build() {
     logging
     # By default, build the library with OpenTelemetry in our CI.
     experimental-opentelemetry
+    # Handcrafted bigquery v2 library.
+    bigquery_v2_minimal
   )
   printf "%s\n" "${list[@]}" | sort -u
 }

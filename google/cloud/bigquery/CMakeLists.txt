@@ -32,8 +32,7 @@ include(GoogleCloudCppCommon)
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc" "v2/minimal/internal/*.h"
-    "v2/minimal/internal/*.cc")
+    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
 list(SORT source_files)
 add_library(google_cloud_cpp_bigquery ${source_files})
 target_include_directories(
@@ -85,6 +84,10 @@ target_include_directories(
               $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_bigquery_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+# Include bigquery_v2_minimal target for rest transport. Ideally this should be
+# conditional include.
+# include("${CMAKE_CURRENT_SOURCE_DIR}/bigquery_v2_minimal_internal.cmake")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
