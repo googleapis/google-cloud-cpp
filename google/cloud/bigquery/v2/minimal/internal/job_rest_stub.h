@@ -12,17 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Internal interface for Bigquery V2 Job resource.
+// Internal Stub interface for Bigquery V2 Job apis.
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_STUB_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+class BigQueryJobStub {
+ public:
+  virtual ~BigQueryJobStub() = 0;
+
+  virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request) = 0;
+};
+
+class DefaultBigQueryJobStub : public BigQueryJobStub {
+ public:
+  explicit DefaultBigQueryJobStub(
+      std::unique_ptr<rest_internal::RestClient> rest_stub)
+      : rest_stub_(std::move(rest_stub)) {}
+
+  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request) override;
+
+ private:
+  std::unique_ptr<rest_internal::RestClient> rest_stub_;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
