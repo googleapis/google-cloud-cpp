@@ -12,33 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/status.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigQueryJobStub::~BigQueryJobStub() = default;
+std::ostream& operator<<(std::ostream& os, GetJobRequest const& r) {
+  os << "GetJobRequest={project_id=" << r.project_id()
+     << ", job_id=" << r.job_id() << ", location=" << r.location();
+  return os << "}";
+}
 
-StatusOr<GetJobResponse> DefaultBigQueryJobStub::GetJob(
-    GetJobRequest const& request) {
-  GetJobResponse response;
-  if (request.project_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
+StatusOr<rest_internal::RestRequest> GetJobRequest::BuildRestRequest(
+    GetJobRequest& r) {
+  rest_internal::RestRequest request;
+  if (r.project_id().empty()) {
+    GCP_LOG(DEBUG) << "Invalid request: " << r;
     return Status(StatusCode::kInvalidArgument,
                   "Invalid GetJobRequest: Project Id is empty");
   }
-  if (request.job_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
+  if (r.job_id().empty()) {
+    GCP_LOG(DEBUG) << "Invalid request: " << r;
     return Status(StatusCode::kInvalidArgument,
                   "Invalid GetJobRequest: Job Id is empty");
   }
-  // Not Implemented Yet: Call the rest client to get job details from the
-  // server.
-  return response;
+  // Set path.
+  std::string path =
+      absl::StrCat("https://bigquery.googleapis.com/bigquery/v2/projects/",
+                   r.project_id(), "/jobs/", r.job_id());
+  request.SetPath(path);
+  // Add query params.
+  if (!r.location().empty()) {
+    request.AddQueryParameter("location", r.location());
+  }
+  return request;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

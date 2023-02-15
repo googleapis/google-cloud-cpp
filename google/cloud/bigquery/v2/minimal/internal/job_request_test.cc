@@ -12,33 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
-#include "google/cloud/log.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigQueryJobStub::~BigQueryJobStub() = default;
+TEST(GetJobRequestTest, BuildRestRequestSuccessWithLocation) {
+  // Not Implemented Yet.
+}
 
-StatusOr<GetJobResponse> DefaultBigQueryJobStub::GetJob(
-    GetJobRequest const& request) {
-  GetJobResponse response;
-  if (request.project_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Project Id is empty");
-  }
-  if (request.job_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Job Id is empty");
-  }
-  // Not Implemented Yet: Call the rest client to get job details from the
-  // server.
-  return response;
+TEST(GetJobRequestTest, BuildRestRequestSuccessWithoutLocation) {
+  // Not Implemented Yet.
+}
+
+TEST(GetJobRequestTest, BuildRestRequestFailureEmptyProjectId) {
+  // Not Implemented Yet.
+}
+
+TEST(GetJobRequestTest, BuildRestRequestFailureEmptyJobId) {
+  // Not Implemented Yet.
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
