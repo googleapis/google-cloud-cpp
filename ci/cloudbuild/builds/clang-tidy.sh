@@ -30,6 +30,8 @@ read -r ENABLED_FEATURES < <(features::always_build_cmake)
 ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc"
 ENABLED_FEATURES="${ENABLED_FEATURES},generator"
 ENABLED_FEATURES="${ENABLED_FEATURES},internal-docfx"
+# TODO(#10830) - pick up experimental-bigquery_rest from `always_build_cmake`
+ENABLED_FEATURES="${ENABLED_FEATURES},experimental-bigquery_rest"
 readonly ENABLED_FEATURES
 
 mapfile -t cmake_args < <(cmake::common_args)
