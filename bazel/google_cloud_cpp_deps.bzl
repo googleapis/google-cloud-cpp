@@ -38,6 +38,7 @@ def google_cloud_cpp_deps(name = None):
         urls = [
             "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
             "https://github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/platforms/platforms-0.0.6.tar.gz",
         ],
         sha256 = "5308fc1d8865406a49427ba24a9ab53087f17f5266a7aabbfc28823f3916e1ca",
     )
@@ -48,6 +49,7 @@ def google_cloud_cpp_deps(name = None):
         name = "rules_cc",
         urls = [
             "https://github.com/bazelbuild/rules_cc/releases/download/0.0.1/rules_cc-0.0.1.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/rules_cc/rules_cc-0.0.1.tar.gz",
         ],
         sha256 = "4dccbfd22c0def164c8f47458bd50e0c7148f3d92002cdb459c2a96a68498241",
     )
@@ -59,6 +61,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "abseil-cpp-20230125.0",
         urls = [
             "https://github.com/abseil/abseil-cpp/archive/20230125.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20230125.0.tar.gz",
         ],
         sha256 = "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
     )
@@ -70,6 +73,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "googletest-1.13.0",
         urls = [
             "https://github.com/google/googletest/archive/v1.13.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googletest/v1.13.0.tar.gz",
         ],
         sha256 = "ad7fdba11ea011c1d925b3289cf4af2c66a352e18d4c7264392fead75e919363",
     )
@@ -81,6 +85,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "benchmark-1.7.0",
         urls = [
             "https://github.com/google/benchmark/archive/v1.7.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.7.0.tar.gz",
         ],
         sha256 = "3aff99169fa8bdee356eaa1f691e835a6e57b1efeadb8a0f9f228531158246ac",
     )
@@ -113,6 +118,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "protobuf-21.12",
         urls = [
             "https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v21.12.tar.gz",
         ],
         sha256 = "22fdaf641b31655d4b2297f9981fa5203b2866f8332d3c6333f6b0107bb320de",
     )
@@ -139,6 +145,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "grpc-1.52.0",
         urls = [
             "https://github.com/grpc/grpc/archive/v1.52.0.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.52.0.tar.gz",
         ],
         sha256 = "df9608a5bd4eb6d6b78df75908bb3390efdbbb9e07eddbee325e98cdfad6acd5",
     )
@@ -174,6 +181,7 @@ def google_cloud_cpp_deps(name = None):
         name = "com_github_nlohmann_json",
         urls = [
             "https://github.com/nlohmann/json/releases/download/v3.11.2/include.zip",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_nlohmann_json/include.zip",
         ],
         sha256 = "e5c7a9f49a16814be27e4ed0ee900ecd0092bfb7dbfca65b5a421b774dccaaed",
         build_file = Label("//bazel:nlohmann_json.BUILD"),
@@ -186,6 +194,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "crc32c-1.1.2",
         urls = [
             "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_google_crc32c/1.1.2.tar.gz",
         ],
         sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
         build_file = Label("//bazel:crc32c.BUILD"),
@@ -201,6 +210,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "opentelemetry-cpp-1.8.2",
         urls = [
             "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.8.2.tar.gz",
         ],
         sha256 = "20fa97e507d067e9e2ab0c1accfc334f5a4b10d01312e55455dc3733748585f4",
     )
@@ -212,6 +222,7 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "pugixml-1.13",
         urls = [
             "https://github.com/zeux/pugixml/archive/refs/tags/v1.13.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.13.tar.gz",
         ],
         sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
         build_file = Label("//bazel:pugixml.BUILD"),
