@@ -1063,16 +1063,14 @@ std::map<std::string, std::string> ParseIdempotencyOverrides(
        absl::StrSplit(iter->second, absl::ByChar(','))) {
     std::pair<std::string, std::string> override_splits =
         absl::StrSplit(idempotency_override, absl::ByChar(':'));
-    int idempotency;
-    // If this assert fails, it means we have a fundamental problem with how
-    // textproto enum fields are parsed.
-    assert(absl::SimpleAtoi(override_splits.second, &idempotency));
+    auto idempotency =
+        ServiceConfiguration::IdempotencyOverride::NON_IDEMPOTENT;
+    ServiceConfiguration::IdempotencyOverride::Idempotency_Parse(
+        override_splits.second, &idempotency);
     parsed_overrides[override_splits.first] =
-        (static_cast<ServiceConfiguration::IdempotencyOverride::Idempotency>(
-             idempotency) ==
-                 ServiceConfiguration::IdempotencyOverride::IDEMPOTENT
-             ? "kIdempotent"
-             : "kNonIdempotent");
+        idempotency == ServiceConfiguration::IdempotencyOverride::IDEMPOTENT
+            ? "kIdempotent"
+            : "kNonIdempotent";
   }
   return parsed_overrides;
 }
