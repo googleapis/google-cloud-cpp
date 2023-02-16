@@ -285,6 +285,10 @@ int main(int argc, char** argv) {
       args.emplace_back("--cpp_codegen_opt=forwarding_product_path=" +
                         service.forwarding_product_path());
     }
+    for (auto const& o : service.idempotency_overrides()) {
+      args.emplace_back(absl::StrCat("--cpp_codegen_opt=idempotency_override=",
+                                     o.rpc_name(), ":", o.idempotency()));
+    }
 
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";

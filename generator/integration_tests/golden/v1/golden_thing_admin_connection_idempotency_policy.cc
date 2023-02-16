@@ -51,7 +51,7 @@ Idempotency GoldenThingAdminConnectionIdempotencyPolicy::UpdateDatabaseDdl(googl
 }
 
 Idempotency GoldenThingAdminConnectionIdempotencyPolicy::DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const&) {

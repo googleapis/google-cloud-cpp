@@ -170,7 +170,7 @@ Idempotency $idempotency_class_name$::$method_name$(
     if (IsPaginated(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
 Idempotency $idempotency_class_name$::$method_name$($request_type$) {  // NOLINT
-  return Idempotency::$default_idempotency$;
+  return Idempotency::$idempotency$;
 }
 )""");
       continue;
@@ -178,7 +178,7 @@ Idempotency $idempotency_class_name$::$method_name$($request_type$) {  // NOLINT
 
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
 Idempotency $idempotency_class_name$::$method_name$($request_type$ const&) {
-  return Idempotency::$default_idempotency$;
+  return Idempotency::$idempotency$;
 }
 )""");
   }

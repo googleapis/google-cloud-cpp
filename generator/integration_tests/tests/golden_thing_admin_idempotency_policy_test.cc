@@ -58,7 +58,7 @@ TEST_F(GoldenIdempotencyPolicyTest, UpdateDatabaseDdl) {
 
 TEST_F(GoldenIdempotencyPolicyTest, DropDatabase) {
   gtab::DropDatabaseRequest request;
-  EXPECT_EQ(policy_->DropDatabase(request), Idempotency::kNonIdempotent);
+  EXPECT_EQ(policy_->DropDatabase(request), Idempotency::kIdempotent);
 }
 
 TEST_F(GoldenIdempotencyPolicyTest, GetDatabaseDdl) {

@@ -47,7 +47,7 @@ Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::WriteLogEntries(google
 }
 
 Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ListLogs(google::test::admin::database::v1::ListLogsRequest) {  // NOLINT
-  return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const&) {
