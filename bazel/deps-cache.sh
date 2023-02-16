@@ -87,10 +87,6 @@ cat >"${TMPDIR}/script" <<'EOT'
 /^ *maybe($/ {
   : maybe
   n
-  /^ *repo_rule = / {
-    /^ *repo_rule = http_archive,$/ b maybe
-    Q 1
-  }
   /^ *name = ".*",$/ {
     s/^ *name = "\(.*\)",$/NAME="\1"/
     H
@@ -117,6 +113,7 @@ cat >"${TMPDIR}/script" <<'EOT'
     b maybe
   }
   /^ *#/ b maybe
+  /^ *http_archive,$/ b maybe
   /^ *strip_prefix = ".*",$/ b maybe
   /^ *build_file = .*,$/ b maybe
   /^ *patch/ b maybe
@@ -127,10 +124,18 @@ cat >"${TMPDIR}/script" <<'EOT'
     p
     b
   }
-  Q 3
+  Q 1
 }
 EOT
-readarray ARCHIVES < <(sed -n -f "${TMPDIR}/script" "${BZL_FILE}")
+coproc { sed -n -f "${TMPDIR}/script" "${BZL_FILE}"; }
+WAIT_PID="${COPROC_PID}"
+readarray ARCHIVES <&"${COPROC[0]}"
+if wait "${WAIT_PID}"; then
+  : # "! wait" would clear $?
+else
+  echo "${PROGRAM}: ${BZL_FILE}: Parse error ($?)"
+  exit 1
+fi
 
 # Download archives and verify checksums.
 declare -i FETCH_ERRORS=0
