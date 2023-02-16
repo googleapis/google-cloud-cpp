@@ -22,8 +22,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Custom class for V2 Job proto fields.
-
 struct JobConfiguration {
   // Not Implemented Yet.
 };
@@ -40,6 +38,7 @@ struct JobStatus {
   // Not Implemented Yet.
 };
 
+// Custom object for V2 Job proto fields.
 struct Job {
   std::string kind;
   std::string etag;

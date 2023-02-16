@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,12 +21,19 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TEST(GetJobResponseTest, BuildFromHttpResponseSuccess) {
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+
+TEST(JobResponseTest, Success) {
   // Not Implemented Yet.
 }
 
-TEST(GetJobResponseTest, BuildFromHttpResponseFailure) {
-  // Not Implemented Yet.
+TEST(JobResponseTest, EmptyPayload) {
+  BigQueryHttpResponse http_response;
+  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(job_response,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("Empty payload in HTTP response")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
