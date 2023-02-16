@@ -130,6 +130,8 @@ time {
   expressions=("-e" "'s/[[:blank:]]\+$//'")
   # Removes trailing blank lines (see http://sed.sourceforge.net/sed1line.txt)
   expressions+=("-e" "':x;/^\n*$/{\$d;N;bx;}'")
+  # Adds a trailing newline if one doesn't already exist
+  expressions+=("-e" "'\$a\'")
   git_files -z | grep -zv '\.gz$' | grep -zv 'googleapis.patch$' |
     (xargs -r -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
