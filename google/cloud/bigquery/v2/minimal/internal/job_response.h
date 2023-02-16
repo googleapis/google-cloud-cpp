@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Internal interface for Bigquery V2 Job resource.
-
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_RESPONSE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_RESPONSE_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 
 namespace google {

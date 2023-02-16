@@ -16,29 +16,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REQUEST_H
 
 #include "google/cloud/internal/rest_request.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <ostream>
+#include <iosfwd>
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Holds request parameters necessary to make the GetJob rest call.
+// Holds request parameters necessary to make the GetJob call.
 class GetJobRequest {
  public:
-  // Constructors
   GetJobRequest() = default;
   explicit GetJobRequest(std::string project_id, std::string job_id)
       : project_id_(std::move(project_id)), job_id_(std::move(job_id)) {}
 
-  // Getters
   std::string const& project_id() const { return project_id_; }
   std::string const& job_id() const { return job_id_; }
   std::string const& location() const { return location_; }
 
-  // Setters
   GetJobRequest& set_project_id(std::string project_id) & {
     project_id_ = std::move(project_id);
     return *this;
@@ -65,17 +64,13 @@ class GetJobRequest {
 
   // Builds RestRequest from GetJobRequest.
   static StatusOr<rest_internal::RestRequest> BuildRestRequest(
-      GetJobRequest& r);
+      Options opts, GetJobRequest& r);
 
-  // Members
  private:
   std::string project_id_;
   std::string job_id_;
   std::string location_;
 };
-
-// Logs GetJobRequest data.
-std::ostream& operator<<(std::ostream& os, GetJobRequest const& r);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
