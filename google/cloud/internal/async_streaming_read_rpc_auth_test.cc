@@ -110,14 +110,10 @@ TEST(AsyncStreamReadWriteAuth, CancelDuringAuth) {
   auto start_promise = promise<void>();
   EXPECT_CALL(*strategy, AsyncConfigureContext)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext> context) {
-        struct MoveCapture {
-          std::unique_ptr<grpc::ClientContext> context;
-          StatusOr<std::unique_ptr<grpc::ClientContext>> operator()(
-              future<void>) {
-            return make_status_or(std::move(context));
-          }
-        };
-        return start_promise.get_future().then(MoveCapture{std::move(context)});
+        return start_promise.get_future().then(
+            [c = std::move(context)](auto) mutable {
+              return make_status_or(std::move(c));
+            });
       });
 
   auto uut = absl::make_unique<AuthStream>(
