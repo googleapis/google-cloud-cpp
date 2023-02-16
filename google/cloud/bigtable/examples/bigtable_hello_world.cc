@@ -45,10 +45,16 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
   using ::google::cloud::StatusOr;
   //! [aliases]
 
-  // Connect to the Cloud Bigtable Admin API.
   //! [connect admin] [START bigtable_hw_connect]
+  // Connect to the Cloud Bigtable Admin API.
   cbta::BigtableTableAdminClient table_admin(
       cbta::MakeBigtableTableAdminConnection());
+
+  //! [connect data]
+  // Create an object to access the Cloud Bigtable Data API.
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
+  //! [connect data]
   //! [connect admin] [END bigtable_hw_connect]
 
   //! [create table] [START bigtable_hw_create_table]
@@ -61,13 +67,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
   std::string instance_name = cbt::InstanceName(project_id, instance_id);
   StatusOr<google::bigtable::admin::v2::Table> schema =
       table_admin.CreateTable(instance_name, table_id, std::move(t));
-  //! [create table]
-
-  // Create an object to access the Cloud Bigtable Data API.
-  //! [connect data]
-  cbt::Table table(cbt::MakeDataConnection(),
-                   cbt::TableResource(project_id, instance_id, table_id));
-  //! [connect data] [END bigtable_hw_create_table]
+  //! [create table] [END bigtable_hw_create_table]
 
   // Modify (and create if necessary) a row.
   //! [write rows] [START bigtable_hw_write_rows]
