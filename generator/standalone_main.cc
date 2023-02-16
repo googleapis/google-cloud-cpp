@@ -286,8 +286,10 @@ int main(int argc, char** argv) {
                         service.forwarding_product_path());
     }
     for (auto const& o : service.idempotency_overrides()) {
-      args.emplace_back(absl::StrCat("--cpp_codegen_opt=idempotency_override=",
-                                     o.rpc_name(), ":", o.idempotency()));
+      args.emplace_back(absl::StrCat(
+          "--cpp_codegen_opt=idempotency_override=", o.rpc_name(), ":",
+          google::cloud::cpp::generator::ServiceConfiguration::
+              IdempotencyOverride::Idempotency_Name(o.idempotency())));
     }
 
     GCP_LOG(INFO) << "Generating service code using: "

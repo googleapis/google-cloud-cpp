@@ -1068,9 +1068,9 @@ std::map<std::string, std::string> ParseIdempotencyOverrides(
     ServiceConfiguration::IdempotencyOverride::Idempotency_Parse(
         override_splits.second, &idempotency);
     parsed_overrides[override_splits.first] =
-        idempotency == ServiceConfiguration::IdempotencyOverride::IDEMPOTENT
-            ? "kIdempotent"
-            : "kNonIdempotent";
+        (idempotency == ServiceConfiguration::IdempotencyOverride::IDEMPOTENT
+             ? "kIdempotent"
+             : "kNonIdempotent");
   }
   return parsed_overrides;
 }
