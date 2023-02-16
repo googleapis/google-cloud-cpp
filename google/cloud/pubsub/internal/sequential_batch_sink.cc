@@ -81,19 +81,14 @@ void SequentialBatchSink::OnPublish(Status s) {
   queue_.pop_front();
   lk.unlock();
 
-  auto weak = WeakFromThis();
-  struct MoveCaptureRequest {
-    std::weak_ptr<SequentialBatchSink> weak;
-    google::cloud::promise<StatusOr<PublishResponse>> promise;
-    void operator()(future<StatusOr<PublishResponse>> f) {
-      auto response = f.get();
-      auto status = response ? Status{} : response.status();
-      promise.set_value(std::move(response));
-      if (auto self = weak.lock()) self->OnPublish(std::move(status));
-    }
-  };
+  auto w = WeakFromThis();
   sink_->AsyncPublish(std::move(pr.request))
-      .then(MoveCaptureRequest{WeakFromThis(), std::move(pr.promise)});
+      .then([w = std::move(w), p = std::move(pr.promise)](auto f) mutable {
+        auto response = f.get();
+        auto status = response ? Status{} : response.status();
+        p.set_value(std::move(response));
+        if (auto self = w.lock()) self->OnPublish(std::move(status));
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -104,15 +104,11 @@ void SubscriptionConcurrencyControl::OnMessage(
   ++message_count_;
   lk.unlock();
 
-  struct MoveCapture {
-    std::weak_ptr<SubscriptionConcurrencyControl> w;
-    google::pubsub::v1::ReceivedMessage m;
-    void operator()() {
-      if (auto s = w.lock()) s->OnMessageAsync(std::move(m), std::move(w));
-    }
-  };
+  std::weak_ptr<SubscriptionConcurrencyControl> w = shared_from_this();
   shutdown_manager_->StartAsyncOperation(
-      __func__, "callback", cq_, MoveCapture{shared_from_this(), std::move(m)});
+      __func__, "callback", cq_, [m = std::move(m), w = std::move(w)] {
+        if (auto s = w.lock()) s->OnMessageAsync(std::move(m), std::move(w));
+      });
 }
 
 void SubscriptionConcurrencyControl::OnMessageAsync(

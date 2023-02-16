@@ -118,12 +118,9 @@ void BatchingPublisherConnection::HandleError(Status const& status) {
   waiters.swap(waiters_);
   lk.unlock();
   for (auto& p : waiters) {
-    struct MoveCapture {
-      promise<StatusOr<std::string>> p;
-      Status status;
-      void operator()() { p.set_value(std::move(status)); }
-    };
-    cq_.RunAsync(MoveCapture{std::move(p), status});
+    cq_.RunAsync([p = std::move(p), status]() mutable {
+      p.set_value(std::move(status));
+    });
   }
 }
 
@@ -178,14 +175,9 @@ void BatchingPublisherConnection::OnTimer() {
 future<StatusOr<std::string>> BatchingPublisherConnection::CorkedError() {
   promise<StatusOr<std::string>> p;
   auto f = p.get_future();
-
-  struct MoveCapture {
-    promise<StatusOr<std::string>> p;
-    Status status;
-    void operator()() { p.set_value(std::move(status)); }
-  };
-  cq_.RunAsync(MoveCapture{std::move(p), corked_on_status_});
-
+  cq_.RunAsync([p = std::move(p), status = corked_on_status_]() mutable {
+    p.set_value(std::move(status));
+  });
   return f;
 }
 
