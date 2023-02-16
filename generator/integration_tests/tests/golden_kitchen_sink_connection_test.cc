@@ -243,8 +243,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListLogsPermanentError) {
 TEST(GoldenKitchenSinkConnectionTest, ListLogsTooManyTransients) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, ListLogs)
-      .Times(AtLeast(2))
-      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
   auto conn = CreateTestingConnection(std::move(mock));
   ::google::test::admin::database::v1::ListLogsRequest request;
   request.set_parent("projects/my-project");

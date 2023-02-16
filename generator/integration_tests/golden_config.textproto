@@ -45,4 +45,8 @@ service {
     "Deprecated2",
     "GenerateAccessToken(std::string const&, std::string const&)"
   ]
+  idempotency_overrides: [
+    {rpc_name: "GoldenThingAdmin.DropDatabase", idempotency: IDEMPOTENT},
+    {rpc_name: "GoldenKitchenSink.ListLogs", idempotency: NON_IDEMPOTENT}
+  ]
 }

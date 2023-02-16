@@ -52,7 +52,7 @@ TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, WriteLogEntries) {
 
 TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, ListLogs) {
   google::test::admin::database::v1::ListLogsRequest request;
-  EXPECT_EQ(policy_->ListLogs(request), Idempotency::kIdempotent);
+  EXPECT_EQ(policy_->ListLogs(request), Idempotency::kNonIdempotent);
 }
 
 TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, ListServiceAccountKeys) {

@@ -394,6 +394,19 @@ TEST(GoldenThingAdminConnectionTest, DropDatabaseSuccess) {
   EXPECT_STATUS_OK(response);
 }
 
+TEST(GoldenThingAdminConnectionTest, DropDatabaseTooManyTransients) {
+  auto mock = std::make_shared<MockGoldenThingAdminStub>();
+  EXPECT_CALL(*mock, DropDatabase)
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ::google::test::admin::database::v1::DropDatabaseRequest request;
+  request.set_database(
+      "projects/test-project/instances/test-instance/databases/test-database");
+  auto response = conn->DropDatabase(request);
+  EXPECT_EQ(StatusCode::kUnavailable, response.code());
+}
+
 /// @test Verify that permanent errors are reported immediately.
 TEST(GoldenThingAdminConnectionTest, DropDatabasePermanentError) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
@@ -1292,7 +1305,8 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
   EXPECT_CALL(*mock, AsyncDropDatabase)
-      .WillOnce(
+      .Times(AtLeast(2))
+      .WillRepeatedly(
           [&expected_name](
               CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
               ::google::test::admin::database::v1::DropDatabaseRequest const&
@@ -1310,7 +1324,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
   ASSERT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto status = fut.get();
   ASSERT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
-                               AllOf(HasSubstr("Error in non-idempotent"),
+                               AllOf(HasSubstr("Retry policy exhausted"),
                                      HasSubstr("AsyncDropDatabase"),
                                      HasSubstr("try again"))));
 }
@@ -1348,7 +1362,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   EXPECT_TRUE(cancel_completed.get());
   auto status = fut.get();
   ASSERT_THAT(status, StatusIs(StatusCode::kDeadlineExceeded,
-                               AllOf(HasSubstr("Error in non-idempotent"),
+                               AllOf(HasSubstr("Retry loop cancelled"),
                                      HasSubstr("AsyncDropDatabase"),
                                      HasSubstr("try again"))));
 }

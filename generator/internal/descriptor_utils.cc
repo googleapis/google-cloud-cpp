@@ -1053,6 +1053,28 @@ VarsDictionary CreateServiceVars(
   return vars;
 }
 
+std::map<std::string, std::string> ParseIdempotencyOverrides(
+    VarsDictionary const& vars) {
+  using ::google::cloud::cpp::generator::ServiceConfiguration;
+  auto iter = vars.find("idempotency_overrides");
+  if (iter == vars.end()) return {};
+  std::map<std::string, std::string> parsed_overrides;
+  for (auto const& idempotency_override :
+       absl::StrSplit(iter->second, absl::ByChar(','))) {
+    std::pair<std::string, std::string> override_splits =
+        absl::StrSplit(idempotency_override, absl::ByChar(':'));
+    auto idempotency =
+        ServiceConfiguration::IdempotencyOverride::NON_IDEMPOTENT;
+    ServiceConfiguration::IdempotencyOverride::Idempotency_Parse(
+        override_splits.second, &idempotency);
+    parsed_overrides[override_splits.first] =
+        (idempotency == ServiceConfiguration::IdempotencyOverride::IDEMPOTENT
+             ? "kIdempotent"
+             : "kNonIdempotent");
+  }
+  return parsed_overrides;
+}
+
 std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service,
     VarsDictionary const& vars) {
@@ -1065,14 +1087,21 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
   };
   auto const emitted_rpcs = split_arg("emitted_rpcs");
   auto const omitted_rpcs = split_arg("omitted_rpcs");
+  auto const idempotency_overrides = ParseIdempotencyOverrides(vars);
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
     VarsDictionary method_vars;
     method_vars["method_return_doxygen_link"] =
         FormatDoxygenLink(*method.output_type());
-    method_vars["default_idempotency"] =
-        DefaultIdempotencyFromHttpOperation(method);
+    method_vars["idempotency"] = DefaultIdempotencyFromHttpOperation(method);
+    if (!idempotency_overrides.empty()) {
+      auto iter = idempotency_overrides.find(
+          absl::StrCat(service.name(), ".", method.name()));
+      if (iter != idempotency_overrides.end()) {
+        method_vars["idempotency"] = iter->second;
+      }
+    }
     method_vars["method_name"] = method.name();
     method_vars["method_name_snake"] = CamelCaseToSnakeCase(method.name());
     method_vars["request_type"] =

@@ -172,6 +172,12 @@ void ProcessArgEmitRpc(
   ProcessRepeated("emit_rpc", "emitted_rpcs", command_line_args);
 }
 
+void ProcessArgIdempotencyOverride(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("idempotency_override", "idempotency_overrides",
+                  command_line_args);
+}
+
 }  // namespace
 
 std::string CurrentCopyrightYear() {
@@ -268,6 +274,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgAdditionalProtoFiles(command_line_args);
   ProcessArgForwardingProductPath(command_line_args);
   ProcessArgEmitRpc(command_line_args);
+  ProcessArgIdempotencyOverride(command_line_args);
   return command_line_args;
 }
 
