@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -23,7 +24,9 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
   GetJobResponse response;
   if (http_response.payload.empty()) {
-    return Status(StatusCode::kUnknown, "Empty payload in HTTP response.");
+    return internal::InvalidArgumentError(
+        "Empty payload in HTTP response.",
+        GCP_ERROR_INFO().Build(StatusCode::kInternal));
   }
   // Not Implemented Yet: Parse HttpResponse and build GetJobResponse object.
   return response;

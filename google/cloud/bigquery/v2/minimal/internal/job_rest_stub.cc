@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
-#include "google/cloud/log.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 
 namespace google {
@@ -27,14 +27,14 @@ StatusOr<GetJobResponse> DefaultBigQueryJobStub::GetJob(
     GetJobRequest const& request) {
   GetJobResponse response;
   if (request.project_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Project Id is empty");
+    return internal::InvalidArgumentError(
+        "Invalid GetJobRequest: Project Id is empty",
+        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
   }
   if (request.job_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << request;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Job Id is empty");
+    return internal::InvalidArgumentError(
+        "Invalid GetJobRequest: Job Id is empty",
+        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
   }
   // Not Implemented Yet: Call the rest client to get job details from the
   // server.

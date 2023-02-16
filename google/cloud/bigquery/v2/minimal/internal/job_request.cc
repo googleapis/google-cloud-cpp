@@ -13,39 +13,50 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/log.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
+#include "absl/strings/match.h"
+#include <ostream>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::ostream& operator<<(std::ostream& os, GetJobRequest const& r) {
-  os << "GetJobRequest={project_id=" << r.project_id()
-     << ", job_id=" << r.job_id() << ", location=" << r.location();
-  return os << "}";
-}
-
 StatusOr<rest_internal::RestRequest> GetJobRequest::BuildRestRequest(
-    GetJobRequest& r) {
+    Options opts, GetJobRequest& r) {
   rest_internal::RestRequest request;
   if (r.project_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << r;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Project Id is empty");
+    return internal::InvalidArgumentError(
+        "Invalid GetJobRequest: Project Id is empty",
+        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
   }
   if (r.job_id().empty()) {
-    GCP_LOG(DEBUG) << "Invalid request: " << r;
-    return Status(StatusCode::kInvalidArgument,
-                  "Invalid GetJobRequest: Job Id is empty");
+    return internal::InvalidArgumentError(
+        "Invalid GetJobRequest: Job Id is empty",
+        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
   }
-  // Set path.
+  if (!opts.has<EndpointOption>()) {
+    opts.set<EndpointOption>("https://bigquery.googleapis.com/");
+  }
+  // Fix the endpoints prefix and suffixes.
+  auto endpoint = opts.get<EndpointOption>();
+  if (!(absl::StartsWith(endpoint, "https://")) &&
+      !(absl::StartsWith(endpoint, "http://"))) {
+    endpoint = absl::StrCat("https://", endpoint);
+  }
+  if (absl::EndsWith(endpoint, "/")) {
+    absl::StrAppend(&endpoint, "bigquery/v2/projects/");
+  } else {
+    absl::StrAppend(&endpoint, "/bigquery/v2/projects/");
+  }
+
   std::string path =
-      absl::StrCat("https://bigquery.googleapis.com/bigquery/v2/projects/",
-                   r.project_id(), "/jobs/", r.job_id());
-  request.SetPath(path);
+      absl::StrCat(endpoint, r.project_id(), "/jobs/", r.job_id());
+  request.SetPath(std::move(path));
+
   // Add query params.
   if (!r.location().empty()) {
     request.AddQueryParameter("location", r.location());

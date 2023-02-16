@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,20 +22,77 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TEST(GetJobRequestTest, BuildRestRequestSuccessWithLocation) {
-  // Not Implemented Yet.
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
+
+TEST(JobRequestTest, SuccessWithLocation) {
+  GetJobRequest request("1", "2");
+  request.set_location("useast");
+  Options opts;
+  auto actual = GetJobRequest::BuildRestRequest(opts, request);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+  expected.AddQueryParameter("location", "useast");
+  EXPECT_EQ(expected, actual.value());
 }
 
-TEST(GetJobRequestTest, BuildRestRequestSuccessWithoutLocation) {
-  // Not Implemented Yet.
+TEST(JobRequestTest, SuccessWithoutLocation) {
+  GetJobRequest request("1", "2");
+  Options opts;
+  auto actual = GetJobRequest::BuildRestRequest(opts, request);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
+  EXPECT_EQ(expected, actual.value());
 }
 
-TEST(GetJobRequestTest, BuildRestRequestFailureEmptyProjectId) {
-  // Not Implemented Yet.
+TEST(JobRequestTest, SuccessWithEndpoint) {
+  GetJobRequest request("1", "2");
+  Options opts;
+
+  struct EndpointTest {
+    std::string endpoint;
+    std::string expected;
+  } cases[] = {
+      {"https://myendpoint.google.com",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+      {"http://myendpoint.google.com",
+       "http://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+      {"myendpoint.google.com",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+      {"https://myendpoint.google.com/",
+       "https://myendpoint.google.com/bigquery/v2/projects/1/jobs/2"},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing for endpoint: " + test.endpoint +
+                 ", expected: " + test.expected);
+    opts.set<EndpointOption>(test.endpoint);
+    auto actual = GetJobRequest::BuildRestRequest(opts, request);
+    ASSERT_STATUS_OK(actual);
+    EXPECT_EQ(test.expected, actual.value().path());
+  }
 }
 
-TEST(GetJobRequestTest, BuildRestRequestFailureEmptyJobId) {
-  // Not Implemented Yet.
+TEST(JobRequestTest, EmptyProjectId) {
+  GetJobRequest request("", "job_id");
+  Options opts;
+  auto rest_request = GetJobRequest::BuildRestRequest(opts, request);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("Project Id is empty")));
+}
+
+TEST(GetJobRequest, EmptyJobId) {
+  GetJobRequest request("project_id", "");
+  Options opts;
+  auto rest_request = GetJobRequest::BuildRestRequest(opts, request);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("Job Id is empty")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
