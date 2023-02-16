@@ -107,6 +107,12 @@ For status on this, see https://github.com/googleapis/google-cloud-cpp/issues/88
   details.
 </details>
 
+## v1.42.2 - 2023-02
+
+- Update BoringSSL version in Bazel configuration ([#10838](https://github.com/googleapis/google-cloud-cpp/pull/10838))
+
+  The new version of BoringSSL includes fixes for [CVE-2023-0286](https://github.com/advisories/GHSA-x4qr-2fvf-3mr5).
+
 ## v1.42.1 - 2022-09
 
 - Update Protobuf version in Bazel configuration to v21.6 ([#9863](https://github.com/googleapis/google-cloud-cpp/pull/9863))
