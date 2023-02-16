@@ -116,7 +116,6 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, Options opts) {
   SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
       request, app_profile_id(), table_name_);
   mut.MoveTo(request);
-  auto context = absl::make_unique<grpc::ClientContext>();
 
   // Determine if all the mutations are idempotent. The idempotency of the
   // mutations won't change as the retry loop executes, so we can just compute

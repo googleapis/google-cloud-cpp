@@ -92,8 +92,6 @@ class DefaultRowReader : public RowReaderImpl {
   std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
 
-  std::unique_ptr<grpc::ClientContext> context_;
-
   std::unique_ptr<bigtable::internal::ReadRowsParser> parser_;
   std::unique_ptr<
       internal::StreamingReadRpc<google::bigtable::v2::ReadRowsResponse>>
