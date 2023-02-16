@@ -33,7 +33,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load platforms, we use it directly
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "platforms",
         urls = [
             "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.6/platforms-0.0.6.tar.gz",
@@ -44,7 +44,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load rules_cc, used by googletest
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "rules_cc",
         urls = [
             "https://github.com/bazelbuild/rules_cc/releases/download/0.0.1/rules_cc-0.0.1.tar.gz",
@@ -54,7 +54,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load Abseil
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_google_absl",
         strip_prefix = "abseil-cpp-20230125.0",
         urls = [
@@ -65,7 +65,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load a version of googletest that we know works.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_google_googletest",
         strip_prefix = "googletest-1.13.0",
         urls = [
@@ -76,7 +76,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load a version of benchmark that we know works.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_google_benchmark",
         strip_prefix = "benchmark-1.7.0",
         urls = [
@@ -87,7 +87,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load the googleapis dependency.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_google_googleapis",
         urls = [
             "https://github.com/googleapis/googleapis/archive/ebf47e25ff363de57a6036562504db6caf3d8b89.tar.gz",
@@ -108,7 +108,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load protobuf.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_google_protobuf",
         strip_prefix = "protobuf-21.12",
         urls = [
@@ -120,7 +120,7 @@ def google_cloud_cpp_deps(name = None):
     # Load BoringSSL. This could be automatically loaded by gRPC. But as of
     # 2023-02-01 the version loaded by gRPC-1.51 does not compile with Clang-15.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "boringssl",
         # Use github mirror instead of https://boringssl.googlesource.com/boringssl
         # to obtain a boringssl archive with (more) consistent sha256.
@@ -134,7 +134,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_github_grpc_grpc",
         strip_prefix = "grpc-1.52.0",
         urls = [
@@ -157,7 +157,7 @@ def google_cloud_cpp_deps(name = None):
 
     # We need libcurl for the Google Cloud Storage client.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_github_curl_curl",
         urls = [
             "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
@@ -170,7 +170,7 @@ def google_cloud_cpp_deps(name = None):
 
     # We need the nlohmann_json library
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_github_nlohmann_json",
         urls = [
             "https://github.com/nlohmann/json/releases/download/v3.11.2/include.zip",
@@ -181,7 +181,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Load google/crc32c, a library to efficiently compute CRC32C checksums.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_github_google_crc32c",
         strip_prefix = "crc32c-1.1.2",
         urls = [
@@ -196,7 +196,7 @@ def google_cloud_cpp_deps(name = None):
 
     # Open Telemetry
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "io_opentelemetry_cpp",
         strip_prefix = "opentelemetry-cpp-1.8.2",
         urls = [
@@ -207,7 +207,7 @@ def google_cloud_cpp_deps(name = None):
 
     # PugiXML, this is only used in the docfx internal tool.
     maybe(
-        repo_rule = http_archive,
+        http_archive,
         name = "com_github_zeux_pugixml",
         strip_prefix = "pugixml-1.13",
         urls = [
