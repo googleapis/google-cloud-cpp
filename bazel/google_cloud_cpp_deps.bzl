@@ -172,10 +172,11 @@ def google_cloud_cpp_deps(name = None):
     maybe(
         http_archive,
         name = "com_github_nlohmann_json",
+        strip_prefix = "json-3.11.2",
         urls = [
-            "https://github.com/nlohmann/json/releases/download/v3.11.2/include.zip",
+            "https://github.com/nlohmann/json/archive/v3.11.2.tar.gz",
         ],
-        sha256 = "e5c7a9f49a16814be27e4ed0ee900ecd0092bfb7dbfca65b5a421b774dccaaed",
+        sha256 = "d69f9deb6a75e2580465c6c4c5111b89c4dc2fa94e3a85fcd2ffcd9a143d9273",
         build_file = Label("//bazel:nlohmann_json.BUILD"),
     )
 
