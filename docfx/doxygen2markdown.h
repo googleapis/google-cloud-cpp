@@ -50,9 +50,29 @@ struct MarkdownContext {
 bool AppendIfPlainText(std::ostream& os, MarkdownContext const& ctx,
                        pugi::xml_node const& node);
 
-/// Handle nodes with `computer output`.
+/// Handles nodes with **bold** text.
+bool AppendIfBold(std::ostream& os, MarkdownContext const& ctx,
+                  pugi::xml_node const& node);
+
+/// Handles nodes with ~strike through~ text.
+bool AppendIfStrike(std::ostream& os, MarkdownContext const& ctx,
+                    pugi::xml_node const& node);
+
+/// Handles *emphasis* in text.
+bool AppendIfEmphasis(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node);
+
+/// Handles nodes with `computer output`.
 bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& ctx,
                             pugi::xml_node const& node);
+
+/// Part of the implementation of AppendIfParagraph().
+bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
+                              pugi::xml_node const& node);
+
+/// Part of the implementation of AppendIfParagraph().
+bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
+                         pugi::xml_node const& node);
 
 /// Handle full paragraphs.
 bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,

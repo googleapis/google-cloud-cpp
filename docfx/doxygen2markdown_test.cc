@@ -33,6 +33,42 @@ TEST(Doxygen2Markdown, PlainText) {
   EXPECT_EQ(os.str(), "test-only-value 42");
 }
 
+TEST(Doxygen2Markdown, Bold) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <bold id="test-node">some text</bold>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfBold(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "**some text**");
+}
+
+TEST(Doxygen2Markdown, Strike) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <strike id="test-node">some text</strike>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfStrike(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "~some text~");
+}
+
+TEST(Doxygen2Markdown, Emphasis) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <emphasis id="test-node">some text</emphasis>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfEmphasis(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "*some text*");
+}
+
 TEST(Doxygen2Markdown, ComputerOutput) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
