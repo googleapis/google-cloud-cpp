@@ -102,6 +102,7 @@ cat >"${TMPDIR}/script" <<'EOT'
       H
       b urls
     }
+    /^ *#/ b urls
     /^ *\],$/ {
       b maybe
     }
