@@ -128,10 +128,11 @@ def google_cloud_cpp_deps(name = None):
     maybe(
         http_archive,
         name = "boringssl",
-        # Use github mirror instead of https://boringssl.googlesource.com/boringssl
-        # to obtain a boringssl archive with (more) consistent sha256.
         urls = [
             "https://storage.googleapis.com/cloud-cpp-community-archive/boringssl/82a53d8c902f940eb1310f76a0b96c40c67f632f.tar.gz",
+            # Use https://github.com/google/boringssl instead of
+            # https://boringssl.googlesource.com/boringssl as the
+            # former has a (more) consistent sha256.
             "https://github.com/google/boringssl/archive/82a53d8c902f940eb1310f76a0b96c40c67f632f.tar.gz",
         ],
         sha256 = "c25e5c1ac36fa6709b2fd9095584228d48e9f82bcf97d8cd868bcbe796f90ba5",
