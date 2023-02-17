@@ -22,9 +22,7 @@
  * Keeps the state for markdown generation.
  *
  * As we recurse through the XML tree, we need to keep some information to
- * generate valid Markdown text. At the moment, this is just the indentation
- * level for new paragraphs, but we use a `struct` in anticipation of more
- * state.
+ * generate valid Markdown text.
  */
 struct MarkdownContext {
   std::string paragraph_start = "\n\n";
