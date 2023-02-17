@@ -330,7 +330,8 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: hruler, preformatted, programlisting, verbatim, indexentry
   // Unexpected: orderedlist
   if (AppendIfItemizedList(os, ctx, node)) return true;
-  // Unexpected: simplesect, title, variablelist, table, header
+  if (AppendIfSimpleSect(os, ctx, node)) return true;
+  // Unexpected: title, variablelist, table, header
   // Unexpected: dotfile, mscfile,diafile, toclist, language, parameterlist
   // Unexpected: xrefsect, copydoc, blockquote, parblock
   return false;
