@@ -29,26 +29,26 @@ TEST(JobRequestTest, SuccessWithLocation) {
   GetJobRequest request("1", "2");
   request.set_location("useast");
   Options opts;
-  auto actual = GetJobRequest::BuildRestRequest(opts, request);
+  auto actual = BuildRestRequest(request, opts);
   ASSERT_STATUS_OK(actual);
 
   rest_internal::RestRequest expected;
   expected.SetPath(
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
   expected.AddQueryParameter("location", "useast");
-  EXPECT_EQ(expected, actual.value());
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST(JobRequestTest, SuccessWithoutLocation) {
   GetJobRequest request("1", "2");
   Options opts;
-  auto actual = GetJobRequest::BuildRestRequest(opts, request);
+  auto actual = BuildRestRequest(request, opts);
   ASSERT_STATUS_OK(actual);
 
   rest_internal::RestRequest expected;
   expected.SetPath(
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs/2");
-  EXPECT_EQ(expected, actual.value());
+  EXPECT_EQ(expected, *actual);
 }
 
 TEST(JobRequestTest, SuccessWithEndpoint) {
@@ -73,7 +73,7 @@ TEST(JobRequestTest, SuccessWithEndpoint) {
     SCOPED_TRACE("Testing for endpoint: " + test.endpoint +
                  ", expected: " + test.expected);
     opts.set<EndpointOption>(test.endpoint);
-    auto actual = GetJobRequest::BuildRestRequest(opts, request);
+    auto actual = BuildRestRequest(request, opts);
     ASSERT_STATUS_OK(actual);
     EXPECT_EQ(test.expected, actual.value().path());
   }
@@ -82,7 +82,7 @@ TEST(JobRequestTest, SuccessWithEndpoint) {
 TEST(JobRequestTest, EmptyProjectId) {
   GetJobRequest request("", "job_id");
   Options opts;
-  auto rest_request = GetJobRequest::BuildRestRequest(opts, request);
+  auto rest_request = BuildRestRequest(request, opts);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Project Id is empty")));
 }
@@ -90,7 +90,7 @@ TEST(JobRequestTest, EmptyProjectId) {
 TEST(GetJobRequest, EmptyJobId) {
   GetJobRequest request("project_id", "");
   Options opts;
-  auto rest_request = GetJobRequest::BuildRestRequest(opts, request);
+  auto rest_request = BuildRestRequest(request, opts);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Job Id is empty")));
 }

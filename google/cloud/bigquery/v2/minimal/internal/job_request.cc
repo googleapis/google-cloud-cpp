@@ -25,33 +25,26 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<rest_internal::RestRequest> GetJobRequest::BuildRestRequest(
-    Options opts, GetJobRequest& r) {
+StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest& r,
+                                                      Options opts) {
   rest_internal::RestRequest request;
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Project Id is empty",
-        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
+        "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
   }
   if (r.job_id().empty()) {
     return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Job Id is empty",
-        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
-  }
-  if (!opts.has<EndpointOption>()) {
-    opts.set<EndpointOption>("https://bigquery.googleapis.com/");
+        "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
   // Fix the endpoints prefix and suffixes.
-  auto endpoint = opts.get<EndpointOption>();
-  if (!(absl::StartsWith(endpoint, "https://")) &&
-      !(absl::StartsWith(endpoint, "http://"))) {
+  auto endpoint =
+      opts.lookup<EndpointOption>("https://bigquery.googleapis.com/");
+  if (!absl::StartsWith(endpoint, "https://") &&
+      !absl::StartsWith(endpoint, "http://")) {
     endpoint = absl::StrCat("https://", endpoint);
   }
-  if (absl::EndsWith(endpoint, "/")) {
-    absl::StrAppend(&endpoint, "bigquery/v2/projects/");
-  } else {
-    absl::StrAppend(&endpoint, "/bigquery/v2/projects/");
-  }
+  if (!absl::EndsWith(endpoint, "/")) absl::StrAppend(&endpoint, "/");
+  absl::StrAppend(&endpoint, "bigquery/v2/projects/");
 
   std::string path =
       absl::StrCat(endpoint, r.project_id(), "/jobs/", r.job_id());
