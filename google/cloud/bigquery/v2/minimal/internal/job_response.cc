@@ -24,9 +24,8 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
   GetJobResponse response;
   if (http_response.payload.empty()) {
-    return internal::InvalidArgumentError(
-        "Empty payload in HTTP response.",
-        GCP_ERROR_INFO().Build(StatusCode::kInternal));
+    return internal::InternalError("Empty payload in HTTP response.",
+                                   GCP_ERROR_INFO());
   }
   // Not Implemented Yet: Parse HttpResponse and build GetJobResponse object.
   return response;

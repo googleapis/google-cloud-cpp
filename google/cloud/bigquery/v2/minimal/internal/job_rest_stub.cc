@@ -21,20 +21,18 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigQueryJobStub::~BigQueryJobStub() = default;
+BigQueryJobRestStub::~BigQueryJobRestStub() = default;
 
-StatusOr<GetJobResponse> DefaultBigQueryJobStub::GetJob(
+StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
     GetJobRequest const& request) {
   GetJobResponse response;
   if (request.project_id().empty()) {
     return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Project Id is empty",
-        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
+        "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
   }
   if (request.job_id().empty()) {
     return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Job Id is empty",
-        GCP_ERROR_INFO().Build(StatusCode::kInvalidArgument));
+        "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
   // Not Implemented Yet: Call the rest client to get job details from the
   // server.

@@ -32,7 +32,7 @@ TEST(JobResponseTest, EmptyPayload) {
   BigQueryHttpResponse http_response;
   auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
   EXPECT_THAT(job_response,
-              StatusIs(StatusCode::kInvalidArgument,
+              StatusIs(StatusCode::kInternal,
                        HasSubstr("Empty payload in HTTP response")));
 }
 

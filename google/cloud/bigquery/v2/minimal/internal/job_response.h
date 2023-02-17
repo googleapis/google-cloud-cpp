@@ -26,7 +26,9 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Parses the BigQueryHttpResponse and builds a GetJobResponse.
-struct GetJobResponse {
+class GetJobResponse {
+ public:
+  GetJobResponse() = default;
   // Builds GetJobResponse from HttpResponse.
   static StatusOr<GetJobResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
 
 #include "google/cloud/version.h"
+#include <string>
 
 namespace google {
 namespace cloud {

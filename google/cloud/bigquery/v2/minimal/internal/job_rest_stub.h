@@ -27,16 +27,16 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BigQueryJobStub {
+class BigQueryJobRestStub {
  public:
-  virtual ~BigQueryJobStub() = 0;
+  virtual ~BigQueryJobRestStub() = 0;
 
   virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request) = 0;
 };
 
-class DefaultBigQueryJobStub : public BigQueryJobStub {
+class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
  public:
-  explicit DefaultBigQueryJobStub(
+  explicit DefaultBigQueryJobRestStub(
       std::unique_ptr<rest_internal::RestClient> rest_stub)
       : rest_stub_(std::move(rest_stub)) {}
 

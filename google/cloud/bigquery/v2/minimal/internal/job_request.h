@@ -62,15 +62,15 @@ class GetJobRequest {
     return std::move(set_location(std::move(location)));
   }
 
-  // Builds RestRequest from GetJobRequest.
-  static StatusOr<rest_internal::RestRequest> BuildRestRequest(
-      Options opts, GetJobRequest& r);
-
  private:
   std::string project_id_;
   std::string job_id_;
   std::string location_;
 };
+
+// Builds RestRequest from GetJobRequest.
+StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest& r,
+                                                      Options opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
