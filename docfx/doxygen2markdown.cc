@@ -195,6 +195,39 @@ bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& /*ctx*/,
   return true;
 }
 
+// The `ref` node element type in Doxygen is defined as below.
+//
+// Note the recursive definition with docTitleCmdGroup. DoxRefKind is either
+// "compound" or "member". That is, the link may refer to a page, namespace,
+// class, or similar (the "compound" case) or a terminal member function, type,
+// variable, or similar within a compound.
+//
+// <xsd:complexType name="docRefTextType" mixed="true">
+//   <xsd:group ref="docTitleCmdGroup" minOccurs="0" maxOccurs="unbounded" />
+//   <xsd:attribute name="refid" type="xsd:string" />
+//   <xsd:attribute name="kindref" type="DoxRefKind" />
+//   <xsd:attribute name="external" type="xsd:string" />
+// </xsd:complexType>
+bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
+                 pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "ref") return false;
+  os << "[";
+  for (auto const child : node) {
+    if (AppendIfDocTitleCmdGroup(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  os << "]";
+  if (!std::string_view(node.attribute("external").as_string()).empty()) {
+    os << "(" << node.attribute("external").as_string() << ")";
+  } else {
+    // DocFX YAML supports `xref:` as the syntax to cross link other documents
+    // generated from the same DoxFX YAML source:
+    //    https://dotnet.github.io/docfx/tutorial/links_and_cross_references.html#using-cross-reference
+    os << "(xref:" << node.attribute("refid").as_string() << ")";
+  }
+  return true;
+}
+
 // The `docTitleCmdGroup` element type in Doxygen is defined as below.
 //
 // Only one is possible. We will ignore most of them because they do not
@@ -240,6 +273,7 @@ bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& /*ctx*/,
 // </xsd:group>
 bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
                               pugi::xml_node const& node) {
+  if (AppendIfPlainText(os, ctx, node)) return true;
   // Unexpected: ulink
   if (AppendIfBold(os, ctx, node)) return true;
   // Unexpected: s
@@ -252,7 +286,7 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: image, dot, msc, plantuml
   // Unexpected: anchor
   // Unexpected: formula
-  // Unexpected: ref
+  if (AppendIfRef(os, ctx, node)) return true;
   // Unexpected: emoji
   // Unexpected: linebreak
   // Unexpected: nonbreakablespace
@@ -320,7 +354,6 @@ bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
   if (std::string_view{node.name()} != "para") return false;
   os << ctx.paragraph_start << ctx.paragraph_indent;
   for (auto const& child : node) {
-    if (AppendIfPlainText(os, ctx, child)) continue;
     if (AppendIfDocCmdGroup(os, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
