@@ -30,6 +30,95 @@ namespace {
 
 }  // namespace
 
+// A "page" appears in the generated XML as:
+// clang-format off
+//   <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="indexpage" kind="page">
+// clang-format on
+//
+// That is, they are generic `compounddef` nodes, the same entity used to
+// represent class or function reference docs. The definition is fairly complex
+// (see below).  We will ignore things that we do not expect, such as
+// include diagrams, inner classes, etc.
+//
+// clang-format off
+//   <xsd:complexType name="DoxygenType">
+//     <xsd:sequence maxOccurs="unbounded">
+//       <xsd:element name="compounddef" type="compounddefType" minOccurs="0" />
+//     </xsd:sequence>
+//     <xsd:attribute name="version" type="DoxVersionNumber" use="required" />
+//     <xsd:attribute ref="xml:lang" use="required"/>
+//   </xsd:complexType>
+//
+//   <xsd:complexType name="compounddefType">
+//   <xsd:sequence>
+//     <xsd:element name="compoundname" type="xsd:string"/>
+//     <xsd:element name="title" type="xsd:string" minOccurs="0" />
+//     <xsd:element name="basecompoundref" type="compoundRefType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="derivedcompoundref" type="compoundRefType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="includes" type="incType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="includedby" type="incType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="incdepgraph" type="graphType" minOccurs="0" />
+//     <xsd:element name="invincdepgraph" type="graphType" minOccurs="0" />
+//     <xsd:element name="innerdir" type="refType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="innerfile" type="refType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="innerclass" type="refType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="innernamespace" type="refType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="innerpage" type="refType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="innergroup" type="refType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="templateparamlist" type="templateparamlistType" minOccurs="0" />
+//     <xsd:element name="sectiondef" type="sectiondefType" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:element name="tableofcontents" type="tableofcontentsType" minOccurs="0" maxOccurs="1" />
+//     <xsd:element name="briefdescription" type="descriptionType" minOccurs="0" />
+//     <xsd:element name="detaileddescription" type="descriptionType" minOccurs="0" />
+//     <xsd:element name="inheritancegraph" type="graphType" minOccurs="0" />
+//     <xsd:element name="collaborationgraph" type="graphType" minOccurs="0" />
+//     <xsd:element name="programlisting" type="listingType" minOccurs="0" />
+//     <xsd:element name="location" type="locationType" minOccurs="0" />
+//     <xsd:element name="listofallmembers" type="listofallmembersType" minOccurs="0" />
+//   </xsd:sequence>
+//   <xsd:attribute name="id" type="xsd:string" />
+//   <xsd:attribute name="kind" type="DoxCompoundKind" />
+//   <xsd:attribute name="language" type="DoxLanguage" use="optional"/>
+//   <xsd:attribute name="prot" type="DoxProtectionKind" />
+//   <xsd:attribute name="final" type="DoxBool" use="optional"/>
+//   <xsd:attribute name="inline" type="DoxBool" use="optional"/>
+//   <xsd:attribute name="sealed" type="DoxBool" use="optional"/>
+//   <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
+// </xsd:complexType>
+// clang-format on
+//
+std::string Page2Markdown(pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "compounddef" ||
+      std::string_view{node.attribute("kind").as_string()} != "page") {
+    std::ostringstream os;
+    os << "The node is not a page " << __func__ << "(): node=";
+    node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw,
+               /*encoding=*/pugi::encoding_auto, /*depth=*/1);
+    throw std::runtime_error(std::move(os).str());
+  }
+  std::stringstream os;
+  MarkdownContext ctx;
+  os << "# ";
+  AppendTitle(os, ctx, node);
+  os << "\n";
+  for (auto const& child : node) {
+    auto name = std::string_view(child.name());
+    if (name == "compoundname") continue;      // no markdown output
+    if (name == "briefdescription") continue;  // no markdown output
+    if (name == "location") continue;          // no markdown output
+    if (name == "title") continue;             // already handled
+    // These are unexpected in a page: basecompoundref, derivedcompoundref,
+    //    includes, includedby, incdepgraph, invincdepgraph, innerdir,
+    //    innerfile, innerclass, innernamespace, innerpage, innergroup,
+    //    templateparamlist, sectiondef, inheritancegraph, collaborationgraph,
+    //    programlisting, listofallmembers.
+    if (AppendIfDetailedDescription(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  os << "\n";
+  return std::move(os).str();
+}
+
 // A "sect4" node type is defined as (note the lack of sect5):
 //
 // clang-format off
@@ -155,6 +244,30 @@ bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
     UnknownChildType(__func__, child);
   }
 
+  return true;
+}
+
+// A "detaileddescription" node type is defined as:
+//
+// clang-format off
+//   <xsd:complexType name="descriptionType" mixed="true">
+//     <xsd:sequence>
+//       <xsd:element name="title" type="xsd:string" minOccurs="0"/>
+//       <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//       <xsd:element name="internal" type="docInternalType" minOccurs="0" maxOccurs="unbounded"/>
+//       <xsd:element name="sect1" type="docSect1Type" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
+                                 pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "detaileddescription") return false;
+  for (auto const& child : node) {
+    // Unexpected: title, internal  -> we do not use this...
+    if (AppendIfParagraph(os, ctx, child)) continue;
+    if (AppendIfSect1(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
   return true;
 }
 
