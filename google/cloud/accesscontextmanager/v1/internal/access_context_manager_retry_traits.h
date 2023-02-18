@@ -16,24 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_ACCESS_CONTEXT_MANAGER_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_ACCESS_CONTEXT_MANAGER_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_RETRY_TRAITS_H
 
-#include "google/cloud/accesscontextmanager/access_context_manager_connection.h"
-#include "google/cloud/accesscontextmanager/v1/access_context_manager_client.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use accesscontextmanager_v1::AccessContextManagerClient
-/// directly.
-using ::google::cloud::accesscontextmanager_v1::AccessContextManagerClient;
+/// Define the gRPC status code semantics for retrying requests.
+struct AccessContextManagerRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_ACCESS_CONTEXT_MANAGER_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_RETRY_TRAITS_H

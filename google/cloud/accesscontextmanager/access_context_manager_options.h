@@ -21,63 +21,38 @@
 
 #include "google/cloud/accesscontextmanager/access_context_manager_connection.h"
 #include "google/cloud/accesscontextmanager/access_context_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-accesscontextmanager-options
- */
-struct AccessContextManagerRetryPolicyOption {
-  using Type = std::shared_ptr<AccessContextManagerRetryPolicy>;
-};
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerPollingPolicyOption directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-accesscontextmanager-options
- */
-struct AccessContextManagerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-accesscontextmanager-options
- */
-struct AccessContextManagerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AccessContextManagerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-accesscontextmanager-options
- */
-struct AccessContextManagerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerPolicyOptionList directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerPolicyOptionList;
 
-/**
- * The options applicable to AccessContextManager.
- *
- * @ingroup google-cloud-accesscontextmanager-options
- */
-using AccessContextManagerPolicyOptionList =
-    OptionList<AccessContextManagerRetryPolicyOption,
-               AccessContextManagerBackoffPolicyOption,
-               AccessContextManagerPollingPolicyOption,
-               AccessContextManagerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerRetryPolicyOption directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
