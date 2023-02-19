@@ -100,6 +100,10 @@ For example, this will override the default endpoint for `apigeeconnect::Connect
 
 @snippet connection_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [apigeeconnect::ConnectionServiceClient](@ref apigeeconnect::ConnectionServiceClient-endpoint-snippet)
+ [apigeeconnect_v1::ConnectionServiceClient](@ref apigeeconnect_v1::ConnectionServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -111,6 +115,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet connection_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [apigeeconnect::ConnectionServiceClient](@ref apigeeconnect::ConnectionServiceClient-service-account-snippet)
+ [apigeeconnect_v1::ConnectionServiceClient](@ref apigeeconnect_v1::ConnectionServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -150,6 +158,18 @@ can override the default policies.
 /*! @page apigeeconnect::ConnectionServiceClient-service-account-snippet Override apigeeconnect::ConnectionServiceClient Authentication Defaults
 
 @snippet google/cloud/apigeeconnect/samples/connection_client_samples.cc with-service-account
+
+*/
+
+/*! @page apigeeconnect_v1::ConnectionServiceClient-endpoint-snippet Override apigeeconnect_v1::ConnectionServiceClient Endpoint Configuration
+
+@snippet google/cloud/apigeeconnect/v1/samples/connection_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apigeeconnect_v1::ConnectionServiceClient-service-account-snippet Override apigeeconnect_v1::ConnectionServiceClient Authentication Defaults
+
+@snippet google/cloud/apigeeconnect/v1/samples/connection_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

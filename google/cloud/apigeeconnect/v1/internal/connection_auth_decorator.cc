@@ -16,23 +16,30 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CLIENT_H
-
-#include "google/cloud/apigeeconnect/connection_connection.h"
-#include "google/cloud/apigeeconnect/v1/connection_client.h"
+#include "google/cloud/apigeeconnect/v1/internal/connection_auth_decorator.h"
+#include <google/cloud/apigeeconnect/v1/connection.grpc.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect {
+namespace apigeeconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServiceClient directly.
-using ::google::cloud::apigeeconnect_v1::ConnectionServiceClient;
+ConnectionServiceAuth::ConnectionServiceAuth(
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<ConnectionServiceStub> child)
+    : auth_(std::move(auth)), child_(std::move(child)) {}
+
+StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
+ConnectionServiceAuth::ListConnections(
+    grpc::ClientContext& context,
+    google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListConnections(context, request);
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigeeconnect
+}  // namespace apigeeconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CLIENT_H

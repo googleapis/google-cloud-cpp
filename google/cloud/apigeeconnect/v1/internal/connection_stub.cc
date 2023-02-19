@@ -16,23 +16,33 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CLIENT_H
-
-#include "google/cloud/apigeeconnect/connection_connection.h"
-#include "google/cloud/apigeeconnect/v1/connection_client.h"
+#include "google/cloud/apigeeconnect/v1/internal/connection_stub.h"
+#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/status_or.h"
+#include <google/cloud/apigeeconnect/v1/connection.grpc.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect {
+namespace apigeeconnect_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigeeconnect_v1::ConnectionServiceClient directly.
-using ::google::cloud::apigeeconnect_v1::ConnectionServiceClient;
+ConnectionServiceStub::~ConnectionServiceStub() = default;
+
+StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
+DefaultConnectionServiceStub::ListConnections(
+    grpc::ClientContext& client_context,
+    google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
+  google::cloud::apigeeconnect::v1::ListConnectionsResponse response;
+  auto status =
+      grpc_stub_->ListConnections(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigeeconnect
+}  // namespace apigeeconnect_v1_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CLIENT_H

@@ -16,23 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_API_GATEWAY_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_API_GATEWAY_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_STUB_FACTORY_H
 
-#include "google/cloud/apigateway/api_gateway_connection.h"
-#include "google/cloud/apigateway/v1/api_gateway_client.h"
+#include "google/cloud/apigateway/v1/internal/api_gateway_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace apigateway {
+namespace apigateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigateway_v1::ApiGatewayServiceClient directly.
-using ::google::cloud::apigateway_v1::ApiGatewayServiceClient;
+std::shared_ptr<ApiGatewayServiceStub> CreateDefaultApiGatewayServiceStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigateway
+}  // namespace apigateway_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_API_GATEWAY_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_STUB_FACTORY_H

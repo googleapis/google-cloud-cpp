@@ -16,23 +16,29 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_API_GATEWAY_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_API_GATEWAY_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_RETRY_TRAITS_H
 
-#include "google/cloud/apigateway/api_gateway_connection.h"
-#include "google/cloud/apigateway/v1/api_gateway_client.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace apigateway {
+namespace apigateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use apigateway_v1::ApiGatewayServiceClient directly.
-using ::google::cloud::apigateway_v1::ApiGatewayServiceClient;
+/// Define the gRPC status code semantics for retrying requests.
+struct ApiGatewayServiceRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable &&
+           status.code() != StatusCode::kUnknown;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigateway
+}  // namespace apigateway_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_API_GATEWAY_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_INTERNAL_API_GATEWAY_RETRY_TRAITS_H

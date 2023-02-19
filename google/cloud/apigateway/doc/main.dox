@@ -96,6 +96,10 @@ For example, this will override the default endpoint for `apigateway::ApiGateway
 
 @snippet api_gateway_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [apigateway::ApiGatewayServiceClient](@ref apigateway::ApiGatewayServiceClient-endpoint-snippet)
+ [apigateway_v1::ApiGatewayServiceClient](@ref apigateway_v1::ApiGatewayServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +111,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet api_gateway_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [apigateway::ApiGatewayServiceClient](@ref apigateway::ApiGatewayServiceClient-service-account-snippet)
+ [apigateway_v1::ApiGatewayServiceClient](@ref apigateway_v1::ApiGatewayServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +154,18 @@ can override the default policies.
 /*! @page apigateway::ApiGatewayServiceClient-service-account-snippet Override apigateway::ApiGatewayServiceClient Authentication Defaults
 
 @snippet google/cloud/apigateway/samples/api_gateway_client_samples.cc with-service-account
+
+*/
+
+/*! @page apigateway_v1::ApiGatewayServiceClient-endpoint-snippet Override apigateway_v1::ApiGatewayServiceClient Endpoint Configuration
+
+@snippet google/cloud/apigateway/v1/samples/api_gateway_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page apigateway_v1::ApiGatewayServiceClient-service-account-snippet Override apigateway_v1::ApiGatewayServiceClient Authentication Defaults
+
+@snippet google/cloud/apigateway/v1/samples/api_gateway_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

@@ -16,30 +16,36 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CONNECTION_IDEMPOTENCY_POLICY_H
-
 #include "google/cloud/apigeeconnect/v1/connection_connection_idempotency_policy.h"
+#include "absl/memory/memory.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect {
+namespace apigeeconnect_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// apigeeconnect_v1::MakeDefaultConnectionServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::apigeeconnect_v1::
-    MakeDefaultConnectionServiceConnectionIdempotencyPolicy;
+using ::google::cloud::Idempotency;
 
-/// @deprecated Use
-/// apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::apigeeconnect_v1::
-    ConnectionServiceConnectionIdempotencyPolicy;
+ConnectionServiceConnectionIdempotencyPolicy::
+    ~ConnectionServiceConnectionIdempotencyPolicy() = default;
+
+std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
+ConnectionServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>(*this);
+}
+
+Idempotency ConnectionServiceConnectionIdempotencyPolicy::ListConnections(
+    google::cloud::apigeeconnect::v1::ListConnectionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
+MakeDefaultConnectionServiceConnectionIdempotencyPolicy() {
+  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>();
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigeeconnect
+}  // namespace apigeeconnect_v1
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CONNECTION_IDEMPOTENCY_POLICY_H
