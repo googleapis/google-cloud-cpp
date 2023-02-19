@@ -223,7 +223,7 @@ def google_cloud_cpp_deps(name = None):
         name = "com_github_zeux_pugixml",
         urls = [
             "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.13.tar.gz",
-            "https://github.com/zeux/pugixml/archive/refs/tags/v1.13.tar.gz",
+            "https://github.com/zeux/pugixml/archive/v1.13.tar.gz",
         ],
         sha256 = "5c5ad5d7caeb791420408042a7d88c2c6180781bf218feca259fd9d840a888e1",
         strip_prefix = "pugixml-1.13",
