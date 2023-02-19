@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/access_context_manager_connection_idempotency_policy.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager {
+namespace accesscontextmanager_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -206,6 +206,6 @@ MakeDefaultAccessContextManagerConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager
+}  // namespace accesscontextmanager_v1
 }  // namespace cloud
 }  // namespace google

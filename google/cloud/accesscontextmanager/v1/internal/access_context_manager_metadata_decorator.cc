@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_metadata_decorator.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessContextManagerMetadata::AccessContextManagerMetadata(
@@ -319,6 +319,6 @@ void AccessContextManagerMetadata::SetMetadata(grpc::ClientContext& context) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google

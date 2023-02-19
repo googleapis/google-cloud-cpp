@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_H
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AccessContextManagerStub {
@@ -392,8 +392,8 @@ class DefaultAccessContextManagerStub : public AccessContextManagerStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_STUB_H

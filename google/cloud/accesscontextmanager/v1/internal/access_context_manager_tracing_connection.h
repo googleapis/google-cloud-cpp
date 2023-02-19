@@ -16,42 +16,30 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_TRACING_CONNECTION_H
 
-#include "google/cloud/accesscontextmanager/access_context_manager_connection.h"
-#include "google/cloud/accesscontextmanager/access_context_manager_connection_idempotency_policy.h"
-#include "google/cloud/accesscontextmanager/access_context_manager_options.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_retry_traits.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AccessContextManagerConnectionImpl
-    : public accesscontextmanager::AccessContextManagerConnection {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class AccessContextManagerTracingConnection
+    : public accesscontextmanager_v1::AccessContextManagerConnection {
  public:
-  ~AccessContextManagerConnectionImpl() override = default;
+  ~AccessContextManagerTracingConnection() override = default;
 
-  AccessContextManagerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
-          stub,
-      Options options);
+  explicit AccessContextManagerTracingConnection(
+      std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
+          child);
 
-  Options options() override { return options_; }
+  Options options() override { return child_->options(); }
 
   StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
   ListAccessPolicies(
@@ -180,73 +168,26 @@ class AccessContextManagerConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            accesscontextmanager::AccessContextManagerRetryPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            accesscontextmanager::AccessContextManagerBackoffPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<accesscontextmanager::
-                     AccessContextManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::
-                   AccessContextManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::
-                 AccessContextManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            accesscontextmanager::AccessContextManagerPollingPolicyOption>()) {
-      return options
-          .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
-      stub_;
-  Options options_;
+  std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
+      child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
+MakeAccessContextManagerTracingConnection(
+    std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
+        conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_TRACING_CONNECTION_H

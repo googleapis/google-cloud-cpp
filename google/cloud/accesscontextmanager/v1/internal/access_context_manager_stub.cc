@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_stub.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessContextManagerStub::~AccessContextManagerStub() = default;
@@ -455,6 +455,6 @@ future<Status> DefaultAccessContextManagerStub::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google

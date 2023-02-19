@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_option_defaults.h"
-#include "google/cloud/accesscontextmanager/access_context_manager_connection.h"
-#include "google/cloud/accesscontextmanager/access_context_manager_options.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_option_defaults.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -40,41 +40,44 @@ Options AccessContextManagerDefaultOptions(Options options) {
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<
-          accesscontextmanager::AccessContextManagerRetryPolicyOption>()) {
-    options.set<accesscontextmanager::AccessContextManagerRetryPolicyOption>(
-        accesscontextmanager::AccessContextManagerLimitedTimeRetryPolicy(
+          accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()) {
+    options.set<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>(
+        accesscontextmanager_v1::AccessContextManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options.has<
-          accesscontextmanager::AccessContextManagerBackoffPolicyOption>()) {
-    options.set<accesscontextmanager::AccessContextManagerBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+          accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>()) {
+    options
+        .set<accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          accesscontextmanager::AccessContextManagerPollingPolicyOption>()) {
-    options.set<accesscontextmanager::AccessContextManagerPollingPolicyOption>(
-        GenericPollingPolicy<
-            accesscontextmanager::AccessContextManagerRetryPolicyOption::Type,
-            accesscontextmanager::AccessContextManagerBackoffPolicyOption::
-                Type>(options
-                          .get<accesscontextmanager::
-                                   AccessContextManagerRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<accesscontextmanager::
-                                   AccessContextManagerBackoffPolicyOption>()
-                          ->clone())
+          accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>()) {
+    options.set<
+        accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>(
+        GenericPollingPolicy<accesscontextmanager_v1::
+                                 AccessContextManagerRetryPolicyOption::Type,
+                             accesscontextmanager_v1::
+                                 AccessContextManagerBackoffPolicyOption::Type>(
+            options
+                .get<accesscontextmanager_v1::
+                         AccessContextManagerRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<accesscontextmanager_v1::
+                         AccessContextManagerBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
   if (!options
-           .has<accesscontextmanager::
+           .has<accesscontextmanager_v1::
                     AccessContextManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<accesscontextmanager::
+    options.set<accesscontextmanager_v1::
                     AccessContextManagerConnectionIdempotencyPolicyOption>(
-        accesscontextmanager::
+        accesscontextmanager_v1::
             MakeDefaultAccessContextManagerConnectionIdempotencyPolicy());
   }
 
@@ -82,6 +85,6 @@ Options AccessContextManagerDefaultOptions(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google

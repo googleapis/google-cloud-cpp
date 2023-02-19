@@ -16,27 +16,24 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_METADATA_DECORATOR_H
 
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
-#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AccessContextManagerAuth : public AccessContextManagerStub {
+class AccessContextManagerMetadata : public AccessContextManagerStub {
  public:
-  ~AccessContextManagerAuth() override = default;
-  AccessContextManagerAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+  ~AccessContextManagerMetadata() override = default;
+  explicit AccessContextManagerMetadata(
       std::shared_ptr<AccessContextManagerStub> child);
 
   StatusOr<
@@ -205,13 +202,17 @@ class AccessContextManagerAuth : public AccessContextManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<AccessContextManagerStub> child_;
+  std::string api_client_header_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_METADATA_DECORATOR_H

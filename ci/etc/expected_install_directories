@@ -23,8 +23,10 @@
 ./include/google/cloud/accessapproval/v1/internal
 ./include/google/cloud/accessapproval/v1/mocks
 ./include/google/cloud/accesscontextmanager
-./include/google/cloud/accesscontextmanager/internal
 ./include/google/cloud/accesscontextmanager/mocks
+./include/google/cloud/accesscontextmanager/v1
+./include/google/cloud/accesscontextmanager/v1/internal
+./include/google/cloud/accesscontextmanager/v1/mocks
 ./include/google/cloud/advisorynotifications
 ./include/google/cloud/advisorynotifications/v1
 ./include/google/cloud/advisorynotifications/v1/internal

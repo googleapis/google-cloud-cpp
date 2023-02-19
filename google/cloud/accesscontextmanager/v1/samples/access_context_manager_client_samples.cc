@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/access_context_manager_client.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: accesscontextmanager::AccessContextManagerClient
+// main-dox-marker: accesscontextmanager_v1::AccessContextManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,9 +38,10 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::accesscontextmanager::AccessContextManagerClient(
-      google::cloud::accesscontextmanager::MakeAccessContextManagerConnection(
-          options));
+  auto client =
+      google::cloud::accesscontextmanager_v1::AccessContextManagerClient(
+          google::cloud::accesscontextmanager_v1::
+              MakeAccessContextManagerConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -56,9 +57,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::accesscontextmanager::AccessContextManagerClient(
-        google::cloud::accesscontextmanager::MakeAccessContextManagerConnection(
-            options));
+    return google::cloud::accesscontextmanager_v1::AccessContextManagerClient(
+        google::cloud::accesscontextmanager_v1::
+            MakeAccessContextManagerConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

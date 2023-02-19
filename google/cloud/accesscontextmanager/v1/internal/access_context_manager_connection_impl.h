@@ -16,30 +16,43 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/accesscontextmanager/access_context_manager_connection.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_connection_idempotency_policy.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_options.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_retry_traits.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class AccessContextManagerTracingConnection
-    : public accesscontextmanager::AccessContextManagerConnection {
+class AccessContextManagerConnectionImpl
+    : public accesscontextmanager_v1::AccessContextManagerConnection {
  public:
-  ~AccessContextManagerTracingConnection() override = default;
+  ~AccessContextManagerConnectionImpl() override = default;
 
-  explicit AccessContextManagerTracingConnection(
-      std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
-          child);
+  AccessContextManagerConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          accesscontextmanager_v1_internal::AccessContextManagerStub>
+          stub,
+      Options options);
 
-  Options options() override { return child_->options(); }
+  Options options() override { return options_; }
 
   StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
   ListAccessPolicies(
@@ -168,24 +181,75 @@ class AccessContextManagerTracingConnection
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<accesscontextmanager::AccessContextManagerConnection> child_;
+  std::unique_ptr<accesscontextmanager_v1::AccessContextManagerRetryPolicy>
+  retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()) {
+      return options
+          .get<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<accesscontextmanager_v1::AccessContextManagerRetryPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<accesscontextmanager_v1::
+                        AccessContextManagerBackoffPolicyOption>()) {
+      return options
+          .get<accesscontextmanager_v1::
+                   AccessContextManagerBackoffPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<accesscontextmanager_v1::AccessContextManagerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      accesscontextmanager_v1::AccessContextManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<accesscontextmanager_v1::
+                     AccessContextManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<accesscontextmanager_v1::
+                   AccessContextManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<accesscontextmanager_v1::
+                 AccessContextManagerConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<accesscontextmanager_v1::
+                        AccessContextManagerPollingPolicyOption>()) {
+      return options
+          .get<accesscontextmanager_v1::
+                   AccessContextManagerPollingPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<accesscontextmanager_v1::AccessContextManagerPollingPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<accesscontextmanager_v1_internal::AccessContextManagerStub>
+      stub_;
+  Options options_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Conditionally applies the tracing decorator to the given connection.
- *
- * The connection is only decorated if tracing is enabled (as determined by the
- * connection's options).
- */
-std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
-MakeAccessContextManagerTracingConnection(
-    std::shared_ptr<accesscontextmanager::AccessContextManagerConnection> conn);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_INTERNAL_ACCESS_CONTEXT_MANAGER_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_INTERNAL_ACCESS_CONTEXT_MANAGER_CONNECTION_IMPL_H

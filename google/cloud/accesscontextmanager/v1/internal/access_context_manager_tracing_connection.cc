@@ -16,20 +16,21 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_tracing_connection.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AccessContextManagerTracingConnection::AccessContextManagerTracingConnection(
-    std::shared_ptr<accesscontextmanager::AccessContextManagerConnection> child)
+    std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
+        child)
     : child_(std::move(child)) {}
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
@@ -37,7 +38,7 @@ AccessContextManagerTracingConnection::ListAccessPolicies(
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
         request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::"
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ListAccessPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAccessPolicies(std::move(request));
@@ -51,7 +52,8 @@ AccessContextManagerTracingConnection::GetAccessPolicy(
     google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::GetAccessPolicy");
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "GetAccessPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAccessPolicy(request));
 }
@@ -82,7 +84,8 @@ AccessContextManagerTracingConnection::ListAccessLevels(
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
         request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::ListAccessLevels");
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "ListAccessLevels");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListAccessLevels(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -95,7 +98,8 @@ AccessContextManagerTracingConnection::GetAccessLevel(
     google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::GetAccessLevel");
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "GetAccessLevel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetAccessLevel(request));
 }
@@ -135,7 +139,7 @@ AccessContextManagerTracingConnection::ListServicePerimeters(
     google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
         request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::"
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ListServicePerimeters");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListServicePerimeters(std::move(request));
@@ -149,7 +153,7 @@ AccessContextManagerTracingConnection::GetServicePerimeter(
     google::identity::accesscontextmanager::v1::
         GetServicePerimeterRequest const& request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::"
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
       "GetServicePerimeter");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetServicePerimeter(request));
@@ -198,7 +202,7 @@ AccessContextManagerTracingConnection::ListGcpUserAccessBindings(
     google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
         request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::"
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
       "ListGcpUserAccessBindings");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListGcpUserAccessBindings(std::move(request));
@@ -212,7 +216,7 @@ AccessContextManagerTracingConnection::GetGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         GetGcpUserAccessBindingRequest const& request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::"
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
       "GetGcpUserAccessBinding");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetGcpUserAccessBinding(request));
@@ -246,7 +250,7 @@ StatusOr<google::iam::v1::Policy>
 AccessContextManagerTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::SetIamPolicy");
+      "accesscontextmanager_v1::AccessContextManagerConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
@@ -255,7 +259,7 @@ StatusOr<google::iam::v1::Policy>
 AccessContextManagerTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::GetIamPolicy");
+      "accesscontextmanager_v1::AccessContextManagerConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
@@ -264,7 +268,7 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AccessContextManagerTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpan(
-      "accesscontextmanager::AccessContextManagerConnection::"
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
       "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
@@ -272,9 +276,9 @@ AccessContextManagerTracingConnection::TestIamPermissions(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
+std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
 MakeAccessContextManagerTracingConnection(
-    std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
+    std::shared_ptr<accesscontextmanager_v1::AccessContextManagerConnection>
         conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
@@ -286,6 +290,6 @@ MakeAccessContextManagerTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google

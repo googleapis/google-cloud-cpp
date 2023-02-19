@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `accesscontextmanager::AccessContextManagerClient`:
+For example, this will override the default endpoint for `accesscontextmanager_v1::AccessContextManagerClient`:
 
 @snippet access_context_manager_client_samples.cc set-client-endpoint
 
@@ -138,15 +138,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page accesscontextmanager::AccessContextManagerClient-endpoint-snippet Override accesscontextmanager::AccessContextManagerClient Endpoint Configuration
+/*! @page accesscontextmanager_v1::AccessContextManagerClient-endpoint-snippet Override accesscontextmanager_v1::AccessContextManagerClient Endpoint Configuration
 
-@snippet google/cloud/accesscontextmanager/samples/access_context_manager_client_samples.cc set-client-endpoint
+@snippet google/cloud/accesscontextmanager/v1/samples/access_context_manager_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page accesscontextmanager::AccessContextManagerClient-service-account-snippet Override accesscontextmanager::AccessContextManagerClient Authentication Defaults
+/*! @page accesscontextmanager_v1::AccessContextManagerClient-service-account-snippet Override accesscontextmanager_v1::AccessContextManagerClient Authentication Defaults
 
-@snippet google/cloud/accesscontextmanager/samples/access_context_manager_client_samples.cc with-service-account
+@snippet google/cloud/accesscontextmanager/v1/samples/access_context_manager_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

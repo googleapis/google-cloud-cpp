@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/access_context_manager_connection.h"
-#include "google/cloud/accesscontextmanager/access_context_manager_options.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_connection_impl.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_option_defaults.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_stub_factory.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_tracing_connection.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.h"
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_options.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_connection_impl.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_option_defaults.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_stub_factory.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager {
+namespace accesscontextmanager_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessContextManagerConnection::~AccessContextManagerConnection() = default;
@@ -265,20 +265,21 @@ MakeAccessContextManagerConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AccessContextManagerPolicyOptionList>(
       options, __func__);
-  options = accesscontextmanager_internal::AccessContextManagerDefaultOptions(
-      std::move(options));
+  options =
+      accesscontextmanager_v1_internal::AccessContextManagerDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      accesscontextmanager_internal::CreateDefaultAccessContextManagerStub(
+      accesscontextmanager_v1_internal::CreateDefaultAccessContextManagerStub(
           background->cq(), options);
-  return accesscontextmanager_internal::
+  return accesscontextmanager_v1_internal::
       MakeAccessContextManagerTracingConnection(
-          std::make_shared<accesscontextmanager_internal::
+          std::make_shared<accesscontextmanager_v1_internal::
                                AccessContextManagerConnectionImpl>(
               std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager
+}  // namespace accesscontextmanager_v1
 }  // namespace cloud
 }  // namespace google

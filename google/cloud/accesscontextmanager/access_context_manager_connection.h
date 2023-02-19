@@ -20,207 +20,37 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_ACCESS_CONTEXT_MANAGER_CONNECTION_H
 
 #include "google/cloud/accesscontextmanager/access_context_manager_connection_idempotency_policy.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_retry_traits.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AccessContextManagerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        accesscontextmanager_internal::AccessContextManagerRetryTraits>;
+/// @deprecated Use accesscontextmanager_v1::MakeAccessContextManagerConnection
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    MakeAccessContextManagerConnection;
 
-using AccessContextManagerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        accesscontextmanager_internal::AccessContextManagerRetryTraits>;
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerConnection
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::AccessContextManagerConnection;
 
-using AccessContextManagerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        accesscontextmanager_internal::AccessContextManagerRetryTraits>;
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerLimitedErrorCountRetryPolicy;
 
-/**
- * The `AccessContextManagerConnection` object for `AccessContextManagerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AccessContextManagerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AccessContextManagerClient`.
- *
- * To create a concrete instance, see `MakeAccessContextManagerConnection()`.
- *
- * For mocking, see
- * `accesscontextmanager_mocks::MockAccessContextManagerConnection`.
- */
-class AccessContextManagerConnection {
- public:
-  virtual ~AccessContextManagerConnection() = 0;
+/// @deprecated Use
+/// accesscontextmanager_v1::AccessContextManagerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::
+    AccessContextManagerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-  ListAccessPolicies(
-      google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
-          request);
-
-  virtual StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
-  GetAccessPolicy(
-      google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy(
-      google::identity::accesscontextmanager::v1::AccessPolicy const& request);
-
-  virtual future<
-      StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
-                         UpdateAccessPolicyRequest const& request);
-
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
-                              AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(google::identity::accesscontextmanager::v1::
-                         DeleteAccessPolicyRequest const& request);
-
-  virtual StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-  ListAccessLevels(
-      google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
-          request);
-
-  virtual StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
-  GetAccessLevel(
-      google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(google::identity::accesscontextmanager::v1::
-                        CreateAccessLevelRequest const& request);
-
-  virtual future<
-      StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(google::identity::accesscontextmanager::v1::
-                        UpdateAccessLevelRequest const& request);
-
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
-                              AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(google::identity::accesscontextmanager::v1::
-                        DeleteAccessLevelRequest const& request);
-
-  virtual future<StatusOr<
-      google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels(google::identity::accesscontextmanager::v1::
-                          ReplaceAccessLevelsRequest const& request);
-
-  virtual StreamRange<
-      google::identity::accesscontextmanager::v1::ServicePerimeter>
-  ListServicePerimeters(
-      google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
-          request);
-
-  virtual StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(google::identity::accesscontextmanager::v1::
-                          GetServicePerimeterRequest const& request);
-
-  virtual future<
-      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter(google::identity::accesscontextmanager::v1::
-                             CreateServicePerimeterRequest const& request);
-
-  virtual future<
-      StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter(google::identity::accesscontextmanager::v1::
-                             UpdateServicePerimeterRequest const& request);
-
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
-                              AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter(google::identity::accesscontextmanager::v1::
-                             DeleteServicePerimeterRequest const& request);
-
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
-                              ReplaceServicePerimetersResponse>>
-  ReplaceServicePerimeters(google::identity::accesscontextmanager::v1::
-                               ReplaceServicePerimetersRequest const& request);
-
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
-                              CommitServicePerimetersResponse>>
-  CommitServicePerimeters(google::identity::accesscontextmanager::v1::
-                              CommitServicePerimetersRequest const& request);
-
-  virtual StreamRange<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  ListGcpUserAccessBindings(google::identity::accesscontextmanager::v1::
-                                ListGcpUserAccessBindingsRequest request);
-
-  virtual StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-  GetGcpUserAccessBinding(google::identity::accesscontextmanager::v1::
-                              GetGcpUserAccessBindingRequest const& request);
-
-  virtual future<StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          CreateGcpUserAccessBindingRequest const& request);
-
-  virtual future<StatusOr<
-      google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          UpdateGcpUserAccessBindingRequest const& request);
-
-  virtual future<StatusOr<google::identity::accesscontextmanager::v1::
-                              GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding(
-      google::identity::accesscontextmanager::v1::
-          DeleteGcpUserAccessBindingRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `AccessContextManagerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AccessContextManagerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `AccessContextManagerConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::accesscontextmanager::AccessContextManagerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `AccessContextManagerConnection`
- * created by this function.
- */
-std::shared_ptr<AccessContextManagerConnection>
-MakeAccessContextManagerConnection(Options options = {});
+/// @deprecated Use accesscontextmanager_v1::AccessContextManagerRetryPolicy
+/// directly.
+using ::google::cloud::accesscontextmanager_v1::AccessContextManagerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager

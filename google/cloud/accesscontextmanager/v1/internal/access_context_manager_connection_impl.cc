@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_connection_impl.h"
-#include "google/cloud/accesscontextmanager/internal/access_context_manager_option_defaults.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_connection_impl.h"
+#include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
+namespace accesscontextmanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessContextManagerConnectionImpl::AccessContextManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
+    std::shared_ptr<accesscontextmanager_v1_internal::AccessContextManagerStub>
         stub,
     Options options)
     : background_(std::move(background)),
@@ -48,7 +48,7 @@ AccessContextManagerConnectionImpl::ListAccessPolicies(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      accesscontextmanager_v1::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAccessPolicies(request);
@@ -195,7 +195,7 @@ AccessContextManagerConnectionImpl::ListAccessLevels(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      accesscontextmanager_v1::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAccessLevels(request);
@@ -376,7 +376,7 @@ AccessContextManagerConnectionImpl::ListServicePerimeters(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      accesscontextmanager_v1::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServicePerimeters(request);
@@ -598,7 +598,7 @@ AccessContextManagerConnectionImpl::ListGcpUserAccessBindings(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      accesscontextmanager_v1::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGcpUserAccessBindings(request);
@@ -785,6 +785,6 @@ AccessContextManagerConnectionImpl::TestIamPermissions(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
+}  // namespace accesscontextmanager_v1_internal
 }  // namespace cloud
 }  // namespace google
