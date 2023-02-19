@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `accesscontextmanager::AccessContextManagerClient`:
+For example, this will override the default endpoint for `accesscontextmanager_v1::AccessContextManagerClient`:
 
 @snippet access_context_manager_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [accesscontextmanager::AccessContextManagerClient](@ref accesscontextmanager::AccessContextManagerClient-endpoint-snippet)
- [accesscontextmanager_v1::AccessContextManagerClient](@ref accesscontextmanager_v1::AccessContextManagerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet access_context_manager_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [accesscontextmanager::AccessContextManagerClient](@ref accesscontextmanager::AccessContextManagerClient-service-account-snippet)
- [accesscontextmanager_v1::AccessContextManagerClient](@ref accesscontextmanager_v1::AccessContextManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page accesscontextmanager::AccessContextManagerClient-endpoint-snippet Override accesscontextmanager::AccessContextManagerClient Endpoint Configuration
-
-@snippet google/cloud/accesscontextmanager/samples/access_context_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page accesscontextmanager::AccessContextManagerClient-service-account-snippet Override accesscontextmanager::AccessContextManagerClient Authentication Defaults
-
-@snippet google/cloud/accesscontextmanager/samples/access_context_manager_client_samples.cc with-service-account
-
-*/
 
 /*! @page accesscontextmanager_v1::AccessContextManagerClient-endpoint-snippet Override accesscontextmanager_v1::AccessContextManagerClient Endpoint Configuration
 
