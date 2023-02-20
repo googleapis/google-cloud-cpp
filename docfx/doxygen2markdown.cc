@@ -16,6 +16,7 @@
 #include <iostream>
 #include <sstream>
 #include <string_view>
+#include <unordered_set>
 
 namespace {
 
@@ -228,4 +229,104 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
     UnknownChildType(__func__, child);
   }
   return true;
+}
+
+// The `simplesect` element type in Doxygen is defined as below.
+//
+// These are small sections, such as the `@see` notes, or a `@warning`
+// callout.  How we want to render them depends on their type. For most we will
+// use a simple H6 header, put things like 'warning' or 'note' deserve a block
+// quote.
+//
+// clang-format off
+//   <xsd:simpleType name="DoxSimpleSectKind">
+//     <xsd:restriction base="xsd:string">
+//       <xsd:enumeration value="see" />
+//       <xsd:enumeration value="return" />
+//       <xsd:enumeration value="author" />
+//       <xsd:enumeration value="authors" />
+//       <xsd:enumeration value="version" />
+//       <xsd:enumeration value="since" />
+//       <xsd:enumeration value="date" />
+//       <xsd:enumeration value="note" />
+//       <xsd:enumeration value="warning" />
+//       <xsd:enumeration value="pre" />
+//       <xsd:enumeration value="post" />
+//       <xsd:enumeration value="copyright" />
+//       <xsd:enumeration value="invariant" />
+//       <xsd:enumeration value="remark" />
+//       <xsd:enumeration value="attention" />
+//       <xsd:enumeration value="par" />
+//       <xsd:enumeration value="rcs" />
+//     </xsd:restriction>
+//   </xsd:simpleType>
+//
+//
+//   <xsd:complexType name="docSimpleSectType">
+//     <xsd:sequence>
+//       <xsd:element name="title" type="docTitleType" minOccurs="0" />
+//       <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+//         <xsd:element name="para" type="docParaType" minOccurs="1" maxOccurs="unbounded" />
+//       </xsd:sequence>
+//     </xsd:sequence>
+//     <xsd:attribute name="kind" type="DoxSimpleSectKind" />
+//   </xsd:complexType>
+// clang-format on
+//
+bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
+                        pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "simplesect") return false;
+  static auto const* const kUseH6 = [] {
+    return new std::unordered_set<std::string>{
+        "see", "return", "author",    "authors",   "version", "since", "date",
+        "pre", "post",   "copyright", "invariant", "par",     "rcs",
+    };
+  }();
+
+  auto nested = ctx;
+  nested.paragraph_start = "\n";
+  nested.paragraph_indent = ctx.paragraph_indent + "> ";
+
+  auto const kind = std::string{node.attribute("kind").as_string()};
+  if (kUseH6->count(kind) != 0) {
+    nested = ctx;
+    os << "\n\n###### ";
+    AppendTitle(os, nested, node);
+  } else if (kind == "note") {
+    os << "\n";
+    os << nested.paragraph_start << nested.paragraph_indent << "**Note:**";
+  } else if (kind == "warning") {
+    os << "\n";
+    os << nested.paragraph_start << nested.paragraph_indent << "**Warning:**";
+  } else if (kind == "remark") {
+    os << "\n";
+    os << nested.paragraph_start << nested.paragraph_indent << "Remark:";
+  } else if (kind == "attention") {
+    os << "\n";
+    os << nested.paragraph_start << nested.paragraph_indent << "Attention:";
+  } else {
+    std::ostringstream os;
+    os << "Unknown simplesect kind in " << __func__ << "(): node=";
+    node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
+    throw std::runtime_error(std::move(os).str());
+  }
+
+  for (auto const& child : node) {
+    if (std::string_view{child.name()} == "title") continue;
+    if (AppendIfParagraph(os, nested, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+void AppendTitle(std::ostream& os, MarkdownContext const& ctx,
+                 pugi::xml_node const& node) {
+  // The XML schema says there is only one of these, but it is easier to write
+  // the loop.
+  for (auto const& title : node.children("title")) {
+    for (auto const& child : title) {
+      if (AppendIfPlainText(os, ctx, child)) continue;
+      UnknownChildType(__func__, child);
+    }
+  }
 }
