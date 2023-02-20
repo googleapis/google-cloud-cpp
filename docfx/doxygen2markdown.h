@@ -86,4 +86,12 @@ bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);
 
+/// Handle a `simplesect` element (a section without sub-sections).
+bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
+                        pugi::xml_node const& node);
+
+/// Handle the title for a section-like element.
+void AppendTitle(std::ostream& os, MarkdownContext const& ctx,
+                 pugi::xml_node const& node);
+
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2MARKDOWN_H
