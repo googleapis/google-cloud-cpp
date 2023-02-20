@@ -20,39 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_MOCKS_MOCK_CONNECTION_CONNECTION_H
 
 #include "google/cloud/apigeeconnect/connection_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/apigeeconnect/v1/mocks/mock_connection_connection.h"
 
 namespace google {
 namespace cloud {
 namespace apigeeconnect_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ConnectionServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ConnectionServiceClient`. To do so,
- * construct an object of type `ConnectionServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockConnectionServiceConnection
-    : public apigeeconnect::ConnectionServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::apigeeconnect::v1::Connection>,
-      ListConnections,
-      (google::cloud::apigeeconnect::v1::ListConnectionsRequest request),
-      (override));
-};
+/// @deprecated Use apigeeconnect_v1_mocks::MockConnectionServiceConnection
+/// directly.
+using ::google::cloud::apigeeconnect_v1_mocks::MockConnectionServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_mocks

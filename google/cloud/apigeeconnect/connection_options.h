@@ -21,52 +21,30 @@
 
 #include "google/cloud/apigeeconnect/connection_connection.h"
 #include "google/cloud/apigeeconnect/connection_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/apigeeconnect/v1/connection_options.h"
 
 namespace google {
 namespace cloud {
 namespace apigeeconnect {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-apigeeconnect-options
- */
-struct ConnectionServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ConnectionServiceRetryPolicy>;
-};
+/// @deprecated Use apigeeconnect_v1::ConnectionServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::apigeeconnect_v1::ConnectionServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-apigeeconnect-options
- */
-struct ConnectionServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::apigeeconnect_v1::
+    ConnectionServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-apigeeconnect-options
- */
-struct ConnectionServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ConnectionServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use apigeeconnect_v1::ConnectionServicePolicyOptionList
+/// directly.
+using ::google::cloud::apigeeconnect_v1::ConnectionServicePolicyOptionList;
 
-/**
- * The options applicable to ConnectionService.
- *
- * @ingroup google-cloud-apigeeconnect-options
- */
-using ConnectionServicePolicyOptionList =
-    OptionList<ConnectionServiceRetryPolicyOption,
-               ConnectionServiceBackoffPolicyOption,
-               ConnectionServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use apigeeconnect_v1::ConnectionServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::apigeeconnect_v1::ConnectionServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect

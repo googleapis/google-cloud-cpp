@@ -20,107 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_MOCKS_MOCK_API_GATEWAY_CONNECTION_H
 
 #include "google/cloud/apigateway/api_gateway_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/apigateway/v1/mocks/mock_api_gateway_connection.h"
 
 namespace google {
 namespace cloud {
 namespace apigateway_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ApiGatewayServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ApiGatewayServiceClient`. To do so,
- * construct an object of type `ApiGatewayServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockApiGatewayServiceConnection
-    : public apigateway::ApiGatewayServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::apigateway::v1::Gateway>, ListGateways,
-              (google::cloud::apigateway::v1::ListGatewaysRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::apigateway::v1::Gateway>, GetGateway,
-              (google::cloud::apigateway::v1::GetGatewayRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apigateway::v1::Gateway>>, CreateGateway,
-      (google::cloud::apigateway::v1::CreateGatewayRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apigateway::v1::Gateway>>, UpdateGateway,
-      (google::cloud::apigateway::v1::UpdateGatewayRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteGateway,
-      (google::cloud::apigateway::v1::DeleteGatewayRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::apigateway::v1::Api>, ListApis,
-              (google::cloud::apigateway::v1::ListApisRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::apigateway::v1::Api>, GetApi,
-              (google::cloud::apigateway::v1::GetApiRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, CreateApi,
-              (google::cloud::apigateway::v1::CreateApiRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, UpdateApi,
-              (google::cloud::apigateway::v1::UpdateApiRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteApi,
-      (google::cloud::apigateway::v1::DeleteApiRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::apigateway::v1::ApiConfig>,
-              ListApiConfigs,
-              (google::cloud::apigateway::v1::ListApiConfigsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::apigateway::v1::ApiConfig>, GetApiConfig,
-      (google::cloud::apigateway::v1::GetApiConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
-      CreateApiConfig,
-      (google::cloud::apigateway::v1::CreateApiConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
-      UpdateApiConfig,
-      (google::cloud::apigateway::v1::UpdateApiConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteApiConfig,
-      (google::cloud::apigateway::v1::DeleteApiConfigRequest const& request),
-      (override));
-};
+/// @deprecated Use apigateway_v1_mocks::MockApiGatewayServiceConnection
+/// directly.
+using ::google::cloud::apigateway_v1_mocks::MockApiGatewayServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_mocks

@@ -20,114 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CLIENT_H
 
 #include "google/cloud/apigeeconnect/connection_connection.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/apigeeconnect/v1/connection_client.h"
 
 namespace google {
 namespace cloud {
 namespace apigeeconnect {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-///
-/// Service Interface for the Apigee Connect connection management APIs.
-///
-/// @par Equality
-///
-/// Instances of this class created via copy-construction or copy-assignment
-/// always compare equal. Instances created with equal
-/// `std::shared_ptr<*Connection>` objects compare equal. Objects that compare
-/// equal share the same underlying resources.
-///
-/// @par Performance
-///
-/// Creating a new instance of this class is a relatively expensive operation,
-/// new objects establish new connections to the service. In contrast,
-/// copy-construction, move-construction, and the corresponding assignment
-/// operations are relatively efficient as the copies share all underlying
-/// resources.
-///
-/// @par Thread Safety
-///
-/// Concurrent access to different instances of this class, even if they compare
-/// equal, is guaranteed to work. Two or more threads operating on the same
-/// instance of this class is not guaranteed to work. Since copy-construction
-/// and move-construction is a relatively efficient operation, consider using
-/// such a copy when using this class from multiple threads.
-///
-class ConnectionServiceClient {
- public:
-  explicit ConnectionServiceClient(
-      std::shared_ptr<ConnectionServiceConnection> connection,
-      Options opts = {});
-  ~ConnectionServiceClient();
-
-  ///@{
-  /// @name Copy and move support
-  ConnectionServiceClient(ConnectionServiceClient const&) = default;
-  ConnectionServiceClient& operator=(ConnectionServiceClient const&) = default;
-  ConnectionServiceClient(ConnectionServiceClient&&) = default;
-  ConnectionServiceClient& operator=(ConnectionServiceClient&&) = default;
-  ///@}
-
-  ///@{
-  /// @name Equality
-  friend bool operator==(ConnectionServiceClient const& a,
-                         ConnectionServiceClient const& b) {
-    return a.connection_ == b.connection_;
-  }
-  friend bool operator!=(ConnectionServiceClient const& a,
-                         ConnectionServiceClient const& b) {
-    return !(a == b);
-  }
-  ///@}
-
-  ///
-  /// Lists connections that are currently active for the given Apigee Connect
-  /// endpoint.
-  ///
-  /// @param parent  Required. Parent name of the form:
-  ///      `projects/{project_number or project_id}/endpoints/{endpoint}`.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::apigeeconnect::v1::Connection,google/cloud/apigeeconnect/v1/connection.proto#L86}
-  ///
-  /// [google.cloud.apigeeconnect.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L86}
-  /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
-  ///
-  StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
-      std::string const& parent, Options opts = {});
-
-  ///
-  /// Lists connections that are currently active for the given Apigee Connect
-  /// endpoint.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::apigeeconnect::v1::ListConnectionsRequest,google/cloud/apigeeconnect/v1/connection.proto#L52}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::apigeeconnect::v1::Connection,google/cloud/apigeeconnect/v1/connection.proto#L86}
-  ///
-  /// [google.cloud.apigeeconnect.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L86}
-  /// [google.cloud.apigeeconnect.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/apigeeconnect/v1/connection.proto#L52}
-  ///
-  StreamRange<google::cloud::apigeeconnect::v1::Connection> ListConnections(
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest request,
-      Options opts = {});
-
- private:
-  std::shared_ptr<ConnectionServiceConnection> connection_;
-  Options options_;
-};
+/// @deprecated Use apigeeconnect_v1::ConnectionServiceClient directly.
+using ::google::cloud::apigeeconnect_v1::ConnectionServiceClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect

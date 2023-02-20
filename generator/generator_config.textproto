@@ -43,7 +43,8 @@ service {
 # API Gateway
 service {
   service_proto_path: "google/cloud/apigateway/v1/apigateway_service.proto"
-  product_path: "google/cloud/apigateway"
+  product_path: "google/cloud/apigateway/v1"
+  forwarding_product_path: "google/cloud/apigateway"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
@@ -51,7 +52,8 @@ service {
 # Apigee Connect
 service {
   service_proto_path: "google/cloud/apigeeconnect/v1/connection.proto"
-  product_path: "google/cloud/apigeeconnect"
+  product_path: "google/cloud/apigeeconnect/v1"
+  forwarding_product_path: "google/cloud/apigeeconnect"
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_APIGEE_CONNECTION_SERVICE_ENDPOINT"
   retryable_status_codes: ["kUnavailable", "kUnknown"]

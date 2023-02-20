@@ -32,13 +32,15 @@
 ./include/google/cloud/advisorynotifications/v1/internal
 ./include/google/cloud/advisorynotifications/v1/mocks
 ./include/google/cloud/apigateway
-./include/google/cloud/apigateway/internal
 ./include/google/cloud/apigateway/mocks
 ./include/google/cloud/apigateway/v1
+./include/google/cloud/apigateway/v1/internal
+./include/google/cloud/apigateway/v1/mocks
 ./include/google/cloud/apigeeconnect
-./include/google/cloud/apigeeconnect/internal
 ./include/google/cloud/apigeeconnect/mocks
 ./include/google/cloud/apigeeconnect/v1
+./include/google/cloud/apigeeconnect/v1/internal
+./include/google/cloud/apigeeconnect/v1/mocks
 ./include/google/cloud/apikeys
 ./include/google/cloud/apikeys/internal
 ./include/google/cloud/apikeys/mocks

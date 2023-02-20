@@ -19,31 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_CONNECTION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/apigeeconnect/v1/connection.grpc.pb.h>
-#include <memory>
+#include "google/cloud/apigeeconnect/v1/connection_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace apigeeconnect {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ConnectionServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~ConnectionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// apigeeconnect_v1::MakeDefaultConnectionServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::apigeeconnect_v1::
+    MakeDefaultConnectionServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListConnections(
-      google::cloud::apigeeconnect::v1::ListConnectionsRequest request);
-};
-
-std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
-MakeDefaultConnectionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// apigeeconnect_v1::ConnectionServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::apigeeconnect_v1::
+    ConnectionServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect
