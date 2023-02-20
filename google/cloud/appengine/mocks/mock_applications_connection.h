@@ -20,51 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_MOCKS_MOCK_APPLICATIONS_CONNECTION_H
 
 #include "google/cloud/appengine/applications_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/appengine/v1/mocks/mock_applications_connection.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ApplicationsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ApplicationsClient`. To do so,
- * construct an object of type `ApplicationsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockApplicationsConnection : public appengine::ApplicationsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::appengine::v1::Application>, GetApplication,
-              (google::appengine::v1::GetApplicationRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
-              CreateApplication,
-              (google::appengine::v1::CreateApplicationRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
-              UpdateApplication,
-              (google::appengine::v1::UpdateApplicationRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
-              RepairApplication,
-              (google::appengine::v1::RepairApplicationRequest const& request),
-              (override));
-};
+/// @deprecated Use appengine_v1_mocks::MockApplicationsConnection directly.
+using ::google::cloud::appengine_v1_mocks::MockApplicationsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_mocks

@@ -19,39 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
-#include <memory>
+#include "google/cloud/appengine/v1/services_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ServicesConnectionIdempotencyPolicy {
- public:
-  virtual ~ServicesConnectionIdempotencyPolicy();
+/// @deprecated Use appengine_v1::MakeDefaultServicesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    MakeDefaultServicesConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ServicesConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListServices(
-      google::appengine::v1::ListServicesRequest request);
-
-  virtual google::cloud::Idempotency GetService(
-      google::appengine::v1::GetServiceRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateService(
-      google::appengine::v1::UpdateServiceRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteService(
-      google::appengine::v1::DeleteServiceRequest const& request);
-};
-
-std::unique_ptr<ServicesConnectionIdempotencyPolicy>
-MakeDefaultServicesConnectionIdempotencyPolicy();
+/// @deprecated Use appengine_v1::ServicesConnectionIdempotencyPolicy directly.
+using ::google::cloud::appengine_v1::ServicesConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

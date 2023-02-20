@@ -20,48 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_MOCKS_MOCK_SERVICES_CONNECTION_H
 
 #include "google/cloud/appengine/services_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/appengine/v1/mocks/mock_services_connection.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ServicesConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ServicesClient`. To do so,
- * construct an object of type `ServicesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockServicesConnection : public appengine::ServicesConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::appengine::v1::Service>, ListServices,
-              (google::appengine::v1::ListServicesRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::appengine::v1::Service>, GetService,
-              (google::appengine::v1::GetServiceRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>, UpdateService,
-              (google::appengine::v1::UpdateServiceRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-              DeleteService,
-              (google::appengine::v1::DeleteServiceRequest const& request),
-              (override));
-};
+/// @deprecated Use appengine_v1_mocks::MockServicesConnection directly.
+using ::google::cloud::appengine_v1_mocks::MockServicesConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_mocks

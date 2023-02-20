@@ -21,53 +21,30 @@
 
 #include "google/cloud/appengine/authorized_certificates_connection.h"
 #include "google/cloud/appengine/authorized_certificates_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/appengine/v1/authorized_certificates_options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct AuthorizedCertificatesRetryPolicyOption {
-  using Type = std::shared_ptr<AuthorizedCertificatesRetryPolicy>;
-};
+/// @deprecated Use appengine_v1::AuthorizedCertificatesBackoffPolicyOption
+/// directly.
+using ::google::cloud::appengine_v1::AuthorizedCertificatesBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct AuthorizedCertificatesBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// appengine_v1::AuthorizedCertificatesConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::appengine_v1::
+    AuthorizedCertificatesConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct AuthorizedCertificatesConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use appengine_v1::AuthorizedCertificatesPolicyOptionList
+/// directly.
+using ::google::cloud::appengine_v1::AuthorizedCertificatesPolicyOptionList;
 
-/**
- * The options applicable to AuthorizedCertificates.
- *
- * @ingroup google-cloud-appengine-options
- */
-using AuthorizedCertificatesPolicyOptionList =
-    OptionList<AuthorizedCertificatesRetryPolicyOption,
-               AuthorizedCertificatesBackoffPolicyOption,
-               AuthorizedCertificatesConnectionIdempotencyPolicyOption>;
+/// @deprecated Use appengine_v1::AuthorizedCertificatesRetryPolicyOption
+/// directly.
+using ::google::cloud::appengine_v1::AuthorizedCertificatesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

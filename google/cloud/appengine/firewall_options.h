@@ -21,51 +21,25 @@
 
 #include "google/cloud/appengine/firewall_connection.h"
 #include "google/cloud/appengine/firewall_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/appengine/v1/firewall_options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct FirewallRetryPolicyOption {
-  using Type = std::shared_ptr<FirewallRetryPolicy>;
-};
+/// @deprecated Use appengine_v1::FirewallBackoffPolicyOption directly.
+using ::google::cloud::appengine_v1::FirewallBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct FirewallBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use appengine_v1::FirewallConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::appengine_v1::FirewallConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct FirewallConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<FirewallConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use appengine_v1::FirewallPolicyOptionList directly.
+using ::google::cloud::appengine_v1::FirewallPolicyOptionList;
 
-/**
- * The options applicable to Firewall.
- *
- * @ingroup google-cloud-appengine-options
- */
-using FirewallPolicyOptionList =
-    OptionList<FirewallRetryPolicyOption, FirewallBackoffPolicyOption,
-               FirewallConnectionIdempotencyPolicyOption>;
+/// @deprecated Use appengine_v1::FirewallRetryPolicyOption directly.
+using ::google::cloud::appengine_v1::FirewallRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

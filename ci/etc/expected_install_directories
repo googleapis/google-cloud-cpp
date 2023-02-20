@@ -45,8 +45,10 @@
 ./include/google/cloud/apikeys/internal
 ./include/google/cloud/apikeys/mocks
 ./include/google/cloud/appengine
-./include/google/cloud/appengine/internal
 ./include/google/cloud/appengine/mocks
+./include/google/cloud/appengine/v1
+./include/google/cloud/appengine/v1/internal
+./include/google/cloud/appengine/v1/mocks
 ./include/google/cloud/artifactregistry
 ./include/google/cloud/artifactregistry/internal
 ./include/google/cloud/artifactregistry/mocks

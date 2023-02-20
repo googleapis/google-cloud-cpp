@@ -19,43 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_DOMAIN_MAPPINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_DOMAIN_MAPPINGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
-#include <memory>
+#include "google/cloud/appengine/v1/domain_mappings_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DomainMappingsConnectionIdempotencyPolicy {
- public:
-  virtual ~DomainMappingsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// appengine_v1::MakeDefaultDomainMappingsConnectionIdempotencyPolicy directly.
+using ::google::cloud::appengine_v1::
+    MakeDefaultDomainMappingsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListDomainMappings(
-      google::appengine::v1::ListDomainMappingsRequest request);
-
-  virtual google::cloud::Idempotency GetDomainMapping(
-      google::appengine::v1::GetDomainMappingRequest const& request);
-
-  virtual google::cloud::Idempotency CreateDomainMapping(
-      google::appengine::v1::CreateDomainMappingRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateDomainMapping(
-      google::appengine::v1::UpdateDomainMappingRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteDomainMapping(
-      google::appengine::v1::DeleteDomainMappingRequest const& request);
-};
-
-std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
-MakeDefaultDomainMappingsConnectionIdempotencyPolicy();
+/// @deprecated Use appengine_v1::DomainMappingsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::appengine_v1::DomainMappingsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
