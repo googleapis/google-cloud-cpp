@@ -19,100 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_ASSET_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_ASSET_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/asset/v1/asset_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/asset/v1/asset_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace asset {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AssetServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~AssetServiceConnectionIdempotencyPolicy();
+/// @deprecated Use asset_v1::MakeDefaultAssetServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::asset_v1::
+    MakeDefaultAssetServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AssetServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ExportAssets(
-      google::cloud::asset::v1::ExportAssetsRequest const& request);
-
-  virtual google::cloud::Idempotency ListAssets(
-      google::cloud::asset::v1::ListAssetsRequest request);
-
-  virtual google::cloud::Idempotency BatchGetAssetsHistory(
-      google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request);
-
-  virtual google::cloud::Idempotency CreateFeed(
-      google::cloud::asset::v1::CreateFeedRequest const& request);
-
-  virtual google::cloud::Idempotency GetFeed(
-      google::cloud::asset::v1::GetFeedRequest const& request);
-
-  virtual google::cloud::Idempotency ListFeeds(
-      google::cloud::asset::v1::ListFeedsRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateFeed(
-      google::cloud::asset::v1::UpdateFeedRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteFeed(
-      google::cloud::asset::v1::DeleteFeedRequest const& request);
-
-  virtual google::cloud::Idempotency SearchAllResources(
-      google::cloud::asset::v1::SearchAllResourcesRequest request);
-
-  virtual google::cloud::Idempotency SearchAllIamPolicies(
-      google::cloud::asset::v1::SearchAllIamPoliciesRequest request);
-
-  virtual google::cloud::Idempotency AnalyzeIamPolicy(
-      google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency AnalyzeIamPolicyLongrunning(
-      google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
-          request);
-
-  virtual google::cloud::Idempotency AnalyzeMove(
-      google::cloud::asset::v1::AnalyzeMoveRequest const& request);
-
-  virtual google::cloud::Idempotency QueryAssets(
-      google::cloud::asset::v1::QueryAssetsRequest const& request);
-
-  virtual google::cloud::Idempotency CreateSavedQuery(
-      google::cloud::asset::v1::CreateSavedQueryRequest const& request);
-
-  virtual google::cloud::Idempotency GetSavedQuery(
-      google::cloud::asset::v1::GetSavedQueryRequest const& request);
-
-  virtual google::cloud::Idempotency ListSavedQueries(
-      google::cloud::asset::v1::ListSavedQueriesRequest request);
-
-  virtual google::cloud::Idempotency UpdateSavedQuery(
-      google::cloud::asset::v1::UpdateSavedQueryRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteSavedQuery(
-      google::cloud::asset::v1::DeleteSavedQueryRequest const& request);
-
-  virtual google::cloud::Idempotency BatchGetEffectiveIamPolicies(
-      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
-          request);
-
-  virtual google::cloud::Idempotency AnalyzeOrgPolicies(
-      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request);
-
-  virtual google::cloud::Idempotency AnalyzeOrgPolicyGovernedContainers(
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
-          request);
-
-  virtual google::cloud::Idempotency AnalyzeOrgPolicyGovernedAssets(
-      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request);
-};
-
-std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>
-MakeDefaultAssetServiceConnectionIdempotencyPolicy();
+/// @deprecated Use asset_v1::AssetServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::asset_v1::AssetServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset

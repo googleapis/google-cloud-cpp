@@ -21,62 +21,28 @@
 
 #include "google/cloud/asset/asset_connection.h"
 #include "google/cloud/asset/asset_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/asset/v1/asset_options.h"
 
 namespace google {
 namespace cloud {
 namespace asset {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-asset-options
- */
-struct AssetServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AssetServiceRetryPolicy>;
-};
+/// @deprecated Use asset_v1::AssetServicePollingPolicyOption directly.
+using ::google::cloud::asset_v1::AssetServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-asset-options
- */
-struct AssetServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use asset_v1::AssetServiceBackoffPolicyOption directly.
+using ::google::cloud::asset_v1::AssetServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-asset-options
- */
-struct AssetServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AssetServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use asset_v1::AssetServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::asset_v1::AssetServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-asset-options
- */
-struct AssetServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use asset_v1::AssetServicePolicyOptionList directly.
+using ::google::cloud::asset_v1::AssetServicePolicyOptionList;
 
-/**
- * The options applicable to AssetService.
- *
- * @ingroup google-cloud-asset-options
- */
-using AssetServicePolicyOptionList =
-    OptionList<AssetServiceRetryPolicyOption, AssetServiceBackoffPolicyOption,
-               AssetServicePollingPolicyOption,
-               AssetServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use asset_v1::AssetServiceRetryPolicyOption directly.
+using ::google::cloud::asset_v1::AssetServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset

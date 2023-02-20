@@ -16,23 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_MOCKS_MOCK_ASSET_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_MOCKS_MOCK_ASSET_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_STUB_FACTORY_H
 
-#include "google/cloud/asset/asset_connection.h"
-#include "google/cloud/asset/v1/mocks/mock_asset_connection.h"
+#include "google/cloud/asset/v1/internal/asset_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace asset_mocks {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use asset_v1_mocks::MockAssetServiceConnection directly.
-using ::google::cloud::asset_v1_mocks::MockAssetServiceConnection;
+std::shared_ptr<AssetServiceStub> CreateDefaultAssetServiceStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_mocks
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_MOCKS_MOCK_ASSET_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_STUB_FACTORY_H

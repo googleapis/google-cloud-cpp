@@ -51,9 +51,10 @@
 ./include/google/cloud/artifactregistry/internal
 ./include/google/cloud/artifactregistry/mocks
 ./include/google/cloud/asset
-./include/google/cloud/asset/internal
 ./include/google/cloud/asset/mocks
 ./include/google/cloud/asset/v1
+./include/google/cloud/asset/v1/internal
+./include/google/cloud/asset/v1/mocks
 ./include/google/cloud/assuredworkloads
 ./include/google/cloud/assuredworkloads/internal
 ./include/google/cloud/assuredworkloads/mocks

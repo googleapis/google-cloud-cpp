@@ -16,23 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_MOCKS_MOCK_ASSET_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_MOCKS_MOCK_ASSET_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_OPTION_DEFAULTS_H
 
-#include "google/cloud/asset/asset_connection.h"
-#include "google/cloud/asset/v1/mocks/mock_asset_connection.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace asset_mocks {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use asset_v1_mocks::MockAssetServiceConnection directly.
-using ::google::cloud::asset_v1_mocks::MockAssetServiceConnection;
+Options AssetServiceDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_mocks
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_MOCKS_MOCK_ASSET_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_OPTION_DEFAULTS_H
