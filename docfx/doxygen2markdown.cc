@@ -235,7 +235,7 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
 //
 // These are small sections, such as the `@see` notes, or a `@warning`
 // callout.  How we want to render them depends on their type. For most we will
-// use a simple H6 header, put things like 'warning' or 'note' deserve a block
+// use a simple H6 header, but things like 'warning' or 'note' deserve a block
 // quote.
 //
 // clang-format off
@@ -260,7 +260,6 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
 //       <xsd:enumeration value="rcs" />
 //     </xsd:restriction>
 //   </xsd:simpleType>
-//
 //
 //   <xsd:complexType name="docSimpleSectType">
 //     <xsd:sequence>
