@@ -30,6 +30,134 @@ namespace {
 
 }  // namespace
 
+// A "sect4" node type is defined as (note the lack of sect5):
+//
+// clang-format off
+//    <xsd:complexType name="docSect4Type" mixed="true">
+//      <xsd:sequence>
+//        <xsd:element name="title" type="xsd:string" />
+//        <xsd:choice maxOccurs="unbounded">
+//          <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//          <xsd:element name="internal" type="docInternalS4Type" minOccurs="0" />
+//        </xsd:choice>
+//      </xsd:sequence>
+//      <xsd:attribute name="id" type="xsd:string" />
+//    </xsd:complexType>
+// clang-format on
+bool AppendIfSect4(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "sect4") return false;
+  // A single '#' title is reserved for the document title. The sect4 title uses
+  // '#####':
+  os << "\n\n##### ";
+  AppendTitle(os, ctx, node);
+  for (auto const& child : node) {
+    // Unexpected: internal  -> we do not use this.
+    if (std::string_view(child.name()) == "title") continue;  // already handled
+    if (AppendIfParagraph(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// A "sect3" node type is defined as:
+//
+// clang-format off
+//   <xsd:complexType name="docSect3Type" mixed="true">
+//     <xsd:sequence>
+//       <xsd:element name="title" type="xsd:string" minOccurs="0" />
+//       <xsd:choice maxOccurs="unbounded">
+//         <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//         <xsd:element name="internal" type="docInternalS1Type" minOccurs="0"  maxOccurs="unbounded" />
+//         <xsd:element name="sect2" type="docSect2Type" minOccurs="0" maxOccurs="unbounded" />
+//       </xsd:choice>
+//     </xsd:sequence>
+//     <xsd:attribute name="id" type="xsd:string" />
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfSect3(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "sect3") return false;
+  // A single '#' title is reserved for the document title. The sect3 title
+  // uses '####'.
+  os << "\n\n#### ";
+  AppendTitle(os, ctx, node);
+  for (auto const& child : node) {
+    // Unexpected: internal  -> we do not use this.
+    if (std::string_view(child.name()) == "title") continue;  // already handled
+    if (AppendIfParagraph(os, ctx, child)) continue;
+    if (AppendIfSect4(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+
+  return true;
+}
+
+// A "sect2" node type is defined as:
+//
+// clang-format off
+//   <xsd:complexType name="docSect1Type" mixed="true">
+//     <xsd:sequence>
+//       <xsd:element name="title" type="xsd:string" minOccurs="0" />
+//       <xsd:choice maxOccurs="unbounded">
+//         <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//         <xsd:element name="internal" type="docInternalS1Type" minOccurs="0"  maxOccurs="unbounded" />
+//         <xsd:element name="sect3" type="docSect2Type" minOccurs="0" maxOccurs="unbounded" />
+//       </xsd:choice>
+//     </xsd:sequence>
+//     <xsd:attribute name="id" type="xsd:string" />
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfSect2(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "sect2") return false;
+  // A single '#' title is reserved for the document title. The sect2 title
+  // uses '###':
+  os << "\n\n### ";
+  AppendTitle(os, ctx, node);
+  for (auto const& child : node) {
+    // Unexpected: internal  -> we do not use this.
+    if (std::string_view(child.name()) == "title") continue;  // already handled
+    if (AppendIfParagraph(os, ctx, child)) continue;
+    if (AppendIfSect3(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// A "sect1" node type is defined as:
+//
+// clang-format off
+//   <xsd:complexType name="docSect1Type" mixed="true">
+//     <xsd:sequence>
+//       <xsd:element name="title" type="xsd:string" minOccurs="0" />
+//       <xsd:choice maxOccurs="unbounded">
+//         <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//         <xsd:element name="internal" type="docInternalS1Type" minOccurs="0"  maxOccurs="unbounded" />
+//         <xsd:element name="sect2" type="docSect2Type" minOccurs="0" maxOccurs="unbounded" />
+//       </xsd:choice>
+//     </xsd:sequence>
+//     <xsd:attribute name="id" type="xsd:string" />
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "sect1") return false;
+  // A single '#' title is reserved for the document title. The sect1 title
+  // uses '##':
+  os << "\n\n## ";
+  AppendTitle(os, ctx, node);
+  for (auto const& child : node) {
+    // Unexpected: internal  -> we do not use this.
+    if (std::string_view(child.name()) == "title") continue;  // already handled
+    if (AppendIfParagraph(os, ctx, child)) continue;
+    if (AppendIfSect2(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+
+  return true;
+}
+
 bool AppendIfPlainText(std::ostream& os, MarkdownContext const& /*ctx*/,
                        pugi::xml_node const& node) {
   if (!std::string_view{node.name()}.empty() || !node.attributes().empty()) {

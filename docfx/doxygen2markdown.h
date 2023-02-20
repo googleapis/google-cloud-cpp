@@ -29,6 +29,22 @@ struct MarkdownContext {
   std::string paragraph_indent = "";
 };
 
+/// Handles a sect4 node.
+bool AppendIfSect4(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node);
+
+/// Handles a sect3 node.
+bool AppendIfSect3(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node);
+
+/// Handles a sect2 node.
+bool AppendIfSect2(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node);
+
+/// Handles a sect1 node.
+bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node);
+
 /**
  * Handle plain text nodes.
  *
@@ -78,7 +94,7 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
                        pugi::xml_node const& node);
 
-/// Handle itemized lists
+/// Handle itemized lists.
 bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
                           pugi::xml_node const& node);
 
