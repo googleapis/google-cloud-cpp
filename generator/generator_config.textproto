@@ -561,7 +561,8 @@ service {
 # Datastream
 service {
   service_proto_path: "google/cloud/datastream/v1/datastream.proto"
-  product_path: "google/cloud/datastream"
+  product_path: "google/cloud/datastream/v1"
+  forwarding_product_path: "google/cloud/datastream"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
