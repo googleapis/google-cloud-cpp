@@ -149,6 +149,8 @@ add_library(
     internal/partial_result_set_resume.h
     internal/partial_result_set_source.cc
     internal/partial_result_set_source.h
+    internal/route_to_leader.cc
+    internal/route_to_leader.h
     internal/session.cc
     internal/session.h
     internal/session_pool.cc
@@ -397,6 +399,7 @@ function (spanner_client_define_tests)
         internal/metadata_spanner_stub_test.cc
         internal/partial_result_set_resume_test.cc
         internal/partial_result_set_source_test.cc
+        internal/route_to_leader_test.cc
         internal/session_pool_test.cc
         internal/spanner_auth_test.cc
         internal/spanner_stub_test.cc
