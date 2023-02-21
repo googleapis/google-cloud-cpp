@@ -333,7 +333,8 @@ service {
 # Cloud Build
 service {
   service_proto_path: "google/devtools/cloudbuild/v1/cloudbuild.proto"
-  product_path: "google/cloud/cloudbuild"
+  product_path: "google/cloud/cloudbuild/v1"
+  forwarding_product_path: "google/cloud/cloudbuild"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
