@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#include "google/cloud/certificatemanager/internal/certificate_manager_auth_decorator.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_auth_decorator.h"
 #include <google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CertificateManagerAuth::CertificateManagerAuth(
@@ -458,6 +458,6 @@ future<Status> CertificateManagerAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_internal
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google

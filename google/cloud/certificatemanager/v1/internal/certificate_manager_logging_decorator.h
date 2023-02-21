@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_LOGGING_DECORATOR_H
 
-#include "google/cloud/certificatemanager/internal/certificate_manager_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -29,15 +29,15 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CertificateManagerAuth : public CertificateManagerStub {
+class CertificateManagerLogging : public CertificateManagerStub {
  public:
-  ~CertificateManagerAuth() override = default;
-  CertificateManagerAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<CertificateManagerStub> child);
+  ~CertificateManagerLogging() override = default;
+  CertificateManagerLogging(std::shared_ptr<CertificateManagerStub> child,
+                            TracingOptions tracing_options,
+                            std::set<std::string> components);
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
   ListCertificates(
@@ -200,13 +200,14 @@ class CertificateManagerAuth : public CertificateManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CertificateManagerStub> child_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // CertificateManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_internal
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_LOGGING_DECORATOR_H

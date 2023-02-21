@@ -338,7 +338,8 @@ service {
 # Certificate Manager
 service {
   service_proto_path: "google/cloud/certificatemanager/v1/certificate_manager.proto"
-  product_path: "google/cloud/certificatemanager"
+  product_path: "google/cloud/certificatemanager/v1"
+  forwarding_product_path: "google/cloud/certificatemanager"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

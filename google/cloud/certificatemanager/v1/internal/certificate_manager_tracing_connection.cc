@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#include "google/cloud/certificatemanager/internal/certificate_manager_tracing_connection.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CertificateManagerTracingConnection::CertificateManagerTracingConnection(
-    std::shared_ptr<certificatemanager::CertificateManagerConnection> child)
+    std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::certificatemanager::v1::Certificate>
 CertificateManagerTracingConnection::ListCertificates(
     google::cloud::certificatemanager::v1::ListCertificatesRequest request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::ListCertificates");
+      "certificatemanager_v1::CertificateManagerConnection::ListCertificates");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCertificates(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -49,7 +49,7 @@ CertificateManagerTracingConnection::GetCertificate(
     google::cloud::certificatemanager::v1::GetCertificateRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::GetCertificate");
+      "certificatemanager_v1::CertificateManagerConnection::GetCertificate");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCertificate(request));
 }
@@ -79,7 +79,8 @@ StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
 CertificateManagerTracingConnection::ListCertificateMaps(
     google::cloud::certificatemanager::v1::ListCertificateMapsRequest request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::ListCertificateMaps");
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "ListCertificateMaps");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCertificateMaps(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -92,7 +93,7 @@ CertificateManagerTracingConnection::GetCertificateMap(
     google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::GetCertificateMap");
+      "certificatemanager_v1::CertificateManagerConnection::GetCertificateMap");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCertificateMap(request));
 }
@@ -123,7 +124,7 @@ CertificateManagerTracingConnection::ListCertificateMapEntries(
     google::cloud::certificatemanager::v1::ListCertificateMapEntriesRequest
         request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::"
+      "certificatemanager_v1::CertificateManagerConnection::"
       "ListCertificateMapEntries");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCertificateMapEntries(std::move(request));
@@ -137,7 +138,7 @@ CertificateManagerTracingConnection::GetCertificateMapEntry(
     google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::"
+      "certificatemanager_v1::CertificateManagerConnection::"
       "GetCertificateMapEntry");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCertificateMapEntry(request));
@@ -169,7 +170,7 @@ CertificateManagerTracingConnection::ListDnsAuthorizations(
     google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest
         request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::"
+      "certificatemanager_v1::CertificateManagerConnection::"
       "ListDnsAuthorizations");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListDnsAuthorizations(std::move(request));
@@ -183,7 +184,8 @@ CertificateManagerTracingConnection::GetDnsAuthorization(
     google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::GetDnsAuthorization");
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "GetDnsAuthorization");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDnsAuthorization(request));
 }
@@ -214,7 +216,7 @@ CertificateManagerTracingConnection::ListCertificateIssuanceConfigs(
     google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsRequest
         request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::"
+      "certificatemanager_v1::CertificateManagerConnection::"
       "ListCertificateIssuanceConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListCertificateIssuanceConfigs(std::move(request));
@@ -228,7 +230,7 @@ CertificateManagerTracingConnection::GetCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
         GetCertificateIssuanceConfigRequest const& request) {
   auto span = internal::MakeSpan(
-      "certificatemanager::CertificateManagerConnection::"
+      "certificatemanager_v1::CertificateManagerConnection::"
       "GetCertificateIssuanceConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span,
@@ -252,9 +254,9 @@ CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<certificatemanager::CertificateManagerConnection>
+std::shared_ptr<certificatemanager_v1::CertificateManagerConnection>
 MakeCertificateManagerTracingConnection(
-    std::shared_ptr<certificatemanager::CertificateManagerConnection> conn) {
+    std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn =
@@ -265,6 +267,6 @@ MakeCertificateManagerTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_internal
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#include "google/cloud/certificatemanager/internal/certificate_manager_option_defaults.h"
-#include "google/cloud/certificatemanager/certificate_manager_connection.h"
-#include "google/cloud/certificatemanager/certificate_manager_options.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_option_defaults.h"
+#include "google/cloud/certificatemanager/v1/certificate_manager_connection.h"
+#include "google/cloud/certificatemanager/v1/certificate_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,39 +39,41 @@ Options CertificateManagerDefaultOptions(Options options) {
       "certificatemanager.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<certificatemanager::CertificateManagerRetryPolicyOption>()) {
-    options.set<certificatemanager::CertificateManagerRetryPolicyOption>(
-        certificatemanager::CertificateManagerLimitedTimeRetryPolicy(
+  if (!options
+           .has<certificatemanager_v1::CertificateManagerRetryPolicyOption>()) {
+    options.set<certificatemanager_v1::CertificateManagerRetryPolicyOption>(
+        certificatemanager_v1::CertificateManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<certificatemanager::CertificateManagerBackoffPolicyOption>()) {
-    options.set<certificatemanager::CertificateManagerBackoffPolicyOption>(
+  if (!options.has<
+          certificatemanager_v1::CertificateManagerBackoffPolicyOption>()) {
+    options.set<certificatemanager_v1::CertificateManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<certificatemanager::CertificateManagerPollingPolicyOption>()) {
-    options.set<certificatemanager::CertificateManagerPollingPolicyOption>(
+  if (!options.has<
+          certificatemanager_v1::CertificateManagerPollingPolicyOption>()) {
+    options.set<certificatemanager_v1::CertificateManagerPollingPolicyOption>(
         GenericPollingPolicy<
-            certificatemanager::CertificateManagerRetryPolicyOption::Type,
-            certificatemanager::CertificateManagerBackoffPolicyOption::Type>(
+            certificatemanager_v1::CertificateManagerRetryPolicyOption::Type,
+            certificatemanager_v1::CertificateManagerBackoffPolicyOption::Type>(
             options
-                .get<certificatemanager::CertificateManagerRetryPolicyOption>()
+                .get<certificatemanager_v1::
+                         CertificateManagerRetryPolicyOption>()
                 ->clone(),
             options
-                .get<
-                    certificatemanager::CertificateManagerBackoffPolicyOption>()
+                .get<certificatemanager_v1::
+                         CertificateManagerBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<certificatemanager::
+  if (!options.has<certificatemanager_v1::
                        CertificateManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<certificatemanager::
+    options.set<certificatemanager_v1::
                     CertificateManagerConnectionIdempotencyPolicyOption>(
-        certificatemanager::
+        certificatemanager_v1::
             MakeDefaultCertificateManagerConnectionIdempotencyPolicy());
   }
 
@@ -79,6 +81,6 @@ Options CertificateManagerDefaultOptions(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_internal
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,41 +16,30 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_TRACING_CONNECTION_H
 
-#include "google/cloud/certificatemanager/certificate_manager_connection.h"
-#include "google/cloud/certificatemanager/certificate_manager_connection_idempotency_policy.h"
-#include "google/cloud/certificatemanager/certificate_manager_options.h"
-#include "google/cloud/certificatemanager/internal/certificate_manager_retry_traits.h"
-#include "google/cloud/certificatemanager/internal/certificate_manager_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/certificatemanager/v1/certificate_manager_connection.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CertificateManagerConnectionImpl
-    : public certificatemanager::CertificateManagerConnection {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class CertificateManagerTracingConnection
+    : public certificatemanager_v1::CertificateManagerConnection {
  public:
-  ~CertificateManagerConnectionImpl() override = default;
+  ~CertificateManagerTracingConnection() override = default;
 
-  CertificateManagerConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<certificatemanager_internal::CertificateManagerStub> stub,
-      Options options);
+  explicit CertificateManagerTracingConnection(
+      std::shared_ptr<certificatemanager_v1::CertificateManagerConnection>
+          child);
 
-  Options options() override { return options_; }
+  Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::certificatemanager::v1::Certificate>
   ListCertificates(
@@ -173,72 +162,24 @@ class CertificateManagerConnectionImpl
           DeleteCertificateIssuanceConfigRequest const& request) override;
 
  private:
-  std::unique_ptr<certificatemanager::CertificateManagerRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<certificatemanager::CertificateManagerRetryPolicyOption>()) {
-      return options
-          .get<certificatemanager::CertificateManagerRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<certificatemanager::CertificateManagerRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<certificatemanager::CertificateManagerBackoffPolicyOption>()) {
-      return options
-          .get<certificatemanager::CertificateManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<certificatemanager::CertificateManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      certificatemanager::CertificateManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<certificatemanager::
-                     CertificateManagerConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<certificatemanager::
-                   CertificateManagerConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<certificatemanager::
-                 CertificateManagerConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<certificatemanager::CertificateManagerPollingPolicyOption>()) {
-      return options
-          .get<certificatemanager::CertificateManagerPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<certificatemanager::CertificateManagerPollingPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<certificatemanager_internal::CertificateManagerStub> stub_;
-  Options options_;
+  std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<certificatemanager_v1::CertificateManagerConnection>
+MakeCertificateManagerTracingConnection(
+    std::shared_ptr<certificatemanager_v1::CertificateManagerConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_internal
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_TRACING_CONNECTION_H

@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#include "google/cloud/certificatemanager/certificate_manager_connection.h"
-#include "google/cloud/certificatemanager/certificate_manager_options.h"
-#include "google/cloud/certificatemanager/internal/certificate_manager_connection_impl.h"
-#include "google/cloud/certificatemanager/internal/certificate_manager_option_defaults.h"
-#include "google/cloud/certificatemanager/internal/certificate_manager_stub_factory.h"
-#include "google/cloud/certificatemanager/internal/certificate_manager_tracing_connection.h"
+#include "google/cloud/certificatemanager/v1/certificate_manager_connection.h"
+#include "google/cloud/certificatemanager/v1/certificate_manager_options.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_connection_impl.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_option_defaults.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_stub_factory.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager {
+namespace certificatemanager_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CertificateManagerConnection::~CertificateManagerConnection() = default;
@@ -235,18 +235,20 @@ std::shared_ptr<CertificateManagerConnection> MakeCertificateManagerConnection(
                                  UnifiedCredentialsOptionList,
                                  CertificateManagerPolicyOptionList>(options,
                                                                      __func__);
-  options = certificatemanager_internal::CertificateManagerDefaultOptions(
+  options = certificatemanager_v1_internal::CertificateManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = certificatemanager_internal::CreateDefaultCertificateManagerStub(
-      background->cq(), options);
-  return certificatemanager_internal::MakeCertificateManagerTracingConnection(
-      std::make_shared<
-          certificatemanager_internal::CertificateManagerConnectionImpl>(
-          std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      certificatemanager_v1_internal::CreateDefaultCertificateManagerStub(
+          background->cq(), options);
+  return certificatemanager_v1_internal::
+      MakeCertificateManagerTracingConnection(
+          std::make_shared<
+              certificatemanager_v1_internal::CertificateManagerConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager
+}  // namespace certificatemanager_v1
 }  // namespace cloud
 }  // namespace google

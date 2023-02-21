@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#include "google/cloud/certificatemanager/internal/certificate_manager_connection_impl.h"
-#include "google/cloud/certificatemanager/internal/certificate_manager_option_defaults.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_connection_impl.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CertificateManagerConnectionImpl::CertificateManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<certificatemanager_internal::CertificateManagerStub> stub,
+    std::shared_ptr<certificatemanager_v1_internal::CertificateManagerStub>
+        stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,9 +46,9 @@ CertificateManagerConnectionImpl::ListCertificates(
     google::cloud::certificatemanager::v1::ListCertificatesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      certificatemanager_v1::CertificateManagerRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificates(request);
   char const* function_name = __func__;
@@ -189,9 +190,9 @@ CertificateManagerConnectionImpl::ListCertificateMaps(
     google::cloud::certificatemanager::v1::ListCertificateMapsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      certificatemanager_v1::CertificateManagerRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificateMaps(request);
   char const* function_name = __func__;
@@ -332,9 +333,9 @@ CertificateManagerConnectionImpl::ListCertificateMapEntries(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      certificatemanager_v1::CertificateManagerRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificateMapEntries(request);
   char const* function_name = __func__;
@@ -480,9 +481,9 @@ CertificateManagerConnectionImpl::ListDnsAuthorizations(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      certificatemanager_v1::CertificateManagerRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDnsAuthorizations(request);
   char const* function_name = __func__;
@@ -628,9 +629,9 @@ CertificateManagerConnectionImpl::ListCertificateIssuanceConfigs(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      certificatemanager_v1::CertificateManagerRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListCertificateIssuanceConfigs(request);
@@ -742,6 +743,6 @@ CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_internal
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google

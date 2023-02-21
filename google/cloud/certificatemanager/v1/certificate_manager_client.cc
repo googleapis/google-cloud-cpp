@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#include "google/cloud/certificatemanager/certificate_manager_client.h"
+#include "google/cloud/certificatemanager/v1/certificate_manager_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace certificatemanager {
+namespace certificatemanager_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CertificateManagerClient::CertificateManagerClient(
@@ -505,6 +505,6 @@ CertificateManagerClient::DeleteCertificateIssuanceConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager
+}  // namespace certificatemanager_v1
 }  // namespace cloud
 }  // namespace google

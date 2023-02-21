@@ -16,24 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_TRACING_STUB_H
 
-#include "google/cloud/certificatemanager/internal/certificate_manager_stub.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CertificateManagerMetadata : public CertificateManagerStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class CertificateManagerTracingStub : public CertificateManagerStub {
  public:
-  ~CertificateManagerMetadata() override = default;
-  explicit CertificateManagerMetadata(
+  ~CertificateManagerTracingStub() override = default;
+
+  explicit CertificateManagerTracingStub(
       std::shared_ptr<CertificateManagerStub> child);
 
   StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
@@ -197,17 +198,23 @@ class CertificateManagerMetadata : public CertificateManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
   std::shared_ptr<CertificateManagerStub> child_;
-  std::string api_client_header_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<CertificateManagerStub> MakeCertificateManagerTracingStub(
+    std::shared_ptr<CertificateManagerStub> stub);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_internal
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_INTERNAL_CERTIFICATE_MANAGER_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_TRACING_STUB_H
