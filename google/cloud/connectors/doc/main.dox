@@ -98,6 +98,10 @@ For example, this will override the default endpoint for `connectors::Connectors
 
 @snippet connectors_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [connectors::ConnectorsClient](@ref connectors::ConnectorsClient-endpoint-snippet)
+ [connectors_v1::ConnectorsClient](@ref connectors_v1::ConnectorsClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -109,6 +113,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet connectors_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [connectors::ConnectorsClient](@ref connectors::ConnectorsClient-service-account-snippet)
+ [connectors_v1::ConnectorsClient](@ref connectors_v1::ConnectorsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -148,6 +156,18 @@ can override the default policies.
 /*! @page connectors::ConnectorsClient-service-account-snippet Override connectors::ConnectorsClient Authentication Defaults
 
 @snippet google/cloud/connectors/samples/connectors_client_samples.cc with-service-account
+
+*/
+
+/*! @page connectors_v1::ConnectorsClient-endpoint-snippet Override connectors_v1::ConnectorsClient Endpoint Configuration
+
+@snippet google/cloud/connectors/v1/samples/connectors_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page connectors_v1::ConnectorsClient-service-account-snippet Override connectors_v1::ConnectorsClient Authentication Defaults
+
+@snippet google/cloud/connectors/v1/samples/connectors_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

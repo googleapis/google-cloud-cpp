@@ -16,28 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_CONNECTORS_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_CONNECTORS_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_OPTION_DEFAULTS_H
 
-#include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace connectors {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// connectors_v1::MakeDefaultConnectorsConnectionIdempotencyPolicy directly.
-using ::google::cloud::connectors_v1::
-    MakeDefaultConnectorsConnectionIdempotencyPolicy;
-
-/// @deprecated Use connectors_v1::ConnectorsConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::connectors_v1::ConnectorsConnectionIdempotencyPolicy;
+Options ConnectorsDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_CONNECTORS_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_OPTION_DEFAULTS_H

@@ -21,62 +21,29 @@
 
 #include "google/cloud/connectors/connectors_connection.h"
 #include "google/cloud/connectors/connectors_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/connectors/v1/connectors_options.h"
 
 namespace google {
 namespace cloud {
 namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-connectors-options
- */
-struct ConnectorsRetryPolicyOption {
-  using Type = std::shared_ptr<ConnectorsRetryPolicy>;
-};
+/// @deprecated Use connectors_v1::ConnectorsPollingPolicyOption directly.
+using ::google::cloud::connectors_v1::ConnectorsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-connectors-options
- */
-struct ConnectorsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use connectors_v1::ConnectorsBackoffPolicyOption directly.
+using ::google::cloud::connectors_v1::ConnectorsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-connectors-options
- */
-struct ConnectorsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ConnectorsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use connectors_v1::ConnectorsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::connectors_v1::
+    ConnectorsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-connectors-options
- */
-struct ConnectorsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use connectors_v1::ConnectorsPolicyOptionList directly.
+using ::google::cloud::connectors_v1::ConnectorsPolicyOptionList;
 
-/**
- * The options applicable to Connectors.
- *
- * @ingroup google-cloud-connectors-options
- */
-using ConnectorsPolicyOptionList =
-    OptionList<ConnectorsRetryPolicyOption, ConnectorsBackoffPolicyOption,
-               ConnectorsPollingPolicyOption,
-               ConnectorsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use connectors_v1::ConnectorsRetryPolicyOption directly.
+using ::google::cloud::connectors_v1::ConnectorsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors

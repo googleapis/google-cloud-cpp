@@ -158,9 +158,10 @@
 ./include/google/cloud/composer/internal
 ./include/google/cloud/composer/mocks
 ./include/google/cloud/connectors
-./include/google/cloud/connectors/internal
 ./include/google/cloud/connectors/mocks
 ./include/google/cloud/connectors/v1
+./include/google/cloud/connectors/v1/internal
+./include/google/cloud/connectors/v1/mocks
 ./include/google/cloud/contactcenterinsights
 ./include/google/cloud/contactcenterinsights/internal
 ./include/google/cloud/contactcenterinsights/mocks
