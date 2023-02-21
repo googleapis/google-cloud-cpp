@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_TRACING_CONNECTION_H
 
-#include "google/cloud/asset/asset_connection.h"
+#include "google/cloud/asset/v1/asset_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class AssetServiceTracingConnection : public asset::AssetServiceConnection {
+class AssetServiceTracingConnection : public asset_v1::AssetServiceConnection {
  public:
   ~AssetServiceTracingConnection() override = default;
 
   explicit AssetServiceTracingConnection(
-      std::shared_ptr<asset::AssetServiceConnection> child);
+      std::shared_ptr<asset_v1::AssetServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -130,7 +130,7 @@ class AssetServiceTracingConnection : public asset::AssetServiceConnection {
       override;
 
  private:
-  std::shared_ptr<asset::AssetServiceConnection> child_;
+  std::shared_ptr<asset_v1::AssetServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -141,13 +141,13 @@ class AssetServiceTracingConnection : public asset::AssetServiceConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<asset::AssetServiceConnection>
+std::shared_ptr<asset_v1::AssetServiceConnection>
 MakeAssetServiceTracingConnection(
-    std::shared_ptr<asset::AssetServiceConnection> conn);
+    std::shared_ptr<asset_v1::AssetServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_TRACING_CONNECTION_H

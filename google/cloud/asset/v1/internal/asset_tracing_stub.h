@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_TRACING_STUB_H
 
-#include "google/cloud/asset/internal/asset_stub.h"
+#include "google/cloud/asset/v1/internal/asset_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -175,8 +175,8 @@ std::shared_ptr<AssetServiceStub> MakeAssetServiceTracingStub(
     std::shared_ptr<AssetServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_TRACING_STUB_H

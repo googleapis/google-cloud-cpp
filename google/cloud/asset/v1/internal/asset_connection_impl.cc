@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/internal/asset_connection_impl.h"
-#include "google/cloud/asset/internal/asset_option_defaults.h"
+#include "google/cloud/asset/v1/internal/asset_connection_impl.h"
+#include "google/cloud/asset/v1/internal/asset_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssetServiceConnectionImpl::AssetServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<asset_internal::AssetServiceStub> stub, Options options)
+    std::shared_ptr<asset_v1_internal::AssetServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -73,7 +73,7 @@ AssetServiceConnectionImpl::ListAssets(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAssets(request);
   char const* function_name = __func__;
@@ -178,7 +178,7 @@ AssetServiceConnectionImpl::SearchAllResources(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchAllResources(request);
   char const* function_name = __func__;
@@ -211,7 +211,7 @@ AssetServiceConnectionImpl::SearchAllIamPolicies(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchAllIamPolicies(request);
   char const* function_name = __func__;
@@ -341,7 +341,7 @@ AssetServiceConnectionImpl::ListSavedQueries(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSavedQueries(request);
   char const* function_name = __func__;
@@ -416,7 +416,7 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicies(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->AnalyzeOrgPolicies(request);
   char const* function_name = __func__;
@@ -452,7 +452,7 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedContainers(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->AnalyzeOrgPolicyGovernedContainers(request);
@@ -493,7 +493,7 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedAssets(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<asset_v1::AssetServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->AnalyzeOrgPolicyGovernedAssets(request);
@@ -525,6 +525,6 @@ AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedAssets(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google

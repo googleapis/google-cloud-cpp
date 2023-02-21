@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/asset_client.h"
+#include "google/cloud/asset/v1/asset_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace asset {
+namespace asset_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssetServiceClient::AssetServiceClient(
@@ -361,6 +361,6 @@ AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset
+}  // namespace asset_v1
 }  // namespace cloud
 }  // namespace google

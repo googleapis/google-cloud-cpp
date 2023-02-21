@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/internal/asset_option_defaults.h"
-#include "google/cloud/asset/asset_connection.h"
-#include "google/cloud/asset/asset_options.h"
+#include "google/cloud/asset/v1/internal/asset_option_defaults.h"
+#include "google/cloud/asset/v1/asset_connection.h"
+#include "google/cloud/asset/v1/asset_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -38,34 +38,34 @@ Options AssetServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_ASSET_SERVICE_AUTHORITY", "cloudasset.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<asset::AssetServiceRetryPolicyOption>()) {
-    options.set<asset::AssetServiceRetryPolicyOption>(
-        asset::AssetServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<asset_v1::AssetServiceRetryPolicyOption>()) {
+    options.set<asset_v1::AssetServiceRetryPolicyOption>(
+        asset_v1::AssetServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<asset::AssetServiceBackoffPolicyOption>()) {
-    options.set<asset::AssetServiceBackoffPolicyOption>(
+  if (!options.has<asset_v1::AssetServiceBackoffPolicyOption>()) {
+    options.set<asset_v1::AssetServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<asset::AssetServicePollingPolicyOption>()) {
-    options.set<asset::AssetServicePollingPolicyOption>(
-        GenericPollingPolicy<asset::AssetServiceRetryPolicyOption::Type,
-                             asset::AssetServiceBackoffPolicyOption::Type>(
-            options.get<asset::AssetServiceRetryPolicyOption>()->clone(),
-            options.get<asset::AssetServiceBackoffPolicyOption>()->clone())
+  if (!options.has<asset_v1::AssetServicePollingPolicyOption>()) {
+    options.set<asset_v1::AssetServicePollingPolicyOption>(
+        GenericPollingPolicy<asset_v1::AssetServiceRetryPolicyOption::Type,
+                             asset_v1::AssetServiceBackoffPolicyOption::Type>(
+            options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone(),
+            options.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone())
             .clone());
   }
-  if (!options.has<asset::AssetServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<asset::AssetServiceConnectionIdempotencyPolicyOption>(
-        asset::MakeDefaultAssetServiceConnectionIdempotencyPolicy());
+  if (!options.has<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>(
+        asset_v1::MakeDefaultAssetServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google

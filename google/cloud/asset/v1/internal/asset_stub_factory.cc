@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/internal/asset_stub_factory.h"
-#include "google/cloud/asset/internal/asset_auth_decorator.h"
-#include "google/cloud/asset/internal/asset_logging_decorator.h"
-#include "google/cloud/asset/internal/asset_metadata_decorator.h"
-#include "google/cloud/asset/internal/asset_stub.h"
-#include "google/cloud/asset/internal/asset_tracing_stub.h"
+#include "google/cloud/asset/v1/internal/asset_stub_factory.h"
+#include "google/cloud/asset/v1/internal/asset_auth_decorator.h"
+#include "google/cloud/asset/v1/internal/asset_logging_decorator.h"
+#include "google/cloud/asset/v1/internal/asset_metadata_decorator.h"
+#include "google/cloud/asset/v1/internal/asset_stub.h"
+#include "google/cloud/asset/v1/internal/asset_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<AssetServiceStub> CreateDefaultAssetServiceStub(
@@ -66,6 +66,6 @@ std::shared_ptr<AssetServiceStub> CreateDefaultAssetServiceStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google

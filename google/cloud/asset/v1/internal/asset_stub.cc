@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/internal/asset_stub.h"
+#include "google/cloud/asset/v1/internal/asset_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/asset/v1/asset_service.grpc.pb.h>
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssetServiceStub::~AssetServiceStub() = default;
@@ -355,6 +355,6 @@ future<Status> DefaultAssetServiceStub::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google

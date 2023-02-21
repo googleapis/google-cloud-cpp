@@ -16,281 +16,247 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/internal/asset_auth_decorator.h"
+#include "google/cloud/asset/v1/internal/asset_metadata_decorator.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/status_or.h"
 #include <google/cloud/asset/v1/asset_service.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-AssetServiceAuth::AssetServiceAuth(
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+AssetServiceMetadata::AssetServiceMetadata(
     std::shared_ptr<AssetServiceStub> child)
-    : auth_(std::move(auth)), child_(std::move(child)) {}
+    : child_(std::move(child)),
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 future<StatusOr<google::longrunning::Operation>>
-AssetServiceAuth::AsyncExportAssets(
+AssetServiceMetadata::AsyncExportAssets(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncExportAssets(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncExportAssets(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
-AssetServiceAuth::ListAssets(
+AssetServiceMetadata::ListAssets(
     grpc::ClientContext& context,
     google::cloud::asset::v1::ListAssetsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListAssets(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
-AssetServiceAuth::BatchGetAssetsHistory(
+AssetServiceMetadata::BatchGetAssetsHistory(
     grpc::ClientContext& context,
     google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->BatchGetAssetsHistory(context, request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed> AssetServiceAuth::CreateFeed(
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceMetadata::CreateFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::CreateFeedRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->CreateFeed(context, request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed> AssetServiceAuth::GetFeed(
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceMetadata::GetFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::GetFeedRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetFeed(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::ListFeedsResponse>
-AssetServiceAuth::ListFeeds(
+AssetServiceMetadata::ListFeeds(
     grpc::ClientContext& context,
     google::cloud::asset::v1::ListFeedsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListFeeds(context, request);
 }
 
-StatusOr<google::cloud::asset::v1::Feed> AssetServiceAuth::UpdateFeed(
+StatusOr<google::cloud::asset::v1::Feed> AssetServiceMetadata::UpdateFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::UpdateFeedRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "feed.name=" + request.feed().name());
   return child_->UpdateFeed(context, request);
 }
 
-Status AssetServiceAuth::DeleteFeed(
+Status AssetServiceMetadata::DeleteFeed(
     grpc::ClientContext& context,
     google::cloud::asset::v1::DeleteFeedRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->DeleteFeed(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
-AssetServiceAuth::SearchAllResources(
+AssetServiceMetadata::SearchAllResources(
     grpc::ClientContext& context,
     google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "scope=" + request.scope());
   return child_->SearchAllResources(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
-AssetServiceAuth::SearchAllIamPolicies(
+AssetServiceMetadata::SearchAllIamPolicies(
     grpc::ClientContext& context,
     google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "scope=" + request.scope());
   return child_->SearchAllIamPolicies(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
-AssetServiceAuth::AnalyzeIamPolicy(
+AssetServiceMetadata::AnalyzeIamPolicy(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context,
+              "analysis_query.scope=" + request.analysis_query().scope());
   return child_->AnalyzeIamPolicy(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-AssetServiceAuth::AsyncAnalyzeIamPolicyLongrunning(
+AssetServiceMetadata::AsyncAnalyzeIamPolicyLongrunning(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncAnalyzeIamPolicyLongrunning(cq, *std::move(context),
-                                                       request);
-      });
+  SetMetadata(*context,
+              "analysis_query.scope=" + request.analysis_query().scope());
+  return child_->AsyncAnalyzeIamPolicyLongrunning(cq, std::move(context),
+                                                  request);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
-AssetServiceAuth::AnalyzeMove(
+AssetServiceMetadata::AnalyzeMove(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "resource=" + request.resource());
   return child_->AnalyzeMove(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
-AssetServiceAuth::QueryAssets(
+AssetServiceMetadata::QueryAssets(
     grpc::ClientContext& context,
     google::cloud::asset::v1::QueryAssetsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->QueryAssets(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
-AssetServiceAuth::CreateSavedQuery(
+AssetServiceMetadata::CreateSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->CreateSavedQuery(context, request);
 }
 
-StatusOr<google::cloud::asset::v1::SavedQuery> AssetServiceAuth::GetSavedQuery(
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceMetadata::GetSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::GetSavedQueryRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetSavedQuery(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
-AssetServiceAuth::ListSavedQueries(
+AssetServiceMetadata::ListSavedQueries(
     grpc::ClientContext& context,
     google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListSavedQueries(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
-AssetServiceAuth::UpdateSavedQuery(
+AssetServiceMetadata::UpdateSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "saved_query.name=" + request.saved_query().name());
   return child_->UpdateSavedQuery(context, request);
 }
 
-Status AssetServiceAuth::DeleteSavedQuery(
+Status AssetServiceMetadata::DeleteSavedQuery(
     grpc::ClientContext& context,
     google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->DeleteSavedQuery(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
-AssetServiceAuth::BatchGetEffectiveIamPolicies(
+AssetServiceMetadata::BatchGetEffectiveIamPolicies(
     grpc::ClientContext& context,
     google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "scope=" + request.scope());
   return child_->BatchGetEffectiveIamPolicies(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
-AssetServiceAuth::AnalyzeOrgPolicies(
+AssetServiceMetadata::AnalyzeOrgPolicies(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "scope=" + request.scope());
   return child_->AnalyzeOrgPolicies(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
-AssetServiceAuth::AnalyzeOrgPolicyGovernedContainers(
+AssetServiceMetadata::AnalyzeOrgPolicyGovernedContainers(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "scope=" + request.scope());
   return child_->AnalyzeOrgPolicyGovernedContainers(context, request);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
-AssetServiceAuth::AnalyzeOrgPolicyGovernedAssets(
+AssetServiceMetadata::AnalyzeOrgPolicyGovernedAssets(
     grpc::ClientContext& context,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "scope=" + request.scope());
   return child_->AnalyzeOrgPolicyGovernedAssets(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-AssetServiceAuth::AsyncGetOperation(
+AssetServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
-future<Status> AssetServiceAuth::AsyncCancelOperation(
+future<Status> AssetServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
+}
+
+void AssetServiceMetadata::SetMetadata(grpc::ClientContext& context,
+                                       std::string const& request_params) {
+  context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
+
+void AssetServiceMetadata::SetMetadata(grpc::ClientContext& context) {
+  context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google

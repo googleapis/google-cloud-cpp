@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/asset_connection.h"
-#include "google/cloud/asset/asset_options.h"
-#include "google/cloud/asset/internal/asset_connection_impl.h"
-#include "google/cloud/asset/internal/asset_option_defaults.h"
-#include "google/cloud/asset/internal/asset_stub_factory.h"
-#include "google/cloud/asset/internal/asset_tracing_connection.h"
+#include "google/cloud/asset/v1/asset_connection.h"
+#include "google/cloud/asset/v1/asset_options.h"
+#include "google/cloud/asset/v1/internal/asset_connection_impl.h"
+#include "google/cloud/asset/v1/internal/asset_option_defaults.h"
+#include "google/cloud/asset/v1/internal/asset_stub_factory.h"
+#include "google/cloud/asset/v1/internal/asset_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace asset {
+namespace asset_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssetServiceConnection::~AssetServiceConnection() = default;
@@ -197,16 +197,16 @@ std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  AssetServicePolicyOptionList>(options,
                                                                __func__);
-  options = asset_internal::AssetServiceDefaultOptions(std::move(options));
+  options = asset_v1_internal::AssetServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      asset_internal::CreateDefaultAssetServiceStub(background->cq(), options);
-  return asset_internal::MakeAssetServiceTracingConnection(
-      std::make_shared<asset_internal::AssetServiceConnectionImpl>(
+  auto stub = asset_v1_internal::CreateDefaultAssetServiceStub(background->cq(),
+                                                               options);
+  return asset_v1_internal::MakeAssetServiceTracingConnection(
+      std::make_shared<asset_v1_internal::AssetServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset
+}  // namespace asset_v1
 }  // namespace cloud
 }  // namespace google

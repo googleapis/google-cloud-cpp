@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/asset_connection_idempotency_policy.h"
+#include "google/cloud/asset/v1/asset_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace asset {
+namespace asset_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -162,6 +162,6 @@ MakeDefaultAssetServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset
+}  // namespace asset_v1
 }  // namespace cloud
 }  // namespace google

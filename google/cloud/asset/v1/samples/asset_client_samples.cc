@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/asset_client.h"
+#include "google/cloud/asset/v1/asset_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: asset::AssetServiceClient
+// main-dox-marker: asset_v1::AssetServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::asset::AssetServiceClient(
-      google::cloud::asset::MakeAssetServiceConnection(options));
+  auto client = google::cloud::asset_v1::AssetServiceClient(
+      google::cloud::asset_v1::MakeAssetServiceConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::asset::AssetServiceClient(
-        google::cloud::asset::MakeAssetServiceConnection(options));
+    return google::cloud::asset_v1::AssetServiceClient(
+        google::cloud::asset_v1::MakeAssetServiceConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

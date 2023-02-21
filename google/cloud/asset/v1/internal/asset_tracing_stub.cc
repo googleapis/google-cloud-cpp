@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#include "google/cloud/asset/internal/asset_tracing_stub.h"
+#include "google/cloud/asset/v1/internal/asset_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -324,6 +324,6 @@ std::shared_ptr<AssetServiceStub> MakeAssetServiceTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google

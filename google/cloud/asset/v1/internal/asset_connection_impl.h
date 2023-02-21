@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/asset/v1/asset_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_CONNECTION_IMPL_H
 
-#include "google/cloud/asset/asset_connection.h"
-#include "google/cloud/asset/asset_connection_idempotency_policy.h"
-#include "google/cloud/asset/asset_options.h"
-#include "google/cloud/asset/internal/asset_retry_traits.h"
-#include "google/cloud/asset/internal/asset_stub.h"
+#include "google/cloud/asset/v1/asset_connection.h"
+#include "google/cloud/asset/v1/asset_connection_idempotency_policy.h"
+#include "google/cloud/asset/v1/asset_options.h"
+#include "google/cloud/asset/v1/internal/asset_retry_traits.h"
+#include "google/cloud/asset/v1/internal/asset_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
+namespace asset_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
+class AssetServiceConnectionImpl : public asset_v1::AssetServiceConnection {
  public:
   ~AssetServiceConnectionImpl() override = default;
 
   AssetServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<asset_internal::AssetServiceStub> stub, Options options);
+      std::shared_ptr<asset_v1_internal::AssetServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -141,50 +142,52 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
       override;
 
  private:
-  std::unique_ptr<asset::AssetServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<asset_v1::AssetServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceRetryPolicyOption>()) {
-      return options.get<asset::AssetServiceRetryPolicyOption>()->clone();
+    if (options.has<asset_v1::AssetServiceRetryPolicyOption>()) {
+      return options.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
     }
-    return options_.get<asset::AssetServiceRetryPolicyOption>()->clone();
+    return options_.get<asset_v1::AssetServiceRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceBackoffPolicyOption>()) {
-      return options.get<asset::AssetServiceBackoffPolicyOption>()->clone();
+    if (options.has<asset_v1::AssetServiceBackoffPolicyOption>()) {
+      return options.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone();
     }
-    return options_.get<asset::AssetServiceBackoffPolicyOption>()->clone();
+    return options_.get<asset_v1::AssetServiceBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<asset::AssetServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<asset_v1::AssetServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
+          .get<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return options_.get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
+    return options_
+        .get<asset_v1::AssetServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServicePollingPolicyOption>()) {
-      return options.get<asset::AssetServicePollingPolicyOption>()->clone();
+    if (options.has<asset_v1::AssetServicePollingPolicyOption>()) {
+      return options.get<asset_v1::AssetServicePollingPolicyOption>()->clone();
     }
-    return options_.get<asset::AssetServicePollingPolicyOption>()->clone();
+    return options_.get<asset_v1::AssetServicePollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<asset_internal::AssetServiceStub> stub_;
+  std::shared_ptr<asset_v1_internal::AssetServiceStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
+}  // namespace asset_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_INTERNAL_ASSET_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSET_V1_INTERNAL_ASSET_CONNECTION_IMPL_H
