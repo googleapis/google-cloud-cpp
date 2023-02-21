@@ -16,24 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_AUTH_DECORATOR_H
 
-#include "google/cloud/connectors/internal/connectors_stub.h"
+#include "google/cloud/connectors/v1/internal/connectors_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ConnectorsMetadata : public ConnectorsStub {
+class ConnectorsAuth : public ConnectorsStub {
  public:
-  ~ConnectorsMetadata() override = default;
-  explicit ConnectorsMetadata(std::shared_ptr<ConnectorsStub> child);
+  ~ConnectorsAuth() override = default;
+  ConnectorsAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+      std::shared_ptr<ConnectorsStub> child);
 
   StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
   ListConnections(grpc::ClientContext& context,
@@ -128,17 +132,13 @@ class ConnectorsMetadata : public ConnectorsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ConnectorsStub> child_;
-  std::string api_client_header_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_AUTH_DECORATOR_H

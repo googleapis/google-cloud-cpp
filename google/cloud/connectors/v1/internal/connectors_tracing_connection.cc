@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#include "google/cloud/connectors/internal/connectors_tracing_connection.h"
+#include "google/cloud/connectors/v1/internal/connectors_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 ConnectorsTracingConnection::ConnectorsTracingConnection(
-    std::shared_ptr<connectors::ConnectorsConnection> child)
+    std::shared_ptr<connectors_v1::ConnectorsConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::connectors::v1::Connection>
 ConnectorsTracingConnection::ListConnections(
     google::cloud::connectors::v1::ListConnectionsRequest request) {
-  auto span =
-      internal::MakeSpan("connectors::ConnectorsConnection::ListConnections");
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListConnections(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -48,7 +48,7 @@ StatusOr<google::cloud::connectors::v1::Connection>
 ConnectorsTracingConnection::GetConnection(
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
   auto span =
-      internal::MakeSpan("connectors::ConnectorsConnection::GetConnection");
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnection(request));
 }
@@ -75,7 +75,7 @@ StreamRange<google::cloud::connectors::v1::Provider>
 ConnectorsTracingConnection::ListProviders(
     google::cloud::connectors::v1::ListProvidersRequest request) {
   auto span =
-      internal::MakeSpan("connectors::ConnectorsConnection::ListProviders");
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::ListProviders");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProviders(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -86,7 +86,7 @@ StatusOr<google::cloud::connectors::v1::Provider>
 ConnectorsTracingConnection::GetProvider(
     google::cloud::connectors::v1::GetProviderRequest const& request) {
   auto span =
-      internal::MakeSpan("connectors::ConnectorsConnection::GetProvider");
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetProvider");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProvider(request));
 }
@@ -95,7 +95,7 @@ StreamRange<google::cloud::connectors::v1::Connector>
 ConnectorsTracingConnection::ListConnectors(
     google::cloud::connectors::v1::ListConnectorsRequest request) {
   auto span =
-      internal::MakeSpan("connectors::ConnectorsConnection::ListConnectors");
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::ListConnectors");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListConnectors(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -106,7 +106,7 @@ StatusOr<google::cloud::connectors::v1::Connector>
 ConnectorsTracingConnection::GetConnector(
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
   auto span =
-      internal::MakeSpan("connectors::ConnectorsConnection::GetConnector");
+      internal::MakeSpan("connectors_v1::ConnectorsConnection::GetConnector");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnector(request));
 }
@@ -115,7 +115,7 @@ StreamRange<google::cloud::connectors::v1::ConnectorVersion>
 ConnectorsTracingConnection::ListConnectorVersions(
     google::cloud::connectors::v1::ListConnectorVersionsRequest request) {
   auto span = internal::MakeSpan(
-      "connectors::ConnectorsConnection::ListConnectorVersions");
+      "connectors_v1::ConnectorsConnection::ListConnectorVersions");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListConnectorVersions(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -127,7 +127,7 @@ StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 ConnectorsTracingConnection::GetConnectorVersion(
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "connectors::ConnectorsConnection::GetConnectorVersion");
+      "connectors_v1::ConnectorsConnection::GetConnectorVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnectorVersion(request));
 }
@@ -137,7 +137,7 @@ ConnectorsTracingConnection::GetConnectionSchemaMetadata(
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "connectors::ConnectorsConnection::GetConnectionSchemaMetadata");
+      "connectors_v1::ConnectorsConnection::GetConnectionSchemaMetadata");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConnectionSchemaMetadata(request));
 }
@@ -146,7 +146,7 @@ StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
 ConnectorsTracingConnection::ListRuntimeEntitySchemas(
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request) {
   auto span = internal::MakeSpan(
-      "connectors::ConnectorsConnection::ListRuntimeEntitySchemas");
+      "connectors_v1::ConnectorsConnection::ListRuntimeEntitySchemas");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRuntimeEntitySchemas(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -158,7 +158,7 @@ StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
 ConnectorsTracingConnection::ListRuntimeActionSchemas(
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request) {
   auto span = internal::MakeSpan(
-      "connectors::ConnectorsConnection::ListRuntimeActionSchemas");
+      "connectors_v1::ConnectorsConnection::ListRuntimeActionSchemas");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListRuntimeActionSchemas(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -169,17 +169,17 @@ ConnectorsTracingConnection::ListRuntimeActionSchemas(
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 ConnectorsTracingConnection::GetRuntimeConfig(
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-  auto span =
-      internal::MakeSpan("connectors::ConnectorsConnection::GetRuntimeConfig");
+  auto span = internal::MakeSpan(
+      "connectors_v1::ConnectorsConnection::GetRuntimeConfig");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRuntimeConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<connectors::ConnectorsConnection>
+std::shared_ptr<connectors_v1::ConnectorsConnection>
 MakeConnectorsTracingConnection(
-    std::shared_ptr<connectors::ConnectorsConnection> conn) {
+    std::shared_ptr<connectors_v1::ConnectorsConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<ConnectorsTracingConnection>(std::move(conn));
@@ -189,6 +189,6 @@ MakeConnectorsTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google

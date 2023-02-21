@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#include "google/cloud/connectors/connectors_connection_idempotency_policy.h"
+#include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace connectors {
+namespace connectors_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -116,6 +116,6 @@ MakeDefaultConnectorsConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors
+}  // namespace connectors_v1
 }  // namespace cloud
 }  // namespace google

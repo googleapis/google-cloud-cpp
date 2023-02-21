@@ -19,73 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_CONNECTORS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_CONNECTORS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/connectors/v1/connectors_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ConnectorsConnectionIdempotencyPolicy {
- public:
-  virtual ~ConnectorsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// connectors_v1::MakeDefaultConnectorsConnectionIdempotencyPolicy directly.
+using ::google::cloud::connectors_v1::
+    MakeDefaultConnectorsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ConnectorsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListConnections(
-      google::cloud::connectors::v1::ListConnectionsRequest request);
-
-  virtual google::cloud::Idempotency GetConnection(
-      google::cloud::connectors::v1::GetConnectionRequest const& request);
-
-  virtual google::cloud::Idempotency CreateConnection(
-      google::cloud::connectors::v1::CreateConnectionRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateConnection(
-      google::cloud::connectors::v1::UpdateConnectionRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteConnection(
-      google::cloud::connectors::v1::DeleteConnectionRequest const& request);
-
-  virtual google::cloud::Idempotency ListProviders(
-      google::cloud::connectors::v1::ListProvidersRequest request);
-
-  virtual google::cloud::Idempotency GetProvider(
-      google::cloud::connectors::v1::GetProviderRequest const& request);
-
-  virtual google::cloud::Idempotency ListConnectors(
-      google::cloud::connectors::v1::ListConnectorsRequest request);
-
-  virtual google::cloud::Idempotency GetConnector(
-      google::cloud::connectors::v1::GetConnectorRequest const& request);
-
-  virtual google::cloud::Idempotency ListConnectorVersions(
-      google::cloud::connectors::v1::ListConnectorVersionsRequest request);
-
-  virtual google::cloud::Idempotency GetConnectorVersion(
-      google::cloud::connectors::v1::GetConnectorVersionRequest const& request);
-
-  virtual google::cloud::Idempotency GetConnectionSchemaMetadata(
-      google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListRuntimeEntitySchemas(
-      google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request);
-
-  virtual google::cloud::Idempotency ListRuntimeActionSchemas(
-      google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request);
-
-  virtual google::cloud::Idempotency GetRuntimeConfig(
-      google::cloud::connectors::v1::GetRuntimeConfigRequest const& request);
-};
-
-std::unique_ptr<ConnectorsConnectionIdempotencyPolicy>
-MakeDefaultConnectorsConnectionIdempotencyPolicy();
+/// @deprecated Use connectors_v1::ConnectorsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::connectors_v1::ConnectorsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors

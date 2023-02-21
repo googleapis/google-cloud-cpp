@@ -398,7 +398,8 @@ service {
 # Connectors
 service {
   service_proto_path: "google/cloud/connectors/v1/connectors_service.proto"
-  product_path: "google/cloud/connectors"
+  product_path: "google/cloud/connectors/v1"
+  forwarding_product_path: "google/cloud/connectors"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_LOGGING_DECORATOR_H
 
-#include "google/cloud/connectors/internal/connectors_stub.h"
+#include "google/cloud/connectors/v1/internal/connectors_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ConnectorsLogging : public ConnectorsStub {
@@ -138,8 +138,8 @@ class ConnectorsLogging : public ConnectorsStub {
 };  // ConnectorsLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_LOGGING_DECORATOR_H

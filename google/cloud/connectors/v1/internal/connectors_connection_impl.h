@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_CONNECTION_IMPL_H
 
-#include "google/cloud/connectors/connectors_connection.h"
-#include "google/cloud/connectors/connectors_connection_idempotency_policy.h"
-#include "google/cloud/connectors/connectors_options.h"
-#include "google/cloud/connectors/internal/connectors_retry_traits.h"
-#include "google/cloud/connectors/internal/connectors_stub.h"
+#include "google/cloud/connectors/v1/connectors_connection.h"
+#include "google/cloud/connectors/v1/connectors_connection_idempotency_policy.h"
+#include "google/cloud/connectors/v1/connectors_options.h"
+#include "google/cloud/connectors/v1/internal/connectors_retry_traits.h"
+#include "google/cloud/connectors/v1/internal/connectors_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ConnectorsConnectionImpl : public connectors::ConnectorsConnection {
+class ConnectorsConnectionImpl : public connectors_v1::ConnectorsConnection {
  public:
   ~ConnectorsConnectionImpl() override = default;
 
   ConnectorsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<connectors_internal::ConnectorsStub> stub,
+      std::shared_ptr<connectors_v1_internal::ConnectorsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -113,52 +113,56 @@ class ConnectorsConnectionImpl : public connectors::ConnectorsConnection {
       override;
 
  private:
-  std::unique_ptr<connectors::ConnectorsRetryPolicy> retry_policy() {
+  std::unique_ptr<connectors_v1::ConnectorsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<connectors::ConnectorsRetryPolicyOption>()) {
-      return options.get<connectors::ConnectorsRetryPolicyOption>()->clone();
+    if (options.has<connectors_v1::ConnectorsRetryPolicyOption>()) {
+      return options.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone();
     }
-    return options_.get<connectors::ConnectorsRetryPolicyOption>()->clone();
+    return options_.get<connectors_v1::ConnectorsRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<connectors::ConnectorsBackoffPolicyOption>()) {
-      return options.get<connectors::ConnectorsBackoffPolicyOption>()->clone();
+    if (options.has<connectors_v1::ConnectorsBackoffPolicyOption>()) {
+      return options.get<connectors_v1::ConnectorsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<connectors::ConnectorsBackoffPolicyOption>()->clone();
+    return options_.get<connectors_v1::ConnectorsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<connectors::ConnectorsConnectionIdempotencyPolicy>
+  std::unique_ptr<connectors_v1::ConnectorsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<connectors::ConnectorsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<
+            connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<connectors::ConnectorsConnectionIdempotencyPolicyOption>()
+          .get<connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<connectors::ConnectorsConnectionIdempotencyPolicyOption>()
+        .get<connectors_v1::ConnectorsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<connectors::ConnectorsPollingPolicyOption>()) {
-      return options.get<connectors::ConnectorsPollingPolicyOption>()->clone();
+    if (options.has<connectors_v1::ConnectorsPollingPolicyOption>()) {
+      return options.get<connectors_v1::ConnectorsPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<connectors::ConnectorsPollingPolicyOption>()->clone();
+    return options_.get<connectors_v1::ConnectorsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<connectors_internal::ConnectorsStub> stub_;
+  std::shared_ptr<connectors_v1_internal::ConnectorsStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_CONNECTION_IMPL_H

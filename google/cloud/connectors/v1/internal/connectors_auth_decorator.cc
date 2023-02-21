@@ -16,185 +16,222 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#include "google/cloud/connectors/internal/connectors_metadata_decorator.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/connectors/v1/internal/connectors_auth_decorator.h"
 #include <google/cloud/connectors/v1/connectors_service.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ConnectorsMetadata::ConnectorsMetadata(std::shared_ptr<ConnectorsStub> child)
-    : child_(std::move(child)),
-      api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+ConnectorsAuth::ConnectorsAuth(
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<ConnectorsStub> child)
+    : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
-ConnectorsMetadata::ListConnections(
+ConnectorsAuth::ListConnections(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ListConnections(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Connection>
-ConnectorsMetadata::GetConnection(
+ConnectorsAuth::GetConnection(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->GetConnection(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ConnectorsMetadata::AsyncCreateConnection(
+ConnectorsAuth::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
-  return child_->AsyncCreateConnection(cq, std::move(context), request);
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateConnection(cq, *std::move(context), request);
+      });
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ConnectorsMetadata::AsyncUpdateConnection(
+ConnectorsAuth::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
-  SetMetadata(*context, "connection.name=" + request.connection().name());
-  return child_->AsyncUpdateConnection(cq, std::move(context), request);
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateConnection(cq, *std::move(context), request);
+      });
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ConnectorsMetadata::AsyncDeleteConnection(
+ConnectorsAuth::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
-  return child_->AsyncDeleteConnection(cq, std::move(context), request);
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteConnection(cq, *std::move(context), request);
+      });
 }
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
-ConnectorsMetadata::ListProviders(
+ConnectorsAuth::ListProviders(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ListProviders(context, request);
 }
 
-StatusOr<google::cloud::connectors::v1::Provider>
-ConnectorsMetadata::GetProvider(
+StatusOr<google::cloud::connectors::v1::Provider> ConnectorsAuth::GetProvider(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->GetProvider(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
-ConnectorsMetadata::ListConnectors(
+ConnectorsAuth::ListConnectors(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ListConnectors(context, request);
 }
 
-StatusOr<google::cloud::connectors::v1::Connector>
-ConnectorsMetadata::GetConnector(
+StatusOr<google::cloud::connectors::v1::Connector> ConnectorsAuth::GetConnector(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->GetConnector(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
-ConnectorsMetadata::ListConnectorVersions(
+ConnectorsAuth::ListConnectorVersions(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListConnectorVersionsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ListConnectorVersions(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
-ConnectorsMetadata::GetConnectorVersion(
+ConnectorsAuth::GetConnectorVersion(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->GetConnectorVersion(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
-ConnectorsMetadata::GetConnectionSchemaMetadata(
+ConnectorsAuth::GetConnectionSchemaMetadata(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
-  SetMetadata(context, "name=" + request.name());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->GetConnectionSchemaMetadata(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
-ConnectorsMetadata::ListRuntimeEntitySchemas(
+ConnectorsAuth::ListRuntimeEntitySchemas(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ListRuntimeEntitySchemas(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
-ConnectorsMetadata::ListRuntimeActionSchemas(
+ConnectorsAuth::ListRuntimeActionSchemas(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ListRuntimeActionSchemas(context, request);
 }
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
-ConnectorsMetadata::GetRuntimeConfig(
+ConnectorsAuth::GetRuntimeConfig(
     grpc::ClientContext& context,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->GetRuntimeConfig(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ConnectorsMetadata::AsyncGetOperation(
+ConnectorsAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncGetOperation(cq, *std::move(context), request);
+      });
 }
 
-future<Status> ConnectorsMetadata::AsyncCancelOperation(
+future<Status> ConnectorsAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
-}
-
-void ConnectorsMetadata::SetMetadata(grpc::ClientContext& context,
-                                     std::string const& request_params) {
-  context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
-}
-
-void ConnectorsMetadata::SetMetadata(grpc::ClientContext& context) {
-  context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
-  if (options.has<UserProjectOption>()) {
-    context.AddMetadata("x-goog-user-project",
-                        options.get<UserProjectOption>());
-  }
-  auto const& authority = options.get<AuthorityOption>();
-  if (!authority.empty()) context.set_authority(authority);
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->AsyncCancelOperation(cq, *std::move(context), request);
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google

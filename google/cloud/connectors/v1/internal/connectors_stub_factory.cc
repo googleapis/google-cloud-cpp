@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#include "google/cloud/connectors/internal/connectors_stub_factory.h"
-#include "google/cloud/connectors/internal/connectors_auth_decorator.h"
-#include "google/cloud/connectors/internal/connectors_logging_decorator.h"
-#include "google/cloud/connectors/internal/connectors_metadata_decorator.h"
-#include "google/cloud/connectors/internal/connectors_stub.h"
-#include "google/cloud/connectors/internal/connectors_tracing_stub.h"
+#include "google/cloud/connectors/v1/internal/connectors_stub_factory.h"
+#include "google/cloud/connectors/v1/internal/connectors_auth_decorator.h"
+#include "google/cloud/connectors/v1/internal/connectors_logging_decorator.h"
+#include "google/cloud/connectors/v1/internal/connectors_metadata_decorator.h"
+#include "google/cloud/connectors/v1/internal/connectors_stub.h"
+#include "google/cloud/connectors/v1/internal/connectors_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ConnectorsStub> CreateDefaultConnectorsStub(
@@ -66,6 +66,6 @@ std::shared_ptr<ConnectorsStub> CreateDefaultConnectorsStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google

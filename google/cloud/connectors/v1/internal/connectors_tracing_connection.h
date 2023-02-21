@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_TRACING_CONNECTION_H
 
-#include "google/cloud/connectors/connectors_connection.h"
+#include "google/cloud/connectors/v1/connectors_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ConnectorsTracingConnection : public connectors::ConnectorsConnection {
+class ConnectorsTracingConnection : public connectors_v1::ConnectorsConnection {
  public:
   ~ConnectorsTracingConnection() override = default;
 
   explicit ConnectorsTracingConnection(
-      std::shared_ptr<connectors::ConnectorsConnection> child);
+      std::shared_ptr<connectors_v1::ConnectorsConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -101,7 +101,7 @@ class ConnectorsTracingConnection : public connectors::ConnectorsConnection {
       override;
 
  private:
-  std::shared_ptr<connectors::ConnectorsConnection> child_;
+  std::shared_ptr<connectors_v1::ConnectorsConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -112,13 +112,13 @@ class ConnectorsTracingConnection : public connectors::ConnectorsConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<connectors::ConnectorsConnection>
+std::shared_ptr<connectors_v1::ConnectorsConnection>
 MakeConnectorsTracingConnection(
-    std::shared_ptr<connectors::ConnectorsConnection> conn);
+    std::shared_ptr<connectors_v1::ConnectorsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_INTERNAL_CONNECTORS_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_INTERNAL_CONNECTORS_TRACING_CONNECTION_H

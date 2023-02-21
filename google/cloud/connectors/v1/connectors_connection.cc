@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#include "google/cloud/connectors/connectors_connection.h"
-#include "google/cloud/connectors/connectors_options.h"
-#include "google/cloud/connectors/internal/connectors_connection_impl.h"
-#include "google/cloud/connectors/internal/connectors_option_defaults.h"
-#include "google/cloud/connectors/internal/connectors_stub_factory.h"
-#include "google/cloud/connectors/internal/connectors_tracing_connection.h"
+#include "google/cloud/connectors/v1/connectors_connection.h"
+#include "google/cloud/connectors/v1/connectors_options.h"
+#include "google/cloud/connectors/v1/internal/connectors_connection_impl.h"
+#include "google/cloud/connectors/v1/internal/connectors_option_defaults.h"
+#include "google/cloud/connectors/v1/internal/connectors_stub_factory.h"
+#include "google/cloud/connectors/v1/internal/connectors_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace connectors {
+namespace connectors_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConnectorsConnection::~ConnectorsConnection() = default;
@@ -149,16 +149,17 @@ std::shared_ptr<ConnectorsConnection> MakeConnectorsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  ConnectorsPolicyOptionList>(options, __func__);
-  options = connectors_internal::ConnectorsDefaultOptions(std::move(options));
+  options =
+      connectors_v1_internal::ConnectorsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = connectors_internal::CreateDefaultConnectorsStub(background->cq(),
-                                                               options);
-  return connectors_internal::MakeConnectorsTracingConnection(
-      std::make_shared<connectors_internal::ConnectorsConnectionImpl>(
+  auto stub = connectors_v1_internal::CreateDefaultConnectorsStub(
+      background->cq(), options);
+  return connectors_v1_internal::MakeConnectorsTracingConnection(
+      std::make_shared<connectors_v1_internal::ConnectorsConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors
+}  // namespace connectors_v1
 }  // namespace cloud
 }  // namespace google

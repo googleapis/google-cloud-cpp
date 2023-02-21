@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#include "google/cloud/connectors/connectors_client.h"
+#include "google/cloud/connectors/v1/connectors_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace connectors {
+namespace connectors_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConnectorsClient::ConnectorsClient(
@@ -283,6 +283,6 @@ ConnectorsClient::GetRuntimeConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors
+}  // namespace connectors_v1
 }  // namespace cloud
 }  // namespace google

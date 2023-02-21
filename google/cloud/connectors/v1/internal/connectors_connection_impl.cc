@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/connectors/v1/connectors_service.proto
 
-#include "google/cloud/connectors/internal/connectors_connection_impl.h"
-#include "google/cloud/connectors/internal/connectors_option_defaults.h"
+#include "google/cloud/connectors/v1/internal/connectors_connection_impl.h"
+#include "google/cloud/connectors/v1/internal/connectors_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
+namespace connectors_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConnectorsConnectionImpl::ConnectorsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<connectors_internal::ConnectorsStub> stub, Options options)
+    std::shared_ptr<connectors_v1_internal::ConnectorsStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,8 +45,8 @@ ConnectorsConnectionImpl::ListConnections(
     google::cloud::connectors::v1::ListConnectionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<connectors::ConnectorsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConnections(request);
   char const* function_name = __func__;
@@ -181,8 +182,8 @@ ConnectorsConnectionImpl::ListProviders(
     google::cloud::connectors::v1::ListProvidersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<connectors::ConnectorsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProviders(request);
   char const* function_name = __func__;
@@ -227,8 +228,8 @@ ConnectorsConnectionImpl::ListConnectors(
     google::cloud::connectors::v1::ListConnectorsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<connectors::ConnectorsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConnectors(request);
   char const* function_name = __func__;
@@ -274,8 +275,8 @@ ConnectorsConnectionImpl::ListConnectorVersions(
     google::cloud::connectors::v1::ListConnectorVersionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<connectors::ConnectorsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConnectorVersions(request);
   char const* function_name = __func__;
@@ -337,8 +338,8 @@ ConnectorsConnectionImpl::ListRuntimeEntitySchemas(
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<connectors::ConnectorsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRuntimeEntitySchemas(request);
   char const* function_name = __func__;
@@ -371,8 +372,8 @@ ConnectorsConnectionImpl::ListRuntimeActionSchemas(
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<connectors::ConnectorsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRuntimeActionSchemas(request);
   char const* function_name = __func__;
@@ -413,6 +414,6 @@ ConnectorsConnectionImpl::GetRuntimeConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace connectors_internal
+}  // namespace connectors_v1_internal
 }  // namespace cloud
 }  // namespace google
