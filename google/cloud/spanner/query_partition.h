@@ -157,9 +157,9 @@ struct QueryPartitionInternals {
   static spanner::Connection::SqlParams MakeSqlParams(
       spanner::QueryPartition const& query_partition) {
     spanner::QueryOptions query_options;  // not serialized
-    return {MakeTransactionFromIds(query_partition.session_id(),
-                                   query_partition.transaction_id(),
-                                   query_partition.transaction_tag()),
+    return {MakeTransactionFromIds(
+                query_partition.session_id(), query_partition.transaction_id(),
+                /*route_to_leader=*/false, query_partition.transaction_tag()),
             query_partition.sql_statement(), query_options,
             query_partition.partition_token()};
   }

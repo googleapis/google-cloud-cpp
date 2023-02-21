@@ -33,6 +33,7 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 struct TransactionContext {
+  bool route_to_leader;
   std::string const& tag;
   std::int64_t seqno;
 };
@@ -49,19 +50,22 @@ using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
 class TransactionImpl {
  public:
   TransactionImpl(google::spanner::v1::TransactionSelector selector,
-                  std::string tag)
-      : TransactionImpl(/*session=*/{}, std::move(selector), std::move(tag)) {}
+                  bool route_to_leader, std::string tag)
+      : TransactionImpl(/*session=*/{}, std::move(selector), route_to_leader,
+                        std::move(tag)) {}
 
   TransactionImpl(TransactionImpl const& impl,
                   google::spanner::v1::TransactionSelector selector,
-                  std::string tag)
-      : TransactionImpl(impl.session_, std::move(selector), std::move(tag)) {}
+                  bool route_to_leader, std::string tag)
+      : TransactionImpl(impl.session_, std::move(selector), route_to_leader,
+                        std::move(tag)) {}
 
   TransactionImpl(SessionHolder session,
                   google::spanner::v1::TransactionSelector selector,
-                  std::string tag)
+                  bool route_to_leader, std::string tag)
       : session_(std::move(session)),
         selector_(std::move(selector)),
+        route_to_leader_(route_to_leader),
         tag_(std::move(tag)),
         seqno_(0) {
     state_ = selector_->has_begin() ? State::kBegin : State::kDone;
@@ -95,7 +99,7 @@ class TransactionImpl {
                       StatusOr<google::spanner::v1::TransactionSelector>&,
                       TransactionContext const&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    TransactionContext ctx{tag_, 0};
+    TransactionContext ctx{route_to_leader_, tag_, 0};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
@@ -148,6 +152,7 @@ class TransactionImpl {
   std::condition_variable cond_;
   SessionHolder session_;
   StatusOr<google::spanner::v1::TransactionSelector> selector_;
+  bool route_to_leader_;
   std::string tag_;
   std::int64_t seqno_;
 };

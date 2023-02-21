@@ -950,7 +950,8 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
   s->set_id(begin->id());
 
   SqlParams sql_params(
-      {MakeTransactionFromIds(session->session_name(), begin->id(), ctx.tag),
+      {MakeTransactionFromIds(session->session_name(), begin->id(),
+                              ctx.route_to_leader, ctx.tag),
        std::move(params.statement), std::move(params.query_options),
        /*partition_token=*/{}});
   auto dml_result = CommonQueryImpl<StreamingPartitionedDmlResult>(
