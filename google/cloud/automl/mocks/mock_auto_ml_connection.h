@@ -20,115 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_MOCKS_MOCK_AUTO_ML_CONNECTION_H
 
 #include "google/cloud/automl/auto_ml_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/automl/v1/mocks/mock_auto_ml_connection.h"
 
 namespace google {
 namespace cloud {
 namespace automl_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AutoMlConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AutoMlClient`. To do so,
- * construct an object of type `AutoMlClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAutoMlConnection : public automl::AutoMlConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Dataset>>,
-              CreateDataset,
-              (google::cloud::automl::v1::CreateDatasetRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Dataset>, GetDataset,
-              (google::cloud::automl::v1::GetDatasetRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::automl::v1::Dataset>, ListDatasets,
-              (google::cloud::automl::v1::ListDatasetsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Dataset>, UpdateDataset,
-              (google::cloud::automl::v1::UpdateDatasetRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-              DeleteDataset,
-              (google::cloud::automl::v1::DeleteDatasetRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-              ImportData,
-              (google::cloud::automl::v1::ImportDataRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-              ExportData,
-              (google::cloud::automl::v1::ExportDataRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::automl::v1::AnnotationSpec>, GetAnnotationSpec,
-      (google::cloud::automl::v1::GetAnnotationSpecRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::Model>>, CreateModel,
-              (google::cloud::automl::v1::CreateModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>, GetModel,
-              (google::cloud::automl::v1::GetModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::automl::v1::Model>, ListModels,
-              (google::cloud::automl::v1::ListModelsRequest request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-              DeleteModel,
-              (google::cloud::automl::v1::DeleteModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::automl::v1::Model>, UpdateModel,
-              (google::cloud::automl::v1::UpdateModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-              DeployModel,
-              (google::cloud::automl::v1::DeployModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-              UndeployModel,
-              (google::cloud::automl::v1::UndeployModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::OperationMetadata>>,
-              ExportModel,
-              (google::cloud::automl::v1::ExportModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::automl::v1::ModelEvaluation>, GetModelEvaluation,
-      (google::cloud::automl::v1::GetModelEvaluationRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::automl::v1::ModelEvaluation>,
-              ListModelEvaluations,
-              (google::cloud::automl::v1::ListModelEvaluationsRequest request),
-              (override));
-};
+/// @deprecated Use automl_v1_mocks::MockAutoMlConnection directly.
+using ::google::cloud::automl_v1_mocks::MockAutoMlConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_mocks

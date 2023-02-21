@@ -21,62 +21,27 @@
 
 #include "google/cloud/automl/auto_ml_connection.h"
 #include "google/cloud/automl/auto_ml_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/automl/v1/auto_ml_options.h"
 
 namespace google {
 namespace cloud {
 namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-automl-options
- */
-struct AutoMlRetryPolicyOption {
-  using Type = std::shared_ptr<AutoMlRetryPolicy>;
-};
+/// @deprecated Use automl_v1::AutoMlPollingPolicyOption directly.
+using ::google::cloud::automl_v1::AutoMlPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-automl-options
- */
-struct AutoMlBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use automl_v1::AutoMlBackoffPolicyOption directly.
+using ::google::cloud::automl_v1::AutoMlBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-automl-options
- */
-struct AutoMlConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AutoMlConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use automl_v1::AutoMlConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::automl_v1::AutoMlConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-automl-options
- */
-struct AutoMlPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use automl_v1::AutoMlPolicyOptionList directly.
+using ::google::cloud::automl_v1::AutoMlPolicyOptionList;
 
-/**
- * The options applicable to AutoMl.
- *
- * @ingroup google-cloud-automl-options
- */
-using AutoMlPolicyOptionList =
-    OptionList<AutoMlRetryPolicyOption, AutoMlBackoffPolicyOption,
-               AutoMlPollingPolicyOption,
-               AutoMlConnectionIdempotencyPolicyOption>;
+/// @deprecated Use automl_v1::AutoMlRetryPolicyOption directly.
+using ::google::cloud::automl_v1::AutoMlRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl

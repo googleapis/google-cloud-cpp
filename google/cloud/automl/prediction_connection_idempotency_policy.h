@@ -19,34 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_PREDICTION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_PREDICTION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/automl/v1/prediction_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/automl/v1/prediction_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PredictionServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~PredictionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// automl_v1::MakeDefaultPredictionServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::automl_v1::
+    MakeDefaultPredictionServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency Predict(
-      google::cloud::automl::v1::PredictRequest const& request);
-
-  virtual google::cloud::Idempotency BatchPredict(
-      google::cloud::automl::v1::BatchPredictRequest const& request);
-};
-
-std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-MakeDefaultPredictionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use automl_v1::PredictionServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::automl_v1::PredictionServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl

@@ -62,9 +62,10 @@
 ./include/google/cloud/assuredworkloads/mocks
 ./include/google/cloud/assuredworkloads/v1
 ./include/google/cloud/automl
-./include/google/cloud/automl/internal
 ./include/google/cloud/automl/mocks
 ./include/google/cloud/automl/v1
+./include/google/cloud/automl/v1/internal
+./include/google/cloud/automl/v1/mocks
 ./include/google/cloud/baremetalsolution
 ./include/google/cloud/baremetalsolution/internal
 ./include/google/cloud/baremetalsolution/mocks

@@ -16,23 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/automl/v1/prediction_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_MOCKS_MOCK_PREDICTION_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_MOCKS_MOCK_PREDICTION_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_V1_INTERNAL_PREDICTION_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_V1_INTERNAL_PREDICTION_STUB_FACTORY_H
 
-#include "google/cloud/automl/prediction_connection.h"
-#include "google/cloud/automl/v1/mocks/mock_prediction_connection.h"
+#include "google/cloud/automl/v1/internal/prediction_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace automl_mocks {
+namespace automl_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use automl_v1_mocks::MockPredictionServiceConnection directly.
-using ::google::cloud::automl_v1_mocks::MockPredictionServiceConnection;
+std::shared_ptr<PredictionServiceStub> CreateDefaultPredictionServiceStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace automl_mocks
+}  // namespace automl_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_MOCKS_MOCK_PREDICTION_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_V1_INTERNAL_PREDICTION_STUB_FACTORY_H

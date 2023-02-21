@@ -20,131 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_AUTO_ML_CONNECTION_H
 
 #include "google/cloud/automl/auto_ml_connection_idempotency_policy.h"
-#include "google/cloud/automl/internal/auto_ml_retry_traits.h"
-#include "google/cloud/automl/internal/auto_ml_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/automl/v1/auto_ml_connection.h"
 
 namespace google {
 namespace cloud {
 namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AutoMlRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    automl_internal::AutoMlRetryTraits>;
+/// @deprecated Use automl_v1::MakeAutoMlConnection directly.
+using ::google::cloud::automl_v1::MakeAutoMlConnection;
 
-using AutoMlLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        automl_internal::AutoMlRetryTraits>;
+/// @deprecated Use automl_v1::AutoMlConnection directly.
+using ::google::cloud::automl_v1::AutoMlConnection;
 
-using AutoMlLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        automl_internal::AutoMlRetryTraits>;
+/// @deprecated Use automl_v1::AutoMlLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::automl_v1::AutoMlLimitedErrorCountRetryPolicy;
 
-/**
- * The `AutoMlConnection` object for `AutoMlClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AutoMlClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `AutoMlClient`.
- *
- * To create a concrete instance, see `MakeAutoMlConnection()`.
- *
- * For mocking, see `automl_mocks::MockAutoMlConnection`.
- */
-class AutoMlConnection {
- public:
-  virtual ~AutoMlConnection() = 0;
+/// @deprecated Use automl_v1::AutoMlLimitedTimeRetryPolicy directly.
+using ::google::cloud::automl_v1::AutoMlLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
-      google::cloud::automl::v1::CreateDatasetRequest const& request);
-
-  virtual StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
-      google::cloud::automl::v1::GetDatasetRequest const& request);
-
-  virtual StreamRange<google::cloud::automl::v1::Dataset> ListDatasets(
-      google::cloud::automl::v1::ListDatasetsRequest request);
-
-  virtual StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
-      google::cloud::automl::v1::UpdateDatasetRequest const& request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteDataset(google::cloud::automl::v1::DeleteDatasetRequest const& request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ImportData(google::cloud::automl::v1::ImportDataRequest const& request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportData(google::cloud::automl::v1::ExportDataRequest const& request);
-
-  virtual StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
-      google::cloud::automl::v1::GetAnnotationSpecRequest const& request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
-      google::cloud::automl::v1::CreateModelRequest const& request);
-
-  virtual StatusOr<google::cloud::automl::v1::Model> GetModel(
-      google::cloud::automl::v1::GetModelRequest const& request);
-
-  virtual StreamRange<google::cloud::automl::v1::Model> ListModels(
-      google::cloud::automl::v1::ListModelsRequest request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeleteModel(google::cloud::automl::v1::DeleteModelRequest const& request);
-
-  virtual StatusOr<google::cloud::automl::v1::Model> UpdateModel(
-      google::cloud::automl::v1::UpdateModelRequest const& request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  DeployModel(google::cloud::automl::v1::DeployModelRequest const& request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  UndeployModel(google::cloud::automl::v1::UndeployModelRequest const& request);
-
-  virtual future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-  ExportModel(google::cloud::automl::v1::ExportModelRequest const& request);
-
-  virtual StatusOr<google::cloud::automl::v1::ModelEvaluation>
-  GetModelEvaluation(
-      google::cloud::automl::v1::GetModelEvaluationRequest const& request);
-
-  virtual StreamRange<google::cloud::automl::v1::ModelEvaluation>
-  ListModelEvaluations(
-      google::cloud::automl::v1::ListModelEvaluationsRequest request);
-};
-
-/**
- * A factory function to construct an object of type `AutoMlConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AutoMlClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `AutoMlConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::automl::AutoMlPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `AutoMlConnection` created by
- * this function.
- */
-std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options = {});
+/// @deprecated Use automl_v1::AutoMlRetryPolicy directly.
+using ::google::cloud::automl_v1::AutoMlRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
