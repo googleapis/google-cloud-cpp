@@ -16,26 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_MOCKS_MOCK_CONTACT_CENTER_INSIGHTS_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_MOCKS_MOCK_CONTACT_CENTER_INSIGHTS_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H
 
-#include "google/cloud/contactcenterinsights/contact_center_insights_connection.h"
-#include "google/cloud/contactcenterinsights/v1/mocks/mock_contact_center_insights_connection.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_mocks {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// contactcenterinsights_v1_mocks::MockContactCenterInsightsConnection
-/// directly.
-using ::google::cloud::contactcenterinsights_v1_mocks::
-    MockContactCenterInsightsConnection;
+std::shared_ptr<ContactCenterInsightsStub>
+CreateDefaultContactCenterInsightsStub(google::cloud::CompletionQueue cq,
+                                       Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_mocks
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_MOCKS_MOCK_CONTACT_CENTER_INSIGHTS_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H

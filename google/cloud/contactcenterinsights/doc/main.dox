@@ -97,6 +97,10 @@ For example, this will override the default endpoint for `contactcenterinsights:
 
 @snippet contact_center_insights_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [contactcenterinsights::ContactCenterInsightsClient](@ref contactcenterinsights::ContactCenterInsightsClient-endpoint-snippet)
+ [contactcenterinsights_v1::ContactCenterInsightsClient](@ref contactcenterinsights_v1::ContactCenterInsightsClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -108,6 +112,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet contact_center_insights_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [contactcenterinsights::ContactCenterInsightsClient](@ref contactcenterinsights::ContactCenterInsightsClient-service-account-snippet)
+ [contactcenterinsights_v1::ContactCenterInsightsClient](@ref contactcenterinsights_v1::ContactCenterInsightsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page contactcenterinsights::ContactCenterInsightsClient-service-account-snippet Override contactcenterinsights::ContactCenterInsightsClient Authentication Defaults
 
 @snippet google/cloud/contactcenterinsights/samples/contact_center_insights_client_samples.cc with-service-account
+
+*/
+
+/*! @page contactcenterinsights_v1::ContactCenterInsightsClient-endpoint-snippet Override contactcenterinsights_v1::ContactCenterInsightsClient Endpoint Configuration
+
+@snippet google/cloud/contactcenterinsights/v1/samples/contact_center_insights_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page contactcenterinsights_v1::ContactCenterInsightsClient-service-account-snippet Override contactcenterinsights_v1::ContactCenterInsightsClient Authentication Defaults
+
+@snippet google/cloud/contactcenterinsights/v1/samples/contact_center_insights_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

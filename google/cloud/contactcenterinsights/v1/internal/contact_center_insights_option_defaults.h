@@ -16,26 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_MOCKS_MOCK_CONTACT_CENTER_INSIGHTS_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_MOCKS_MOCK_CONTACT_CENTER_INSIGHTS_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_OPTION_DEFAULTS_H
 
-#include "google/cloud/contactcenterinsights/contact_center_insights_connection.h"
-#include "google/cloud/contactcenterinsights/v1/mocks/mock_contact_center_insights_connection.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_mocks {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// contactcenterinsights_v1_mocks::MockContactCenterInsightsConnection
-/// directly.
-using ::google::cloud::contactcenterinsights_v1_mocks::
-    MockContactCenterInsightsConnection;
+Options ContactCenterInsightsDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_mocks
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_MOCKS_MOCK_CONTACT_CENTER_INSIGHTS_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_OPTION_DEFAULTS_H

@@ -19,172 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_CONTACT_CENTER_INSIGHTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_CONTACT_CENTER_INSIGHTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
-#include <memory>
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ContactCenterInsightsConnectionIdempotencyPolicy {
- public:
-  virtual ~ContactCenterInsightsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// contactcenterinsights_v1::MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency CreateConversation(
-      google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateConversation(
-      google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetConversation(
-      google::cloud::contactcenterinsights::v1::GetConversationRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListConversations(
-      google::cloud::contactcenterinsights::v1::ListConversationsRequest
-          request);
-
-  virtual google::cloud::Idempotency DeleteConversation(
-      google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateAnalysis(
-      google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetAnalysis(
-      google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListAnalyses(
-      google::cloud::contactcenterinsights::v1::ListAnalysesRequest request);
-
-  virtual google::cloud::Idempotency DeleteAnalysis(
-      google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
-          request);
-
-  virtual google::cloud::Idempotency BulkAnalyzeConversations(
-      google::cloud::contactcenterinsights::v1::
-          BulkAnalyzeConversationsRequest const& request);
-
-  virtual google::cloud::Idempotency IngestConversations(
-      google::cloud::contactcenterinsights::v1::
-          IngestConversationsRequest const& request);
-
-  virtual google::cloud::Idempotency ExportInsightsData(
-      google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateIssueModel(
-      google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateIssueModel(
-      google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetIssueModel(
-      google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListIssueModels(
-      google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteIssueModel(
-      google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeployIssueModel(
-      google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UndeployIssueModel(
-      google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetIssue(
-      google::cloud::contactcenterinsights::v1::GetIssueRequest const& request);
-
-  virtual google::cloud::Idempotency ListIssues(
-      google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateIssue(
-      google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteIssue(
-      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CalculateIssueModelStats(
-      google::cloud::contactcenterinsights::v1::
-          CalculateIssueModelStatsRequest const& request);
-
-  virtual google::cloud::Idempotency CreatePhraseMatcher(
-      google::cloud::contactcenterinsights::v1::
-          CreatePhraseMatcherRequest const& request);
-
-  virtual google::cloud::Idempotency GetPhraseMatcher(
-      google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListPhraseMatchers(
-      google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
-          request);
-
-  virtual google::cloud::Idempotency DeletePhraseMatcher(
-      google::cloud::contactcenterinsights::v1::
-          DeletePhraseMatcherRequest const& request);
-
-  virtual google::cloud::Idempotency UpdatePhraseMatcher(
-      google::cloud::contactcenterinsights::v1::
-          UpdatePhraseMatcherRequest const& request);
-
-  virtual google::cloud::Idempotency CalculateStats(
-      google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetSettings(
-      google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateSettings(
-      google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateView(
-      google::cloud::contactcenterinsights::v1::CreateViewRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetView(
-      google::cloud::contactcenterinsights::v1::GetViewRequest const& request);
-
-  virtual google::cloud::Idempotency ListViews(
-      google::cloud::contactcenterinsights::v1::ListViewsRequest request);
-
-  virtual google::cloud::Idempotency UpdateView(
-      google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteView(
-      google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
-          request);
-};
-
-std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
-MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// contactcenterinsights_v1::ContactCenterInsightsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::contactcenterinsights_v1::
+    ContactCenterInsightsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
