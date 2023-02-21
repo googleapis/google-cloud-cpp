@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_logging_decorator.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssuredWorkloadsServiceLogging::AssuredWorkloadsServiceLogging(
@@ -170,6 +170,6 @@ future<Status> AssuredWorkloadsServiceLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google

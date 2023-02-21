@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_auth_decorator.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_auth_decorator.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssuredWorkloadsServiceAuth::AssuredWorkloadsServiceAuth(
@@ -157,6 +157,6 @@ future<Status> AssuredWorkloadsServiceAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google

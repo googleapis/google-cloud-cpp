@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_option_defaults.h"
-#include "google/cloud/assuredworkloads/assured_workloads_connection.h"
-#include "google/cloud/assuredworkloads/assured_workloads_options.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_option_defaults.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_connection.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,42 +39,44 @@ Options AssuredWorkloadsServiceDefaultOptions(Options options) {
       "assuredworkloads.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options
-           .has<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()) {
-    options.set<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>(
-        assuredworkloads::AssuredWorkloadsServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()) {
+    options.set<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>(
+        assuredworkloads_v1::AssuredWorkloadsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options.has<
-          assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()) {
-    options.set<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+          assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()) {
+    options
+        .set<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()) {
-    options.set<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>(
+          assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()) {
+    options.set<
+        assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>(
         GenericPollingPolicy<
-            assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption::Type,
-            assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption::Type>(
-            options
-                .get<assuredworkloads::
-                         AssuredWorkloadsServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<assuredworkloads::
-                         AssuredWorkloadsServiceBackoffPolicyOption>()
-                ->clone())
+            assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption::Type,
+            assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption::
+                Type>(options
+                          .get<assuredworkloads_v1::
+                                   AssuredWorkloadsServiceRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<assuredworkloads_v1::
+                                   AssuredWorkloadsServiceBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options.has<
-          assuredworkloads::
+          assuredworkloads_v1::
               AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<assuredworkloads::
+    options.set<assuredworkloads_v1::
                     AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>(
-        assuredworkloads::
+        assuredworkloads_v1::
             MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy());
   }
 
@@ -82,6 +84,6 @@ Options AssuredWorkloadsServiceDefaultOptions(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google

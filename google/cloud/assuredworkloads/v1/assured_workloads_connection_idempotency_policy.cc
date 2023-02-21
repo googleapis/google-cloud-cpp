@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/assured_workloads_connection_idempotency_policy.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
+namespace assuredworkloads_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -91,6 +91,6 @@ MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads
+}  // namespace assuredworkloads_v1
 }  // namespace cloud
 }  // namespace google

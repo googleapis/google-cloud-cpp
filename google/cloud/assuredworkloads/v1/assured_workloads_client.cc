@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/assured_workloads_client.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
+namespace assuredworkloads_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssuredWorkloadsServiceClient::AssuredWorkloadsServiceClient(
@@ -172,6 +172,6 @@ AssuredWorkloadsServiceClient::AcknowledgeViolation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads
+}  // namespace assuredworkloads_v1
 }  // namespace cloud
 }  // namespace google

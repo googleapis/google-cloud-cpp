@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_TRACING_CONNECTION_H
 
-#include "google/cloud/assuredworkloads/assured_workloads_connection.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class AssuredWorkloadsServiceTracingConnection
-    : public assuredworkloads::AssuredWorkloadsServiceConnection {
+    : public assuredworkloads_v1::AssuredWorkloadsServiceConnection {
  public:
   ~AssuredWorkloadsServiceTracingConnection() override = default;
 
   explicit AssuredWorkloadsServiceTracingConnection(
-      std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection>
+      std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
           child);
 
   Options options() override { return child_->options(); }
@@ -82,7 +82,8 @@ class AssuredWorkloadsServiceTracingConnection
           request) override;
 
  private:
-  std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection> child_;
+  std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -93,13 +94,14 @@ class AssuredWorkloadsServiceTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection>
+std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceTracingConnection(
-    std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection> conn);
+    std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_TRACING_CONNECTION_H

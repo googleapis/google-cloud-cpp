@@ -16,24 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_TRACING_STUB_H
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_stub.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class AssuredWorkloadsServiceTracingStub : public AssuredWorkloadsServiceStub {
  public:
-  ~AssuredWorkloadsServiceMetadata() override = default;
-  explicit AssuredWorkloadsServiceMetadata(
+  ~AssuredWorkloadsServiceTracingStub() override = default;
+
+  explicit AssuredWorkloadsServiceTracingStub(
       std::shared_ptr<AssuredWorkloadsServiceStub> child);
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkload(
@@ -97,17 +98,24 @@ class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
-  std::string api_client_header_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<AssuredWorkloadsServiceStub>
+MakeAssuredWorkloadsServiceTracingStub(
+    std::shared_ptr<AssuredWorkloadsServiceStub> stub);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_TRACING_STUB_H

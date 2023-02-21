@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/assured_workloads_client.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: assuredworkloads::AssuredWorkloadsServiceClient
+// main-dox-marker: assuredworkloads_v1::AssuredWorkloadsServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,9 +38,10 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::assuredworkloads::AssuredWorkloadsServiceClient(
-      google::cloud::assuredworkloads::MakeAssuredWorkloadsServiceConnection(
-          options));
+  auto client =
+      google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
+          google::cloud::assuredworkloads_v1::
+              MakeAssuredWorkloadsServiceConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -56,9 +57,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::assuredworkloads::AssuredWorkloadsServiceClient(
-        google::cloud::assuredworkloads::MakeAssuredWorkloadsServiceConnection(
-            options));
+    return google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient(
+        google::cloud::assuredworkloads_v1::
+            MakeAssuredWorkloadsServiceConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

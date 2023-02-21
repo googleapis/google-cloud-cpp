@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_CONNECTION_IMPL_H
 
-#include "google/cloud/assuredworkloads/assured_workloads_connection.h"
-#include "google/cloud/assuredworkloads/assured_workloads_connection_idempotency_policy.h"
-#include "google/cloud/assuredworkloads/assured_workloads_options.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_retry_traits.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_stub.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_connection.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_connection_idempotency_policy.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_options.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_retry_traits.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AssuredWorkloadsServiceConnectionImpl
-    : public assuredworkloads::AssuredWorkloadsServiceConnection {
+    : public assuredworkloads_v1::AssuredWorkloadsServiceConnection {
  public:
   ~AssuredWorkloadsServiceConnectionImpl() override = default;
 
   AssuredWorkloadsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub>
+      std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub>
           stub,
       Options options);
 
@@ -94,72 +94,75 @@ class AssuredWorkloadsServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<assuredworkloads::AssuredWorkloadsServiceRetryPolicy>
+  std::unique_ptr<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()) {
+            assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()) {
       return options
-          .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
+          .get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
+        .get<assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()) {
+    if (options.has<assuredworkloads_v1::
+                        AssuredWorkloadsServiceBackoffPolicyOption>()) {
       return options
-          .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
+          .get<
+              assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
+        .get<assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      assuredworkloads::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
+      assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            assuredworkloads::
+            assuredworkloads_v1::
                 AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<assuredworkloads::
+          .get<assuredworkloads_v1::
                    AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::
+        .get<assuredworkloads_v1::
                  AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()) {
+    if (options.has<assuredworkloads_v1::
+                        AssuredWorkloadsServicePollingPolicyOption>()) {
       return options
-          .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
+          .get<
+              assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
+        .get<assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub> stub_;
+  std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub>
+      stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_CONNECTION_IMPL_H

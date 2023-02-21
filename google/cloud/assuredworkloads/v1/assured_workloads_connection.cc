@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/assured_workloads_connection.h"
-#include "google/cloud/assuredworkloads/assured_workloads_options.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_connection_impl.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_option_defaults.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_stub_factory.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_tracing_connection.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_connection.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_options.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_connection_impl.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_option_defaults.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub_factory.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
+namespace assuredworkloads_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssuredWorkloadsServiceConnection::~AssuredWorkloadsServiceConnection() =
@@ -103,20 +103,20 @@ MakeAssuredWorkloadsServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AssuredWorkloadsServicePolicyOptionList>(
       options, __func__);
-  options = assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
+  options = assuredworkloads_v1_internal::AssuredWorkloadsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      assuredworkloads_internal::CreateDefaultAssuredWorkloadsServiceStub(
+      assuredworkloads_v1_internal::CreateDefaultAssuredWorkloadsServiceStub(
           background->cq(), options);
-  return assuredworkloads_internal::
+  return assuredworkloads_v1_internal::
       MakeAssuredWorkloadsServiceTracingConnection(
-          std::make_shared<
-              assuredworkloads_internal::AssuredWorkloadsServiceConnectionImpl>(
+          std::make_shared<assuredworkloads_v1_internal::
+                               AssuredWorkloadsServiceConnectionImpl>(
               std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads
+}  // namespace assuredworkloads_v1
 }  // namespace cloud
 }  // namespace google

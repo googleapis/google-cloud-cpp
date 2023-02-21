@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_connection_impl.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_option_defaults.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_connection_impl.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AssuredWorkloadsServiceConnectionImpl::AssuredWorkloadsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub>
+    std::shared_ptr<assuredworkloads_v1_internal::AssuredWorkloadsServiceStub>
         stub,
     Options options)
     : background_(std::move(background)),
@@ -127,7 +127,7 @@ AssuredWorkloadsServiceConnectionImpl::ListWorkloads(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      assuredworkloads::AssuredWorkloadsServiceRetryPolicy const>(
+      assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListWorkloads(request);
@@ -160,7 +160,7 @@ AssuredWorkloadsServiceConnectionImpl::ListViolations(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      assuredworkloads::AssuredWorkloadsServiceRetryPolicy const>(
+      assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListViolations(request);
@@ -216,6 +216,6 @@ AssuredWorkloadsServiceConnectionImpl::AcknowledgeViolation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google

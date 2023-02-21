@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_AUTH_DECORATOR_H
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_stub.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AssuredWorkloadsServiceAuth : public AssuredWorkloadsServiceStub {
@@ -105,8 +105,8 @@ class AssuredWorkloadsServiceAuth : public AssuredWorkloadsServiceStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_INTERNAL_ASSURED_WORKLOADS_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_AUTH_DECORATOR_H

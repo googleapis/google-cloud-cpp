@@ -16,21 +16,21 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_tracing_connection.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 AssuredWorkloadsServiceTracingConnection::
     AssuredWorkloadsServiceTracingConnection(
-        std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection>
+        std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
             child)
     : child_(std::move(child)) {}
 
@@ -44,7 +44,7 @@ StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceTracingConnection::UpdateWorkload(
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::UpdateWorkload");
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::UpdateWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateWorkload(request));
 }
@@ -54,7 +54,7 @@ AssuredWorkloadsServiceTracingConnection::RestrictAllowedResources(
     google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::"
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::"
       "RestrictAllowedResources");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->RestrictAllowedResources(request));
@@ -63,7 +63,7 @@ AssuredWorkloadsServiceTracingConnection::RestrictAllowedResources(
 Status AssuredWorkloadsServiceTracingConnection::DeleteWorkload(
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::DeleteWorkload");
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::DeleteWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteWorkload(request));
 }
@@ -72,7 +72,7 @@ StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceTracingConnection::GetWorkload(
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::GetWorkload");
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetWorkload");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetWorkload(request));
 }
@@ -81,7 +81,7 @@ StreamRange<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceTracingConnection::ListWorkloads(
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::ListWorkloads");
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListWorkloads");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListWorkloads(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -93,7 +93,7 @@ StreamRange<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceTracingConnection::ListViolations(
     google::cloud::assuredworkloads::v1::ListViolationsRequest request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::ListViolations");
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::ListViolations");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListViolations(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -105,7 +105,7 @@ StatusOr<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceTracingConnection::GetViolation(
     google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::GetViolation");
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::GetViolation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetViolation(request));
 }
@@ -115,7 +115,7 @@ AssuredWorkloadsServiceTracingConnection::AcknowledgeViolation(
     google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
         request) {
   auto span = internal::MakeSpan(
-      "assuredworkloads::AssuredWorkloadsServiceConnection::"
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::"
       "AcknowledgeViolation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AcknowledgeViolation(request));
@@ -123,9 +123,10 @@ AssuredWorkloadsServiceTracingConnection::AcknowledgeViolation(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection>
+std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceTracingConnection(
-    std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection> conn) {
+    std::shared_ptr<assuredworkloads_v1::AssuredWorkloadsServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<AssuredWorkloadsServiceTracingConnection>(
@@ -136,6 +137,6 @@ MakeAssuredWorkloadsServiceTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google

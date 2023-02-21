@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_stub_factory.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_auth_decorator.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_logging_decorator.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_metadata_decorator.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_stub.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_tracing_stub.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub_factory.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_auth_decorator.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_logging_decorator.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_metadata_decorator.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<AssuredWorkloadsServiceStub>
@@ -69,6 +69,6 @@ CreateDefaultAssuredWorkloadsServiceStub(google::cloud::CompletionQueue cq,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google

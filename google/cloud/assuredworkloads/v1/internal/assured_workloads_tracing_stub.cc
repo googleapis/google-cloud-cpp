@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#include "google/cloud/assuredworkloads/internal/assured_workloads_tracing_stub.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -171,6 +171,6 @@ MakeAssuredWorkloadsServiceTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -19,60 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_ASSURED_WORKLOADS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_ASSURED_WORKLOADS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
-#include <memory>
+#include "google/cloud/assuredworkloads/v1/assured_workloads_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AssuredWorkloadsServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~AssuredWorkloadsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// assuredworkloads_v1::MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency CreateWorkload(
-      google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateWorkload(
-      google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
-          request);
-
-  virtual google::cloud::Idempotency RestrictAllowedResources(
-      google::cloud::assuredworkloads::v1::
-          RestrictAllowedResourcesRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteWorkload(
-      google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetWorkload(
-      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request);
-
-  virtual google::cloud::Idempotency ListWorkloads(
-      google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
-
-  virtual google::cloud::Idempotency ListViolations(
-      google::cloud::assuredworkloads::v1::ListViolationsRequest request);
-
-  virtual google::cloud::Idempotency GetViolation(
-      google::cloud::assuredworkloads::v1::GetViolationRequest const& request);
-
-  virtual google::cloud::Idempotency AcknowledgeViolation(
-      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
-          request);
-};
-
-std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
