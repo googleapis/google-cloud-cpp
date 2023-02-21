@@ -167,6 +167,24 @@ bool AppendIfPlainText(std::ostream& os, MarkdownContext const& /*ctx*/,
   return true;
 }
 
+// The `ulink` elements must satisfy:
+//
+//   <xsd:complexType name="docURLLink" mixed="true">
+//     <xsd:group ref="docTitleCmdGroup" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:attribute name="url" type="xsd:string" />
+//   </xsd:complexType>
+bool AppendIfULink(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "ulink") return false;
+  os << "[";
+  for (auto const child : node) {
+    if (AppendIfDocTitleCmdGroup(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  os << "](" << node.attribute("url").as_string() << ")";
+  return true;
+}
+
 bool AppendIfBold(std::ostream& os, MarkdownContext const& /*ctx*/,
                   pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "bold") return false;
@@ -274,7 +292,7 @@ bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
                               pugi::xml_node const& node) {
   if (AppendIfPlainText(os, ctx, node)) return true;
-  // Unexpected: ulink
+  if (AppendIfULink(os, ctx, node)) return true;
   if (AppendIfBold(os, ctx, node)) return true;
   // Unexpected: s
   if (AppendIfStrike(os, ctx, node)) return true;

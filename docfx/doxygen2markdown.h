@@ -66,6 +66,10 @@ bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfPlainText(std::ostream& os, MarkdownContext const& ctx,
                        pugi::xml_node const& node);
 
+/// Handles nodes with URL links.
+bool AppendIfULink(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node);
+
 /// Handles nodes with **bold** text.
 bool AppendIfBold(std::ostream& os, MarkdownContext const& ctx,
                   pugi::xml_node const& node);
