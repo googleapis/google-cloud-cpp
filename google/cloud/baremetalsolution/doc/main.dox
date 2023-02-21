@@ -97,6 +97,10 @@ For example, this will override the default endpoint for `baremetalsolution::Bar
 
 @snippet bare_metal_solution_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [baremetalsolution::BareMetalSolutionClient](@ref baremetalsolution::BareMetalSolutionClient-endpoint-snippet)
+ [baremetalsolution_v2::BareMetalSolutionClient](@ref baremetalsolution_v2::BareMetalSolutionClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -108,6 +112,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet bare_metal_solution_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [baremetalsolution::BareMetalSolutionClient](@ref baremetalsolution::BareMetalSolutionClient-service-account-snippet)
+ [baremetalsolution_v2::BareMetalSolutionClient](@ref baremetalsolution_v2::BareMetalSolutionClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page baremetalsolution::BareMetalSolutionClient-service-account-snippet Override baremetalsolution::BareMetalSolutionClient Authentication Defaults
 
 @snippet google/cloud/baremetalsolution/samples/bare_metal_solution_client_samples.cc with-service-account
+
+*/
+
+/*! @page baremetalsolution_v2::BareMetalSolutionClient-endpoint-snippet Override baremetalsolution_v2::BareMetalSolutionClient Endpoint Configuration
+
+@snippet google/cloud/baremetalsolution/v2/samples/bare_metal_solution_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page baremetalsolution_v2::BareMetalSolutionClient-service-account-snippet Override baremetalsolution_v2::BareMetalSolutionClient Authentication Defaults
+
+@snippet google/cloud/baremetalsolution/v2/samples/bare_metal_solution_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

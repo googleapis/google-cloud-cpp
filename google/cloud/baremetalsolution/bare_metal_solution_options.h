@@ -21,63 +21,36 @@
 
 #include "google/cloud/baremetalsolution/bare_metal_solution_connection.h"
 #include "google/cloud/baremetalsolution/bare_metal_solution_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_options.h"
 
 namespace google {
 namespace cloud {
 namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-baremetalsolution-options
- */
-struct BareMetalSolutionRetryPolicyOption {
-  using Type = std::shared_ptr<BareMetalSolutionRetryPolicy>;
-};
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionPollingPolicyOption
+/// directly.
+using ::google::cloud::baremetalsolution_v2::
+    BareMetalSolutionPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-baremetalsolution-options
- */
-struct BareMetalSolutionBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption
+/// directly.
+using ::google::cloud::baremetalsolution_v2::
+    BareMetalSolutionBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-baremetalsolution-options
- */
-struct BareMetalSolutionConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<BareMetalSolutionConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// baremetalsolution_v2::BareMetalSolutionConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::baremetalsolution_v2::
+    BareMetalSolutionConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-baremetalsolution-options
- */
-struct BareMetalSolutionPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionPolicyOptionList
+/// directly.
+using ::google::cloud::baremetalsolution_v2::BareMetalSolutionPolicyOptionList;
 
-/**
- * The options applicable to BareMetalSolution.
- *
- * @ingroup google-cloud-baremetalsolution-options
- */
-using BareMetalSolutionPolicyOptionList =
-    OptionList<BareMetalSolutionRetryPolicyOption,
-               BareMetalSolutionBackoffPolicyOption,
-               BareMetalSolutionPollingPolicyOption,
-               BareMetalSolutionConnectionIdempotencyPolicyOption>;
+/// @deprecated Use baremetalsolution_v2::BareMetalSolutionRetryPolicyOption
+/// directly.
+using ::google::cloud::baremetalsolution_v2::BareMetalSolutionRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution

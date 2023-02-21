@@ -16,23 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_BARE_METAL_SOLUTION_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_BARE_METAL_SOLUTION_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_OPTION_DEFAULTS_H
 
-#include "google/cloud/baremetalsolution/bare_metal_solution_connection.h"
-#include "google/cloud/baremetalsolution/v2/bare_metal_solution_client.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use baremetalsolution_v2::BareMetalSolutionClient directly.
-using ::google::cloud::baremetalsolution_v2::BareMetalSolutionClient;
+Options BareMetalSolutionDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_BARE_METAL_SOLUTION_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_OPTION_DEFAULTS_H
