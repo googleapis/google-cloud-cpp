@@ -208,4 +208,100 @@ TEST(Doxygen2Markdown, ItemizedListNested) {
   - Sub 3)md");
 }
 
+TEST(Doxygen2Markdown, SimpleSectH6) {
+  auto constexpr kXmlPrefix = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">)xml";
+  auto constexpr kXmlSuffix = R"xml(
+          <title>This is the title</title>
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+        </simplesect>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+###### This is the title
+
+First paragraph.
+
+Second paragraph.)md";
+
+  auto const cases = std::vector<std::string>{
+      "see", "return", "author",    "authors",   "version", "since", "date",
+      "pre", "post",   "copyright", "invariant", "par",     "rcs",
+  };
+
+  for (auto const& kind : cases) {
+    SCOPED_TRACE("Testing with kind=" + kind);
+
+    pugi::xml_document doc;
+    auto xml = std::string(kXmlPrefix) + "<simplesect id='test-node' kind='" +
+               kind + "'>" + kXmlSuffix;
+    doc.load_string(xml.c_str());
+
+    auto selected = doc.select_node("//*[@id='test-node']");
+    std::ostringstream os;
+    ASSERT_TRUE(AppendIfSimpleSect(os, {}, selected.node()));
+    EXPECT_EQ(kExpected, os.str());
+  }
+}
+
+TEST(Doxygen2Markdown, SimpleSectBlockQuote) {
+  auto constexpr kXmlPrefix = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">)xml";
+  auto constexpr kXmlSuffix = R"xml(
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+        </simplesect>
+    </doxygen>)xml";
+
+  auto constexpr kExpectedBody = R"md(
+> First paragraph.
+> Second paragraph.)md";
+
+  struct TestCase {
+    std::string kind;
+    std::string header;
+  } const cases[] = {
+      {"warning", "> **Warning:**"},
+      {"note", "> **Note:**"},
+      {"remark", "> Remark:"},
+      {"attention", "> Attention:"},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing with kind=" + test.kind);
+
+    pugi::xml_document doc;
+    auto xml = std::string(kXmlPrefix) + "<simplesect id='test-node' kind='" +
+               test.kind + "'>" + kXmlSuffix;
+    doc.load_string(xml.c_str());
+
+    auto selected = doc.select_node("//*[@id='test-node']");
+    std::ostringstream os;
+    ASSERT_TRUE(AppendIfSimpleSect(os, {}, selected.node()));
+    auto const expected = std::string("\n\n") + test.header + kExpectedBody;
+    EXPECT_EQ(expected, os.str());
+  }
+}
+
+TEST(Doxygen2Markdown, Title) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <simplesect id='test-node'>
+          <title>This is the title</title>
+          <para>unused</para>
+        </simplesect>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(This is the title)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  AppendTitle(os, {}, selected.node());
+  EXPECT_EQ(kExpected, os.str());
+}
+
 }  // namespace
