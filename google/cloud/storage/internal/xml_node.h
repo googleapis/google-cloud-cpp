@@ -90,7 +90,8 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
       std::string const& tag_name) const;
 
   /// Get the XML string representation of the node.
-  std::string ToString(int indent_width = 0, int indent_level = 0) const;
+  std::string ToString(std::size_t indent_width = 0,
+                       std::size_t indent_level = 0) const;
 
   /// Append a new tag node and return the added node.
   std::shared_ptr<XmlNode> AppendTagNode(std::string tag_name) {
