@@ -189,6 +189,17 @@ using SessionPoolOptionList =
                SessionPoolKeepAliveIntervalOption, SessionPoolLabelsOption>;
 
 /**
+ * Option for `google::cloud::Options` to, when present and false, suppress
+ * adding headers to distinguish requests served by the leader v/s non-leader
+ * region.
+ *
+ * @ingroup spanner-options
+ */
+struct RouteToLeaderOption {
+  using Type = bool;
+};
+
+/**
  * Option for `google::cloud::Options` to set the optimizer version used in an
  * SQL query.
  *

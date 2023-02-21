@@ -55,6 +55,8 @@ TEST(Options, Defaults) {
                                                absl::nullopt);
   testing_util::ScopedEnvironment user_project_env(
       "GOOGLE_CLOUD_CPP_USER_PROJECT", absl::nullopt);
+  testing_util::ScopedEnvironment route_to_leader_env(
+      "GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER", absl::nullopt);
   auto opts = spanner_internal::DefaultOptions();
 
   EXPECT_EQ(opts.get<EndpointOption>(), "spanner.googleapis.com");
@@ -82,6 +84,8 @@ TEST(Options, Defaults) {
   EXPECT_TRUE(opts.has<SpannerRetryPolicyOption>());
   EXPECT_TRUE(opts.has<SpannerBackoffPolicyOption>());
   EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
+
+  EXPECT_FALSE(opts.has<spanner::RouteToLeaderOption>());
 }
 
 TEST(Options, AdminDefaults) {
@@ -148,6 +152,14 @@ TEST(Options, SpannerEmulatorHost) {
   EXPECT_EQ(opts.get<EndpointOption>(), "foo.bar.baz");
   EXPECT_EQ(opts.get<AuthorityOption>(), "spanner.googleapis.com");
   EXPECT_NE(opts.get<GrpcCredentialOption>(), nullptr);
+}
+
+TEST(Options, RouteToLeaderFromEnv) {
+  testing_util::ScopedEnvironment route_to_leader_env(
+      "GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER", "off");
+  auto opts = spanner_internal::DefaultOptions();
+  EXPECT_TRUE(opts.has<spanner::RouteToLeaderOption>());
+  EXPECT_FALSE(opts.get<spanner::RouteToLeaderOption>());
 }
 
 TEST(Options, TracingComponentsFromEnv) {

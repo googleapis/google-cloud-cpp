@@ -104,6 +104,19 @@ Options DefaultOptions(Options opts) {
   min_sessions =
       (std::min)(min_sessions, max_sessions_per_channel * num_channels);
 
+  if (!opts.has<spanner::RouteToLeaderOption>()) {
+    if (auto e = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER")) {
+      for (auto const* disable : {"N", "n", "F", "f", "0", "off"}) {
+        if (*e == disable) {
+          // Change the default from "for RW/PartitionedDml transactions"
+          // to "never".
+          opts.set<spanner::RouteToLeaderOption>(false);
+          break;
+        }
+      }
+    }
+  }
+
   return opts;
 }
 
