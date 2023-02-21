@@ -116,9 +116,10 @@
 ./include/google/cloud/billing/mocks
 ./include/google/cloud/billing/v1
 ./include/google/cloud/binaryauthorization
-./include/google/cloud/binaryauthorization/internal
 ./include/google/cloud/binaryauthorization/mocks
 ./include/google/cloud/binaryauthorization/v1
+./include/google/cloud/binaryauthorization/v1/internal
+./include/google/cloud/binaryauthorization/v1/mocks
 ./include/google/cloud/certificatemanager
 ./include/google/cloud/certificatemanager/internal
 ./include/google/cloud/certificatemanager/mocks

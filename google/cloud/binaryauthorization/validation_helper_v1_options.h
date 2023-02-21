@@ -19,54 +19,35 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_VALIDATION_HELPER_V1_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_VALIDATION_HELPER_V1_OPTIONS_H
 
+#include "google/cloud/binaryauthorization/v1/validation_helper_v1_options.h"
 #include "google/cloud/binaryauthorization/validation_helper_v1_connection.h"
 #include "google/cloud/binaryauthorization/validation_helper_v1_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-struct ValidationHelperV1RetryPolicyOption {
-  using Type = std::shared_ptr<ValidationHelperV1RetryPolicy>;
-};
+/// @deprecated Use
+/// binaryauthorization_v1::ValidationHelperV1BackoffPolicyOption directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1BackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-struct ValidationHelperV1BackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1ConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-struct ValidationHelperV1ConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1PolicyOptionList
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1PolicyOptionList;
 
-/**
- * The options applicable to ValidationHelperV1.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-using ValidationHelperV1PolicyOptionList =
-    OptionList<ValidationHelperV1RetryPolicyOption,
-               ValidationHelperV1BackoffPolicyOption,
-               ValidationHelperV1ConnectionIdempotencyPolicyOption>;
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1RetryPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

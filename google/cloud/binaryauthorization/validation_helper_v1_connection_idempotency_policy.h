@@ -19,32 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_VALIDATION_HELPER_V1_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_VALIDATION_HELPER_V1_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/binaryauthorization/v1/validation_helper_v1_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ValidationHelperV1ConnectionIdempotencyPolicy {
- public:
-  virtual ~ValidationHelperV1ConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// binaryauthorization_v1::MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ValidateAttestationOccurrence(
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request);
-};
-
-std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>
-MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// binaryauthorization_v1::ValidationHelperV1ConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1ConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

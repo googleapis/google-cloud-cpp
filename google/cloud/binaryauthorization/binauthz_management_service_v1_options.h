@@ -21,53 +21,36 @@
 
 #include "google/cloud/binaryauthorization/binauthz_management_service_v1_connection.h"
 #include "google/cloud/binaryauthorization/binauthz_management_service_v1_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_options.h"
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-struct BinauthzManagementServiceV1RetryPolicyOption {
-  using Type = std::shared_ptr<BinauthzManagementServiceV1RetryPolicy>;
-};
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1BackoffPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1BackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-struct BinauthzManagementServiceV1BackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-struct BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1PolicyOptionList
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1PolicyOptionList;
 
-/**
- * The options applicable to BinauthzManagementServiceV1.
- *
- * @ingroup google-cloud-binaryauthorization-options
- */
-using BinauthzManagementServiceV1PolicyOptionList =
-    OptionList<BinauthzManagementServiceV1RetryPolicyOption,
-               BinauthzManagementServiceV1BackoffPolicyOption,
-               BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicyOption
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

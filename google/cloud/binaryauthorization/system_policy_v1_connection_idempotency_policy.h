@@ -19,32 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_SYSTEM_POLICY_V1_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_SYSTEM_POLICY_V1_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/binaryauthorization/v1/system_policy_v1_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SystemPolicyV1ConnectionIdempotencyPolicy {
- public:
-  virtual ~SystemPolicyV1ConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// binaryauthorization_v1::MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency GetSystemPolicy(
-      google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-          request);
-};
-
-std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
-MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// binaryauthorization_v1::SystemPolicyV1ConnectionIdempotencyPolicy directly.
+using ::google::cloud::binaryauthorization_v1::
+    SystemPolicyV1ConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

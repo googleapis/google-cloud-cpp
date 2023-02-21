@@ -20,109 +20,39 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_BINAUTHZ_MANAGEMENT_SERVICE_V1_CONNECTION_H
 
 #include "google/cloud/binaryauthorization/binauthz_management_service_v1_connection_idempotency_policy.h"
-#include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_retry_traits.h"
-#include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection.h"
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using BinauthzManagementServiceV1RetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        binaryauthorization_internal::BinauthzManagementServiceV1RetryTraits>;
+/// @deprecated Use
+/// binaryauthorization_v1::MakeBinauthzManagementServiceV1Connection directly.
+using ::google::cloud::binaryauthorization_v1::
+    MakeBinauthzManagementServiceV1Connection;
 
-using BinauthzManagementServiceV1LimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        binaryauthorization_internal::BinauthzManagementServiceV1RetryTraits>;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1Connection directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1Connection;
 
-using BinauthzManagementServiceV1LimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        binaryauthorization_internal::BinauthzManagementServiceV1RetryTraits>;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1LimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1LimitedErrorCountRetryPolicy;
 
-/**
- * The `BinauthzManagementServiceV1Connection` object for
- * `BinauthzManagementServiceV1Client`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `BinauthzManagementServiceV1Client`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `BinauthzManagementServiceV1Client`.
- *
- * To create a concrete instance, see
- * `MakeBinauthzManagementServiceV1Connection()`.
- *
- * For mocking, see
- * `binaryauthorization_mocks::MockBinauthzManagementServiceV1Connection`.
- */
-class BinauthzManagementServiceV1Connection {
- public:
-  virtual ~BinauthzManagementServiceV1Connection() = 0;
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1LimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1LimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy> GetPolicy(
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const& request);
-
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Policy> UpdatePolicy(
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  CreateAttestor(
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  GetAttestor(google::cloud::binaryauthorization::v1::GetAttestorRequest const&
-                  request);
-
-  virtual StatusOr<google::cloud::binaryauthorization::v1::Attestor>
-  UpdateAttestor(
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::binaryauthorization::v1::Attestor>
-  ListAttestors(
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest request);
-
-  virtual Status DeleteAttestor(
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type
- * `BinauthzManagementServiceV1Connection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * BinauthzManagementServiceV1Client.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `BinauthzManagementServiceV1Connection`. Expected options are any of
- * the types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::binaryauthorization::BinauthzManagementServiceV1PolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the
- * `BinauthzManagementServiceV1Connection` created by this function.
- */
-std::shared_ptr<BinauthzManagementServiceV1Connection>
-MakeBinauthzManagementServiceV1Connection(Options options = {});
+/// @deprecated Use
+/// binaryauthorization_v1::BinauthzManagementServiceV1RetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::
+    BinauthzManagementServiceV1RetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
