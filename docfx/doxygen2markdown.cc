@@ -345,7 +345,9 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
                          pugi::xml_node const& node) {
   if (AppendIfDocTitleCmdGroup(os, ctx, node)) return true;
-  // Unexpected: hruler, preformatted, programlisting, verbatim, indexentry
+  // Unexpected: hruler, preformatted
+  if (AppendIfProgramListing(os, ctx, node)) return true;
+  // Uexpected: verbatim, indexentry
   // Unexpected: orderedlist
   if (AppendIfItemizedList(os, ctx, node)) return true;
   if (AppendIfSimpleSect(os, ctx, node)) return true;
@@ -374,6 +376,115 @@ bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
   os << ctx.paragraph_start << ctx.paragraph_indent;
   for (auto const& child : node) {
     if (AppendIfDocCmdGroup(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// The type for `programlisting` elements is basically a sequence of `codeline`
+// elements.  Defined as:
+//
+// clang-format off
+//   <xsd:complexType name="listingType">
+//     <xsd:sequence>
+//       <xsd:element name="codeline" type="codelineType" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//     <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
+                            pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "programlisting") return false;
+  // Start with a new paragraph, with the right level of indentation, and a new
+  // code fence:
+  os << ctx.paragraph_start << ctx.paragraph_indent << "```cpp";
+  for (auto const& child : node) {
+    if (AppendIfCodeline(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  os << "\n" << ctx.paragraph_indent << "```";
+  return true;
+}
+
+// The type for `codeline` is basically a sequence of highlights (think "syntax
+// highlighting", not "important things"). We will discard this information and
+// rely in the target markdown to generate the right coloring.
+//
+// clang-format off
+//   <xsd:complexType name="codelineType">
+//     <xsd:sequence>
+//       <xsd:element name="highlight" type="highlightType" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//     <xsd:attribute name="lineno" type="xsd:integer" />
+//     <xsd:attribute name="refid" type="xsd:string" />
+//     <xsd:attribute name="refkind" type="DoxRefKind" />
+//     <xsd:attribute name="external" type="DoxBool" />
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfCodeline(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "codeline") return false;
+  os << "\n" << ctx.paragraph_indent;
+  for (auto const& child : node) {
+    if (AppendIfHighlight(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// The type for `highlight` is basically a sequence of `<sp>` and `<ref>`
+// elements. The `<ref>` elements are where the text appears.
+//
+//   <xsd:complexType name="highlightType" mixed="true">
+//     <xsd:choice minOccurs="0" maxOccurs="unbounded">
+//       <xsd:element name="sp" type="spType" />
+//       <xsd:element name="ref" type="refTextType" />
+//     </xsd:choice>
+//     <xsd:attribute name="class" type="DoxHighlightClass" />
+//   </xsd:complexType>
+bool AppendIfHighlight(std::ostream& os, MarkdownContext const& ctx,
+                       pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "highlight") return false;
+  for (auto const& child : node) {
+    if (AppendIfPlainText(os, ctx, child)) continue;
+    if (AppendIfHighlightSp(os, ctx, child)) continue;
+    if (AppendIfHighlightRef(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// A `<sp>` element is just a space. It seems that Doxygen does not use the
+// `value` attribute, we will leave that unhandled.
+//
+//   <xsd:complexType name="spType" mixed="true">
+//     <xsd:attribute name="value" type="xsd:integer" use="optional"/>
+//   </xsd:complexType>
+bool AppendIfHighlightSp(std::ostream& os, MarkdownContext const& /*ctx*/,
+                         pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "sp") return false;
+  // Leave the 'value' attribute unhandled. It is probably the number of spaces,
+  // but without documentation it is hard to say. Since it is unused, this
+  // approach seems safer.
+  if (!std::string_view{node.attribute("value").name()}.empty()) return false;
+  os << ' ';
+  return true;
+}
+
+// A `ref` element inside a `highlight` element has `refTextType`. Which is
+// defined as:
+//
+//   <xsd:complexType name="docRefTextType" mixed="true">
+//     <xsd:group ref="docTitleCmdGroup" minOccurs="0" maxOccurs="unbounded" />
+//     <xsd:attribute name="refid" type="xsd:string" />
+//     <xsd:attribute name="kindref" type="DoxRefKind" />
+//     <xsd:attribute name="external" type="xsd:string" />
+//   </xsd:complexType>
+bool AppendIfHighlightRef(std::ostream& os, MarkdownContext const& ctx,
+                          pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "ref") return false;
+  for (auto const& child : node) {
+    if (AppendIfDocTitleCmdGroup(os, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
   return true;

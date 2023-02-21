@@ -102,6 +102,26 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
                        pugi::xml_node const& node);
 
+/// Handle `programlisting` elements.
+bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
+                            pugi::xml_node const& node);
+
+/// Handle `codeline` elements.
+bool AppendIfCodeline(std::ostream& os, MarkdownContext const& ctx,
+                      pugi::xml_node const& node);
+
+/// Handle `highlight` elements.
+bool AppendIfHighlight(std::ostream& os, MarkdownContext const& ctx,
+                       pugi::xml_node const& node);
+
+/// Handle `sp` elements embedded in `highlight` elements.
+bool AppendIfHighlightSp(std::ostream& os, MarkdownContext const& ctx,
+                         pugi::xml_node const& node);
+
+/// Handle `ref` elements embedded in `highlight` elements.
+bool AppendIfHighlightRef(std::ostream& os, MarkdownContext const& ctx,
+                          pugi::xml_node const& node);
+
 /// Handle itemized lists.
 bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
                           pugi::xml_node const& node);

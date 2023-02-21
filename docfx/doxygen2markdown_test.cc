@@ -385,6 +385,47 @@ TEST(Doxygen2Markdown, ParagraphItemizedList) {
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphProgramListing) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-node'>
+          <programlisting><codeline><highlight class="normal">auto<sp/>sr<sp/>=<sp/>MakeStreamRange&lt;T&gt;({t1,<sp/>t2});</highlight></codeline>
+          <codeline><highlight class="normal">for<sp/>(StatusOr&lt;int&gt;<sp/>const&amp;<sp/>v<sp/>:<sp/>sr)<sp/>{</highlight></codeline>
+          <codeline><highlight class="normal"><sp/><sp/>//<sp/>Yields<sp/>t1<sp/>-&gt;<sp/>t2</highlight></codeline>
+          <codeline><highlight class="normal">}</highlight></codeline>
+          <codeline/>
+          <codeline><highlight class="normal">sr<sp/>=<sp/>MakeStreamRange&lt;T&gt;({t1,<sp/>t2},<sp/>BadStatus());</highlight></codeline>
+          <codeline><highlight class="normal">for<sp/>(StatusOr&lt;int&gt;<sp/>const&amp;<sp/>v<sp/>:<sp/>sr)<sp/>{</highlight></codeline>
+          <codeline><highlight class="normal"><sp/><sp/>//<sp/>Yields<sp/>t1<sp/>-&gt;<sp/>t2<sp/>-&gt;<sp/>BadStatus()</highlight></codeline>
+          <codeline><highlight class="normal">}</highlight></codeline>
+          </programlisting>
+        </para>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+
+
+```cpp
+auto sr = MakeStreamRange<T>({t1, t2});
+for (StatusOr<int> const& v : sr) {
+  // Yields t1 -> t2
+}
+
+sr = MakeStreamRange<T>({t1, t2}, BadStatus());
+for (StatusOr<int> const& v : sr) {
+  // Yields t1 -> t2 -> BadStatus()
+}
+```)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ItemizedListSimple) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
