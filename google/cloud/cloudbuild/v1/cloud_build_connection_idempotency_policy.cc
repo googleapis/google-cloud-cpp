@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/cloudbuild/cloud_build_connection_idempotency_policy.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
+namespace cloudbuild_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -131,6 +131,6 @@ MakeDefaultCloudBuildConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild
+}  // namespace cloudbuild_v1
 }  // namespace cloud
 }  // namespace google

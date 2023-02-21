@@ -20,147 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_H
 
 #include "google/cloud/cloudbuild/cloud_build_connection_idempotency_policy.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_retry_traits.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/cloudbuild/v1/cloud_build_connection.h"
 
 namespace google {
 namespace cloud {
 namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudBuildRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    cloudbuild_internal::CloudBuildRetryTraits>;
+/// @deprecated Use cloudbuild_v1::MakeCloudBuildConnection directly.
+using ::google::cloud::cloudbuild_v1::MakeCloudBuildConnection;
 
-using CloudBuildLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        cloudbuild_internal::CloudBuildRetryTraits>;
+/// @deprecated Use cloudbuild_v1::CloudBuildConnection directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildConnection;
 
-using CloudBuildLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        cloudbuild_internal::CloudBuildRetryTraits>;
+/// @deprecated Use cloudbuild_v1::CloudBuildLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildLimitedErrorCountRetryPolicy;
 
-/**
- * The `CloudBuildConnection` object for `CloudBuildClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudBuildClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CloudBuildClient`.
- *
- * To create a concrete instance, see `MakeCloudBuildConnection()`.
- *
- * For mocking, see `cloudbuild_mocks::MockCloudBuildConnection`.
- */
-class CloudBuildConnection {
- public:
-  virtual ~CloudBuildConnection() = 0;
+/// @deprecated Use cloudbuild_v1::CloudBuildLimitedTimeRetryPolicy directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
-      google::devtools::cloudbuild::v1::CreateBuildRequest const& request);
-
-  virtual StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
-      google::devtools::cloudbuild::v1::GetBuildRequest const& request);
-
-  virtual StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
-      google::devtools::cloudbuild::v1::ListBuildsRequest request);
-
-  virtual StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
-      google::devtools::cloudbuild::v1::CancelBuildRequest const& request);
-
-  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
-      google::devtools::cloudbuild::v1::RetryBuildRequest const& request);
-
-  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-  ApproveBuild(
-      google::devtools::cloudbuild::v1::ApproveBuildRequest const& request);
-
-  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
-  CreateBuildTrigger(
-      google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
-          request);
-
-  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
-  GetBuildTrigger(
-      google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request);
-
-  virtual StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
-  ListBuildTriggers(
-      google::devtools::cloudbuild::v1::ListBuildTriggersRequest request);
-
-  virtual Status DeleteBuildTrigger(
-      google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
-          request);
-
-  virtual StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
-  UpdateBuildTrigger(
-      google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
-          request);
-
-  virtual future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-  RunBuildTrigger(
-      google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request);
-
-  virtual StatusOr<
-      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
-  ReceiveTriggerWebhook(
-      google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
-          request);
-
-  virtual future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  CreateWorkerPool(
-      google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request);
-
-  virtual StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
-      google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request);
-
-  virtual future<StatusOr<
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-  DeleteWorkerPool(
-      google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request);
-
-  virtual future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  UpdateWorkerPool(
-      google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request);
-
-  virtual StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
-  ListWorkerPools(
-      google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request);
-};
-
-/**
- * A factory function to construct an object of type `CloudBuildConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CloudBuildClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CloudBuildConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::cloudbuild::CloudBuildPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CloudBuildConnection` created by
- * this function.
- */
-std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
-    Options options = {});
+/// @deprecated Use cloudbuild_v1::CloudBuildRetryPolicy directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild

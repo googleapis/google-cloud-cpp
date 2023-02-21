@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/cloudbuild/internal/cloud_build_metadata_decorator.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudBuildMetadata::CloudBuildMetadata(std::shared_ptr<CloudBuildStub> child)
@@ -221,6 +221,6 @@ void CloudBuildMetadata::SetMetadata(grpc::ClientContext& context) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google

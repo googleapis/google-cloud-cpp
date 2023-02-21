@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_METADATA_DECORATOR_H
 
-#include "google/cloud/cloudbuild/internal/cloud_build_stub.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudBuildMetadata : public CloudBuildStub {
@@ -155,8 +155,8 @@ class CloudBuildMetadata : public CloudBuildStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_METADATA_DECORATOR_H

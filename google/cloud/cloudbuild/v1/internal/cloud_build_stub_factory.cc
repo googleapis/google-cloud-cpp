@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/cloudbuild/internal/cloud_build_stub_factory.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_auth_decorator.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_logging_decorator.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_metadata_decorator.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_stub.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_tracing_stub.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_stub_factory.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_auth_decorator.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_logging_decorator.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_metadata_decorator.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<CloudBuildStub> CreateDefaultCloudBuildStub(
@@ -66,6 +66,6 @@ std::shared_ptr<CloudBuildStub> CreateDefaultCloudBuildStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google

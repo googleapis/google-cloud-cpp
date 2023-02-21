@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/cloudbuild/internal/cloud_build_tracing_stub.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -247,6 +247,6 @@ std::shared_ptr<CloudBuildStub> MakeCloudBuildTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -21,62 +21,29 @@
 
 #include "google/cloud/cloudbuild/cloud_build_connection.h"
 #include "google/cloud/cloudbuild/cloud_build_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/cloudbuild/v1/cloud_build_options.h"
 
 namespace google {
 namespace cloud {
 namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-cloudbuild-options
- */
-struct CloudBuildRetryPolicyOption {
-  using Type = std::shared_ptr<CloudBuildRetryPolicy>;
-};
+/// @deprecated Use cloudbuild_v1::CloudBuildPollingPolicyOption directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-cloudbuild-options
- */
-struct CloudBuildBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use cloudbuild_v1::CloudBuildBackoffPolicyOption directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-cloudbuild-options
- */
-struct CloudBuildConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CloudBuildConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::cloudbuild_v1::
+    CloudBuildConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-cloudbuild-options
- */
-struct CloudBuildPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use cloudbuild_v1::CloudBuildPolicyOptionList directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildPolicyOptionList;
 
-/**
- * The options applicable to CloudBuild.
- *
- * @ingroup google-cloud-cloudbuild-options
- */
-using CloudBuildPolicyOptionList =
-    OptionList<CloudBuildRetryPolicyOption, CloudBuildBackoffPolicyOption,
-               CloudBuildPollingPolicyOption,
-               CloudBuildConnectionIdempotencyPolicyOption>;
+/// @deprecated Use cloudbuild_v1::CloudBuildRetryPolicyOption directly.
+using ::google::cloud::cloudbuild_v1::CloudBuildRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild

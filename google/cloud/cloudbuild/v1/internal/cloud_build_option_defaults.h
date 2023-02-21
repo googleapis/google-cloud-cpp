@@ -16,27 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_STUB_FACTORY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_STUB_FACTORY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_OPTION_DEFAULTS_H
 
-#include "google/cloud/cloudbuild/internal/cloud_build_stub.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CloudBuildStub> CreateDefaultCloudBuildStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+Options CloudBuildDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_STUB_FACTORY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_OPTION_DEFAULTS_H

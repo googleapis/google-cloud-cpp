@@ -20,136 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_MOCKS_MOCK_CLOUD_BUILD_CONNECTION_H
 
 #include "google/cloud/cloudbuild/cloud_build_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/cloudbuild/v1/mocks/mock_cloud_build_connection.h"
 
 namespace google {
 namespace cloud {
 namespace cloudbuild_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudBuildConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudBuildClient`. To do so,
- * construct an object of type `CloudBuildClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudBuildConnection : public cloudbuild::CloudBuildConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::devtools::cloudbuild::v1::Build>>, CreateBuild,
-      (google::devtools::cloudbuild::v1::CreateBuildRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v1::Build>, GetBuild,
-      (google::devtools::cloudbuild::v1::GetBuildRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::devtools::cloudbuild::v1::Build>, ListBuilds,
-              (google::devtools::cloudbuild::v1::ListBuildsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v1::Build>, CancelBuild,
-      (google::devtools::cloudbuild::v1::CancelBuildRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::devtools::cloudbuild::v1::Build>>, RetryBuild,
-      (google::devtools::cloudbuild::v1::RetryBuildRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::devtools::cloudbuild::v1::Build>>, ApproveBuild,
-      (google::devtools::cloudbuild::v1::ApproveBuildRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>,
-      CreateBuildTrigger,
-      (google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>, GetBuildTrigger,
-      (google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>,
-      ListBuildTriggers,
-      (google::devtools::cloudbuild::v1::ListBuildTriggersRequest request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteBuildTrigger,
-      (google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>,
-      UpdateBuildTrigger,
-      (google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
-      RunBuildTrigger,
-      (google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>,
-      ReceiveTriggerWebhook,
-      (google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>,
-              CreateWorkerPool,
-              (google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudbuild::v1::WorkerPool>, GetWorkerPool,
-      (google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>,
-      DeleteWorkerPool,
-      (google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>,
-              UpdateWorkerPool,
-              (google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::devtools::cloudbuild::v1::WorkerPool>,
-      ListWorkerPools,
-      (google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request),
-      (override));
-};
+/// @deprecated Use cloudbuild_v1_mocks::MockCloudBuildConnection directly.
+using ::google::cloud::cloudbuild_v1_mocks::MockCloudBuildConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_mocks

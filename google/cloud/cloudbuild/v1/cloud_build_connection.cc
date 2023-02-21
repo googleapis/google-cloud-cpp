@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/cloudbuild/cloud_build_connection.h"
-#include "google/cloud/cloudbuild/cloud_build_options.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_connection_impl.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_option_defaults.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_stub_factory.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_tracing_connection.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_connection.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_options.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_connection_impl.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_option_defaults.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_stub_factory.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
+namespace cloudbuild_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudBuildConnection::~CloudBuildConnection() = default;
@@ -169,16 +169,17 @@ std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  CloudBuildPolicyOptionList>(options, __func__);
-  options = cloudbuild_internal::CloudBuildDefaultOptions(std::move(options));
+  options =
+      cloudbuild_v1_internal::CloudBuildDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = cloudbuild_internal::CreateDefaultCloudBuildStub(background->cq(),
-                                                               options);
-  return cloudbuild_internal::MakeCloudBuildTracingConnection(
-      std::make_shared<cloudbuild_internal::CloudBuildConnectionImpl>(
+  auto stub = cloudbuild_v1_internal::CreateDefaultCloudBuildStub(
+      background->cq(), options);
+  return cloudbuild_v1_internal::MakeCloudBuildTracingConnection(
+      std::make_shared<cloudbuild_v1_internal::CloudBuildConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild
+}  // namespace cloudbuild_v1
 }  // namespace cloud
 }  // namespace google

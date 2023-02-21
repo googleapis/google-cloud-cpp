@@ -16,28 +16,40 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_CONNECTION_IMPL_H
 
-#include "google/cloud/cloudbuild/cloud_build_connection.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_connection.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_options.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_retry_traits.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class CloudBuildTracingConnection : public cloudbuild::CloudBuildConnection {
+class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
  public:
-  ~CloudBuildTracingConnection() override = default;
+  ~CloudBuildConnectionImpl() override = default;
 
-  explicit CloudBuildTracingConnection(
-      std::shared_ptr<cloudbuild::CloudBuildConnection> child);
+  CloudBuildConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<cloudbuild_v1_internal::CloudBuildStub> stub,
+      Options options);
 
-  Options options() override { return child_->options(); }
+  Options options() override { return options_; }
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
@@ -116,24 +128,56 @@ class CloudBuildTracingConnection : public cloudbuild::CloudBuildConnection {
       override;
 
  private:
-  std::shared_ptr<cloudbuild::CloudBuildConnection> child_;
+  std::unique_ptr<cloudbuild_v1::CloudBuildRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<cloudbuild_v1::CloudBuildRetryPolicyOption>()) {
+      return options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone();
+    }
+    return options_.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<cloudbuild_v1::CloudBuildBackoffPolicyOption>()) {
+      return options.get<cloudbuild_v1::CloudBuildBackoffPolicyOption>()
+          ->clone();
+    }
+    return options_.get<cloudbuild_v1::CloudBuildBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<cloudbuild_v1::CloudBuildPollingPolicyOption>()) {
+      return options.get<cloudbuild_v1::CloudBuildPollingPolicyOption>()
+          ->clone();
+    }
+    return options_.get<cloudbuild_v1::CloudBuildPollingPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<cloudbuild_v1_internal::CloudBuildStub> stub_;
+  Options options_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Conditionally applies the tracing decorator to the given connection.
- *
- * The connection is only decorated if tracing is enabled (as determined by the
- * connection's options).
- */
-std::shared_ptr<cloudbuild::CloudBuildConnection>
-MakeCloudBuildTracingConnection(
-    std::shared_ptr<cloudbuild::CloudBuildConnection> conn);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_INTERNAL_CLOUD_BUILD_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_CONNECTION_IMPL_H

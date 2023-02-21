@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/cloudbuild/internal/cloud_build_option_defaults.h"
-#include "google/cloud/cloudbuild/cloud_build_connection.h"
-#include "google/cloud/cloudbuild/cloud_build_options.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_option_defaults.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_connection.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -38,34 +38,38 @@ Options CloudBuildDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CLOUD_BUILD_AUTHORITY", "cloudbuild.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<cloudbuild::CloudBuildRetryPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildRetryPolicyOption>(
-        cloudbuild::CloudBuildLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<cloudbuild_v1::CloudBuildRetryPolicyOption>()) {
+    options.set<cloudbuild_v1::CloudBuildRetryPolicyOption>(
+        cloudbuild_v1::CloudBuildLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<cloudbuild::CloudBuildBackoffPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildBackoffPolicyOption>(
+  if (!options.has<cloudbuild_v1::CloudBuildBackoffPolicyOption>()) {
+    options.set<cloudbuild_v1::CloudBuildBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<cloudbuild::CloudBuildPollingPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildPollingPolicyOption>(
-        GenericPollingPolicy<cloudbuild::CloudBuildRetryPolicyOption::Type,
-                             cloudbuild::CloudBuildBackoffPolicyOption::Type>(
-            options.get<cloudbuild::CloudBuildRetryPolicyOption>()->clone(),
-            options.get<cloudbuild::CloudBuildBackoffPolicyOption>()->clone())
+  if (!options.has<cloudbuild_v1::CloudBuildPollingPolicyOption>()) {
+    options.set<cloudbuild_v1::CloudBuildPollingPolicyOption>(
+        GenericPollingPolicy<
+            cloudbuild_v1::CloudBuildRetryPolicyOption::Type,
+            cloudbuild_v1::CloudBuildBackoffPolicyOption::Type>(
+            options.get<cloudbuild_v1::CloudBuildRetryPolicyOption>()->clone(),
+            options.get<cloudbuild_v1::CloudBuildBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>(
-        cloudbuild::MakeDefaultCloudBuildConnectionIdempotencyPolicy());
+  if (!options
+           .has<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>()) {
+    options.set<cloudbuild_v1::CloudBuildConnectionIdempotencyPolicyOption>(
+        cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google

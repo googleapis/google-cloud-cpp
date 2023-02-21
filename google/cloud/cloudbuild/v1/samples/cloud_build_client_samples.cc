@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#include "google/cloud/cloudbuild/cloud_build_client.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: cloudbuild::CloudBuildClient
+// main-dox-marker: cloudbuild_v1::CloudBuildClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::cloudbuild::CloudBuildClient(
-      google::cloud::cloudbuild::MakeCloudBuildConnection(options));
+  auto client = google::cloud::cloudbuild_v1::CloudBuildClient(
+      google::cloud::cloudbuild_v1::MakeCloudBuildConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::cloudbuild::CloudBuildClient(
-        google::cloud::cloudbuild::MakeCloudBuildConnection(options));
+    return google::cloud::cloudbuild_v1::CloudBuildClient(
+        google::cloud::cloudbuild_v1::MakeCloudBuildConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
