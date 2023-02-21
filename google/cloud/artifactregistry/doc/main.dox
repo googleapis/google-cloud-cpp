@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `artifactregistry::ArtifactRegistryClient`:
+For example, this will override the default endpoint for `artifactregistry_v1::ArtifactRegistryClient`:
 
 @snippet artifact_registry_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [artifactregistry::ArtifactRegistryClient](@ref artifactregistry::ArtifactRegistryClient-endpoint-snippet)
- [artifactregistry_v1::ArtifactRegistryClient](@ref artifactregistry_v1::ArtifactRegistryClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet artifact_registry_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [artifactregistry::ArtifactRegistryClient](@ref artifactregistry::ArtifactRegistryClient-service-account-snippet)
- [artifactregistry_v1::ArtifactRegistryClient](@ref artifactregistry_v1::ArtifactRegistryClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page artifactregistry::ArtifactRegistryClient-endpoint-snippet Override artifactregistry::ArtifactRegistryClient Endpoint Configuration
-
-@snippet google/cloud/artifactregistry/samples/artifact_registry_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page artifactregistry::ArtifactRegistryClient-service-account-snippet Override artifactregistry::ArtifactRegistryClient Authentication Defaults
-
-@snippet google/cloud/artifactregistry/samples/artifact_registry_client_samples.cc with-service-account
-
-*/
 
 /*! @page artifactregistry_v1::ArtifactRegistryClient-endpoint-snippet Override artifactregistry_v1::ArtifactRegistryClient Endpoint Configuration
 
