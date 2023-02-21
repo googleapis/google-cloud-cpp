@@ -20,258 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_H
 
 #include "google/cloud/channel/cloud_channel_connection_idempotency_policy.h"
-#include "google/cloud/channel/internal/cloud_channel_retry_traits.h"
-#include "google/cloud/channel/internal/cloud_channel_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/channel/v1/cloud_channel_connection.h"
 
 namespace google {
 namespace cloud {
 namespace channel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudChannelServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        channel_internal::CloudChannelServiceRetryTraits>;
+/// @deprecated Use channel_v1::MakeCloudChannelServiceConnection directly.
+using ::google::cloud::channel_v1::MakeCloudChannelServiceConnection;
 
-using CloudChannelServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        channel_internal::CloudChannelServiceRetryTraits>;
+/// @deprecated Use channel_v1::CloudChannelServiceConnection directly.
+using ::google::cloud::channel_v1::CloudChannelServiceConnection;
 
-using CloudChannelServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        channel_internal::CloudChannelServiceRetryTraits>;
+/// @deprecated Use channel_v1::CloudChannelServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::channel_v1::
+    CloudChannelServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `CloudChannelServiceConnection` object for `CloudChannelServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudChannelServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CloudChannelServiceClient`.
- *
- * To create a concrete instance, see `MakeCloudChannelServiceConnection()`.
- *
- * For mocking, see `channel_mocks::MockCloudChannelServiceConnection`.
- */
-class CloudChannelServiceConnection {
- public:
-  virtual ~CloudChannelServiceConnection() = 0;
+/// @deprecated Use channel_v1::CloudChannelServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::channel_v1::CloudChannelServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
-      google::cloud::channel::v1::ListCustomersRequest request);
-
-  virtual StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
-      google::cloud::channel::v1::GetCustomerRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
-  CheckCloudIdentityAccountsExist(
-      google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::channel::v1::Customer> CreateCustomer(
-      google::cloud::channel::v1::CreateCustomerRequest const& request);
-
-  virtual StatusOr<google::cloud::channel::v1::Customer> UpdateCustomer(
-      google::cloud::channel::v1::UpdateCustomerRequest const& request);
-
-  virtual Status DeleteCustomer(
-      google::cloud::channel::v1::DeleteCustomerRequest const& request);
-
-  virtual StatusOr<google::cloud::channel::v1::Customer> ImportCustomer(
-      google::cloud::channel::v1::ImportCustomerRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Customer>>
-  ProvisionCloudIdentity(
-      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request);
-
-  virtual StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
-      google::cloud::channel::v1::ListEntitlementsRequest request);
-
-  virtual StreamRange<google::cloud::channel::v1::TransferableSku>
-  ListTransferableSkus(
-      google::cloud::channel::v1::ListTransferableSkusRequest request);
-
-  virtual StreamRange<google::cloud::channel::v1::TransferableOffer>
-  ListTransferableOffers(
-      google::cloud::channel::v1::ListTransferableOffersRequest request);
-
-  virtual StatusOr<google::cloud::channel::v1::Entitlement> GetEntitlement(
-      google::cloud::channel::v1::GetEntitlementRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  CreateEntitlement(
-      google::cloud::channel::v1::CreateEntitlementRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeParameters(
-      google::cloud::channel::v1::ChangeParametersRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ChangeRenewalSettings(
-      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
-      google::cloud::channel::v1::ChangeOfferRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  StartPaidService(
-      google::cloud::channel::v1::StartPaidServiceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  SuspendEntitlement(
-      google::cloud::channel::v1::SuspendEntitlementRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(
-      google::cloud::channel::v1::CancelEntitlementRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::Entitlement>>
-  ActivateEntitlement(
-      google::cloud::channel::v1::ActivateEntitlementRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
-  TransferEntitlements(
-      google::cloud::channel::v1::TransferEntitlementsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  TransferEntitlementsToGoogle(
-      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::channel::v1::ChannelPartnerLink>
-  ListChannelPartnerLinks(
-      google::cloud::channel::v1::ListChannelPartnerLinksRequest request);
-
-  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  GetChannelPartnerLink(
-      google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request);
-
-  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  CreateChannelPartnerLink(
-      google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
-  UpdateChannelPartnerLink(
-      google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  GetCustomerRepricingConfig(
-      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
-  ListCustomerRepricingConfigs(
-      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request);
-
-  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  CreateCustomerRepricingConfig(
-      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
-  UpdateCustomerRepricingConfig(
-      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
-          request);
-
-  virtual Status DeleteCustomerRepricingConfig(
-      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  GetChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  ListChannelPartnerRepricingConfigs(
-      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
-          request);
-
-  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  CreateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          CreateChannelPartnerRepricingConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
-  UpdateChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          UpdateChannelPartnerRepricingConfigRequest const& request);
-
-  virtual Status DeleteChannelPartnerRepricingConfig(
-      google::cloud::channel::v1::
-          DeleteChannelPartnerRepricingConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
-      google::cloud::channel::v1::LookupOfferRequest const& request);
-
-  virtual StreamRange<google::cloud::channel::v1::Product> ListProducts(
-      google::cloud::channel::v1::ListProductsRequest request);
-
-  virtual StreamRange<google::cloud::channel::v1::Sku> ListSkus(
-      google::cloud::channel::v1::ListSkusRequest request);
-
-  virtual StreamRange<google::cloud::channel::v1::Offer> ListOffers(
-      google::cloud::channel::v1::ListOffersRequest request);
-
-  virtual StreamRange<google::cloud::channel::v1::PurchasableSku>
-  ListPurchasableSkus(
-      google::cloud::channel::v1::ListPurchasableSkusRequest request);
-
-  virtual StreamRange<google::cloud::channel::v1::PurchasableOffer>
-  ListPurchasableOffers(
-      google::cloud::channel::v1::ListPurchasableOffersRequest request);
-
-  virtual StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
-  RegisterSubscriber(
-      google::cloud::channel::v1::RegisterSubscriberRequest const& request);
-
-  virtual StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
-  UnregisterSubscriber(
-      google::cloud::channel::v1::UnregisterSubscriberRequest const& request);
-
-  virtual StreamRange<std::string> ListSubscribers(
-      google::cloud::channel::v1::ListSubscribersRequest request);
-};
-
-/**
- * A factory function to construct an object of type
- * `CloudChannelServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CloudChannelServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CloudChannelServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::channel::CloudChannelServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CloudChannelServiceConnection`
- * created by this function.
- */
-std::shared_ptr<CloudChannelServiceConnection>
-MakeCloudChannelServiceConnection(Options options = {});
+/// @deprecated Use channel_v1::CloudChannelServiceRetryPolicy directly.
+using ::google::cloud::channel_v1::CloudChannelServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel

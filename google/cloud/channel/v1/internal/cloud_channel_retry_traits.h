@@ -16,30 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_RETRY_TRAITS_H
 
-#include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace channel {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// channel_v1::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy;
-
-/// @deprecated Use channel_v1::CloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    CloudChannelServiceConnectionIdempotencyPolicy;
+/// Define the gRPC status code semantics for retrying requests.
+struct CloudChannelServiceRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_RETRY_TRAITS_H

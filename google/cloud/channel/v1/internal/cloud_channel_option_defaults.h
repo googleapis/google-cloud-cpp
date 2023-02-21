@@ -16,30 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_OPTION_DEFAULTS_H
 
-#include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace channel {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// channel_v1::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy;
-
-/// @deprecated Use channel_v1::CloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    CloudChannelServiceConnectionIdempotencyPolicy;
+Options CloudChannelServiceDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_OPTION_DEFAULTS_H

@@ -16,30 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_STUB_FACTORY_H
 
-#include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace channel {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// channel_v1::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy;
-
-/// @deprecated Use channel_v1::CloudChannelServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::channel_v1::
-    CloudChannelServiceConnectionIdempotencyPolicy;
+std::shared_ptr<CloudChannelServiceStub> CreateDefaultCloudChannelServiceStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_CLOUD_CHANNEL_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_STUB_FACTORY_H
