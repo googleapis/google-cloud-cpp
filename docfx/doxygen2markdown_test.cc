@@ -20,6 +20,125 @@ namespace {
 using ::testing::HasSubstr;
 using ::testing::Not;
 
+TEST(Doxygen2Markdown, Sect4) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <sect4 id='tested-node'>
+          <title>This is the title</title>
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+        </sect4>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+##### This is the title
+
+First paragraph.
+
+Second paragraph.)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfSect4(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
+TEST(Doxygen2Markdown, Sect3) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <sect3 id='tested-node'>
+          <title>This is the title</title>
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+          <sect4><title>This is a section4</title><para>Sect4 paragraph.</para></sect4>
+        </sect3>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+#### This is the title
+
+First paragraph.
+
+Second paragraph.
+
+##### This is a section4
+
+Sect4 paragraph.)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfSect3(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
+TEST(Doxygen2Markdown, Sect2) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <sect2 id='tested-node'>
+          <title>This is the title</title>
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+          <sect3><title>This is a section3</title><para>Sect3 paragraph.</para></sect3>
+        </sect2>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+### This is the title
+
+First paragraph.
+
+Second paragraph.
+
+#### This is a section3
+
+Sect3 paragraph.)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfSect2(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
+TEST(Doxygen2Markdown, Sect1) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <sect1 id='tested-node'>
+          <title>This is the title</title>
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+          <sect2><title>This is a section2</title><para>Sect2 paragraph.</para></sect2>
+        </sect1>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+## This is the title
+
+First paragraph.
+
+Second paragraph.
+
+### This is a section2
+
+Sect2 paragraph.)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfSect1(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, PlainText) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
