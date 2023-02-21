@@ -400,8 +400,9 @@ std::vector<std::shared_ptr<XmlNode const>> XmlNode::GetChildren(
   return children;
 }
 
-std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
-                              int indent_level) const {
+// NOLINTNEXTLINE(misc-no-recursion)
+std::string XmlNode::ToString(std::size_t indent_width,
+                              std::size_t indent_level) const {
   auto const separator = std::string(indent_width == 0 ? "" : "\n");
   auto const indentation = std::string(indent_width * indent_level, ' ');
   if (!tag_name_.empty()) ++indent_level;
