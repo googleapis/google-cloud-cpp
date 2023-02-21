@@ -94,13 +94,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `channel::CloudChannelServiceClient`:
+For example, this will override the default endpoint for `channel_v1::CloudChannelServiceClient`:
 
 @snippet cloud_channel_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [channel::CloudChannelServiceClient](@ref channel::CloudChannelServiceClient-endpoint-snippet)
- [channel_v1::CloudChannelServiceClient](@ref channel_v1::CloudChannelServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -113,10 +109,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_channel_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [channel::CloudChannelServiceClient](@ref channel::CloudChannelServiceClient-service-account-snippet)
- [channel_v1::CloudChannelServiceClient](@ref channel_v1::CloudChannelServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page channel::CloudChannelServiceClient-endpoint-snippet Override channel::CloudChannelServiceClient Endpoint Configuration
-
-@snippet google/cloud/channel/samples/cloud_channel_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page channel::CloudChannelServiceClient-service-account-snippet Override channel::CloudChannelServiceClient Authentication Defaults
-
-@snippet google/cloud/channel/samples/cloud_channel_client_samples.cc with-service-account
-
-*/
 
 /*! @page channel_v1::CloudChannelServiceClient-endpoint-snippet Override channel_v1::CloudChannelServiceClient Endpoint Configuration
 
