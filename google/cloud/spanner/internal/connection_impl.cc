@@ -136,7 +136,7 @@ spanner::RowStream ConnectionImpl::Read(ReadParams params) {
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return ReadImpl(session, s, ctx.tag, std::move(params));
+        return ReadImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -147,7 +147,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionRead(
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return PartitionReadImpl(session, s, ctx.tag, params.read_params,
+        return PartitionReadImpl(session, s, ctx, params.read_params,
                                  params.partition_options);
       });
 }
@@ -158,8 +158,7 @@ spanner::RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return ExecuteQueryImpl(session, s, ctx.tag, ctx.seqno,
-                                std::move(params));
+        return ExecuteQueryImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -169,8 +168,7 @@ StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return ExecuteDmlImpl(session, s, ctx.tag, ctx.seqno,
-                              std::move(params));
+        return ExecuteDmlImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -180,8 +178,7 @@ spanner::ProfileQueryResult ConnectionImpl::ProfileQuery(SqlParams params) {
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return ProfileQueryImpl(session, s, ctx.tag, ctx.seqno,
-                                std::move(params));
+        return ProfileQueryImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -192,8 +189,7 @@ StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDml(
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return ProfileDmlImpl(session, s, ctx.tag, ctx.seqno,
-                              std::move(params));
+        return ProfileDmlImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -203,8 +199,7 @@ StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return AnalyzeSqlImpl(session, s, ctx.tag, ctx.seqno,
-                              std::move(params));
+        return AnalyzeSqlImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -215,8 +210,7 @@ StatusOr<spanner::PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
                         SessionHolder& session,
                         StatusOr<google::spanner::v1::TransactionSelector>& s,
                         TransactionContext const& ctx) {
-    return ExecutePartitionedDmlImpl(session, s, ctx.tag, ctx.seqno,
-                                     std::move(params));
+    return ExecutePartitionedDmlImpl(session, s, ctx, std::move(params));
   });
 }
 
@@ -227,7 +221,7 @@ StatusOr<std::vector<spanner::QueryPartition>> ConnectionImpl::PartitionQuery(
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return PartitionQueryImpl(session, s, ctx.tag, params);
+        return PartitionQueryImpl(session, s, ctx, params);
       });
 }
 
@@ -238,8 +232,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return ExecuteBatchDmlImpl(session, s, ctx.tag, ctx.seqno,
-                                   std::move(params));
+        return ExecuteBatchDmlImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -249,7 +242,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::Commit(CommitParams params) {
       [this, &params](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-        return this->CommitImpl(session, s, ctx.tag, std::move(params));
+        return CommitImpl(session, s, ctx, std::move(params));
       });
 }
 
@@ -258,7 +251,7 @@ Status ConnectionImpl::Rollback(RollbackParams params) {
                [this](SessionHolder& session,
                       StatusOr<google::spanner::v1::TransactionSelector>& s,
                       TransactionContext const& ctx) {
-                 return this->RollbackImpl(session, s, ctx.tag);
+                 return RollbackImpl(session, s, ctx);
                });
 }
 
@@ -378,8 +371,7 @@ Status ConnectionImpl::PrepareSession(SessionHolder& session,
  */
 StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     SessionHolder& session, google::spanner::v1::TransactionOptions options,
-    std::string request_tag, std::string const& transaction_tag,
-    char const* func) {
+    std::string request_tag, TransactionContext const& ctx, char const* func) {
   google::spanner::v1::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   *begin.mutable_options() = std::move(options);
@@ -387,7 +379,7 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
   // for a transaction, set it on the reads and writes that are part of
   // the transaction instead.
   begin.mutable_request_options()->set_request_tag(std::move(request_tag));
-  begin.mutable_request_options()->set_transaction_tag(transaction_tag);
+  begin.mutable_request_options()->set_transaction_tag(ctx.tag);
 
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
@@ -409,7 +401,7 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
 spanner::RowStream ConnectionImpl::ReadImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, ReadParams params) {
+    TransactionContext const& ctx, ReadParams params) {
   if (!s.ok()) {
     return MakeStatusOnlyResult<spanner::RowStream>(s.status());
   }
@@ -438,7 +430,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     request->mutable_request_options()->set_request_tag(
         *std::move(params.read_options.request_tag));
   }
-  request->mutable_request_options()->set_transaction_tag(transaction_tag);
+  request->mutable_request_options()->set_transaction_tag(ctx.tag);
 
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
@@ -475,7 +467,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
       } else {
         auto begin = BeginTransaction(session, s->begin(),
                                       request->request_options().request_tag(),
-                                      transaction_tag, __func__);
+                                      ctx, __func__);
         if (begin.ok()) {
           s->set_id(begin->id());
           *request->mutable_transaction() = *s;
@@ -497,7 +489,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
 StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, ReadParams const& params,
+    TransactionContext const& ctx, ReadParams const& params,
     spanner::PartitionOptions const& partition_options) {
   if (!s.ok()) {
     return s.status();
@@ -539,8 +531,8 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
         }
         s->set_id(response->transaction().id());
       } else {
-        auto begin = BeginTransaction(session, s->begin(), std::string(),
-                                      transaction_tag, __func__);
+        auto begin =
+            BeginTransaction(session, s->begin(), std::string(), ctx, __func__);
         if (begin.ok()) {
           s->set_id(begin->id());
           *request.mutable_transaction() = *s;
@@ -559,9 +551,9 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
     std::vector<spanner::ReadPartition> read_partitions;
     for (auto const& partition : response->partitions()) {
       read_partitions.push_back(MakeReadPartition(
-          response->transaction().id(), transaction_tag,
-          session->session_name(), partition.partition_token(), params.table,
-          params.keys, params.columns, params.read_options));
+          response->transaction().id(), ctx.tag, session->session_name(),
+          partition.partition_token(), params.table, params.keys,
+          params.columns, params.read_options));
     }
 
     return read_partitions;
@@ -572,7 +564,7 @@ template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params,
+    TransactionContext const& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
@@ -589,7 +581,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
   *request.mutable_params() = std::move(*sql_statement.mutable_params());
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
-  request.set_seqno(seqno);
+  request.set_seqno(ctx.seqno);
   request.set_query_mode(query_mode);
   if (params.partition_token) {
     request.set_partition_token(*std::move(params.partition_token));
@@ -608,7 +600,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     request.mutable_request_options()->set_request_tag(
         *params.query_options.request_tag());
   }
-  request.mutable_request_options()->set_transaction_tag(transaction_tag);
+  request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
   for (;;) {
     auto reader = retry_resume_fn(request);
@@ -623,7 +615,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
       } else {
         auto begin = BeginTransaction(session, s->begin(),
                                       request.request_options().request_tag(),
-                                      transaction_tag, __func__);
+                                      ctx, __func__);
         if (begin.ok()) {
           s->set_id(begin->id());
           *request.mutable_transaction() = *s;
@@ -643,7 +635,7 @@ template <typename ResultType>
 ResultType ConnectionImpl::CommonQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params,
+    TransactionContext const& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   if (!s.ok()) {
     return MakeStatusOnlyResult<ResultType>(s.status());
@@ -686,9 +678,9 @@ ResultType ConnectionImpl::CommonQueryImpl(
     return PartialResultSetSource::Create(std::move(rpc));
   };
 
-  StatusOr<ResultType> response = ExecuteSqlImpl<ResultType>(
-      session, s, transaction_tag, seqno, std::move(params), query_mode,
-      std::move(retry_resume_fn));
+  StatusOr<ResultType> response =
+      ExecuteSqlImpl<ResultType>(session, s, ctx, std::move(params), query_mode,
+                                 std::move(retry_resume_fn));
   if (!response) {
     auto status = std::move(response).status();
     if (IsSessionNotFound(status)) session->set_bad();
@@ -700,18 +692,18 @@ ResultType ConnectionImpl::CommonQueryImpl(
 spanner::RowStream ConnectionImpl::ExecuteQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
+    TransactionContext const& ctx, SqlParams params) {
   return CommonQueryImpl<spanner::RowStream>(
-      session, s, transaction_tag, seqno, std::move(params),
+      session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);
 }
 
 spanner::ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
+    TransactionContext const& ctx, SqlParams params) {
   return CommonQueryImpl<spanner::ProfileQueryResult>(
-      session, s, transaction_tag, seqno, std::move(params),
+      session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::PROFILE);
 }
 
@@ -719,7 +711,7 @@ template <typename ResultType>
 StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params,
+    TransactionContext const& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   if (!s.ok()) {
     return s.status();
@@ -755,35 +747,34 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     }
     return DmlResultSetSource::Create(std::move(*response));
   };
-  return ExecuteSqlImpl<ResultType>(session, s, transaction_tag, seqno,
-                                    std::move(params), query_mode,
-                                    std::move(retry_resume_fn));
+  return ExecuteSqlImpl<ResultType>(session, s, ctx, std::move(params),
+                                    query_mode, std::move(retry_resume_fn));
 }
 
 StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
+    TransactionContext const& ctx, SqlParams params) {
   return CommonDmlImpl<spanner::DmlResult>(
-      session, s, transaction_tag, seqno, std::move(params),
+      session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);
 }
 
 StatusOr<spanner::ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
+    TransactionContext const& ctx, SqlParams params) {
   return CommonDmlImpl<spanner::ProfileDmlResult>(
-      session, s, transaction_tag, seqno, std::move(params),
+      session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::PROFILE);
 }
 
 StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno, SqlParams params) {
+    TransactionContext const& ctx, SqlParams params) {
   auto result = CommonDmlImpl<spanner::ProfileDmlResult>(
-      session, s, transaction_tag, seqno, std::move(params),
+      session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::PLAN);
   if (result.status().ok()) {
     return *result->ExecutionPlan();
@@ -795,7 +786,7 @@ StatusOr<std::vector<spanner::QueryPartition>>
 ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, PartitionQueryParams const& params) {
+    TransactionContext const& ctx, PartitionQueryParams const& params) {
   if (!s.ok()) {
     return s.status();
   }
@@ -836,8 +827,8 @@ ConnectionImpl::PartitionQueryImpl(
         }
         s->set_id(response->transaction().id());
       } else {
-        auto begin = BeginTransaction(session, s->begin(), std::string(),
-                                      transaction_tag, __func__);
+        auto begin =
+            BeginTransaction(session, s->begin(), std::string(), ctx, __func__);
         if (begin.ok()) {
           s->set_id(begin->id());
           *request.mutable_transaction() = *s;
@@ -854,10 +845,9 @@ ConnectionImpl::PartitionQueryImpl(
 
     std::vector<spanner::QueryPartition> query_partitions;
     for (auto const& partition : response->partitions()) {
-      query_partitions.push_back(
-          MakeQueryPartition(response->transaction().id(), transaction_tag,
-                             session->session_name(),
-                             partition.partition_token(), params.statement));
+      query_partitions.push_back(MakeQueryPartition(
+          response->transaction().id(), ctx.tag, session->session_name(),
+          partition.partition_token(), params.statement));
     }
     return query_partitions;
   }
@@ -866,8 +856,7 @@ ConnectionImpl::PartitionQueryImpl(
 StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno,
-    ExecuteBatchDmlParams params) {
+    TransactionContext const& ctx, ExecuteBatchDmlParams params) {
   if (!s.ok()) {
     return s.status();
   }
@@ -879,7 +868,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 
   google::spanner::v1::ExecuteBatchDmlRequest request;
   request.set_session(session->session_name());
-  request.set_seqno(seqno);
+  request.set_seqno(ctx.seqno);
   *request.mutable_transaction() = *s;
   for (auto& sql : params.statements) {
     *request.add_statements() = ToProto(std::move(sql));
@@ -891,7 +880,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
           : google::spanner::v1::RequestOptions::PRIORITY_UNSPECIFIED);
   auto const& request_tag = params.options.get<spanner::RequestTagOption>();
   request.mutable_request_options()->set_request_tag(request_tag);
-  request.mutable_request_options()->set_transaction_tag(transaction_tag);
+  request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
@@ -911,8 +900,8 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         }
         s->set_id(response->result_sets(0).metadata().transaction().id());
       } else {
-        auto begin = BeginTransaction(session, s->begin(), request_tag,
-                                      transaction_tag, __func__);
+        auto begin =
+            BeginTransaction(session, s->begin(), request_tag, ctx, __func__);
         if (begin.ok()) {
           s->set_id(begin->id());
           *request.mutable_transaction() = *s;
@@ -939,8 +928,7 @@ StatusOr<spanner::PartitionedDmlResult>
 ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, std::int64_t seqno,
-    ExecutePartitionedDmlParams params) {
+    TransactionContext const& ctx, ExecutePartitionedDmlParams params) {
   if (!s.ok()) {
     return s.status();
   }
@@ -951,21 +939,20 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
   }
   auto begin = BeginTransaction(
       session, PartitionedDmlTransactionOptions(),
-      params.query_options.request_tag().value_or(std::string()),
-      transaction_tag, __func__);
+      params.query_options.request_tag().value_or(std::string()), ctx,
+      __func__);
   if (!begin.ok()) {
     s = begin.status();  // invalidate the transaction
     return begin.status();
   }
   s->set_id(begin->id());
 
-  SqlParams sql_params({MakeTransactionFromIds(session->session_name(),
-                                               begin->id(), transaction_tag),
-                        std::move(params.statement),
-                        std::move(params.query_options),
-                        /*partition_token=*/{}});
+  SqlParams sql_params(
+      {MakeTransactionFromIds(session->session_name(), begin->id(), ctx.tag),
+       std::move(params.statement), std::move(params.query_options),
+       /*partition_token=*/{}});
   auto dml_result = CommonQueryImpl<StreamingPartitionedDmlResult>(
-      session, s, transaction_tag, seqno, std::move(sql_params),
+      session, s, ctx, std::move(sql_params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);
   auto rows_modified = dml_result.RowsModifiedLowerBound();
   if (!rows_modified.ok()) {
@@ -981,7 +968,7 @@ ConnectionImpl::ExecutePartitionedDmlImpl(
 StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag, CommitParams params) {
+    TransactionContext const& ctx, CommitParams params) {
   if (!s.ok()) {
     // Fail the commit if the transaction has been invalidated.
     return s.status();
@@ -1002,14 +989,14 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       ProtoRequestPriority(params.options.request_priority()));
 
   // params.options.transaction_tag() was either already used to set
-  // transaction_tag (for a library-generated transaction), or it is
-  // ignored (for a user-supplied transaction).
-  request.mutable_request_options()->set_transaction_tag(transaction_tag);
+  // ctx.tag (for a library-generated transaction), or it is ignored
+  // (for a user-supplied transaction).
+  request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
   if (s->selector_case() != google::spanner::v1::TransactionSelector::kId) {
     auto begin =
         BeginTransaction(session, s->has_begin() ? s->begin() : s->single_use(),
-                         std::string(), transaction_tag, __func__);
+                         std::string(), ctx, __func__);
     if (!begin.ok()) {
       s = begin.status();  // invalidate the transaction
       return begin.status();
@@ -1054,7 +1041,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 Status ConnectionImpl::RollbackImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
-    std::string const& transaction_tag) {
+    TransactionContext const& ctx) {
   if (!s.ok()) {
     return s.status();
   }
@@ -1069,8 +1056,8 @@ Status ConnectionImpl::RollbackImpl(
   }
 
   if (s->has_begin()) {
-    auto begin = BeginTransaction(session, s->begin(), std::string(),
-                                  transaction_tag, __func__);
+    auto begin =
+        BeginTransaction(session, s->begin(), std::string(), ctx, __func__);
     if (!begin.ok()) {
       s = begin.status();  // invalidate the transaction
       return begin.status();
