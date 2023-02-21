@@ -273,7 +273,7 @@ TEST(Doxygen2Markdown, ParagraphWithUnknownOutput) {
       std::runtime_error);
 }
 
-TEST(Doxygen2Markdown, ParagraphContents) {
+TEST(Doxygen2Markdown, ParagraphSimpleContents) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
         <para id='test-000'>The answer is 42.</para>
@@ -305,6 +305,70 @@ TEST(Doxygen2Markdown, ParagraphContents) {
     ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
     EXPECT_EQ(test.expected, os.str());
   }
+}
+
+TEST(Doxygen2Markdown, ParagraphSimpleSect) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-node'>
+          <simplesect kind="remark">
+            <para>First remark paragraph.</para>
+            <para>Second remark paragraph.</para>
+          </simplesect>
+          <simplesect kind="warning">
+            <para>First warning paragraph.</para>
+            <para>Second warning paragraph.</para>
+          </simplesect>
+        </para>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+
+
+> Remark:
+> First remark paragraph.
+> Second remark paragraph.
+
+> **Warning:**
+> First warning paragraph.
+> Second warning paragraph.)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
+TEST(Doxygen2Markdown, ParagraphItemizedList) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-node'>
+          <itemizedlist>
+            <listitem><para>First item.</para></listitem>
+            <listitem>
+              <para>Second item.</para><para>With a second paragraph.</para>
+            </listitem>
+          </itemizedlist>
+        </para>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+
+- First item.
+- Second item.
+
+  With a second paragraph.)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
 }
 
 TEST(Doxygen2Markdown, ItemizedListSimple) {
