@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `certificatemanager::CertificateManagerClient`:
+For example, this will override the default endpoint for `certificatemanager_v1::CertificateManagerClient`:
 
 @snippet certificate_manager_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [certificatemanager::CertificateManagerClient](@ref certificatemanager::CertificateManagerClient-endpoint-snippet)
- [certificatemanager_v1::CertificateManagerClient](@ref certificatemanager_v1::CertificateManagerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet certificate_manager_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [certificatemanager::CertificateManagerClient](@ref certificatemanager::CertificateManagerClient-service-account-snippet)
- [certificatemanager_v1::CertificateManagerClient](@ref certificatemanager_v1::CertificateManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page certificatemanager::CertificateManagerClient-endpoint-snippet Override certificatemanager::CertificateManagerClient Endpoint Configuration
-
-@snippet google/cloud/certificatemanager/samples/certificate_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page certificatemanager::CertificateManagerClient-service-account-snippet Override certificatemanager::CertificateManagerClient Authentication Defaults
-
-@snippet google/cloud/certificatemanager/samples/certificate_manager_client_samples.cc with-service-account
-
-*/
 
 /*! @page certificatemanager_v1::CertificateManagerClient-endpoint-snippet Override certificatemanager_v1::CertificateManagerClient Endpoint Configuration
 
