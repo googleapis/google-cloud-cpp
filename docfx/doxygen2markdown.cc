@@ -52,7 +52,7 @@ bool AppendIfSect4(std::ostream& os, MarkdownContext const& ctx,
   os << "\n\n##### ";
   AppendTitle(os, ctx, node);
   for (auto const& child : node) {
-    // Unexpected: internal  -> we do not use this.
+    // Unexpected: internal -> we do not use this.
     if (std::string_view(child.name()) == "title") continue;  // already handled
     if (AppendIfParagraph(os, ctx, child)) continue;
     UnknownChildType(__func__, child);
@@ -83,7 +83,7 @@ bool AppendIfSect3(std::ostream& os, MarkdownContext const& ctx,
   os << "\n\n#### ";
   AppendTitle(os, ctx, node);
   for (auto const& child : node) {
-    // Unexpected: internal  -> we do not use this.
+    // Unexpected: internal -> we do not use this.
     if (std::string_view(child.name()) == "title") continue;  // already handled
     if (AppendIfParagraph(os, ctx, child)) continue;
     if (AppendIfSect4(os, ctx, child)) continue;
@@ -116,7 +116,7 @@ bool AppendIfSect2(std::ostream& os, MarkdownContext const& ctx,
   os << "\n\n### ";
   AppendTitle(os, ctx, node);
   for (auto const& child : node) {
-    // Unexpected: internal  -> we do not use this.
+    // Unexpected: internal -> we do not use this.
     if (std::string_view(child.name()) == "title") continue;  // already handled
     if (AppendIfParagraph(os, ctx, child)) continue;
     if (AppendIfSect3(os, ctx, child)) continue;
@@ -148,7 +148,7 @@ bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
   os << "\n\n## ";
   AppendTitle(os, ctx, node);
   for (auto const& child : node) {
-    // Unexpected: internal  -> we do not use this.
+    // Unexpected: internal -> we do not use this.
     if (std::string_view(child.name()) == "title") continue;  // already handled
     if (AppendIfParagraph(os, ctx, child)) continue;
     if (AppendIfSect2(os, ctx, child)) continue;
