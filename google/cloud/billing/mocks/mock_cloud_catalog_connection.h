@@ -20,40 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_MOCKS_MOCK_CLOUD_CATALOG_CONNECTION_H
 
 #include "google/cloud/billing/cloud_catalog_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/billing/v1/mocks/mock_cloud_catalog_connection.h"
 
 namespace google {
 namespace cloud {
 namespace billing_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudCatalogConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudCatalogClient`. To do so,
- * construct an object of type `CloudCatalogClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudCatalogConnection : public billing::CloudCatalogConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::billing::v1::Service>, ListServices,
-              (google::cloud::billing::v1::ListServicesRequest request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::billing::v1::Sku>, ListSkus,
-              (google::cloud::billing::v1::ListSkusRequest request),
-              (override));
-};
+/// @deprecated Use billing_v1_mocks::MockCloudCatalogConnection directly.
+using ::google::cloud::billing_v1_mocks::MockCloudCatalogConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_mocks

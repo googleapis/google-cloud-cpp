@@ -19,43 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGET_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGET_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/billing/budgets/v1/budget_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/billing/budgets/v1/budget_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BudgetServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~BudgetServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// billing_budgets_v1::MakeDefaultBudgetServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::billing_budgets_v1::
+    MakeDefaultBudgetServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateBudget(
-      google::cloud::billing::budgets::v1::CreateBudgetRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateBudget(
-      google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request);
-
-  virtual google::cloud::Idempotency GetBudget(
-      google::cloud::billing::budgets::v1::GetBudgetRequest const& request);
-
-  virtual google::cloud::Idempotency ListBudgets(
-      google::cloud::billing::budgets::v1::ListBudgetsRequest request);
-
-  virtual google::cloud::Idempotency DeleteBudget(
-      google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request);
-};
-
-std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
-MakeDefaultBudgetServiceConnectionIdempotencyPolicy();
+/// @deprecated Use billing_budgets_v1::BudgetServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::billing_budgets_v1::
+    BudgetServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing

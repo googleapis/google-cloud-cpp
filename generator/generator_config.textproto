@@ -297,21 +297,24 @@ service {
 # Billing
 service {
   service_proto_path: "google/cloud/billing/v1/cloud_billing.proto"
-  product_path: "google/cloud/billing"
+  product_path: "google/cloud/billing/v1"
+  forwarding_product_path: "google/cloud/billing"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/billing/v1/cloud_catalog.proto"
-  product_path: "google/cloud/billing"
+  product_path: "google/cloud/billing/v1"
+  forwarding_product_path: "google/cloud/billing"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/billing/budgets/v1/budget_service.proto"
-  product_path: "google/cloud/billing"
+  product_path: "google/cloud/billing/budgets/v1"
+  forwarding_product_path: "google/cloud/billing"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
