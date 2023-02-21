@@ -53,7 +53,6 @@ TEST(JobRequestTest, SuccessWithoutLocation) {
 
 TEST(JobRequestTest, SuccessWithEndpoint) {
   GetJobRequest request("1", "2");
-  Options opts;
 
   struct EndpointTest {
     std::string endpoint;
@@ -72,10 +71,11 @@ TEST(JobRequestTest, SuccessWithEndpoint) {
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing for endpoint: " + test.endpoint +
                  ", expected: " + test.expected);
+    Options opts;
     opts.set<EndpointOption>(test.endpoint);
     auto actual = BuildRestRequest(request, opts);
     ASSERT_STATUS_OK(actual);
-    EXPECT_EQ(test.expected, actual.value().path());
+    EXPECT_EQ(test.expected, actual->path());
   }
 }
 

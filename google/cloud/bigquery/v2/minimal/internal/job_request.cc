@@ -18,15 +18,14 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "absl/strings/match.h"
-#include <ostream>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest& r,
-                                                      Options opts) {
+StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
+                                                      Options& opts) {
   rest_internal::RestRequest request;
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
