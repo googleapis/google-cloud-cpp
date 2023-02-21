@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `container::ClusterManagerClient`:
+For example, this will override the default endpoint for `container_v1::ClusterManagerClient`:
 
 @snippet cluster_manager_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [container::ClusterManagerClient](@ref container::ClusterManagerClient-endpoint-snippet)
- [container_v1::ClusterManagerClient](@ref container_v1::ClusterManagerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cluster_manager_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [container::ClusterManagerClient](@ref container::ClusterManagerClient-service-account-snippet)
- [container_v1::ClusterManagerClient](@ref container_v1::ClusterManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page container::ClusterManagerClient-endpoint-snippet Override container::ClusterManagerClient Endpoint Configuration
-
-@snippet google/cloud/container/samples/cluster_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page container::ClusterManagerClient-service-account-snippet Override container::ClusterManagerClient Authentication Defaults
-
-@snippet google/cloud/container/samples/cluster_manager_client_samples.cc with-service-account
-
-*/
 
 /*! @page container_v1::ClusterManagerClient-endpoint-snippet Override container_v1::ClusterManagerClient Endpoint Configuration
 
