@@ -12,31 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
-#include "google/cloud/internal/make_status.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigQueryJobRestStub::~BigQueryJobRestStub() = default;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::HasSubstr;
 
-StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
-    GetJobRequest const& request) {
-  GetJobResponse response;
-  if (request.project_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
-  }
-  if (request.job_id().empty()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
-  }
-  // Not Implemented Yet: Call the rest client to get job details from the
-  // server.
-  return response;
+TEST(JobResponseTest, Success) {
+  // Not Implemented Yet.
+}
+
+TEST(JobResponseTest, EmptyPayload) {
+  BigQueryHttpResponse http_response;
+  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(job_response,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Empty payload in HTTP response")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
