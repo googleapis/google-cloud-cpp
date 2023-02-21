@@ -347,7 +347,7 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   if (AppendIfDocTitleCmdGroup(os, ctx, node)) return true;
   // Unexpected: hruler, preformatted
   if (AppendIfProgramListing(os, ctx, node)) return true;
-  // Uexpected: verbatim, indexentry
+  // Unexpected: verbatim, indexentry
   // Unexpected: orderedlist
   if (AppendIfItemizedList(os, ctx, node)) return true;
   if (AppendIfSimpleSect(os, ctx, node)) return true;
@@ -396,7 +396,7 @@ bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
                             pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "programlisting") return false;
   // Start with a new paragraph, with the right level of indentation, and a new
-  // code fence:
+  // code fence.
   os << ctx.paragraph_start << ctx.paragraph_indent << "```cpp";
   for (auto const& child : node) {
     if (AppendIfCodeline(os, ctx, child)) continue;
@@ -455,7 +455,7 @@ bool AppendIfHighlight(std::ostream& os, MarkdownContext const& ctx,
 }
 
 // A `<sp>` element is just a space. It seems that Doxygen does not use the
-// `value` attribute, we will leave that unhandled.
+// `value` attribute, so we will leave that unhandled.
 //
 //   <xsd:complexType name="spType" mixed="true">
 //     <xsd:attribute name="value" type="xsd:integer" use="optional"/>
@@ -471,7 +471,7 @@ bool AppendIfHighlightSp(std::ostream& os, MarkdownContext const& /*ctx*/,
   return true;
 }
 
-// A `ref` element inside a `highlight` element has `refTextType`. Which is
+// A `ref` element inside a `highlight` element has `refTextType`, which is
 // defined as:
 //
 //   <xsd:complexType name="docRefTextType" mixed="true">
