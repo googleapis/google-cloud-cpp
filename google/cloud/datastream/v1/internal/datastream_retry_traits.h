@@ -16,23 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_MOCKS_MOCK_DATASTREAM_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_MOCKS_MOCK_DATASTREAM_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_RETRY_TRAITS_H
 
-#include "google/cloud/datastream/datastream_connection.h"
-#include "google/cloud/datastream/v1/mocks/mock_datastream_connection.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace datastream_mocks {
+namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use datastream_v1_mocks::MockDatastreamConnection directly.
-using ::google::cloud::datastream_v1_mocks::MockDatastreamConnection;
+/// Define the gRPC status code semantics for retrying requests.
+struct DatastreamRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream_mocks
+}  // namespace datastream_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_MOCKS_MOCK_DATASTREAM_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_RETRY_TRAITS_H

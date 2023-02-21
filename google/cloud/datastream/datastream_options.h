@@ -21,62 +21,29 @@
 
 #include "google/cloud/datastream/datastream_connection.h"
 #include "google/cloud/datastream/datastream_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/datastream/v1/datastream_options.h"
 
 namespace google {
 namespace cloud {
 namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-datastream-options
- */
-struct DatastreamRetryPolicyOption {
-  using Type = std::shared_ptr<DatastreamRetryPolicy>;
-};
+/// @deprecated Use datastream_v1::DatastreamPollingPolicyOption directly.
+using ::google::cloud::datastream_v1::DatastreamPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-datastream-options
- */
-struct DatastreamBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use datastream_v1::DatastreamBackoffPolicyOption directly.
+using ::google::cloud::datastream_v1::DatastreamBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-datastream-options
- */
-struct DatastreamConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DatastreamConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use datastream_v1::DatastreamConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::datastream_v1::
+    DatastreamConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-datastream-options
- */
-struct DatastreamPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use datastream_v1::DatastreamPolicyOptionList directly.
+using ::google::cloud::datastream_v1::DatastreamPolicyOptionList;
 
-/**
- * The options applicable to Datastream.
- *
- * @ingroup google-cloud-datastream-options
- */
-using DatastreamPolicyOptionList =
-    OptionList<DatastreamRetryPolicyOption, DatastreamBackoffPolicyOption,
-               DatastreamPollingPolicyOption,
-               DatastreamConnectionIdempotencyPolicyOption>;
+/// @deprecated Use datastream_v1::DatastreamRetryPolicyOption directly.
+using ::google::cloud::datastream_v1::DatastreamRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream

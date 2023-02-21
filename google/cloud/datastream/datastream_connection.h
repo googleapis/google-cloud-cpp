@@ -20,175 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_DATASTREAM_CONNECTION_H
 
 #include "google/cloud/datastream/datastream_connection_idempotency_policy.h"
-#include "google/cloud/datastream/internal/datastream_retry_traits.h"
-#include "google/cloud/datastream/internal/datastream_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/datastream/v1/datastream_connection.h"
 
 namespace google {
 namespace cloud {
 namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DatastreamRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    datastream_internal::DatastreamRetryTraits>;
+/// @deprecated Use datastream_v1::MakeDatastreamConnection directly.
+using ::google::cloud::datastream_v1::MakeDatastreamConnection;
 
-using DatastreamLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datastream_internal::DatastreamRetryTraits>;
+/// @deprecated Use datastream_v1::DatastreamConnection directly.
+using ::google::cloud::datastream_v1::DatastreamConnection;
 
-using DatastreamLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datastream_internal::DatastreamRetryTraits>;
+/// @deprecated Use datastream_v1::DatastreamLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::datastream_v1::DatastreamLimitedErrorCountRetryPolicy;
 
-/**
- * The `DatastreamConnection` object for `DatastreamClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `DatastreamClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `DatastreamClient`.
- *
- * To create a concrete instance, see `MakeDatastreamConnection()`.
- *
- * For mocking, see `datastream_mocks::MockDatastreamConnection`.
- */
-class DatastreamConnection {
- public:
-  virtual ~DatastreamConnection() = 0;
+/// @deprecated Use datastream_v1::DatastreamLimitedTimeRetryPolicy directly.
+using ::google::cloud::datastream_v1::DatastreamLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::datastream::v1::ConnectionProfile>
-  ListConnectionProfiles(
-      google::cloud::datastream::v1::ListConnectionProfilesRequest request);
-
-  virtual StatusOr<google::cloud::datastream::v1::ConnectionProfile>
-  GetConnectionProfile(
-      google::cloud::datastream::v1::GetConnectionProfileRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  CreateConnectionProfile(
-      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
-  UpdateConnectionProfile(
-      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteConnectionProfile(
-      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
-          request);
-
-  virtual StatusOr<
-      google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
-  DiscoverConnectionProfile(
-      google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::datastream::v1::Stream> ListStreams(
-      google::cloud::datastream::v1::ListStreamsRequest request);
-
-  virtual StatusOr<google::cloud::datastream::v1::Stream> GetStream(
-      google::cloud::datastream::v1::GetStreamRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
-      google::cloud::datastream::v1::CreateStreamRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
-      google::cloud::datastream::v1::UpdateStreamRequest const& request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteStream(
-      google::cloud::datastream::v1::DeleteStreamRequest const& request);
-
-  virtual StatusOr<google::cloud::datastream::v1::StreamObject> GetStreamObject(
-      google::cloud::datastream::v1::GetStreamObjectRequest const& request);
-
-  virtual StatusOr<google::cloud::datastream::v1::StreamObject>
-  LookupStreamObject(
-      google::cloud::datastream::v1::LookupStreamObjectRequest const& request);
-
-  virtual StreamRange<google::cloud::datastream::v1::StreamObject>
-  ListStreamObjects(
-      google::cloud::datastream::v1::ListStreamObjectsRequest request);
-
-  virtual StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
-  StartBackfillJob(
-      google::cloud::datastream::v1::StartBackfillJobRequest const& request);
-
-  virtual StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
-  StopBackfillJob(
-      google::cloud::datastream::v1::StopBackfillJobRequest const& request);
-
-  virtual StreamRange<std::string> FetchStaticIps(
-      google::cloud::datastream::v1::FetchStaticIpsRequest request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
-  CreatePrivateConnection(
-      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::datastream::v1::PrivateConnection>
-  GetPrivateConnection(
-      google::cloud::datastream::v1::GetPrivateConnectionRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::datastream::v1::PrivateConnection>
-  ListPrivateConnections(
-      google::cloud::datastream::v1::ListPrivateConnectionsRequest request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeletePrivateConnection(
-      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
-      google::cloud::datastream::v1::CreateRouteRequest const& request);
-
-  virtual StatusOr<google::cloud::datastream::v1::Route> GetRoute(
-      google::cloud::datastream::v1::GetRouteRequest const& request);
-
-  virtual StreamRange<google::cloud::datastream::v1::Route> ListRoutes(
-      google::cloud::datastream::v1::ListRoutesRequest request);
-
-  virtual future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
-  DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `DatastreamConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DatastreamClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `DatastreamConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datastream::DatastreamPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `DatastreamConnection` created by
- * this function.
- */
-std::shared_ptr<DatastreamConnection> MakeDatastreamConnection(
-    Options options = {});
+/// @deprecated Use datastream_v1::DatastreamRetryPolicy directly.
+using ::google::cloud::datastream_v1::DatastreamRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream
