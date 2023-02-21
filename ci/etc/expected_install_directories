@@ -112,9 +112,12 @@
 ./include/google/cloud/billing
 ./include/google/cloud/billing/budgets
 ./include/google/cloud/billing/budgets/v1
-./include/google/cloud/billing/internal
+./include/google/cloud/billing/budgets/v1/internal
+./include/google/cloud/billing/budgets/v1/mocks
 ./include/google/cloud/billing/mocks
 ./include/google/cloud/billing/v1
+./include/google/cloud/billing/v1/internal
+./include/google/cloud/billing/v1/mocks
 ./include/google/cloud/binaryauthorization
 ./include/google/cloud/binaryauthorization/internal
 ./include/google/cloud/binaryauthorization/mocks

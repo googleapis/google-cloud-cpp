@@ -21,51 +21,26 @@
 
 #include "google/cloud/billing/cloud_billing_connection.h"
 #include "google/cloud/billing/cloud_billing_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/billing/v1/cloud_billing_options.h"
 
 namespace google {
 namespace cloud {
 namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-billing-options
- */
-struct CloudBillingRetryPolicyOption {
-  using Type = std::shared_ptr<CloudBillingRetryPolicy>;
-};
+/// @deprecated Use billing_v1::CloudBillingBackoffPolicyOption directly.
+using ::google::cloud::billing_v1::CloudBillingBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-billing-options
- */
-struct CloudBillingBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use billing_v1::CloudBillingConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::billing_v1::
+    CloudBillingConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-billing-options
- */
-struct CloudBillingConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CloudBillingConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use billing_v1::CloudBillingPolicyOptionList directly.
+using ::google::cloud::billing_v1::CloudBillingPolicyOptionList;
 
-/**
- * The options applicable to CloudBilling.
- *
- * @ingroup google-cloud-billing-options
- */
-using CloudBillingPolicyOptionList =
-    OptionList<CloudBillingRetryPolicyOption, CloudBillingBackoffPolicyOption,
-               CloudBillingConnectionIdempotencyPolicyOption>;
+/// @deprecated Use billing_v1::CloudBillingRetryPolicyOption directly.
+using ::google::cloud::billing_v1::CloudBillingRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing

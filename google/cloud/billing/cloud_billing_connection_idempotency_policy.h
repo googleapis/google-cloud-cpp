@@ -19,59 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_CLOUD_BILLING_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_CLOUD_BILLING_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/billing/v1/cloud_billing.grpc.pb.h>
-#include <memory>
+#include "google/cloud/billing/v1/cloud_billing_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudBillingConnectionIdempotencyPolicy {
- public:
-  virtual ~CloudBillingConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// billing_v1::MakeDefaultCloudBillingConnectionIdempotencyPolicy directly.
+using ::google::cloud::billing_v1::
+    MakeDefaultCloudBillingConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudBillingConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency GetBillingAccount(
-      google::cloud::billing::v1::GetBillingAccountRequest const& request);
-
-  virtual google::cloud::Idempotency ListBillingAccounts(
-      google::cloud::billing::v1::ListBillingAccountsRequest request);
-
-  virtual google::cloud::Idempotency UpdateBillingAccount(
-      google::cloud::billing::v1::UpdateBillingAccountRequest const& request);
-
-  virtual google::cloud::Idempotency CreateBillingAccount(
-      google::cloud::billing::v1::CreateBillingAccountRequest const& request);
-
-  virtual google::cloud::Idempotency ListProjectBillingInfo(
-      google::cloud::billing::v1::ListProjectBillingInfoRequest request);
-
-  virtual google::cloud::Idempotency GetProjectBillingInfo(
-      google::cloud::billing::v1::GetProjectBillingInfoRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateProjectBillingInfo(
-      google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
-MakeDefaultCloudBillingConnectionIdempotencyPolicy();
+/// @deprecated Use billing_v1::CloudBillingConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::billing_v1::CloudBillingConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing

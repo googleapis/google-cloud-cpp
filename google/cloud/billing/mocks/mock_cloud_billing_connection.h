@@ -20,86 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_MOCKS_MOCK_CLOUD_BILLING_CONNECTION_H
 
 #include "google/cloud/billing/cloud_billing_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/billing/v1/mocks/mock_cloud_billing_connection.h"
 
 namespace google {
 namespace cloud {
 namespace billing_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudBillingConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudBillingClient`. To do so,
- * construct an object of type `CloudBillingClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudBillingConnection : public billing::CloudBillingConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>, GetBillingAccount,
-      (google::cloud::billing::v1::GetBillingAccountRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::billing::v1::BillingAccount>,
-              ListBillingAccounts,
-              (google::cloud::billing::v1::ListBillingAccountsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>,
-      UpdateBillingAccount,
-      (google::cloud::billing::v1::UpdateBillingAccountRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::BillingAccount>,
-      CreateBillingAccount,
-      (google::cloud::billing::v1::CreateBillingAccountRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::billing::v1::ProjectBillingInfo>,
-      ListProjectBillingInfo,
-      (google::cloud::billing::v1::ListProjectBillingInfoRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
-      GetProjectBillingInfo,
-      (google::cloud::billing::v1::GetProjectBillingInfoRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::billing::v1::ProjectBillingInfo>,
-      UpdateProjectBillingInfo,
-      (google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-};
+/// @deprecated Use billing_v1_mocks::MockCloudBillingConnection directly.
+using ::google::cloud::billing_v1_mocks::MockCloudBillingConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_mocks

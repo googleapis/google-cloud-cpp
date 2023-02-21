@@ -102,14 +102,17 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `billing::BudgetServiceClient`:
+For example, this will override the default endpoint for `billing_budgets_v1::BudgetServiceClient`:
 
 @snippet budget_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
+ [billing_budgets_v1::BudgetServiceClient](@ref billing_budgets_v1::BudgetServiceClient-endpoint-snippet)
  [billing::BudgetServiceClient](@ref billing::BudgetServiceClient-endpoint-snippet)
  [billing::CloudBillingClient](@ref billing::CloudBillingClient-endpoint-snippet)
  [billing::CloudCatalogClient](@ref billing::CloudCatalogClient-endpoint-snippet)
+ [billing_v1::CloudBillingClient](@ref billing_v1::CloudBillingClient-endpoint-snippet)
+ [billing_v1::CloudCatalogClient](@ref billing_v1::CloudCatalogClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -124,9 +127,12 @@ to explicitly load a service account key file.
 @snippet budget_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
+ [billing_budgets_v1::BudgetServiceClient](@ref billing_budgets_v1::BudgetServiceClient-service-account-snippet)
  [billing::BudgetServiceClient](@ref billing::BudgetServiceClient-service-account-snippet)
  [billing::CloudBillingClient](@ref billing::CloudBillingClient-service-account-snippet)
  [billing::CloudCatalogClient](@ref billing::CloudCatalogClient-service-account-snippet)
+ [billing_v1::CloudBillingClient](@ref billing_v1::CloudBillingClient-service-account-snippet)
+ [billing_v1::CloudCatalogClient](@ref billing_v1::CloudCatalogClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -155,6 +161,18 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page billing_budgets_v1::BudgetServiceClient-endpoint-snippet Override billing_budgets_v1::BudgetServiceClient Endpoint Configuration
+
+@snippet google/cloud/billing/budgets/v1/samples/budget_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page billing_budgets_v1::BudgetServiceClient-service-account-snippet Override billing_budgets_v1::BudgetServiceClient Authentication Defaults
+
+@snippet google/cloud/billing/budgets/v1/samples/budget_client_samples.cc with-service-account
+
+*/
 
 /*! @page billing::BudgetServiceClient-endpoint-snippet Override billing::BudgetServiceClient Endpoint Configuration
 
@@ -189,6 +207,30 @@ can override the default policies.
 /*! @page billing::CloudCatalogClient-service-account-snippet Override billing::CloudCatalogClient Authentication Defaults
 
 @snippet google/cloud/billing/samples/cloud_catalog_client_samples.cc with-service-account
+
+*/
+
+/*! @page billing_v1::CloudBillingClient-endpoint-snippet Override billing_v1::CloudBillingClient Endpoint Configuration
+
+@snippet google/cloud/billing/v1/samples/cloud_billing_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page billing_v1::CloudBillingClient-service-account-snippet Override billing_v1::CloudBillingClient Authentication Defaults
+
+@snippet google/cloud/billing/v1/samples/cloud_billing_client_samples.cc with-service-account
+
+*/
+
+/*! @page billing_v1::CloudCatalogClient-endpoint-snippet Override billing_v1::CloudCatalogClient Endpoint Configuration
+
+@snippet google/cloud/billing/v1/samples/cloud_catalog_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page billing_v1::CloudCatalogClient-service-account-snippet Override billing_v1::CloudCatalogClient Authentication Defaults
+
+@snippet google/cloud/billing/v1/samples/cloud_catalog_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
