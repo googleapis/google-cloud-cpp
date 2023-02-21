@@ -20,102 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_BATCH_CONTROLLER_CONNECTION_H
 
 #include "google/cloud/dataproc/batch_controller_connection_idempotency_policy.h"
-#include "google/cloud/dataproc/internal/batch_controller_retry_traits.h"
-#include "google/cloud/dataproc/internal/batch_controller_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
+#include "google/cloud/dataproc/v1/batch_controller_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using BatchControllerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataproc_internal::BatchControllerRetryTraits>;
+/// @deprecated Use dataproc_v1::MakeBatchControllerConnection directly.
+using ::google::cloud::dataproc_v1::MakeBatchControllerConnection;
 
-using BatchControllerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataproc_internal::BatchControllerRetryTraits>;
+/// @deprecated Use dataproc_v1::BatchControllerConnection directly.
+using ::google::cloud::dataproc_v1::BatchControllerConnection;
 
-using BatchControllerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataproc_internal::BatchControllerRetryTraits>;
+/// @deprecated Use dataproc_v1::BatchControllerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dataproc_v1::BatchControllerLimitedErrorCountRetryPolicy;
 
-/**
- * The `BatchControllerConnection` object for `BatchControllerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `BatchControllerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `BatchControllerClient`.
- *
- * To create a concrete instance, see `MakeBatchControllerConnection()`.
- *
- * For mocking, see `dataproc_mocks::MockBatchControllerConnection`.
- */
-class BatchControllerConnection {
- public:
-  virtual ~BatchControllerConnection() = 0;
+/// @deprecated Use dataproc_v1::BatchControllerLimitedTimeRetryPolicy directly.
+using ::google::cloud::dataproc_v1::BatchControllerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
-      google::cloud::dataproc::v1::CreateBatchRequest const& request);
-
-  virtual StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
-      google::cloud::dataproc::v1::GetBatchRequest const& request);
-
-  virtual StreamRange<google::cloud::dataproc::v1::Batch> ListBatches(
-      google::cloud::dataproc::v1::ListBatchesRequest request);
-
-  virtual Status DeleteBatch(
-      google::cloud::dataproc::v1::DeleteBatchRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `BatchControllerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of BatchControllerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `BatchControllerConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataproc::BatchControllerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `BatchControllerConnection` created
- * by this function.
- */
-std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
-    std::string const& location, Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
-    Options options = {});
+/// @deprecated Use dataproc_v1::BatchControllerRetryPolicy directly.
+using ::google::cloud::dataproc_v1::BatchControllerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc

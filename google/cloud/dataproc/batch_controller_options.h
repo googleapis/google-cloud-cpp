@@ -21,63 +21,29 @@
 
 #include "google/cloud/dataproc/batch_controller_connection.h"
 #include "google/cloud/dataproc/batch_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dataproc/v1/batch_controller_options.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct BatchControllerRetryPolicyOption {
-  using Type = std::shared_ptr<BatchControllerRetryPolicy>;
-};
+/// @deprecated Use dataproc_v1::BatchControllerPollingPolicyOption directly.
+using ::google::cloud::dataproc_v1::BatchControllerPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct BatchControllerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dataproc_v1::BatchControllerBackoffPolicyOption directly.
+using ::google::cloud::dataproc_v1::BatchControllerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct BatchControllerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<BatchControllerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// dataproc_v1::BatchControllerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataproc_v1::
+    BatchControllerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct BatchControllerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use dataproc_v1::BatchControllerPolicyOptionList directly.
+using ::google::cloud::dataproc_v1::BatchControllerPolicyOptionList;
 
-/**
- * The options applicable to BatchController.
- *
- * @ingroup google-cloud-dataproc-options
- */
-using BatchControllerPolicyOptionList =
-    OptionList<BatchControllerRetryPolicyOption,
-               BatchControllerBackoffPolicyOption,
-               BatchControllerPollingPolicyOption,
-               BatchControllerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dataproc_v1::BatchControllerRetryPolicyOption directly.
+using ::google::cloud::dataproc_v1::BatchControllerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc

@@ -20,61 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_MOCKS_MOCK_JOB_CONTROLLER_CONNECTION_H
 
 #include "google/cloud/dataproc/job_controller_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dataproc/v1/mocks/mock_job_controller_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `JobControllerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `JobControllerClient`. To do so,
- * construct an object of type `JobControllerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockJobControllerConnection : public dataproc::JobControllerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, SubmitJob,
-              (google::cloud::dataproc::v1::SubmitJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
-              SubmitJobAsOperation,
-              (google::cloud::dataproc::v1::SubmitJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, GetJob,
-              (google::cloud::dataproc::v1::GetJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dataproc::v1::Job>, ListJobs,
-              (google::cloud::dataproc::v1::ListJobsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, UpdateJob,
-              (google::cloud::dataproc::v1::UpdateJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, CancelJob,
-              (google::cloud::dataproc::v1::CancelJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteJob,
-              (google::cloud::dataproc::v1::DeleteJobRequest const& request),
-              (override));
-};
+/// @deprecated Use dataproc_v1_mocks::MockJobControllerConnection directly.
+using ::google::cloud::dataproc_v1_mocks::MockJobControllerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_mocks

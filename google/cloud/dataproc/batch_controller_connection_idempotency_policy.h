@@ -19,40 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_BATCH_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_BATCH_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dataproc/v1/batches.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dataproc/v1/batch_controller_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BatchControllerConnectionIdempotencyPolicy {
- public:
-  virtual ~BatchControllerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dataproc_v1::MakeDefaultBatchControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataproc_v1::
+    MakeDefaultBatchControllerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<BatchControllerConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateBatch(
-      google::cloud::dataproc::v1::CreateBatchRequest const& request);
-
-  virtual google::cloud::Idempotency GetBatch(
-      google::cloud::dataproc::v1::GetBatchRequest const& request);
-
-  virtual google::cloud::Idempotency ListBatches(
-      google::cloud::dataproc::v1::ListBatchesRequest request);
-
-  virtual google::cloud::Idempotency DeleteBatch(
-      google::cloud::dataproc::v1::DeleteBatchRequest const& request);
-};
-
-std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
-MakeDefaultBatchControllerConnectionIdempotencyPolicy();
+/// @deprecated Use dataproc_v1::BatchControllerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dataproc_v1::BatchControllerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc

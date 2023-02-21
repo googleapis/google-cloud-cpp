@@ -21,53 +21,30 @@
 
 #include "google/cloud/dataproc/autoscaling_policy_connection.h"
 #include "google/cloud/dataproc/autoscaling_policy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dataproc/v1/autoscaling_policy_options.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct AutoscalingPolicyServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AutoscalingPolicyServiceRetryPolicy>;
-};
+/// @deprecated Use dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::dataproc_v1::AutoscalingPolicyServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct AutoscalingPolicyServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dataproc_v1::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dataproc_v1::
+    AutoscalingPolicyServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct AutoscalingPolicyServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dataproc_v1::AutoscalingPolicyServicePolicyOptionList
+/// directly.
+using ::google::cloud::dataproc_v1::AutoscalingPolicyServicePolicyOptionList;
 
-/**
- * The options applicable to AutoscalingPolicyService.
- *
- * @ingroup google-cloud-dataproc-options
- */
-using AutoscalingPolicyServicePolicyOptionList =
-    OptionList<AutoscalingPolicyServiceRetryPolicyOption,
-               AutoscalingPolicyServiceBackoffPolicyOption,
-               AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::dataproc_v1::AutoscalingPolicyServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc

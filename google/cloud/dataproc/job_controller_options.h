@@ -21,62 +21,29 @@
 
 #include "google/cloud/dataproc/job_controller_connection.h"
 #include "google/cloud/dataproc/job_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dataproc/v1/job_controller_options.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct JobControllerRetryPolicyOption {
-  using Type = std::shared_ptr<JobControllerRetryPolicy>;
-};
+/// @deprecated Use dataproc_v1::JobControllerPollingPolicyOption directly.
+using ::google::cloud::dataproc_v1::JobControllerPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct JobControllerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dataproc_v1::JobControllerBackoffPolicyOption directly.
+using ::google::cloud::dataproc_v1::JobControllerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct JobControllerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<JobControllerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dataproc_v1::JobControllerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dataproc_v1::
+    JobControllerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-dataproc-options
- */
-struct JobControllerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use dataproc_v1::JobControllerPolicyOptionList directly.
+using ::google::cloud::dataproc_v1::JobControllerPolicyOptionList;
 
-/**
- * The options applicable to JobController.
- *
- * @ingroup google-cloud-dataproc-options
- */
-using JobControllerPolicyOptionList =
-    OptionList<JobControllerRetryPolicyOption, JobControllerBackoffPolicyOption,
-               JobControllerPollingPolicyOption,
-               JobControllerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dataproc_v1::JobControllerRetryPolicyOption directly.
+using ::google::cloud::dataproc_v1::JobControllerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc

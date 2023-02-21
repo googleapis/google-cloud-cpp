@@ -20,65 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_MOCKS_MOCK_AUTOSCALING_POLICY_CONNECTION_H
 
 #include "google/cloud/dataproc/autoscaling_policy_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dataproc/v1/mocks/mock_autoscaling_policy_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AutoscalingPolicyServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AutoscalingPolicyServiceClient`. To
- * do so, construct an object of type `AutoscalingPolicyServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAutoscalingPolicyServiceConnection
-    : public dataproc::AutoscalingPolicyServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>,
-      CreateAutoscalingPolicy,
-      (google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>,
-      UpdateAutoscalingPolicy,
-      (google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>,
-      GetAutoscalingPolicy,
-      (google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>,
-      ListAutoscalingPolicies,
-      (google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteAutoscalingPolicy,
-      (google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use dataproc_v1_mocks::MockAutoscalingPolicyServiceConnection
+/// directly.
+using ::google::cloud::dataproc_v1_mocks::
+    MockAutoscalingPolicyServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_mocks

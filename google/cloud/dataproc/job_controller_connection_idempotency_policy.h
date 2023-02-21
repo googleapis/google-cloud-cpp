@@ -19,49 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_JOB_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_JOB_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dataproc/v1/jobs.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dataproc/v1/job_controller_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class JobControllerConnectionIdempotencyPolicy {
- public:
-  virtual ~JobControllerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dataproc_v1::MakeDefaultJobControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataproc_v1::
+    MakeDefaultJobControllerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<JobControllerConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency SubmitJob(
-      google::cloud::dataproc::v1::SubmitJobRequest const& request);
-
-  virtual google::cloud::Idempotency SubmitJobAsOperation(
-      google::cloud::dataproc::v1::SubmitJobRequest const& request);
-
-  virtual google::cloud::Idempotency GetJob(
-      google::cloud::dataproc::v1::GetJobRequest const& request);
-
-  virtual google::cloud::Idempotency ListJobs(
-      google::cloud::dataproc::v1::ListJobsRequest request);
-
-  virtual google::cloud::Idempotency UpdateJob(
-      google::cloud::dataproc::v1::UpdateJobRequest const& request);
-
-  virtual google::cloud::Idempotency CancelJob(
-      google::cloud::dataproc::v1::CancelJobRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::dataproc::v1::DeleteJobRequest const& request);
-};
-
-std::unique_ptr<JobControllerConnectionIdempotencyPolicy>
-MakeDefaultJobControllerConnectionIdempotencyPolicy();
+/// @deprecated Use dataproc_v1::JobControllerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dataproc_v1::JobControllerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
