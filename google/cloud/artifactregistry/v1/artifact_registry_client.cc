@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#include "google/cloud/artifactregistry/artifact_registry_client.h"
+#include "google/cloud/artifactregistry/v1/artifact_registry_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace artifactregistry {
+namespace artifactregistry_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ArtifactRegistryClient::ArtifactRegistryClient(
@@ -592,6 +592,6 @@ ArtifactRegistryClient::UpdateVPCSCConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry
+}  // namespace artifactregistry_v1
 }  // namespace cloud
 }  // namespace google

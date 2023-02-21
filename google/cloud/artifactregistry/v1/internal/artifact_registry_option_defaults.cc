@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#include "google/cloud/artifactregistry/internal/artifact_registry_option_defaults.h"
-#include "google/cloud/artifactregistry/artifact_registry_connection.h"
-#include "google/cloud/artifactregistry/artifact_registry_options.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_option_defaults.h"
+#include "google/cloud/artifactregistry/v1/artifact_registry_connection.h"
+#include "google/cloud/artifactregistry/v1/artifact_registry_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,35 +39,38 @@ Options ArtifactRegistryDefaultOptions(Options options) {
       "artifactregistry.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<artifactregistry::ArtifactRegistryRetryPolicyOption>()) {
-    options.set<artifactregistry::ArtifactRegistryRetryPolicyOption>(
-        artifactregistry::ArtifactRegistryLimitedTimeRetryPolicy(
+  if (!options.has<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()) {
+    options.set<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>(
+        artifactregistry_v1::ArtifactRegistryLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<artifactregistry::ArtifactRegistryBackoffPolicyOption>()) {
-    options.set<artifactregistry::ArtifactRegistryBackoffPolicyOption>(
+  if (!options
+           .has<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()) {
+    options.set<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
-    options.set<artifactregistry::ArtifactRegistryPollingPolicyOption>(
+  if (!options
+           .has<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>()) {
+    options.set<artifactregistry_v1::ArtifactRegistryPollingPolicyOption>(
         GenericPollingPolicy<
-            artifactregistry::ArtifactRegistryRetryPolicyOption::Type,
-            artifactregistry::ArtifactRegistryBackoffPolicyOption::Type>(
-            options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+            artifactregistry_v1::ArtifactRegistryRetryPolicyOption::Type,
+            artifactregistry_v1::ArtifactRegistryBackoffPolicyOption::Type>(
+            options
+                .get<artifactregistry_v1::ArtifactRegistryRetryPolicyOption>()
                 ->clone(),
             options
-                .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+                .get<artifactregistry_v1::ArtifactRegistryBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<artifactregistry::
+  if (!options.has<artifactregistry_v1::
                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
     options.set<
-        artifactregistry::ArtifactRegistryConnectionIdempotencyPolicyOption>(
-        artifactregistry::
+        artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption>(
+        artifactregistry_v1::
             MakeDefaultArtifactRegistryConnectionIdempotencyPolicy());
   }
 
@@ -75,6 +78,6 @@ Options ArtifactRegistryDefaultOptions(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google

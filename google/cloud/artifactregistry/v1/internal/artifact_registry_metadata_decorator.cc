@@ -16,450 +16,366 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#include "google/cloud/artifactregistry/internal/artifact_registry_auth_decorator.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_metadata_decorator.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/status_or.h"
 #include <google/devtools/artifactregistry/v1/service.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ArtifactRegistryAuth::ArtifactRegistryAuth(
-    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+ArtifactRegistryMetadata::ArtifactRegistryMetadata(
     std::shared_ptr<ArtifactRegistryStub> child)
-    : auth_(std::move(auth)), child_(std::move(child)) {}
+    : child_(std::move(child)),
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
-ArtifactRegistryAuth::ListDockerImages(
+ArtifactRegistryMetadata::ListDockerImages(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListDockerImages(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
-ArtifactRegistryAuth::GetDockerImage(
+ArtifactRegistryMetadata::GetDockerImage(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetDockerImageRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetDockerImage(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
-ArtifactRegistryAuth::ListMavenArtifacts(
+ArtifactRegistryMetadata::ListMavenArtifacts(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListMavenArtifacts(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
-ArtifactRegistryAuth::GetMavenArtifact(
+ArtifactRegistryMetadata::GetMavenArtifact(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetMavenArtifact(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
-ArtifactRegistryAuth::ListNpmPackages(
+ArtifactRegistryMetadata::ListNpmPackages(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListNpmPackages(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
-ArtifactRegistryAuth::GetNpmPackage(
+ArtifactRegistryMetadata::GetNpmPackage(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetNpmPackage(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
-ArtifactRegistryAuth::ListPythonPackages(
+ArtifactRegistryMetadata::ListPythonPackages(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListPythonPackages(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
-ArtifactRegistryAuth::GetPythonPackage(
+ArtifactRegistryMetadata::GetPythonPackage(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetPythonPackage(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ArtifactRegistryAuth::AsyncImportAptArtifacts(
+ArtifactRegistryMetadata::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncImportAptArtifacts(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncImportAptArtifacts(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ArtifactRegistryAuth::AsyncImportYumArtifacts(
+ArtifactRegistryMetadata::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncImportYumArtifacts(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncImportYumArtifacts(cq, std::move(context), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
-ArtifactRegistryAuth::ListRepositories(
+ArtifactRegistryMetadata::ListRepositories(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListRepositories(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryAuth::GetRepository(
+ArtifactRegistryMetadata::GetRepository(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetRepositoryRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetRepository(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ArtifactRegistryAuth::AsyncCreateRepository(
+ArtifactRegistryMetadata::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncCreateRepository(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateRepository(cq, std::move(context), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
-ArtifactRegistryAuth::UpdateRepository(
+ArtifactRegistryMetadata::UpdateRepository(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "repository.name=" + request.repository().name());
   return child_->UpdateRepository(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ArtifactRegistryAuth::AsyncDeleteRepository(
+ArtifactRegistryMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncDeleteRepository(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteRepository(cq, std::move(context), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
-ArtifactRegistryAuth::ListPackages(
+ArtifactRegistryMetadata::ListPackages(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListPackagesRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListPackages(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
-ArtifactRegistryAuth::GetPackage(
+ArtifactRegistryMetadata::GetPackage(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetPackage(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ArtifactRegistryAuth::AsyncDeletePackage(
+ArtifactRegistryMetadata::AsyncDeletePackage(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncDeletePackage(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeletePackage(cq, std::move(context), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
-ArtifactRegistryAuth::ListVersions(
+ArtifactRegistryMetadata::ListVersions(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListVersionsRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListVersions(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
-ArtifactRegistryAuth::GetVersion(
+ArtifactRegistryMetadata::GetVersion(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetVersion(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ArtifactRegistryAuth::AsyncDeleteVersion(
+ArtifactRegistryMetadata::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncDeleteVersion(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteVersion(cq, std::move(context), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
-ArtifactRegistryAuth::ListFiles(
+ArtifactRegistryMetadata::ListFiles(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListFiles(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::File>
-ArtifactRegistryAuth::GetFile(
+ArtifactRegistryMetadata::GetFile(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetFileRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetFile(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
-ArtifactRegistryAuth::ListTags(
+ArtifactRegistryMetadata::ListTags(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->ListTags(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryAuth::GetTag(
+ArtifactRegistryMetadata::GetTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetTagRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetTag(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryAuth::CreateTag(
+ArtifactRegistryMetadata::CreateTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "parent=" + request.parent());
   return child_->CreateTag(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
-ArtifactRegistryAuth::UpdateTag(
+ArtifactRegistryMetadata::UpdateTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "tag.name=" + request.tag().name());
   return child_->UpdateTag(context, request);
 }
 
-Status ArtifactRegistryAuth::DeleteTag(
+Status ArtifactRegistryMetadata::DeleteTag(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->DeleteTag(context, request);
 }
 
-StatusOr<google::iam::v1::Policy> ArtifactRegistryAuth::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> ArtifactRegistryMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "resource=" + request.resource());
   return child_->SetIamPolicy(context, request);
 }
 
-StatusOr<google::iam::v1::Policy> ArtifactRegistryAuth::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> ArtifactRegistryMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "resource=" + request.resource());
   return child_->GetIamPolicy(context, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ArtifactRegistryAuth::TestIamPermissions(
+ArtifactRegistryMetadata::TestIamPermissions(
     grpc::ClientContext& context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "resource=" + request.resource());
   return child_->TestIamPermissions(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-ArtifactRegistryAuth::GetProjectSettings(
+ArtifactRegistryMetadata::GetProjectSettings(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetProjectSettings(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-ArtifactRegistryAuth::UpdateProjectSettings(
+ArtifactRegistryMetadata::UpdateProjectSettings(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context,
+              "project_settings.name=" + request.project_settings().name());
   return child_->UpdateProjectSettings(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-ArtifactRegistryAuth::GetVPCSCConfig(
+ArtifactRegistryMetadata::GetVPCSCConfig(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "name=" + request.name());
   return child_->GetVPCSCConfig(context, request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
-ArtifactRegistryAuth::UpdateVPCSCConfig(
+ArtifactRegistryMetadata::UpdateVPCSCConfig(
     grpc::ClientContext& context,
     google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
         request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
+  SetMetadata(context, "vpcsc_config.name=" + request.vpcsc_config().name());
   return child_->UpdateVPCSCConfig(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ArtifactRegistryAuth::AsyncGetOperation(
+ArtifactRegistryMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        }
-        return child->AsyncGetOperation(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
-future<Status> ArtifactRegistryAuth::AsyncCancelOperation(
+future<Status> ArtifactRegistryMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto& child = child_;
-  return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
-             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                          f) mutable {
-        auto context = f.get();
-        if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), request);
-      });
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
+}
+
+void ArtifactRegistryMetadata::SetMetadata(grpc::ClientContext& context,
+                                           std::string const& request_params) {
+  context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
+
+void ArtifactRegistryMetadata::SetMetadata(grpc::ClientContext& context) {
+  context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google

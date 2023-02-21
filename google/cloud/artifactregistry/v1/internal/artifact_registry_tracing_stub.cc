@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#include "google/cloud/artifactregistry/internal/artifact_registry_tracing_stub.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -478,6 +478,6 @@ std::shared_ptr<ArtifactRegistryStub> MakeArtifactRegistryTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google

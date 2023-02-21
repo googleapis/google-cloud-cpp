@@ -80,7 +80,8 @@ service {
 # Artifact Registry
 service {
   service_proto_path: "google/devtools/artifactregistry/v1/service.proto"
-  product_path: "google/cloud/artifactregistry"
+  product_path: "google/cloud/artifactregistry/v1"
+  forwarding_product_path: "google/cloud/artifactregistry"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

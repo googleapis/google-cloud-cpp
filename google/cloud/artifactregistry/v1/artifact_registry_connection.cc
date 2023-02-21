@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#include "google/cloud/artifactregistry/artifact_registry_connection.h"
-#include "google/cloud/artifactregistry/artifact_registry_options.h"
-#include "google/cloud/artifactregistry/internal/artifact_registry_connection_impl.h"
-#include "google/cloud/artifactregistry/internal/artifact_registry_option_defaults.h"
-#include "google/cloud/artifactregistry/internal/artifact_registry_stub_factory.h"
-#include "google/cloud/artifactregistry/internal/artifact_registry_tracing_connection.h"
+#include "google/cloud/artifactregistry/v1/artifact_registry_connection.h"
+#include "google/cloud/artifactregistry/v1/artifact_registry_options.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_connection_impl.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_option_defaults.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_stub_factory.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry {
+namespace artifactregistry_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
@@ -282,18 +282,18 @@ std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
                                  UnifiedCredentialsOptionList,
                                  ArtifactRegistryPolicyOptionList>(options,
                                                                    __func__);
-  options = artifactregistry_internal::ArtifactRegistryDefaultOptions(
+  options = artifactregistry_v1_internal::ArtifactRegistryDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = artifactregistry_internal::CreateDefaultArtifactRegistryStub(
+  auto stub = artifactregistry_v1_internal::CreateDefaultArtifactRegistryStub(
       background->cq(), options);
-  return artifactregistry_internal::MakeArtifactRegistryTracingConnection(
+  return artifactregistry_v1_internal::MakeArtifactRegistryTracingConnection(
       std::make_shared<
-          artifactregistry_internal::ArtifactRegistryConnectionImpl>(
+          artifactregistry_v1_internal::ArtifactRegistryConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry
+}  // namespace artifactregistry_v1
 }  // namespace cloud
 }  // namespace google

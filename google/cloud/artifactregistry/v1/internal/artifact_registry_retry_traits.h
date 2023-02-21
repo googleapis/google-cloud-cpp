@@ -16,15 +16,15 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_RETRY_TRAITS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_RETRY_TRAITS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_RETRY_TRAITS_H
 
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Define the gRPC status code semantics for retrying requests.
@@ -36,8 +36,8 @@ struct ArtifactRegistryRetryTraits {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_RETRY_TRAITS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_RETRY_TRAITS_H

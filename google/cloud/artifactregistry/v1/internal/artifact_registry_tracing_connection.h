@@ -16,41 +16,29 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_CONNECTION_H
 
-#include "google/cloud/artifactregistry/artifact_registry_connection.h"
-#include "google/cloud/artifactregistry/artifact_registry_connection_idempotency_policy.h"
-#include "google/cloud/artifactregistry/artifact_registry_options.h"
-#include "google/cloud/artifactregistry/internal/artifact_registry_retry_traits.h"
-#include "google/cloud/artifactregistry/internal/artifact_registry_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/artifactregistry/v1/artifact_registry_connection.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ArtifactRegistryConnectionImpl
-    : public artifactregistry::ArtifactRegistryConnection {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class ArtifactRegistryTracingConnection
+    : public artifactregistry_v1::ArtifactRegistryConnection {
  public:
-  ~ArtifactRegistryConnectionImpl() override = default;
+  ~ArtifactRegistryTracingConnection() override = default;
 
-  ArtifactRegistryConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
-      Options options);
+  explicit ArtifactRegistryTracingConnection(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> child);
 
-  Options options() override { return options_; }
+  Options options() override { return child_->options(); }
 
   StreamRange<google::devtools::artifactregistry::v1::DockerImage>
   ListDockerImages(
@@ -206,65 +194,24 @@ class ArtifactRegistryConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryRetryPolicyOption>()) {
-      return options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
-          ->clone();
-    }
-    return options_.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryBackoffPolicyOption>()) {
-      return options
-          .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::
-                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<artifactregistry::
-                   ArtifactRegistryConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<artifactregistry::
-                 ArtifactRegistryConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
-      return options
-          .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub_;
-  Options options_;
+  std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection>
+MakeArtifactRegistryTracingConnection(
+    std::shared_ptr<artifactregistry_v1::ArtifactRegistryConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_CONNECTION_H

@@ -16,28 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_STUB_H
 
-#include "google/cloud/artifactregistry/internal/artifact_registry_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ArtifactRegistryLogging : public ArtifactRegistryStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class ArtifactRegistryTracingStub : public ArtifactRegistryStub {
  public:
-  ~ArtifactRegistryLogging() override = default;
-  ArtifactRegistryLogging(std::shared_ptr<ArtifactRegistryStub> child,
-                          TracingOptions tracing_options,
-                          std::set<std::string> components);
+  ~ArtifactRegistryTracingStub() override = default;
+
+  explicit ArtifactRegistryTracingStub(
+      std::shared_ptr<ArtifactRegistryStub> child);
 
   StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
   ListDockerImages(
@@ -241,13 +239,22 @@ class ArtifactRegistryLogging : public ArtifactRegistryStub {
 
  private:
   std::shared_ptr<ArtifactRegistryStub> child_;
-  TracingOptions tracing_options_;
-  std::set<std::string> components_;
-};  // ArtifactRegistryLogging
+};
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<ArtifactRegistryStub> MakeArtifactRegistryTracingStub(
+    std::shared_ptr<ArtifactRegistryStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_INTERNAL_ARTIFACT_REGISTRY_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ARTIFACTREGISTRY_V1_INTERNAL_ARTIFACT_REGISTRY_TRACING_STUB_H

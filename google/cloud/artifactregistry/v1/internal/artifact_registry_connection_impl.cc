@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#include "google/cloud/artifactregistry/internal/artifact_registry_connection_impl.h"
-#include "google/cloud/artifactregistry/internal/artifact_registry_option_defaults.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_connection_impl.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ArtifactRegistryConnectionImpl::ArtifactRegistryConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
+    std::shared_ptr<artifactregistry_v1_internal::ArtifactRegistryStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,7 +46,7 @@ ArtifactRegistryConnectionImpl::ListDockerImages(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDockerImages(request);
@@ -95,7 +95,7 @@ ArtifactRegistryConnectionImpl::ListMavenArtifacts(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMavenArtifacts(request);
@@ -144,7 +144,7 @@ ArtifactRegistryConnectionImpl::ListNpmPackages(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNpmPackages(request);
@@ -192,7 +192,7 @@ ArtifactRegistryConnectionImpl::ListPythonPackages(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPythonPackages(request);
@@ -305,7 +305,7 @@ ArtifactRegistryConnectionImpl::ListRepositories(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRepositories(request);
@@ -431,7 +431,7 @@ ArtifactRegistryConnectionImpl::ListPackages(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPackages(request);
@@ -508,7 +508,7 @@ ArtifactRegistryConnectionImpl::ListVersions(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListVersions(request);
@@ -585,7 +585,7 @@ ArtifactRegistryConnectionImpl::ListFiles(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFiles(request);
@@ -629,7 +629,7 @@ ArtifactRegistryConnectionImpl::ListTags(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<artifactregistry::ArtifactRegistryRetryPolicy const>(
+      std::shared_ptr<artifactregistry_v1::ArtifactRegistryRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTags(request);
@@ -799,6 +799,6 @@ ArtifactRegistryConnectionImpl::UpdateVPCSCConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google

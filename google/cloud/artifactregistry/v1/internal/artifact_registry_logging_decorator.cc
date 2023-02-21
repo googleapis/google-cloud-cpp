@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/artifactregistry/v1/service.proto
 
-#include "google/cloud/artifactregistry/internal/artifact_registry_logging_decorator.h"
+#include "google/cloud/artifactregistry/v1/internal/artifact_registry_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/devtools/artifactregistry/v1/service.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
+namespace artifactregistry_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ArtifactRegistryLogging::ArtifactRegistryLogging(
@@ -514,6 +514,6 @@ future<Status> ArtifactRegistryLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
+}  // namespace artifactregistry_v1_internal
 }  // namespace cloud
 }  // namespace google
