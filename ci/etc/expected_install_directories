@@ -180,9 +180,10 @@
 ./include/google/cloud/datamigration/internal
 ./include/google/cloud/datamigration/mocks
 ./include/google/cloud/dataplex
-./include/google/cloud/dataplex/internal
 ./include/google/cloud/dataplex/mocks
 ./include/google/cloud/dataplex/v1
+./include/google/cloud/dataplex/v1/internal
+./include/google/cloud/dataplex/v1/mocks
 ./include/google/cloud/dataproc
 ./include/google/cloud/dataproc/internal
 ./include/google/cloud/dataproc/mocks

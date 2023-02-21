@@ -20,72 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_MOCKS_MOCK_METADATA_CONNECTION_H
 
 #include "google/cloud/dataplex/metadata_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dataplex/v1/mocks/mock_metadata_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `MetadataServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `MetadataServiceClient`. To do so,
- * construct an object of type `MetadataServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockMetadataServiceConnection
-    : public dataplex::MetadataServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, CreateEntity,
-              (google::cloud::dataplex::v1::CreateEntityRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, UpdateEntity,
-              (google::cloud::dataplex::v1::UpdateEntityRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteEntity,
-              (google::cloud::dataplex::v1::DeleteEntityRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Entity>, GetEntity,
-              (google::cloud::dataplex::v1::GetEntityRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Entity>, ListEntities,
-              (google::cloud::dataplex::v1::ListEntitiesRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Partition>, CreatePartition,
-      (google::cloud::dataplex::v1::CreatePartitionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeletePartition,
-      (google::cloud::dataplex::v1::DeletePartitionRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Partition>, GetPartition,
-              (google::cloud::dataplex::v1::GetPartitionRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Partition>,
-              ListPartitions,
-              (google::cloud::dataplex::v1::ListPartitionsRequest request),
-              (override));
-};
+/// @deprecated Use dataplex_v1_mocks::MockMetadataServiceConnection directly.
+using ::google::cloud::dataplex_v1_mocks::MockMetadataServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_mocks

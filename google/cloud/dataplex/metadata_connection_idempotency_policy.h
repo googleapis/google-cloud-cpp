@@ -19,55 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_METADATA_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_METADATA_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dataplex/v1/metadata_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MetadataServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~MetadataServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dataplex_v1::MakeDefaultMetadataServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataplex_v1::
+    MakeDefaultMetadataServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateEntity(
-      google::cloud::dataplex::v1::CreateEntityRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateEntity(
-      google::cloud::dataplex::v1::UpdateEntityRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteEntity(
-      google::cloud::dataplex::v1::DeleteEntityRequest const& request);
-
-  virtual google::cloud::Idempotency GetEntity(
-      google::cloud::dataplex::v1::GetEntityRequest const& request);
-
-  virtual google::cloud::Idempotency ListEntities(
-      google::cloud::dataplex::v1::ListEntitiesRequest request);
-
-  virtual google::cloud::Idempotency CreatePartition(
-      google::cloud::dataplex::v1::CreatePartitionRequest const& request);
-
-  virtual google::cloud::Idempotency DeletePartition(
-      google::cloud::dataplex::v1::DeletePartitionRequest const& request);
-
-  virtual google::cloud::Idempotency GetPartition(
-      google::cloud::dataplex::v1::GetPartitionRequest const& request);
-
-  virtual google::cloud::Idempotency ListPartitions(
-      google::cloud::dataplex::v1::ListPartitionsRequest request);
-};
-
-std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
-MakeDefaultMetadataServiceConnectionIdempotencyPolicy();
+/// @deprecated Use dataplex_v1::MetadataServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dataplex_v1::MetadataServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex

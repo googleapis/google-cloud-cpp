@@ -109,6 +109,9 @@ Follow these links to find examples for other \c *Client classes:
  [dataplex::ContentServiceClient](@ref dataplex::ContentServiceClient-endpoint-snippet)
  [dataplex::DataplexServiceClient](@ref dataplex::DataplexServiceClient-endpoint-snippet)
  [dataplex::MetadataServiceClient](@ref dataplex::MetadataServiceClient-endpoint-snippet)
+ [dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-endpoint-snippet)
+ [dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-endpoint-snippet)
+ [dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -126,6 +129,9 @@ Follow these links to find examples for other \c *Client classes:
  [dataplex::ContentServiceClient](@ref dataplex::ContentServiceClient-service-account-snippet)
  [dataplex::DataplexServiceClient](@ref dataplex::DataplexServiceClient-service-account-snippet)
  [dataplex::MetadataServiceClient](@ref dataplex::MetadataServiceClient-service-account-snippet)
+ [dataplex_v1::ContentServiceClient](@ref dataplex_v1::ContentServiceClient-service-account-snippet)
+ [dataplex_v1::DataplexServiceClient](@ref dataplex_v1::DataplexServiceClient-service-account-snippet)
+ [dataplex_v1::MetadataServiceClient](@ref dataplex_v1::MetadataServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -189,6 +195,42 @@ can override the default policies.
 /*! @page dataplex::MetadataServiceClient-service-account-snippet Override dataplex::MetadataServiceClient Authentication Defaults
 
 @snippet google/cloud/dataplex/samples/metadata_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::ContentServiceClient-endpoint-snippet Override dataplex_v1::ContentServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/content_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataplex_v1::ContentServiceClient-service-account-snippet Override dataplex_v1::ContentServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/content_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::DataplexServiceClient-endpoint-snippet Override dataplex_v1::DataplexServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/dataplex_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataplex_v1::DataplexServiceClient-service-account-snippet Override dataplex_v1::DataplexServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/dataplex_client_samples.cc with-service-account
+
+*/
+
+/*! @page dataplex_v1::MetadataServiceClient-endpoint-snippet Override dataplex_v1::MetadataServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataplex/v1/samples/metadata_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dataplex_v1::MetadataServiceClient-service-account-snippet Override dataplex_v1::MetadataServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/v1/samples/metadata_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

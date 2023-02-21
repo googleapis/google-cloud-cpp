@@ -21,52 +21,26 @@
 
 #include "google/cloud/dataplex/metadata_connection.h"
 #include "google/cloud/dataplex/metadata_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dataplex/v1/metadata_options.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct MetadataServiceRetryPolicyOption {
-  using Type = std::shared_ptr<MetadataServiceRetryPolicy>;
-};
+/// @deprecated Use dataplex_v1::MetadataServiceBackoffPolicyOption directly.
+using ::google::cloud::dataplex_v1::MetadataServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct MetadataServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// dataplex_v1::MetadataServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataplex_v1::
+    MetadataServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct MetadataServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<MetadataServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dataplex_v1::MetadataServicePolicyOptionList directly.
+using ::google::cloud::dataplex_v1::MetadataServicePolicyOptionList;
 
-/**
- * The options applicable to MetadataService.
- *
- * @ingroup google-cloud-dataplex-options
- */
-using MetadataServicePolicyOptionList =
-    OptionList<MetadataServiceRetryPolicyOption,
-               MetadataServiceBackoffPolicyOption,
-               MetadataServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dataplex_v1::MetadataServiceRetryPolicyOption directly.
+using ::google::cloud::dataplex_v1::MetadataServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex

@@ -20,68 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_MOCKS_MOCK_CONTENT_CONNECTION_H
 
 #include "google/cloud/dataplex/content_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dataplex/v1/mocks/mock_content_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ContentServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ContentServiceClient`. To do so,
- * construct an object of type `ContentServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockContentServiceConnection : public dataplex::ContentServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Content>, CreateContent,
-      (google::cloud::dataplex::v1::CreateContentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::dataplex::v1::Content>, UpdateContent,
-      (google::cloud::dataplex::v1::UpdateContentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteContent,
-      (google::cloud::dataplex::v1::DeleteContentRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::Content>, GetContent,
-              (google::cloud::dataplex::v1::GetContentRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dataplex::v1::Content>, ListContent,
-              (google::cloud::dataplex::v1::ListContentRequest request),
-              (override));
-};
+/// @deprecated Use dataplex_v1_mocks::MockContentServiceConnection directly.
+using ::google::cloud::dataplex_v1_mocks::MockContentServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_mocks
