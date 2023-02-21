@@ -35,7 +35,7 @@ namespace {
 //   <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="indexpage" kind="page">
 // clang-format on
 //
-// That is, they are generic `compounddef` nodes, the same entity used to
+// That is, they are generic `compounddef` nodes -- the same entity used to
 // represent class or function reference docs. The definition is fairly complex
 // (see below).  We will ignore things that we do not expect, such as
 // include diagrams, inner classes, etc.
@@ -86,7 +86,6 @@ namespace {
 //   <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
 // </xsd:complexType>
 // clang-format on
-//
 std::string Page2Markdown(pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "compounddef" ||
       std::string_view{node.attribute("kind").as_string()} != "page") {
@@ -263,7 +262,7 @@ bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
                                  pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "detaileddescription") return false;
   for (auto const& child : node) {
-    // Unexpected: title, internal  -> we do not use this...
+    // Unexpected: title, internal -> we do not use this...
     if (AppendIfParagraph(os, ctx, child)) continue;
     if (AppendIfSect1(os, ctx, child)) continue;
     UnknownChildType(__func__, child);
@@ -462,7 +461,6 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
 //
 // The `<xsd:group>` signifies that there may be 0 or more (unbounded) number of
 // `docCmdGroup` child elements.
-//
 bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
                        pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "para") return false;
@@ -546,7 +544,6 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
 //     <xsd:attribute name="kind" type="DoxSimpleSectKind" />
 //   </xsd:complexType>
 // clang-format on
-//
 bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
                         pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "simplesect") return false;
