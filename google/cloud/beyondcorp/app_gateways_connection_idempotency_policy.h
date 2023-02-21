@@ -19,44 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APP_GATEWAYS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APP_GATEWAYS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/beyondcorp/appgateways/v1/app_gateways_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AppGatewaysServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~AppGatewaysServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// beyondcorp_appgateways_v1::MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appgateways_v1::
+    MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request);
-
-  virtual google::cloud::Idempotency GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request);
-};
-
-std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
-MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// beyondcorp_appgateways_v1::AppGatewaysServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appgateways_v1::
+    AppGatewaysServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

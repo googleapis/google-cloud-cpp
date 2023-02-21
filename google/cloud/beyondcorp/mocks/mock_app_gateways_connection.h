@@ -20,61 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_MOCKS_MOCK_APP_GATEWAYS_CONNECTION_H
 
 #include "google/cloud/beyondcorp/app_gateways_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/beyondcorp/appgateways/v1/mocks/mock_app_gateways_connection.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AppGatewaysServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AppGatewaysServiceClient`. To do
- * so, construct an object of type `AppGatewaysServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAppGatewaysServiceConnection
-    : public beyondcorp::AppGatewaysServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
-      ListAppGateways,
-      (google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>,
-      GetAppGateway,
-      (google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
-      CreateAppGateway,
-      (google::cloud::beyondcorp::appgateways::v1::
-           CreateAppGatewayRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
-                                  AppGatewayOperationMetadata>>,
-              DeleteAppGateway,
-              (google::cloud::beyondcorp::appgateways::v1::
-                   DeleteAppGatewayRequest const& request),
-              (override));
-};
+/// @deprecated Use
+/// beyondcorp_appgateways_v1_mocks::MockAppGatewaysServiceConnection directly.
+using ::google::cloud::beyondcorp_appgateways_v1_mocks::
+    MockAppGatewaysServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_mocks

@@ -20,101 +20,37 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APP_GATEWAYS_CONNECTION_H
 
 #include "google/cloud/beyondcorp/app_gateways_connection_idempotency_policy.h"
-#include "google/cloud/beyondcorp/internal/app_gateways_retry_traits.h"
-#include "google/cloud/beyondcorp/internal/app_gateways_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AppGatewaysServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        beyondcorp_internal::AppGatewaysServiceRetryTraits>;
+/// @deprecated Use beyondcorp_appgateways_v1::MakeAppGatewaysServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_appgateways_v1::
+    MakeAppGatewaysServiceConnection;
 
-using AppGatewaysServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        beyondcorp_internal::AppGatewaysServiceRetryTraits>;
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceConnection;
 
-using AppGatewaysServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        beyondcorp_internal::AppGatewaysServiceRetryTraits>;
+/// @deprecated Use
+/// beyondcorp_appgateways_v1::AppGatewaysServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appgateways_v1::
+    AppGatewaysServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `AppGatewaysServiceConnection` object for `AppGatewaysServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AppGatewaysServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AppGatewaysServiceClient`.
- *
- * To create a concrete instance, see `MakeAppGatewaysServiceConnection()`.
- *
- * For mocking, see `beyondcorp_mocks::MockAppGatewaysServiceConnection`.
- */
-class AppGatewaysServiceConnection {
- public:
-  virtual ~AppGatewaysServiceConnection() = 0;
+/// @deprecated Use
+/// beyondcorp_appgateways_v1::AppGatewaysServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appgateways_v1::
+    AppGatewaysServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  ListAppGateways(
-      google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest
-          request);
-
-  virtual StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
-  GetAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
-          request);
-
-  virtual future<StatusOr<
-      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-  DeleteAppGateway(
-      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type
- * `AppGatewaysServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AppGatewaysServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `AppGatewaysServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::beyondcorp::AppGatewaysServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `AppGatewaysServiceConnection`
- * created by this function.
- */
-std::shared_ptr<AppGatewaysServiceConnection> MakeAppGatewaysServiceConnection(
-    Options options = {});
+/// @deprecated Use beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appgateways_v1::AppGatewaysServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

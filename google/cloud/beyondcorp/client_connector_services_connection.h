@@ -21,112 +21,42 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_CLIENT_CONNECTOR_SERVICES_CONNECTION_H
 
 #include "google/cloud/beyondcorp/client_connector_services_connection_idempotency_policy.h"
-#include "google/cloud/beyondcorp/internal/client_connector_services_retry_traits.h"
-#include "google/cloud/beyondcorp/internal/client_connector_services_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_connection.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ClientConnectorServicesServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        beyondcorp_internal::ClientConnectorServicesServiceRetryTraits>;
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::MakeClientConnectorServicesServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    MakeClientConnectorServicesServiceConnection;
 
-using ClientConnectorServicesServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        beyondcorp_internal::ClientConnectorServicesServiceRetryTraits>;
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServiceConnection;
 
-using ClientConnectorServicesServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        beyondcorp_internal::ClientConnectorServicesServiceRetryTraits>;
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `ClientConnectorServicesServiceConnection` object for
- * `ClientConnectorServicesServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ClientConnectorServicesServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ClientConnectorServicesServiceClient`.
- *
- * To create a concrete instance, see
- * `MakeClientConnectorServicesServiceConnection()`.
- *
- * For mocking, see
- * `beyondcorp_mocks::MockClientConnectorServicesServiceConnection`.
- */
-class ClientConnectorServicesServiceConnection {
- public:
-  virtual ~ClientConnectorServicesServiceConnection() = 0;
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::beyondcorp::clientconnectorservices::v1::
-                          ClientConnectorService>
-  ListClientConnectorServices(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          ListClientConnectorServicesRequest request);
-
-  virtual StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
-                       ClientConnectorService>
-  GetClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          GetClientConnectorServiceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::
-                              v1::ClientConnectorService>>
-  CreateClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          CreateClientConnectorServiceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::
-                              v1::ClientConnectorService>>
-  UpdateClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          UpdateClientConnectorServiceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::
-                              v1::ClientConnectorServiceOperationMetadata>>
-  DeleteClientConnectorService(
-      google::cloud::beyondcorp::clientconnectorservices::v1::
-          DeleteClientConnectorServiceRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ClientConnectorServicesServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ClientConnectorServicesServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ClientConnectorServicesServiceConnection`. Expected options are any
- * of the types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::beyondcorp::ClientConnectorServicesServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the
- * `ClientConnectorServicesServiceConnection` created by this function.
- */
-std::shared_ptr<ClientConnectorServicesServiceConnection>
-MakeClientConnectorServicesServiceConnection(Options options = {});
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

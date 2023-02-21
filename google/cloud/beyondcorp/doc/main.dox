@@ -111,11 +111,15 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `beyondcorp::AppConnectionsServiceClient`:
+For example, this will override the default endpoint for `beyondcorp_appconnections_v1::AppConnectionsServiceClient`:
 
 @snippet app_connections_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
+ [beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref beyondcorp_appconnections_v1::AppConnectionsServiceClient-endpoint-snippet)
+ [beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref beyondcorp_appconnectors_v1::AppConnectorsServiceClient-endpoint-snippet)
+ [beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref beyondcorp_appgateways_v1::AppGatewaysServiceClient-endpoint-snippet)
+ [beyondcorp_clientgateways_v1::ClientGatewaysServiceClient](@ref beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-endpoint-snippet)
  [beyondcorp::AppConnectionsServiceClient](@ref beyondcorp::AppConnectionsServiceClient-endpoint-snippet)
  [beyondcorp::AppConnectorsServiceClient](@ref beyondcorp::AppConnectorsServiceClient-endpoint-snippet)
  [beyondcorp::AppGatewaysServiceClient](@ref beyondcorp::AppGatewaysServiceClient-endpoint-snippet)
@@ -135,6 +139,10 @@ to explicitly load a service account key file.
 @snippet app_connections_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
+ [beyondcorp_appconnections_v1::AppConnectionsServiceClient](@ref beyondcorp_appconnections_v1::AppConnectionsServiceClient-service-account-snippet)
+ [beyondcorp_appconnectors_v1::AppConnectorsServiceClient](@ref beyondcorp_appconnectors_v1::AppConnectorsServiceClient-service-account-snippet)
+ [beyondcorp_appgateways_v1::AppGatewaysServiceClient](@ref beyondcorp_appgateways_v1::AppGatewaysServiceClient-service-account-snippet)
+ [beyondcorp_clientgateways_v1::ClientGatewaysServiceClient](@ref beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-service-account-snippet)
  [beyondcorp::AppConnectionsServiceClient](@ref beyondcorp::AppConnectionsServiceClient-service-account-snippet)
  [beyondcorp::AppConnectorsServiceClient](@ref beyondcorp::AppConnectorsServiceClient-service-account-snippet)
  [beyondcorp::AppGatewaysServiceClient](@ref beyondcorp::AppGatewaysServiceClient-service-account-snippet)
@@ -169,6 +177,66 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page beyondcorp_appconnections_v1::AppConnectionsServiceClient-endpoint-snippet Override beyondcorp_appconnections_v1::AppConnectionsServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/appconnections/v1/samples/app_connections_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page beyondcorp_appconnections_v1::AppConnectionsServiceClient-service-account-snippet Override beyondcorp_appconnections_v1::AppConnectionsServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/appconnections/v1/samples/app_connections_client_samples.cc with-service-account
+
+*/
+
+/*! @page beyondcorp_appconnectors_v1::AppConnectorsServiceClient-endpoint-snippet Override beyondcorp_appconnectors_v1::AppConnectorsServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/appconnectors/v1/samples/app_connectors_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page beyondcorp_appconnectors_v1::AppConnectorsServiceClient-service-account-snippet Override beyondcorp_appconnectors_v1::AppConnectorsServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/appconnectors/v1/samples/app_connectors_client_samples.cc with-service-account
+
+*/
+
+/*! @page beyondcorp_appgateways_v1::AppGatewaysServiceClient-endpoint-snippet Override beyondcorp_appgateways_v1::AppGatewaysServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/appgateways/v1/samples/app_gateways_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page beyondcorp_appgateways_v1::AppGatewaysServiceClient-service-account-snippet Override beyondcorp_appgateways_v1::AppGatewaysServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/appgateways/v1/samples/app_gateways_client_samples.cc with-service-account
+
+*/
+
+/*! @page -endpoint-snippet Override  Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/clientconnectorservices/v1/samples/client_connector_services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page -service-account-snippet Override  Authentication Defaults
+
+@snippet google/cloud/beyondcorp/clientconnectorservices/v1/samples/client_connector_services_client_samples.cc with-service-account
+
+*/
+
+/*! @page beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-endpoint-snippet Override beyondcorp_clientgateways_v1::ClientGatewaysServiceClient Endpoint Configuration
+
+@snippet google/cloud/beyondcorp/clientgateways/v1/samples/client_gateways_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page beyondcorp_clientgateways_v1::ClientGatewaysServiceClient-service-account-snippet Override beyondcorp_clientgateways_v1::ClientGatewaysServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/clientgateways/v1/samples/client_gateways_client_samples.cc with-service-account
+
+*/
 
 /*! @page beyondcorp::AppConnectionsServiceClient-endpoint-snippet Override beyondcorp::AppConnectionsServiceClient Endpoint Configuration
 

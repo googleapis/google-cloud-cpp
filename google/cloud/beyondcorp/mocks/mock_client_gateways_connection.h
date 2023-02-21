@@ -21,62 +21,18 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_MOCKS_MOCK_CLIENT_GATEWAYS_CONNECTION_H
 
 #include "google/cloud/beyondcorp/client_gateways_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/beyondcorp/clientgateways/v1/mocks/mock_client_gateways_connection.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ClientGatewaysServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ClientGatewaysServiceClient`. To do
- * so, construct an object of type `ClientGatewaysServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockClientGatewaysServiceConnection
-    : public beyondcorp::ClientGatewaysServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>,
-      ListClientGateways,
-      (google::cloud::beyondcorp::clientgateways::v1::ListClientGatewaysRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>,
-      GetClientGateway,
-      (google::cloud::beyondcorp::clientgateways::v1::
-           GetClientGatewayRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::beyondcorp::clientgateways::v1::ClientGateway>>,
-      CreateClientGateway,
-      (google::cloud::beyondcorp::clientgateways::v1::
-           CreateClientGatewayRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::
-                                  ClientGatewayOperationMetadata>>,
-              DeleteClientGateway,
-              (google::cloud::beyondcorp::clientgateways::v1::
-                   DeleteClientGatewayRequest const& request),
-              (override));
-};
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1_mocks::MockClientGatewaysServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1_mocks::
+    MockClientGatewaysServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_mocks

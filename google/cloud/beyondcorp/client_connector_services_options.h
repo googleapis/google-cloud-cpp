@@ -22,64 +22,42 @@
 
 #include "google/cloud/beyondcorp/client_connector_services_connection.h"
 #include "google/cloud/beyondcorp/client_connector_services_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_options.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientConnectorServicesServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ClientConnectorServicesServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServicePollingPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientConnectorServicesServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientConnectorServicesServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<
-      ClientConnectorServicesServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientConnectorServicesServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServicePolicyOptionList
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServicePolicyOptionList;
 
-/**
- * The options applicable to ClientConnectorServicesService.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-using ClientConnectorServicesServicePolicyOptionList =
-    OptionList<ClientConnectorServicesServiceRetryPolicyOption,
-               ClientConnectorServicesServiceBackoffPolicyOption,
-               ClientConnectorServicesServicePollingPolicyOption,
-               ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// beyondcorp_clientconnectorservices_v1::ClientConnectorServicesServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientconnectorservices_v1::
+    ClientConnectorServicesServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

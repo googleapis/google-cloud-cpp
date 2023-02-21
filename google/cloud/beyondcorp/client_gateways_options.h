@@ -22,64 +22,42 @@
 
 #include "google/cloud/beyondcorp/client_gateways_connection.h"
 #include "google/cloud/beyondcorp/client_gateways_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/beyondcorp/clientgateways/v1/client_gateways_options.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientGatewaysServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ClientGatewaysServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServicePollingPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientGatewaysServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientGatewaysServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct ClientGatewaysServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServicePolicyOptionList
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServicePolicyOptionList;
 
-/**
- * The options applicable to ClientGatewaysService.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-using ClientGatewaysServicePolicyOptionList =
-    OptionList<ClientGatewaysServiceRetryPolicyOption,
-               ClientGatewaysServiceBackoffPolicyOption,
-               ClientGatewaysServicePollingPolicyOption,
-               ClientGatewaysServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

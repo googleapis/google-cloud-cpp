@@ -20,44 +20,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_CLIENT_GATEWAYS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_CLIENT_GATEWAYS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/beyondcorp/clientgateways/v1/client_gateways_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ClientGatewaysServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~ClientGatewaysServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::MakeDefaultClientGatewaysServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    MakeDefaultClientGatewaysServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListClientGateways(
-      google::cloud::beyondcorp::clientgateways::v1::ListClientGatewaysRequest
-          request);
-
-  virtual google::cloud::Idempotency GetClientGateway(
-      google::cloud::beyondcorp::clientgateways::v1::
-          GetClientGatewayRequest const& request);
-
-  virtual google::cloud::Idempotency CreateClientGateway(
-      google::cloud::beyondcorp::clientgateways::v1::
-          CreateClientGatewayRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteClientGateway(
-      google::cloud::beyondcorp::clientgateways::v1::
-          DeleteClientGatewayRequest const& request);
-};
-
-std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>
-MakeDefaultClientGatewaysServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

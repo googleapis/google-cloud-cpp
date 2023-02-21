@@ -19,52 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APP_CONNECTORS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APP_CONNECTORS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AppConnectorsServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~AppConnectorsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AppConnectorsServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListAppConnectors(
-      google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsRequest
-          request);
-
-  virtual google::cloud::Idempotency GetAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::
-          GetAppConnectorRequest const& request);
-
-  virtual google::cloud::Idempotency CreateAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::
-          CreateAppConnectorRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::
-          UpdateAppConnectorRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteAppConnector(
-      google::cloud::beyondcorp::appconnectors::v1::
-          DeleteAppConnectorRequest const& request);
-
-  virtual google::cloud::Idempotency ReportStatus(
-      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
-          request);
-};
-
-std::unique_ptr<AppConnectorsServiceConnectionIdempotencyPolicy>
-MakeDefaultAppConnectorsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// beyondcorp_appconnectors_v1::AppConnectorsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::beyondcorp_appconnectors_v1::
+    AppConnectorsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
