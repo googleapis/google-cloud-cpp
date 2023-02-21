@@ -48,8 +48,10 @@
 ./include/google/cloud/appengine/internal
 ./include/google/cloud/appengine/mocks
 ./include/google/cloud/artifactregistry
-./include/google/cloud/artifactregistry/internal
 ./include/google/cloud/artifactregistry/mocks
+./include/google/cloud/artifactregistry/v1
+./include/google/cloud/artifactregistry/v1/internal
+./include/google/cloud/artifactregistry/v1/mocks
 ./include/google/cloud/asset
 ./include/google/cloud/asset/internal
 ./include/google/cloud/asset/mocks

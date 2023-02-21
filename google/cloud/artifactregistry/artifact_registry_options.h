@@ -21,63 +21,34 @@
 
 #include "google/cloud/artifactregistry/artifact_registry_connection.h"
 #include "google/cloud/artifactregistry/artifact_registry_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/artifactregistry/v1/artifact_registry_options.h"
 
 namespace google {
 namespace cloud {
 namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-artifactregistry-options
- */
-struct ArtifactRegistryRetryPolicyOption {
-  using Type = std::shared_ptr<ArtifactRegistryRetryPolicy>;
-};
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryPollingPolicyOption
+/// directly.
+using ::google::cloud::artifactregistry_v1::ArtifactRegistryPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-artifactregistry-options
- */
-struct ArtifactRegistryBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryBackoffPolicyOption
+/// directly.
+using ::google::cloud::artifactregistry_v1::ArtifactRegistryBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-artifactregistry-options
- */
-struct ArtifactRegistryConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ArtifactRegistryConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// artifactregistry_v1::ArtifactRegistryConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::artifactregistry_v1::
+    ArtifactRegistryConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-artifactregistry-options
- */
-struct ArtifactRegistryPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryPolicyOptionList
+/// directly.
+using ::google::cloud::artifactregistry_v1::ArtifactRegistryPolicyOptionList;
 
-/**
- * The options applicable to ArtifactRegistry.
- *
- * @ingroup google-cloud-artifactregistry-options
- */
-using ArtifactRegistryPolicyOptionList =
-    OptionList<ArtifactRegistryRetryPolicyOption,
-               ArtifactRegistryBackoffPolicyOption,
-               ArtifactRegistryPollingPolicyOption,
-               ArtifactRegistryConnectionIdempotencyPolicyOption>;
+/// @deprecated Use artifactregistry_v1::ArtifactRegistryRetryPolicyOption
+/// directly.
+using ::google::cloud::artifactregistry_v1::ArtifactRegistryRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
