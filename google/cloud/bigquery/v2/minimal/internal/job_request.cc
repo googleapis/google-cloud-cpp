@@ -25,7 +25,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
-                                                      Options& opts) {
+                                                      Options const& opts) {
   rest_internal::RestRequest request;
   if (r.project_id().empty()) {
     return internal::InvalidArgumentError(
@@ -36,8 +36,10 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
         "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
   // Fix the endpoints prefix and suffixes.
-  auto endpoint =
-      opts.lookup<EndpointOption>("https://bigquery.googleapis.com/");
+  std::string endpoint = "https://bigquery.googleapis.com/";
+  if (opts.has<EndpointOption>()) {
+    endpoint = opts.get<EndpointOption>();
+  }
   if (!absl::StartsWith(endpoint, "https://") &&
       !absl::StartsWith(endpoint, "http://")) {
     endpoint = absl::StrCat("https://", endpoint);

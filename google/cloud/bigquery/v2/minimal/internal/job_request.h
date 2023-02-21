@@ -69,7 +69,7 @@ class GetJobRequest {
 
 // Builds RestRequest from GetJobRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
-                                                      Options& opts);
+                                                      Options const& opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
