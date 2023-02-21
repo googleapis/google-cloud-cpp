@@ -82,6 +82,10 @@ bool AppendIfEmphasis(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& ctx,
                             pugi::xml_node const& node);
 
+/// Handles `ref` nodes: all forms of links.
+bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
+                 pugi::xml_node const& node);
+
 /// Part of the implementation of AppendIfParagraph().
 bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
                               pugi::xml_node const& node);

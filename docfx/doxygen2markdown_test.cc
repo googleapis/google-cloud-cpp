@@ -200,6 +200,30 @@ TEST(Doxygen2Markdown, ComputerOutput) {
   EXPECT_EQ(os.str(), "`int f() { return 42; }`");
 }
 
+TEST(Doxygen2Markdown, RefExternal) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <ref id="test-node" external="https://example.com">Reference Text</ref>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfRef(os, {}, selected.node()));
+  EXPECT_EQ("[Reference Text](https://example.com)", os.str());
+}
+
+TEST(Doxygen2Markdown, RefInternal) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <ref id="test-node" refid="some_id">Reference Text</ref>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfRef(os, {}, selected.node()));
+  EXPECT_EQ("[Reference Text](xref:some_id)", os.str());
+}
+
 TEST(Doxygen2Markdown, Paragraph) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
@@ -247,6 +271,40 @@ TEST(Doxygen2Markdown, ParagraphWithUnknownOutput) {
         throw;
       },
       std::runtime_error);
+}
+
+TEST(Doxygen2Markdown, ParagraphContents) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-000'>The answer is 42.</para>
+        <para id='test-001'><bold>The answer is 42.</bold></para>
+        <para id='test-002'><strike>The answer is 42.</strike></para>
+        <para id='test-003'><emphasis>The answer is 42.</emphasis></para>
+        <para id='test-004'><computeroutput>The answer is 42.</computeroutput></para>
+        <para id='test-005'><ref refid="test_id">The answer is 42.</ref></para>
+    </doxygen>)xml";
+
+  struct TestCase {
+    std::string id;
+    std::string expected;
+  } const cases[] = {
+      {"test-000", "\n\nThe answer is 42."},
+      {"test-001", "\n\n**The answer is 42.**"},
+      {"test-002", "\n\n~The answer is 42.~"},
+      {"test-003", "\n\n*The answer is 42.*"},
+      {"test-004", "\n\n`The answer is 42.`"},
+      {"test-005", "\n\n[The answer is 42.](xref:test_id)"},
+  };
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing with id=" + test.id + ", expected=" + test.expected);
+    auto selected = doc.select_node(("//*[@id='" + test.id + "']").c_str());
+    std::ostringstream os;
+    ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+    EXPECT_EQ(test.expected, os.str());
+  }
 }
 
 TEST(Doxygen2Markdown, ItemizedListSimple) {
