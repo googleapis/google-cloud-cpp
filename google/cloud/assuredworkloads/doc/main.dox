@@ -95,13 +95,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `assuredworkloads::AssuredWorkloadsServiceClient`:
+For example, this will override the default endpoint for `assuredworkloads_v1::AssuredWorkloadsServiceClient`:
 
 @snippet assured_workloads_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [assuredworkloads::AssuredWorkloadsServiceClient](@ref assuredworkloads::AssuredWorkloadsServiceClient-endpoint-snippet)
- [assuredworkloads_v1::AssuredWorkloadsServiceClient](@ref assuredworkloads_v1::AssuredWorkloadsServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -114,10 +110,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet assured_workloads_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [assuredworkloads::AssuredWorkloadsServiceClient](@ref assuredworkloads::AssuredWorkloadsServiceClient-service-account-snippet)
- [assuredworkloads_v1::AssuredWorkloadsServiceClient](@ref assuredworkloads_v1::AssuredWorkloadsServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page assuredworkloads::AssuredWorkloadsServiceClient-endpoint-snippet Override assuredworkloads::AssuredWorkloadsServiceClient Endpoint Configuration
-
-@snippet google/cloud/assuredworkloads/samples/assured_workloads_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page assuredworkloads::AssuredWorkloadsServiceClient-service-account-snippet Override assuredworkloads::AssuredWorkloadsServiceClient Authentication Defaults
-
-@snippet google/cloud/assuredworkloads/samples/assured_workloads_client_samples.cc with-service-account
-
-*/
 
 /*! @page assuredworkloads_v1::AssuredWorkloadsServiceClient-endpoint-snippet Override assuredworkloads_v1::AssuredWorkloadsServiceClient Endpoint Configuration
 
