@@ -16,27 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_TRACING_STUB_H
 
-#include "google/cloud/channel/internal/cloud_channel_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudChannelServiceAuth : public CloudChannelServiceStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class CloudChannelServiceTracingStub : public CloudChannelServiceStub {
  public:
-  ~CloudChannelServiceAuth() override = default;
-  CloudChannelServiceAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+  ~CloudChannelServiceTracingStub() override = default;
+
+  explicit CloudChannelServiceTracingStub(
       std::shared_ptr<CloudChannelServiceStub> child);
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
@@ -299,13 +297,23 @@ class CloudChannelServiceAuth : public CloudChannelServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CloudChannelServiceStub> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<CloudChannelServiceStub> MakeCloudChannelServiceTracingStub(
+    std::shared_ptr<CloudChannelServiceStub> stub);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_TRACING_STUB_H

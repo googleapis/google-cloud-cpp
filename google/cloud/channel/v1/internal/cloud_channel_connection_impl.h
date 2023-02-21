@@ -16,29 +16,41 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_CONNECTION_IMPL_H
 
-#include "google/cloud/channel/cloud_channel_connection.h"
+#include "google/cloud/channel/v1/cloud_channel_connection.h"
+#include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
+#include "google/cloud/channel/v1/cloud_channel_options.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_retry_traits.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class CloudChannelServiceTracingConnection
-    : public channel::CloudChannelServiceConnection {
+class CloudChannelServiceConnectionImpl
+    : public channel_v1::CloudChannelServiceConnection {
  public:
-  ~CloudChannelServiceTracingConnection() override = default;
+  ~CloudChannelServiceConnectionImpl() override = default;
 
-  explicit CloudChannelServiceTracingConnection(
-      std::shared_ptr<channel::CloudChannelServiceConnection> child);
+  CloudChannelServiceConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<channel_v1_internal::CloudChannelServiceStub> stub,
+      Options options);
 
-  Options options() override { return child_->options(); }
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::channel::v1::Customer> ListCustomers(
       google::cloud::channel::v1::ListCustomersRequest request) override;
@@ -228,24 +240,60 @@ class CloudChannelServiceTracingConnection
       google::cloud::channel::v1::ListSubscribersRequest request) override;
 
  private:
-  std::shared_ptr<channel::CloudChannelServiceConnection> child_;
+  std::unique_ptr<channel_v1::CloudChannelServiceRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<channel_v1::CloudChannelServiceRetryPolicyOption>()) {
+      return options.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
+          ->clone();
+    }
+    return options_.get<channel_v1::CloudChannelServiceRetryPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<channel_v1::CloudChannelServiceBackoffPolicyOption>()) {
+      return options.get<channel_v1::CloudChannelServiceBackoffPolicyOption>()
+          ->clone();
+    }
+    return options_.get<channel_v1::CloudChannelServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<channel_v1::CloudChannelServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<channel_v1::
+                     CloudChannelServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<channel_v1::
+                   CloudChannelServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<channel_v1::CloudChannelServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<channel_v1::CloudChannelServicePollingPolicyOption>()) {
+      return options.get<channel_v1::CloudChannelServicePollingPolicyOption>()
+          ->clone();
+    }
+    return options_.get<channel_v1::CloudChannelServicePollingPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<channel_v1_internal::CloudChannelServiceStub> stub_;
+  Options options_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Conditionally applies the tracing decorator to the given connection.
- *
- * The connection is only decorated if tracing is enabled (as determined by the
- * connection's options).
- */
-std::shared_ptr<channel::CloudChannelServiceConnection>
-MakeCloudChannelServiceTracingConnection(
-    std::shared_ptr<channel::CloudChannelServiceConnection> conn);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_CONNECTION_IMPL_H

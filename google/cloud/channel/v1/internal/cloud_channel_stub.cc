@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#include "google/cloud/channel/internal/cloud_channel_stub.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/channel/v1/service.grpc.pb.h>
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudChannelServiceStub::~CloudChannelServiceStub() = default;
@@ -669,6 +669,6 @@ future<Status> DefaultCloudChannelServiceStub::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google

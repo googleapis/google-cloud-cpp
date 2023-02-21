@@ -142,9 +142,10 @@
 ./include/google/cloud/certificatemanager/v1/internal
 ./include/google/cloud/certificatemanager/v1/mocks
 ./include/google/cloud/channel
-./include/google/cloud/channel/internal
 ./include/google/cloud/channel/mocks
 ./include/google/cloud/channel/v1
+./include/google/cloud/channel/v1/internal
+./include/google/cloud/channel/v1/mocks
 ./include/google/cloud/cloudbuild
 ./include/google/cloud/cloudbuild/internal
 ./include/google/cloud/cloudbuild/mocks

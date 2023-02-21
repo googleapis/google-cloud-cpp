@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#include "google/cloud/channel/internal/cloud_channel_connection_impl.h"
-#include "google/cloud/channel/internal/cloud_channel_option_defaults.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_connection_impl.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudChannelServiceConnectionImpl::CloudChannelServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<channel_internal::CloudChannelServiceStub> stub,
+    std::shared_ptr<channel_v1_internal::CloudChannelServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,8 +45,9 @@ CloudChannelServiceConnectionImpl::ListCustomers(
     google::cloud::channel::v1::ListCustomersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCustomers(request);
   char const* function_name = __func__;
@@ -188,8 +189,9 @@ CloudChannelServiceConnectionImpl::ListEntitlements(
     google::cloud::channel::v1::ListEntitlementsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEntitlements(request);
   char const* function_name = __func__;
@@ -221,8 +223,9 @@ CloudChannelServiceConnectionImpl::ListTransferableSkus(
     google::cloud::channel::v1::ListTransferableSkusRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTransferableSkus(request);
   char const* function_name = __func__;
@@ -255,8 +258,9 @@ CloudChannelServiceConnectionImpl::ListTransferableOffers(
     google::cloud::channel::v1::ListTransferableOffersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTransferableOffers(request);
   char const* function_name = __func__;
@@ -604,8 +608,9 @@ CloudChannelServiceConnectionImpl::ListChannelPartnerLinks(
     google::cloud::channel::v1::ListChannelPartnerLinksRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListChannelPartnerLinks(request);
   char const* function_name = __func__;
@@ -697,8 +702,9 @@ CloudChannelServiceConnectionImpl::ListCustomerRepricingConfigs(
     google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListCustomerRepricingConfigs(request);
@@ -792,8 +798,9 @@ CloudChannelServiceConnectionImpl::ListChannelPartnerRepricingConfigs(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListChannelPartnerRepricingConfigs(request);
@@ -886,8 +893,9 @@ CloudChannelServiceConnectionImpl::ListProducts(
     google::cloud::channel::v1::ListProductsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProducts(request);
   char const* function_name = __func__;
@@ -919,8 +927,9 @@ CloudChannelServiceConnectionImpl::ListSkus(
     google::cloud::channel::v1::ListSkusRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSkus(request);
   char const* function_name = __func__;
@@ -950,8 +959,9 @@ CloudChannelServiceConnectionImpl::ListOffers(
     google::cloud::channel::v1::ListOffersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListOffers(request);
   char const* function_name = __func__;
@@ -983,8 +993,9 @@ CloudChannelServiceConnectionImpl::ListPurchasableSkus(
     google::cloud::channel::v1::ListPurchasableSkusRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPurchasableSkus(request);
   char const* function_name = __func__;
@@ -1016,8 +1027,9 @@ CloudChannelServiceConnectionImpl::ListPurchasableOffers(
     google::cloud::channel::v1::ListPurchasableOffersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPurchasableOffers(request);
   char const* function_name = __func__;
@@ -1077,8 +1089,9 @@ StreamRange<std::string> CloudChannelServiceConnectionImpl::ListSubscribers(
     google::cloud::channel::v1::ListSubscribersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<channel::CloudChannelServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSubscribers(request);
   char const* function_name = __func__;
@@ -1104,6 +1117,6 @@ StreamRange<std::string> CloudChannelServiceConnectionImpl::ListSubscribers(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google

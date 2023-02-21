@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#include "google/cloud/channel/cloud_channel_connection.h"
-#include "google/cloud/channel/cloud_channel_options.h"
-#include "google/cloud/channel/internal/cloud_channel_connection_impl.h"
-#include "google/cloud/channel/internal/cloud_channel_option_defaults.h"
-#include "google/cloud/channel/internal/cloud_channel_stub_factory.h"
-#include "google/cloud/channel/internal/cloud_channel_tracing_connection.h"
+#include "google/cloud/channel/v1/cloud_channel_connection.h"
+#include "google/cloud/channel/v1/cloud_channel_options.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_connection_impl.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_option_defaults.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub_factory.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace channel {
+namespace channel_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudChannelServiceConnection::~CloudChannelServiceConnection() = default;
@@ -360,17 +360,17 @@ MakeCloudChannelServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  CloudChannelServicePolicyOptionList>(options,
                                                                       __func__);
-  options =
-      channel_internal::CloudChannelServiceDefaultOptions(std::move(options));
+  options = channel_v1_internal::CloudChannelServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = channel_internal::CreateDefaultCloudChannelServiceStub(
+  auto stub = channel_v1_internal::CreateDefaultCloudChannelServiceStub(
       background->cq(), options);
-  return channel_internal::MakeCloudChannelServiceTracingConnection(
-      std::make_shared<channel_internal::CloudChannelServiceConnectionImpl>(
+  return channel_v1_internal::MakeCloudChannelServiceTracingConnection(
+      std::make_shared<channel_v1_internal::CloudChannelServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel
+}  // namespace channel_v1
 }  // namespace cloud
 }  // namespace google

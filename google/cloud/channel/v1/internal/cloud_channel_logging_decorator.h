@@ -16,25 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_LOGGING_DECORATOR_H
 
-#include "google/cloud/channel/internal/cloud_channel_stub.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudChannelServiceMetadata : public CloudChannelServiceStub {
+class CloudChannelServiceLogging : public CloudChannelServiceStub {
  public:
-  ~CloudChannelServiceMetadata() override = default;
-  explicit CloudChannelServiceMetadata(
-      std::shared_ptr<CloudChannelServiceStub> child);
+  ~CloudChannelServiceLogging() override = default;
+  CloudChannelServiceLogging(std::shared_ptr<CloudChannelServiceStub> child,
+                             TracingOptions tracing_options,
+                             std::set<std::string> components);
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
       grpc::ClientContext& context,
@@ -296,17 +299,14 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
   std::shared_ptr<CloudChannelServiceStub> child_;
-  std::string api_client_header_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // CloudChannelServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_INTERNAL_CLOUD_CHANNEL_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_INTERNAL_CLOUD_CHANNEL_LOGGING_DECORATOR_H

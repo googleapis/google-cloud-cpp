@@ -356,7 +356,8 @@ service {
 service {
   service_proto_path: "google/cloud/channel/v1/service.proto"
   additional_proto_files: ["google/cloud/channel/v1/operations.proto"]
-  product_path: "google/cloud/channel"
+  product_path: "google/cloud/channel/v1"
+  forwarding_product_path: "google/cloud/channel"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

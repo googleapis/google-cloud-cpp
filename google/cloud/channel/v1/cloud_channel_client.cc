@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#include "google/cloud/channel/cloud_channel_client.h"
+#include "google/cloud/channel/v1/cloud_channel_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace channel {
+namespace channel_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudChannelServiceClient::CloudChannelServiceClient(
@@ -514,6 +514,6 @@ StreamRange<std::string> CloudChannelServiceClient::ListSubscribers(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel
+}  // namespace channel_v1
 }  // namespace cloud
 }  // namespace google

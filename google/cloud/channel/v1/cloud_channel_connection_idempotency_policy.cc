@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#include "google/cloud/channel/cloud_channel_connection_idempotency_policy.h"
+#include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace channel {
+namespace channel_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -296,6 +296,6 @@ MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel
+}  // namespace channel_v1
 }  // namespace cloud
 }  // namespace google

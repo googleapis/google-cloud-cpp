@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/channel/v1/service.proto
 
-#include "google/cloud/channel/internal/cloud_channel_stub_factory.h"
-#include "google/cloud/channel/internal/cloud_channel_auth_decorator.h"
-#include "google/cloud/channel/internal/cloud_channel_logging_decorator.h"
-#include "google/cloud/channel/internal/cloud_channel_metadata_decorator.h"
-#include "google/cloud/channel/internal/cloud_channel_stub.h"
-#include "google/cloud/channel/internal/cloud_channel_tracing_stub.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub_factory.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_auth_decorator.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_logging_decorator.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_metadata_decorator.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_stub.h"
+#include "google/cloud/channel/v1/internal/cloud_channel_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
+namespace channel_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<CloudChannelServiceStub> CreateDefaultCloudChannelServiceStub(
@@ -67,6 +67,6 @@ std::shared_ptr<CloudChannelServiceStub> CreateDefaultCloudChannelServiceStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
+}  // namespace channel_v1_internal
 }  // namespace cloud
 }  // namespace google
