@@ -16,27 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_STUB_FACTORY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_STUB_FACTORY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_RETRY_TRAITS_H
 
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<BareMetalSolutionStub> CreateDefaultBareMetalSolutionStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+/// Define the gRPC status code semantics for retrying requests.
+struct BareMetalSolutionRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_STUB_FACTORY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_RETRY_TRAITS_H

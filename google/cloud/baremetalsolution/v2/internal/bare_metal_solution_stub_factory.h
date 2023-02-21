@@ -16,22 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_OPTION_DEFAULTS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_OPTION_DEFAULTS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_STUB_FACTORY_H
 
-#include "google/cloud/options.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options BareMetalSolutionDefaultOptions(Options options);
+std::shared_ptr<BareMetalSolutionStub> CreateDefaultBareMetalSolutionStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_OPTION_DEFAULTS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_STUB_FACTORY_H

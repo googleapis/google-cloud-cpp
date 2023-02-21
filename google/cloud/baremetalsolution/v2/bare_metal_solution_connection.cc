@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#include "google/cloud/baremetalsolution/bare_metal_solution_connection.h"
-#include "google/cloud/baremetalsolution/bare_metal_solution_options.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_connection_impl.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_option_defaults.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub_factory.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_tracing_connection.h"
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_options.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_connection_impl.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_option_defaults.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub_factory.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
+namespace baremetalsolution_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BareMetalSolutionConnection::~BareMetalSolutionConnection() = default;
@@ -190,18 +190,18 @@ std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
                                  UnifiedCredentialsOptionList,
                                  BareMetalSolutionPolicyOptionList>(options,
                                                                     __func__);
-  options = baremetalsolution_internal::BareMetalSolutionDefaultOptions(
+  options = baremetalsolution_v2_internal::BareMetalSolutionDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = baremetalsolution_internal::CreateDefaultBareMetalSolutionStub(
+  auto stub = baremetalsolution_v2_internal::CreateDefaultBareMetalSolutionStub(
       background->cq(), options);
-  return baremetalsolution_internal::MakeBareMetalSolutionTracingConnection(
+  return baremetalsolution_v2_internal::MakeBareMetalSolutionTracingConnection(
       std::make_shared<
-          baremetalsolution_internal::BareMetalSolutionConnectionImpl>(
+          baremetalsolution_v2_internal::BareMetalSolutionConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution
+}  // namespace baremetalsolution_v2
 }  // namespace cloud
 }  // namespace google

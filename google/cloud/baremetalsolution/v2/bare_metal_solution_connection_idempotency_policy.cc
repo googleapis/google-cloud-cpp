@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#include "google/cloud/baremetalsolution/bare_metal_solution_connection_idempotency_policy.h"
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
+namespace baremetalsolution_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -141,6 +141,6 @@ MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution
+}  // namespace baremetalsolution_v2
 }  // namespace cloud
 }  // namespace google

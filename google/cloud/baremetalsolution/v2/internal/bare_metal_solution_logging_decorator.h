@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_LOGGING_DECORATOR_H
 
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -29,15 +29,15 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BareMetalSolutionAuth : public BareMetalSolutionStub {
+class BareMetalSolutionLogging : public BareMetalSolutionStub {
  public:
-  ~BareMetalSolutionAuth() override = default;
-  BareMetalSolutionAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<BareMetalSolutionStub> child);
+  ~BareMetalSolutionLogging() override = default;
+  BareMetalSolutionLogging(std::shared_ptr<BareMetalSolutionStub> child,
+                           TracingOptions tracing_options,
+                           std::set<std::string> components);
 
   StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
   ListInstances(
@@ -162,13 +162,14 @@ class BareMetalSolutionAuth : public BareMetalSolutionStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<BareMetalSolutionStub> child_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // BareMetalSolutionLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_LOGGING_DECORATOR_H

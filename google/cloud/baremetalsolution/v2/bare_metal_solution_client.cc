@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#include "google/cloud/baremetalsolution/bare_metal_solution_client.h"
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
+namespace baremetalsolution_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BareMetalSolutionClient::BareMetalSolutionClient(
@@ -372,6 +372,6 @@ BareMetalSolutionClient::UpdateNfsShare(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution
+}  // namespace baremetalsolution_v2
 }  // namespace cloud
 }  // namespace google

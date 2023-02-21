@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_option_defaults.h"
-#include "google/cloud/baremetalsolution/bare_metal_solution_connection.h"
-#include "google/cloud/baremetalsolution/bare_metal_solution_options.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_option_defaults.h"
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,36 +39,40 @@ Options BareMetalSolutionDefaultOptions(Options options) {
       "baremetalsolution.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<baremetalsolution::BareMetalSolutionRetryPolicyOption>()) {
-    options.set<baremetalsolution::BareMetalSolutionRetryPolicyOption>(
-        baremetalsolution::BareMetalSolutionLimitedTimeRetryPolicy(
+  if (!options
+           .has<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()) {
+    options.set<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>(
+        baremetalsolution_v2::BareMetalSolutionLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()) {
-    options.set<baremetalsolution::BareMetalSolutionBackoffPolicyOption>(
+  if (!options
+           .has<baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption>()) {
+    options.set<baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<baremetalsolution::BareMetalSolutionPollingPolicyOption>()) {
-    options.set<baremetalsolution::BareMetalSolutionPollingPolicyOption>(
+  if (!options
+           .has<baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>()) {
+    options.set<baremetalsolution_v2::BareMetalSolutionPollingPolicyOption>(
         GenericPollingPolicy<
-            baremetalsolution::BareMetalSolutionRetryPolicyOption::Type,
-            baremetalsolution::BareMetalSolutionBackoffPolicyOption::Type>(
+            baremetalsolution_v2::BareMetalSolutionRetryPolicyOption::Type,
+            baremetalsolution_v2::BareMetalSolutionBackoffPolicyOption::Type>(
             options
-                .get<baremetalsolution::BareMetalSolutionRetryPolicyOption>()
+                .get<baremetalsolution_v2::BareMetalSolutionRetryPolicyOption>()
                 ->clone(),
             options
-                .get<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()
+                .get<baremetalsolution_v2::
+                         BareMetalSolutionBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<baremetalsolution::
+  if (!options.has<baremetalsolution_v2::
                        BareMetalSolutionConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        baremetalsolution::BareMetalSolutionConnectionIdempotencyPolicyOption>(
-        baremetalsolution::
+    options.set<baremetalsolution_v2::
+                    BareMetalSolutionConnectionIdempotencyPolicyOption>(
+        baremetalsolution_v2::
             MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy());
   }
 
@@ -76,6 +80,6 @@ Options BareMetalSolutionDefaultOptions(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google

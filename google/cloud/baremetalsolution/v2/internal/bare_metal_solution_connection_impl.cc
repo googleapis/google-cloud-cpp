@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_connection_impl.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_option_defaults.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_connection_impl.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BareMetalSolutionConnectionImpl::BareMetalSolutionConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<baremetalsolution_internal::BareMetalSolutionStub> stub,
+    std::shared_ptr<baremetalsolution_v2_internal::BareMetalSolutionStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,7 +46,7 @@ BareMetalSolutionConnectionImpl::ListInstances(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
+      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInstances(request);
@@ -239,7 +239,7 @@ BareMetalSolutionConnectionImpl::ListVolumes(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
+      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListVolumes(request);
@@ -342,7 +342,7 @@ BareMetalSolutionConnectionImpl::ListNetworks(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
+      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNetworks(request);
@@ -443,7 +443,7 @@ BareMetalSolutionConnectionImpl::ListLuns(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
+      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLuns(request);
@@ -487,7 +487,7 @@ BareMetalSolutionConnectionImpl::ListNfsShares(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<baremetalsolution::BareMetalSolutionRetryPolicy const>(
+      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNfsShares(request);
@@ -547,6 +547,6 @@ BareMetalSolutionConnectionImpl::UpdateNfsShare(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google

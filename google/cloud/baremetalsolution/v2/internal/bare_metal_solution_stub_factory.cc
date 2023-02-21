@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub_factory.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_auth_decorator.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_logging_decorator.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_metadata_decorator.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_tracing_stub.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub_factory.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_auth_decorator.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_logging_decorator.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_metadata_decorator.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_stub.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<BareMetalSolutionStub> CreateDefaultBareMetalSolutionStub(
@@ -67,6 +67,6 @@ std::shared_ptr<BareMetalSolutionStub> CreateDefaultBareMetalSolutionStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google

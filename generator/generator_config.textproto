@@ -126,7 +126,8 @@ service {
 # Bare Metal Solution
 service {
   service_proto_path: "google/cloud/baremetalsolution/v2/baremetalsolution.proto"
-  product_path: "google/cloud/baremetalsolution"
+  product_path: "google/cloud/baremetalsolution/v2"
+  forwarding_product_path: "google/cloud/baremetalsolution"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

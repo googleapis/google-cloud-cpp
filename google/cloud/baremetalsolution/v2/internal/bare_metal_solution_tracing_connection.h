@@ -16,41 +16,29 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_TRACING_CONNECTION_H
 
-#include "google/cloud/baremetalsolution/bare_metal_solution_connection.h"
-#include "google/cloud/baremetalsolution/bare_metal_solution_connection_idempotency_policy.h"
-#include "google/cloud/baremetalsolution/bare_metal_solution_options.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_retry_traits.h"
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BareMetalSolutionConnectionImpl
-    : public baremetalsolution::BareMetalSolutionConnection {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class BareMetalSolutionTracingConnection
+    : public baremetalsolution_v2::BareMetalSolutionConnection {
  public:
-  ~BareMetalSolutionConnectionImpl() override = default;
+  ~BareMetalSolutionTracingConnection() override = default;
 
-  BareMetalSolutionConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<baremetalsolution_internal::BareMetalSolutionStub> stub,
-      Options options);
+  explicit BareMetalSolutionTracingConnection(
+      std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection> child);
 
-  Options options() override { return options_; }
+  Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::baremetalsolution::v2::Instance> ListInstances(
       google::cloud::baremetalsolution::v2::ListInstancesRequest request)
@@ -137,70 +125,24 @@ class BareMetalSolutionConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<baremetalsolution::BareMetalSolutionRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<baremetalsolution::BareMetalSolutionRetryPolicyOption>()) {
-      return options
-          .get<baremetalsolution::BareMetalSolutionRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution::BareMetalSolutionRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()) {
-      return options
-          .get<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      baremetalsolution::BareMetalSolutionConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<baremetalsolution::
-                        BareMetalSolutionConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<baremetalsolution::
-                   BareMetalSolutionConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution::
-                 BareMetalSolutionConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<baremetalsolution::BareMetalSolutionPollingPolicyOption>()) {
-      return options
-          .get<baremetalsolution::BareMetalSolutionPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<baremetalsolution::BareMetalSolutionPollingPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<baremetalsolution_internal::BareMetalSolutionStub> stub_;
-  Options options_;
+  std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection>
+MakeBareMetalSolutionTracingConnection(
+    std::shared_ptr<baremetalsolution_v2::BareMetalSolutionConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_INTERNAL_BARE_METAL_SOLUTION_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BAREMETALSOLUTION_V2_INTERNAL_BARE_METAL_SOLUTION_TRACING_CONNECTION_H

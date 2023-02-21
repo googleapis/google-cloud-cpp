@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
-#include "google/cloud/baremetalsolution/internal/bare_metal_solution_logging_decorator.h"
+#include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/baremetalsolution/v2/baremetalsolution.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
+namespace baremetalsolution_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BareMetalSolutionLogging::BareMetalSolutionLogging(
@@ -324,6 +324,6 @@ future<Status> BareMetalSolutionLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace baremetalsolution_internal
+}  // namespace baremetalsolution_v2_internal
 }  // namespace cloud
 }  // namespace google

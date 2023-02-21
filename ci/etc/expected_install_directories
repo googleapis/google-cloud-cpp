@@ -70,9 +70,10 @@
 ./include/google/cloud/automl/v1/internal
 ./include/google/cloud/automl/v1/mocks
 ./include/google/cloud/baremetalsolution
-./include/google/cloud/baremetalsolution/internal
 ./include/google/cloud/baremetalsolution/mocks
 ./include/google/cloud/baremetalsolution/v2
+./include/google/cloud/baremetalsolution/v2/internal
+./include/google/cloud/baremetalsolution/v2/mocks
 ./include/google/cloud/batch
 ./include/google/cloud/batch/internal
 ./include/google/cloud/batch/mocks
