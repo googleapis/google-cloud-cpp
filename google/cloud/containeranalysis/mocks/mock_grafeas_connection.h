@@ -20,81 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_MOCKS_MOCK_GRAFEAS_CONNECTION_H
 
 #include "google/cloud/containeranalysis/grafeas_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/containeranalysis/v1/mocks/mock_grafeas_connection.h"
 
 namespace google {
 namespace cloud {
 namespace containeranalysis_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `GrafeasConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `GrafeasClient`. To do so,
- * construct an object of type `GrafeasClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockGrafeasConnection : public containeranalysis::GrafeasConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, GetOccurrence,
-              (grafeas::v1::GetOccurrenceRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<grafeas::v1::Occurrence>, ListOccurrences,
-              (grafeas::v1::ListOccurrencesRequest request), (override));
-
-  MOCK_METHOD(Status, DeleteOccurrence,
-              (grafeas::v1::DeleteOccurrenceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, CreateOccurrence,
-              (grafeas::v1::CreateOccurrenceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>,
-              BatchCreateOccurrences,
-              (grafeas::v1::BatchCreateOccurrencesRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::Occurrence>, UpdateOccurrence,
-              (grafeas::v1::UpdateOccurrenceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, GetOccurrenceNote,
-              (grafeas::v1::GetOccurrenceNoteRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, GetNote,
-              (grafeas::v1::GetNoteRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<grafeas::v1::Note>, ListNotes,
-              (grafeas::v1::ListNotesRequest request), (override));
-
-  MOCK_METHOD(Status, DeleteNote,
-              (grafeas::v1::DeleteNoteRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, CreateNote,
-              (grafeas::v1::CreateNoteRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::BatchCreateNotesResponse>, BatchCreateNotes,
-              (grafeas::v1::BatchCreateNotesRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<grafeas::v1::Note>, UpdateNote,
-              (grafeas::v1::UpdateNoteRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<grafeas::v1::Occurrence>, ListNoteOccurrences,
-              (grafeas::v1::ListNoteOccurrencesRequest request), (override));
-};
+/// @deprecated Use containeranalysis_v1_mocks::MockGrafeasConnection directly.
+using ::google::cloud::containeranalysis_v1_mocks::MockGrafeasConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_mocks

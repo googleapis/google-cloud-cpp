@@ -16,23 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_CONTAINER_ANALYSIS_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_CONTAINER_ANALYSIS_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_CONTAINER_ANALYSIS_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_CONTAINER_ANALYSIS_RETRY_TRAITS_H
 
-#include "google/cloud/containeranalysis/container_analysis_connection.h"
-#include "google/cloud/containeranalysis/v1/container_analysis_client.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
+namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use containeranalysis_v1::ContainerAnalysisClient directly.
-using ::google::cloud::containeranalysis_v1::ContainerAnalysisClient;
+/// Define the gRPC status code semantics for retrying requests.
+struct ContainerAnalysisRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace containeranalysis
+}  // namespace containeranalysis_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_CONTAINER_ANALYSIS_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_CONTAINER_ANALYSIS_RETRY_TRAITS_H

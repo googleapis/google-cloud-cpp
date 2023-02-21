@@ -20,114 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_GRAFEAS_CONNECTION_H
 
 #include "google/cloud/containeranalysis/grafeas_connection_idempotency_policy.h"
-#include "google/cloud/containeranalysis/internal/grafeas_retry_traits.h"
-#include "google/cloud/containeranalysis/internal/grafeas_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/containeranalysis/v1/grafeas_connection.h"
 
 namespace google {
 namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GrafeasRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    containeranalysis_internal::GrafeasRetryTraits>;
+/// @deprecated Use containeranalysis_v1::MakeGrafeasConnection directly.
+using ::google::cloud::containeranalysis_v1::MakeGrafeasConnection;
 
-using GrafeasLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        containeranalysis_internal::GrafeasRetryTraits>;
+/// @deprecated Use containeranalysis_v1::GrafeasConnection directly.
+using ::google::cloud::containeranalysis_v1::GrafeasConnection;
 
-using GrafeasLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        containeranalysis_internal::GrafeasRetryTraits>;
+/// @deprecated Use containeranalysis_v1::GrafeasLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::containeranalysis_v1::
+    GrafeasLimitedErrorCountRetryPolicy;
 
-/**
- * The `GrafeasConnection` object for `GrafeasClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `GrafeasClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `GrafeasClient`.
- *
- * To create a concrete instance, see `MakeGrafeasConnection()`.
- *
- * For mocking, see `containeranalysis_mocks::MockGrafeasConnection`.
- */
-class GrafeasConnection {
- public:
-  virtual ~GrafeasConnection() = 0;
+/// @deprecated Use containeranalysis_v1::GrafeasLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::containeranalysis_v1::GrafeasLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<grafeas::v1::Occurrence> GetOccurrence(
-      grafeas::v1::GetOccurrenceRequest const& request);
-
-  virtual StreamRange<grafeas::v1::Occurrence> ListOccurrences(
-      grafeas::v1::ListOccurrencesRequest request);
-
-  virtual Status DeleteOccurrence(
-      grafeas::v1::DeleteOccurrenceRequest const& request);
-
-  virtual StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
-      grafeas::v1::CreateOccurrenceRequest const& request);
-
-  virtual StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
-  BatchCreateOccurrences(
-      grafeas::v1::BatchCreateOccurrencesRequest const& request);
-
-  virtual StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
-      grafeas::v1::UpdateOccurrenceRequest const& request);
-
-  virtual StatusOr<grafeas::v1::Note> GetOccurrenceNote(
-      grafeas::v1::GetOccurrenceNoteRequest const& request);
-
-  virtual StatusOr<grafeas::v1::Note> GetNote(
-      grafeas::v1::GetNoteRequest const& request);
-
-  virtual StreamRange<grafeas::v1::Note> ListNotes(
-      grafeas::v1::ListNotesRequest request);
-
-  virtual Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request);
-
-  virtual StatusOr<grafeas::v1::Note> CreateNote(
-      grafeas::v1::CreateNoteRequest const& request);
-
-  virtual StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
-      grafeas::v1::BatchCreateNotesRequest const& request);
-
-  virtual StatusOr<grafeas::v1::Note> UpdateNote(
-      grafeas::v1::UpdateNoteRequest const& request);
-
-  virtual StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
-      grafeas::v1::ListNoteOccurrencesRequest request);
-};
-
-/**
- * A factory function to construct an object of type `GrafeasConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of GrafeasClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `GrafeasConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::containeranalysis::GrafeasPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `GrafeasConnection` created by
- * this function.
- */
-std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options = {});
+/// @deprecated Use containeranalysis_v1::GrafeasRetryPolicy directly.
+using ::google::cloud::containeranalysis_v1::GrafeasRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis

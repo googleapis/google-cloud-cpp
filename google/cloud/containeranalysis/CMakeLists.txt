@@ -23,9 +23,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "containeranalysis_internal"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
+include(GoogleCloudCppDoxygen)
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/google/cloud/grafeas")
-include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("containeranalysis" DEPENDS cloud-docs
                                  google-cloud-cpp::containeranalysis_protos)
 

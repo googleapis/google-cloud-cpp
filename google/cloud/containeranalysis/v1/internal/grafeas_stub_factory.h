@@ -16,29 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: grafeas/v1/grafeas.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_GRAFEAS_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_GRAFEAS_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_GRAFEAS_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_GRAFEAS_STUB_FACTORY_H
 
-#include "google/cloud/containeranalysis/v1/grafeas_connection_idempotency_policy.h"
+#include "google/cloud/containeranalysis/v1/internal/grafeas_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
+namespace containeranalysis_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// containeranalysis_v1::MakeDefaultGrafeasConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::containeranalysis_v1::
-    MakeDefaultGrafeasConnectionIdempotencyPolicy;
-
-/// @deprecated Use containeranalysis_v1::GrafeasConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::containeranalysis_v1::GrafeasConnectionIdempotencyPolicy;
+std::shared_ptr<GrafeasStub> CreateDefaultGrafeasStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace containeranalysis
+}  // namespace containeranalysis_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_GRAFEAS_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_V1_INTERNAL_GRAFEAS_STUB_FACTORY_H

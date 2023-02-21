@@ -20,90 +20,33 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_CONTAINER_ANALYSIS_CONNECTION_H
 
 #include "google/cloud/containeranalysis/container_analysis_connection_idempotency_policy.h"
-#include "google/cloud/containeranalysis/internal/container_analysis_retry_traits.h"
-#include "google/cloud/containeranalysis/internal/container_analysis_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/containeranalysis/v1/container_analysis_connection.h"
 
 namespace google {
 namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ContainerAnalysisRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        containeranalysis_internal::ContainerAnalysisRetryTraits>;
+/// @deprecated Use containeranalysis_v1::MakeContainerAnalysisConnection
+/// directly.
+using ::google::cloud::containeranalysis_v1::MakeContainerAnalysisConnection;
 
-using ContainerAnalysisLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        containeranalysis_internal::ContainerAnalysisRetryTraits>;
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisConnection directly.
+using ::google::cloud::containeranalysis_v1::ContainerAnalysisConnection;
 
-using ContainerAnalysisLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        containeranalysis_internal::ContainerAnalysisRetryTraits>;
+/// @deprecated Use
+/// containeranalysis_v1::ContainerAnalysisLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisLimitedErrorCountRetryPolicy;
 
-/**
- * The `ContainerAnalysisConnection` object for `ContainerAnalysisClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ContainerAnalysisClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ContainerAnalysisClient`.
- *
- * To create a concrete instance, see `MakeContainerAnalysisConnection()`.
- *
- * For mocking, see `containeranalysis_mocks::MockContainerAnalysisConnection`.
- */
-class ContainerAnalysisConnection {
- public:
-  virtual ~ContainerAnalysisConnection() = 0;
+/// @deprecated Use
+/// containeranalysis_v1::ContainerAnalysisLimitedTimeRetryPolicy directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual StatusOr<
-      google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
-  GetVulnerabilityOccurrencesSummary(
-      google::devtools::containeranalysis::v1::
-          GetVulnerabilityOccurrencesSummaryRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ContainerAnalysisConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ContainerAnalysisClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ContainerAnalysisConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::containeranalysis::ContainerAnalysisPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ContainerAnalysisConnection` created
- * by this function.
- */
-std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
-    Options options = {});
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisRetryPolicy directly.
+using ::google::cloud::containeranalysis_v1::ContainerAnalysisRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
