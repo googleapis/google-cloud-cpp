@@ -19,7 +19,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <iosfwd>
 #include <string>
 
 namespace google {
@@ -69,8 +68,8 @@ class GetJobRequest {
 };
 
 // Builds RestRequest from GetJobRequest.
-StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest& r,
-                                                      Options opts);
+StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
+                                                      Options& opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
