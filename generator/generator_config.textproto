@@ -108,14 +108,16 @@ service {
 service {
   service_proto_path: "google/cloud/automl/v1/service.proto"
   additional_proto_files: ["google/cloud/automl/v1/operations.proto"]
-  product_path: "google/cloud/automl"
+  product_path: "google/cloud/automl/v1"
+  forwarding_product_path: "google/cloud/automl"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/automl/v1/prediction_service.proto"
-  product_path: "google/cloud/automl"
+  product_path: "google/cloud/automl/v1"
+  forwarding_product_path: "google/cloud/automl"
   initial_copyright_year: "2022"
   service_endpoint_env_var: "GOOGLE_CLOUD_CPP_AUTOML_PREDICTION_SERVICE_ENDPOINT"
   retryable_status_codes: ["kUnavailable"]

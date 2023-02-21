@@ -21,63 +21,29 @@
 
 #include "google/cloud/automl/prediction_connection.h"
 #include "google/cloud/automl/prediction_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/automl/v1/prediction_options.h"
 
 namespace google {
 namespace cloud {
 namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-automl-options
- */
-struct PredictionServiceRetryPolicyOption {
-  using Type = std::shared_ptr<PredictionServiceRetryPolicy>;
-};
+/// @deprecated Use automl_v1::PredictionServicePollingPolicyOption directly.
+using ::google::cloud::automl_v1::PredictionServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-automl-options
- */
-struct PredictionServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use automl_v1::PredictionServiceBackoffPolicyOption directly.
+using ::google::cloud::automl_v1::PredictionServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-automl-options
- */
-struct PredictionServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PredictionServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// automl_v1::PredictionServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::automl_v1::
+    PredictionServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-automl-options
- */
-struct PredictionServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use automl_v1::PredictionServicePolicyOptionList directly.
+using ::google::cloud::automl_v1::PredictionServicePolicyOptionList;
 
-/**
- * The options applicable to PredictionService.
- *
- * @ingroup google-cloud-automl-options
- */
-using PredictionServicePolicyOptionList =
-    OptionList<PredictionServiceRetryPolicyOption,
-               PredictionServiceBackoffPolicyOption,
-               PredictionServicePollingPolicyOption,
-               PredictionServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use automl_v1::PredictionServiceRetryPolicyOption directly.
+using ::google::cloud::automl_v1::PredictionServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl

@@ -97,13 +97,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `automl::AutoMlClient`:
+For example, this will override the default endpoint for `automl_v1::AutoMlClient`:
 
 @snippet auto_ml_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [automl::AutoMlClient](@ref automl::AutoMlClient-endpoint-snippet)
- [automl::PredictionServiceClient](@ref automl::PredictionServiceClient-endpoint-snippet)
+ [automl_v1::AutoMlClient](@ref automl_v1::AutoMlClient-endpoint-snippet)
+ [automl_v1::PredictionServiceClient](@ref automl_v1::PredictionServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -118,8 +118,8 @@ to explicitly load a service account key file.
 @snippet auto_ml_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [automl::AutoMlClient](@ref automl::AutoMlClient-service-account-snippet)
- [automl::PredictionServiceClient](@ref automl::PredictionServiceClient-service-account-snippet)
+ [automl_v1::AutoMlClient](@ref automl_v1::AutoMlClient-service-account-snippet)
+ [automl_v1::PredictionServiceClient](@ref automl_v1::PredictionServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -150,27 +150,27 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page automl::AutoMlClient-endpoint-snippet Override automl::AutoMlClient Endpoint Configuration
+/*! @page automl_v1::AutoMlClient-endpoint-snippet Override automl_v1::AutoMlClient Endpoint Configuration
 
-@snippet google/cloud/automl/samples/auto_ml_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page automl::AutoMlClient-service-account-snippet Override automl::AutoMlClient Authentication Defaults
-
-@snippet google/cloud/automl/samples/auto_ml_client_samples.cc with-service-account
+@snippet google/cloud/automl/v1/samples/auto_ml_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page automl::PredictionServiceClient-endpoint-snippet Override automl::PredictionServiceClient Endpoint Configuration
+/*! @page automl_v1::AutoMlClient-service-account-snippet Override automl_v1::AutoMlClient Authentication Defaults
 
-@snippet google/cloud/automl/samples/prediction_client_samples.cc set-client-endpoint
+@snippet google/cloud/automl/v1/samples/auto_ml_client_samples.cc with-service-account
 
 */
 
-/*! @page automl::PredictionServiceClient-service-account-snippet Override automl::PredictionServiceClient Authentication Defaults
+/*! @page automl_v1::PredictionServiceClient-endpoint-snippet Override automl_v1::PredictionServiceClient Endpoint Configuration
 
-@snippet google/cloud/automl/samples/prediction_client_samples.cc with-service-account
+@snippet google/cloud/automl/v1/samples/prediction_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page automl_v1::PredictionServiceClient-service-account-snippet Override automl_v1::PredictionServiceClient Authentication Defaults
+
+@snippet google/cloud/automl/v1/samples/prediction_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
