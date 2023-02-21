@@ -142,35 +142,40 @@ service {
 # BeyondCorp
 service {
   service_proto_path: "google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto"
-  product_path: "google/cloud/beyondcorp"
+  product_path: "google/cloud/beyondcorp/clientconnectorservices/v1"
+  forwarding_product_path: "google/cloud/beyondcorp"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto"
-  product_path: "google/cloud/beyondcorp"
+  product_path: "google/cloud/beyondcorp/clientgateways/v1"
+  forwarding_product_path: "google/cloud/beyondcorp"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.proto"
-  product_path: "google/cloud/beyondcorp"
+  product_path: "google/cloud/beyondcorp/appconnectors/v1"
+  forwarding_product_path: "google/cloud/beyondcorp"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto"
-  product_path: "google/cloud/beyondcorp"
+  product_path: "google/cloud/beyondcorp/appgateways/v1"
+  forwarding_product_path: "google/cloud/beyondcorp"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto"
-  product_path: "google/cloud/beyondcorp"
+  product_path: "google/cloud/beyondcorp/appconnections/v1"
+  forwarding_product_path: "google/cloud/beyondcorp"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

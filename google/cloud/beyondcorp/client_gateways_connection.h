@@ -21,100 +21,39 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_CLIENT_GATEWAYS_CONNECTION_H
 
 #include "google/cloud/beyondcorp/client_gateways_connection_idempotency_policy.h"
-#include "google/cloud/beyondcorp/internal/client_gateways_retry_traits.h"
-#include "google/cloud/beyondcorp/internal/client_gateways_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/beyondcorp/clientgateways/v1/client_gateways_connection.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ClientGatewaysServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        beyondcorp_internal::ClientGatewaysServiceRetryTraits>;
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::MakeClientGatewaysServiceConnection directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    MakeClientGatewaysServiceConnection;
 
-using ClientGatewaysServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        beyondcorp_internal::ClientGatewaysServiceRetryTraits>;
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceConnection directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceConnection;
 
-using ClientGatewaysServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        beyondcorp_internal::ClientGatewaysServiceRetryTraits>;
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `ClientGatewaysServiceConnection` object for
- * `ClientGatewaysServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ClientGatewaysServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ClientGatewaysServiceClient`.
- *
- * To create a concrete instance, see `MakeClientGatewaysServiceConnection()`.
- *
- * For mocking, see `beyondcorp_mocks::MockClientGatewaysServiceConnection`.
- */
-class ClientGatewaysServiceConnection {
- public:
-  virtual ~ClientGatewaysServiceConnection() = 0;
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<
-      google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
-  ListClientGateways(
-      google::cloud::beyondcorp::clientgateways::v1::ListClientGatewaysRequest
-          request);
-
-  virtual StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
-  GetClientGateway(google::cloud::beyondcorp::clientgateways::v1::
-                       GetClientGatewayRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>>
-  CreateClientGateway(google::cloud::beyondcorp::clientgateways::v1::
-                          CreateClientGatewayRequest const& request);
-
-  virtual future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::
-                              ClientGatewayOperationMetadata>>
-  DeleteClientGateway(google::cloud::beyondcorp::clientgateways::v1::
-                          DeleteClientGatewayRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ClientGatewaysServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ClientGatewaysServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ClientGatewaysServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::beyondcorp::ClientGatewaysServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ClientGatewaysServiceConnection`
- * created by this function.
- */
-std::shared_ptr<ClientGatewaysServiceConnection>
-MakeClientGatewaysServiceConnection(Options options = {});
+/// @deprecated Use
+/// beyondcorp_clientgateways_v1::ClientGatewaysServiceRetryPolicy directly.
+using ::google::cloud::beyondcorp_clientgateways_v1::
+    ClientGatewaysServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

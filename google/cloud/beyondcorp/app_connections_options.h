@@ -22,64 +22,42 @@
 
 #include "google/cloud/beyondcorp/app_connections_connection.h"
 #include "google/cloud/beyondcorp/app_connections_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/beyondcorp/appconnections/v1/app_connections_options.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct AppConnectionsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AppConnectionsServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_appconnections_v1::AppConnectionsServicePollingPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_appconnections_v1::
+    AppConnectionsServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct AppConnectionsServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_appconnections_v1::AppConnectionsServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_appconnections_v1::
+    AppConnectionsServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct AppConnectionsServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<AppConnectionsServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_appconnections_v1::AppConnectionsServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_appconnections_v1::
+    AppConnectionsServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-struct AppConnectionsServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use
+/// beyondcorp_appconnections_v1::AppConnectionsServicePolicyOptionList
+/// directly.
+using ::google::cloud::beyondcorp_appconnections_v1::
+    AppConnectionsServicePolicyOptionList;
 
-/**
- * The options applicable to AppConnectionsService.
- *
- * @ingroup google-cloud-beyondcorp-options
- */
-using AppConnectionsServicePolicyOptionList =
-    OptionList<AppConnectionsServiceRetryPolicyOption,
-               AppConnectionsServiceBackoffPolicyOption,
-               AppConnectionsServicePollingPolicyOption,
-               AppConnectionsServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::beyondcorp_appconnections_v1::
+    AppConnectionsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp

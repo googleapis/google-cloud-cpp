@@ -21,78 +21,18 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_MOCKS_MOCK_APP_CONNECTIONS_CONNECTION_H
 
 #include "google/cloud/beyondcorp/app_connections_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/beyondcorp/appconnections/v1/mocks/mock_app_connections_connection.h"
 
 namespace google {
 namespace cloud {
 namespace beyondcorp_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AppConnectionsServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AppConnectionsServiceClient`. To do
- * so, construct an object of type `AppConnectionsServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAppConnectionsServiceConnection
-    : public beyondcorp::AppConnectionsServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::beyondcorp::appconnections::v1::AppConnection>,
-      ListAppConnections,
-      (google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>,
-      GetAppConnection,
-      (google::cloud::beyondcorp::appconnections::v1::
-           GetAppConnectionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
-      CreateAppConnection,
-      (google::cloud::beyondcorp::appconnections::v1::
-           CreateAppConnectionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
-      UpdateAppConnection,
-      (google::cloud::beyondcorp::appconnections::v1::
-           UpdateAppConnectionRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
-                                  AppConnectionOperationMetadata>>,
-              DeleteAppConnection,
-              (google::cloud::beyondcorp::appconnections::v1::
-                   DeleteAppConnectionRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::beyondcorp::appconnections::v1::
-                      ResolveAppConnectionsResponse::AppConnectionDetails>,
-      ResolveAppConnections,
-      (google::cloud::beyondcorp::appconnections::v1::
-           ResolveAppConnectionsRequest request),
-      (override));
-};
+/// @deprecated Use
+/// beyondcorp_appconnections_v1_mocks::MockAppConnectionsServiceConnection
+/// directly.
+using ::google::cloud::beyondcorp_appconnections_v1_mocks::
+    MockAppConnectionsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_mocks
