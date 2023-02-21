@@ -95,13 +95,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `datastream::DatastreamClient`:
+For example, this will override the default endpoint for `datastream_v1::DatastreamClient`:
 
 @snippet datastream_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [datastream::DatastreamClient](@ref datastream::DatastreamClient-endpoint-snippet)
- [datastream_v1::DatastreamClient](@ref datastream_v1::DatastreamClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -114,10 +110,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet datastream_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [datastream::DatastreamClient](@ref datastream::DatastreamClient-service-account-snippet)
- [datastream_v1::DatastreamClient](@ref datastream_v1::DatastreamClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,18 +139,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page datastream::DatastreamClient-endpoint-snippet Override datastream::DatastreamClient Endpoint Configuration
-
-@snippet google/cloud/datastream/samples/datastream_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page datastream::DatastreamClient-service-account-snippet Override datastream::DatastreamClient Authentication Defaults
-
-@snippet google/cloud/datastream/samples/datastream_client_samples.cc with-service-account
-
-*/
 
 /*! @page datastream_v1::DatastreamClient-endpoint-snippet Override datastream_v1::DatastreamClient Endpoint Configuration
 
