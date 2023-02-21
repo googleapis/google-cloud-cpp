@@ -21,64 +21,38 @@
 
 #include "google/cloud/assuredworkloads/assured_workloads_connection.h"
 #include "google/cloud/assuredworkloads/assured_workloads_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/assuredworkloads/v1/assured_workloads_options.h"
 
 namespace google {
 namespace cloud {
 namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-assuredworkloads-options
- */
-struct AssuredWorkloadsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AssuredWorkloadsServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServicePollingPolicyOption directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-assuredworkloads-options
- */
-struct AssuredWorkloadsServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceBackoffPolicyOption directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-assuredworkloads-options
- */
-struct AssuredWorkloadsServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-assuredworkloads-options
- */
-struct AssuredWorkloadsServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServicePolicyOptionList
+/// directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServicePolicyOptionList;
 
-/**
- * The options applicable to AssuredWorkloadsService.
- *
- * @ingroup google-cloud-assuredworkloads-options
- */
-using AssuredWorkloadsServicePolicyOptionList =
-    OptionList<AssuredWorkloadsServiceRetryPolicyOption,
-               AssuredWorkloadsServiceBackoffPolicyOption,
-               AssuredWorkloadsServicePollingPolicyOption,
-               AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// assuredworkloads_v1::AssuredWorkloadsServiceRetryPolicyOption directly.
+using ::google::cloud::assuredworkloads_v1::
+    AssuredWorkloadsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads

@@ -16,23 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_ASSURED_WORKLOADS_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_ASSURED_WORKLOADS_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_STUB_FACTORY_H
 
-#include "google/cloud/assuredworkloads/assured_workloads_connection.h"
-#include "google/cloud/assuredworkloads/v1/assured_workloads_client.h"
+#include "google/cloud/assuredworkloads/v1/internal/assured_workloads_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
+namespace assuredworkloads_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use assuredworkloads_v1::AssuredWorkloadsServiceClient directly.
-using ::google::cloud::assuredworkloads_v1::AssuredWorkloadsServiceClient;
+std::shared_ptr<AssuredWorkloadsServiceStub>
+CreateDefaultAssuredWorkloadsServiceStub(google::cloud::CompletionQueue cq,
+                                         Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads
+}  // namespace assuredworkloads_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_ASSURED_WORKLOADS_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ASSUREDWORKLOADS_V1_INTERNAL_ASSURED_WORKLOADS_STUB_FACTORY_H

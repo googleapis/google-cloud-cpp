@@ -55,9 +55,10 @@
 ./include/google/cloud/asset/mocks
 ./include/google/cloud/asset/v1
 ./include/google/cloud/assuredworkloads
-./include/google/cloud/assuredworkloads/internal
 ./include/google/cloud/assuredworkloads/mocks
 ./include/google/cloud/assuredworkloads/v1
+./include/google/cloud/assuredworkloads/v1/internal
+./include/google/cloud/assuredworkloads/v1/mocks
 ./include/google/cloud/automl
 ./include/google/cloud/automl/internal
 ./include/google/cloud/automl/mocks
