@@ -16,28 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_RETRY_TRAITS_H
 
-#include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy directly.
-using ::google::cloud::cloudbuild_v1::
-    MakeDefaultCloudBuildConnectionIdempotencyPolicy;
-
-/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy;
+/// Define the gRPC status code semantics for retrying requests.
+struct CloudBuildRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_RETRY_TRAITS_H

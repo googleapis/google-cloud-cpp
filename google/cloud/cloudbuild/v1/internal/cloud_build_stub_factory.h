@@ -16,28 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_STUB_FACTORY_H
 
-#include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.h"
+#include "google/cloud/cloudbuild/v1/internal/cloud_build_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy directly.
-using ::google::cloud::cloudbuild_v1::
-    MakeDefaultCloudBuildConnectionIdempotencyPolicy;
-
-/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy;
+std::shared_ptr<CloudBuildStub> CreateDefaultCloudBuildStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_STUB_FACTORY_H

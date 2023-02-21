@@ -96,6 +96,10 @@ For example, this will override the default endpoint for `cloudbuild::CloudBuild
 
 @snippet cloud_build_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [cloudbuild::CloudBuildClient](@ref cloudbuild::CloudBuildClient-endpoint-snippet)
+ [cloudbuild_v1::CloudBuildClient](@ref cloudbuild_v1::CloudBuildClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +111,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_build_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [cloudbuild::CloudBuildClient](@ref cloudbuild::CloudBuildClient-service-account-snippet)
+ [cloudbuild_v1::CloudBuildClient](@ref cloudbuild_v1::CloudBuildClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +154,18 @@ can override the default policies.
 /*! @page cloudbuild::CloudBuildClient-service-account-snippet Override cloudbuild::CloudBuildClient Authentication Defaults
 
 @snippet google/cloud/cloudbuild/samples/cloud_build_client_samples.cc with-service-account
+
+*/
+
+/*! @page cloudbuild_v1::CloudBuildClient-endpoint-snippet Override cloudbuild_v1::CloudBuildClient Endpoint Configuration
+
+@snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page cloudbuild_v1::CloudBuildClient-service-account-snippet Override cloudbuild_v1::CloudBuildClient Authentication Defaults
+
+@snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

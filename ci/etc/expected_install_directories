@@ -128,8 +128,10 @@
 ./include/google/cloud/channel/mocks
 ./include/google/cloud/channel/v1
 ./include/google/cloud/cloudbuild
-./include/google/cloud/cloudbuild/internal
 ./include/google/cloud/cloudbuild/mocks
+./include/google/cloud/cloudbuild/v1
+./include/google/cloud/cloudbuild/v1/internal
+./include/google/cloud/cloudbuild/v1/mocks
 ./include/google/cloud/clouddms
 ./include/google/cloud/clouddms/v1
 ./include/google/cloud/composer

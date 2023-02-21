@@ -16,28 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_OPTION_DEFAULTS_H
 
-#include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
+namespace cloudbuild_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// cloudbuild_v1::MakeDefaultCloudBuildConnectionIdempotencyPolicy directly.
-using ::google::cloud::cloudbuild_v1::
-    MakeDefaultCloudBuildConnectionIdempotencyPolicy;
-
-/// @deprecated Use cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::cloudbuild_v1::CloudBuildConnectionIdempotencyPolicy;
+Options CloudBuildDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild
+}  // namespace cloudbuild_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_CLOUD_BUILD_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V1_INTERNAL_CLOUD_BUILD_OPTION_DEFAULTS_H
