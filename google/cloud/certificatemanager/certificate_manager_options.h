@@ -21,63 +21,38 @@
 
 #include "google/cloud/certificatemanager/certificate_manager_connection.h"
 #include "google/cloud/certificatemanager/certificate_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/certificatemanager/v1/certificate_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-certificatemanager-options
- */
-struct CertificateManagerRetryPolicyOption {
-  using Type = std::shared_ptr<CertificateManagerRetryPolicy>;
-};
+/// @deprecated Use certificatemanager_v1::CertificateManagerPollingPolicyOption
+/// directly.
+using ::google::cloud::certificatemanager_v1::
+    CertificateManagerPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-certificatemanager-options
- */
-struct CertificateManagerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use certificatemanager_v1::CertificateManagerBackoffPolicyOption
+/// directly.
+using ::google::cloud::certificatemanager_v1::
+    CertificateManagerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-certificatemanager-options
- */
-struct CertificateManagerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CertificateManagerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// certificatemanager_v1::CertificateManagerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::certificatemanager_v1::
+    CertificateManagerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-certificatemanager-options
- */
-struct CertificateManagerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use certificatemanager_v1::CertificateManagerPolicyOptionList
+/// directly.
+using ::google::cloud::certificatemanager_v1::
+    CertificateManagerPolicyOptionList;
 
-/**
- * The options applicable to CertificateManager.
- *
- * @ingroup google-cloud-certificatemanager-options
- */
-using CertificateManagerPolicyOptionList =
-    OptionList<CertificateManagerRetryPolicyOption,
-               CertificateManagerBackoffPolicyOption,
-               CertificateManagerPollingPolicyOption,
-               CertificateManagerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use certificatemanager_v1::CertificateManagerRetryPolicyOption
+/// directly.
+using ::google::cloud::certificatemanager_v1::
+    CertificateManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager

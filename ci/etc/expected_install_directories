@@ -120,9 +120,10 @@
 ./include/google/cloud/binaryauthorization/mocks
 ./include/google/cloud/binaryauthorization/v1
 ./include/google/cloud/certificatemanager
-./include/google/cloud/certificatemanager/internal
 ./include/google/cloud/certificatemanager/mocks
 ./include/google/cloud/certificatemanager/v1
+./include/google/cloud/certificatemanager/v1/internal
+./include/google/cloud/certificatemanager/v1/mocks
 ./include/google/cloud/channel
 ./include/google/cloud/channel/internal
 ./include/google/cloud/channel/mocks

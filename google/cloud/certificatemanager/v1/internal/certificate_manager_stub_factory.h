@@ -16,25 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_MOCKS_MOCK_CERTIFICATE_MANAGER_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_MOCKS_MOCK_CERTIFICATE_MANAGER_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_STUB_FACTORY_H
 
-#include "google/cloud/certificatemanager/certificate_manager_connection.h"
-#include "google/cloud/certificatemanager/v1/mocks/mock_certificate_manager_connection.h"
+#include "google/cloud/certificatemanager/v1/internal/certificate_manager_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_mocks {
+namespace certificatemanager_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// certificatemanager_v1_mocks::MockCertificateManagerConnection directly.
-using ::google::cloud::certificatemanager_v1_mocks::
-    MockCertificateManagerConnection;
+std::shared_ptr<CertificateManagerStub> CreateDefaultCertificateManagerStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace certificatemanager_mocks
+}  // namespace certificatemanager_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_MOCKS_MOCK_CERTIFICATE_MANAGER_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CERTIFICATEMANAGER_V1_INTERNAL_CERTIFICATE_MANAGER_STUB_FACTORY_H
