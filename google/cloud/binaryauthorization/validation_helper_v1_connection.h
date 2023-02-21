@@ -19,83 +19,36 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_VALIDATION_HELPER_V1_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_VALIDATION_HELPER_V1_CONNECTION_H
 
-#include "google/cloud/binaryauthorization/internal/validation_helper_v1_retry_traits.h"
-#include "google/cloud/binaryauthorization/internal/validation_helper_v1_stub.h"
+#include "google/cloud/binaryauthorization/v1/validation_helper_v1_connection.h"
 #include "google/cloud/binaryauthorization/validation_helper_v1_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ValidationHelperV1RetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        binaryauthorization_internal::ValidationHelperV1RetryTraits>;
+/// @deprecated Use binaryauthorization_v1::MakeValidationHelperV1Connection
+/// directly.
+using ::google::cloud::binaryauthorization_v1::MakeValidationHelperV1Connection;
 
-using ValidationHelperV1LimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        binaryauthorization_internal::ValidationHelperV1RetryTraits>;
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1Connection
+/// directly.
+using ::google::cloud::binaryauthorization_v1::ValidationHelperV1Connection;
 
-using ValidationHelperV1LimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        binaryauthorization_internal::ValidationHelperV1RetryTraits>;
+/// @deprecated Use
+/// binaryauthorization_v1::ValidationHelperV1LimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1LimitedErrorCountRetryPolicy;
 
-/**
- * The `ValidationHelperV1Connection` object for `ValidationHelperV1Client`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ValidationHelperV1Client`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ValidationHelperV1Client`.
- *
- * To create a concrete instance, see `MakeValidationHelperV1Connection()`.
- *
- * For mocking, see
- * `binaryauthorization_mocks::MockValidationHelperV1Connection`.
- */
-class ValidationHelperV1Connection {
- public:
-  virtual ~ValidationHelperV1Connection() = 0;
+/// @deprecated Use
+/// binaryauthorization_v1::ValidationHelperV1LimitedTimeRetryPolicy directly.
+using ::google::cloud::binaryauthorization_v1::
+    ValidationHelperV1LimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::binaryauthorization::v1::
-                       ValidateAttestationOccurrenceResponse>
-  ValidateAttestationOccurrence(
-      google::cloud::binaryauthorization::v1::
-          ValidateAttestationOccurrenceRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ValidationHelperV1Connection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ValidationHelperV1Client.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ValidationHelperV1Connection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::binaryauthorization::ValidationHelperV1PolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ValidationHelperV1Connection`
- * created by this function.
- */
-std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
-    Options options = {});
+/// @deprecated Use binaryauthorization_v1::ValidationHelperV1RetryPolicy
+/// directly.
+using ::google::cloud::binaryauthorization_v1::ValidationHelperV1RetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization

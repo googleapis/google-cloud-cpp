@@ -322,7 +322,8 @@ service {
 # Binary Authorization
 service {
   service_proto_path: "google/cloud/binaryauthorization/v1/service.proto"
-  product_path: "google/cloud/binaryauthorization"
+  product_path: "google/cloud/binaryauthorization/v1"
+  forwarding_product_path: "google/cloud/binaryauthorization"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

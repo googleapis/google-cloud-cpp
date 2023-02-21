@@ -19,41 +19,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_MOCKS_MOCK_VALIDATION_HELPER_V1_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_MOCKS_MOCK_VALIDATION_HELPER_V1_CONNECTION_H
 
+#include "google/cloud/binaryauthorization/v1/mocks/mock_validation_helper_v1_connection.h"
 #include "google/cloud/binaryauthorization/validation_helper_v1_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace binaryauthorization_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ValidationHelperV1Connection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ValidationHelperV1Client`. To do
- * so, construct an object of type `ValidationHelperV1Client` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockValidationHelperV1Connection
-    : public binaryauthorization::ValidationHelperV1Connection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::binaryauthorization::v1::
-                           ValidateAttestationOccurrenceResponse>,
-              ValidateAttestationOccurrence,
-              (google::cloud::binaryauthorization::v1::
-                   ValidateAttestationOccurrenceRequest const& request),
-              (override));
-};
+/// @deprecated Use
+/// binaryauthorization_v1_mocks::MockValidationHelperV1Connection directly.
+using ::google::cloud::binaryauthorization_v1_mocks::
+    MockValidationHelperV1Connection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_mocks
