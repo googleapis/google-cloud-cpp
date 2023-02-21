@@ -19,31 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_DOMAINS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_DOMAINS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
-#include <memory>
+#include "google/cloud/appengine/v1/authorized_domains_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AuthorizedDomainsConnectionIdempotencyPolicy {
- public:
-  virtual ~AuthorizedDomainsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// appengine_v1::MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListAuthorizedDomains(
-      google::appengine::v1::ListAuthorizedDomainsRequest request);
-};
-
-std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
-MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy();
+/// @deprecated Use appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    AuthorizedDomainsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

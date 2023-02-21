@@ -20,80 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_AUTHORIZED_DOMAINS_CONNECTION_H
 
 #include "google/cloud/appengine/authorized_domains_connection_idempotency_policy.h"
-#include "google/cloud/appengine/internal/authorized_domains_retry_traits.h"
-#include "google/cloud/appengine/internal/authorized_domains_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/appengine/v1/authorized_domains_connection.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AuthorizedDomainsRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        appengine_internal::AuthorizedDomainsRetryTraits>;
+/// @deprecated Use appengine_v1::MakeAuthorizedDomainsConnection directly.
+using ::google::cloud::appengine_v1::MakeAuthorizedDomainsConnection;
 
-using AuthorizedDomainsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::AuthorizedDomainsRetryTraits>;
+/// @deprecated Use appengine_v1::AuthorizedDomainsConnection directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsConnection;
 
-using AuthorizedDomainsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::AuthorizedDomainsRetryTraits>;
+/// @deprecated Use appengine_v1::AuthorizedDomainsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    AuthorizedDomainsLimitedErrorCountRetryPolicy;
 
-/**
- * The `AuthorizedDomainsConnection` object for `AuthorizedDomainsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AuthorizedDomainsClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AuthorizedDomainsClient`.
- *
- * To create a concrete instance, see `MakeAuthorizedDomainsConnection()`.
- *
- * For mocking, see `appengine_mocks::MockAuthorizedDomainsConnection`.
- */
-class AuthorizedDomainsConnection {
- public:
-  virtual ~AuthorizedDomainsConnection() = 0;
+/// @deprecated Use appengine_v1::AuthorizedDomainsLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::appengine::v1::AuthorizedDomain>
-  ListAuthorizedDomains(
-      google::appengine::v1::ListAuthorizedDomainsRequest request);
-};
-
-/**
- * A factory function to construct an object of type
- * `AuthorizedDomainsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AuthorizedDomainsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `AuthorizedDomainsConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::AuthorizedDomainsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `AuthorizedDomainsConnection` created
- * by this function.
- */
-std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
-    Options options = {});
+/// @deprecated Use appengine_v1::AuthorizedDomainsRetryPolicy directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

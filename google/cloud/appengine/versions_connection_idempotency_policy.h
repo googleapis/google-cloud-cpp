@@ -19,42 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/appengine/v1/appengine.grpc.pb.h>
-#include <memory>
+#include "google/cloud/appengine/v1/versions_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VersionsConnectionIdempotencyPolicy {
- public:
-  virtual ~VersionsConnectionIdempotencyPolicy();
+/// @deprecated Use appengine_v1::MakeDefaultVersionsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::appengine_v1::
+    MakeDefaultVersionsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<VersionsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListVersions(
-      google::appengine::v1::ListVersionsRequest request);
-
-  virtual google::cloud::Idempotency GetVersion(
-      google::appengine::v1::GetVersionRequest const& request);
-
-  virtual google::cloud::Idempotency CreateVersion(
-      google::appengine::v1::CreateVersionRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateVersion(
-      google::appengine::v1::UpdateVersionRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteVersion(
-      google::appengine::v1::DeleteVersionRequest const& request);
-};
-
-std::unique_ptr<VersionsConnectionIdempotencyPolicy>
-MakeDefaultVersionsConnectionIdempotencyPolicy();
+/// @deprecated Use appengine_v1::VersionsConnectionIdempotencyPolicy directly.
+using ::google::cloud::appengine_v1::VersionsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

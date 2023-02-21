@@ -21,52 +21,26 @@
 
 #include "google/cloud/appengine/authorized_domains_connection.h"
 #include "google/cloud/appengine/authorized_domains_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/appengine/v1/authorized_domains_options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct AuthorizedDomainsRetryPolicyOption {
-  using Type = std::shared_ptr<AuthorizedDomainsRetryPolicy>;
-};
+/// @deprecated Use appengine_v1::AuthorizedDomainsBackoffPolicyOption directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct AuthorizedDomainsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// appengine_v1::AuthorizedDomainsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::appengine_v1::
+    AuthorizedDomainsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct AuthorizedDomainsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use appengine_v1::AuthorizedDomainsPolicyOptionList directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsPolicyOptionList;
 
-/**
- * The options applicable to AuthorizedDomains.
- *
- * @ingroup google-cloud-appengine-options
- */
-using AuthorizedDomainsPolicyOptionList =
-    OptionList<AuthorizedDomainsRetryPolicyOption,
-               AuthorizedDomainsBackoffPolicyOption,
-               AuthorizedDomainsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use appengine_v1::AuthorizedDomainsRetryPolicyOption directly.
+using ::google::cloud::appengine_v1::AuthorizedDomainsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

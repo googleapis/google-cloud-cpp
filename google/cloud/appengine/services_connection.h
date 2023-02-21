@@ -19,89 +19,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_SERVICES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_SERVICES_CONNECTION_H
 
-#include "google/cloud/appengine/internal/services_retry_traits.h"
-#include "google/cloud/appengine/internal/services_stub.h"
 #include "google/cloud/appengine/services_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/appengine/v1/services_connection.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ServicesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    appengine_internal::ServicesRetryTraits>;
+/// @deprecated Use appengine_v1::MakeServicesConnection directly.
+using ::google::cloud::appengine_v1::MakeServicesConnection;
 
-using ServicesLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::ServicesRetryTraits>;
+/// @deprecated Use appengine_v1::ServicesConnection directly.
+using ::google::cloud::appengine_v1::ServicesConnection;
 
-using ServicesLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::ServicesRetryTraits>;
+/// @deprecated Use appengine_v1::ServicesLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::appengine_v1::ServicesLimitedErrorCountRetryPolicy;
 
-/**
- * The `ServicesConnection` object for `ServicesClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServicesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ServicesClient`.
- *
- * To create a concrete instance, see `MakeServicesConnection()`.
- *
- * For mocking, see `appengine_mocks::MockServicesConnection`.
- */
-class ServicesConnection {
- public:
-  virtual ~ServicesConnection() = 0;
+/// @deprecated Use appengine_v1::ServicesLimitedTimeRetryPolicy directly.
+using ::google::cloud::appengine_v1::ServicesLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::appengine::v1::Service> ListServices(
-      google::appengine::v1::ListServicesRequest request);
-
-  virtual StatusOr<google::appengine::v1::Service> GetService(
-      google::appengine::v1::GetServiceRequest const& request);
-
-  virtual future<StatusOr<google::appengine::v1::Service>> UpdateService(
-      google::appengine::v1::UpdateServiceRequest const& request);
-
-  virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteService(google::appengine::v1::DeleteServiceRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `ServicesConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ServicesClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ServicesConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::ServicesPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ServicesConnection` created by
- * this function.
- */
-std::shared_ptr<ServicesConnection> MakeServicesConnection(
-    Options options = {});
+/// @deprecated Use appengine_v1::ServicesRetryPolicy directly.
+using ::google::cloud::appengine_v1::ServicesRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

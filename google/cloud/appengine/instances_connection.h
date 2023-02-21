@@ -20,88 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_INSTANCES_CONNECTION_H
 
 #include "google/cloud/appengine/instances_connection_idempotency_policy.h"
-#include "google/cloud/appengine/internal/instances_retry_traits.h"
-#include "google/cloud/appengine/internal/instances_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/appengine/v1/instances_connection.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using InstancesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    appengine_internal::InstancesRetryTraits>;
+/// @deprecated Use appengine_v1::MakeInstancesConnection directly.
+using ::google::cloud::appengine_v1::MakeInstancesConnection;
 
-using InstancesLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::InstancesRetryTraits>;
+/// @deprecated Use appengine_v1::InstancesConnection directly.
+using ::google::cloud::appengine_v1::InstancesConnection;
 
-using InstancesLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::InstancesRetryTraits>;
+/// @deprecated Use appengine_v1::InstancesLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::appengine_v1::InstancesLimitedErrorCountRetryPolicy;
 
-/**
- * The `InstancesConnection` object for `InstancesClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `InstancesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `InstancesClient`.
- *
- * To create a concrete instance, see `MakeInstancesConnection()`.
- *
- * For mocking, see `appengine_mocks::MockInstancesConnection`.
- */
-class InstancesConnection {
- public:
-  virtual ~InstancesConnection() = 0;
+/// @deprecated Use appengine_v1::InstancesLimitedTimeRetryPolicy directly.
+using ::google::cloud::appengine_v1::InstancesLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::appengine::v1::Instance> ListInstances(
-      google::appengine::v1::ListInstancesRequest request);
-
-  virtual StatusOr<google::appengine::v1::Instance> GetInstance(
-      google::appengine::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteInstance(google::appengine::v1::DeleteInstanceRequest const& request);
-
-  virtual future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
-      google::appengine::v1::DebugInstanceRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `InstancesConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of InstancesClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `InstancesConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::InstancesPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `InstancesConnection` created by
- * this function.
- */
-std::shared_ptr<InstancesConnection> MakeInstancesConnection(
-    Options options = {});
+/// @deprecated Use appengine_v1::InstancesRetryPolicy directly.
+using ::google::cloud::appengine_v1::InstancesRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

@@ -21,63 +21,29 @@
 
 #include "google/cloud/appengine/domain_mappings_connection.h"
 #include "google/cloud/appengine/domain_mappings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/appengine/v1/domain_mappings_options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct DomainMappingsRetryPolicyOption {
-  using Type = std::shared_ptr<DomainMappingsRetryPolicy>;
-};
+/// @deprecated Use appengine_v1::DomainMappingsPollingPolicyOption directly.
+using ::google::cloud::appengine_v1::DomainMappingsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct DomainMappingsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use appengine_v1::DomainMappingsBackoffPolicyOption directly.
+using ::google::cloud::appengine_v1::DomainMappingsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct DomainMappingsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DomainMappingsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// appengine_v1::DomainMappingsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::appengine_v1::
+    DomainMappingsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct DomainMappingsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use appengine_v1::DomainMappingsPolicyOptionList directly.
+using ::google::cloud::appengine_v1::DomainMappingsPolicyOptionList;
 
-/**
- * The options applicable to DomainMappings.
- *
- * @ingroup google-cloud-appengine-options
- */
-using DomainMappingsPolicyOptionList =
-    OptionList<DomainMappingsRetryPolicyOption,
-               DomainMappingsBackoffPolicyOption,
-               DomainMappingsPollingPolicyOption,
-               DomainMappingsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use appengine_v1::DomainMappingsRetryPolicyOption directly.
+using ::google::cloud::appengine_v1::DomainMappingsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

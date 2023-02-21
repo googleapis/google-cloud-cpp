@@ -19,64 +19,30 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_VERSIONS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_VERSIONS_OPTIONS_H
 
+#include "google/cloud/appengine/v1/versions_options.h"
 #include "google/cloud/appengine/versions_connection.h"
 #include "google/cloud/appengine/versions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct VersionsRetryPolicyOption {
-  using Type = std::shared_ptr<VersionsRetryPolicy>;
-};
+/// @deprecated Use appengine_v1::VersionsPollingPolicyOption directly.
+using ::google::cloud::appengine_v1::VersionsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct VersionsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use appengine_v1::VersionsBackoffPolicyOption directly.
+using ::google::cloud::appengine_v1::VersionsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct VersionsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<VersionsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use appengine_v1::VersionsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::appengine_v1::VersionsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct VersionsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use appengine_v1::VersionsPolicyOptionList directly.
+using ::google::cloud::appengine_v1::VersionsPolicyOptionList;
 
-/**
- * The options applicable to Versions.
- *
- * @ingroup google-cloud-appengine-options
- */
-using VersionsPolicyOptionList =
-    OptionList<VersionsRetryPolicyOption, VersionsBackoffPolicyOption,
-               VersionsPollingPolicyOption,
-               VersionsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use appengine_v1::VersionsRetryPolicyOption directly.
+using ::google::cloud::appengine_v1::VersionsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

@@ -21,62 +21,28 @@
 
 #include "google/cloud/appengine/instances_connection.h"
 #include "google/cloud/appengine/instances_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/appengine/v1/instances_options.h"
 
 namespace google {
 namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct InstancesRetryPolicyOption {
-  using Type = std::shared_ptr<InstancesRetryPolicy>;
-};
+/// @deprecated Use appengine_v1::InstancesPollingPolicyOption directly.
+using ::google::cloud::appengine_v1::InstancesPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct InstancesBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use appengine_v1::InstancesBackoffPolicyOption directly.
+using ::google::cloud::appengine_v1::InstancesBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct InstancesConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<InstancesConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use appengine_v1::InstancesConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::appengine_v1::InstancesConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-appengine-options
- */
-struct InstancesPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use appengine_v1::InstancesPolicyOptionList directly.
+using ::google::cloud::appengine_v1::InstancesPolicyOptionList;
 
-/**
- * The options applicable to Instances.
- *
- * @ingroup google-cloud-appengine-options
- */
-using InstancesPolicyOptionList =
-    OptionList<InstancesRetryPolicyOption, InstancesBackoffPolicyOption,
-               InstancesPollingPolicyOption,
-               InstancesConnectionIdempotencyPolicyOption>;
+/// @deprecated Use appengine_v1::InstancesRetryPolicyOption directly.
+using ::google::cloud::appengine_v1::InstancesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine

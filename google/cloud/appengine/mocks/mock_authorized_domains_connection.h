@@ -20,38 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_MOCKS_MOCK_AUTHORIZED_DOMAINS_CONNECTION_H
 
 #include "google/cloud/appengine/authorized_domains_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/appengine/v1/mocks/mock_authorized_domains_connection.h"
 
 namespace google {
 namespace cloud {
 namespace appengine_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AuthorizedDomainsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AuthorizedDomainsClient`. To do so,
- * construct an object of type `AuthorizedDomainsClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAuthorizedDomainsConnection
-    : public appengine::AuthorizedDomainsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::appengine::v1::AuthorizedDomain>,
-              ListAuthorizedDomains,
-              (google::appengine::v1::ListAuthorizedDomainsRequest request),
-              (override));
-};
+/// @deprecated Use appengine_v1_mocks::MockAuthorizedDomainsConnection
+/// directly.
+using ::google::cloud::appengine_v1_mocks::MockAuthorizedDomainsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_mocks
