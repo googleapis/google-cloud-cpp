@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `contactcenterinsights::ContactCenterInsightsClient`:
+For example, this will override the default endpoint for `contactcenterinsights_v1::ContactCenterInsightsClient`:
 
 @snippet contact_center_insights_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [contactcenterinsights::ContactCenterInsightsClient](@ref contactcenterinsights::ContactCenterInsightsClient-endpoint-snippet)
- [contactcenterinsights_v1::ContactCenterInsightsClient](@ref contactcenterinsights_v1::ContactCenterInsightsClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet contact_center_insights_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [contactcenterinsights::ContactCenterInsightsClient](@ref contactcenterinsights::ContactCenterInsightsClient-service-account-snippet)
- [contactcenterinsights_v1::ContactCenterInsightsClient](@ref contactcenterinsights_v1::ContactCenterInsightsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page contactcenterinsights::ContactCenterInsightsClient-endpoint-snippet Override contactcenterinsights::ContactCenterInsightsClient Endpoint Configuration
-
-@snippet google/cloud/contactcenterinsights/samples/contact_center_insights_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page contactcenterinsights::ContactCenterInsightsClient-service-account-snippet Override contactcenterinsights::ContactCenterInsightsClient Authentication Defaults
-
-@snippet google/cloud/contactcenterinsights/samples/contact_center_insights_client_samples.cc with-service-account
-
-*/
 
 /*! @page contactcenterinsights_v1::ContactCenterInsightsClient-endpoint-snippet Override contactcenterinsights_v1::ContactCenterInsightsClient Endpoint Configuration
 
