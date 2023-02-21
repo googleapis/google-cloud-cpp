@@ -16,28 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_STUB_FACTORY_H
 
-#include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace container {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// container_v1::MakeDefaultClusterManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::container_v1::
-    MakeDefaultClusterManagerConnectionIdempotencyPolicy;
-
-/// @deprecated Use container_v1::ClusterManagerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::container_v1::ClusterManagerConnectionIdempotencyPolicy;
+std::shared_ptr<ClusterManagerStub> CreateDefaultClusterManagerStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_CLUSTER_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_STUB_FACTORY_H

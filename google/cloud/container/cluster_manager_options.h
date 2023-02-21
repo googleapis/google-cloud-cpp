@@ -21,52 +21,26 @@
 
 #include "google/cloud/container/cluster_manager_connection.h"
 #include "google/cloud/container/cluster_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/container/v1/cluster_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-container-options
- */
-struct ClusterManagerRetryPolicyOption {
-  using Type = std::shared_ptr<ClusterManagerRetryPolicy>;
-};
+/// @deprecated Use container_v1::ClusterManagerBackoffPolicyOption directly.
+using ::google::cloud::container_v1::ClusterManagerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-container-options
- */
-struct ClusterManagerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// container_v1::ClusterManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::container_v1::
+    ClusterManagerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-container-options
- */
-struct ClusterManagerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ClusterManagerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use container_v1::ClusterManagerPolicyOptionList directly.
+using ::google::cloud::container_v1::ClusterManagerPolicyOptionList;
 
-/**
- * The options applicable to ClusterManager.
- *
- * @ingroup google-cloud-container-options
- */
-using ClusterManagerPolicyOptionList =
-    OptionList<ClusterManagerRetryPolicyOption,
-               ClusterManagerBackoffPolicyOption,
-               ClusterManagerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use container_v1::ClusterManagerRetryPolicyOption directly.
+using ::google::cloud::container_v1::ClusterManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
