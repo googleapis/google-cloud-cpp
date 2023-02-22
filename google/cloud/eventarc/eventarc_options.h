@@ -21,62 +21,28 @@
 
 #include "google/cloud/eventarc/eventarc_connection.h"
 #include "google/cloud/eventarc/eventarc_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/eventarc/v1/eventarc_options.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-eventarc-options
- */
-struct EventarcRetryPolicyOption {
-  using Type = std::shared_ptr<EventarcRetryPolicy>;
-};
+/// @deprecated Use eventarc_v1::EventarcPollingPolicyOption directly.
+using ::google::cloud::eventarc_v1::EventarcPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-eventarc-options
- */
-struct EventarcBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use eventarc_v1::EventarcBackoffPolicyOption directly.
+using ::google::cloud::eventarc_v1::EventarcBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-eventarc-options
- */
-struct EventarcConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<EventarcConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use eventarc_v1::EventarcConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::eventarc_v1::EventarcConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-eventarc-options
- */
-struct EventarcPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use eventarc_v1::EventarcPolicyOptionList directly.
+using ::google::cloud::eventarc_v1::EventarcPolicyOptionList;
 
-/**
- * The options applicable to Eventarc.
- *
- * @ingroup google-cloud-eventarc-options
- */
-using EventarcPolicyOptionList =
-    OptionList<EventarcRetryPolicyOption, EventarcBackoffPolicyOption,
-               EventarcPollingPolicyOption,
-               EventarcConnectionIdempotencyPolicyOption>;
+/// @deprecated Use eventarc_v1::EventarcRetryPolicyOption directly.
+using ::google::cloud::eventarc_v1::EventarcRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc

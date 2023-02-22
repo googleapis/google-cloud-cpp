@@ -16,27 +16,29 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/eventarc/v1/eventarc.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_EVENTARC_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_EVENTARC_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_INTERNAL_EVENTARC_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_INTERNAL_EVENTARC_RETRY_TRAITS_H
 
-#include "google/cloud/eventarc/v1/eventarc_connection_idempotency_policy.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace eventarc {
+namespace eventarc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use eventarc_v1::MakeDefaultEventarcConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::eventarc_v1::
-    MakeDefaultEventarcConnectionIdempotencyPolicy;
-
-/// @deprecated Use eventarc_v1::EventarcConnectionIdempotencyPolicy directly.
-using ::google::cloud::eventarc_v1::EventarcConnectionIdempotencyPolicy;
+/// Define the gRPC status code semantics for retrying requests.
+struct EventarcRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable &&
+           status.code() != StatusCode::kUnknown;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace eventarc
+}  // namespace eventarc_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_EVENTARC_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_INTERNAL_EVENTARC_RETRY_TRAITS_H

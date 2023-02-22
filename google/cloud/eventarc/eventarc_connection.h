@@ -20,140 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_EVENTARC_CONNECTION_H
 
 #include "google/cloud/eventarc/eventarc_connection_idempotency_policy.h"
-#include "google/cloud/eventarc/internal/eventarc_retry_traits.h"
-#include "google/cloud/eventarc/internal/eventarc_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/eventarc/v1/eventarc_connection.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using EventarcRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    eventarc_internal::EventarcRetryTraits>;
+/// @deprecated Use eventarc_v1::MakeEventarcConnection directly.
+using ::google::cloud::eventarc_v1::MakeEventarcConnection;
 
-using EventarcLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        eventarc_internal::EventarcRetryTraits>;
+/// @deprecated Use eventarc_v1::EventarcConnection directly.
+using ::google::cloud::eventarc_v1::EventarcConnection;
 
-using EventarcLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        eventarc_internal::EventarcRetryTraits>;
+/// @deprecated Use eventarc_v1::EventarcLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::eventarc_v1::EventarcLimitedErrorCountRetryPolicy;
 
-/**
- * The `EventarcConnection` object for `EventarcClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `EventarcClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `EventarcClient`.
- *
- * To create a concrete instance, see `MakeEventarcConnection()`.
- *
- * For mocking, see `eventarc_mocks::MockEventarcConnection`.
- */
-class EventarcConnection {
- public:
-  virtual ~EventarcConnection() = 0;
+/// @deprecated Use eventarc_v1::EventarcLimitedTimeRetryPolicy directly.
+using ::google::cloud::eventarc_v1::EventarcLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
-      google::cloud::eventarc::v1::GetTriggerRequest const& request);
-
-  virtual StreamRange<google::cloud::eventarc::v1::Trigger> ListTriggers(
-      google::cloud::eventarc::v1::ListTriggersRequest request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
-      google::cloud::eventarc::v1::CreateTriggerRequest const& request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
-      google::cloud::eventarc::v1::UpdateTriggerRequest const& request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
-      google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
-
-  virtual StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
-      google::cloud::eventarc::v1::GetChannelRequest const& request);
-
-  virtual StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
-      google::cloud::eventarc::v1::ListChannelsRequest request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
-      google::cloud::eventarc::v1::CreateChannelRequest const& request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
-      google::cloud::eventarc::v1::UpdateChannelRequest const& request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
-      google::cloud::eventarc::v1::DeleteChannelRequest const& request);
-
-  virtual StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
-      google::cloud::eventarc::v1::GetProviderRequest const& request);
-
-  virtual StreamRange<google::cloud::eventarc::v1::Provider> ListProviders(
-      google::cloud::eventarc::v1::ListProvidersRequest request);
-
-  virtual StatusOr<google::cloud::eventarc::v1::ChannelConnection>
-  GetChannelConnection(
-      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request);
-
-  virtual StreamRange<google::cloud::eventarc::v1::ChannelConnection>
-  ListChannelConnections(
-      google::cloud::eventarc::v1::ListChannelConnectionsRequest request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  CreateChannelConnection(
-      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
-  DeleteChannelConnection(
-      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  GetGoogleChannelConfig(
-      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
-  UpdateGoogleChannelConfig(
-      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type `EventarcConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of EventarcClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `EventarcConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::eventarc::EventarcPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `EventarcConnection` created by
- * this function.
- */
-std::shared_ptr<EventarcConnection> MakeEventarcConnection(
-    Options options = {});
+/// @deprecated Use eventarc_v1::EventarcRetryPolicy directly.
+using ::google::cloud::eventarc_v1::EventarcRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc

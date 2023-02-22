@@ -224,11 +224,14 @@
 ./include/google/cloud/edgecontainer/mocks
 ./include/google/cloud/edgecontainer/v1
 ./include/google/cloud/eventarc
-./include/google/cloud/eventarc/internal
 ./include/google/cloud/eventarc/mocks
 ./include/google/cloud/eventarc/publishing
 ./include/google/cloud/eventarc/publishing/v1
+./include/google/cloud/eventarc/publishing/v1/internal
+./include/google/cloud/eventarc/publishing/v1/mocks
 ./include/google/cloud/eventarc/v1
+./include/google/cloud/eventarc/v1/internal
+./include/google/cloud/eventarc/v1/mocks
 ./include/google/cloud/filestore
 ./include/google/cloud/filestore/internal
 ./include/google/cloud/filestore/mocks

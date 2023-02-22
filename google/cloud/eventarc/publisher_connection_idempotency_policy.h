@@ -19,35 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h>
-#include <memory>
+#include "google/cloud/eventarc/publishing/v1/publisher_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PublisherConnectionIdempotencyPolicy {
- public:
-  virtual ~PublisherConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// eventarc_publishing_v1::MakeDefaultPublisherConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::eventarc_publishing_v1::
+    MakeDefaultPublisherConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<PublisherConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency PublishChannelConnectionEvents(
-      google::cloud::eventarc::publishing::v1::
-          PublishChannelConnectionEventsRequest const& request);
-
-  virtual google::cloud::Idempotency PublishEvents(
-      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-          request);
-};
-
-std::unique_ptr<PublisherConnectionIdempotencyPolicy>
-MakeDefaultPublisherConnectionIdempotencyPolicy();
+/// @deprecated Use eventarc_publishing_v1::PublisherConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::eventarc_publishing_v1::
+    PublisherConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc

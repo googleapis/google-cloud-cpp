@@ -19,85 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHER_CONNECTION_H
 
-#include "google/cloud/eventarc/internal/publisher_retry_traits.h"
-#include "google/cloud/eventarc/internal/publisher_stub.h"
 #include "google/cloud/eventarc/publisher_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/eventarc/publishing/v1/publisher_connection.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using PublisherRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    eventarc_internal::PublisherRetryTraits>;
+/// @deprecated Use eventarc_publishing_v1::MakePublisherConnection directly.
+using ::google::cloud::eventarc_publishing_v1::MakePublisherConnection;
 
-using PublisherLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        eventarc_internal::PublisherRetryTraits>;
+/// @deprecated Use eventarc_publishing_v1::PublisherConnection directly.
+using ::google::cloud::eventarc_publishing_v1::PublisherConnection;
 
-using PublisherLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        eventarc_internal::PublisherRetryTraits>;
+/// @deprecated Use
+/// eventarc_publishing_v1::PublisherLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::eventarc_publishing_v1::
+    PublisherLimitedErrorCountRetryPolicy;
 
-/**
- * The `PublisherConnection` object for `PublisherClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `PublisherClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `PublisherClient`.
- *
- * To create a concrete instance, see `MakePublisherConnection()`.
- *
- * For mocking, see `eventarc_mocks::MockPublisherConnection`.
- */
-class PublisherConnection {
- public:
-  virtual ~PublisherConnection() = 0;
+/// @deprecated Use eventarc_publishing_v1::PublisherLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::eventarc_publishing_v1::PublisherLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::eventarc::publishing::v1::
-                       PublishChannelConnectionEventsResponse>
-  PublishChannelConnectionEvents(
-      google::cloud::eventarc::publishing::v1::
-          PublishChannelConnectionEventsRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::eventarc::publishing::v1::PublishEventsResponse>
-  PublishEvents(
-      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type `PublisherConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of PublisherClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `PublisherConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::eventarc::PublisherPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `PublisherConnection` created by
- * this function.
- */
-std::shared_ptr<PublisherConnection> MakePublisherConnection(
-    Options options = {});
+/// @deprecated Use eventarc_publishing_v1::PublisherRetryPolicy directly.
+using ::google::cloud::eventarc_publishing_v1::PublisherRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc

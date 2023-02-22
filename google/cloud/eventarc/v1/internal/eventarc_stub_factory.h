@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/eventarc/v1/eventarc.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_EVENTARC_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_EVENTARC_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_INTERNAL_EVENTARC_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_INTERNAL_EVENTARC_STUB_FACTORY_H
 
-#include "google/cloud/eventarc/v1/eventarc_connection_idempotency_policy.h"
+#include "google/cloud/eventarc/v1/internal/eventarc_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace eventarc {
+namespace eventarc_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use eventarc_v1::MakeDefaultEventarcConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::eventarc_v1::
-    MakeDefaultEventarcConnectionIdempotencyPolicy;
-
-/// @deprecated Use eventarc_v1::EventarcConnectionIdempotencyPolicy directly.
-using ::google::cloud::eventarc_v1::EventarcConnectionIdempotencyPolicy;
+std::shared_ptr<EventarcStub> CreateDefaultEventarcStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace eventarc
+}  // namespace eventarc_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_EVENTARC_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_INTERNAL_EVENTARC_STUB_FACTORY_H
