@@ -16,23 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_CLOUD_FUNCTIONS_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_CLOUD_FUNCTIONS_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_OPTION_DEFAULTS_H
 
-#include "google/cloud/functions/cloud_functions_connection.h"
-#include "google/cloud/functions/v1/cloud_functions_client.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace functions {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use functions_v1::CloudFunctionsServiceClient directly.
-using ::google::cloud::functions_v1::CloudFunctionsServiceClient;
+Options CloudFunctionsServiceDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_CLOUD_FUNCTIONS_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_OPTION_DEFAULTS_H

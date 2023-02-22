@@ -16,23 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_CLOUD_FUNCTIONS_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_CLOUD_FUNCTIONS_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_STUB_FACTORY_H
 
-#include "google/cloud/functions/cloud_functions_connection.h"
-#include "google/cloud/functions/v1/cloud_functions_client.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace functions {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use functions_v1::CloudFunctionsServiceClient directly.
-using ::google::cloud::functions_v1::CloudFunctionsServiceClient;
+std::shared_ptr<CloudFunctionsServiceStub>
+CreateDefaultCloudFunctionsServiceStub(google::cloud::CompletionQueue cq,
+                                       Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_CLOUD_FUNCTIONS_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_STUB_FACTORY_H

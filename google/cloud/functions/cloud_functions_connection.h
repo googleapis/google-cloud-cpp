@@ -20,119 +20,31 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_CLOUD_FUNCTIONS_CONNECTION_H
 
 #include "google/cloud/functions/cloud_functions_connection_idempotency_policy.h"
-#include "google/cloud/functions/internal/cloud_functions_retry_traits.h"
-#include "google/cloud/functions/internal/cloud_functions_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/functions/v1/cloud_functions_connection.h"
 
 namespace google {
 namespace cloud {
 namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudFunctionsServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        functions_internal::CloudFunctionsServiceRetryTraits>;
+/// @deprecated Use functions_v1::MakeCloudFunctionsServiceConnection directly.
+using ::google::cloud::functions_v1::MakeCloudFunctionsServiceConnection;
 
-using CloudFunctionsServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        functions_internal::CloudFunctionsServiceRetryTraits>;
+/// @deprecated Use functions_v1::CloudFunctionsServiceConnection directly.
+using ::google::cloud::functions_v1::CloudFunctionsServiceConnection;
 
-using CloudFunctionsServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        functions_internal::CloudFunctionsServiceRetryTraits>;
+/// @deprecated Use
+/// functions_v1::CloudFunctionsServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::functions_v1::
+    CloudFunctionsServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `CloudFunctionsServiceConnection` object for
- * `CloudFunctionsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudFunctionsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CloudFunctionsServiceClient`.
- *
- * To create a concrete instance, see `MakeCloudFunctionsServiceConnection()`.
- *
- * For mocking, see `functions_mocks::MockCloudFunctionsServiceConnection`.
- */
-class CloudFunctionsServiceConnection {
- public:
-  virtual ~CloudFunctionsServiceConnection() = 0;
+/// @deprecated Use functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::functions_v1::
+    CloudFunctionsServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::functions::v1::CloudFunction>
-  ListFunctions(google::cloud::functions::v1::ListFunctionsRequest request);
-
-  virtual StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
-      google::cloud::functions::v1::GetFunctionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::functions::v1::CloudFunction>>
-  CreateFunction(
-      google::cloud::functions::v1::CreateFunctionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::functions::v1::CloudFunction>>
-  UpdateFunction(
-      google::cloud::functions::v1::UpdateFunctionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
-  DeleteFunction(
-      google::cloud::functions::v1::DeleteFunctionRequest const& request);
-
-  virtual StatusOr<google::cloud::functions::v1::CallFunctionResponse>
-  CallFunction(
-      google::cloud::functions::v1::CallFunctionRequest const& request);
-
-  virtual StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
-  GenerateUploadUrl(
-      google::cloud::functions::v1::GenerateUploadUrlRequest const& request);
-
-  virtual StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
-  GenerateDownloadUrl(
-      google::cloud::functions::v1::GenerateDownloadUrlRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `CloudFunctionsServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CloudFunctionsServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CloudFunctionsServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::functions::CloudFunctionsServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CloudFunctionsServiceConnection`
- * created by this function.
- */
-std::shared_ptr<CloudFunctionsServiceConnection>
-MakeCloudFunctionsServiceConnection(Options options = {});
+/// @deprecated Use functions_v1::CloudFunctionsServiceRetryPolicy directly.
+using ::google::cloud::functions_v1::CloudFunctionsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions
