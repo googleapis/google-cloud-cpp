@@ -1015,7 +1015,8 @@ service {
 # Identity-Aware Proxy (IAP)
 service {
   service_proto_path: "google/cloud/iap/v1/service.proto"
-  product_path: "google/cloud/iap"
+  product_path: "google/cloud/iap/v1"
+  forwarding_product_path: "google/cloud/iap"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
