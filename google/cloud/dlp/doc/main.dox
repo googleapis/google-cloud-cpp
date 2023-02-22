@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `dlp::DlpServiceClient`:
+For example, this will override the default endpoint for `dlp_v2::DlpServiceClient`:
 
 @snippet dlp_client_samples.cc set-client-endpoint
 
@@ -140,15 +140,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page dlp::DlpServiceClient-endpoint-snippet Override dlp::DlpServiceClient Endpoint Configuration
+/*! @page dlp_v2::DlpServiceClient-endpoint-snippet Override dlp_v2::DlpServiceClient Endpoint Configuration
 
-@snippet google/cloud/dlp/samples/dlp_client_samples.cc set-client-endpoint
+@snippet google/cloud/dlp/v2/samples/dlp_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page dlp::DlpServiceClient-service-account-snippet Override dlp::DlpServiceClient Authentication Defaults
+/*! @page dlp_v2::DlpServiceClient-service-account-snippet Override dlp_v2::DlpServiceClient Authentication Defaults
 
-@snippet google/cloud/dlp/samples/dlp_client_samples.cc with-service-account
+@snippet google/cloud/dlp/v2/samples/dlp_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

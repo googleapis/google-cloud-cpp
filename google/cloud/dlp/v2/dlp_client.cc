@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#include "google/cloud/dlp/dlp_client.h"
+#include "google/cloud/dlp/v2/dlp_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace dlp {
+namespace dlp_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DlpServiceClient::DlpServiceClient(
@@ -555,6 +555,6 @@ Status DlpServiceClient::FinishDlpJob(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp
+}  // namespace dlp_v2
 }  // namespace cloud
 }  // namespace google

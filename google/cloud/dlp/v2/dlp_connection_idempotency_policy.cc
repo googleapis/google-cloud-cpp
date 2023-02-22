@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#include "google/cloud/dlp/dlp_connection_idempotency_policy.h"
+#include "google/cloud/dlp/v2/dlp_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace dlp {
+namespace dlp_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -211,6 +211,6 @@ MakeDefaultDlpServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp
+}  // namespace dlp_v2
 }  // namespace cloud
 }  // namespace google

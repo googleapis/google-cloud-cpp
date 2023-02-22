@@ -16,27 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_TRACING_STUB_H
 
-#include "google/cloud/dlp/internal/dlp_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/dlp/v2/internal/dlp_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
+namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DlpServiceLogging : public DlpServiceStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class DlpServiceTracingStub : public DlpServiceStub {
  public:
-  ~DlpServiceLogging() override = default;
-  DlpServiceLogging(std::shared_ptr<DlpServiceStub> child,
-                    TracingOptions tracing_options,
-                    std::set<std::string> components);
+  ~DlpServiceTracingStub() override = default;
+
+  explicit DlpServiceTracingStub(std::shared_ptr<DlpServiceStub> child);
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       grpc::ClientContext& context,
@@ -205,13 +203,22 @@ class DlpServiceLogging : public DlpServiceStub {
 
  private:
   std::shared_ptr<DlpServiceStub> child_;
-  TracingOptions tracing_options_;
-  std::set<std::string> components_;
-};  // DlpServiceLogging
+};
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<DlpServiceStub> MakeDlpServiceTracingStub(
+    std::shared_ptr<DlpServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
+}  // namespace dlp_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_TRACING_STUB_H

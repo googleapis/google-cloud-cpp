@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#include "google/cloud/dlp/internal/dlp_auth_decorator.h"
+#include "google/cloud/dlp/v2/internal/dlp_auth_decorator.h"
 #include <google/privacy/dlp/v2/dlp.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
+namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DlpServiceAuth::DlpServiceAuth(
@@ -324,6 +324,6 @@ Status DlpServiceAuth::FinishDlpJob(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
+}  // namespace dlp_v2_internal
 }  // namespace cloud
 }  // namespace google

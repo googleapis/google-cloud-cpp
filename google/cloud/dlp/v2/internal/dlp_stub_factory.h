@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_STUB_FACTORY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_STUB_FACTORY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_STUB_FACTORY_H
 
-#include "google/cloud/dlp/internal/dlp_stub.h"
+#include "google/cloud/dlp/v2/internal/dlp_stub.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -28,15 +28,15 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
+namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<DlpServiceStub> CreateDefaultDlpServiceStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
+}  // namespace dlp_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_STUB_FACTORY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_STUB_FACTORY_H

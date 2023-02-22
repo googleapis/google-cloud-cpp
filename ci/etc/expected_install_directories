@@ -219,8 +219,10 @@
 ./include/google/cloud/dialogflow_es/internal
 ./include/google/cloud/dialogflow_es/mocks
 ./include/google/cloud/dlp
-./include/google/cloud/dlp/internal
 ./include/google/cloud/dlp/mocks
+./include/google/cloud/dlp/v2
+./include/google/cloud/dlp/v2/internal
+./include/google/cloud/dlp/v2/mocks
 ./include/google/cloud/documentai
 ./include/google/cloud/documentai/internal
 ./include/google/cloud/documentai/mocks

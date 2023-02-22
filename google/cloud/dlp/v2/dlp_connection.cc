@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#include "google/cloud/dlp/dlp_connection.h"
-#include "google/cloud/dlp/dlp_options.h"
-#include "google/cloud/dlp/internal/dlp_connection_impl.h"
-#include "google/cloud/dlp/internal/dlp_option_defaults.h"
-#include "google/cloud/dlp/internal/dlp_stub_factory.h"
-#include "google/cloud/dlp/internal/dlp_tracing_connection.h"
+#include "google/cloud/dlp/v2/dlp_connection.h"
+#include "google/cloud/dlp/v2/dlp_options.h"
+#include "google/cloud/dlp/v2/internal/dlp_connection_impl.h"
+#include "google/cloud/dlp/v2/internal/dlp_option_defaults.h"
+#include "google/cloud/dlp/v2/internal/dlp_stub_factory.h"
+#include "google/cloud/dlp/v2/internal/dlp_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace dlp {
+namespace dlp_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DlpServiceConnection::~DlpServiceConnection() = default;
@@ -245,16 +245,16 @@ std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  DlpServicePolicyOptionList>(options, __func__);
-  options = dlp_internal::DlpServiceDefaultOptions(std::move(options));
+  options = dlp_v2_internal::DlpServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      dlp_internal::CreateDefaultDlpServiceStub(background->cq(), options);
-  return dlp_internal::MakeDlpServiceTracingConnection(
-      std::make_shared<dlp_internal::DlpServiceConnectionImpl>(
+      dlp_v2_internal::CreateDefaultDlpServiceStub(background->cq(), options);
+  return dlp_v2_internal::MakeDlpServiceTracingConnection(
+      std::make_shared<dlp_v2_internal::DlpServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp
+}  // namespace dlp_v2
 }  // namespace cloud
 }  // namespace google

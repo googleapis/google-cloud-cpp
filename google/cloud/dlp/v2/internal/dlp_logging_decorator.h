@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_LOGGING_DECORATOR_H
 
-#include "google/cloud/dlp/internal/dlp_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/dlp/v2/internal/dlp_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -28,15 +28,15 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
+namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DlpServiceAuth : public DlpServiceStub {
+class DlpServiceLogging : public DlpServiceStub {
  public:
-  ~DlpServiceAuth() override = default;
-  DlpServiceAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<DlpServiceStub> child);
+  ~DlpServiceLogging() override = default;
+  DlpServiceLogging(std::shared_ptr<DlpServiceStub> child,
+                    TracingOptions tracing_options,
+                    std::set<std::string> components);
 
   StatusOr<google::privacy::dlp::v2::InspectContentResponse> InspectContent(
       grpc::ClientContext& context,
@@ -204,13 +204,14 @@ class DlpServiceAuth : public DlpServiceStub {
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<DlpServiceStub> child_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // DlpServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
+}  // namespace dlp_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_LOGGING_DECORATOR_H

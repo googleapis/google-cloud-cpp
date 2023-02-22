@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#include "google/cloud/dlp/internal/dlp_option_defaults.h"
-#include "google/cloud/dlp/dlp_connection.h"
-#include "google/cloud/dlp/dlp_options.h"
+#include "google/cloud/dlp/v2/internal/dlp_option_defaults.h"
+#include "google/cloud/dlp/v2/dlp_connection.h"
+#include "google/cloud/dlp/v2/dlp_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
+namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -38,26 +38,26 @@ Options DlpServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DLP_SERVICE_AUTHORITY", "dlp.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dlp::DlpServiceRetryPolicyOption>()) {
-    options.set<dlp::DlpServiceRetryPolicyOption>(
-        dlp::DlpServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<dlp_v2::DlpServiceRetryPolicyOption>()) {
+    options.set<dlp_v2::DlpServiceRetryPolicyOption>(
+        dlp_v2::DlpServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dlp::DlpServiceBackoffPolicyOption>()) {
-    options.set<dlp::DlpServiceBackoffPolicyOption>(
+  if (!options.has<dlp_v2::DlpServiceBackoffPolicyOption>()) {
+    options.set<dlp_v2::DlpServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dlp::DlpServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dlp::DlpServiceConnectionIdempotencyPolicyOption>(
-        dlp::MakeDefaultDlpServiceConnectionIdempotencyPolicy());
+  if (!options.has<dlp_v2::DlpServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<dlp_v2::DlpServiceConnectionIdempotencyPolicyOption>(
+        dlp_v2::MakeDefaultDlpServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
+}  // namespace dlp_v2_internal
 }  // namespace cloud
 }  // namespace google

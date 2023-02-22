@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_TRACING_CONNECTION_H
 
-#include "google/cloud/dlp/dlp_connection.h"
+#include "google/cloud/dlp/v2/dlp_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
+namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class DlpServiceTracingConnection : public dlp::DlpServiceConnection {
+class DlpServiceTracingConnection : public dlp_v2::DlpServiceConnection {
  public:
   ~DlpServiceTracingConnection() override = default;
 
   explicit DlpServiceTracingConnection(
-      std::shared_ptr<dlp::DlpServiceConnection> child);
+      std::shared_ptr<dlp_v2::DlpServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -167,7 +167,7 @@ class DlpServiceTracingConnection : public dlp::DlpServiceConnection {
       google::privacy::dlp::v2::FinishDlpJobRequest const& request) override;
 
  private:
-  std::shared_ptr<dlp::DlpServiceConnection> child_;
+  std::shared_ptr<dlp_v2::DlpServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -178,12 +178,12 @@ class DlpServiceTracingConnection : public dlp::DlpServiceConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<dlp::DlpServiceConnection> MakeDlpServiceTracingConnection(
-    std::shared_ptr<dlp::DlpServiceConnection> conn);
+std::shared_ptr<dlp_v2::DlpServiceConnection> MakeDlpServiceTracingConnection(
+    std::shared_ptr<dlp_v2::DlpServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
+}  // namespace dlp_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_INTERNAL_DLP_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_TRACING_CONNECTION_H
