@@ -888,7 +888,8 @@ service {
 # Filestore
 service {
   service_proto_path: "google/cloud/filestore/v1/cloud_filestore_service.proto"
-  product_path: "google/cloud/filestore"
+  product_path: "google/cloud/filestore/v1"
+  forwarding_product_path: "google/cloud/filestore"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
