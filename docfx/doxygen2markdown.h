@@ -144,6 +144,24 @@ bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);
 
+/**
+ *
+ */
+/// Handle `variablelist` elements.
+///
+/// Most commonly used in lists of deprecated symbols, these are pairs of
+/// terms (a linked code entity), and a sequence of text.
+bool AppendIfVariableList(std::ostream& os, MarkdownContext const& ctx,
+                          pugi::xml_node const& node);
+
+/// Handle a single `varlistentry` element.
+bool AppendIfVariableListEntry(std::ostream& os, MarkdownContext const& ctx,
+                               pugi::xml_node const& node);
+
+/// Handle a single `listitem` in a variable list.
+bool AppendIfVariableListItem(std::ostream& os, MarkdownContext const& ctx,
+                              pugi::xml_node const& node);
+
 /// Handle a `simplesect` element (a section without sub-sections).
 bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
                         pugi::xml_node const& node);
