@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `deploy::CloudDeployClient`:
+For example, this will override the default endpoint for `deploy_v1::CloudDeployClient`:
 
 @snippet cloud_deploy_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [deploy::CloudDeployClient](@ref deploy::CloudDeployClient-endpoint-snippet)
- [deploy_v1::CloudDeployClient](@ref deploy_v1::CloudDeployClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_deploy_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [deploy::CloudDeployClient](@ref deploy::CloudDeployClient-service-account-snippet)
- [deploy_v1::CloudDeployClient](@ref deploy_v1::CloudDeployClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page deploy::CloudDeployClient-endpoint-snippet Override deploy::CloudDeployClient Endpoint Configuration
-
-@snippet google/cloud/deploy/samples/cloud_deploy_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page deploy::CloudDeployClient-service-account-snippet Override deploy::CloudDeployClient Authentication Defaults
-
-@snippet google/cloud/deploy/samples/cloud_deploy_client_samples.cc with-service-account
-
-*/
 
 /*! @page deploy_v1::CloudDeployClient-endpoint-snippet Override deploy_v1::CloudDeployClient Endpoint Configuration
 
