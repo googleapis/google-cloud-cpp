@@ -16,26 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/privacy/dlp/v2/dlp.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_DLP_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_DLP_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_RETRY_TRAITS_H
 
-#include "google/cloud/dlp/v2/dlp_connection_idempotency_policy.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace dlp {
+namespace dlp_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use dlp_v2::MakeDefaultDlpServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::dlp_v2::MakeDefaultDlpServiceConnectionIdempotencyPolicy;
-
-/// @deprecated Use dlp_v2::DlpServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::dlp_v2::DlpServiceConnectionIdempotencyPolicy;
+/// Define the gRPC status code semantics for retrying requests.
+struct DlpServiceRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp
+}  // namespace dlp_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_DLP_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DLP_V2_INTERNAL_DLP_RETRY_TRAITS_H
