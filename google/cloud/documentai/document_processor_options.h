@@ -21,64 +21,36 @@
 
 #include "google/cloud/documentai/document_processor_connection.h"
 #include "google/cloud/documentai/document_processor_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/documentai/v1/document_processor_options.h"
 
 namespace google {
 namespace cloud {
 namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-documentai-options
- */
-struct DocumentProcessorServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DocumentProcessorServiceRetryPolicy>;
-};
+/// @deprecated Use documentai_v1::DocumentProcessorServicePollingPolicyOption
+/// directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-documentai-options
- */
-struct DocumentProcessorServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use documentai_v1::DocumentProcessorServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-documentai-options
- */
-struct DocumentProcessorServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-documentai-options
- */
-struct DocumentProcessorServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use documentai_v1::DocumentProcessorServicePolicyOptionList
+/// directly.
+using ::google::cloud::documentai_v1::DocumentProcessorServicePolicyOptionList;
 
-/**
- * The options applicable to DocumentProcessorService.
- *
- * @ingroup google-cloud-documentai-options
- */
-using DocumentProcessorServicePolicyOptionList =
-    OptionList<DocumentProcessorServiceRetryPolicyOption,
-               DocumentProcessorServiceBackoffPolicyOption,
-               DocumentProcessorServicePollingPolicyOption,
-               DocumentProcessorServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use documentai_v1::DocumentProcessorServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::documentai_v1::DocumentProcessorServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai

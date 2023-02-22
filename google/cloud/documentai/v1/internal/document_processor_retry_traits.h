@@ -16,30 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_DOCUMENT_PROCESSOR_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_DOCUMENT_PROCESSOR_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_RETRY_TRAITS_H
 
-#include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace documentai {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// documentai_v1::MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::documentai_v1::
-    MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy;
-
-/// @deprecated Use
-/// documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::documentai_v1::
-    DocumentProcessorServiceConnectionIdempotencyPolicy;
+/// Define the gRPC status code semantics for retrying requests.
+struct DocumentProcessorServiceRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_DOCUMENT_PROCESSOR_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_RETRY_TRAITS_H
