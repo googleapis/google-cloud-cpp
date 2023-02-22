@@ -20,60 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_METRICS_SCOPES_CONNECTION_H
 
 #include "google/cloud/monitoring/metrics_scopes_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/monitoring/metricsscope/v1/mocks/mock_metrics_scopes_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `MetricsScopesConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `MetricsScopesClient`. To do so,
- * construct an object of type `MetricsScopesClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockMetricsScopesConnection : public monitoring::MetricsScopesConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::metricsscope::v1::MetricsScope>,
-      GetMetricsScope,
-      (google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::metricsscope::v1::
-                           ListMetricsScopesByMonitoredProjectResponse>,
-              ListMetricsScopesByMonitoredProject,
-              (google::monitoring::metricsscope::v1::
-                   ListMetricsScopesByMonitoredProjectRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
-      CreateMonitoredProject,
-      (google::monitoring::metricsscope::v1::
-           CreateMonitoredProjectRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
-      DeleteMonitoredProject,
-      (google::monitoring::metricsscope::v1::
-           DeleteMonitoredProjectRequest const& request),
-      (override));
-};
+/// @deprecated Use
+/// monitoring_metricsscope_v1_mocks::MockMetricsScopesConnection directly.
+using ::google::cloud::monitoring_metricsscope_v1_mocks::
+    MockMetricsScopesConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

@@ -19,55 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/gaming/v1/game_server_clusters_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/gameservices/v1/game_server_clusters_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GameServerClustersServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~GameServerClustersServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// gameservices_v1::MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListGameServerClusters(
-      google::cloud::gaming::v1::ListGameServerClustersRequest request);
-
-  virtual google::cloud::Idempotency GetGameServerCluster(
-      google::cloud::gaming::v1::GetGameServerClusterRequest const& request);
-
-  virtual google::cloud::Idempotency CreateGameServerCluster(
-      google::cloud::gaming::v1::CreateGameServerClusterRequest const& request);
-
-  virtual google::cloud::Idempotency PreviewCreateGameServerCluster(
-      google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteGameServerCluster(
-      google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request);
-
-  virtual google::cloud::Idempotency PreviewDeleteGameServerCluster(
-      google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateGameServerCluster(
-      google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request);
-
-  virtual google::cloud::Idempotency PreviewUpdateGameServerCluster(
-      google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
-          request);
-};
-
-std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
-MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// gameservices_v1::GameServerClustersServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

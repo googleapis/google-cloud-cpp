@@ -20,60 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_MOCKS_MOCK_REALMS_CONNECTION_H
 
 #include "google/cloud/gameservices/realms_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/gameservices/v1/mocks/mock_realms_connection.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `RealmsServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `RealmsServiceClient`. To do so,
- * construct an object of type `RealmsServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockRealmsServiceConnection
-    : public gameservices::RealmsServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::gaming::v1::Realm>, ListRealms,
-              (google::cloud::gaming::v1::ListRealmsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::Realm>, GetRealm,
-              (google::cloud::gaming::v1::GetRealmRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::Realm>>, CreateRealm,
-              (google::cloud::gaming::v1::CreateRealmRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
-              DeleteRealm,
-              (google::cloud::gaming::v1::DeleteRealmRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::Realm>>, UpdateRealm,
-              (google::cloud::gaming::v1::UpdateRealmRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>,
-      PreviewRealmUpdate,
-      (google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request),
-      (override));
-};
+/// @deprecated Use gameservices_v1_mocks::MockRealmsServiceConnection directly.
+using ::google::cloud::gameservices_v1_mocks::MockRealmsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_mocks

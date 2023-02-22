@@ -19,126 +19,39 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_MANAGED_IDENTITIES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_MANAGED_IDENTITIES_CONNECTION_H
 
-#include "google/cloud/managedidentities/internal/managed_identities_retry_traits.h"
-#include "google/cloud/managedidentities/internal/managed_identities_stub.h"
 #include "google/cloud/managedidentities/managed_identities_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/managedidentities/v1/managed_identities_connection.h"
 
 namespace google {
 namespace cloud {
 namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ManagedIdentitiesServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        managedidentities_internal::ManagedIdentitiesServiceRetryTraits>;
+/// @deprecated Use managedidentities_v1::MakeManagedIdentitiesServiceConnection
+/// directly.
+using ::google::cloud::managedidentities_v1::
+    MakeManagedIdentitiesServiceConnection;
 
-using ManagedIdentitiesServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        managedidentities_internal::ManagedIdentitiesServiceRetryTraits>;
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceConnection
+/// directly.
+using ::google::cloud::managedidentities_v1::ManagedIdentitiesServiceConnection;
 
-using ManagedIdentitiesServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        managedidentities_internal::ManagedIdentitiesServiceRetryTraits>;
+/// @deprecated Use
+/// managedidentities_v1::ManagedIdentitiesServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::managedidentities_v1::
+    ManagedIdentitiesServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `ManagedIdentitiesServiceConnection` object for
- * `ManagedIdentitiesServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ManagedIdentitiesServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ManagedIdentitiesServiceClient`.
- *
- * To create a concrete instance, see
- * `MakeManagedIdentitiesServiceConnection()`.
- *
- * For mocking, see
- * `managedidentities_mocks::MockManagedIdentitiesServiceConnection`.
- */
-class ManagedIdentitiesServiceConnection {
- public:
-  virtual ~ManagedIdentitiesServiceConnection() = 0;
+/// @deprecated Use
+/// managedidentities_v1::ManagedIdentitiesServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::managedidentities_v1::
+    ManagedIdentitiesServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain(google::cloud::managedidentities::v1::
-                              CreateMicrosoftAdDomainRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
-  ResetAdminPassword(
-      google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::managedidentities::v1::Domain> ListDomains(
-      google::cloud::managedidentities::v1::ListDomainsRequest request);
-
-  virtual StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
-      google::cloud::managedidentities::v1::GetDomainRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  UpdateDomain(
-      google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(
-      google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  AttachTrust(
-      google::cloud::managedidentities::v1::AttachTrustRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(
-      google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  DetachTrust(
-      google::cloud::managedidentities::v1::DetachTrustRequest const& request);
-
-  virtual future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ValidateTrust(
-      google::cloud::managedidentities::v1::ValidateTrustRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ManagedIdentitiesServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ManagedIdentitiesServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ManagedIdentitiesServiceConnection`. Expected options are any of
- * the types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::managedidentities::ManagedIdentitiesServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ManagedIdentitiesServiceConnection`
- * created by this function.
- */
-std::shared_ptr<ManagedIdentitiesServiceConnection>
-MakeManagedIdentitiesServiceConnection(Options options = {});
+/// @deprecated Use managedidentities_v1::ManagedIdentitiesServiceRetryPolicy
+/// directly.
+using ::google::cloud::managedidentities_v1::
+    ManagedIdentitiesServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities

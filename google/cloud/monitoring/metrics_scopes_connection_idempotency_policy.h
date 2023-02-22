@@ -19,44 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICS_SCOPES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICS_SCOPES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/monitoring/metricsscope/v1/metrics_scopes.grpc.pb.h>
-#include <memory>
+#include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MetricsScopesConnectionIdempotencyPolicy {
- public:
-  virtual ~MetricsScopesConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_metricsscope_v1::MakeDefaultMetricsScopesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_metricsscope_v1::
+    MakeDefaultMetricsScopesConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency GetMetricsScope(
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListMetricsScopesByMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const& request);
-
-  virtual google::cloud::Idempotency CreateMonitoredProject(
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteMonitoredProject(
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request);
-};
-
-std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
-MakeDefaultMetricsScopesConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_metricsscope_v1::MetricsScopesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_metricsscope_v1::
+    MetricsScopesConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

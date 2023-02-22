@@ -20,125 +20,37 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_DEPLOYMENTS_CONNECTION_H
 
 #include "google/cloud/gameservices/game_server_deployments_connection_idempotency_policy.h"
-#include "google/cloud/gameservices/internal/game_server_deployments_retry_traits.h"
-#include "google/cloud/gameservices/internal/game_server_deployments_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/gameservices/v1/game_server_deployments_connection.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GameServerDeploymentsServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
+/// @deprecated Use gameservices_v1::MakeGameServerDeploymentsServiceConnection
+/// directly.
+using ::google::cloud::gameservices_v1::
+    MakeGameServerDeploymentsServiceConnection;
 
-using GameServerDeploymentsServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
+/// @deprecated Use gameservices_v1::GameServerDeploymentsServiceConnection
+/// directly.
+using ::google::cloud::gameservices_v1::GameServerDeploymentsServiceConnection;
 
-using GameServerDeploymentsServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
+/// @deprecated Use
+/// gameservices_v1::GameServerDeploymentsServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerDeploymentsServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `GameServerDeploymentsServiceConnection` object for
- * `GameServerDeploymentsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `GameServerDeploymentsServiceClient`. This allows users to inject
- * custom behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `GameServerDeploymentsServiceClient`.
- *
- * To create a concrete instance, see
- * `MakeGameServerDeploymentsServiceConnection()`.
- *
- * For mocking, see
- * `gameservices_mocks::MockGameServerDeploymentsServiceConnection`.
- */
-class GameServerDeploymentsServiceConnection {
- public:
-  virtual ~GameServerDeploymentsServiceConnection() = 0;
+/// @deprecated Use
+/// gameservices_v1::GameServerDeploymentsServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerDeploymentsServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::gaming::v1::GameServerDeployment>
-  ListGameServerDeployments(
-      google::cloud::gaming::v1::ListGameServerDeploymentsRequest request);
-
-  virtual StatusOr<google::cloud::gaming::v1::GameServerDeployment>
-  GetGameServerDeployment(
-      google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  CreateGameServerDeployment(
-      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerDeployment(
-      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  UpdateGameServerDeployment(
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
-  GetGameServerDeploymentRollout(
-      google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
-  UpdateGameServerDeploymentRollout(
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
-          request);
-
-  virtual StatusOr<
-      google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>
-  PreviewGameServerDeploymentRollout(
-      google::cloud::gaming::v1::
-          PreviewGameServerDeploymentRolloutRequest const& request);
-
-  virtual StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
-  FetchDeploymentState(
-      google::cloud::gaming::v1::FetchDeploymentStateRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `GameServerDeploymentsServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * GameServerDeploymentsServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `GameServerDeploymentsServiceConnection`. Expected options are any
- * of the types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::gameservices::GameServerDeploymentsServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the
- * `GameServerDeploymentsServiceConnection` created by this function.
- */
-std::shared_ptr<GameServerDeploymentsServiceConnection>
-MakeGameServerDeploymentsServiceConnection(Options options = {});
+/// @deprecated Use gameservices_v1::GameServerDeploymentsServiceRetryPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::GameServerDeploymentsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

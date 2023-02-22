@@ -19,100 +19,36 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICS_SCOPES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICS_SCOPES_CONNECTION_H
 
-#include "google/cloud/monitoring/internal/metrics_scopes_retry_traits.h"
-#include "google/cloud/monitoring/internal/metrics_scopes_stub.h"
 #include "google/cloud/monitoring/metrics_scopes_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using MetricsScopesRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::MetricsScopesRetryTraits>;
+/// @deprecated Use monitoring_metricsscope_v1::MakeMetricsScopesConnection
+/// directly.
+using ::google::cloud::monitoring_metricsscope_v1::MakeMetricsScopesConnection;
 
-using MetricsScopesLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::MetricsScopesRetryTraits>;
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesConnection
+/// directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesConnection;
 
-using MetricsScopesLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::MetricsScopesRetryTraits>;
+/// @deprecated Use
+/// monitoring_metricsscope_v1::MetricsScopesLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::monitoring_metricsscope_v1::
+    MetricsScopesLimitedErrorCountRetryPolicy;
 
-/**
- * The `MetricsScopesConnection` object for `MetricsScopesClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `MetricsScopesClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `MetricsScopesClient`.
- *
- * To create a concrete instance, see `MakeMetricsScopesConnection()`.
- *
- * For mocking, see `monitoring_mocks::MockMetricsScopesConnection`.
- */
-class MetricsScopesConnection {
- public:
-  virtual ~MetricsScopesConnection() = 0;
+/// @deprecated Use
+/// monitoring_metricsscope_v1::MetricsScopesLimitedTimeRetryPolicy directly.
+using ::google::cloud::monitoring_metricsscope_v1::
+    MetricsScopesLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
-  GetMetricsScope(
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-          request);
-
-  virtual StatusOr<google::monitoring::metricsscope::v1::
-                       ListMetricsScopesByMonitoredProjectResponse>
-  ListMetricsScopesByMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const& request);
-
-  virtual future<
-      StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(
-      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(
-      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type `MetricsScopesConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of MetricsScopesClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `MetricsScopesConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::MetricsScopesPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `MetricsScopesConnection` created by
- * this function.
- */
-std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
-    Options options = {});
+/// @deprecated Use monitoring_metricsscope_v1::MetricsScopesRetryPolicy
+/// directly.
+using ::google::cloud::monitoring_metricsscope_v1::MetricsScopesRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

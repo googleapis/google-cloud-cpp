@@ -19,95 +19,36 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARDS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARDS_CONNECTION_H
 
+#include "google/cloud/monitoring/dashboard/v1/dashboards_connection.h"
 #include "google/cloud/monitoring/dashboards_connection_idempotency_policy.h"
-#include "google/cloud/monitoring/internal/dashboards_retry_traits.h"
-#include "google/cloud/monitoring/internal/dashboards_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DashboardsServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::DashboardsServiceRetryTraits>;
+/// @deprecated Use monitoring_dashboard_v1::MakeDashboardsServiceConnection
+/// directly.
+using ::google::cloud::monitoring_dashboard_v1::MakeDashboardsServiceConnection;
 
-using DashboardsServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::DashboardsServiceRetryTraits>;
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceConnection
+/// directly.
+using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceConnection;
 
-using DashboardsServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::DashboardsServiceRetryTraits>;
+/// @deprecated Use
+/// monitoring_dashboard_v1::DashboardsServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::monitoring_dashboard_v1::
+    DashboardsServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `DashboardsServiceConnection` object for `DashboardsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `DashboardsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DashboardsServiceClient`.
- *
- * To create a concrete instance, see `MakeDashboardsServiceConnection()`.
- *
- * For mocking, see `monitoring_mocks::MockDashboardsServiceConnection`.
- */
-class DashboardsServiceConnection {
- public:
-  virtual ~DashboardsServiceConnection() = 0;
+/// @deprecated Use
+/// monitoring_dashboard_v1::DashboardsServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::monitoring_dashboard_v1::
+    DashboardsServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  CreateDashboard(
-      google::monitoring::dashboard::v1::CreateDashboardRequest const& request);
-
-  virtual StreamRange<google::monitoring::dashboard::v1::Dashboard>
-  ListDashboards(
-      google::monitoring::dashboard::v1::ListDashboardsRequest request);
-
-  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
-      google::monitoring::dashboard::v1::GetDashboardRequest const& request);
-
-  virtual Status DeleteDashboard(
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request);
-
-  virtual StatusOr<google::monitoring::dashboard::v1::Dashboard>
-  UpdateDashboard(
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `DashboardsServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DashboardsServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `DashboardsServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::DashboardsServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `DashboardsServiceConnection` created
- * by this function.
- */
-std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
-    Options options = {});
+/// @deprecated Use monitoring_dashboard_v1::DashboardsServiceRetryPolicy
+/// directly.
+using ::google::cloud::monitoring_dashboard_v1::DashboardsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

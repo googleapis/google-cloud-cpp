@@ -19,61 +19,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_DASHBOARDS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_DASHBOARDS_CONNECTION_H
 
+#include "google/cloud/monitoring/dashboard/v1/mocks/mock_dashboards_connection.h"
 #include "google/cloud/monitoring/dashboards_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `DashboardsServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DashboardsServiceClient`. To do so,
- * construct an object of type `DashboardsServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockDashboardsServiceConnection
-    : public monitoring::DashboardsServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::dashboard::v1::Dashboard>,
-              CreateDashboard,
-              (google::monitoring::dashboard::v1::CreateDashboardRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::monitoring::dashboard::v1::Dashboard>, ListDashboards,
-      (google::monitoring::dashboard::v1::ListDashboardsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::dashboard::v1::Dashboard>, GetDashboard,
-      (google::monitoring::dashboard::v1::GetDashboardRequest const& request),
-      (override));
-
-  MOCK_METHOD(Status, DeleteDashboard,
-              (google::monitoring::dashboard::v1::DeleteDashboardRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::dashboard::v1::Dashboard>,
-              UpdateDashboard,
-              (google::monitoring::dashboard::v1::UpdateDashboardRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use
+/// monitoring_dashboard_v1_mocks::MockDashboardsServiceConnection directly.
+using ::google::cloud::monitoring_dashboard_v1_mocks::
+    MockDashboardsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

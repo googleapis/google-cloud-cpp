@@ -109,6 +109,9 @@ Follow these links to find examples for other \c *Client classes:
  [resourcemanager::FoldersClient](@ref resourcemanager::FoldersClient-endpoint-snippet)
  [resourcemanager::OrganizationsClient](@ref resourcemanager::OrganizationsClient-endpoint-snippet)
  [resourcemanager::ProjectsClient](@ref resourcemanager::ProjectsClient-endpoint-snippet)
+ [resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-endpoint-snippet)
+ [resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-endpoint-snippet)
+ [resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -126,6 +129,9 @@ Follow these links to find examples for other \c *Client classes:
  [resourcemanager::FoldersClient](@ref resourcemanager::FoldersClient-service-account-snippet)
  [resourcemanager::OrganizationsClient](@ref resourcemanager::OrganizationsClient-service-account-snippet)
  [resourcemanager::ProjectsClient](@ref resourcemanager::ProjectsClient-service-account-snippet)
+ [resourcemanager_v3::FoldersClient](@ref resourcemanager_v3::FoldersClient-service-account-snippet)
+ [resourcemanager_v3::OrganizationsClient](@ref resourcemanager_v3::OrganizationsClient-service-account-snippet)
+ [resourcemanager_v3::ProjectsClient](@ref resourcemanager_v3::ProjectsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -189,6 +195,42 @@ can override the default policies.
 /*! @page resourcemanager::ProjectsClient-service-account-snippet Override resourcemanager::ProjectsClient Authentication Defaults
 
 @snippet google/cloud/resourcemanager/samples/projects_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcemanager_v3::FoldersClient-endpoint-snippet Override resourcemanager_v3::FoldersClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/folders_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::FoldersClient-service-account-snippet Override resourcemanager_v3::FoldersClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/v3/samples/folders_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcemanager_v3::OrganizationsClient-endpoint-snippet Override resourcemanager_v3::OrganizationsClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/organizations_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::OrganizationsClient-service-account-snippet Override resourcemanager_v3::OrganizationsClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/v3/samples/organizations_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcemanager_v3::ProjectsClient-endpoint-snippet Override resourcemanager_v3::ProjectsClient Endpoint Configuration
+
+@snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcemanager_v3::ProjectsClient-service-account-snippet Override resourcemanager_v3::ProjectsClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/v3/samples/projects_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

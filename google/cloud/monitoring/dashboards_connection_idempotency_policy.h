@@ -19,43 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARDS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_DASHBOARDS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/monitoring/dashboard/v1/dashboards_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DashboardsServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~DashboardsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_dashboard_v1::MakeDefaultDashboardsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_dashboard_v1::
+    MakeDefaultDashboardsServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateDashboard(
-      google::monitoring::dashboard::v1::CreateDashboardRequest const& request);
-
-  virtual google::cloud::Idempotency ListDashboards(
-      google::monitoring::dashboard::v1::ListDashboardsRequest request);
-
-  virtual google::cloud::Idempotency GetDashboard(
-      google::monitoring::dashboard::v1::GetDashboardRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteDashboard(
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateDashboard(
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request);
-};
-
-std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>
-MakeDefaultDashboardsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_dashboard_v1::DashboardsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_dashboard_v1::
+    DashboardsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

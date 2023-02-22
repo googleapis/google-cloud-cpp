@@ -19,31 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_QUERY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_QUERY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/monitoring/v3/query_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/monitoring/v3/query_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class QueryServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~QueryServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_v3::MakeDefaultQueryServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::monitoring_v3::
+    MakeDefaultQueryServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<QueryServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency QueryTimeSeries(
-      google::monitoring::v3::QueryTimeSeriesRequest request);
-};
-
-std::unique_ptr<QueryServiceConnectionIdempotencyPolicy>
-MakeDefaultQueryServiceConnectionIdempotencyPolicy();
+/// @deprecated Use monitoring_v3::QueryServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::QueryServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

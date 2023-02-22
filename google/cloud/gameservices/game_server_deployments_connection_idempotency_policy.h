@@ -19,62 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_DEPLOYMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_DEPLOYMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/gaming/v1/game_server_deployments_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/gameservices/v1/game_server_deployments_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GameServerDeploymentsServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~GameServerDeploymentsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// gameservices_v1::MakeDefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    MakeDefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      GameServerDeploymentsServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListGameServerDeployments(
-      google::cloud::gaming::v1::ListGameServerDeploymentsRequest request);
-
-  virtual google::cloud::Idempotency GetGameServerDeployment(
-      google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request);
-
-  virtual google::cloud::Idempotency CreateGameServerDeployment(
-      google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteGameServerDeployment(
-      google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateGameServerDeployment(
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetGameServerDeploymentRollout(
-      google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateGameServerDeploymentRollout(
-      google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
-          request);
-
-  virtual google::cloud::Idempotency PreviewGameServerDeploymentRollout(
-      google::cloud::gaming::v1::
-          PreviewGameServerDeploymentRolloutRequest const& request);
-
-  virtual google::cloud::Idempotency FetchDeploymentState(
-      google::cloud::gaming::v1::FetchDeploymentStateRequest const& request);
-};
-
-std::unique_ptr<GameServerDeploymentsServiceConnectionIdempotencyPolicy>
-MakeDefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// gameservices_v1::GameServerDeploymentsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerDeploymentsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

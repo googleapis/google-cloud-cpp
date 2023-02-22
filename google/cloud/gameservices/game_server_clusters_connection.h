@@ -20,120 +20,35 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CLUSTERS_CONNECTION_H
 
 #include "google/cloud/gameservices/game_server_clusters_connection_idempotency_policy.h"
-#include "google/cloud/gameservices/internal/game_server_clusters_retry_traits.h"
-#include "google/cloud/gameservices/internal/game_server_clusters_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/gameservices/v1/game_server_clusters_connection.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GameServerClustersServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        gameservices_internal::GameServerClustersServiceRetryTraits>;
+/// @deprecated Use gameservices_v1::MakeGameServerClustersServiceConnection
+/// directly.
+using ::google::cloud::gameservices_v1::MakeGameServerClustersServiceConnection;
 
-using GameServerClustersServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        gameservices_internal::GameServerClustersServiceRetryTraits>;
+/// @deprecated Use gameservices_v1::GameServerClustersServiceConnection
+/// directly.
+using ::google::cloud::gameservices_v1::GameServerClustersServiceConnection;
 
-using GameServerClustersServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        gameservices_internal::GameServerClustersServiceRetryTraits>;
+/// @deprecated Use
+/// gameservices_v1::GameServerClustersServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `GameServerClustersServiceConnection` object for
- * `GameServerClustersServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `GameServerClustersServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `GameServerClustersServiceClient`.
- *
- * To create a concrete instance, see
- * `MakeGameServerClustersServiceConnection()`.
- *
- * For mocking, see
- * `gameservices_mocks::MockGameServerClustersServiceConnection`.
- */
-class GameServerClustersServiceConnection {
- public:
-  virtual ~GameServerClustersServiceConnection() = 0;
+/// @deprecated Use
+/// gameservices_v1::GameServerClustersServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::gaming::v1::GameServerCluster>
-  ListGameServerClusters(
-      google::cloud::gaming::v1::ListGameServerClustersRequest request);
-
-  virtual StatusOr<google::cloud::gaming::v1::GameServerCluster>
-  GetGameServerCluster(
-      google::cloud::gaming::v1::GetGameServerClusterRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  CreateGameServerCluster(
-      google::cloud::gaming::v1::CreateGameServerClusterRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
-  PreviewCreateGameServerCluster(
-      google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerCluster(
-      google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
-  PreviewDeleteGameServerCluster(
-      google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
-  UpdateGameServerCluster(
-      google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
-  PreviewUpdateGameServerCluster(
-      google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type
- * `GameServerClustersServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * GameServerClustersServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `GameServerClustersServiceConnection`. Expected options are any of
- * the types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::gameservices::GameServerClustersServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `GameServerClustersServiceConnection`
- * created by this function.
- */
-std::shared_ptr<GameServerClustersServiceConnection>
-MakeGameServerClustersServiceConnection(Options options = {});
+/// @deprecated Use gameservices_v1::GameServerClustersServiceRetryPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::GameServerClustersServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

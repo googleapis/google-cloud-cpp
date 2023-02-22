@@ -20,55 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_GROUP_CONNECTION_H
 
 #include "google/cloud/monitoring/group_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/monitoring/v3/mocks/mock_group_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `GroupServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `GroupServiceClient`. To do so,
- * construct an object of type `GroupServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockGroupServiceConnection : public monitoring::GroupServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::monitoring::v3::Group>, ListGroups,
-              (google::monitoring::v3::ListGroupsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, GetGroup,
-              (google::monitoring::v3::GetGroupRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, CreateGroup,
-              (google::monitoring::v3::CreateGroupRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Group>, UpdateGroup,
-              (google::monitoring::v3::UpdateGroupRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteGroup,
-              (google::monitoring::v3::DeleteGroupRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::api::MonitoredResource>, ListGroupMembers,
-              (google::monitoring::v3::ListGroupMembersRequest request),
-              (override));
-};
+/// @deprecated Use monitoring_v3_mocks::MockGroupServiceConnection directly.
+using ::google::cloud::monitoring_v3_mocks::MockGroupServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

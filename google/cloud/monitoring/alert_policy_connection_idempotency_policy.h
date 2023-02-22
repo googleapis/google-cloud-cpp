@@ -19,43 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_ALERT_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_ALERT_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/monitoring/v3/alert_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/monitoring/v3/alert_policy_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AlertPolicyServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~AlertPolicyServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_v3::MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::
+    MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListAlertPolicies(
-      google::monitoring::v3::ListAlertPoliciesRequest request);
-
-  virtual google::cloud::Idempotency GetAlertPolicy(
-      google::monitoring::v3::GetAlertPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency CreateAlertPolicy(
-      google::monitoring::v3::CreateAlertPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteAlertPolicy(
-      google::monitoring::v3::DeleteAlertPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateAlertPolicy(
-      google::monitoring::v3::UpdateAlertPolicyRequest const& request);
-};
-
-std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
-MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy();
+/// @deprecated Use monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::
+    AlertPolicyServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

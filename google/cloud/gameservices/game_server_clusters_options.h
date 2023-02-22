@@ -21,64 +21,38 @@
 
 #include "google/cloud/gameservices/game_server_clusters_connection.h"
 #include "google/cloud/gameservices/game_server_clusters_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/gameservices/v1/game_server_clusters_options.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-gameservices-options
- */
-struct GameServerClustersServiceRetryPolicyOption {
-  using Type = std::shared_ptr<GameServerClustersServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// gameservices_v1::GameServerClustersServicePollingPolicyOption directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-gameservices-options
- */
-struct GameServerClustersServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// gameservices_v1::GameServerClustersServiceBackoffPolicyOption directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-gameservices-options
- */
-struct GameServerClustersServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// gameservices_v1::GameServerClustersServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-gameservices-options
- */
-struct GameServerClustersServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use gameservices_v1::GameServerClustersServicePolicyOptionList
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServicePolicyOptionList;
 
-/**
- * The options applicable to GameServerClustersService.
- *
- * @ingroup google-cloud-gameservices-options
- */
-using GameServerClustersServicePolicyOptionList =
-    OptionList<GameServerClustersServiceRetryPolicyOption,
-               GameServerClustersServiceBackoffPolicyOption,
-               GameServerClustersServicePollingPolicyOption,
-               GameServerClustersServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use gameservices_v1::GameServerClustersServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerClustersServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

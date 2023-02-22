@@ -21,52 +21,27 @@
 
 #include "google/cloud/monitoring/uptime_check_connection.h"
 #include "google/cloud/monitoring/uptime_check_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/monitoring/v3/uptime_check_options.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct UptimeCheckServiceRetryPolicyOption {
-  using Type = std::shared_ptr<UptimeCheckServiceRetryPolicy>;
-};
+/// @deprecated Use monitoring_v3::UptimeCheckServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::monitoring_v3::UptimeCheckServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct UptimeCheckServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_v3::
+    UptimeCheckServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct UptimeCheckServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use monitoring_v3::UptimeCheckServicePolicyOptionList directly.
+using ::google::cloud::monitoring_v3::UptimeCheckServicePolicyOptionList;
 
-/**
- * The options applicable to UptimeCheckService.
- *
- * @ingroup google-cloud-monitoring-options
- */
-using UptimeCheckServicePolicyOptionList =
-    OptionList<UptimeCheckServiceRetryPolicyOption,
-               UptimeCheckServiceBackoffPolicyOption,
-               UptimeCheckServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use monitoring_v3::UptimeCheckServiceRetryPolicyOption directly.
+using ::google::cloud::monitoring_v3::UptimeCheckServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

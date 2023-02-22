@@ -19,46 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_REALMS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/gaming/v1/realms_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/gameservices/v1/realms_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RealmsServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~RealmsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// gameservices_v1::MakeDefaultRealmsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    MakeDefaultRealmsServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListRealms(
-      google::cloud::gaming::v1::ListRealmsRequest request);
-
-  virtual google::cloud::Idempotency GetRealm(
-      google::cloud::gaming::v1::GetRealmRequest const& request);
-
-  virtual google::cloud::Idempotency CreateRealm(
-      google::cloud::gaming::v1::CreateRealmRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteRealm(
-      google::cloud::gaming::v1::DeleteRealmRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateRealm(
-      google::cloud::gaming::v1::UpdateRealmRequest const& request);
-
-  virtual google::cloud::Idempotency PreviewRealmUpdate(
-      google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request);
-};
-
-std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy>
-MakeDefaultRealmsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use gameservices_v1::RealmsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    RealmsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

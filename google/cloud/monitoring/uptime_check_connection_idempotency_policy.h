@@ -19,46 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_UPTIME_CHECK_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_UPTIME_CHECK_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/monitoring/v3/uptime_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/monitoring/v3/uptime_check_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class UptimeCheckServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~UptimeCheckServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_v3::MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::
+    MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListUptimeCheckConfigs(
-      google::monitoring::v3::ListUptimeCheckConfigsRequest request);
-
-  virtual google::cloud::Idempotency GetUptimeCheckConfig(
-      google::monitoring::v3::GetUptimeCheckConfigRequest const& request);
-
-  virtual google::cloud::Idempotency CreateUptimeCheckConfig(
-      google::monitoring::v3::CreateUptimeCheckConfigRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateUptimeCheckConfig(
-      google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteUptimeCheckConfig(
-      google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request);
-
-  virtual google::cloud::Idempotency ListUptimeCheckIps(
-      google::monitoring::v3::ListUptimeCheckIpsRequest request);
-};
-
-std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>
-MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy();
+/// @deprecated Use monitoring_v3::UptimeCheckServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::
+    UptimeCheckServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

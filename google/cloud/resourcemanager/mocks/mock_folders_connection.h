@@ -20,89 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_MOCKS_MOCK_FOLDERS_CONNECTION_H
 
 #include "google/cloud/resourcemanager/folders_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/resourcemanager/v3/mocks/mock_folders_connection.h"
 
 namespace google {
 namespace cloud {
 namespace resourcemanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `FoldersConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `FoldersClient`. To do so,
- * construct an object of type `FoldersClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockFoldersConnection : public resourcemanager::FoldersConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::resourcemanager::v3::Folder>, GetFolder,
-      (google::cloud::resourcemanager::v3::GetFolderRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::resourcemanager::v3::Folder>,
-              ListFolders,
-              (google::cloud::resourcemanager::v3::ListFoldersRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::resourcemanager::v3::Folder>, SearchFolders,
-      (google::cloud::resourcemanager::v3::SearchFoldersRequest request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-      CreateFolder,
-      (google::cloud::resourcemanager::v3::CreateFolderRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-      UpdateFolder,
-      (google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>, MoveFolder,
-      (google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-      DeleteFolder,
-      (google::cloud::resourcemanager::v3::DeleteFolderRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
-              UndeleteFolder,
-              (google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-};
+/// @deprecated Use resourcemanager_v3_mocks::MockFoldersConnection directly.
+using ::google::cloud::resourcemanager_v3_mocks::MockFoldersConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_mocks

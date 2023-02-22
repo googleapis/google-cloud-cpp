@@ -21,52 +21,27 @@
 
 #include "google/cloud/monitoring/alert_policy_connection.h"
 #include "google/cloud/monitoring/alert_policy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/monitoring/v3/alert_policy_options.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct AlertPolicyServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AlertPolicyServiceRetryPolicy>;
-};
+/// @deprecated Use monitoring_v3::AlertPolicyServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::monitoring_v3::AlertPolicyServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct AlertPolicyServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// monitoring_v3::AlertPolicyServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_v3::
+    AlertPolicyServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct AlertPolicyServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use monitoring_v3::AlertPolicyServicePolicyOptionList directly.
+using ::google::cloud::monitoring_v3::AlertPolicyServicePolicyOptionList;
 
-/**
- * The options applicable to AlertPolicyService.
- *
- * @ingroup google-cloud-monitoring-options
- */
-using AlertPolicyServicePolicyOptionList =
-    OptionList<AlertPolicyServiceRetryPolicyOption,
-               AlertPolicyServiceBackoffPolicyOption,
-               AlertPolicyServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use monitoring_v3::AlertPolicyServiceRetryPolicyOption directly.
+using ::google::cloud::monitoring_v3::AlertPolicyServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

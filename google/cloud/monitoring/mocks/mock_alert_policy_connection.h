@@ -20,54 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_ALERT_POLICY_CONNECTION_H
 
 #include "google/cloud/monitoring/alert_policy_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/monitoring/v3/mocks/mock_alert_policy_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AlertPolicyServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AlertPolicyServiceClient`. To do
- * so, construct an object of type `AlertPolicyServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAlertPolicyServiceConnection
-    : public monitoring::AlertPolicyServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::monitoring::v3::AlertPolicy>,
-              ListAlertPolicies,
-              (google::monitoring::v3::ListAlertPoliciesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::AlertPolicy>, GetAlertPolicy,
-              (google::monitoring::v3::GetAlertPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::AlertPolicy>, CreateAlertPolicy,
-              (google::monitoring::v3::CreateAlertPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteAlertPolicy,
-              (google::monitoring::v3::DeleteAlertPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::AlertPolicy>, UpdateAlertPolicy,
-              (google::monitoring::v3::UpdateAlertPolicyRequest const& request),
-              (override));
-};
+/// @deprecated Use monitoring_v3_mocks::MockAlertPolicyServiceConnection
+/// directly.
+using ::google::cloud::monitoring_v3_mocks::MockAlertPolicyServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

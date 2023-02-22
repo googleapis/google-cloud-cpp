@@ -21,53 +21,31 @@
 
 #include "google/cloud/monitoring/service_monitoring_connection.h"
 #include "google/cloud/monitoring/service_monitoring_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/monitoring/v3/service_monitoring_options.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct ServiceMonitoringServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ServiceMonitoringServiceRetryPolicy>;
-};
+/// @deprecated Use monitoring_v3::ServiceMonitoringServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::monitoring_v3::
+    ServiceMonitoringServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct ServiceMonitoringServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// monitoring_v3::ServiceMonitoringServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::monitoring_v3::
+    ServiceMonitoringServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct ServiceMonitoringServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use monitoring_v3::ServiceMonitoringServicePolicyOptionList
+/// directly.
+using ::google::cloud::monitoring_v3::ServiceMonitoringServicePolicyOptionList;
 
-/**
- * The options applicable to ServiceMonitoringService.
- *
- * @ingroup google-cloud-monitoring-options
- */
-using ServiceMonitoringServicePolicyOptionList =
-    OptionList<ServiceMonitoringServiceRetryPolicyOption,
-               ServiceMonitoringServiceBackoffPolicyOption,
-               ServiceMonitoringServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use monitoring_v3::ServiceMonitoringServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::monitoring_v3::ServiceMonitoringServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
