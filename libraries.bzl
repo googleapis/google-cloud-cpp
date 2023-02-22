@@ -22,7 +22,6 @@ GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
 ]
 
 GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES = [
-    "batch",
 ]
 
 GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
@@ -37,6 +36,7 @@ GOOGLE_CLOUD_CPP_GA_LIBRARIES = [
     "assuredworkloads",
     "automl",
     "baremetalsolution",
+    "batch",
     "beyondcorp",
     "bigquery",
     "bigtable",
