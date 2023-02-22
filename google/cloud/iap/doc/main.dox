@@ -96,13 +96,11 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `iap::IdentityAwareProxyAdminServiceClient`:
+For example, this will override the default endpoint for `iap_v1::IdentityAwareProxyAdminServiceClient`:
 
 @snippet identity_aware_proxy_admin_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [iap::IdentityAwareProxyAdminServiceClient](@ref iap::IdentityAwareProxyAdminServiceClient-endpoint-snippet)
- [iap::IdentityAwareProxyOAuthServiceClient](@ref iap::IdentityAwareProxyOAuthServiceClient-endpoint-snippet)
  [iap_v1::IdentityAwareProxyAdminServiceClient](@ref iap_v1::IdentityAwareProxyAdminServiceClient-endpoint-snippet)
  [iap_v1::IdentityAwareProxyOAuthServiceClient](@ref iap_v1::IdentityAwareProxyOAuthServiceClient-endpoint-snippet)
 
@@ -119,8 +117,6 @@ to explicitly load a service account key file.
 @snippet identity_aware_proxy_admin_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [iap::IdentityAwareProxyAdminServiceClient](@ref iap::IdentityAwareProxyAdminServiceClient-service-account-snippet)
- [iap::IdentityAwareProxyOAuthServiceClient](@ref iap::IdentityAwareProxyOAuthServiceClient-service-account-snippet)
  [iap_v1::IdentityAwareProxyAdminServiceClient](@ref iap_v1::IdentityAwareProxyAdminServiceClient-service-account-snippet)
  [iap_v1::IdentityAwareProxyOAuthServiceClient](@ref iap_v1::IdentityAwareProxyOAuthServiceClient-service-account-snippet)
 
@@ -152,30 +148,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page iap::IdentityAwareProxyAdminServiceClient-endpoint-snippet Override iap::IdentityAwareProxyAdminServiceClient Endpoint Configuration
-
-@snippet google/cloud/iap/samples/identity_aware_proxy_admin_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page iap::IdentityAwareProxyAdminServiceClient-service-account-snippet Override iap::IdentityAwareProxyAdminServiceClient Authentication Defaults
-
-@snippet google/cloud/iap/samples/identity_aware_proxy_admin_client_samples.cc with-service-account
-
-*/
-
-/*! @page iap::IdentityAwareProxyOAuthServiceClient-endpoint-snippet Override iap::IdentityAwareProxyOAuthServiceClient Endpoint Configuration
-
-@snippet google/cloud/iap/samples/identity_aware_proxy_o_auth_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page iap::IdentityAwareProxyOAuthServiceClient-service-account-snippet Override iap::IdentityAwareProxyOAuthServiceClient Authentication Defaults
-
-@snippet google/cloud/iap/samples/identity_aware_proxy_o_auth_client_samples.cc with-service-account
-
-*/
 
 /*! @page iap_v1::IdentityAwareProxyAdminServiceClient-endpoint-snippet Override iap_v1::IdentityAwareProxyAdminServiceClient Endpoint Configuration
 
