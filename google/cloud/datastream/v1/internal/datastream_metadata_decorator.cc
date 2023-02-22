@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#include "google/cloud/datastream/internal/datastream_metadata_decorator.h"
+#include "google/cloud/datastream/v1/internal/datastream_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
+namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastreamMetadata::DatastreamMetadata(std::shared_ptr<DatastreamStub> child)
@@ -285,6 +285,6 @@ void DatastreamMetadata::SetMetadata(grpc::ClientContext& context) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream_internal
+}  // namespace datastream_v1_internal
 }  // namespace cloud
 }  // namespace google

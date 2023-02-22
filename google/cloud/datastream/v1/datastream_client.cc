@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#include "google/cloud/datastream/datastream_client.h"
+#include "google/cloud/datastream/v1/datastream_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace datastream {
+namespace datastream_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastreamClient::DatastreamClient(
@@ -445,6 +445,6 @@ DatastreamClient::DeleteRoute(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream
+}  // namespace datastream_v1
 }  // namespace cloud
 }  // namespace google

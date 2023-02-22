@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#include "google/cloud/datastream/datastream_connection.h"
-#include "google/cloud/datastream/datastream_options.h"
-#include "google/cloud/datastream/internal/datastream_connection_impl.h"
-#include "google/cloud/datastream/internal/datastream_option_defaults.h"
-#include "google/cloud/datastream/internal/datastream_stub_factory.h"
-#include "google/cloud/datastream/internal/datastream_tracing_connection.h"
+#include "google/cloud/datastream/v1/datastream_connection.h"
+#include "google/cloud/datastream/v1/datastream_options.h"
+#include "google/cloud/datastream/v1/internal/datastream_connection_impl.h"
+#include "google/cloud/datastream/v1/internal/datastream_option_defaults.h"
+#include "google/cloud/datastream/v1/internal/datastream_stub_factory.h"
+#include "google/cloud/datastream/v1/internal/datastream_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace datastream {
+namespace datastream_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastreamConnection::~DatastreamConnection() = default;
@@ -220,16 +220,17 @@ std::shared_ptr<DatastreamConnection> MakeDatastreamConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  DatastreamPolicyOptionList>(options, __func__);
-  options = datastream_internal::DatastreamDefaultOptions(std::move(options));
+  options =
+      datastream_v1_internal::DatastreamDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = datastream_internal::CreateDefaultDatastreamStub(background->cq(),
-                                                               options);
-  return datastream_internal::MakeDatastreamTracingConnection(
-      std::make_shared<datastream_internal::DatastreamConnectionImpl>(
+  auto stub = datastream_v1_internal::CreateDefaultDatastreamStub(
+      background->cq(), options);
+  return datastream_v1_internal::MakeDatastreamTracingConnection(
+      std::make_shared<datastream_v1_internal::DatastreamConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream
+}  // namespace datastream_v1
 }  // namespace cloud
 }  // namespace google

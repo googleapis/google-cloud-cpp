@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#include "google/cloud/datastream/internal/datastream_tracing_stub.h"
+#include "google/cloud/datastream/v1/internal/datastream_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
+namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -322,6 +322,6 @@ std::shared_ptr<DatastreamStub> MakeDatastreamTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream_internal
+}  // namespace datastream_v1_internal
 }  // namespace cloud
 }  // namespace google

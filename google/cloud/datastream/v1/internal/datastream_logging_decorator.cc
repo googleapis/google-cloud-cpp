@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#include "google/cloud/datastream/internal/datastream_logging_decorator.h"
+#include "google/cloud/datastream/v1/internal/datastream_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/datastream/v1/datastream.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
+namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastreamLogging::DatastreamLogging(std::shared_ptr<DatastreamStub> child,
@@ -414,6 +414,6 @@ future<Status> DatastreamLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream_internal
+}  // namespace datastream_v1_internal
 }  // namespace cloud
 }  // namespace google

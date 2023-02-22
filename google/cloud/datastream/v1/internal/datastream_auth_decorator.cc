@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#include "google/cloud/datastream/internal/datastream_auth_decorator.h"
+#include "google/cloud/datastream/v1/internal/datastream_auth_decorator.h"
 #include <google/cloud/datastream/v1/datastream.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
+namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatastreamAuth::DatastreamAuth(
@@ -401,6 +401,6 @@ future<Status> DatastreamAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream_internal
+}  // namespace datastream_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,40 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_INTERNAL_DATASTREAM_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_INTERNAL_DATASTREAM_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_TRACING_CONNECTION_H
 
-#include "google/cloud/datastream/datastream_connection.h"
-#include "google/cloud/datastream/datastream_connection_idempotency_policy.h"
-#include "google/cloud/datastream/datastream_options.h"
-#include "google/cloud/datastream/internal/datastream_retry_traits.h"
-#include "google/cloud/datastream/internal/datastream_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/datastream/v1/datastream_connection.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
+namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DatastreamConnectionImpl : public datastream::DatastreamConnection {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class DatastreamTracingConnection : public datastream_v1::DatastreamConnection {
  public:
-  ~DatastreamConnectionImpl() override = default;
+  ~DatastreamTracingConnection() override = default;
 
-  DatastreamConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<datastream_internal::DatastreamStub> stub,
-      Options options);
+  explicit DatastreamTracingConnection(
+      std::shared_ptr<datastream_v1::DatastreamConnection> child);
 
-  Options options() override { return options_; }
+  Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::datastream::v1::ConnectionProfile>
   ListConnectionProfiles(
@@ -156,52 +144,24 @@ class DatastreamConnectionImpl : public datastream::DatastreamConnection {
       override;
 
  private:
-  std::unique_ptr<datastream::DatastreamRetryPolicy> retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastream::DatastreamRetryPolicyOption>()) {
-      return options.get<datastream::DatastreamRetryPolicyOption>()->clone();
-    }
-    return options_.get<datastream::DatastreamRetryPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastream::DatastreamBackoffPolicyOption>()) {
-      return options.get<datastream::DatastreamBackoffPolicyOption>()->clone();
-    }
-    return options_.get<datastream::DatastreamBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<datastream::DatastreamConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datastream::DatastreamConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<datastream::DatastreamConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<datastream::DatastreamConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<datastream::DatastreamPollingPolicyOption>()) {
-      return options.get<datastream::DatastreamPollingPolicyOption>()->clone();
-    }
-    return options_.get<datastream::DatastreamPollingPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<datastream_internal::DatastreamStub> stub_;
-  Options options_;
+  std::shared_ptr<datastream_v1::DatastreamConnection> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<datastream_v1::DatastreamConnection>
+MakeDatastreamTracingConnection(
+    std::shared_ptr<datastream_v1::DatastreamConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream_internal
+}  // namespace datastream_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_INTERNAL_DATASTREAM_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_TRACING_CONNECTION_H

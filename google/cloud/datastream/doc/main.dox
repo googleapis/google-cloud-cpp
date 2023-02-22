@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `datastream::DatastreamClient`:
+For example, this will override the default endpoint for `datastream_v1::DatastreamClient`:
 
 @snippet datastream_client_samples.cc set-client-endpoint
 
@@ -140,15 +140,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page datastream::DatastreamClient-endpoint-snippet Override datastream::DatastreamClient Endpoint Configuration
+/*! @page datastream_v1::DatastreamClient-endpoint-snippet Override datastream_v1::DatastreamClient Endpoint Configuration
 
-@snippet google/cloud/datastream/samples/datastream_client_samples.cc set-client-endpoint
+@snippet google/cloud/datastream/v1/samples/datastream_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page datastream::DatastreamClient-service-account-snippet Override datastream::DatastreamClient Authentication Defaults
+/*! @page datastream_v1::DatastreamClient-service-account-snippet Override datastream_v1::DatastreamClient Authentication Defaults
 
-@snippet google/cloud/datastream/samples/datastream_client_samples.cc with-service-account
+@snippet google/cloud/datastream/v1/samples/datastream_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

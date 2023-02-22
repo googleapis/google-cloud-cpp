@@ -19,110 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_DATASTREAM_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_DATASTREAM_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/datastream/v1/datastream.grpc.pb.h>
-#include <memory>
+#include "google/cloud/datastream/v1/datastream_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DatastreamConnectionIdempotencyPolicy {
- public:
-  virtual ~DatastreamConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// datastream_v1::MakeDefaultDatastreamConnectionIdempotencyPolicy directly.
+using ::google::cloud::datastream_v1::
+    MakeDefaultDatastreamConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<DatastreamConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListConnectionProfiles(
-      google::cloud::datastream::v1::ListConnectionProfilesRequest request);
-
-  virtual google::cloud::Idempotency GetConnectionProfile(
-      google::cloud::datastream::v1::GetConnectionProfileRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateConnectionProfile(
-      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateConnectionProfile(
-      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteConnectionProfile(
-      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DiscoverConnectionProfile(
-      google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListStreams(
-      google::cloud::datastream::v1::ListStreamsRequest request);
-
-  virtual google::cloud::Idempotency GetStream(
-      google::cloud::datastream::v1::GetStreamRequest const& request);
-
-  virtual google::cloud::Idempotency CreateStream(
-      google::cloud::datastream::v1::CreateStreamRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateStream(
-      google::cloud::datastream::v1::UpdateStreamRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteStream(
-      google::cloud::datastream::v1::DeleteStreamRequest const& request);
-
-  virtual google::cloud::Idempotency GetStreamObject(
-      google::cloud::datastream::v1::GetStreamObjectRequest const& request);
-
-  virtual google::cloud::Idempotency LookupStreamObject(
-      google::cloud::datastream::v1::LookupStreamObjectRequest const& request);
-
-  virtual google::cloud::Idempotency ListStreamObjects(
-      google::cloud::datastream::v1::ListStreamObjectsRequest request);
-
-  virtual google::cloud::Idempotency StartBackfillJob(
-      google::cloud::datastream::v1::StartBackfillJobRequest const& request);
-
-  virtual google::cloud::Idempotency StopBackfillJob(
-      google::cloud::datastream::v1::StopBackfillJobRequest const& request);
-
-  virtual google::cloud::Idempotency FetchStaticIps(
-      google::cloud::datastream::v1::FetchStaticIpsRequest request);
-
-  virtual google::cloud::Idempotency CreatePrivateConnection(
-      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetPrivateConnection(
-      google::cloud::datastream::v1::GetPrivateConnectionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListPrivateConnections(
-      google::cloud::datastream::v1::ListPrivateConnectionsRequest request);
-
-  virtual google::cloud::Idempotency DeletePrivateConnection(
-      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateRoute(
-      google::cloud::datastream::v1::CreateRouteRequest const& request);
-
-  virtual google::cloud::Idempotency GetRoute(
-      google::cloud::datastream::v1::GetRouteRequest const& request);
-
-  virtual google::cloud::Idempotency ListRoutes(
-      google::cloud::datastream::v1::ListRoutesRequest request);
-
-  virtual google::cloud::Idempotency DeleteRoute(
-      google::cloud::datastream::v1::DeleteRouteRequest const& request);
-};
-
-std::unique_ptr<DatastreamConnectionIdempotencyPolicy>
-MakeDefaultDatastreamConnectionIdempotencyPolicy();
+/// @deprecated Use datastream_v1::DatastreamConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datastream_v1::DatastreamConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream

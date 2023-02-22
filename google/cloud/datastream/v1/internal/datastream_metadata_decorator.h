@@ -16,28 +16,24 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_INTERNAL_DATASTREAM_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_INTERNAL_DATASTREAM_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_METADATA_DECORATOR_H
 
-#include "google/cloud/datastream/internal/datastream_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/datastream/v1/internal/datastream_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
-#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
+namespace datastream_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DatastreamAuth : public DatastreamStub {
+class DatastreamMetadata : public DatastreamStub {
  public:
-  ~DatastreamAuth() override = default;
-  DatastreamAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<DatastreamStub> child);
+  ~DatastreamMetadata() override = default;
+  explicit DatastreamMetadata(std::shared_ptr<DatastreamStub> child);
 
   StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(
@@ -188,13 +184,17 @@ class DatastreamAuth : public DatastreamStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<DatastreamStub> child_;
+  std::string api_client_header_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datastream_internal
+}  // namespace datastream_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_INTERNAL_DATASTREAM_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_INTERNAL_DATASTREAM_METADATA_DECORATOR_H

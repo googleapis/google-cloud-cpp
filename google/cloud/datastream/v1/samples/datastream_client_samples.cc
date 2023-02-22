@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/datastream/v1/datastream.proto
 
-#include "google/cloud/datastream/datastream_client.h"
+#include "google/cloud/datastream/v1/datastream_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: datastream::DatastreamClient
+// main-dox-marker: datastream_v1::DatastreamClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::datastream::DatastreamClient(
-      google::cloud::datastream::MakeDatastreamConnection(options));
+  auto client = google::cloud::datastream_v1::DatastreamClient(
+      google::cloud::datastream_v1::MakeDatastreamConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::datastream::DatastreamClient(
-        google::cloud::datastream::MakeDatastreamConnection(options));
+    return google::cloud::datastream_v1::DatastreamClient(
+        google::cloud::datastream_v1::MakeDatastreamConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));
