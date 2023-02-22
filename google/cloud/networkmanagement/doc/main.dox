@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `networkmanagement::ReachabilityServiceClient`:
+For example, this will override the default endpoint for `networkmanagement_v1::ReachabilityServiceClient`:
 
 @snippet reachability_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [networkmanagement::ReachabilityServiceClient](@ref networkmanagement::ReachabilityServiceClient-endpoint-snippet)
- [networkmanagement_v1::ReachabilityServiceClient](@ref networkmanagement_v1::ReachabilityServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet reachability_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [networkmanagement::ReachabilityServiceClient](@ref networkmanagement::ReachabilityServiceClient-service-account-snippet)
- [networkmanagement_v1::ReachabilityServiceClient](@ref networkmanagement_v1::ReachabilityServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page networkmanagement::ReachabilityServiceClient-endpoint-snippet Override networkmanagement::ReachabilityServiceClient Endpoint Configuration
-
-@snippet google/cloud/networkmanagement/samples/reachability_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page networkmanagement::ReachabilityServiceClient-service-account-snippet Override networkmanagement::ReachabilityServiceClient Authentication Defaults
-
-@snippet google/cloud/networkmanagement/samples/reachability_client_samples.cc with-service-account
-
-*/
 
 /*! @page networkmanagement_v1::ReachabilityServiceClient-endpoint-snippet Override networkmanagement_v1::ReachabilityServiceClient Endpoint Configuration
 

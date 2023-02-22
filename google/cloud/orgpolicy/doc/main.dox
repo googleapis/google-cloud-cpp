@@ -92,13 +92,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `orgpolicy::OrgPolicyClient`:
+For example, this will override the default endpoint for `orgpolicy_v2::OrgPolicyClient`:
 
 @snippet org_policy_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [orgpolicy::OrgPolicyClient](@ref orgpolicy::OrgPolicyClient-endpoint-snippet)
- [orgpolicy_v2::OrgPolicyClient](@ref orgpolicy_v2::OrgPolicyClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -111,10 +107,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet org_policy_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [orgpolicy::OrgPolicyClient](@ref orgpolicy::OrgPolicyClient-service-account-snippet)
- [orgpolicy_v2::OrgPolicyClient](@ref orgpolicy_v2::OrgPolicyClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -144,18 +136,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page orgpolicy::OrgPolicyClient-endpoint-snippet Override orgpolicy::OrgPolicyClient Endpoint Configuration
-
-@snippet google/cloud/orgpolicy/samples/org_policy_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page orgpolicy::OrgPolicyClient-service-account-snippet Override orgpolicy::OrgPolicyClient Authentication Defaults
-
-@snippet google/cloud/orgpolicy/samples/org_policy_client_samples.cc with-service-account
-
-*/
 
 /*! @page orgpolicy_v2::OrgPolicyClient-endpoint-snippet Override orgpolicy_v2::OrgPolicyClient Endpoint Configuration
 
