@@ -165,7 +165,7 @@ TEST(QueryPartitionTest, MakeSqlParams) {
                          {{"name", Value("Bob")}}));
   EXPECT_EQ(*params.partition_token, "token");
   EXPECT_THAT(params.transaction,
-              HasSessionAndTransaction("session", "txn-id", "tag"));
+              HasSessionAndTransaction("session", "txn-id", false, "tag"));
 }
 
 }  // namespace

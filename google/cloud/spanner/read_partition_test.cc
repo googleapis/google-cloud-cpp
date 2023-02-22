@@ -195,7 +195,7 @@ TEST(ReadPartitionTest, MakeReadParams) {
   EXPECT_EQ(params.keys, KeySet::All());
   EXPECT_EQ(params.table, "Students");
   EXPECT_THAT(params.transaction,
-              HasSessionAndTransaction("session", "txn-id", "tag"));
+              HasSessionAndTransaction("session", "txn-id", false, "tag"));
 }
 
 }  // namespace

@@ -537,8 +537,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   auto rows = conn->Read(
       {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
   EXPECT_TRUE(ContainsNoRows(rows));
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("test-session-name", "ABCDEF00", ""));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "ABCDEF00",
+                                            false, ""));
 }
 
 TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
@@ -601,8 +601,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOneTransientFailure) {
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("test-session-name", "ABCDEF00", ""));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "ABCDEF00",
+                                            false, ""));
 }
 
 TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
@@ -667,8 +667,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransactionOnePermanentFailure) {
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("test-session-name", "FEDCBA98", ""));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "FEDCBA98",
+                                            false, ""));
 }
 
 TEST(ConnectionImplTest, ReadImplicitBeginTransactionPermanentFailure) {
@@ -1006,8 +1006,8 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   auto rows =
       conn->ExecuteQuery({txn, spanner::SqlStatement("SELECT * FROM Table")});
   EXPECT_TRUE(ContainsNoRows(rows));
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("test-session-name", "00FEDCBA", ""));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "00FEDCBA",
+                                            false, ""));
 }
 
 /**
@@ -1817,8 +1817,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
   EXPECT_EQ(result->stats[0].row_count, 0);
   EXPECT_EQ(result->stats[1].row_count, 1);
   EXPECT_EQ(result->stats[2].row_count, 2);
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("session-name", "1234567890", "tag"));
+  EXPECT_THAT(
+      txn, HasSessionAndTransaction("session-name", "1234567890", true, "tag"));
 }
 
 TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
@@ -1856,8 +1856,8 @@ TEST(ConnectionImplTest, ExecuteBatchDmlPartialFailure) {
   EXPECT_EQ(result->stats.size(), 2);
   EXPECT_EQ(result->stats[0].row_count, 42);
   EXPECT_EQ(result->stats[1].row_count, 43);
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("session-name", "1234567890", "tag"));
+  EXPECT_THAT(
+      txn, HasSessionAndTransaction("session-name", "1234567890", true, "tag"));
 }
 
 TEST(ConnectionImplTest, ExecuteBatchDmlPermanentFailure) {
@@ -2579,8 +2579,8 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
                             {"UserId", "UserName"},
                             read_options}});
   ASSERT_STATUS_OK(result);
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("test-session-name", "CAFEDEAD", ""));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "CAFEDEAD",
+                                            false, ""));
 
   std::vector<spanner::ReadPartition> expected_read_partitions = {
       spanner_internal::MakeReadPartition(
@@ -2880,7 +2880,8 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   spanner::Transaction txn1 =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   auto rows = conn->Read({txn1, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn1, HasSessionAndTransaction("session-1", "ABCDEF01", ""));
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("session-1", "ABCDEF01", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 0);
@@ -2889,21 +2890,24 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   spanner::Transaction txn2 =
       MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions());
   rows = conn->Read({txn2, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn2, HasSessionAndTransaction("session-2", "ABCDEF02", ""));
+  EXPECT_THAT(txn2,
+              HasSessionAndTransaction("session-2", "ABCDEF02", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 1);
   }
 
   rows = conn->Read({txn1, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn1, HasSessionAndTransaction("session-1", "ABCDEF01", ""));
+  EXPECT_THAT(txn1,
+              HasSessionAndTransaction("session-1", "ABCDEF01", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 2);
   }
 
   rows = conn->Read({txn2, "table", spanner::KeySet::All(), {"Number"}});
-  EXPECT_THAT(txn2, HasSessionAndTransaction("session-2", "ABCDEF02", ""));
+  EXPECT_THAT(txn2,
+              HasSessionAndTransaction("session-2", "ABCDEF02", false, ""));
   for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 3);
@@ -2936,8 +2940,8 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   auto rows = conn->Read(
       {txn, "table", spanner::KeySet::All(), {"UserId", "UserName"}});
   EXPECT_TRUE(ContainsNoRows(rows));
-  EXPECT_THAT(txn,
-              HasSessionAndTransaction("test-session-name", "ABCDEF00", ""));
+  EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "ABCDEF00",
+                                            false, ""));
 
   // `conn` is the only reference to the `ConnectionImpl`, so dropping it will
   // cause the `ConnectionImpl` object to be deleted, while `txn` and its
