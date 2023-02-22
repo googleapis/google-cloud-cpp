@@ -19,41 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_CONTAINER_ANALYSIS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINERANALYSIS_CONTAINER_ANALYSIS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
-#include <memory>
+#include "google/cloud/containeranalysis/v1/container_analysis_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ContainerAnalysisConnectionIdempotencyPolicy {
- public:
-  virtual ~ContainerAnalysisConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// containeranalysis_v1::MakeDefaultContainerAnalysisConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::containeranalysis_v1::
+    MakeDefaultContainerAnalysisConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual google::cloud::Idempotency GetVulnerabilityOccurrencesSummary(
-      google::devtools::containeranalysis::v1::
-          GetVulnerabilityOccurrencesSummaryRequest const& request);
-};
-
-std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
-MakeDefaultContainerAnalysisConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicy directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis

@@ -21,52 +21,31 @@
 
 #include "google/cloud/containeranalysis/container_analysis_connection.h"
 #include "google/cloud/containeranalysis/container_analysis_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/containeranalysis/v1/container_analysis_options.h"
 
 namespace google {
 namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-containeranalysis-options
- */
-struct ContainerAnalysisRetryPolicyOption {
-  using Type = std::shared_ptr<ContainerAnalysisRetryPolicy>;
-};
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisBackoffPolicyOption
+/// directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-containeranalysis-options
- */
-struct ContainerAnalysisBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// containeranalysis_v1::ContainerAnalysisConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::containeranalysis_v1::
+    ContainerAnalysisConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-containeranalysis-options
- */
-struct ContainerAnalysisConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ContainerAnalysisConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisPolicyOptionList
+/// directly.
+using ::google::cloud::containeranalysis_v1::ContainerAnalysisPolicyOptionList;
 
-/**
- * The options applicable to ContainerAnalysis.
- *
- * @ingroup google-cloud-containeranalysis-options
- */
-using ContainerAnalysisPolicyOptionList =
-    OptionList<ContainerAnalysisRetryPolicyOption,
-               ContainerAnalysisBackoffPolicyOption,
-               ContainerAnalysisConnectionIdempotencyPolicyOption>;
+/// @deprecated Use containeranalysis_v1::ContainerAnalysisRetryPolicyOption
+/// directly.
+using ::google::cloud::containeranalysis_v1::ContainerAnalysisRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
