@@ -96,13 +96,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `eventarc::EventarcClient`:
+For example, this will override the default endpoint for `eventarc_publishing_v1::PublisherClient`:
 
-@snippet eventarc_client_samples.cc set-client-endpoint
+@snippet publisher_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [eventarc::EventarcClient](@ref eventarc::EventarcClient-endpoint-snippet)
- [eventarc::PublisherClient](@ref eventarc::PublisherClient-endpoint-snippet)
+ [eventarc_publishing_v1::PublisherClient](@ref eventarc_publishing_v1::PublisherClient-endpoint-snippet)
+ [eventarc_v1::EventarcClient](@ref eventarc_v1::EventarcClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -114,11 +114,11 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
-@snippet eventarc_client_samples.cc with-service-account
+@snippet publisher_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [eventarc::EventarcClient](@ref eventarc::EventarcClient-service-account-snippet)
- [eventarc::PublisherClient](@ref eventarc::PublisherClient-service-account-snippet)
+ [eventarc_publishing_v1::PublisherClient](@ref eventarc_publishing_v1::PublisherClient-service-account-snippet)
+ [eventarc_v1::EventarcClient](@ref eventarc_v1::EventarcClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -149,27 +149,27 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page eventarc::EventarcClient-endpoint-snippet Override eventarc::EventarcClient Endpoint Configuration
+/*! @page eventarc_publishing_v1::PublisherClient-endpoint-snippet Override eventarc_publishing_v1::PublisherClient Endpoint Configuration
 
-@snippet google/cloud/eventarc/samples/eventarc_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page eventarc::EventarcClient-service-account-snippet Override eventarc::EventarcClient Authentication Defaults
-
-@snippet google/cloud/eventarc/samples/eventarc_client_samples.cc with-service-account
+@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page eventarc::PublisherClient-endpoint-snippet Override eventarc::PublisherClient Endpoint Configuration
+/*! @page eventarc_publishing_v1::PublisherClient-service-account-snippet Override eventarc_publishing_v1::PublisherClient Authentication Defaults
 
-@snippet google/cloud/eventarc/samples/publisher_client_samples.cc set-client-endpoint
+@snippet google/cloud/eventarc/publishing/v1/samples/publisher_client_samples.cc with-service-account
 
 */
 
-/*! @page eventarc::PublisherClient-service-account-snippet Override eventarc::PublisherClient Authentication Defaults
+/*! @page eventarc_v1::EventarcClient-endpoint-snippet Override eventarc_v1::EventarcClient Endpoint Configuration
 
-@snippet google/cloud/eventarc/samples/publisher_client_samples.cc with-service-account
+@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page eventarc_v1::EventarcClient-service-account-snippet Override eventarc_v1::EventarcClient Authentication Defaults
+
+@snippet google/cloud/eventarc/v1/samples/eventarc_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

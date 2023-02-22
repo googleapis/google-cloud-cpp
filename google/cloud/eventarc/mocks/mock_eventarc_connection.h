@@ -20,125 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_MOCKS_MOCK_EVENTARC_CONNECTION_H
 
 #include "google/cloud/eventarc/eventarc_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/eventarc/v1/mocks/mock_eventarc_connection.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `EventarcConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EventarcClient`. To do so,
- * construct an object of type `EventarcClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockEventarcConnection : public eventarc::EventarcConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::Trigger>, GetTrigger,
-              (google::cloud::eventarc::v1::GetTriggerRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::eventarc::v1::Trigger>, ListTriggers,
-              (google::cloud::eventarc::v1::ListTriggersRequest request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::Trigger>>, CreateTrigger,
-      (google::cloud::eventarc::v1::CreateTriggerRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::Trigger>>, UpdateTrigger,
-      (google::cloud::eventarc::v1::UpdateTriggerRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::Trigger>>, DeleteTrigger,
-      (google::cloud::eventarc::v1::DeleteTriggerRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::Channel>, GetChannel,
-              (google::cloud::eventarc::v1::GetChannelRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::eventarc::v1::Channel>, ListChannels,
-              (google::cloud::eventarc::v1::ListChannelsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::Channel>>, CreateChannel,
-      (google::cloud::eventarc::v1::CreateChannelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::Channel>>, UpdateChannel,
-      (google::cloud::eventarc::v1::UpdateChannelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::Channel>>, DeleteChannel,
-      (google::cloud::eventarc::v1::DeleteChannelRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::Provider>, GetProvider,
-              (google::cloud::eventarc::v1::GetProviderRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::eventarc::v1::Provider>, ListProviders,
-              (google::cloud::eventarc::v1::ListProvidersRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::eventarc::v1::ChannelConnection>,
-      GetChannelConnection,
-      (google::cloud::eventarc::v1::GetChannelConnectionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::eventarc::v1::ChannelConnection>,
-      ListChannelConnections,
-      (google::cloud::eventarc::v1::ListChannelConnectionsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>,
-      CreateChannelConnection,
-      (google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>,
-      DeleteChannelConnection,
-      (google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>,
-              GetGoogleChannelConfig,
-              (google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>,
-      UpdateGoogleChannelConfig,
-      (google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use eventarc_v1_mocks::MockEventarcConnection directly.
+using ::google::cloud::eventarc_v1_mocks::MockEventarcConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_mocks

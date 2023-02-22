@@ -21,51 +21,27 @@
 
 #include "google/cloud/eventarc/publisher_connection.h"
 #include "google/cloud/eventarc/publisher_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/eventarc/publishing/v1/publisher_options.h"
 
 namespace google {
 namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-eventarc-options
- */
-struct PublisherRetryPolicyOption {
-  using Type = std::shared_ptr<PublisherRetryPolicy>;
-};
+/// @deprecated Use eventarc_publishing_v1::PublisherBackoffPolicyOption
+/// directly.
+using ::google::cloud::eventarc_publishing_v1::PublisherBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-eventarc-options
- */
-struct PublisherBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// eventarc_publishing_v1::PublisherConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::eventarc_publishing_v1::
+    PublisherConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-eventarc-options
- */
-struct PublisherConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PublisherConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use eventarc_publishing_v1::PublisherPolicyOptionList directly.
+using ::google::cloud::eventarc_publishing_v1::PublisherPolicyOptionList;
 
-/**
- * The options applicable to Publisher.
- *
- * @ingroup google-cloud-eventarc-options
- */
-using PublisherPolicyOptionList =
-    OptionList<PublisherRetryPolicyOption, PublisherBackoffPolicyOption,
-               PublisherConnectionIdempotencyPolicyOption>;
+/// @deprecated Use eventarc_publishing_v1::PublisherRetryPolicyOption directly.
+using ::google::cloud::eventarc_publishing_v1::PublisherRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
