@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_TRACING_CONNECTION_H
 
-#include "google/cloud/edgecontainer/edge_container_connection.h"
+#include "google/cloud/edgecontainer/v1/edge_container_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class EdgeContainerTracingConnection
-    : public edgecontainer::EdgeContainerConnection {
+    : public edgecontainer_v1::EdgeContainerConnection {
  public:
   ~EdgeContainerTracingConnection() override = default;
 
   explicit EdgeContainerTracingConnection(
-      std::shared_ptr<edgecontainer::EdgeContainerConnection> child);
+      std::shared_ptr<edgecontainer_v1::EdgeContainerConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -109,7 +109,7 @@ class EdgeContainerTracingConnection
           request) override;
 
  private:
-  std::shared_ptr<edgecontainer::EdgeContainerConnection> child_;
+  std::shared_ptr<edgecontainer_v1::EdgeContainerConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -120,13 +120,13 @@ class EdgeContainerTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<edgecontainer::EdgeContainerConnection>
+std::shared_ptr<edgecontainer_v1::EdgeContainerConnection>
 MakeEdgeContainerTracingConnection(
-    std::shared_ptr<edgecontainer::EdgeContainerConnection> conn);
+    std::shared_ptr<edgecontainer_v1::EdgeContainerConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_TRACING_CONNECTION_H

@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#include "google/cloud/edgecontainer/internal/edge_container_logging_decorator.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/edgecontainer/v1/service.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EdgeContainerLogging::EdgeContainerLogging(
@@ -299,6 +299,6 @@ future<Status> EdgeContainerLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#include "google/cloud/edgecontainer/internal/edge_container_connection_impl.h"
-#include "google/cloud/edgecontainer/internal/edge_container_option_defaults.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_connection_impl.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EdgeContainerConnectionImpl::EdgeContainerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<edgecontainer_internal::EdgeContainerStub> stub,
+    std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,8 +45,9 @@ EdgeContainerConnectionImpl::ListClusters(
     google::cloud::edgecontainer::v1::ListClustersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<edgecontainer::EdgeContainerRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListClusters(request);
   char const* function_name = __func__;
@@ -194,8 +195,9 @@ EdgeContainerConnectionImpl::ListNodePools(
     google::cloud::edgecontainer::v1::ListNodePoolsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<edgecontainer::EdgeContainerRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNodePools(request);
   char const* function_name = __func__;
@@ -331,8 +333,9 @@ EdgeContainerConnectionImpl::ListMachines(
     google::cloud::edgecontainer::v1::ListMachinesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<edgecontainer::EdgeContainerRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMachines(request);
   char const* function_name = __func__;
@@ -378,8 +381,9 @@ EdgeContainerConnectionImpl::ListVpnConnections(
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<edgecontainer::EdgeContainerRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListVpnConnections(request);
   char const* function_name = __func__;
@@ -482,6 +486,6 @@ EdgeContainerConnectionImpl::DeleteVpnConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google

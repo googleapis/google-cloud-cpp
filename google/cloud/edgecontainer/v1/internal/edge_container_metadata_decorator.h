@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_METADATA_DECORATOR_H
 
-#include "google/cloud/edgecontainer/internal/edge_container_stub.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -27,7 +27,7 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EdgeContainerMetadata : public EdgeContainerStub {
@@ -150,8 +150,8 @@ class EdgeContainerMetadata : public EdgeContainerStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_METADATA_DECORATOR_H

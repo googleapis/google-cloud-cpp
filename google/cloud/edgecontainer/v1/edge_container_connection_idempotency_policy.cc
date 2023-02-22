@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#include "google/cloud/edgecontainer/edge_container_connection_idempotency_policy.h"
+#include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
+namespace edgecontainer_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -126,6 +126,6 @@ MakeDefaultEdgeContainerConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer
+}  // namespace edgecontainer_v1
 }  // namespace cloud
 }  // namespace google

@@ -16,28 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_TRACING_STUB_H
 
-#include "google/cloud/edgecontainer/internal/edge_container_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EdgeContainerAuth : public EdgeContainerStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class EdgeContainerTracingStub : public EdgeContainerStub {
  public:
-  ~EdgeContainerAuth() override = default;
-  EdgeContainerAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<EdgeContainerStub> child);
+  ~EdgeContainerTracingStub() override = default;
+
+  explicit EdgeContainerTracingStub(std::shared_ptr<EdgeContainerStub> child);
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -145,13 +142,23 @@ class EdgeContainerAuth : public EdgeContainerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<EdgeContainerStub> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<EdgeContainerStub> MakeEdgeContainerTracingStub(
+    std::shared_ptr<EdgeContainerStub> stub);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_TRACING_STUB_H

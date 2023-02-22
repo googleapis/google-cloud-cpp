@@ -19,82 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/edgecontainer/v1/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EdgeContainerConnectionIdempotencyPolicy {
- public:
-  virtual ~EdgeContainerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// edgecontainer_v1::MakeDefaultEdgeContainerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::edgecontainer_v1::
+    MakeDefaultEdgeContainerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<EdgeContainerConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListClusters(
-      google::cloud::edgecontainer::v1::ListClustersRequest request);
-
-  virtual google::cloud::Idempotency GetCluster(
-      google::cloud::edgecontainer::v1::GetClusterRequest const& request);
-
-  virtual google::cloud::Idempotency CreateCluster(
-      google::cloud::edgecontainer::v1::CreateClusterRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateCluster(
-      google::cloud::edgecontainer::v1::UpdateClusterRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteCluster(
-      google::cloud::edgecontainer::v1::DeleteClusterRequest const& request);
-
-  virtual google::cloud::Idempotency GenerateAccessToken(
-      google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListNodePools(
-      google::cloud::edgecontainer::v1::ListNodePoolsRequest request);
-
-  virtual google::cloud::Idempotency GetNodePool(
-      google::cloud::edgecontainer::v1::GetNodePoolRequest const& request);
-
-  virtual google::cloud::Idempotency CreateNodePool(
-      google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateNodePool(
-      google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteNodePool(
-      google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request);
-
-  virtual google::cloud::Idempotency ListMachines(
-      google::cloud::edgecontainer::v1::ListMachinesRequest request);
-
-  virtual google::cloud::Idempotency GetMachine(
-      google::cloud::edgecontainer::v1::GetMachineRequest const& request);
-
-  virtual google::cloud::Idempotency ListVpnConnections(
-      google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request);
-
-  virtual google::cloud::Idempotency GetVpnConnection(
-      google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request);
-
-  virtual google::cloud::Idempotency CreateVpnConnection(
-      google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteVpnConnection(
-      google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
-          request);
-};
-
-std::unique_ptr<EdgeContainerConnectionIdempotencyPolicy>
-MakeDefaultEdgeContainerConnectionIdempotencyPolicy();
+/// @deprecated Use edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::edgecontainer_v1::
+    EdgeContainerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer

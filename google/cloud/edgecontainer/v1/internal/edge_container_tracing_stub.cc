@@ -16,207 +16,223 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#include "google/cloud/edgecontainer/internal/edge_container_metadata_decorator.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/status_or.h"
-#include <google/cloud/edgecontainer/v1/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/edgecontainer/v1/internal/edge_container_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-EdgeContainerMetadata::EdgeContainerMetadata(
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+EdgeContainerTracingStub::EdgeContainerTracingStub(
     std::shared_ptr<EdgeContainerStub> child)
-    : child_(std::move(child)),
-      api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+    : child_(std::move(child)) {}
 
 StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse>
-EdgeContainerMetadata::ListClusters(
+EdgeContainerTracingStub::ListClusters(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListClustersRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListClusters(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "ListClusters");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListClusters(context, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
-EdgeContainerMetadata::GetCluster(
+EdgeContainerTracingStub::GetCluster(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetCluster(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "GetCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetCluster(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncCreateCluster(
+EdgeContainerTracingStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncUpdateCluster(
+EdgeContainerTracingStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context, "cluster.name=" + request.cluster().name());
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncDeleteCluster(
+EdgeContainerTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
-EdgeContainerMetadata::GenerateAccessToken(
+EdgeContainerTracingStub::GenerateAccessToken(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
         request) {
-  SetMetadata(context, "cluster=" + request.cluster());
-  return child_->GenerateAccessToken(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "GenerateAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GenerateAccessToken(context, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
-EdgeContainerMetadata::ListNodePools(
+EdgeContainerTracingStub::ListNodePools(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListNodePoolsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListNodePools(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "ListNodePools");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListNodePools(context, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
-EdgeContainerMetadata::GetNodePool(
+EdgeContainerTracingStub::GetNodePool(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetNodePool(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "GetNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetNodePool(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncCreateNodePool(
+EdgeContainerTracingStub::AsyncCreateNodePool(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateNodePool(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncUpdateNodePool(
+EdgeContainerTracingStub::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
-  SetMetadata(*context, "node_pool.name=" + request.node_pool().name());
   return child_->AsyncUpdateNodePool(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncDeleteNodePool(
+EdgeContainerTracingStub::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteNodePool(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
-EdgeContainerMetadata::ListMachines(
+EdgeContainerTracingStub::ListMachines(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListMachinesRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListMachines(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "ListMachines");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListMachines(context, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
-EdgeContainerMetadata::GetMachine(
+EdgeContainerTracingStub::GetMachine(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetMachine(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "GetMachine");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetMachine(context, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListVpnConnectionsResponse>
-EdgeContainerMetadata::ListVpnConnections(
+EdgeContainerTracingStub::ListVpnConnections(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
         request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListVpnConnections(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "ListVpnConnections");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListVpnConnections(context, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
-EdgeContainerMetadata::GetVpnConnection(
+EdgeContainerTracingStub::GetVpnConnection(
     grpc::ClientContext& context,
     google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetVpnConnection(context, request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.edgecontainer.v1.EdgeContainer", "GetVpnConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetVpnConnection(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncCreateVpnConnection(
+EdgeContainerTracingStub::AsyncCreateVpnConnection(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
-  SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateVpnConnection(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncDeleteVpnConnection(
+EdgeContainerTracingStub::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteVpnConnection(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-EdgeContainerMetadata::AsyncGetOperation(
+EdgeContainerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
-future<Status> EdgeContainerMetadata::AsyncCancelOperation(
+future<Status> EdgeContainerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-void EdgeContainerMetadata::SetMetadata(grpc::ClientContext& context,
-                                        std::string const& request_params) {
-  context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
-}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-void EdgeContainerMetadata::SetMetadata(grpc::ClientContext& context) {
-  context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
-  if (options.has<UserProjectOption>()) {
-    context.AddMetadata("x-goog-user-project",
-                        options.get<UserProjectOption>());
-  }
-  auto const& authority = options.get<AuthorityOption>();
-  if (!authority.empty()) context.set_authority(authority);
+std::shared_ptr<EdgeContainerStub> MakeEdgeContainerTracingStub(
+    std::shared_ptr<EdgeContainerStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<EdgeContainerTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google

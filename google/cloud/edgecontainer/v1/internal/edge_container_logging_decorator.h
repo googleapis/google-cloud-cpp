@@ -16,25 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_LOGGING_DECORATOR_H
 
-#include "google/cloud/edgecontainer/internal/edge_container_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class EdgeContainerTracingStub : public EdgeContainerStub {
+class EdgeContainerLogging : public EdgeContainerStub {
  public:
-  ~EdgeContainerTracingStub() override = default;
-
-  explicit EdgeContainerTracingStub(std::shared_ptr<EdgeContainerStub> child);
+  ~EdgeContainerLogging() override = default;
+  EdgeContainerLogging(std::shared_ptr<EdgeContainerStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> components);
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -143,22 +146,13 @@ class EdgeContainerTracingStub : public EdgeContainerStub {
 
  private:
   std::shared_ptr<EdgeContainerStub> child_;
-};
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<EdgeContainerStub> MakeEdgeContainerTracingStub(
-    std::shared_ptr<EdgeContainerStub> stub);
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // EdgeContainerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_LOGGING_DECORATOR_H

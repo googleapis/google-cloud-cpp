@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H
 
-#include "google/cloud/edgecontainer/edge_container_connection.h"
-#include "google/cloud/edgecontainer/edge_container_connection_idempotency_policy.h"
-#include "google/cloud/edgecontainer/edge_container_options.h"
-#include "google/cloud/edgecontainer/internal/edge_container_retry_traits.h"
-#include "google/cloud/edgecontainer/internal/edge_container_stub.h"
+#include "google/cloud/edgecontainer/v1/edge_container_connection.h"
+#include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.h"
+#include "google/cloud/edgecontainer/v1/edge_container_options.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_retry_traits.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EdgeContainerConnectionImpl
-    : public edgecontainer::EdgeContainerConnection {
+    : public edgecontainer_v1::EdgeContainerConnection {
  public:
   ~EdgeContainerConnectionImpl() override = default;
 
   EdgeContainerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<edgecontainer_internal::EdgeContainerStub> stub,
+      std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -121,58 +121,59 @@ class EdgeContainerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<edgecontainer::EdgeContainerRetryPolicy> retry_policy() {
+  std::unique_ptr<edgecontainer_v1::EdgeContainerRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer::EdgeContainerRetryPolicyOption>()) {
-      return options.get<edgecontainer::EdgeContainerRetryPolicyOption>()
+    if (options.has<edgecontainer_v1::EdgeContainerRetryPolicyOption>()) {
+      return options.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<edgecontainer::EdgeContainerRetryPolicyOption>()
+    return options_.get<edgecontainer_v1::EdgeContainerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer::EdgeContainerBackoffPolicyOption>()) {
-      return options.get<edgecontainer::EdgeContainerBackoffPolicyOption>()
+    if (options.has<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()) {
+      return options.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<edgecontainer::EdgeContainerBackoffPolicyOption>()
+    return options_.get<edgecontainer_v1::EdgeContainerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<edgecontainer::EdgeContainerConnectionIdempotencyPolicy>
+  std::unique_ptr<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>()) {
+    if (options.has<edgecontainer_v1::
+                        EdgeContainerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>()
+          .get<edgecontainer_v1::
+                   EdgeContainerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>()
+        .get<edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer::EdgeContainerPollingPolicyOption>()) {
-      return options.get<edgecontainer::EdgeContainerPollingPolicyOption>()
+    if (options.has<edgecontainer_v1::EdgeContainerPollingPolicyOption>()) {
+      return options.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<edgecontainer::EdgeContainerPollingPolicyOption>()
+    return options_.get<edgecontainer_v1::EdgeContainerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<edgecontainer_internal::EdgeContainerStub> stub_;
+  std::shared_ptr<edgecontainer_v1_internal::EdgeContainerStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer_internal
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_CONNECTION_IMPL_H

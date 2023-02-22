@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#include "google/cloud/edgecontainer/edge_container_connection.h"
-#include "google/cloud/edgecontainer/edge_container_options.h"
-#include "google/cloud/edgecontainer/internal/edge_container_connection_impl.h"
-#include "google/cloud/edgecontainer/internal/edge_container_option_defaults.h"
-#include "google/cloud/edgecontainer/internal/edge_container_stub_factory.h"
-#include "google/cloud/edgecontainer/internal/edge_container_tracing_connection.h"
+#include "google/cloud/edgecontainer/v1/edge_container_connection.h"
+#include "google/cloud/edgecontainer/v1/edge_container_options.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_connection_impl.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_option_defaults.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_stub_factory.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
+namespace edgecontainer_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 EdgeContainerConnection::~EdgeContainerConnection() = default;
@@ -168,17 +168,17 @@ std::shared_ptr<EdgeContainerConnection> MakeEdgeContainerConnection(
                                  UnifiedCredentialsOptionList,
                                  EdgeContainerPolicyOptionList>(options,
                                                                 __func__);
-  options =
-      edgecontainer_internal::EdgeContainerDefaultOptions(std::move(options));
+  options = edgecontainer_v1_internal::EdgeContainerDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = edgecontainer_internal::CreateDefaultEdgeContainerStub(
+  auto stub = edgecontainer_v1_internal::CreateDefaultEdgeContainerStub(
       background->cq(), options);
-  return edgecontainer_internal::MakeEdgeContainerTracingConnection(
-      std::make_shared<edgecontainer_internal::EdgeContainerConnectionImpl>(
+  return edgecontainer_v1_internal::MakeEdgeContainerTracingConnection(
+      std::make_shared<edgecontainer_v1_internal::EdgeContainerConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer
+}  // namespace edgecontainer_v1
 }  // namespace cloud
 }  // namespace google

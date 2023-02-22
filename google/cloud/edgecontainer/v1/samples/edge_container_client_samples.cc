@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#include "google/cloud/edgecontainer/edge_container_client.h"
+#include "google/cloud/edgecontainer/v1/edge_container_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: edgecontainer::EdgeContainerClient
+// main-dox-marker: edgecontainer_v1::EdgeContainerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::edgecontainer::EdgeContainerClient(
-      google::cloud::edgecontainer::MakeEdgeContainerConnection(options));
+  auto client = google::cloud::edgecontainer_v1::EdgeContainerClient(
+      google::cloud::edgecontainer_v1::MakeEdgeContainerConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::edgecontainer::EdgeContainerClient(
-        google::cloud::edgecontainer::MakeEdgeContainerConnection(options));
+    return google::cloud::edgecontainer_v1::EdgeContainerClient(
+        google::cloud::edgecontainer_v1::MakeEdgeContainerConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

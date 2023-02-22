@@ -229,9 +229,10 @@
 ./include/google/cloud/documentai/mocks
 ./include/google/cloud/documentai/v1
 ./include/google/cloud/edgecontainer
-./include/google/cloud/edgecontainer/internal
 ./include/google/cloud/edgecontainer/mocks
 ./include/google/cloud/edgecontainer/v1
+./include/google/cloud/edgecontainer/v1/internal
+./include/google/cloud/edgecontainer/v1/mocks
 ./include/google/cloud/eventarc
 ./include/google/cloud/eventarc/mocks
 ./include/google/cloud/eventarc/publishing
