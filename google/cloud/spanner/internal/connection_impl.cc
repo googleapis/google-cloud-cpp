@@ -205,7 +205,10 @@ StatusOr<spanner::ExecutionPlan> ConnectionImpl::AnalyzeSql(SqlParams params) {
 
 StatusOr<spanner::PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
     ExecutePartitionedDmlParams params) {
-  auto txn = spanner::MakeReadOnlyTransaction();  // becomes partitioned DML
+  // This becomes a partitioned DML transaction, but we choose read/write
+  // here so that ctx.route_to_leader == true during the BeginTransaction()
+  // and ExecuteStreamingSql().
+  auto txn = spanner::MakeReadWriteTransaction();
   return Visit(txn, [this, &params](
                         SessionHolder& session,
                         StatusOr<google::spanner::v1::TransactionSelector>& s,
