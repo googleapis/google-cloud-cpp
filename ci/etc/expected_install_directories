@@ -273,9 +273,10 @@
 ./include/google/cloud/iap/mocks
 ./include/google/cloud/iap/v1
 ./include/google/cloud/ids
-./include/google/cloud/ids/internal
 ./include/google/cloud/ids/mocks
 ./include/google/cloud/ids/v1
+./include/google/cloud/ids/v1/internal
+./include/google/cloud/ids/v1/mocks
 ./include/google/cloud/iot
 ./include/google/cloud/iot/internal
 ./include/google/cloud/iot/mocks

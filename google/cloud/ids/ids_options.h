@@ -21,61 +21,27 @@
 
 #include "google/cloud/ids/ids_connection.h"
 #include "google/cloud/ids/ids_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/ids/v1/ids_options.h"
 
 namespace google {
 namespace cloud {
 namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-ids-options
- */
-struct IDSRetryPolicyOption {
-  using Type = std::shared_ptr<IDSRetryPolicy>;
-};
+/// @deprecated Use ids_v1::IDSPollingPolicyOption directly.
+using ::google::cloud::ids_v1::IDSPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-ids-options
- */
-struct IDSBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use ids_v1::IDSBackoffPolicyOption directly.
+using ::google::cloud::ids_v1::IDSBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-ids-options
- */
-struct IDSConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<IDSConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use ids_v1::IDSConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::ids_v1::IDSConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-ids-options
- */
-struct IDSPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use ids_v1::IDSPolicyOptionList directly.
+using ::google::cloud::ids_v1::IDSPolicyOptionList;
 
-/**
- * The options applicable to IDS.
- *
- * @ingroup google-cloud-ids-options
- */
-using IDSPolicyOptionList =
-    OptionList<IDSRetryPolicyOption, IDSBackoffPolicyOption,
-               IDSPollingPolicyOption, IDSConnectionIdempotencyPolicyOption>;
+/// @deprecated Use ids_v1::IDSRetryPolicyOption directly.
+using ::google::cloud::ids_v1::IDSRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids

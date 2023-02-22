@@ -20,87 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_IDS_CONNECTION_H
 
 #include "google/cloud/ids/ids_connection_idempotency_policy.h"
-#include "google/cloud/ids/internal/ids_retry_traits.h"
-#include "google/cloud/ids/internal/ids_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/ids/v1/ids_connection.h"
 
 namespace google {
 namespace cloud {
 namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using IDSRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    ids_internal::IDSRetryTraits>;
+/// @deprecated Use ids_v1::MakeIDSConnection directly.
+using ::google::cloud::ids_v1::MakeIDSConnection;
 
-using IDSLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        ids_internal::IDSRetryTraits>;
+/// @deprecated Use ids_v1::IDSConnection directly.
+using ::google::cloud::ids_v1::IDSConnection;
 
-using IDSLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        ids_internal::IDSRetryTraits>;
+/// @deprecated Use ids_v1::IDSLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::ids_v1::IDSLimitedErrorCountRetryPolicy;
 
-/**
- * The `IDSConnection` object for `IDSClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `IDSClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `IDSClient`.
- *
- * To create a concrete instance, see `MakeIDSConnection()`.
- *
- * For mocking, see `ids_mocks::MockIDSConnection`.
- */
-class IDSConnection {
- public:
-  virtual ~IDSConnection() = 0;
+/// @deprecated Use ids_v1::IDSLimitedTimeRetryPolicy directly.
+using ::google::cloud::ids_v1::IDSLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::ids::v1::Endpoint> ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest request);
-
-  virtual StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      google::cloud::ids::v1::GetEndpointRequest const& request);
-
-  virtual future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
-      google::cloud::ids::v1::CreateEndpointRequest const& request);
-
-  virtual future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-  DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `IDSConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of IDSClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `IDSConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::ids::IDSPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `IDSConnection` created by
- * this function.
- */
-std::shared_ptr<IDSConnection> MakeIDSConnection(Options options = {});
+/// @deprecated Use ids_v1::IDSRetryPolicy directly.
+using ::google::cloud::ids_v1::IDSRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids

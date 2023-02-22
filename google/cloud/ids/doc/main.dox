@@ -101,6 +101,10 @@ For example, this will override the default endpoint for `ids::IDSClient`:
 
 @snippet ids_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [ids::IDSClient](@ref ids::IDSClient-endpoint-snippet)
+ [ids_v1::IDSClient](@ref ids_v1::IDSClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -112,6 +116,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet ids_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [ids::IDSClient](@ref ids::IDSClient-service-account-snippet)
+ [ids_v1::IDSClient](@ref ids_v1::IDSClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -151,6 +159,18 @@ can override the default policies.
 /*! @page ids::IDSClient-service-account-snippet Override ids::IDSClient Authentication Defaults
 
 @snippet google/cloud/ids/samples/ids_client_samples.cc with-service-account
+
+*/
+
+/*! @page ids_v1::IDSClient-endpoint-snippet Override ids_v1::IDSClient Endpoint Configuration
+
+@snippet google/cloud/ids/v1/samples/ids_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ids_v1::IDSClient-service-account-snippet Override ids_v1::IDSClient Authentication Defaults
+
+@snippet google/cloud/ids/v1/samples/ids_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

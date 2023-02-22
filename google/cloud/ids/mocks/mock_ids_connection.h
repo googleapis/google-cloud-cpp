@@ -20,50 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_MOCKS_MOCK_IDS_CONNECTION_H
 
 #include "google/cloud/ids/ids_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/ids/v1/mocks/mock_ids_connection.h"
 
 namespace google {
 namespace cloud {
 namespace ids_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `IDSConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `IDSClient`. To do so,
- * construct an object of type `IDSClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockIDSConnection : public ids::IDSConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::ids::v1::Endpoint>, ListEndpoints,
-              (google::cloud::ids::v1::ListEndpointsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::ids::v1::Endpoint>, GetEndpoint,
-              (google::cloud::ids::v1::GetEndpointRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::Endpoint>>,
-              CreateEndpoint,
-              (google::cloud::ids::v1::CreateEndpointRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
-              DeleteEndpoint,
-              (google::cloud::ids::v1::DeleteEndpointRequest const& request),
-              (override));
-};
+/// @deprecated Use ids_v1_mocks::MockIDSConnection directly.
+using ::google::cloud::ids_v1_mocks::MockIDSConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_mocks
