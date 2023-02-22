@@ -23,7 +23,7 @@ RUN dnf makecache && \
     dnf install -y autoconf automake \
         ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils findutils gcc-c++ git \
-        libcurl-devel make ninja-build \
+        libcurl-devel llvm make ninja-build \
         openssl-devel patch python python3 \
         python-pip tar unzip wget which zip zlib-devel
 
