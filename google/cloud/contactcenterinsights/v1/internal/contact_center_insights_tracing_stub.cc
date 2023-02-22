@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_tracing_stub.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -524,6 +524,6 @@ std::shared_ptr<ContactCenterInsightsStub> MakeContactCenterInsightsTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -407,7 +407,8 @@ service {
 # Contact Center AI Insights
 service {
   service_proto_path: "google/cloud/contactcenterinsights/v1/contact_center_insights.proto"
-  product_path: "google/cloud/contactcenterinsights"
+  product_path: "google/cloud/contactcenterinsights/v1"
+  forwarding_product_path: "google/cloud/contactcenterinsights"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

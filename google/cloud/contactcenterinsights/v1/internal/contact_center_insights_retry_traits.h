@@ -16,28 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_RETRY_TRAITS_H
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ContactCenterInsightsStub>
-CreateDefaultContactCenterInsightsStub(google::cloud::CompletionQueue cq,
-                                       Options const& options);
+/// Define the gRPC status code semantics for retrying requests.
+struct ContactCenterInsightsRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_RETRY_TRAITS_H

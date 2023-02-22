@@ -16,22 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_OPTION_DEFAULTS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_OPTION_DEFAULTS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H
 
-#include "google/cloud/options.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Options ContactCenterInsightsDefaultOptions(Options options);
+std::shared_ptr<ContactCenterInsightsStub>
+CreateDefaultContactCenterInsightsStub(google::cloud::CompletionQueue cq,
+                                       Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_OPTION_DEFAULTS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_STUB_FACTORY_H

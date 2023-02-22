@@ -16,25 +16,24 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_METADATA_DECORATOR_H
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class ContactCenterInsightsTracingStub : public ContactCenterInsightsStub {
+class ContactCenterInsightsMetadata : public ContactCenterInsightsStub {
  public:
-  ~ContactCenterInsightsTracingStub() override = default;
-
-  explicit ContactCenterInsightsTracingStub(
+  ~ContactCenterInsightsMetadata() override = default;
+  explicit ContactCenterInsightsMetadata(
       std::shared_ptr<ContactCenterInsightsStub> child);
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -254,23 +253,17 @@ class ContactCenterInsightsTracingStub : public ContactCenterInsightsStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<ContactCenterInsightsStub> child_;
+  std::string api_client_header_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<ContactCenterInsightsStub> MakeContactCenterInsightsTracingStub(
-    std::shared_ptr<ContactCenterInsightsStub> stub);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_METADATA_DECORATOR_H

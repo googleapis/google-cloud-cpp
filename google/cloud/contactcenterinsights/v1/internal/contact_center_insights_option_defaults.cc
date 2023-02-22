@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_option_defaults.h"
-#include "google/cloud/contactcenterinsights/contact_center_insights_connection.h"
-#include "google/cloud/contactcenterinsights/contact_center_insights_options.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_option_defaults.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -40,43 +40,45 @@ Options ContactCenterInsightsDefaultOptions(Options options) {
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<
-          contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()) {
-    options.set<contactcenterinsights::ContactCenterInsightsRetryPolicyOption>(
-        contactcenterinsights::ContactCenterInsightsLimitedTimeRetryPolicy(
+          contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()) {
+    options.set<
+        contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>(
+        contactcenterinsights_v1::ContactCenterInsightsLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<
-          contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>()) {
-    options
-        .set<contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>(
-            ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                     std::chrono::minutes(5), kBackoffScaling)
-                .clone());
-  }
-  if (!options.has<
-          contactcenterinsights::ContactCenterInsightsPollingPolicyOption>()) {
+  if (!options.has<contactcenterinsights_v1::
+                       ContactCenterInsightsBackoffPolicyOption>()) {
     options.set<
-        contactcenterinsights::ContactCenterInsightsPollingPolicyOption>(
+        contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
+  }
+  if (!options.has<contactcenterinsights_v1::
+                       ContactCenterInsightsPollingPolicyOption>()) {
+    options.set<
+        contactcenterinsights_v1::ContactCenterInsightsPollingPolicyOption>(
         GenericPollingPolicy<
-            contactcenterinsights::ContactCenterInsightsRetryPolicyOption::Type,
-            contactcenterinsights::ContactCenterInsightsBackoffPolicyOption::
+            contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption::
+                Type,
+            contactcenterinsights_v1::ContactCenterInsightsBackoffPolicyOption::
                 Type>(options
-                          .get<contactcenterinsights::
+                          .get<contactcenterinsights_v1::
                                    ContactCenterInsightsRetryPolicyOption>()
                           ->clone(),
                       options
-                          .get<contactcenterinsights::
+                          .get<contactcenterinsights_v1::
                                    ContactCenterInsightsBackoffPolicyOption>()
                           ->clone())
             .clone());
   }
   if (!options
-           .has<contactcenterinsights::
+           .has<contactcenterinsights_v1::
                     ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
-    options.set<contactcenterinsights::
+    options.set<contactcenterinsights_v1::
                     ContactCenterInsightsConnectionIdempotencyPolicyOption>(
-        contactcenterinsights::
+        contactcenterinsights_v1::
             MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy());
   }
 
@@ -84,6 +86,6 @@ Options ContactCenterInsightsDefaultOptions(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google

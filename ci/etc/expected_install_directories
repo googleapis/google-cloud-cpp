@@ -163,9 +163,10 @@
 ./include/google/cloud/connectors/v1/internal
 ./include/google/cloud/connectors/v1/mocks
 ./include/google/cloud/contactcenterinsights
-./include/google/cloud/contactcenterinsights/internal
 ./include/google/cloud/contactcenterinsights/mocks
 ./include/google/cloud/contactcenterinsights/v1
+./include/google/cloud/contactcenterinsights/v1/internal
+./include/google/cloud/contactcenterinsights/v1/mocks
 ./include/google/cloud/container
 ./include/google/cloud/container/mocks
 ./include/google/cloud/container/v1

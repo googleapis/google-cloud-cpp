@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#include "google/cloud/contactcenterinsights/contact_center_insights_connection_idempotency_policy.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights {
+namespace contactcenterinsights_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -252,6 +252,6 @@ MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights
+}  // namespace contactcenterinsights_v1
 }  // namespace cloud
 }  // namespace google

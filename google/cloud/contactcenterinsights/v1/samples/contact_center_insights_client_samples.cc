@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: contactcenterinsights::ContactCenterInsightsClient
+// main-dox-marker: contactcenterinsights_v1::ContactCenterInsightsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -39,8 +39,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client =
-      google::cloud::contactcenterinsights::ContactCenterInsightsClient(
-          google::cloud::contactcenterinsights::
+      google::cloud::contactcenterinsights_v1::ContactCenterInsightsClient(
+          google::cloud::contactcenterinsights_v1::
               MakeContactCenterInsightsConnection(options));
   //! [set-client-endpoint]
 }
@@ -57,8 +57,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::contactcenterinsights::ContactCenterInsightsClient(
-        google::cloud::contactcenterinsights::
+    return google::cloud::contactcenterinsights_v1::ContactCenterInsightsClient(
+        google::cloud::contactcenterinsights_v1::
             MakeContactCenterInsightsConnection(options));
   }
   //! [with-service-account]

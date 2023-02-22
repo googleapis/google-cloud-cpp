@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContactCenterInsightsStub::~ContactCenterInsightsStub() = default;
@@ -575,6 +575,6 @@ future<Status> DefaultContactCenterInsightsStub::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google

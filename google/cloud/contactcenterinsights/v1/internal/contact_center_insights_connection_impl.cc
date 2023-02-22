@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_connection_impl.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_option_defaults.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_connection_impl.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ContactCenterInsightsConnectionImpl::ContactCenterInsightsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<contactcenterinsights_internal::ContactCenterInsightsStub>
+    std::shared_ptr<
+        contactcenterinsights_v1_internal::ContactCenterInsightsStub>
         stub,
     Options options)
     : background_(std::move(background)),
@@ -93,7 +94,7 @@ ContactCenterInsightsConnectionImpl::ListConversations(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
+      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConversations(request);
@@ -188,7 +189,7 @@ ContactCenterInsightsConnectionImpl::ListAnalyses(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
+      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAnalyses(request);
@@ -603,7 +604,7 @@ ContactCenterInsightsConnectionImpl::ListPhraseMatchers(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
+      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPhraseMatchers(request);
@@ -733,7 +734,7 @@ ContactCenterInsightsConnectionImpl::ListViews(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      contactcenterinsights::ContactCenterInsightsRetryPolicy const>(
+      contactcenterinsights_v1::ContactCenterInsightsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListViews(request);
@@ -787,6 +788,6 @@ Status ContactCenterInsightsConnectionImpl::DeleteView(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google

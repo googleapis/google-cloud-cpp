@@ -16,253 +16,289 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_CONNECTION_IMPL_H
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_options.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_retry_traits.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ContactCenterInsightsAuth : public ContactCenterInsightsStub {
+class ContactCenterInsightsConnectionImpl
+    : public contactcenterinsights_v1::ContactCenterInsightsConnection {
  public:
-  ~ContactCenterInsightsAuth() override = default;
-  ContactCenterInsightsAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<ContactCenterInsightsStub> child);
+  ~ContactCenterInsightsConnectionImpl() override = default;
+
+  ContactCenterInsightsConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<
+          contactcenterinsights_v1_internal::ContactCenterInsightsStub>
+          stub,
+      Options options);
+
+  Options options() override { return options_; }
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   UpdateConversation(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   GetConversation(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetConversationRequest const&
           request) override;
 
-  StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
+  StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
   ListConversations(
-      grpc::ClientContext& context,
-      google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
+      google::cloud::contactcenterinsights::v1::ListConversationsRequest
           request) override;
 
   Status DeleteConversation(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
           request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateAnalysis(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+  future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
+  CreateAnalysis(
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Analysis> GetAnalysis(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
           request) override;
 
-  StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
-  ListAnalyses(
-      grpc::ClientContext& context,
-      google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
-          request) override;
+  StreamRange<google::cloud::contactcenterinsights::v1::Analysis> ListAnalyses(
+      google::cloud::contactcenterinsights::v1::ListAnalysesRequest request)
+      override;
 
   Status DeleteAnalysis(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
           request) override;
 
-  future<StatusOr<google::longrunning::Operation>>
-  AsyncBulkAnalyzeConversations(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+  future<StatusOr<google::cloud::contactcenterinsights::v1::
+                      BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncIngestConversations(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::cloud::contactcenterinsights::v1::
-          IngestConversationsRequest const& request) override;
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations(google::cloud::contactcenterinsights::v1::
+                          IngestConversationsRequest const& request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncExportInsightsData(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
+  ExportInsightsData(
       google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
           request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncCreateIssueModel(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+  future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
+  CreateIssueModel(
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
   UpdateIssueModel(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::IssueModel> GetIssueModel(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
   ListIssueModels(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
           request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeleteIssueModel(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
+  DeleteIssueModel(
       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
           request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncDeployIssueModel(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
+  DeployIssueModel(
       google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
           request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncUndeployIssueModel(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+  future<StatusOr<
+      google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
+  UndeployIssueModel(
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> GetIssue(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetIssueRequest const& request)
       override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
-  ListIssues(grpc::ClientContext& context,
-             google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
+  ListIssues(google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
                  request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
           request) override;
 
   Status DeleteIssue(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::
                CalculateIssueModelStatsResponse>
   CalculateIssueModelStats(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::
           CalculateIssueModelStatsRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  CreatePhraseMatcher(grpc::ClientContext& context,
-                      google::cloud::contactcenterinsights::v1::
+  CreatePhraseMatcher(google::cloud::contactcenterinsights::v1::
                           CreatePhraseMatcherRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   GetPhraseMatcher(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
           request) override;
 
-  StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
+  StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
   ListPhraseMatchers(
-      grpc::ClientContext& context,
-      google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
+      google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest
           request) override;
 
   Status DeletePhraseMatcher(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::
           DeletePhraseMatcherRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-  UpdatePhraseMatcher(grpc::ClientContext& context,
-                      google::cloud::contactcenterinsights::v1::
+  UpdatePhraseMatcher(google::cloud::contactcenterinsights::v1::
                           UpdatePhraseMatcherRequest const& request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
   CalculateStats(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> GetSettings(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::Settings> UpdateSettings(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::CreateViewRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::GetViewRequest const& request)
       override;
 
-  StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
-  ListViews(grpc::ClientContext& context,
-            google::cloud::contactcenterinsights::v1::ListViewsRequest const&
-                request) override;
+  StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
+      google::cloud::contactcenterinsights::v1::ListViewsRequest request)
+      override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
           request) override;
 
   Status DeleteView(
-      grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
           request) override;
 
-  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::longrunning::GetOperationRequest const& request) override;
-
-  future<Status> AsyncCancelOperation(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::longrunning::CancelOperationRequest const& request) override;
-
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
-  std::shared_ptr<ContactCenterInsightsStub> child_;
+  std::unique_ptr<contactcenterinsights_v1::ContactCenterInsightsRetryPolicy>
+  retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<contactcenterinsights_v1::
+                        ContactCenterInsightsRetryPolicyOption>()) {
+      return options
+          .get<contactcenterinsights_v1::
+                   ContactCenterInsightsRetryPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<contactcenterinsights_v1::ContactCenterInsightsRetryPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<contactcenterinsights_v1::
+                        ContactCenterInsightsBackoffPolicyOption>()) {
+      return options
+          .get<contactcenterinsights_v1::
+                   ContactCenterInsightsBackoffPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<contactcenterinsights_v1::
+                 ContactCenterInsightsBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<contactcenterinsights_v1::
+                      ContactCenterInsightsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            contactcenterinsights_v1::
+                ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<contactcenterinsights_v1::
+                   ContactCenterInsightsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<contactcenterinsights_v1::
+                 ContactCenterInsightsConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<contactcenterinsights_v1::
+                        ContactCenterInsightsPollingPolicyOption>()) {
+      return options
+          .get<contactcenterinsights_v1::
+                   ContactCenterInsightsPollingPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<contactcenterinsights_v1::
+                 ContactCenterInsightsPollingPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<contactcenterinsights_v1_internal::ContactCenterInsightsStub>
+      stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_CONNECTION_IMPL_H

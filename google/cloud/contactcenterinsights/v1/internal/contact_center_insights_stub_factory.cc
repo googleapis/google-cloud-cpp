@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub_factory.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_auth_decorator.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_logging_decorator.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_metadata_decorator.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_tracing_stub.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub_factory.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_auth_decorator.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_logging_decorator.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_metadata_decorator.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_stub.h"
+#include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ContactCenterInsightsStub>
@@ -69,6 +69,6 @@ CreateDefaultContactCenterInsightsStub(google::cloud::CompletionQueue cq,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google

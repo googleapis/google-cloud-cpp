@@ -16,42 +16,30 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_TRACING_CONNECTION_H
 
-#include "google/cloud/contactcenterinsights/contact_center_insights_connection.h"
-#include "google/cloud/contactcenterinsights/contact_center_insights_connection_idempotency_policy.h"
-#include "google/cloud/contactcenterinsights/contact_center_insights_options.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_retry_traits.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
+namespace contactcenterinsights_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ContactCenterInsightsConnectionImpl
-    : public contactcenterinsights::ContactCenterInsightsConnection {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class ContactCenterInsightsTracingConnection
+    : public contactcenterinsights_v1::ContactCenterInsightsConnection {
  public:
-  ~ContactCenterInsightsConnectionImpl() override = default;
+  ~ContactCenterInsightsTracingConnection() override = default;
 
-  ContactCenterInsightsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<contactcenterinsights_internal::ContactCenterInsightsStub>
-          stub,
-      Options options);
+  explicit ContactCenterInsightsTracingConnection(
+      std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
+          child);
 
-  Options options() override { return options_; }
+  Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
   CreateConversation(
@@ -226,75 +214,26 @@ class ContactCenterInsightsConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<contactcenterinsights::ContactCenterInsightsRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()) {
-      return options
-          .get<contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights::
-                        ContactCenterInsightsBackoffPolicyOption>()) {
-      return options
-          .get<
-              contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      contactcenterinsights::ContactCenterInsightsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            contactcenterinsights::
-                ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<contactcenterinsights::
-                   ContactCenterInsightsConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::
-                 ContactCenterInsightsConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights::
-                        ContactCenterInsightsPollingPolicyOption>()) {
-      return options
-          .get<
-              contactcenterinsights::ContactCenterInsightsPollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<contactcenterinsights::ContactCenterInsightsPollingPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<contactcenterinsights_internal::ContactCenterInsightsStub>
-      stub_;
-  Options options_;
+  std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
+      child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
+MakeContactCenterInsightsTracingConnection(
+    std::shared_ptr<contactcenterinsights_v1::ContactCenterInsightsConnection>
+        conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
+}  // namespace contactcenterinsights_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_INTERNAL_CONTACT_CENTER_INSIGHTS_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTACTCENTERINSIGHTS_V1_INTERNAL_CONTACT_CENTER_INSIGHTS_TRACING_CONNECTION_H
