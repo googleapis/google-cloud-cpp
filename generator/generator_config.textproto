@@ -873,14 +873,16 @@ service {
 # Eventarc
 service {
   service_proto_path: "google/cloud/eventarc/v1/eventarc.proto"
-  product_path: "google/cloud/eventarc"
+  product_path: "google/cloud/eventarc/v1"
+  forwarding_product_path: "google/cloud/eventarc"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
 service {
   service_proto_path: "google/cloud/eventarc/publishing/v1/publisher.proto"
-  product_path: "google/cloud/eventarc"
+  product_path: "google/cloud/eventarc/publishing/v1"
+  forwarding_product_path: "google/cloud/eventarc"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
