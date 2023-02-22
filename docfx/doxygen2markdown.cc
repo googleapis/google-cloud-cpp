@@ -28,6 +28,14 @@ namespace {
   throw std::runtime_error(std::move(os).str());
 }
 
+[[noreturn]] void MissingElement(std::string_view where, std::string_view name,
+                                 pugi::xml_node const& node) {
+  std::ostringstream os;
+  os << "Missing element <" << name << " in " << where << "(): node=";
+  node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
+  throw std::runtime_error(std::move(os).str());
+}
+
 }  // namespace
 
 // A "page" appears in the generated XML as:
@@ -450,7 +458,7 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: subscript, superscript, center, small, del, ins
   // Unexpected: htmlonly, manonly, rtfonly, latexonly, docbookonly
   // Unexpected: image, dot, msc, plantuml
-  // Unexpected: anchor
+  if (AppendIfAnchor(os, ctx, node)) return true;
   // Unexpected: formula
   if (AppendIfRef(os, ctx, node)) return true;
   // Unexpected: emoji
@@ -499,9 +507,10 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: orderedlist
   if (AppendIfItemizedList(os, ctx, node)) return true;
   if (AppendIfSimpleSect(os, ctx, node)) return true;
-  // Unexpected: title, variablelist, table, header
-  // Unexpected: dotfile, mscfile,diafile, toclist, language, parameterlist
-  // Unexpected: xrefsect, copydoc, blockquote, parblock
+  // Unexpected: title
+  if (AppendIfVariableList(os, ctx, node)) return true;
+  // Unexpected: table, header, dotfile, mscfile, diafile, toclist, language
+  // Unexpected: parameterlist, xrefsect, copydoc, blockquote, parblock
   return false;
 }
 
@@ -669,6 +678,89 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
+// The `variablelist` element type is defined as a sequence of "groups".
+// Groups do not create an XML element, they are simply a description of
+// "element A is followed by element B". This requires some funky processing.
+//
+//   <xsd:complexType name="docVariableListType">
+//     <xsd:sequence>
+//       <xsd:group ref="docVariableListGroup" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+//
+//   <xsd:group name="docVariableListGroup">
+//     <xsd:sequence>
+//       <xsd:element name="varlistentry" type="docVarListEntryType" />
+//       <xsd:element name="listitem" type="docListItemType" />
+//     </xsd:sequence>
+//   </xsd:group>
+bool AppendIfVariableList(std::ostream& os, MarkdownContext const& ctx,
+                          pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "variablelist") return false;
+
+  auto nested = ctx;
+  nested.paragraph_start = "\n";
+  nested.paragraph_indent = ctx.paragraph_indent + "- ";
+  for (auto const& child : node) {
+    if (AppendIfVariableListEntry(os, nested, child)) {
+      // Subsequence paragraphs within the same list item require a blank line
+      nested.paragraph_start = "\n\n";
+      nested.paragraph_indent = ctx.paragraph_indent + "  ";
+      continue;
+    }
+    if (AppendIfVariableListItem(os, nested, child)) {
+      nested.paragraph_start = "\n";
+      nested.paragraph_indent = ctx.paragraph_indent + "- ";
+      continue;
+    }
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// A `varlistentry` contains a single `term` element.
+//
+//   <xsd:complexType name="docVarListEntryType">
+//     <xsd:sequence>
+//       <xsd:element name="term" type="docTitleType" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+//
+//   <xsd:complexType name="docTitleType" mixed="true">
+//     <xsd:group ref="docTitleCmdGroup" minOccurs="0" maxOccurs="unbounded" />
+//   </xsd:complexType>
+bool AppendIfVariableListEntry(std::ostream& os, MarkdownContext const& ctx,
+                               pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "varlistentry") return false;
+  auto const term = node.child("term");
+  if (!term) MissingElement(__func__, "term", node);
+  os << ctx.paragraph_start << ctx.paragraph_indent;
+  for (auto const& child : term) {
+    if (AppendIfDocTitleCmdGroup(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
+// A `listitem` in the middle of a `variablelist` is a sequence of paragraphs.
+//
+// clang-format off
+//   <xsd:complexType name="docListItemType">
+//     <xsd:sequence>
+//       <xsd:element name="para" type="docParaType" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+// clang-format on
+bool AppendIfVariableListItem(std::ostream& os, MarkdownContext const& ctx,
+                              pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "listitem") return false;
+  for (auto const& child : node) {
+    if (AppendIfParagraph(os, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
 // The `simplesect` element type in Doxygen is defined as below.
 //
 // These are small sections, such as the `@see` notes, or a `@warning`
@@ -753,6 +845,13 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
     UnknownChildType(__func__, child);
   }
   return true;
+}
+
+bool AppendIfAnchor(std::ostream& /*os*/, MarkdownContext const& /*ctx*/,
+                    pugi::xml_node const& node) {
+  // Do not generate any code for anchors, they have no obvious mapping to
+  // Markdown.
+  return std::string_view{node.name()} == "anchor";
 }
 
 void AppendTitle(std::ostream& os, MarkdownContext const& ctx,
