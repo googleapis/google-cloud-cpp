@@ -28,10 +28,10 @@ namespace cloud {
 namespace spanner_testing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Verifies a `Transaction` has the expected Session and ID/tag.
-MATCHER_P3(
-    HasSessionAndTransaction, session_id, transaction_id, transaction_tag,
-    "Verifies a Transaction has the expected Session and Transaction IDs") {
+/// Verifies a `Transaction` has the expected IDs and attributes.
+MATCHER_P4(HasSessionAndTransaction,  //
+           session_id, transaction_id, route_to_leader, transaction_tag,
+           "Verifies a Transaction has the expected IDs and attributes") {
   return spanner_internal::Visit(
       arg, [&](spanner_internal::SessionHolder& session,
                StatusOr<google::spanner::v1::TransactionSelector>& s,
@@ -55,6 +55,11 @@ MATCHER_P3(
         } else if (s->id() != transaction_id) {
           *result_listener << "Transaction ID mismatch: " << s->id()
                            << " != " << transaction_id;
+          result = false;
+        }
+        if (ctx.route_to_leader != route_to_leader) {
+          *result_listener << "RouteToLeader mismatch: " << ctx.route_to_leader
+                           << " != " << route_to_leader;
           result = false;
         }
         if (ctx.tag != transaction_tag) {
