@@ -569,7 +569,8 @@ service {
 # Cloud Deploy
 service {
   service_proto_path: "google/cloud/deploy/v1/cloud_deploy.proto"
-  product_path: "google/cloud/deploy"
+  product_path: "google/cloud/deploy/v1"
+  forwarding_product_path: "google/cloud/deploy"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
