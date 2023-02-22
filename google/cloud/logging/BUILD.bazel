@@ -16,12 +16,32 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_logging.bzl", "google_cloud_cpp_logging_hdrs", "google_cloud_cpp_logging_srcs")
+service_dirs = [
+    "",
+    "v2/",
+]
+
+src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+
+filegroup(
+    name = "srcs",
+    srcs = glob([d + "*.cc" for d in src_dirs]),
+)
+
+filegroup(
+    name = "hdrs",
+    srcs = glob([d + "*.h" for d in src_dirs]),
+)
+
+filegroup(
+    name = "mocks",
+    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
+)
 
 cc_library(
     name = "google_cloud_cpp_logging",
-    srcs = google_cloud_cpp_logging_srcs,
-    hdrs = google_cloud_cpp_logging_hdrs,
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
@@ -30,15 +50,22 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_logging_mocks.bzl", "google_cloud_cpp_logging_mocks_hdrs", "google_cloud_cpp_logging_mocks_srcs")
-
 cc_library(
     name = "google_cloud_cpp_logging_mocks",
-    srcs = google_cloud_cpp_logging_mocks_srcs,
-    hdrs = google_cloud_cpp_logging_mocks_hdrs,
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_logging",
         "@com_google_googletest//:gtest",
     ],
 )
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:logging",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
