@@ -270,12 +270,16 @@ bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
-bool AppendIfPlainText(std::ostream& os, MarkdownContext const& /*ctx*/,
+bool AppendIfPlainText(std::ostream& os, MarkdownContext const& ctx,
                        pugi::xml_node const& node) {
   if (!std::string_view{node.name()}.empty() || !node.attributes().empty()) {
     return false;
   }
+  for (auto const& d : ctx.decorators) os << d;
   os << node.value();
+  for (auto i = ctx.decorators.rbegin(); i != ctx.decorators.rend(); ++i) {
+    os << *i;
+  }
   return true;
 }
 
@@ -297,31 +301,63 @@ bool AppendIfULink(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
-bool AppendIfBold(std::ostream& os, MarkdownContext const& /*ctx*/,
+// The `bold` elements are of type `docMarkupType`. This is basically
+// a sequence of `docCmdGroup` elements:
+//
+//   <xsd:complexType name="docMarkupType" mixed="true">
+//     <xsd:group ref="docCmdGroup" minOccurs="0" maxOccurs="unbounded" />
+//   </xsd:complexType>
+bool AppendIfBold(std::ostream& os, MarkdownContext const& ctx,
                   pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "bold") return false;
-  os << "**" << node.child_value() << "**";
+  auto nested = ctx;
+  nested.decorators.emplace_back("**");
+  for (auto const& child : node) {
+    if (AppendIfDocCmdGroup(os, nested, child)) continue;
+    UnknownChildType(__func__, child);
+  }
   return true;
 }
 
-bool AppendIfStrike(std::ostream& os, MarkdownContext const& /*ctx*/,
+// The `strike` elements are of type `docMarkupType`. More details in
+// `AppendIfBold()`.
+bool AppendIfStrike(std::ostream& os, MarkdownContext const& ctx,
                     pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "strike") return false;
-  os << '~' << node.child_value() << '~';
+  auto nested = ctx;
+  nested.decorators.emplace_back("~");
+  for (auto const& child : node) {
+    if (AppendIfDocCmdGroup(os, nested, child)) continue;
+    UnknownChildType(__func__, child);
+  }
   return true;
 }
 
-bool AppendIfEmphasis(std::ostream& os, MarkdownContext const& /*ctx*/,
+// The `strike` elements are of type `docMarkupType`. More details in
+// `AppendIfBold()`.
+bool AppendIfEmphasis(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "emphasis") return false;
-  os << '*' << node.child_value() << '*';
+  auto nested = ctx;
+  nested.decorators.emplace_back("*");
+  for (auto const& child : node) {
+    if (AppendIfDocCmdGroup(os, nested, child)) continue;
+    UnknownChildType(__func__, child);
+  }
   return true;
 }
 
-bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& /*ctx*/,
+// The `computeroutput` elements are of type `docMarkupType`. More details in
+// `AppendIfBold()`.
+bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& ctx,
                             pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "computeroutput") return false;
-  os << '`' << node.child_value() << '`';
+  auto nested = ctx;
+  nested.decorators.emplace_back("`");
+  for (auto const& child : node) {
+    if (AppendIfDocCmdGroup(os, nested, child)) continue;
+    UnknownChildType(__func__, child);
+  }
   return true;
 }
 

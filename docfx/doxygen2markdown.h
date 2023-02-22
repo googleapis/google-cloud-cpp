@@ -17,6 +17,8 @@
 
 #include <pugixml.hpp>
 #include <iosfwd>
+#include <string>
+#include <vector>
 
 /**
  * Keeps the state for markdown generation.
@@ -27,6 +29,7 @@
 struct MarkdownContext {
   std::string paragraph_start = "\n\n";
   std::string paragraph_indent = "";
+  std::vector<std::string> decorators;
 };
 
 /**
