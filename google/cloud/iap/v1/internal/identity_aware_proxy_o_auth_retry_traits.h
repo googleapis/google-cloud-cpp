@@ -16,23 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iap/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_O_AUTH_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_O_AUTH_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_RETRY_TRAITS_H
 
-#include "google/cloud/iap/identity_aware_proxy_o_auth_connection.h"
-#include "google/cloud/iap/v1/identity_aware_proxy_o_auth_client.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace iap {
+namespace iap_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iap_v1::IdentityAwareProxyOAuthServiceClient directly.
-using ::google::cloud::iap_v1::IdentityAwareProxyOAuthServiceClient;
+/// Define the gRPC status code semantics for retrying requests.
+struct IdentityAwareProxyOAuthServiceRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iap
+}  // namespace iap_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_O_AUTH_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_RETRY_TRAITS_H
