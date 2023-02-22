@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/iot/device_manager_connection.h"
-#include "google/cloud/iot/device_manager_connection_idempotency_policy.h"
-#include "google/cloud/iot/device_manager_options.h"
-#include "google/cloud/iot/internal/device_manager_retry_traits.h"
-#include "google/cloud/iot/internal/device_manager_stub.h"
+#include "google/cloud/iot/v1/device_manager_connection.h"
+#include "google/cloud/iot/v1/device_manager_connection_idempotency_policy.h"
+#include "google/cloud/iot/v1/device_manager_options.h"
+#include "google/cloud/iot/v1/internal/device_manager_retry_traits.h"
+#include "google/cloud/iot/v1/internal/device_manager_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
+namespace iot_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
+class DeviceManagerConnectionImpl : public iot_v1::DeviceManagerConnection {
  public:
   ~DeviceManagerConnectionImpl() override = default;
 
   DeviceManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options);
+      std::shared_ptr<iot_v1_internal::DeviceManagerStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -115,41 +116,43 @@ class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
       override;
 
  private:
-  std::unique_ptr<iot::DeviceManagerRetryPolicy> retry_policy() {
+  std::unique_ptr<iot_v1::DeviceManagerRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerRetryPolicyOption>()) {
-      return options.get<iot::DeviceManagerRetryPolicyOption>()->clone();
+    if (options.has<iot_v1::DeviceManagerRetryPolicyOption>()) {
+      return options.get<iot_v1::DeviceManagerRetryPolicyOption>()->clone();
     }
-    return options_.get<iot::DeviceManagerRetryPolicyOption>()->clone();
+    return options_.get<iot_v1::DeviceManagerRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerBackoffPolicyOption>()) {
-      return options.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
+    if (options.has<iot_v1::DeviceManagerBackoffPolicyOption>()) {
+      return options.get<iot_v1::DeviceManagerBackoffPolicyOption>()->clone();
     }
-    return options_.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
+    return options_.get<iot_v1::DeviceManagerBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
+  std::unique_ptr<iot_v1::DeviceManagerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerConnectionIdempotencyPolicyOption>()) {
-      return options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+    if (options.has<iot_v1::DeviceManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<iot_v1::DeviceManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return options_.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+    return options_
+        .get<iot_v1::DeviceManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<iot_internal::DeviceManagerStub> stub_;
+  std::shared_ptr<iot_v1_internal::DeviceManagerStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
+}  // namespace iot_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_CONNECTION_IMPL_H

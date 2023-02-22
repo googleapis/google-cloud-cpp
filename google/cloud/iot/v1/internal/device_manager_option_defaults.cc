@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#include "google/cloud/iot/internal/device_manager_option_defaults.h"
-#include "google/cloud/iot/device_manager_connection.h"
-#include "google/cloud/iot/device_manager_options.h"
+#include "google/cloud/iot/v1/internal/device_manager_option_defaults.h"
+#include "google/cloud/iot/v1/device_manager_connection.h"
+#include "google/cloud/iot/v1/device_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
+namespace iot_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -38,26 +38,26 @@ Options DeviceManagerDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DEVICE_MANAGER_AUTHORITY", "cloudiot.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<iot::DeviceManagerRetryPolicyOption>()) {
-    options.set<iot::DeviceManagerRetryPolicyOption>(
-        iot::DeviceManagerLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<iot_v1::DeviceManagerRetryPolicyOption>()) {
+    options.set<iot_v1::DeviceManagerRetryPolicyOption>(
+        iot_v1::DeviceManagerLimitedTimeRetryPolicy(std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<iot::DeviceManagerBackoffPolicyOption>()) {
-    options.set<iot::DeviceManagerBackoffPolicyOption>(
+  if (!options.has<iot_v1::DeviceManagerBackoffPolicyOption>()) {
+    options.set<iot_v1::DeviceManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<iot::DeviceManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<iot::DeviceManagerConnectionIdempotencyPolicyOption>(
-        iot::MakeDefaultDeviceManagerConnectionIdempotencyPolicy());
+  if (!options.has<iot_v1::DeviceManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<iot_v1::DeviceManagerConnectionIdempotencyPolicyOption>(
+        iot_v1::MakeDefaultDeviceManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
+}  // namespace iot_v1_internal
 }  // namespace cloud
 }  // namespace google

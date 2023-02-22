@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#include "google/cloud/iot/internal/device_manager_auth_decorator.h"
+#include "google/cloud/iot/v1/internal/device_manager_auth_decorator.h"
 #include <google/cloud/iot/v1/device_manager.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
+namespace iot_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeviceManagerAuth::DeviceManagerAuth(
@@ -195,6 +195,6 @@ DeviceManagerAuth::UnbindDeviceFromGateway(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
+}  // namespace iot_v1_internal
 }  // namespace cloud
 }  // namespace google

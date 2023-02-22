@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#include "google/cloud/iot/internal/device_manager_connection_impl.h"
-#include "google/cloud/iot/internal/device_manager_option_defaults.h"
+#include "google/cloud/iot/v1/internal/device_manager_connection_impl.h"
+#include "google/cloud/iot/v1/internal/device_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
+namespace iot_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeviceManagerConnectionImpl::DeviceManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options)
+    std::shared_ptr<iot_v1_internal::DeviceManagerStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -98,7 +98,7 @@ DeviceManagerConnectionImpl::ListDeviceRegistries(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
+      std::shared_ptr<iot_v1::DeviceManagerRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDeviceRegistries(request);
   char const* function_name = __func__;
@@ -181,7 +181,7 @@ DeviceManagerConnectionImpl::ListDevices(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
+      std::shared_ptr<iot_v1::DeviceManagerRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDevices(request);
   char const* function_name = __func__;
@@ -327,6 +327,6 @@ DeviceManagerConnectionImpl::UnbindDeviceFromGateway(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
+}  // namespace iot_v1_internal
 }  // namespace cloud
 }  // namespace google

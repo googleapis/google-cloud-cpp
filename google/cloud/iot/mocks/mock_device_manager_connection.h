@@ -20,123 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_MOCKS_MOCK_DEVICE_MANAGER_CONNECTION_H
 
 #include "google/cloud/iot/device_manager_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/iot/v1/mocks/mock_device_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace iot_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `DeviceManagerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DeviceManagerClient`. To do so,
- * construct an object of type `DeviceManagerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockDeviceManagerConnection : public iot::DeviceManagerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iot::v1::DeviceRegistry>, CreateDeviceRegistry,
-      (google::cloud::iot::v1::CreateDeviceRegistryRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::iot::v1::DeviceRegistry>,
-              GetDeviceRegistry,
-              (google::cloud::iot::v1::GetDeviceRegistryRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iot::v1::DeviceRegistry>, UpdateDeviceRegistry,
-      (google::cloud::iot::v1::UpdateDeviceRegistryRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteDeviceRegistry,
-      (google::cloud::iot::v1::DeleteDeviceRegistryRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::iot::v1::DeviceRegistry>,
-              ListDeviceRegistries,
-              (google::cloud::iot::v1::ListDeviceRegistriesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::iot::v1::Device>, CreateDevice,
-              (google::cloud::iot::v1::CreateDeviceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::iot::v1::Device>, GetDevice,
-              (google::cloud::iot::v1::GetDeviceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::iot::v1::Device>, UpdateDevice,
-              (google::cloud::iot::v1::UpdateDeviceRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteDevice,
-              (google::cloud::iot::v1::DeleteDeviceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::iot::v1::Device>, ListDevices,
-              (google::cloud::iot::v1::ListDevicesRequest request), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iot::v1::DeviceConfig>, ModifyCloudToDeviceConfig,
-      (google::cloud::iot::v1::ModifyCloudToDeviceConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iot::v1::ListDeviceConfigVersionsResponse>,
-      ListDeviceConfigVersions,
-      (google::cloud::iot::v1::ListDeviceConfigVersionsRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::iot::v1::ListDeviceStatesResponse>,
-              ListDeviceStates,
-              (google::cloud::iot::v1::ListDeviceStatesRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iot::v1::SendCommandToDeviceResponse>,
-      SendCommandToDevice,
-      (google::cloud::iot::v1::SendCommandToDeviceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iot::v1::BindDeviceToGatewayResponse>,
-      BindDeviceToGateway,
-      (google::cloud::iot::v1::BindDeviceToGatewayRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::iot::v1::UnbindDeviceFromGatewayResponse>,
-      UnbindDeviceFromGateway,
-      (google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request),
-      (override));
-};
+/// @deprecated Use iot_v1_mocks::MockDeviceManagerConnection directly.
+using ::google::cloud::iot_v1_mocks::MockDeviceManagerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_mocks

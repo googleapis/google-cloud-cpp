@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#include "google/cloud/iot/device_manager_connection.h"
-#include "google/cloud/iot/device_manager_options.h"
-#include "google/cloud/iot/internal/device_manager_connection_impl.h"
-#include "google/cloud/iot/internal/device_manager_option_defaults.h"
-#include "google/cloud/iot/internal/device_manager_stub_factory.h"
-#include "google/cloud/iot/internal/device_manager_tracing_connection.h"
+#include "google/cloud/iot/v1/device_manager_connection.h"
+#include "google/cloud/iot/v1/device_manager_options.h"
+#include "google/cloud/iot/v1/internal/device_manager_connection_impl.h"
+#include "google/cloud/iot/v1/internal/device_manager_option_defaults.h"
+#include "google/cloud/iot/v1/internal/device_manager_stub_factory.h"
+#include "google/cloud/iot/v1/internal/device_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace iot {
+namespace iot_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DeviceManagerConnection::~DeviceManagerConnection() = default;
@@ -153,16 +153,16 @@ std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
                                  UnifiedCredentialsOptionList,
                                  DeviceManagerPolicyOptionList>(options,
                                                                 __func__);
-  options = iot_internal::DeviceManagerDefaultOptions(std::move(options));
+  options = iot_v1_internal::DeviceManagerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      iot_internal::CreateDefaultDeviceManagerStub(background->cq(), options);
-  return iot_internal::MakeDeviceManagerTracingConnection(
-      std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
+  auto stub = iot_v1_internal::CreateDefaultDeviceManagerStub(background->cq(),
+                                                              options);
+  return iot_v1_internal::MakeDeviceManagerTracingConnection(
+      std::make_shared<iot_v1_internal::DeviceManagerConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot
+}  // namespace iot_v1
 }  // namespace cloud
 }  // namespace google

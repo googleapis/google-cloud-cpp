@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#include "google/cloud/iot/device_manager_client.h"
+#include "google/cloud/iot/v1/device_manager_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: iot::DeviceManagerClient
+// main-dox-marker: iot_v1::DeviceManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::iot::DeviceManagerClient(
-      google::cloud::iot::MakeDeviceManagerConnection(options));
+  auto client = google::cloud::iot_v1::DeviceManagerClient(
+      google::cloud::iot_v1::MakeDeviceManagerConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::iot::DeviceManagerClient(
-        google::cloud::iot::MakeDeviceManagerConnection(options));
+    return google::cloud::iot_v1::DeviceManagerClient(
+        google::cloud::iot_v1::MakeDeviceManagerConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_AUTH_DECORATOR_H
 
-#include "google/cloud/iot/internal/device_manager_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/iot/v1/internal/device_manager_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -28,15 +28,15 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
+namespace iot_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DeviceManagerLogging : public DeviceManagerStub {
+class DeviceManagerAuth : public DeviceManagerStub {
  public:
-  ~DeviceManagerLogging() override = default;
-  DeviceManagerLogging(std::shared_ptr<DeviceManagerStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+  ~DeviceManagerAuth() override = default;
+  DeviceManagerAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+      std::shared_ptr<DeviceManagerStub> child);
 
   StatusOr<google::cloud::iot::v1::DeviceRegistry> CreateDeviceRegistry(
       grpc::ClientContext& context,
@@ -127,14 +127,13 @@ class DeviceManagerLogging : public DeviceManagerStub {
       override;
 
  private:
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<DeviceManagerStub> child_;
-  TracingOptions tracing_options_;
-  std::set<std::string> components_;
-};  // DeviceManagerLogging
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
+}  // namespace iot_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_INTERNAL_DEVICE_MANAGER_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_AUTH_DECORATOR_H

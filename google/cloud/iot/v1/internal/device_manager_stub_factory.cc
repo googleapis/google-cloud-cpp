@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#include "google/cloud/iot/internal/device_manager_stub_factory.h"
-#include "google/cloud/iot/internal/device_manager_auth_decorator.h"
-#include "google/cloud/iot/internal/device_manager_logging_decorator.h"
-#include "google/cloud/iot/internal/device_manager_metadata_decorator.h"
-#include "google/cloud/iot/internal/device_manager_stub.h"
-#include "google/cloud/iot/internal/device_manager_tracing_stub.h"
+#include "google/cloud/iot/v1/internal/device_manager_stub_factory.h"
+#include "google/cloud/iot/v1/internal/device_manager_auth_decorator.h"
+#include "google/cloud/iot/v1/internal/device_manager_logging_decorator.h"
+#include "google/cloud/iot/v1/internal/device_manager_metadata_decorator.h"
+#include "google/cloud/iot/v1/internal/device_manager_stub.h"
+#include "google/cloud/iot/v1/internal/device_manager_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
+namespace iot_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<DeviceManagerStub> CreateDefaultDeviceManagerStub(
@@ -65,6 +65,6 @@ std::shared_ptr<DeviceManagerStub> CreateDefaultDeviceManagerStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
+}  // namespace iot_v1_internal
 }  // namespace cloud
 }  // namespace google
