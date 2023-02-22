@@ -20,87 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_MOCKS_MOCK_GKE_HUB_CONNECTION_H
 
 #include "google/cloud/gkehub/gke_hub_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/gkehub/v1/mocks/mock_gke_hub_connection.h"
 
 namespace google {
 namespace cloud {
 namespace gkehub_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `GkeHubConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `GkeHubClient`. To do so,
- * construct an object of type `GkeHubClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockGkeHubConnection : public gkehub::GkeHubConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::gkehub::v1::Membership>,
-              ListMemberships,
-              (google::cloud::gkehub::v1::ListMembershipsRequest request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::gkehub::v1::Feature>, ListFeatures,
-              (google::cloud::gkehub::v1::ListFeaturesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::Membership>, GetMembership,
-              (google::cloud::gkehub::v1::GetMembershipRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gkehub::v1::Feature>, GetFeature,
-              (google::cloud::gkehub::v1::GetFeatureRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::gkehub::v1::Membership>>, CreateMembership,
-      (google::cloud::gkehub::v1::CreateMembershipRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
-              CreateFeature,
-              (google::cloud::gkehub::v1::CreateFeatureRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
-      DeleteMembership,
-      (google::cloud::gkehub::v1::DeleteMembershipRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
-              DeleteFeature,
-              (google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::gkehub::v1::Membership>>, UpdateMembership,
-      (google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
-              UpdateFeature,
-              (google::cloud::gkehub::v1::UpdateFeatureRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>,
-      GenerateConnectManifest,
-      (google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use gkehub_v1_mocks::MockGkeHubConnection directly.
+using ::google::cloud::gkehub_v1_mocks::MockGkeHubConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_mocks

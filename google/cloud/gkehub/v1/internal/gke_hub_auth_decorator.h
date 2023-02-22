@@ -16,25 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_AUTH_DECORATOR_H
 
-#include "google/cloud/gkehub/internal/gke_hub_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
+namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class GkeHubTracingStub : public GkeHubStub {
+class GkeHubAuth : public GkeHubStub {
  public:
-  ~GkeHubTracingStub() override = default;
-
-  explicit GkeHubTracingStub(std::shared_ptr<GkeHubStub> child);
+  ~GkeHubAuth() override = default;
+  GkeHubAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+      std::shared_ptr<GkeHubStub> child);
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
       grpc::ClientContext& context,
@@ -103,23 +106,13 @@ class GkeHubTracingStub : public GkeHubStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<GkeHubStub> child_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<GkeHubStub> MakeGkeHubTracingStub(
-    std::shared_ptr<GkeHubStub> stub);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
+}  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_AUTH_DECORATOR_H

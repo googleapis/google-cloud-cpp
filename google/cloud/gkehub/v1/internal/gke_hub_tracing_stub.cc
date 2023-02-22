@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/gkehub/internal/gke_hub_tracing_stub.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
+namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -163,6 +163,6 @@ std::shared_ptr<GkeHubStub> MakeGkeHubTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
+}  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/gkehub/gke_hub_client.h"
+#include "google/cloud/gkehub/v1/gke_hub_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace gkehub {
+namespace gkehub_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GkeHubClient::GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
@@ -213,6 +213,6 @@ GkeHubClient::GenerateConnectManifest(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub
+}  // namespace gkehub_v1
 }  // namespace cloud
 }  // namespace google

@@ -16,26 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/gkehub/internal/gke_hub_tracing_connection.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
+namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GkeHubTracingConnection::GkeHubTracingConnection(
-    std::shared_ptr<gkehub::GkeHubConnection> child)
+    std::shared_ptr<gkehub_v1::GkeHubConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::gkehub::v1::Membership>
 GkeHubTracingConnection::ListMemberships(
     google::cloud::gkehub::v1::ListMembershipsRequest request) {
-  auto span = internal::MakeSpan("gkehub::GkeHubConnection::ListMemberships");
+  auto span =
+      internal::MakeSpan("gkehub_v1::GkeHubConnection::ListMemberships");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMemberships(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::gkehub::v1::Membership>(
@@ -45,7 +46,7 @@ GkeHubTracingConnection::ListMemberships(
 StreamRange<google::cloud::gkehub::v1::Feature>
 GkeHubTracingConnection::ListFeatures(
     google::cloud::gkehub::v1::ListFeaturesRequest request) {
-  auto span = internal::MakeSpan("gkehub::GkeHubConnection::ListFeatures");
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::ListFeatures");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListFeatures(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::gkehub::v1::Feature>(
@@ -55,7 +56,7 @@ GkeHubTracingConnection::ListFeatures(
 StatusOr<google::cloud::gkehub::v1::Membership>
 GkeHubTracingConnection::GetMembership(
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
-  auto span = internal::MakeSpan("gkehub::GkeHubConnection::GetMembership");
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::GetMembership");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetMembership(request));
 }
@@ -63,7 +64,7 @@ GkeHubTracingConnection::GetMembership(
 StatusOr<google::cloud::gkehub::v1::Feature>
 GkeHubTracingConnection::GetFeature(
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
-  auto span = internal::MakeSpan("gkehub::GkeHubConnection::GetFeature");
+  auto span = internal::MakeSpan("gkehub_v1::GkeHubConnection::GetFeature");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFeature(request));
 }
@@ -107,16 +108,16 @@ GkeHubTracingConnection::UpdateFeature(
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubTracingConnection::GenerateConnectManifest(
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
-  auto span =
-      internal::MakeSpan("gkehub::GkeHubConnection::GenerateConnectManifest");
+  auto span = internal::MakeSpan(
+      "gkehub_v1::GkeHubConnection::GenerateConnectManifest");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GenerateConnectManifest(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<gkehub::GkeHubConnection> MakeGkeHubTracingConnection(
-    std::shared_ptr<gkehub::GkeHubConnection> conn) {
+std::shared_ptr<gkehub_v1::GkeHubConnection> MakeGkeHubTracingConnection(
+    std::shared_ptr<gkehub_v1::GkeHubConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<GkeHubTracingConnection>(std::move(conn));
@@ -126,6 +127,6 @@ std::shared_ptr<gkehub::GkeHubConnection> MakeGkeHubTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
+}  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google

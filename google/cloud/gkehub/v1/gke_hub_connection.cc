@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/gkehub/gke_hub_connection.h"
-#include "google/cloud/gkehub/gke_hub_options.h"
-#include "google/cloud/gkehub/internal/gke_hub_connection_impl.h"
-#include "google/cloud/gkehub/internal/gke_hub_option_defaults.h"
-#include "google/cloud/gkehub/internal/gke_hub_stub_factory.h"
-#include "google/cloud/gkehub/internal/gke_hub_tracing_connection.h"
+#include "google/cloud/gkehub/v1/gke_hub_connection.h"
+#include "google/cloud/gkehub/v1/gke_hub_options.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_connection_impl.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_option_defaults.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_stub_factory.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub {
+namespace gkehub_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GkeHubConnection::~GkeHubConnection() = default;
@@ -119,16 +119,16 @@ std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  GkeHubPolicyOptionList>(options, __func__);
-  options = gkehub_internal::GkeHubDefaultOptions(std::move(options));
+  options = gkehub_v1_internal::GkeHubDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      gkehub_internal::CreateDefaultGkeHubStub(background->cq(), options);
-  return gkehub_internal::MakeGkeHubTracingConnection(
-      std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
+      gkehub_v1_internal::CreateDefaultGkeHubStub(background->cq(), options);
+  return gkehub_v1_internal::MakeGkeHubTracingConnection(
+      std::make_shared<gkehub_v1_internal::GkeHubConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub
+}  // namespace gkehub_v1
 }  // namespace cloud
 }  // namespace google

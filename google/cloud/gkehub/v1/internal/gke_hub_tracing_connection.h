@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_TRACING_CONNECTION_H
 
-#include "google/cloud/gkehub/gke_hub_connection.h"
+#include "google/cloud/gkehub/v1/gke_hub_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
+namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class GkeHubTracingConnection : public gkehub::GkeHubConnection {
+class GkeHubTracingConnection : public gkehub_v1::GkeHubConnection {
  public:
   ~GkeHubTracingConnection() override = default;
 
   explicit GkeHubTracingConnection(
-      std::shared_ptr<gkehub::GkeHubConnection> child);
+      std::shared_ptr<gkehub_v1::GkeHubConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -78,7 +78,7 @@ class GkeHubTracingConnection : public gkehub::GkeHubConnection {
       override;
 
  private:
-  std::shared_ptr<gkehub::GkeHubConnection> child_;
+  std::shared_ptr<gkehub_v1::GkeHubConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -89,12 +89,12 @@ class GkeHubTracingConnection : public gkehub::GkeHubConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<gkehub::GkeHubConnection> MakeGkeHubTracingConnection(
-    std::shared_ptr<gkehub::GkeHubConnection> conn);
+std::shared_ptr<gkehub_v1::GkeHubConnection> MakeGkeHubTracingConnection(
+    std::shared_ptr<gkehub_v1::GkeHubConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
+}  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_TRACING_CONNECTION_H

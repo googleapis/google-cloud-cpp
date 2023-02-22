@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/gkehub/gke_hub_connection_idempotency_policy.h"
+#include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace gkehub {
+namespace gkehub_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -96,6 +96,6 @@ MakeDefaultGkeHubConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub
+}  // namespace gkehub_v1
 }  // namespace cloud
 }  // namespace google

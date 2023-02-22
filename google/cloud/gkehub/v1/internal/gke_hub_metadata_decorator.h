@@ -16,28 +16,24 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_METADATA_DECORATOR_H
 
-#include "google/cloud/gkehub/internal/gke_hub_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
-#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
+namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GkeHubAuth : public GkeHubStub {
+class GkeHubMetadata : public GkeHubStub {
  public:
-  ~GkeHubAuth() override = default;
-  GkeHubAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<GkeHubStub> child);
+  ~GkeHubMetadata() override = default;
+  explicit GkeHubMetadata(std::shared_ptr<GkeHubStub> child);
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
       grpc::ClientContext& context,
@@ -106,13 +102,17 @@ class GkeHubAuth : public GkeHubStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<GkeHubStub> child_;
+  std::string api_client_header_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
+}  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_INTERNAL_GKE_HUB_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_INTERNAL_GKE_HUB_METADATA_DECORATOR_H

@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/gkehub/internal/gke_hub_logging_decorator.h"
+#include "google/cloud/gkehub/v1/internal/gke_hub_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/gkehub/v1/service.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
+namespace gkehub_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GkeHubLogging::GkeHubLogging(std::shared_ptr<GkeHubStub> child,
@@ -208,6 +208,6 @@ future<Status> GkeHubLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
+}  // namespace gkehub_v1_internal
 }  // namespace cloud
 }  // namespace google

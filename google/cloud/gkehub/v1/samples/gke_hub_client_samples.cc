@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/gkehub/v1/service.proto
 
-#include "google/cloud/gkehub/gke_hub_client.h"
+#include "google/cloud/gkehub/v1/gke_hub_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: gkehub::GkeHubClient
+// main-dox-marker: gkehub_v1::GkeHubClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::gkehub::GkeHubClient(
-      google::cloud::gkehub::MakeGkeHubConnection(options));
+  auto client = google::cloud::gkehub_v1::GkeHubClient(
+      google::cloud::gkehub_v1::MakeGkeHubConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::gkehub::GkeHubClient(
-        google::cloud::gkehub::MakeGkeHubConnection(options));
+    return google::cloud::gkehub_v1::GkeHubClient(
+        google::cloud::gkehub_v1::MakeGkeHubConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

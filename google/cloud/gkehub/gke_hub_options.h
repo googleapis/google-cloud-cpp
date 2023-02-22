@@ -21,62 +21,27 @@
 
 #include "google/cloud/gkehub/gke_hub_connection.h"
 #include "google/cloud/gkehub/gke_hub_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/gkehub/v1/gke_hub_options.h"
 
 namespace google {
 namespace cloud {
 namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-gkehub-options
- */
-struct GkeHubRetryPolicyOption {
-  using Type = std::shared_ptr<GkeHubRetryPolicy>;
-};
+/// @deprecated Use gkehub_v1::GkeHubPollingPolicyOption directly.
+using ::google::cloud::gkehub_v1::GkeHubPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-gkehub-options
- */
-struct GkeHubBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use gkehub_v1::GkeHubBackoffPolicyOption directly.
+using ::google::cloud::gkehub_v1::GkeHubBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-gkehub-options
- */
-struct GkeHubConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<GkeHubConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use gkehub_v1::GkeHubConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::gkehub_v1::GkeHubConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-gkehub-options
- */
-struct GkeHubPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use gkehub_v1::GkeHubPolicyOptionList directly.
+using ::google::cloud::gkehub_v1::GkeHubPolicyOptionList;
 
-/**
- * The options applicable to GkeHub.
- *
- * @ingroup google-cloud-gkehub-options
- */
-using GkeHubPolicyOptionList =
-    OptionList<GkeHubRetryPolicyOption, GkeHubBackoffPolicyOption,
-               GkeHubPollingPolicyOption,
-               GkeHubConnectionIdempotencyPolicyOption>;
+/// @deprecated Use gkehub_v1::GkeHubRetryPolicyOption directly.
+using ::google::cloud::gkehub_v1::GkeHubRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
