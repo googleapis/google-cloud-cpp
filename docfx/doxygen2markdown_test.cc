@@ -580,6 +580,32 @@ TEST(Doxygen2Markdown, ItemizedListNested) {
   - Sub 3)md");
 }
 
+TEST(Doxygen2Markdown, VariableListSimple) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <variablelist id='test-node'>
+          <varlistentry><term>Class <ref refid="classgoogle_1_1cloud_1_1ConnectionOptions" kindref="compound">google::cloud::ConnectionOptions&lt; ConnectionTraits &gt;</ref>  </term></varlistentry>
+          <listitem><para>Use <ref refid="classgoogle_1_1cloud_1_1Options" kindref="compound">Options</ref> instead.</para></listitem>
+          <varlistentry><term>Member <ref refid="test_only" kindref="member">TestClass::test</ref>(std::string prefix)</term></varlistentry>
+          <listitem><para>Use <ref refid="test_ref" kindref="compound">Options</ref> instead.</para></listitem>
+        </variablelist>
+    </doxygen>)xml";
+  auto constexpr kExpected = R"md(
+- Class [google::cloud::ConnectionOptions< ConnectionTraits >](xref:classgoogle_1_1cloud_1_1ConnectionOptions)
+
+  Use [Options](xref:classgoogle_1_1cloud_1_1Options) instead.
+- Member [TestClass::test](xref:test_only)(std::string prefix)
+
+  Use [Options](xref:test_ref) instead.)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfVariableList(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, SimpleSectH6) {
   auto constexpr kXmlPrefix = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">)xml";
