@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#include "google/cloud/deploy/internal/cloud_deploy_auth_decorator.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_auth_decorator.h"
 #include <google/cloud/deploy/v1/cloud_deploy.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudDeployAuth::CloudDeployAuth(
@@ -340,6 +340,6 @@ future<Status> CloudDeployAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy_internal
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google

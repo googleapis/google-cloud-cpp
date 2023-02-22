@@ -16,25 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_AUTH_DECORATOR_H
 
-#include "google/cloud/deploy/internal/cloud_deploy_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class CloudDeployTracingStub : public CloudDeployStub {
+class CloudDeployAuth : public CloudDeployStub {
  public:
-  ~CloudDeployTracingStub() override = default;
-
-  explicit CloudDeployTracingStub(std::shared_ptr<CloudDeployStub> child);
+  ~CloudDeployAuth() override = default;
+  CloudDeployAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+      std::shared_ptr<CloudDeployStub> child);
 
   StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
   ListDeliveryPipelines(
@@ -149,23 +152,13 @@ class CloudDeployTracingStub : public CloudDeployStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CloudDeployStub> child_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<CloudDeployStub> MakeCloudDeployTracingStub(
-    std::shared_ptr<CloudDeployStub> stub);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy_internal
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_AUTH_DECORATOR_H

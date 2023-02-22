@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#include "google/cloud/deploy/cloud_deploy_client.h"
+#include "google/cloud/deploy/v1/cloud_deploy_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace deploy {
+namespace deploy_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudDeployClient::CloudDeployClient(
@@ -396,6 +396,6 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployClient::GetConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy
+}  // namespace deploy_v1
 }  // namespace cloud
 }  // namespace google

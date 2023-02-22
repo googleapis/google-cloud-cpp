@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#include "google/cloud/deploy/internal/cloud_deploy_connection_impl.h"
-#include "google/cloud/deploy/internal/cloud_deploy_option_defaults.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_connection_impl.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudDeployConnectionImpl::CloudDeployConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<deploy_internal::CloudDeployStub> stub, Options options)
+    std::shared_ptr<deploy_v1_internal::CloudDeployStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -45,7 +45,7 @@ CloudDeployConnectionImpl::ListDeliveryPipelines(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<deploy::CloudDeployRetryPolicy const>(retry_policy());
+      std::shared_ptr<deploy_v1::CloudDeployRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDeliveryPipelines(request);
   char const* function_name = __func__;
@@ -186,7 +186,7 @@ CloudDeployConnectionImpl::ListTargets(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<deploy::CloudDeployRetryPolicy const>(retry_policy());
+      std::shared_ptr<deploy_v1::CloudDeployRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTargets(request);
   char const* function_name = __func__;
@@ -316,7 +316,7 @@ CloudDeployConnectionImpl::ListReleases(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<deploy::CloudDeployRetryPolicy const>(retry_policy());
+      std::shared_ptr<deploy_v1::CloudDeployRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListReleases(request);
   char const* function_name = __func__;
@@ -416,7 +416,7 @@ CloudDeployConnectionImpl::ListRollouts(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<deploy::CloudDeployRetryPolicy const>(retry_policy());
+      std::shared_ptr<deploy_v1::CloudDeployRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRollouts(request);
   char const* function_name = __func__;
@@ -502,7 +502,7 @@ CloudDeployConnectionImpl::ListJobRuns(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<deploy::CloudDeployRetryPolicy const>(retry_policy());
+      std::shared_ptr<deploy_v1::CloudDeployRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobRuns(request);
   char const* function_name = __func__;
@@ -556,6 +556,6 @@ CloudDeployConnectionImpl::GetConfig(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy_internal
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google

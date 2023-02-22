@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_STUB_H
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudDeployStub {
@@ -284,8 +284,8 @@ class DefaultCloudDeployStub : public CloudDeployStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy_internal
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_STUB_H

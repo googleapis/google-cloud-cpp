@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#include "google/cloud/deploy/cloud_deploy_client.h"
+#include "google/cloud/deploy/v1/cloud_deploy_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: deploy::CloudDeployClient
+// main-dox-marker: deploy_v1::CloudDeployClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::deploy::CloudDeployClient(
-      google::cloud::deploy::MakeCloudDeployConnection(options));
+  auto client = google::cloud::deploy_v1::CloudDeployClient(
+      google::cloud::deploy_v1::MakeCloudDeployConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::deploy::CloudDeployClient(
-        google::cloud::deploy::MakeCloudDeployConnection(options));
+    return google::cloud::deploy_v1::CloudDeployClient(
+        google::cloud::deploy_v1::MakeCloudDeployConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

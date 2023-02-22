@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#include "google/cloud/deploy/cloud_deploy_connection.h"
-#include "google/cloud/deploy/cloud_deploy_options.h"
-#include "google/cloud/deploy/internal/cloud_deploy_connection_impl.h"
-#include "google/cloud/deploy/internal/cloud_deploy_option_defaults.h"
-#include "google/cloud/deploy/internal/cloud_deploy_stub_factory.h"
-#include "google/cloud/deploy/internal/cloud_deploy_tracing_connection.h"
+#include "google/cloud/deploy/v1/cloud_deploy_connection.h"
+#include "google/cloud/deploy/v1/cloud_deploy_options.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_connection_impl.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_option_defaults.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_stub_factory.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace deploy {
+namespace deploy_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudDeployConnection::~CloudDeployConnection() = default;
@@ -195,16 +195,16 @@ std::shared_ptr<CloudDeployConnection> MakeCloudDeployConnection(
                                  UnifiedCredentialsOptionList,
                                  CloudDeployPolicyOptionList>(options,
                                                               __func__);
-  options = deploy_internal::CloudDeployDefaultOptions(std::move(options));
+  options = deploy_v1_internal::CloudDeployDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      deploy_internal::CreateDefaultCloudDeployStub(background->cq(), options);
-  return deploy_internal::MakeCloudDeployTracingConnection(
-      std::make_shared<deploy_internal::CloudDeployConnectionImpl>(
+  auto stub = deploy_v1_internal::CreateDefaultCloudDeployStub(background->cq(),
+                                                               options);
+  return deploy_v1_internal::MakeCloudDeployTracingConnection(
+      std::make_shared<deploy_v1_internal::CloudDeployConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy
+}  // namespace deploy_v1
 }  // namespace cloud
 }  // namespace google

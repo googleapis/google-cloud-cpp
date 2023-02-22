@@ -16,27 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_STUB_FACTORY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_STUB_FACTORY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_RETRY_TRAITS_H
 
-#include "google/cloud/deploy/internal/cloud_deploy_stub.h"
-#include "google/cloud/completion_queue.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/status.h"
 #include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<CloudDeployStub> CreateDefaultCloudDeployStub(
-    google::cloud::CompletionQueue cq, Options const& options);
+/// Define the gRPC status code semantics for retrying requests.
+struct CloudDeployRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy_internal
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_STUB_FACTORY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_RETRY_TRAITS_H

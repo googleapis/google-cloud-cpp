@@ -16,28 +16,40 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_CONNECTION_IMPL_H
 
-#include "google/cloud/deploy/cloud_deploy_connection.h"
+#include "google/cloud/deploy/v1/cloud_deploy_connection.h"
+#include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.h"
+#include "google/cloud/deploy/v1/cloud_deploy_options.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_retry_traits.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
+#include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class CloudDeployTracingConnection : public deploy::CloudDeployConnection {
+class CloudDeployConnectionImpl : public deploy_v1::CloudDeployConnection {
  public:
-  ~CloudDeployTracingConnection() override = default;
+  ~CloudDeployConnectionImpl() override = default;
 
-  explicit CloudDeployTracingConnection(
-      std::shared_ptr<deploy::CloudDeployConnection> child);
+  CloudDeployConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<deploy_v1_internal::CloudDeployStub> stub,
+      Options options);
 
-  Options options() override { return child_->options(); }
+  Options options() override { return options_; }
 
   StreamRange<google::cloud::deploy::v1::DeliveryPipeline>
   ListDeliveryPipelines(
@@ -114,23 +126,52 @@ class CloudDeployTracingConnection : public deploy::CloudDeployConnection {
       google::cloud::deploy::v1::GetConfigRequest const& request) override;
 
  private:
-  std::shared_ptr<deploy::CloudDeployConnection> child_;
+  std::unique_ptr<deploy_v1::CloudDeployRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<deploy_v1::CloudDeployRetryPolicyOption>()) {
+      return options.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone();
+    }
+    return options_.get<deploy_v1::CloudDeployRetryPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<deploy_v1::CloudDeployBackoffPolicyOption>()) {
+      return options.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone();
+    }
+    return options_.get<deploy_v1::CloudDeployBackoffPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<deploy_v1::CloudDeployConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<deploy_v1::CloudDeployConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<deploy_v1::CloudDeployPollingPolicyOption>()) {
+      return options.get<deploy_v1::CloudDeployPollingPolicyOption>()->clone();
+    }
+    return options_.get<deploy_v1::CloudDeployPollingPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<deploy_v1_internal::CloudDeployStub> stub_;
+  Options options_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Conditionally applies the tracing decorator to the given connection.
- *
- * The connection is only decorated if tracing is enabled (as determined by the
- * connection's options).
- */
-std::shared_ptr<deploy::CloudDeployConnection> MakeCloudDeployTracingConnection(
-    std::shared_ptr<deploy::CloudDeployConnection> conn);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy_internal
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_CONNECTION_IMPL_H

@@ -204,9 +204,10 @@
 ./include/google/cloud/debugger/v2/internal
 ./include/google/cloud/debugger/v2/mocks
 ./include/google/cloud/deploy
-./include/google/cloud/deploy/internal
 ./include/google/cloud/deploy/mocks
 ./include/google/cloud/deploy/v1
+./include/google/cloud/deploy/v1/internal
+./include/google/cloud/deploy/v1/mocks
 ./include/google/cloud/dialogflow
 ./include/google/cloud/dialogflow/cx
 ./include/google/cloud/dialogflow/cx/v3

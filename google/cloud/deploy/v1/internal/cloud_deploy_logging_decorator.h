@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_LOGGING_DECORATOR_H
 
-#include "google/cloud/deploy/internal/cloud_deploy_stub.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudDeployLogging : public CloudDeployStub {
@@ -158,8 +158,8 @@ class CloudDeployLogging : public CloudDeployStub {
 };  // CloudDeployLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy_internal
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_INTERNAL_CLOUD_DEPLOY_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_LOGGING_DECORATOR_H

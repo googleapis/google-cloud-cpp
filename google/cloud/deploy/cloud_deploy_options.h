@@ -21,62 +21,28 @@
 
 #include "google/cloud/deploy/cloud_deploy_connection.h"
 #include "google/cloud/deploy/cloud_deploy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/deploy/v1/cloud_deploy_options.h"
 
 namespace google {
 namespace cloud {
 namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-deploy-options
- */
-struct CloudDeployRetryPolicyOption {
-  using Type = std::shared_ptr<CloudDeployRetryPolicy>;
-};
+/// @deprecated Use deploy_v1::CloudDeployPollingPolicyOption directly.
+using ::google::cloud::deploy_v1::CloudDeployPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-deploy-options
- */
-struct CloudDeployBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use deploy_v1::CloudDeployBackoffPolicyOption directly.
+using ::google::cloud::deploy_v1::CloudDeployBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-deploy-options
- */
-struct CloudDeployConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CloudDeployConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use deploy_v1::CloudDeployConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::deploy_v1::CloudDeployConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-deploy-options
- */
-struct CloudDeployPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use deploy_v1::CloudDeployPolicyOptionList directly.
+using ::google::cloud::deploy_v1::CloudDeployPolicyOptionList;
 
-/**
- * The options applicable to CloudDeploy.
- *
- * @ingroup google-cloud-deploy-options
- */
-using CloudDeployPolicyOptionList =
-    OptionList<CloudDeployRetryPolicyOption, CloudDeployBackoffPolicyOption,
-               CloudDeployPollingPolicyOption,
-               CloudDeployConnectionIdempotencyPolicyOption>;
+/// @deprecated Use deploy_v1::CloudDeployRetryPolicyOption directly.
+using ::google::cloud::deploy_v1::CloudDeployRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy
