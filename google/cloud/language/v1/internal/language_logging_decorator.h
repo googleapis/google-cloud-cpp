@@ -16,23 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_LOGGING_DECORATOR_H
 
-#include "google/cloud/language/internal/language_stub.h"
+#include "google/cloud/language/v1/internal/language_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LanguageServiceMetadata : public LanguageServiceStub {
+class LanguageServiceLogging : public LanguageServiceStub {
  public:
-  ~LanguageServiceMetadata() override = default;
-  explicit LanguageServiceMetadata(std::shared_ptr<LanguageServiceStub> child);
+  ~LanguageServiceLogging() override = default;
+  LanguageServiceLogging(std::shared_ptr<LanguageServiceStub> child,
+                         TracingOptions tracing_options,
+                         std::set<std::string> components);
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(grpc::ClientContext& context,
@@ -64,17 +68,14 @@ class LanguageServiceMetadata : public LanguageServiceStub {
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
   std::shared_ptr<LanguageServiceStub> child_;
-  std::string api_client_header_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // LanguageServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_LOGGING_DECORATOR_H

@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#include "google/cloud/language/language_connection.h"
-#include "google/cloud/language/internal/language_connection_impl.h"
-#include "google/cloud/language/internal/language_option_defaults.h"
-#include "google/cloud/language/internal/language_stub_factory.h"
-#include "google/cloud/language/internal/language_tracing_connection.h"
-#include "google/cloud/language/language_options.h"
+#include "google/cloud/language/v1/language_connection.h"
+#include "google/cloud/language/v1/internal/language_connection_impl.h"
+#include "google/cloud/language/v1/internal/language_option_defaults.h"
+#include "google/cloud/language/v1/internal/language_stub_factory.h"
+#include "google/cloud/language/v1/internal/language_tracing_connection.h"
+#include "google/cloud/language/v1/language_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -30,7 +30,7 @@
 
 namespace google {
 namespace cloud {
-namespace language {
+namespace language_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceConnection::~LanguageServiceConnection() = default;
@@ -78,16 +78,16 @@ std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
                                  LanguageServicePolicyOptionList>(options,
                                                                   __func__);
   options =
-      language_internal::LanguageServiceDefaultOptions(std::move(options));
+      language_v1_internal::LanguageServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = language_internal::CreateDefaultLanguageServiceStub(
+  auto stub = language_v1_internal::CreateDefaultLanguageServiceStub(
       background->cq(), options);
-  return language_internal::MakeLanguageServiceTracingConnection(
-      std::make_shared<language_internal::LanguageServiceConnectionImpl>(
+  return language_v1_internal::MakeLanguageServiceTracingConnection(
+      std::make_shared<language_v1_internal::LanguageServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language
+}  // namespace language_v1
 }  // namespace cloud
 }  // namespace google

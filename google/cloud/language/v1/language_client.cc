@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#include "google/cloud/language/language_client.h"
+#include "google/cloud/language/v1/language_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace language {
+namespace language_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceClient::LanguageServiceClient(
@@ -194,6 +194,6 @@ LanguageServiceClient::AnnotateText(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language
+}  // namespace language_v1
 }  // namespace cloud
 }  // namespace google

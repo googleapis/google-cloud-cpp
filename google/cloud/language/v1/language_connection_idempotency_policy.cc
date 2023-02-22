@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#include "google/cloud/language/language_connection_idempotency_policy.h"
+#include "google/cloud/language/v1/language_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace language {
+namespace language_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -71,6 +71,6 @@ MakeDefaultLanguageServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language
+}  // namespace language_v1
 }  // namespace cloud
 }  // namespace google

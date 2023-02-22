@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#include "google/cloud/language/internal/language_tracing_connection.h"
+#include "google/cloud/language/v1/internal/language_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 LanguageServiceTracingConnection::LanguageServiceTracingConnection(
-    std::shared_ptr<language::LanguageServiceConnection> child)
+    std::shared_ptr<language_v1::LanguageServiceConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceTracingConnection::AnalyzeSentiment(
     google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
   auto span = internal::MakeSpan(
-      "language::LanguageServiceConnection::AnalyzeSentiment");
+      "language_v1::LanguageServiceConnection::AnalyzeSentiment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeSentiment(request));
 }
@@ -44,7 +44,7 @@ StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 LanguageServiceTracingConnection::AnalyzeEntities(
     google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
   auto span = internal::MakeSpan(
-      "language::LanguageServiceConnection::AnalyzeEntities");
+      "language_v1::LanguageServiceConnection::AnalyzeEntities");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeEntities(request));
 }
@@ -53,7 +53,7 @@ StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 LanguageServiceTracingConnection::AnalyzeEntitySentiment(
     google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
   auto span = internal::MakeSpan(
-      "language::LanguageServiceConnection::AnalyzeEntitySentiment");
+      "language_v1::LanguageServiceConnection::AnalyzeEntitySentiment");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeEntitySentiment(request));
 }
@@ -61,8 +61,8 @@ LanguageServiceTracingConnection::AnalyzeEntitySentiment(
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 LanguageServiceTracingConnection::AnalyzeSyntax(
     google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
-  auto span =
-      internal::MakeSpan("language::LanguageServiceConnection::AnalyzeSyntax");
+  auto span = internal::MakeSpan(
+      "language_v1::LanguageServiceConnection::AnalyzeSyntax");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnalyzeSyntax(request));
 }
@@ -70,8 +70,8 @@ LanguageServiceTracingConnection::AnalyzeSyntax(
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
 LanguageServiceTracingConnection::ClassifyText(
     google::cloud::language::v1::ClassifyTextRequest const& request) {
-  auto span =
-      internal::MakeSpan("language::LanguageServiceConnection::ClassifyText");
+  auto span = internal::MakeSpan(
+      "language_v1::LanguageServiceConnection::ClassifyText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ClassifyText(request));
 }
@@ -79,17 +79,17 @@ LanguageServiceTracingConnection::ClassifyText(
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceTracingConnection::AnnotateText(
     google::cloud::language::v1::AnnotateTextRequest const& request) {
-  auto span =
-      internal::MakeSpan("language::LanguageServiceConnection::AnnotateText");
+  auto span = internal::MakeSpan(
+      "language_v1::LanguageServiceConnection::AnnotateText");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->AnnotateText(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<language::LanguageServiceConnection>
+std::shared_ptr<language_v1::LanguageServiceConnection>
 MakeLanguageServiceTracingConnection(
-    std::shared_ptr<language::LanguageServiceConnection> conn) {
+    std::shared_ptr<language_v1::LanguageServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LanguageServiceTracingConnection>(std::move(conn));
@@ -99,6 +99,6 @@ MakeLanguageServiceTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google

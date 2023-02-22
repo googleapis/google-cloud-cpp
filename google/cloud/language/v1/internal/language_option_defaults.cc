@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#include "google/cloud/language/internal/language_option_defaults.h"
-#include "google/cloud/language/language_connection.h"
-#include "google/cloud/language/language_options.h"
+#include "google/cloud/language/v1/internal/language_option_defaults.h"
+#include "google/cloud/language/v1/language_connection.h"
+#include "google/cloud/language/v1/language_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -38,28 +38,28 @@ Options LanguageServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_AUTHORITY", "language.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<language::LanguageServiceRetryPolicyOption>()) {
-    options.set<language::LanguageServiceRetryPolicyOption>(
-        language::LanguageServiceLimitedTimeRetryPolicy(
+  if (!options.has<language_v1::LanguageServiceRetryPolicyOption>()) {
+    options.set<language_v1::LanguageServiceRetryPolicyOption>(
+        language_v1::LanguageServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<language::LanguageServiceBackoffPolicyOption>()) {
-    options.set<language::LanguageServiceBackoffPolicyOption>(
+  if (!options.has<language_v1::LanguageServiceBackoffPolicyOption>()) {
+    options.set<language_v1::LanguageServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<language::LanguageServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<language::LanguageServiceConnectionIdempotencyPolicyOption>(
-        language::MakeDefaultLanguageServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          language_v1::LanguageServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<language_v1::LanguageServiceConnectionIdempotencyPolicyOption>(
+        language_v1::MakeDefaultLanguageServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google

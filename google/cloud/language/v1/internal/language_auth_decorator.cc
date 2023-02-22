@@ -16,90 +16,75 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#include "google/cloud/language/internal/language_metadata_decorator.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/status_or.h"
+#include "google/cloud/language/v1/internal/language_auth_decorator.h"
 #include <google/cloud/language/v1/language_service.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-LanguageServiceMetadata::LanguageServiceMetadata(
+LanguageServiceAuth::LanguageServiceAuth(
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<LanguageServiceStub> child)
-    : child_(std::move(child)),
-      api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+    : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-LanguageServiceMetadata::AnalyzeSentiment(
+LanguageServiceAuth::AnalyzeSentiment(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
-  SetMetadata(context);
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->AnalyzeSentiment(context, request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-LanguageServiceMetadata::AnalyzeEntities(
+LanguageServiceAuth::AnalyzeEntities(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
-  SetMetadata(context);
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->AnalyzeEntities(context, request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
-LanguageServiceMetadata::AnalyzeEntitySentiment(
+LanguageServiceAuth::AnalyzeEntitySentiment(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
-  SetMetadata(context);
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->AnalyzeEntitySentiment(context, request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
-LanguageServiceMetadata::AnalyzeSyntax(
+LanguageServiceAuth::AnalyzeSyntax(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
-  SetMetadata(context);
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->AnalyzeSyntax(context, request);
 }
 
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
-LanguageServiceMetadata::ClassifyText(
+LanguageServiceAuth::ClassifyText(
     grpc::ClientContext& context,
     google::cloud::language::v1::ClassifyTextRequest const& request) {
-  SetMetadata(context);
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->ClassifyText(context, request);
 }
 
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
-LanguageServiceMetadata::AnnotateText(
+LanguageServiceAuth::AnnotateText(
     grpc::ClientContext& context,
     google::cloud::language::v1::AnnotateTextRequest const& request) {
-  SetMetadata(context);
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
   return child_->AnnotateText(context, request);
 }
 
-void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                          std::string const& request_params) {
-  context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
-}
-
-void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context) {
-  context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
-  if (options.has<UserProjectOption>()) {
-    context.AddMetadata("x-goog-user-project",
-                        options.get<UserProjectOption>());
-  }
-  auto const& authority = options.get<AuthorityOption>();
-  if (!authority.empty()) context.set_authority(authority);
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google

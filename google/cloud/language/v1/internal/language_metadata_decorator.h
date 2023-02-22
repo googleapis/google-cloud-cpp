@@ -16,26 +16,23 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_METADATA_DECORATOR_H
 
-#include "google/cloud/language/internal/language_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/language/v1/internal/language_stub.h"
 #include "google/cloud/version.h"
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class LanguageServiceTracingStub : public LanguageServiceStub {
+class LanguageServiceMetadata : public LanguageServiceStub {
  public:
-  ~LanguageServiceTracingStub() override = default;
-
-  explicit LanguageServiceTracingStub(
-      std::shared_ptr<LanguageServiceStub> child);
+  ~LanguageServiceMetadata() override = default;
+  explicit LanguageServiceMetadata(std::shared_ptr<LanguageServiceStub> child);
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(grpc::ClientContext& context,
@@ -67,23 +64,17 @@ class LanguageServiceTracingStub : public LanguageServiceStub {
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<LanguageServiceStub> child_;
+  std::string api_client_header_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<LanguageServiceStub> MakeLanguageServiceTracingStub(
-    std::shared_ptr<LanguageServiceStub> stub);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_METADATA_DECORATOR_H

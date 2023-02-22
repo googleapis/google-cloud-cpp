@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#include "google/cloud/language/internal/language_connection_impl.h"
-#include "google/cloud/language/internal/language_option_defaults.h"
+#include "google/cloud/language/v1/internal/language_connection_impl.h"
+#include "google/cloud/language/v1/internal/language_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LanguageServiceConnectionImpl::LanguageServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<language_internal::LanguageServiceStub> stub,
+    std::shared_ptr<language_v1_internal::LanguageServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -120,6 +120,6 @@ LanguageServiceConnectionImpl::AnnotateText(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google

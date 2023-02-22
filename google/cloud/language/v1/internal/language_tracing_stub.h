@@ -16,26 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_TRACING_STUB_H
 
-#include "google/cloud/language/internal/language_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/language/v1/internal/language_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LanguageServiceAuth : public LanguageServiceStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class LanguageServiceTracingStub : public LanguageServiceStub {
  public:
-  ~LanguageServiceAuth() override = default;
-  LanguageServiceAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+  ~LanguageServiceTracingStub() override = default;
+
+  explicit LanguageServiceTracingStub(
       std::shared_ptr<LanguageServiceStub> child);
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
@@ -68,13 +67,23 @@ class LanguageServiceAuth : public LanguageServiceStub {
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<LanguageServiceStub> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<LanguageServiceStub> MakeLanguageServiceTracingStub(
+    std::shared_ptr<LanguageServiceStub> stub);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_TRACING_STUB_H

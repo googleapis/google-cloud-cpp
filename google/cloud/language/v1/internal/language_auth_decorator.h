@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_AUTH_DECORATOR_H
 
-#include "google/cloud/language/internal/language_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/language/v1/internal/language_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -28,15 +28,15 @@
 
 namespace google {
 namespace cloud {
-namespace language_internal {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LanguageServiceLogging : public LanguageServiceStub {
+class LanguageServiceAuth : public LanguageServiceStub {
  public:
-  ~LanguageServiceLogging() override = default;
-  LanguageServiceLogging(std::shared_ptr<LanguageServiceStub> child,
-                         TracingOptions tracing_options,
-                         std::set<std::string> components);
+  ~LanguageServiceAuth() override = default;
+  LanguageServiceAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+      std::shared_ptr<LanguageServiceStub> child);
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
   AnalyzeSentiment(grpc::ClientContext& context,
@@ -68,14 +68,13 @@ class LanguageServiceLogging : public LanguageServiceStub {
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<LanguageServiceStub> child_;
-  TracingOptions tracing_options_;
-  std::set<std::string> components_;
-};  // LanguageServiceLogging
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language_internal
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_INTERNAL_LANGUAGE_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_AUTH_DECORATOR_H
