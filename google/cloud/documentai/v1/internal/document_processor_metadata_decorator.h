@@ -16,27 +16,24 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_METADATA_DECORATOR_H
 
-#include "google/cloud/documentai/internal/document_processor_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/documentai/v1/internal/document_processor_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
-#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DocumentProcessorServiceAuth : public DocumentProcessorServiceStub {
+class DocumentProcessorServiceMetadata : public DocumentProcessorServiceStub {
  public:
-  ~DocumentProcessorServiceAuth() override = default;
-  DocumentProcessorServiceAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+  ~DocumentProcessorServiceMetadata() override = default;
+  explicit DocumentProcessorServiceMetadata(
       std::shared_ptr<DocumentProcessorServiceStub> child);
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
@@ -153,13 +150,17 @@ class DocumentProcessorServiceAuth : public DocumentProcessorServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<DocumentProcessorServiceStub> child_;
+  std::string api_client_header_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_METADATA_DECORATOR_H

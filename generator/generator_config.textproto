@@ -870,7 +870,8 @@ service {
 # Document AI
 service {
   service_proto_path: "google/cloud/documentai/v1/document_processor_service.proto"
-  product_path: "google/cloud/documentai"
+  product_path: "google/cloud/documentai/v1"
+  forwarding_product_path: "google/cloud/documentai"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   endpoint_location_style: LOCATION_DEPENDENT_COMPAT

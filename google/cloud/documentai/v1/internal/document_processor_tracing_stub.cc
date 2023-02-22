@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/internal/document_processor_tracing_stub.h"
+#include "google/cloud/documentai/v1/internal/document_processor_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -249,6 +249,6 @@ MakeDocumentProcessorServiceTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google

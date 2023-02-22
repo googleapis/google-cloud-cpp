@@ -16,27 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_LOGGING_DECORATOR_H
 
-#include "google/cloud/documentai/internal/document_processor_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/documentai/v1/internal/document_processor_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class DocumentProcessorServiceTracingStub
-    : public DocumentProcessorServiceStub {
+class DocumentProcessorServiceLogging : public DocumentProcessorServiceStub {
  public:
-  ~DocumentProcessorServiceTracingStub() override = default;
-
-  explicit DocumentProcessorServiceTracingStub(
-      std::shared_ptr<DocumentProcessorServiceStub> child);
+  ~DocumentProcessorServiceLogging() override = default;
+  DocumentProcessorServiceLogging(
+      std::shared_ptr<DocumentProcessorServiceStub> child,
+      TracingOptions tracing_options, std::set<std::string> components);
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       grpc::ClientContext& context,
@@ -153,23 +154,13 @@ class DocumentProcessorServiceTracingStub
 
  private:
   std::shared_ptr<DocumentProcessorServiceStub> child_;
-};
-
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<DocumentProcessorServiceStub>
-MakeDocumentProcessorServiceTracingStub(
-    std::shared_ptr<DocumentProcessorServiceStub> stub);
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // DocumentProcessorServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_LOGGING_DECORATOR_H

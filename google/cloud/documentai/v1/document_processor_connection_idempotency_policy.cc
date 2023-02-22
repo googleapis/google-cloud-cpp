@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/document_processor_connection_idempotency_policy.h"
+#include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace documentai {
+namespace documentai_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -148,6 +148,6 @@ MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai
+}  // namespace documentai_v1
 }  // namespace cloud
 }  // namespace google

@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/document_processor_client.h"
+#include "google/cloud/documentai/v1/document_processor_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: documentai::DocumentProcessorServiceClient
+// main-dox-marker: documentai_v1::DocumentProcessorServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::documentai::DocumentProcessorServiceClient(
-      google::cloud::documentai::MakeDocumentProcessorServiceConnection(
+  auto client = google::cloud::documentai_v1::DocumentProcessorServiceClient(
+      google::cloud::documentai_v1::MakeDocumentProcessorServiceConnection(
           options));
   //! [set-client-endpoint]
 }
@@ -56,8 +56,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::documentai::DocumentProcessorServiceClient(
-        google::cloud::documentai::MakeDocumentProcessorServiceConnection(
+    return google::cloud::documentai_v1::DocumentProcessorServiceClient(
+        google::cloud::documentai_v1::MakeDocumentProcessorServiceConnection(
             options));
   }
   //! [with-service-account]

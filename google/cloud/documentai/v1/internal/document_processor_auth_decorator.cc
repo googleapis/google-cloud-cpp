@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/internal/document_processor_auth_decorator.h"
+#include "google/cloud/documentai/v1/internal/document_processor_auth_decorator.h"
 #include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentProcessorServiceAuth::DocumentProcessorServiceAuth(
@@ -327,6 +327,6 @@ future<Status> DocumentProcessorServiceAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google

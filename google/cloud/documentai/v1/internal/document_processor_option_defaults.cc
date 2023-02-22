@@ -16,9 +16,9 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/internal/document_processor_option_defaults.h"
-#include "google/cloud/documentai/document_processor_connection.h"
-#include "google/cloud/documentai/document_processor_options.h"
+#include "google/cloud/documentai/v1/internal/document_processor_option_defaults.h"
+#include "google/cloud/documentai/v1/document_processor_connection.h"
+#include "google/cloud/documentai/v1/document_processor_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
@@ -26,7 +26,7 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -43,37 +43,41 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
                    "documentai.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<documentai::DocumentProcessorServiceRetryPolicyOption>()) {
-    options.set<documentai::DocumentProcessorServiceRetryPolicyOption>(
-        documentai::DocumentProcessorServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()) {
+    options.set<documentai_v1::DocumentProcessorServiceRetryPolicyOption>(
+        documentai_v1::DocumentProcessorServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<documentai::DocumentProcessorServiceBackoffPolicyOption>()) {
-    options.set<documentai::DocumentProcessorServiceBackoffPolicyOption>(
+  if (!options
+           .has<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>()) {
+    options.set<documentai_v1::DocumentProcessorServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<documentai::DocumentProcessorServicePollingPolicyOption>()) {
-    options.set<documentai::DocumentProcessorServicePollingPolicyOption>(
+  if (!options
+           .has<documentai_v1::DocumentProcessorServicePollingPolicyOption>()) {
+    options.set<documentai_v1::DocumentProcessorServicePollingPolicyOption>(
         GenericPollingPolicy<
-            documentai::DocumentProcessorServiceRetryPolicyOption::Type,
-            documentai::DocumentProcessorServiceBackoffPolicyOption::Type>(
+            documentai_v1::DocumentProcessorServiceRetryPolicyOption::Type,
+            documentai_v1::DocumentProcessorServiceBackoffPolicyOption::Type>(
             options
-                .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
+                .get<documentai_v1::DocumentProcessorServiceRetryPolicyOption>()
                 ->clone(),
             options
-                .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
+                .get<documentai_v1::
+                         DocumentProcessorServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
   if (!options.has<
-          documentai::
+          documentai_v1::
               DocumentProcessorServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        documentai::DocumentProcessorServiceConnectionIdempotencyPolicyOption>(
-        documentai::
+    options.set<documentai_v1::
+                    DocumentProcessorServiceConnectionIdempotencyPolicyOption>(
+        documentai_v1::
             MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy());
   }
 
@@ -81,6 +85,6 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,41 +16,29 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_TRACING_CONNECTION_H
 
-#include "google/cloud/documentai/document_processor_connection.h"
-#include "google/cloud/documentai/document_processor_connection_idempotency_policy.h"
-#include "google/cloud/documentai/document_processor_options.h"
-#include "google/cloud/documentai/internal/document_processor_retry_traits.h"
-#include "google/cloud/documentai/internal/document_processor_stub.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
+#include "google/cloud/documentai/v1/document_processor_connection.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DocumentProcessorServiceConnectionImpl
-    : public documentai::DocumentProcessorServiceConnection {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class DocumentProcessorServiceTracingConnection
+    : public documentai_v1::DocumentProcessorServiceConnection {
  public:
-  ~DocumentProcessorServiceConnectionImpl() override = default;
+  ~DocumentProcessorServiceTracingConnection() override = default;
 
-  DocumentProcessorServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<documentai_internal::DocumentProcessorServiceStub> stub,
-      Options options);
+  explicit DocumentProcessorServiceTracingConnection(
+      std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> child);
 
-  Options options() override { return options_; }
+  Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       google::cloud::documentai::v1::ProcessRequest const& request) override;
@@ -134,71 +122,24 @@ class DocumentProcessorServiceConnectionImpl
                      request) override;
 
  private:
-  std::unique_ptr<documentai::DocumentProcessorServiceRetryPolicy>
-  retry_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<documentai::DocumentProcessorServiceRetryPolicyOption>()) {
-      return options
-          .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<BackoffPolicy> backoff_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<documentai::DocumentProcessorServiceBackoffPolicyOption>()) {
-      return options
-          .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<
-      documentai::DocumentProcessorServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            documentai::
-                DocumentProcessorServiceConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<documentai::
-                   DocumentProcessorServiceConnectionIdempotencyPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::
-                 DocumentProcessorServiceConnectionIdempotencyPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<PollingPolicy> polling_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<documentai::DocumentProcessorServicePollingPolicyOption>()) {
-      return options
-          .get<documentai::DocumentProcessorServicePollingPolicyOption>()
-          ->clone();
-    }
-    return options_
-        .get<documentai::DocumentProcessorServicePollingPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<documentai_internal::DocumentProcessorServiceStub> stub_;
-  Options options_;
+  std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> child_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection>
+MakeDocumentProcessorServiceTracingConnection(
+    std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> conn);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_INTERNAL_DOCUMENT_PROCESSOR_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_V1_INTERNAL_DOCUMENT_PROCESSOR_TRACING_CONNECTION_H

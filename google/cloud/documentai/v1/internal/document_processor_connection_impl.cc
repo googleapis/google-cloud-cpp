@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/internal/document_processor_connection_impl.h"
-#include "google/cloud/documentai/internal/document_processor_option_defaults.h"
+#include "google/cloud/documentai/v1/internal/document_processor_connection_impl.h"
+#include "google/cloud/documentai/v1/internal/document_processor_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentProcessorServiceConnectionImpl::DocumentProcessorServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<documentai_internal::DocumentProcessorServiceStub> stub,
+    std::shared_ptr<documentai_v1_internal::DocumentProcessorServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -104,7 +104,7 @@ DocumentProcessorServiceConnectionImpl::ListProcessorTypes(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
+      std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProcessorTypes(request);
@@ -151,7 +151,7 @@ DocumentProcessorServiceConnectionImpl::ListProcessors(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
+      std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProcessors(request);
@@ -213,7 +213,7 @@ DocumentProcessorServiceConnectionImpl::ListProcessorVersions(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
+      std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProcessorVersions(request);
@@ -506,6 +506,6 @@ DocumentProcessorServiceConnectionImpl::ReviewDocument(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google

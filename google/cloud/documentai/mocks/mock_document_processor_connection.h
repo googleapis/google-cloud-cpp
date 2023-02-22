@@ -20,145 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_MOCKS_MOCK_DOCUMENT_PROCESSOR_CONNECTION_H
 
 #include "google/cloud/documentai/document_processor_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/documentai/v1/mocks/mock_document_processor_connection.h"
 
 namespace google {
 namespace cloud {
 namespace documentai_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `DocumentProcessorServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `DocumentProcessorServiceClient`. To
- * do so, construct an object of type `DocumentProcessorServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockDocumentProcessorServiceConnection
-    : public documentai::DocumentProcessorServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::ProcessResponse>,
-              ProcessDocument,
-              (google::cloud::documentai::v1::ProcessRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>,
-      BatchProcessDocuments,
-      (google::cloud::documentai::v1::BatchProcessRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>,
-      FetchProcessorTypes,
-      (google::cloud::documentai::v1::FetchProcessorTypesRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::documentai::v1::ProcessorType>,
-      ListProcessorTypes,
-      (google::cloud::documentai::v1::ListProcessorTypesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::ProcessorType>, GetProcessorType,
-      (google::cloud::documentai::v1::GetProcessorTypeRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::documentai::v1::Processor>,
-              ListProcessors,
-              (google::cloud::documentai::v1::ListProcessorsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::Processor>, GetProcessor,
-      (google::cloud::documentai::v1::GetProcessorRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::documentai::v1::ProcessorVersion>,
-              GetProcessorVersion,
-              (google::cloud::documentai::v1::GetProcessorVersionRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::documentai::v1::ProcessorVersion>,
-      ListProcessorVersions,
-      (google::cloud::documentai::v1::ListProcessorVersionsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
-      DeleteProcessorVersion,
-      (google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
-      DeployProcessorVersion,
-      (google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
-      UndeployProcessorVersion,
-      (google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::documentai::v1::Processor>, CreateProcessor,
-      (google::cloud::documentai::v1::CreateProcessorRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
-      DeleteProcessor,
-      (google::cloud::documentai::v1::DeleteProcessorRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
-      EnableProcessor,
-      (google::cloud::documentai::v1::EnableProcessorRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
-      DisableProcessor,
-      (google::cloud::documentai::v1::DisableProcessorRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
-      SetDefaultProcessorVersion,
-      (google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
-      ReviewDocument,
-      (google::cloud::documentai::v1::ReviewDocumentRequest const& request),
-      (override));
-};
+/// @deprecated Use documentai_v1_mocks::MockDocumentProcessorServiceConnection
+/// directly.
+using ::google::cloud::documentai_v1_mocks::
+    MockDocumentProcessorServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_mocks

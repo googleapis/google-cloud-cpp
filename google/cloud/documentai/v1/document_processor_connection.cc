@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/document_processor_connection.h"
-#include "google/cloud/documentai/document_processor_options.h"
-#include "google/cloud/documentai/internal/document_processor_connection_impl.h"
-#include "google/cloud/documentai/internal/document_processor_option_defaults.h"
-#include "google/cloud/documentai/internal/document_processor_stub_factory.h"
-#include "google/cloud/documentai/internal/document_processor_tracing_connection.h"
+#include "google/cloud/documentai/v1/document_processor_connection.h"
+#include "google/cloud/documentai/v1/document_processor_options.h"
+#include "google/cloud/documentai/v1/internal/document_processor_connection_impl.h"
+#include "google/cloud/documentai/v1/internal/document_processor_option_defaults.h"
+#include "google/cloud/documentai/v1/internal/document_processor_stub_factory.h"
+#include "google/cloud/documentai/v1/internal/document_processor_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace documentai {
+namespace documentai_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DocumentProcessorServiceConnection::~DocumentProcessorServiceConnection() =
@@ -178,14 +178,14 @@ MakeDocumentProcessorServiceConnection(std::string const& location,
                                  UnifiedCredentialsOptionList,
                                  DocumentProcessorServicePolicyOptionList>(
       options, __func__);
-  options = documentai_internal::DocumentProcessorServiceDefaultOptions(
+  options = documentai_v1_internal::DocumentProcessorServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = documentai_internal::CreateDefaultDocumentProcessorServiceStub(
+  auto stub = documentai_v1_internal::CreateDefaultDocumentProcessorServiceStub(
       background->cq(), options);
-  return documentai_internal::MakeDocumentProcessorServiceTracingConnection(
+  return documentai_v1_internal::MakeDocumentProcessorServiceTracingConnection(
       std::make_shared<
-          documentai_internal::DocumentProcessorServiceConnectionImpl>(
+          documentai_v1_internal::DocumentProcessorServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
@@ -196,6 +196,6 @@ MakeDocumentProcessorServiceConnection(Options options) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai
+}  // namespace documentai_v1
 }  // namespace cloud
 }  // namespace google

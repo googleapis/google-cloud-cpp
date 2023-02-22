@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/internal/document_processor_stub_factory.h"
-#include "google/cloud/documentai/internal/document_processor_auth_decorator.h"
-#include "google/cloud/documentai/internal/document_processor_logging_decorator.h"
-#include "google/cloud/documentai/internal/document_processor_metadata_decorator.h"
-#include "google/cloud/documentai/internal/document_processor_stub.h"
-#include "google/cloud/documentai/internal/document_processor_tracing_stub.h"
+#include "google/cloud/documentai/v1/internal/document_processor_stub_factory.h"
+#include "google/cloud/documentai/v1/internal/document_processor_auth_decorator.h"
+#include "google/cloud/documentai/v1/internal/document_processor_logging_decorator.h"
+#include "google/cloud/documentai/v1/internal/document_processor_metadata_decorator.h"
+#include "google/cloud/documentai/v1/internal/document_processor_stub.h"
+#include "google/cloud/documentai/v1/internal/document_processor_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<DocumentProcessorServiceStub>
@@ -68,6 +68,6 @@ CreateDefaultDocumentProcessorServiceStub(google::cloud::CompletionQueue cq,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google

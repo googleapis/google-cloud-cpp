@@ -19,86 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_DOCUMENT_PROCESSOR_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_DOCUMENT_PROCESSOR_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DocumentProcessorServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~DocumentProcessorServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// documentai_v1::MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::documentai_v1::
+    MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ProcessDocument(
-      google::cloud::documentai::v1::ProcessRequest const& request);
-
-  virtual google::cloud::Idempotency BatchProcessDocuments(
-      google::cloud::documentai::v1::BatchProcessRequest const& request);
-
-  virtual google::cloud::Idempotency FetchProcessorTypes(
-      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request);
-
-  virtual google::cloud::Idempotency ListProcessorTypes(
-      google::cloud::documentai::v1::ListProcessorTypesRequest request);
-
-  virtual google::cloud::Idempotency GetProcessorType(
-      google::cloud::documentai::v1::GetProcessorTypeRequest const& request);
-
-  virtual google::cloud::Idempotency ListProcessors(
-      google::cloud::documentai::v1::ListProcessorsRequest request);
-
-  virtual google::cloud::Idempotency GetProcessor(
-      google::cloud::documentai::v1::GetProcessorRequest const& request);
-
-  virtual google::cloud::Idempotency GetProcessorVersion(
-      google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
-
-  virtual google::cloud::Idempotency ListProcessorVersions(
-      google::cloud::documentai::v1::ListProcessorVersionsRequest request);
-
-  virtual google::cloud::Idempotency DeleteProcessorVersion(
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeployProcessorVersion(
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UndeployProcessorVersion(
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateProcessor(
-      google::cloud::documentai::v1::CreateProcessorRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteProcessor(
-      google::cloud::documentai::v1::DeleteProcessorRequest const& request);
-
-  virtual google::cloud::Idempotency EnableProcessor(
-      google::cloud::documentai::v1::EnableProcessorRequest const& request);
-
-  virtual google::cloud::Idempotency DisableProcessor(
-      google::cloud::documentai::v1::DisableProcessorRequest const& request);
-
-  virtual google::cloud::Idempotency SetDefaultProcessorVersion(
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ReviewDocument(
-      google::cloud::documentai::v1::ReviewDocumentRequest const& request);
-};
-
-std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
-MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// documentai_v1::DocumentProcessorServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai

@@ -225,9 +225,10 @@
 ./include/google/cloud/dlp/v2/internal
 ./include/google/cloud/dlp/v2/mocks
 ./include/google/cloud/documentai
-./include/google/cloud/documentai/internal
 ./include/google/cloud/documentai/mocks
 ./include/google/cloud/documentai/v1
+./include/google/cloud/documentai/v1/internal
+./include/google/cloud/documentai/v1/mocks
 ./include/google/cloud/edgecontainer
 ./include/google/cloud/edgecontainer/mocks
 ./include/google/cloud/edgecontainer/v1

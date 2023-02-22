@@ -16,28 +16,29 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
-#include "google/cloud/documentai/internal/document_processor_tracing_connection.h"
+#include "google/cloud/documentai/v1/internal/document_processor_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
+namespace documentai_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 DocumentProcessorServiceTracingConnection::
     DocumentProcessorServiceTracingConnection(
-        std::shared_ptr<documentai::DocumentProcessorServiceConnection> child)
+        std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceTracingConnection::ProcessDocument(
     google::cloud::documentai::v1::ProcessRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::ProcessDocument");
+      "documentai_v1::DocumentProcessorServiceConnection::ProcessDocument");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ProcessDocument(request));
 }
@@ -52,7 +53,7 @@ StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceTracingConnection::FetchProcessorTypes(
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::FetchProcessorTypes");
+      "documentai_v1::DocumentProcessorServiceConnection::FetchProcessorTypes");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->FetchProcessorTypes(request));
 }
@@ -61,7 +62,7 @@ StreamRange<google::cloud::documentai::v1::ProcessorType>
 DocumentProcessorServiceTracingConnection::ListProcessorTypes(
     google::cloud::documentai::v1::ListProcessorTypesRequest request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::ListProcessorTypes");
+      "documentai_v1::DocumentProcessorServiceConnection::ListProcessorTypes");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProcessorTypes(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -73,7 +74,7 @@ StatusOr<google::cloud::documentai::v1::ProcessorType>
 DocumentProcessorServiceTracingConnection::GetProcessorType(
     google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::GetProcessorType");
+      "documentai_v1::DocumentProcessorServiceConnection::GetProcessorType");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProcessorType(request));
 }
@@ -82,7 +83,7 @@ StreamRange<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceTracingConnection::ListProcessors(
     google::cloud::documentai::v1::ListProcessorsRequest request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::ListProcessors");
+      "documentai_v1::DocumentProcessorServiceConnection::ListProcessors");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProcessors(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -93,7 +94,7 @@ StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceTracingConnection::GetProcessor(
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::GetProcessor");
+      "documentai_v1::DocumentProcessorServiceConnection::GetProcessor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProcessor(request));
 }
@@ -102,7 +103,7 @@ StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceTracingConnection::GetProcessorVersion(
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::GetProcessorVersion");
+      "documentai_v1::DocumentProcessorServiceConnection::GetProcessorVersion");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetProcessorVersion(request));
 }
@@ -111,7 +112,8 @@ StreamRange<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceTracingConnection::ListProcessorVersions(
     google::cloud::documentai::v1::ListProcessorVersionsRequest request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::ListProcessorVersions");
+      "documentai_v1::DocumentProcessorServiceConnection::"
+      "ListProcessorVersions");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListProcessorVersions(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -145,7 +147,7 @@ StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceTracingConnection::CreateProcessor(
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
   auto span = internal::MakeSpan(
-      "documentai::DocumentProcessorServiceConnection::CreateProcessor");
+      "documentai_v1::DocumentProcessorServiceConnection::CreateProcessor");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateProcessor(request));
 }
@@ -184,9 +186,9 @@ DocumentProcessorServiceTracingConnection::ReviewDocument(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<documentai::DocumentProcessorServiceConnection>
+std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection>
 MakeDocumentProcessorServiceTracingConnection(
-    std::shared_ptr<documentai::DocumentProcessorServiceConnection> conn) {
+    std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<DocumentProcessorServiceTracingConnection>(
@@ -197,6 +199,6 @@ MakeDocumentProcessorServiceTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace documentai_internal
+}  // namespace documentai_v1_internal
 }  // namespace cloud
 }  // namespace google

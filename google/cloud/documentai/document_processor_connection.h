@@ -20,174 +20,33 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DOCUMENTAI_DOCUMENT_PROCESSOR_CONNECTION_H
 
 #include "google/cloud/documentai/document_processor_connection_idempotency_policy.h"
-#include "google/cloud/documentai/internal/document_processor_retry_traits.h"
-#include "google/cloud/documentai/internal/document_processor_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
+#include "google/cloud/documentai/v1/document_processor_connection.h"
 
 namespace google {
 namespace cloud {
 namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DocumentProcessorServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        documentai_internal::DocumentProcessorServiceRetryTraits>;
+/// @deprecated Use documentai_v1::MakeDocumentProcessorServiceConnection
+/// directly.
+using ::google::cloud::documentai_v1::MakeDocumentProcessorServiceConnection;
 
-using DocumentProcessorServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        documentai_internal::DocumentProcessorServiceRetryTraits>;
+/// @deprecated Use documentai_v1::DocumentProcessorServiceConnection directly.
+using ::google::cloud::documentai_v1::DocumentProcessorServiceConnection;
 
-using DocumentProcessorServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        documentai_internal::DocumentProcessorServiceRetryTraits>;
+/// @deprecated Use
+/// documentai_v1::DocumentProcessorServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `DocumentProcessorServiceConnection` object for
- * `DocumentProcessorServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `DocumentProcessorServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DocumentProcessorServiceClient`.
- *
- * To create a concrete instance, see
- * `MakeDocumentProcessorServiceConnection()`.
- *
- * For mocking, see `documentai_mocks::MockDocumentProcessorServiceConnection`.
- */
-class DocumentProcessorServiceConnection {
- public:
-  virtual ~DocumentProcessorServiceConnection() = 0;
+/// @deprecated Use
+/// documentai_v1::DocumentProcessorServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::documentai_v1::
+    DocumentProcessorServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::documentai::v1::ProcessResponse>
-  ProcessDocument(google::cloud::documentai::v1::ProcessRequest const& request);
-
-  virtual future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
-  BatchProcessDocuments(
-      google::cloud::documentai::v1::BatchProcessRequest const& request);
-
-  virtual StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
-  FetchProcessorTypes(
-      google::cloud::documentai::v1::FetchProcessorTypesRequest const& request);
-
-  virtual StreamRange<google::cloud::documentai::v1::ProcessorType>
-  ListProcessorTypes(
-      google::cloud::documentai::v1::ListProcessorTypesRequest request);
-
-  virtual StatusOr<google::cloud::documentai::v1::ProcessorType>
-  GetProcessorType(
-      google::cloud::documentai::v1::GetProcessorTypeRequest const& request);
-
-  virtual StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
-      google::cloud::documentai::v1::ListProcessorsRequest request);
-
-  virtual StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
-      google::cloud::documentai::v1::GetProcessorRequest const& request);
-
-  virtual StatusOr<google::cloud::documentai::v1::ProcessorVersion>
-  GetProcessorVersion(
-      google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
-
-  virtual StreamRange<google::cloud::documentai::v1::ProcessorVersion>
-  ListProcessorVersions(
-      google::cloud::documentai::v1::ListProcessorVersionsRequest request);
-
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
-  DeleteProcessorVersion(
-      google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
-  DeployProcessorVersion(
-      google::cloud::documentai::v1::DeployProcessorVersionRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
-  UndeployProcessorVersion(
-      google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
-      google::cloud::documentai::v1::CreateProcessorRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
-  DeleteProcessor(
-      google::cloud::documentai::v1::DeleteProcessorRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
-  EnableProcessor(
-      google::cloud::documentai::v1::EnableProcessorRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
-  DisableProcessor(
-      google::cloud::documentai::v1::DisableProcessorRequest const& request);
-
-  virtual future<StatusOr<
-      google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
-  SetDefaultProcessorVersion(
-      google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
-  ReviewDocument(
-      google::cloud::documentai::v1::ReviewDocumentRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `DocumentProcessorServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DocumentProcessorServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `DocumentProcessorServiceConnection`. Expected options are any of
- * the types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::documentai::DocumentProcessorServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param location Sets the prefix for the default `EndpointOption` value.
- * @param options (optional) Configure the `DocumentProcessorServiceConnection`
- * created by this function.
- */
-std::shared_ptr<DocumentProcessorServiceConnection>
-MakeDocumentProcessorServiceConnection(std::string const& location,
-                                       Options options = {});
-
-/**
- * A backwards-compatible version of the previous factory function.  Unless
- * the service also offers a global endpoint, the default value of the
- * `EndpointOption` may be useless, in which case it must be overridden.
- *
- * @deprecated Please use the `location` overload instead.
- */
-std::shared_ptr<DocumentProcessorServiceConnection>
-MakeDocumentProcessorServiceConnection(Options options = {});
+/// @deprecated Use documentai_v1::DocumentProcessorServiceRetryPolicy directly.
+using ::google::cloud::documentai_v1::DocumentProcessorServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai
