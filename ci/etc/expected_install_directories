@@ -230,9 +230,10 @@
 ./include/google/cloud/eventarc/publishing/v1
 ./include/google/cloud/eventarc/v1
 ./include/google/cloud/filestore
-./include/google/cloud/filestore/internal
 ./include/google/cloud/filestore/mocks
 ./include/google/cloud/filestore/v1
+./include/google/cloud/filestore/v1/internal
+./include/google/cloud/filestore/v1/mocks
 ./include/google/cloud/functions
 ./include/google/cloud/functions/internal
 ./include/google/cloud/functions/mocks

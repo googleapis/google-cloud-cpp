@@ -21,64 +21,34 @@
 
 #include "google/cloud/filestore/cloud_filestore_manager_connection.h"
 #include "google/cloud/filestore/cloud_filestore_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/filestore/v1/cloud_filestore_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-filestore-options
- */
-struct CloudFilestoreManagerRetryPolicyOption {
-  using Type = std::shared_ptr<CloudFilestoreManagerRetryPolicy>;
-};
+/// @deprecated Use filestore_v1::CloudFilestoreManagerPollingPolicyOption
+/// directly.
+using ::google::cloud::filestore_v1::CloudFilestoreManagerPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-filestore-options
- */
-struct CloudFilestoreManagerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use filestore_v1::CloudFilestoreManagerBackoffPolicyOption
+/// directly.
+using ::google::cloud::filestore_v1::CloudFilestoreManagerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-filestore-options
- */
-struct CloudFilestoreManagerConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<CloudFilestoreManagerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::filestore_v1::
+    CloudFilestoreManagerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-filestore-options
- */
-struct CloudFilestoreManagerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use filestore_v1::CloudFilestoreManagerPolicyOptionList
+/// directly.
+using ::google::cloud::filestore_v1::CloudFilestoreManagerPolicyOptionList;
 
-/**
- * The options applicable to CloudFilestoreManager.
- *
- * @ingroup google-cloud-filestore-options
- */
-using CloudFilestoreManagerPolicyOptionList =
-    OptionList<CloudFilestoreManagerRetryPolicyOption,
-               CloudFilestoreManagerBackoffPolicyOption,
-               CloudFilestoreManagerPollingPolicyOption,
-               CloudFilestoreManagerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use filestore_v1::CloudFilestoreManagerRetryPolicyOption
+/// directly.
+using ::google::cloud::filestore_v1::CloudFilestoreManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore

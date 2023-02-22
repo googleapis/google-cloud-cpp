@@ -96,6 +96,10 @@ For example, this will override the default endpoint for `filestore::CloudFilest
 
 @snippet cloud_filestore_manager_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [filestore::CloudFilestoreManagerClient](@ref filestore::CloudFilestoreManagerClient-endpoint-snippet)
+ [filestore_v1::CloudFilestoreManagerClient](@ref filestore_v1::CloudFilestoreManagerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +111,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_filestore_manager_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [filestore::CloudFilestoreManagerClient](@ref filestore::CloudFilestoreManagerClient-service-account-snippet)
+ [filestore_v1::CloudFilestoreManagerClient](@ref filestore_v1::CloudFilestoreManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +154,18 @@ can override the default policies.
 /*! @page filestore::CloudFilestoreManagerClient-service-account-snippet Override filestore::CloudFilestoreManagerClient Authentication Defaults
 
 @snippet google/cloud/filestore/samples/cloud_filestore_manager_client_samples.cc with-service-account
+
+*/
+
+/*! @page filestore_v1::CloudFilestoreManagerClient-endpoint-snippet Override filestore_v1::CloudFilestoreManagerClient Endpoint Configuration
+
+@snippet google/cloud/filestore/v1/samples/cloud_filestore_manager_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page filestore_v1::CloudFilestoreManagerClient-service-account-snippet Override filestore_v1::CloudFilestoreManagerClient Authentication Defaults
+
+@snippet google/cloud/filestore/v1/samples/cloud_filestore_manager_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

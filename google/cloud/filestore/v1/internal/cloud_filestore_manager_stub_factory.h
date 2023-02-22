@@ -16,30 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_CLOUD_FILESTORE_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_CLOUD_FILESTORE_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_STUB_FACTORY_H
 
-#include "google/cloud/filestore/v1/cloud_filestore_manager_connection_idempotency_policy.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace filestore {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// filestore_v1::MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::filestore_v1::
-    MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy;
-
-/// @deprecated Use
-/// filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy directly.
-using ::google::cloud::filestore_v1::
-    CloudFilestoreManagerConnectionIdempotencyPolicy;
+std::shared_ptr<CloudFilestoreManagerStub>
+CreateDefaultCloudFilestoreManagerStub(google::cloud::CompletionQueue cq,
+                                       Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_CLOUD_FILESTORE_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_STUB_FACTORY_H
