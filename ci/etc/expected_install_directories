@@ -245,9 +245,10 @@
 ./include/google/cloud/gaming
 ./include/google/cloud/gaming/v1
 ./include/google/cloud/gkehub
-./include/google/cloud/gkehub/internal
 ./include/google/cloud/gkehub/mocks
 ./include/google/cloud/gkehub/v1
+./include/google/cloud/gkehub/v1/internal
+./include/google/cloud/gkehub/v1/mocks
 ./include/google/cloud/gkemulticloud
 ./include/google/cloud/gkemulticloud/v1
 ./include/google/cloud/gkemulticloud/v1/internal
