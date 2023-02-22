@@ -19,103 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_METADATA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_METADATA_CONNECTION_H
 
-#include "google/cloud/dataplex/internal/metadata_retry_traits.h"
-#include "google/cloud/dataplex/internal/metadata_stub.h"
 #include "google/cloud/dataplex/metadata_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dataplex/v1/metadata_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using MetadataServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataplex_internal::MetadataServiceRetryTraits>;
+/// @deprecated Use dataplex_v1::MakeMetadataServiceConnection directly.
+using ::google::cloud::dataplex_v1::MakeMetadataServiceConnection;
 
-using MetadataServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataplex_internal::MetadataServiceRetryTraits>;
+/// @deprecated Use dataplex_v1::MetadataServiceConnection directly.
+using ::google::cloud::dataplex_v1::MetadataServiceConnection;
 
-using MetadataServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataplex_internal::MetadataServiceRetryTraits>;
+/// @deprecated Use dataplex_v1::MetadataServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::dataplex_v1::MetadataServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `MetadataServiceConnection` object for `MetadataServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `MetadataServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `MetadataServiceClient`.
- *
- * To create a concrete instance, see `MakeMetadataServiceConnection()`.
- *
- * For mocking, see `dataplex_mocks::MockMetadataServiceConnection`.
- */
-class MetadataServiceConnection {
- public:
-  virtual ~MetadataServiceConnection() = 0;
+/// @deprecated Use dataplex_v1::MetadataServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::dataplex_v1::MetadataServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
-      google::cloud::dataplex::v1::CreateEntityRequest const& request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
-      google::cloud::dataplex::v1::UpdateEntityRequest const& request);
-
-  virtual Status DeleteEntity(
-      google::cloud::dataplex::v1::DeleteEntityRequest const& request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
-      google::cloud::dataplex::v1::GetEntityRequest const& request);
-
-  virtual StreamRange<google::cloud::dataplex::v1::Entity> ListEntities(
-      google::cloud::dataplex::v1::ListEntitiesRequest request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
-      google::cloud::dataplex::v1::CreatePartitionRequest const& request);
-
-  virtual Status DeletePartition(
-      google::cloud::dataplex::v1::DeletePartitionRequest const& request);
-
-  virtual StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
-      google::cloud::dataplex::v1::GetPartitionRequest const& request);
-
-  virtual StreamRange<google::cloud::dataplex::v1::Partition> ListPartitions(
-      google::cloud::dataplex::v1::ListPartitionsRequest request);
-};
-
-/**
- * A factory function to construct an object of type
- * `MetadataServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of MetadataServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `MetadataServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataplex::MetadataServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `MetadataServiceConnection` created
- * by this function.
- */
-std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
-    Options options = {});
+/// @deprecated Use dataplex_v1::MetadataServiceRetryPolicy directly.
+using ::google::cloud::dataplex_v1::MetadataServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex

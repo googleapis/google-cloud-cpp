@@ -21,63 +21,29 @@
 
 #include "google/cloud/dataplex/dataplex_connection.h"
 #include "google/cloud/dataplex/dataplex_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dataplex/v1/dataplex_options.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct DataplexServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DataplexServiceRetryPolicy>;
-};
+/// @deprecated Use dataplex_v1::DataplexServicePollingPolicyOption directly.
+using ::google::cloud::dataplex_v1::DataplexServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct DataplexServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dataplex_v1::DataplexServiceBackoffPolicyOption directly.
+using ::google::cloud::dataplex_v1::DataplexServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct DataplexServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DataplexServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// dataplex_v1::DataplexServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::dataplex_v1::
+    DataplexServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct DataplexServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use dataplex_v1::DataplexServicePolicyOptionList directly.
+using ::google::cloud::dataplex_v1::DataplexServicePolicyOptionList;
 
-/**
- * The options applicable to DataplexService.
- *
- * @ingroup google-cloud-dataplex-options
- */
-using DataplexServicePolicyOptionList =
-    OptionList<DataplexServiceRetryPolicyOption,
-               DataplexServiceBackoffPolicyOption,
-               DataplexServicePollingPolicyOption,
-               DataplexServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dataplex_v1::DataplexServiceRetryPolicyOption directly.
+using ::google::cloud::dataplex_v1::DataplexServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex

@@ -19,52 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_CONTENT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_CONTENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/dataplex/v1/content.grpc.pb.h>
-#include <memory>
+#include "google/cloud/dataplex/v1/content_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ContentServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~ContentServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// dataplex_v1::MakeDefaultContentServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::dataplex_v1::
+    MakeDefaultContentServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ContentServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateContent(
-      google::cloud::dataplex::v1::CreateContentRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateContent(
-      google::cloud::dataplex::v1::UpdateContentRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteContent(
-      google::cloud::dataplex::v1::DeleteContentRequest const& request);
-
-  virtual google::cloud::Idempotency GetContent(
-      google::cloud::dataplex::v1::GetContentRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual google::cloud::Idempotency ListContent(
-      google::cloud::dataplex::v1::ListContentRequest request);
-};
-
-std::unique_ptr<ContentServiceConnectionIdempotencyPolicy>
-MakeDefaultContentServiceConnectionIdempotencyPolicy();
+/// @deprecated Use dataplex_v1::ContentServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::dataplex_v1::ContentServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex

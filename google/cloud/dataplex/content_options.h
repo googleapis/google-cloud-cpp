@@ -21,52 +21,26 @@
 
 #include "google/cloud/dataplex/content_connection.h"
 #include "google/cloud/dataplex/content_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/dataplex/v1/content_options.h"
 
 namespace google {
 namespace cloud {
 namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct ContentServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ContentServiceRetryPolicy>;
-};
+/// @deprecated Use dataplex_v1::ContentServiceBackoffPolicyOption directly.
+using ::google::cloud::dataplex_v1::ContentServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct ContentServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use dataplex_v1::ContentServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::dataplex_v1::
+    ContentServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-dataplex-options
- */
-struct ContentServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ContentServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use dataplex_v1::ContentServicePolicyOptionList directly.
+using ::google::cloud::dataplex_v1::ContentServicePolicyOptionList;
 
-/**
- * The options applicable to ContentService.
- *
- * @ingroup google-cloud-dataplex-options
- */
-using ContentServicePolicyOptionList =
-    OptionList<ContentServiceRetryPolicyOption,
-               ContentServiceBackoffPolicyOption,
-               ContentServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use dataplex_v1::ContentServiceRetryPolicyOption directly.
+using ::google::cloud::dataplex_v1::ContentServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
