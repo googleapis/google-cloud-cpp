@@ -20,7 +20,8 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Local extension to google::spanner::v1::ExecuteSqlRequest.
+// Local extension to google::spanner::v1::ExecuteSqlRequest, reserved using
+// Google's conventions.
 constexpr int kRouteToLeaderFieldNumber = 511037314;
 
 QueryPartition::QueryPartition(std::string transaction_id, bool route_to_leader,
