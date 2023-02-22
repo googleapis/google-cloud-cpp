@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#include "google/cloud/functions/cloud_functions_client.h"
+#include "google/cloud/functions/v1/cloud_functions_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace functions {
+namespace functions_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFunctionsServiceClient::CloudFunctionsServiceClient(
@@ -163,6 +163,6 @@ CloudFunctionsServiceClient::TestIamPermissions(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions
+}  // namespace functions_v1
 }  // namespace cloud
 }  // namespace google

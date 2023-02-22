@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#include "google/cloud/functions/internal/cloud_functions_auth_decorator.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_auth_decorator.h"
 #include <google/cloud/functions/v1/functions.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFunctionsServiceAuth::CloudFunctionsServiceAuth(
@@ -192,6 +192,6 @@ future<Status> CloudFunctionsServiceAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google

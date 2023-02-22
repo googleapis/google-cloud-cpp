@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_STUB_H
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -30,7 +30,7 @@
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudFunctionsServiceStub {
@@ -186,8 +186,8 @@ class DefaultCloudFunctionsServiceStub : public CloudFunctionsServiceStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_STUB_H

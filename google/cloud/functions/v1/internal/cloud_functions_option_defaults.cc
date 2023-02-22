@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#include "google/cloud/functions/internal/cloud_functions_option_defaults.h"
-#include "google/cloud/functions/cloud_functions_connection.h"
-#include "google/cloud/functions/cloud_functions_options.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_option_defaults.h"
+#include "google/cloud/functions/v1/cloud_functions_connection.h"
+#include "google/cloud/functions/v1/cloud_functions_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,42 +39,43 @@ Options CloudFunctionsServiceDefaultOptions(Options options) {
       "cloudfunctions.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<functions::CloudFunctionsServiceRetryPolicyOption>()) {
-    options.set<functions::CloudFunctionsServiceRetryPolicyOption>(
-        functions::CloudFunctionsServiceLimitedTimeRetryPolicy(
+  if (!options.has<functions_v1::CloudFunctionsServiceRetryPolicyOption>()) {
+    options.set<functions_v1::CloudFunctionsServiceRetryPolicyOption>(
+        functions_v1::CloudFunctionsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<functions::CloudFunctionsServiceBackoffPolicyOption>()) {
-    options.set<functions::CloudFunctionsServiceBackoffPolicyOption>(
+  if (!options.has<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()) {
+    options.set<functions_v1::CloudFunctionsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<functions::CloudFunctionsServicePollingPolicyOption>()) {
-    options.set<functions::CloudFunctionsServicePollingPolicyOption>(
+  if (!options.has<functions_v1::CloudFunctionsServicePollingPolicyOption>()) {
+    options.set<functions_v1::CloudFunctionsServicePollingPolicyOption>(
         GenericPollingPolicy<
-            functions::CloudFunctionsServiceRetryPolicyOption::Type,
-            functions::CloudFunctionsServiceBackoffPolicyOption::Type>(
-            options.get<functions::CloudFunctionsServiceRetryPolicyOption>()
+            functions_v1::CloudFunctionsServiceRetryPolicyOption::Type,
+            functions_v1::CloudFunctionsServiceBackoffPolicyOption::Type>(
+            options.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<functions::CloudFunctionsServiceBackoffPolicyOption>()
+            options
+                .get<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
   if (!options
-           .has<functions::
+           .has<functions_v1::
                     CloudFunctionsServiceConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<functions::CloudFunctionsServiceConnectionIdempotencyPolicyOption>(
-            functions::
-                MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy());
+    options.set<
+        functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption>(
+        functions_v1::
+            MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google

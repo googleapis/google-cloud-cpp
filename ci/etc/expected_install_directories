@@ -249,9 +249,10 @@
 ./include/google/cloud/filestore/v1/internal
 ./include/google/cloud/filestore/v1/mocks
 ./include/google/cloud/functions
-./include/google/cloud/functions/internal
 ./include/google/cloud/functions/mocks
 ./include/google/cloud/functions/v1
+./include/google/cloud/functions/v1/internal
+./include/google/cloud/functions/v1/mocks
 ./include/google/cloud/gameservices
 ./include/google/cloud/gameservices/internal
 ./include/google/cloud/gameservices/mocks

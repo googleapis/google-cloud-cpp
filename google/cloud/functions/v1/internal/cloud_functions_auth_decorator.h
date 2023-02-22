@@ -16,25 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_AUTH_DECORATOR_H
 
-#include "google/cloud/functions/internal/cloud_functions_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class CloudFunctionsServiceTracingStub : public CloudFunctionsServiceStub {
+class CloudFunctionsServiceAuth : public CloudFunctionsServiceStub {
  public:
-  ~CloudFunctionsServiceTracingStub() override = default;
-
-  explicit CloudFunctionsServiceTracingStub(
+  ~CloudFunctionsServiceAuth() override = default;
+  CloudFunctionsServiceAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<CloudFunctionsServiceStub> child);
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
@@ -104,23 +106,13 @@ class CloudFunctionsServiceTracingStub : public CloudFunctionsServiceStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CloudFunctionsServiceStub> child_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<CloudFunctionsServiceStub> MakeCloudFunctionsServiceTracingStub(
-    std::shared_ptr<CloudFunctionsServiceStub> stub);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_AUTH_DECORATOR_H

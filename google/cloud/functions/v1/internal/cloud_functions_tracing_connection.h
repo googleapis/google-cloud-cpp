@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_TRACING_CONNECTION_H
 
-#include "google/cloud/functions/cloud_functions_connection.h"
+#include "google/cloud/functions/v1/cloud_functions_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class CloudFunctionsServiceTracingConnection
-    : public functions::CloudFunctionsServiceConnection {
+    : public functions_v1::CloudFunctionsServiceConnection {
  public:
   ~CloudFunctionsServiceTracingConnection() override = default;
 
   explicit CloudFunctionsServiceTracingConnection(
-      std::shared_ptr<functions::CloudFunctionsServiceConnection> child);
+      std::shared_ptr<functions_v1::CloudFunctionsServiceConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -82,7 +82,7 @@ class CloudFunctionsServiceTracingConnection
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::shared_ptr<functions::CloudFunctionsServiceConnection> child_;
+  std::shared_ptr<functions_v1::CloudFunctionsServiceConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -93,13 +93,13 @@ class CloudFunctionsServiceTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<functions::CloudFunctionsServiceConnection>
+std::shared_ptr<functions_v1::CloudFunctionsServiceConnection>
 MakeCloudFunctionsServiceTracingConnection(
-    std::shared_ptr<functions::CloudFunctionsServiceConnection> conn);
+    std::shared_ptr<functions_v1::CloudFunctionsServiceConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_TRACING_CONNECTION_H

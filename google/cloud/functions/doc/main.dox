@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `functions::CloudFunctionsServiceClient`:
+For example, this will override the default endpoint for `functions_v1::CloudFunctionsServiceClient`:
 
 @snippet cloud_functions_client_samples.cc set-client-endpoint
 
@@ -139,15 +139,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page functions::CloudFunctionsServiceClient-endpoint-snippet Override functions::CloudFunctionsServiceClient Endpoint Configuration
+/*! @page functions_v1::CloudFunctionsServiceClient-endpoint-snippet Override functions_v1::CloudFunctionsServiceClient Endpoint Configuration
 
-@snippet google/cloud/functions/samples/cloud_functions_client_samples.cc set-client-endpoint
+@snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page functions::CloudFunctionsServiceClient-service-account-snippet Override functions::CloudFunctionsServiceClient Authentication Defaults
+/*! @page functions_v1::CloudFunctionsServiceClient-service-account-snippet Override functions_v1::CloudFunctionsServiceClient Authentication Defaults
 
-@snippet google/cloud/functions/samples/cloud_functions_client_samples.cc with-service-account
+@snippet google/cloud/functions/v1/samples/cloud_functions_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

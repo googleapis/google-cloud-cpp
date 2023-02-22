@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_LOGGING_DECORATOR_H
 
-#include "google/cloud/functions/internal/cloud_functions_stub.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudFunctionsServiceLogging : public CloudFunctionsServiceStub {
@@ -112,8 +112,8 @@ class CloudFunctionsServiceLogging : public CloudFunctionsServiceStub {
 };  // CloudFunctionsServiceLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_LOGGING_DECORATOR_H

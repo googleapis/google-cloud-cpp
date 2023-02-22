@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#include "google/cloud/functions/cloud_functions_connection.h"
-#include "google/cloud/functions/cloud_functions_options.h"
-#include "google/cloud/functions/internal/cloud_functions_connection_impl.h"
-#include "google/cloud/functions/internal/cloud_functions_option_defaults.h"
-#include "google/cloud/functions/internal/cloud_functions_stub_factory.h"
-#include "google/cloud/functions/internal/cloud_functions_tracing_connection.h"
+#include "google/cloud/functions/v1/cloud_functions_connection.h"
+#include "google/cloud/functions/v1/cloud_functions_options.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_connection_impl.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_option_defaults.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_stub_factory.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace functions {
+namespace functions_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFunctionsServiceConnection::~CloudFunctionsServiceConnection() = default;
@@ -114,17 +114,18 @@ MakeCloudFunctionsServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  CloudFunctionsServicePolicyOptionList>(
       options, __func__);
-  options = functions_internal::CloudFunctionsServiceDefaultOptions(
+  options = functions_v1_internal::CloudFunctionsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = functions_internal::CreateDefaultCloudFunctionsServiceStub(
+  auto stub = functions_v1_internal::CreateDefaultCloudFunctionsServiceStub(
       background->cq(), options);
-  return functions_internal::MakeCloudFunctionsServiceTracingConnection(
-      std::make_shared<functions_internal::CloudFunctionsServiceConnectionImpl>(
+  return functions_v1_internal::MakeCloudFunctionsServiceTracingConnection(
+      std::make_shared<
+          functions_v1_internal::CloudFunctionsServiceConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions
+}  // namespace functions_v1
 }  // namespace cloud
 }  // namespace google

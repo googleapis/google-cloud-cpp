@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#include "google/cloud/functions/cloud_functions_client.h"
+#include "google/cloud/functions/v1/cloud_functions_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: functions::CloudFunctionsServiceClient
+// main-dox-marker: functions_v1::CloudFunctionsServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::functions::CloudFunctionsServiceClient(
-      google::cloud::functions::MakeCloudFunctionsServiceConnection(options));
+  auto client = google::cloud::functions_v1::CloudFunctionsServiceClient(
+      google::cloud::functions_v1::MakeCloudFunctionsServiceConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::functions::CloudFunctionsServiceClient(
-        google::cloud::functions::MakeCloudFunctionsServiceConnection(options));
+    return google::cloud::functions_v1::CloudFunctionsServiceClient(
+        google::cloud::functions_v1::MakeCloudFunctionsServiceConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

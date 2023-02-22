@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#include "google/cloud/functions/internal/cloud_functions_connection_impl.h"
-#include "google/cloud/functions/internal/cloud_functions_option_defaults.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_connection_impl.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFunctionsServiceConnectionImpl::CloudFunctionsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub,
+    std::shared_ptr<functions_v1_internal::CloudFunctionsServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,7 +46,7 @@ CloudFunctionsServiceConnectionImpl::ListFunctions(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<functions::CloudFunctionsServiceRetryPolicy const>(
+      std::shared_ptr<functions_v1::CloudFunctionsServiceRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFunctions(request);
@@ -258,6 +258,6 @@ CloudFunctionsServiceConnectionImpl::TestIamPermissions(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google

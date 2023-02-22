@@ -916,7 +916,8 @@ service {
 service {
   service_proto_path: "google/cloud/functions/v1/functions.proto"
   additional_proto_files: ["google/cloud/functions/v1/operations.proto"]
-  product_path: "google/cloud/functions"
+  product_path: "google/cloud/functions/v1"
+  forwarding_product_path: "google/cloud/functions"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

@@ -21,64 +21,34 @@
 
 #include "google/cloud/functions/cloud_functions_connection.h"
 #include "google/cloud/functions/cloud_functions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/functions/v1/cloud_functions_options.h"
 
 namespace google {
 namespace cloud {
 namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-functions-options
- */
-struct CloudFunctionsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<CloudFunctionsServiceRetryPolicy>;
-};
+/// @deprecated Use functions_v1::CloudFunctionsServicePollingPolicyOption
+/// directly.
+using ::google::cloud::functions_v1::CloudFunctionsServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-functions-options
- */
-struct CloudFunctionsServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use functions_v1::CloudFunctionsServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::functions_v1::CloudFunctionsServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-functions-options
- */
-struct CloudFunctionsServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::functions_v1::
+    CloudFunctionsServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-functions-options
- */
-struct CloudFunctionsServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use functions_v1::CloudFunctionsServicePolicyOptionList
+/// directly.
+using ::google::cloud::functions_v1::CloudFunctionsServicePolicyOptionList;
 
-/**
- * The options applicable to CloudFunctionsService.
- *
- * @ingroup google-cloud-functions-options
- */
-using CloudFunctionsServicePolicyOptionList =
-    OptionList<CloudFunctionsServiceRetryPolicyOption,
-               CloudFunctionsServiceBackoffPolicyOption,
-               CloudFunctionsServicePollingPolicyOption,
-               CloudFunctionsServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use functions_v1::CloudFunctionsServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::functions_v1::CloudFunctionsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions

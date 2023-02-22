@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/functions/v1/functions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_CONNECTION_IMPL_H
 
-#include "google/cloud/functions/cloud_functions_connection.h"
-#include "google/cloud/functions/cloud_functions_connection_idempotency_policy.h"
-#include "google/cloud/functions/cloud_functions_options.h"
-#include "google/cloud/functions/internal/cloud_functions_retry_traits.h"
-#include "google/cloud/functions/internal/cloud_functions_stub.h"
+#include "google/cloud/functions/v1/cloud_functions_connection.h"
+#include "google/cloud/functions/v1/cloud_functions_connection_idempotency_policy.h"
+#include "google/cloud/functions/v1/cloud_functions_options.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_retry_traits.h"
+#include "google/cloud/functions/v1/internal/cloud_functions_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
+namespace functions_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudFunctionsServiceConnectionImpl
-    : public functions::CloudFunctionsServiceConnection {
+    : public functions_v1::CloudFunctionsServiceConnection {
  public:
   ~CloudFunctionsServiceConnectionImpl() override = default;
 
   CloudFunctionsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub,
+      std::shared_ptr<functions_v1_internal::CloudFunctionsServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -94,61 +94,68 @@ class CloudFunctionsServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<functions::CloudFunctionsServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<functions_v1::CloudFunctionsServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<functions::CloudFunctionsServiceRetryPolicyOption>()) {
-      return options.get<functions::CloudFunctionsServiceRetryPolicyOption>()
+    if (options.has<functions_v1::CloudFunctionsServiceRetryPolicyOption>()) {
+      return options
+          .get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<functions::CloudFunctionsServiceRetryPolicyOption>()
+    return options_.get<functions_v1::CloudFunctionsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<functions::CloudFunctionsServiceBackoffPolicyOption>()) {
-      return options.get<functions::CloudFunctionsServiceBackoffPolicyOption>()
+    if (options.has<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()) {
+      return options
+          .get<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<functions::CloudFunctionsServiceBackoffPolicyOption>()
+    return options_
+        .get<functions_v1::CloudFunctionsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<functions::CloudFunctionsServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      functions_v1::CloudFunctionsServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            functions::
+            functions_v1::
                 CloudFunctionsServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<functions::
+          .get<functions_v1::
                    CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<
-            functions::CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
+        .get<functions_v1::
+                 CloudFunctionsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<functions::CloudFunctionsServicePollingPolicyOption>()) {
-      return options.get<functions::CloudFunctionsServicePollingPolicyOption>()
+    if (options.has<functions_v1::CloudFunctionsServicePollingPolicyOption>()) {
+      return options
+          .get<functions_v1::CloudFunctionsServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<functions::CloudFunctionsServicePollingPolicyOption>()
+    return options_
+        .get<functions_v1::CloudFunctionsServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub_;
+  std::shared_ptr<functions_v1_internal::CloudFunctionsServiceStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
+}  // namespace functions_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_INTERNAL_CLOUD_FUNCTIONS_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUNCTIONS_V1_INTERNAL_CLOUD_FUNCTIONS_CONNECTION_IMPL_H
