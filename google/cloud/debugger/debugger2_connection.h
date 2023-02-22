@@ -20,93 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_DEBUGGER2_CONNECTION_H
 
 #include "google/cloud/debugger/debugger2_connection_idempotency_policy.h"
-#include "google/cloud/debugger/internal/debugger2_retry_traits.h"
-#include "google/cloud/debugger/internal/debugger2_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/debugger/v2/debugger2_connection.h"
 
 namespace google {
 namespace cloud {
 namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using Debugger2RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    debugger_internal::Debugger2RetryTraits>;
+/// @deprecated Use debugger_v2::MakeDebugger2Connection directly.
+using ::google::cloud::debugger_v2::MakeDebugger2Connection;
 
-using Debugger2LimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        debugger_internal::Debugger2RetryTraits>;
+/// @deprecated Use debugger_v2::Debugger2Connection directly.
+using ::google::cloud::debugger_v2::Debugger2Connection;
 
-using Debugger2LimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        debugger_internal::Debugger2RetryTraits>;
+/// @deprecated Use debugger_v2::Debugger2LimitedErrorCountRetryPolicy directly.
+using ::google::cloud::debugger_v2::Debugger2LimitedErrorCountRetryPolicy;
 
-/**
- * The `Debugger2Connection` object for `Debugger2Client`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `Debugger2Client`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `Debugger2Client`.
- *
- * To create a concrete instance, see `MakeDebugger2Connection()`.
- *
- * For mocking, see `debugger_mocks::MockDebugger2Connection`.
- */
-class Debugger2Connection {
- public:
-  virtual ~Debugger2Connection() = 0;
+/// @deprecated Use debugger_v2::Debugger2LimitedTimeRetryPolicy directly.
+using ::google::cloud::debugger_v2::Debugger2LimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
-  SetBreakpoint(
-      google::devtools::clouddebugger::v2::SetBreakpointRequest const& request);
-
-  virtual StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
-  GetBreakpoint(
-      google::devtools::clouddebugger::v2::GetBreakpointRequest const& request);
-
-  virtual Status DeleteBreakpoint(
-      google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
-          request);
-
-  virtual StatusOr<google::devtools::clouddebugger::v2::ListBreakpointsResponse>
-  ListBreakpoints(
-      google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
-          request);
-
-  virtual StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
-  ListDebuggees(
-      google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `Debugger2Connection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of Debugger2Client.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `Debugger2Connection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::debugger::Debugger2PolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `Debugger2Connection` created by
- * this function.
- */
-std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(
-    Options options = {});
+/// @deprecated Use debugger_v2::Debugger2RetryPolicy directly.
+using ::google::cloud::debugger_v2::Debugger2RetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger

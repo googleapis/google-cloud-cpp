@@ -21,51 +21,25 @@
 
 #include "google/cloud/debugger/debugger2_connection.h"
 #include "google/cloud/debugger/debugger2_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/debugger/v2/debugger2_options.h"
 
 namespace google {
 namespace cloud {
 namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-debugger-options
- */
-struct Debugger2RetryPolicyOption {
-  using Type = std::shared_ptr<Debugger2RetryPolicy>;
-};
+/// @deprecated Use debugger_v2::Debugger2BackoffPolicyOption directly.
+using ::google::cloud::debugger_v2::Debugger2BackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-debugger-options
- */
-struct Debugger2BackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use debugger_v2::Debugger2ConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::debugger_v2::Debugger2ConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-debugger-options
- */
-struct Debugger2ConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<Debugger2ConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use debugger_v2::Debugger2PolicyOptionList directly.
+using ::google::cloud::debugger_v2::Debugger2PolicyOptionList;
 
-/**
- * The options applicable to Debugger2.
- *
- * @ingroup google-cloud-debugger-options
- */
-using Debugger2PolicyOptionList =
-    OptionList<Debugger2RetryPolicyOption, Debugger2BackoffPolicyOption,
-               Debugger2ConnectionIdempotencyPolicyOption>;
+/// @deprecated Use debugger_v2::Debugger2RetryPolicyOption directly.
+using ::google::cloud::debugger_v2::Debugger2RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger

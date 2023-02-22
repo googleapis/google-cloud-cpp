@@ -20,66 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_MOCKS_MOCK_DEBUGGER2_CONNECTION_H
 
 #include "google/cloud/debugger/debugger2_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/debugger/v2/mocks/mock_debugger2_connection.h"
 
 namespace google {
 namespace cloud {
 namespace debugger_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `Debugger2Connection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `Debugger2Client`. To do so,
- * construct an object of type `Debugger2Client` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockDebugger2Connection : public debugger::Debugger2Connection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>,
-      SetBreakpoint,
-      (google::devtools::clouddebugger::v2::SetBreakpointRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>,
-      GetBreakpoint,
-      (google::devtools::clouddebugger::v2::GetBreakpointRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteBreakpoint,
-      (google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::clouddebugger::v2::ListBreakpointsResponse>,
-      ListBreakpoints,
-      (google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>,
-      ListDebuggees,
-      (google::devtools::clouddebugger::v2::ListDebuggeesRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use debugger_v2_mocks::MockDebugger2Connection directly.
+using ::google::cloud::debugger_v2_mocks::MockDebugger2Connection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_mocks

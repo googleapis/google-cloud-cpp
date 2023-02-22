@@ -192,8 +192,10 @@
 ./include/google/cloud/datastream/mocks
 ./include/google/cloud/datastream/v1
 ./include/google/cloud/debugger
-./include/google/cloud/debugger/internal
 ./include/google/cloud/debugger/mocks
+./include/google/cloud/debugger/v2
+./include/google/cloud/debugger/v2/internal
+./include/google/cloud/debugger/v2/mocks
 ./include/google/cloud/deploy
 ./include/google/cloud/deploy/internal
 ./include/google/cloud/deploy/mocks

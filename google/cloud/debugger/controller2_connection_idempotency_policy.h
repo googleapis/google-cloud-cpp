@@ -19,39 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_CONTROLLER2_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_CONTROLLER2_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/devtools/clouddebugger/v2/controller.grpc.pb.h>
-#include <memory>
+#include "google/cloud/debugger/v2/controller2_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class Controller2ConnectionIdempotencyPolicy {
- public:
-  virtual ~Controller2ConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// debugger_v2::MakeDefaultController2ConnectionIdempotencyPolicy directly.
+using ::google::cloud::debugger_v2::
+    MakeDefaultController2ConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<Controller2ConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency RegisterDebuggee(
-      google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListActiveBreakpoints(
-      google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateActiveBreakpoint(
-      google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
-          request);
-};
-
-std::unique_ptr<Controller2ConnectionIdempotencyPolicy>
-MakeDefaultController2ConnectionIdempotencyPolicy();
+/// @deprecated Use debugger_v2::Controller2ConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::debugger_v2::Controller2ConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger

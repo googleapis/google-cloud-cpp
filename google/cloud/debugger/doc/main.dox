@@ -104,6 +104,8 @@ For example, this will override the default endpoint for `debugger::Controller2C
 Follow these links to find examples for other \c *Client classes:
  [debugger::Controller2Client](@ref debugger::Controller2Client-endpoint-snippet)
  [debugger::Debugger2Client](@ref debugger::Debugger2Client-endpoint-snippet)
+ [debugger_v2::Controller2Client](@ref debugger_v2::Controller2Client-endpoint-snippet)
+ [debugger_v2::Debugger2Client](@ref debugger_v2::Debugger2Client-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -120,6 +122,8 @@ to explicitly load a service account key file.
 Follow these links to find examples for other \c *Client classes:
  [debugger::Controller2Client](@ref debugger::Controller2Client-service-account-snippet)
  [debugger::Debugger2Client](@ref debugger::Debugger2Client-service-account-snippet)
+ [debugger_v2::Controller2Client](@ref debugger_v2::Controller2Client-service-account-snippet)
+ [debugger_v2::Debugger2Client](@ref debugger_v2::Debugger2Client-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -171,6 +175,30 @@ can override the default policies.
 /*! @page debugger::Debugger2Client-service-account-snippet Override debugger::Debugger2Client Authentication Defaults
 
 @snippet google/cloud/debugger/samples/debugger2_client_samples.cc with-service-account
+
+*/
+
+/*! @page debugger_v2::Controller2Client-endpoint-snippet Override debugger_v2::Controller2Client Endpoint Configuration
+
+@snippet google/cloud/debugger/v2/samples/controller2_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page debugger_v2::Controller2Client-service-account-snippet Override debugger_v2::Controller2Client Authentication Defaults
+
+@snippet google/cloud/debugger/v2/samples/controller2_client_samples.cc with-service-account
+
+*/
+
+/*! @page debugger_v2::Debugger2Client-endpoint-snippet Override debugger_v2::Debugger2Client Endpoint Configuration
+
+@snippet google/cloud/debugger/v2/samples/debugger2_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page debugger_v2::Debugger2Client-service-account-snippet Override debugger_v2::Debugger2Client Authentication Defaults
+
+@snippet google/cloud/debugger/v2/samples/debugger2_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

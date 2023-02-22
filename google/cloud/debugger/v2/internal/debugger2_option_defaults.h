@@ -16,27 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/clouddebugger/v2/debugger.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_DEBUGGER2_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_DEBUGGER2_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_V2_INTERNAL_DEBUGGER2_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_V2_INTERNAL_DEBUGGER2_OPTION_DEFAULTS_H
 
-#include "google/cloud/debugger/v2/debugger2_connection_idempotency_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace debugger {
+namespace debugger_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use debugger_v2::MakeDefaultDebugger2ConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::debugger_v2::
-    MakeDefaultDebugger2ConnectionIdempotencyPolicy;
-
-/// @deprecated Use debugger_v2::Debugger2ConnectionIdempotencyPolicy directly.
-using ::google::cloud::debugger_v2::Debugger2ConnectionIdempotencyPolicy;
+Options Debugger2DefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace debugger
+}  // namespace debugger_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_DEBUGGER2_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_V2_INTERNAL_DEBUGGER2_OPTION_DEFAULTS_H
