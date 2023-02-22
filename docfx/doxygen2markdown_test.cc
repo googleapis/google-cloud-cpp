@@ -252,6 +252,18 @@ TEST(Doxygen2Markdown, Bold) {
   EXPECT_EQ(os.str(), "**some text**");
 }
 
+TEST(Doxygen2Markdown, BoldComplex) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <bold id="test-node"><ref refid="group__test" kindref="compound">Some Text</ref></bold>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfBold(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "[**Some Text**](xref:group__test)");
+}
+
 TEST(Doxygen2Markdown, Strike) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
@@ -262,6 +274,18 @@ TEST(Doxygen2Markdown, Strike) {
   std::ostringstream os;
   ASSERT_TRUE(AppendIfStrike(os, {}, selected.node()));
   EXPECT_EQ(os.str(), "~some text~");
+}
+
+TEST(Doxygen2Markdown, StrikeComplex) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <strike id="test-node"><ref refid="group__test" kindref="compound">Some Text</ref></strike>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfStrike(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "[~Some Text~](xref:group__test)");
 }
 
 TEST(Doxygen2Markdown, Emphasis) {
@@ -276,6 +300,18 @@ TEST(Doxygen2Markdown, Emphasis) {
   EXPECT_EQ(os.str(), "*some text*");
 }
 
+TEST(Doxygen2Markdown, EmphasisComplex) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <emphasis id="test-node"><ref refid="group__test" kindref="compound">Some Text</ref></emphasis>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfEmphasis(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "[*Some Text*](xref:group__test)");
+}
+
 TEST(Doxygen2Markdown, ComputerOutput) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
@@ -286,6 +322,18 @@ TEST(Doxygen2Markdown, ComputerOutput) {
   std::ostringstream os;
   ASSERT_TRUE(AppendIfComputerOutput(os, {}, selected.node()));
   EXPECT_EQ(os.str(), "`int f() { return 42; }`");
+}
+
+TEST(Doxygen2Markdown, ComputerOutputComplex) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <computeroutput id="test-node"><ref refid="group__test" kindref="compound">Some Text</ref></computeroutput>
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfComputerOutput(os, {}, selected.node()));
+  EXPECT_EQ(os.str(), "[`Some Text`](xref:group__test)");
 }
 
 TEST(Doxygen2Markdown, RefExternal) {
