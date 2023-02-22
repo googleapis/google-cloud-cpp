@@ -194,7 +194,7 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("DatabaseAdminClient")
    *   the statements.
    *
    * @par Example
-   * @snippet samples.cc update-database
+   * @snippet samples.cc add-column
    *
    * @see https://cloud.google.com/spanner/docs/data-definition-language for a
    *     full list of the DDL operations
