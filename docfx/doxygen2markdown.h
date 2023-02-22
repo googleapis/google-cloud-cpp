@@ -29,6 +29,13 @@ struct MarkdownContext {
   std::string paragraph_indent = "";
 };
 
+/**
+ * Handle "page" nodes, such as the landing page of a library.
+ *
+ * This creates the root MarkdownContext, so no need to consume it.
+ */
+std::string Page2Markdown(pugi::xml_node const& node);
+
 /// Handles a sect4 node.
 bool AppendIfSect4(std::ostream& os, MarkdownContext const& ctx,
                    pugi::xml_node const& node);
@@ -44,6 +51,10 @@ bool AppendIfSect2(std::ostream& os, MarkdownContext const& ctx,
 /// Handles a sect1 node.
 bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
                    pugi::xml_node const& node);
+
+/// Handles a detailed description node.
+bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
+                                 pugi::xml_node const& node);
 
 /**
  * Handle plain text nodes.
