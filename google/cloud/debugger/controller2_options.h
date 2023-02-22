@@ -21,51 +21,26 @@
 
 #include "google/cloud/debugger/controller2_connection.h"
 #include "google/cloud/debugger/controller2_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/debugger/v2/controller2_options.h"
 
 namespace google {
 namespace cloud {
 namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-debugger-options
- */
-struct Controller2RetryPolicyOption {
-  using Type = std::shared_ptr<Controller2RetryPolicy>;
-};
+/// @deprecated Use debugger_v2::Controller2BackoffPolicyOption directly.
+using ::google::cloud::debugger_v2::Controller2BackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-debugger-options
- */
-struct Controller2BackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use debugger_v2::Controller2ConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::debugger_v2::
+    Controller2ConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-debugger-options
- */
-struct Controller2ConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<Controller2ConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use debugger_v2::Controller2PolicyOptionList directly.
+using ::google::cloud::debugger_v2::Controller2PolicyOptionList;
 
-/**
- * The options applicable to Controller2.
- *
- * @ingroup google-cloud-debugger-options
- */
-using Controller2PolicyOptionList =
-    OptionList<Controller2RetryPolicyOption, Controller2BackoffPolicyOption,
-               Controller2ConnectionIdempotencyPolicyOption>;
+/// @deprecated Use debugger_v2::Controller2RetryPolicyOption directly.
+using ::google::cloud::debugger_v2::Controller2RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger

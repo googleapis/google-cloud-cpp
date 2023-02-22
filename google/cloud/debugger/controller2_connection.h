@@ -20,90 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_CONTROLLER2_CONNECTION_H
 
 #include "google/cloud/debugger/controller2_connection_idempotency_policy.h"
-#include "google/cloud/debugger/internal/controller2_retry_traits.h"
-#include "google/cloud/debugger/internal/controller2_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/debugger/v2/controller2_connection.h"
 
 namespace google {
 namespace cloud {
 namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using Controller2RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    debugger_internal::Controller2RetryTraits>;
+/// @deprecated Use debugger_v2::MakeController2Connection directly.
+using ::google::cloud::debugger_v2::MakeController2Connection;
 
-using Controller2LimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        debugger_internal::Controller2RetryTraits>;
+/// @deprecated Use debugger_v2::Controller2Connection directly.
+using ::google::cloud::debugger_v2::Controller2Connection;
 
-using Controller2LimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        debugger_internal::Controller2RetryTraits>;
+/// @deprecated Use debugger_v2::Controller2LimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::debugger_v2::Controller2LimitedErrorCountRetryPolicy;
 
-/**
- * The `Controller2Connection` object for `Controller2Client`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `Controller2Client`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `Controller2Client`.
- *
- * To create a concrete instance, see `MakeController2Connection()`.
- *
- * For mocking, see `debugger_mocks::MockController2Connection`.
- */
-class Controller2Connection {
- public:
-  virtual ~Controller2Connection() = 0;
+/// @deprecated Use debugger_v2::Controller2LimitedTimeRetryPolicy directly.
+using ::google::cloud::debugger_v2::Controller2LimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<
-      google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
-  RegisterDebuggee(
-      google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
-          request);
-
-  virtual StatusOr<
-      google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
-  ListActiveBreakpoints(
-      google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
-          request);
-
-  virtual StatusOr<
-      google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
-  UpdateActiveBreakpoint(
-      google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type `Controller2Connection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of Controller2Client.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `Controller2Connection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::debugger::Controller2PolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `Controller2Connection` created by
- * this function.
- */
-std::shared_ptr<Controller2Connection> MakeController2Connection(
-    Options options = {});
+/// @deprecated Use debugger_v2::Controller2RetryPolicy directly.
+using ::google::cloud::debugger_v2::Controller2RetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger

@@ -16,27 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/devtools/clouddebugger/v2/debugger.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_DEBUGGER2_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_DEBUGGER2_CONNECTION_IDEMPOTENCY_POLICY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_V2_INTERNAL_DEBUGGER2_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_V2_INTERNAL_DEBUGGER2_RETRY_TRAITS_H
 
-#include "google/cloud/debugger/v2/debugger2_connection_idempotency_policy.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace debugger {
+namespace debugger_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use debugger_v2::MakeDefaultDebugger2ConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::debugger_v2::
-    MakeDefaultDebugger2ConnectionIdempotencyPolicy;
-
-/// @deprecated Use debugger_v2::Debugger2ConnectionIdempotencyPolicy directly.
-using ::google::cloud::debugger_v2::Debugger2ConnectionIdempotencyPolicy;
+/// Define the gRPC status code semantics for retrying requests.
+struct Debugger2RetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace debugger
+}  // namespace debugger_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_DEBUGGER2_CONNECTION_IDEMPOTENCY_POLICY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEBUGGER_V2_INTERNAL_DEBUGGER2_RETRY_TRAITS_H
