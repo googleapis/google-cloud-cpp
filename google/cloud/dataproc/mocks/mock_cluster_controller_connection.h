@@ -20,73 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_MOCKS_MOCK_CLUSTER_CONTROLLER_CONNECTION_H
 
 #include "google/cloud/dataproc/cluster_controller_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/dataproc/v1/mocks/mock_cluster_controller_connection.h"
 
 namespace google {
 namespace cloud {
 namespace dataproc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ClusterControllerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ClusterControllerClient`. To do so,
- * construct an object of type `ClusterControllerClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockClusterControllerConnection
-    : public dataproc::ClusterControllerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::Cluster>>, CreateCluster,
-      (google::cloud::dataproc::v1::CreateClusterRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::Cluster>>, UpdateCluster,
-      (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              StopCluster,
-              (google::cloud::dataproc::v1::StopClusterRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
-              StartCluster,
-              (google::cloud::dataproc::v1::StartClusterRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
-      DeleteCluster,
-      (google::cloud::dataproc::v1::DeleteClusterRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Cluster>, GetCluster,
-              (google::cloud::dataproc::v1::GetClusterRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::dataproc::v1::Cluster>, ListClusters,
-              (google::cloud::dataproc::v1::ListClustersRequest request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
-      DiagnoseCluster,
-      (google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
-      (override));
-};
+/// @deprecated Use dataproc_v1_mocks::MockClusterControllerConnection directly.
+using ::google::cloud::dataproc_v1_mocks::MockClusterControllerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_mocks

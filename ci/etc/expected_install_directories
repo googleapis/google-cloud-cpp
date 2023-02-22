@@ -190,9 +190,10 @@
 ./include/google/cloud/dataplex/v1/internal
 ./include/google/cloud/dataplex/v1/mocks
 ./include/google/cloud/dataproc
-./include/google/cloud/dataproc/internal
 ./include/google/cloud/dataproc/mocks
 ./include/google/cloud/dataproc/v1
+./include/google/cloud/dataproc/v1/internal
+./include/google/cloud/dataproc/v1/mocks
 ./include/google/cloud/datastream
 ./include/google/cloud/datastream/mocks
 ./include/google/cloud/datastream/v1
