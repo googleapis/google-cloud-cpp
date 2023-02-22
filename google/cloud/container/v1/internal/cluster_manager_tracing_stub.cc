@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/internal/cluster_manager_tracing_stub.h"
+#include "google/cloud/container/v1/internal/cluster_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -433,6 +433,6 @@ std::shared_ptr<ClusterManagerStub> MakeClusterManagerTracingStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google

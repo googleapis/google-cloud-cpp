@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_TRACING_STUB_H
 
-#include "google/cloud/container/internal/cluster_manager_stub.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -192,8 +192,8 @@ std::shared_ptr<ClusterManagerStub> MakeClusterManagerTracingStub(
     std::shared_ptr<ClusterManagerStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_TRACING_STUB_H

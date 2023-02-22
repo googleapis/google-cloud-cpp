@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/internal/cluster_manager_metadata_decorator.h"
+#include "google/cloud/container/v1/internal/cluster_manager_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerMetadata::ClusterManagerMetadata(
@@ -308,6 +308,6 @@ void ClusterManagerMetadata::SetMetadata(grpc::ClientContext& context) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google

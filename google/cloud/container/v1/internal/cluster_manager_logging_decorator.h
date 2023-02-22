@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_LOGGING_DECORATOR_H
 
-#include "google/cloud/container/internal/cluster_manager_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -28,15 +28,15 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ClusterManagerAuth : public ClusterManagerStub {
+class ClusterManagerLogging : public ClusterManagerStub {
  public:
-  ~ClusterManagerAuth() override = default;
-  ClusterManagerAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<ClusterManagerStub> child);
+  ~ClusterManagerLogging() override = default;
+  ClusterManagerLogging(std::shared_ptr<ClusterManagerStub> child,
+                        TracingOptions tracing_options,
+                        std::set<std::string> components);
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       grpc::ClientContext& context,
@@ -179,13 +179,14 @@ class ClusterManagerAuth : public ClusterManagerStub {
       override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<ClusterManagerStub> child_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // ClusterManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_LOGGING_DECORATOR_H

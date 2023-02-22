@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/internal/cluster_manager_stub.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/container/v1/cluster_service.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerStub::~ClusterManagerStub() = default;
@@ -437,6 +437,6 @@ DefaultClusterManagerStub::ListUsableSubnetworks(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google

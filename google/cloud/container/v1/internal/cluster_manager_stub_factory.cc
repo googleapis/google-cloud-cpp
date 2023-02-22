@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/internal/cluster_manager_stub_factory.h"
-#include "google/cloud/container/internal/cluster_manager_auth_decorator.h"
-#include "google/cloud/container/internal/cluster_manager_logging_decorator.h"
-#include "google/cloud/container/internal/cluster_manager_metadata_decorator.h"
-#include "google/cloud/container/internal/cluster_manager_stub.h"
-#include "google/cloud/container/internal/cluster_manager_tracing_stub.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub_factory.h"
+#include "google/cloud/container/v1/internal/cluster_manager_auth_decorator.h"
+#include "google/cloud/container/v1/internal/cluster_manager_logging_decorator.h"
+#include "google/cloud/container/v1/internal/cluster_manager_metadata_decorator.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub.h"
+#include "google/cloud/container/v1/internal/cluster_manager_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<ClusterManagerStub> CreateDefaultClusterManagerStub(
@@ -65,6 +65,6 @@ std::shared_ptr<ClusterManagerStub> CreateDefaultClusterManagerStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google

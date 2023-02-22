@@ -16,177 +16,154 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_TRACING_CONNECTION_H
 
-#include "google/cloud/container/internal/cluster_manager_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/container/v1/cluster_manager_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ClusterManagerLogging : public ClusterManagerStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class ClusterManagerTracingConnection
+    : public container_v1::ClusterManagerConnection {
  public:
-  ~ClusterManagerLogging() override = default;
-  ClusterManagerLogging(std::shared_ptr<ClusterManagerStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> components);
+  ~ClusterManagerTracingConnection() override = default;
+
+  explicit ClusterManagerTracingConnection(
+      std::shared_ptr<container_v1::ClusterManagerConnection> child);
+
+  Options options() override { return child_->options(); }
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
       google::container::v1::ListClustersRequest const& request) override;
 
   StatusOr<google::container::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
       google::container::v1::GetClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CreateCluster(
-      grpc::ClientContext& context,
       google::container::v1::CreateClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateCluster(
-      grpc::ClientContext& context,
       google::container::v1::UpdateClusterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateNodePool(
-      grpc::ClientContext& context,
       google::container::v1::UpdateNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolAutoscaling(
-      grpc::ClientContext& context,
       google::container::v1::SetNodePoolAutoscalingRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetLoggingService(
-      grpc::ClientContext& context,
       google::container::v1::SetLoggingServiceRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMonitoringService(
-      grpc::ClientContext& context,
       google::container::v1::SetMonitoringServiceRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetAddonsConfig(
-      grpc::ClientContext& context,
       google::container::v1::SetAddonsConfigRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLocations(
-      grpc::ClientContext& context,
       google::container::v1::SetLocationsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> UpdateMaster(
-      grpc::ClientContext& context,
       google::container::v1::UpdateMasterRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMasterAuth(
-      grpc::ClientContext& context,
       google::container::v1::SetMasterAuthRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> DeleteCluster(
-      grpc::ClientContext& context,
       google::container::v1::DeleteClusterRequest const& request) override;
 
   StatusOr<google::container::v1::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
       google::container::v1::ListOperationsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> GetOperation(
-      grpc::ClientContext& context,
       google::container::v1::GetOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
       google::container::v1::CancelOperationRequest const& request) override;
 
   StatusOr<google::container::v1::ServerConfig> GetServerConfig(
-      grpc::ClientContext& context,
       google::container::v1::GetServerConfigRequest const& request) override;
 
   StatusOr<google::container::v1::GetJSONWebKeysResponse> GetJSONWebKeys(
-      grpc::ClientContext& context,
       google::container::v1::GetJSONWebKeysRequest const& request) override;
 
   StatusOr<google::container::v1::ListNodePoolsResponse> ListNodePools(
-      grpc::ClientContext& context,
       google::container::v1::ListNodePoolsRequest const& request) override;
 
   StatusOr<google::container::v1::NodePool> GetNodePool(
-      grpc::ClientContext& context,
       google::container::v1::GetNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CreateNodePool(
-      grpc::ClientContext& context,
       google::container::v1::CreateNodePoolRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> DeleteNodePool(
-      grpc::ClientContext& context,
       google::container::v1::DeleteNodePoolRequest const& request) override;
 
   Status CompleteNodePoolUpgrade(
-      grpc::ClientContext& context,
       google::container::v1::CompleteNodePoolUpgradeRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
-      grpc::ClientContext& context,
       google::container::v1::RollbackNodePoolUpgradeRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolManagement(
-      grpc::ClientContext& context,
       google::container::v1::SetNodePoolManagementRequest const& request)
       override;
 
   StatusOr<google::container::v1::Operation> SetLabels(
-      grpc::ClientContext& context,
       google::container::v1::SetLabelsRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetLegacyAbac(
-      grpc::ClientContext& context,
       google::container::v1::SetLegacyAbacRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> StartIPRotation(
-      grpc::ClientContext& context,
       google::container::v1::StartIPRotationRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> CompleteIPRotation(
-      grpc::ClientContext& context,
       google::container::v1::CompleteIPRotationRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNodePoolSize(
-      grpc::ClientContext& context,
       google::container::v1::SetNodePoolSizeRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetNetworkPolicy(
-      grpc::ClientContext& context,
       google::container::v1::SetNetworkPolicyRequest const& request) override;
 
   StatusOr<google::container::v1::Operation> SetMaintenancePolicy(
-      grpc::ClientContext& context,
       google::container::v1::SetMaintenancePolicyRequest const& request)
       override;
 
-  StatusOr<google::container::v1::ListUsableSubnetworksResponse>
-  ListUsableSubnetworks(
-      grpc::ClientContext& context,
-      google::container::v1::ListUsableSubnetworksRequest const& request)
-      override;
+  StreamRange<google::container::v1::UsableSubnetwork> ListUsableSubnetworks(
+      google::container::v1::ListUsableSubnetworksRequest request) override;
 
  private:
-  std::shared_ptr<ClusterManagerStub> child_;
-  TracingOptions tracing_options_;
-  std::set<std::string> components_;
-};  // ClusterManagerLogging
+  std::shared_ptr<container_v1::ClusterManagerConnection> child_;
+};
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Conditionally applies the tracing decorator to the given connection.
+ *
+ * The connection is only decorated if tracing is enabled (as determined by the
+ * connection's options).
+ */
+std::shared_ptr<container_v1::ClusterManagerConnection>
+MakeClusterManagerTracingConnection(
+    std::shared_ptr<container_v1::ClusterManagerConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_TRACING_CONNECTION_H

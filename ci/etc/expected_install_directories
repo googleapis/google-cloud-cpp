@@ -167,8 +167,10 @@
 ./include/google/cloud/contactcenterinsights/mocks
 ./include/google/cloud/contactcenterinsights/v1
 ./include/google/cloud/container
-./include/google/cloud/container/internal
 ./include/google/cloud/container/mocks
+./include/google/cloud/container/v1
+./include/google/cloud/container/v1/internal
+./include/google/cloud/container/v1/mocks
 ./include/google/cloud/containeranalysis
 ./include/google/cloud/containeranalysis/internal
 ./include/google/cloud/containeranalysis/mocks

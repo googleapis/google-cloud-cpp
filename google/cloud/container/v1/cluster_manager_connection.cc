@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/cluster_manager_connection.h"
-#include "google/cloud/container/cluster_manager_options.h"
-#include "google/cloud/container/internal/cluster_manager_connection_impl.h"
-#include "google/cloud/container/internal/cluster_manager_option_defaults.h"
-#include "google/cloud/container/internal/cluster_manager_stub_factory.h"
-#include "google/cloud/container/internal/cluster_manager_tracing_connection.h"
+#include "google/cloud/container/v1/cluster_manager_connection.h"
+#include "google/cloud/container/v1/cluster_manager_options.h"
+#include "google/cloud/container/v1/internal/cluster_manager_connection_impl.h"
+#include "google/cloud/container/v1/internal/cluster_manager_option_defaults.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub_factory.h"
+#include "google/cloud/container/v1/internal/cluster_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace container {
+namespace container_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerConnection::~ClusterManagerConnection() = default;
@@ -238,16 +238,16 @@ std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
                                  ClusterManagerPolicyOptionList>(options,
                                                                  __func__);
   options =
-      container_internal::ClusterManagerDefaultOptions(std::move(options));
+      container_v1_internal::ClusterManagerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = container_internal::CreateDefaultClusterManagerStub(
+  auto stub = container_v1_internal::CreateDefaultClusterManagerStub(
       background->cq(), options);
-  return container_internal::MakeClusterManagerTracingConnection(
-      std::make_shared<container_internal::ClusterManagerConnectionImpl>(
+  return container_v1_internal::MakeClusterManagerTracingConnection(
+      std::make_shared<container_v1_internal::ClusterManagerConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container
+}  // namespace container_v1
 }  // namespace cloud
 }  // namespace google

@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/internal/cluster_manager_connection_impl.h"
-#include "google/cloud/container/internal/cluster_manager_option_defaults.h"
+#include "google/cloud/container/v1/internal/cluster_manager_connection_impl.h"
+#include "google/cloud/container/v1/internal/cluster_manager_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerConnectionImpl::ClusterManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<container_internal::ClusterManagerStub> stub,
+    std::shared_ptr<container_v1_internal::ClusterManagerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -464,7 +464,7 @@ ClusterManagerConnectionImpl::ListUsableSubnetworks(
     google::container::v1::ListUsableSubnetworksRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<container::ClusterManagerRetryPolicy const>(
+  auto retry = std::shared_ptr<container_v1::ClusterManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListUsableSubnetworks(request);
@@ -493,6 +493,6 @@ ClusterManagerConnectionImpl::ListUsableSubnetworks(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google

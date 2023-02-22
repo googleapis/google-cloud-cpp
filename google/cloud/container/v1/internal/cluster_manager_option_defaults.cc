@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/internal/cluster_manager_option_defaults.h"
-#include "google/cloud/container/cluster_manager_connection.h"
-#include "google/cloud/container/cluster_manager_options.h"
+#include "google/cloud/container/v1/internal/cluster_manager_option_defaults.h"
+#include "google/cloud/container/v1/cluster_manager_connection.h"
+#include "google/cloud/container/v1/cluster_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -38,28 +38,28 @@ Options ClusterManagerDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CLUSTER_MANAGER_AUTHORITY", "container.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<container::ClusterManagerRetryPolicyOption>()) {
-    options.set<container::ClusterManagerRetryPolicyOption>(
-        container::ClusterManagerLimitedTimeRetryPolicy(
+  if (!options.has<container_v1::ClusterManagerRetryPolicyOption>()) {
+    options.set<container_v1::ClusterManagerRetryPolicyOption>(
+        container_v1::ClusterManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<container::ClusterManagerBackoffPolicyOption>()) {
-    options.set<container::ClusterManagerBackoffPolicyOption>(
+  if (!options.has<container_v1::ClusterManagerBackoffPolicyOption>()) {
+    options.set<container_v1::ClusterManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<container::ClusterManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<container::ClusterManagerConnectionIdempotencyPolicyOption>(
-        container::MakeDefaultClusterManagerConnectionIdempotencyPolicy());
+  if (!options.has<
+          container_v1::ClusterManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<container_v1::ClusterManagerConnectionIdempotencyPolicyOption>(
+        container_v1::MakeDefaultClusterManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google

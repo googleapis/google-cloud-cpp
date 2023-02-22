@@ -415,7 +415,8 @@ service {
 # Container
 service {
   service_proto_path: "google/container/v1/cluster_service.proto"
-  product_path: "google/cloud/container"
+  product_path: "google/cloud/container/v1"
+  forwarding_product_path: "google/cloud/container"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   emitted_rpcs: ["SetLocations"]

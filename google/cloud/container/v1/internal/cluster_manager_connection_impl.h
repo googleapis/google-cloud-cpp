@@ -16,29 +16,38 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/container/cluster_manager_connection.h"
+#include "google/cloud/container/v1/cluster_manager_connection.h"
+#include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.h"
+#include "google/cloud/container/v1/cluster_manager_options.h"
+#include "google/cloud/container/v1/internal/cluster_manager_retry_traits.h"
+#include "google/cloud/container/v1/internal/cluster_manager_stub.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace container_internal {
+namespace container_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class ClusterManagerTracingConnection
-    : public container::ClusterManagerConnection {
+class ClusterManagerConnectionImpl
+    : public container_v1::ClusterManagerConnection {
  public:
-  ~ClusterManagerTracingConnection() override = default;
+  ~ClusterManagerConnectionImpl() override = default;
 
-  explicit ClusterManagerTracingConnection(
-      std::shared_ptr<container::ClusterManagerConnection> child);
+  ClusterManagerConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<container_v1_internal::ClusterManagerStub> stub,
+      Options options);
 
-  Options options() override { return child_->options(); }
+  Options options() override { return options_; }
 
   StatusOr<google::container::v1::ListClustersResponse> ListClusters(
       google::container::v1::ListClustersRequest const& request) override;
@@ -146,24 +155,48 @@ class ClusterManagerTracingConnection
       google::container::v1::ListUsableSubnetworksRequest request) override;
 
  private:
-  std::shared_ptr<container::ClusterManagerConnection> child_;
+  std::unique_ptr<container_v1::ClusterManagerRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<container_v1::ClusterManagerRetryPolicyOption>()) {
+      return options.get<container_v1::ClusterManagerRetryPolicyOption>()
+          ->clone();
+    }
+    return options_.get<container_v1::ClusterManagerRetryPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<container_v1::ClusterManagerBackoffPolicyOption>()) {
+      return options.get<container_v1::ClusterManagerBackoffPolicyOption>()
+          ->clone();
+    }
+    return options_.get<container_v1::ClusterManagerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<container_v1::ClusterManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            container_v1::ClusterManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<container_v1::ClusterManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<container_v1::ClusterManagerConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<container_v1_internal::ClusterManagerStub> stub_;
+  Options options_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Conditionally applies the tracing decorator to the given connection.
- *
- * The connection is only decorated if tracing is enabled (as determined by the
- * connection's options).
- */
-std::shared_ptr<container::ClusterManagerConnection>
-MakeClusterManagerTracingConnection(
-    std::shared_ptr<container::ClusterManagerConnection> conn);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
+}  // namespace container_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_INTERNAL_CLUSTER_MANAGER_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTAINER_V1_INTERNAL_CLUSTER_MANAGER_CONNECTION_IMPL_H

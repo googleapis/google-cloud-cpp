@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/container/v1/cluster_service.proto
 
-#include "google/cloud/container/cluster_manager_client.h"
+#include "google/cloud/container/v1/cluster_manager_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace container {
+namespace container_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ClusterManagerClient::ClusterManagerClient(
@@ -488,6 +488,6 @@ ClusterManagerClient::ListUsableSubnetworks(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container
+}  // namespace container_v1
 }  // namespace cloud
 }  // namespace google
