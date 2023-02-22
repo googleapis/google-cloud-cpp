@@ -145,12 +145,11 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node);
 
 /**
+ * Handle `variablelist` elements.
  *
+ * Most commonly used in lists of deprecated symbols, these are pairs of
+ * terms (a linked code entity), and a sequence of text.
  */
-/// Handle `variablelist` elements.
-///
-/// Most commonly used in lists of deprecated symbols, these are pairs of
-/// terms (a linked code entity), and a sequence of text.
 bool AppendIfVariableList(std::ostream& os, MarkdownContext const& ctx,
                           pugi::xml_node const& node);
 
@@ -165,6 +164,10 @@ bool AppendIfVariableListItem(std::ostream& os, MarkdownContext const& ctx,
 /// Handle a `simplesect` element (a section without sub-sections).
 bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
                         pugi::xml_node const& node);
+
+/// Handle an `anchor` element.
+bool AppendIfAnchor(std::ostream& os, MarkdownContext const& ctx,
+                    pugi::xml_node const& node);
 
 /// Handle the title for a section-like element.
 void AppendTitle(std::ostream& os, MarkdownContext const& ctx,

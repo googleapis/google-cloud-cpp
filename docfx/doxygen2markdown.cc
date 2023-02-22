@@ -447,7 +447,6 @@ bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
 // </xsd:group>
 bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
                               pugi::xml_node const& node) {
-  auto const name = std::string_view{node.name()};
   if (AppendIfPlainText(os, ctx, node)) return true;
   if (AppendIfULink(os, ctx, node)) return true;
   if (AppendIfBold(os, ctx, node)) return true;
@@ -459,7 +458,7 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: subscript, superscript, center, small, del, ins
   // Unexpected: htmlonly, manonly, rtfonly, latexonly, docbookonly
   // Unexpected: image, dot, msc, plantuml
-  if (name == "anchor") return true;  // Generate nothing and succeed
+  if (AppendIfAnchor(os, ctx, node)) return true;
   // Unexpected: formula
   if (AppendIfRef(os, ctx, node)) return true;
   // Unexpected: emoji
@@ -719,7 +718,7 @@ bool AppendIfVariableList(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
-// A varlist entry contains a single `term` element.
+// A `varlistentry` contains a single `term` element.
 //
 //   <xsd:complexType name="docVarListEntryType">
 //     <xsd:sequence>
@@ -846,6 +845,13 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
     UnknownChildType(__func__, child);
   }
   return true;
+}
+
+bool AppendIfAnchor(std::ostream& /*os*/, MarkdownContext const& /*ctx*/,
+                    pugi::xml_node const& node) {
+  // Do not generate any code for anchors, they have no obvious mapping to
+  // Markdown.
+  return std::string_view{node.name()} == "anchor";
 }
 
 void AppendTitle(std::ostream& os, MarkdownContext const& ctx,

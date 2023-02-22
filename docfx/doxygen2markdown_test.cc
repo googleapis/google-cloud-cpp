@@ -731,6 +731,22 @@ TEST(Doxygen2Markdown, SimpleSectBlockQuote) {
   }
 }
 
+TEST(Doxygen2Markdown, Anchor) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <anchor id="test-node"/>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md()md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfAnchor(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, Title) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
