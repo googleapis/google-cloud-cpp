@@ -36,17 +36,17 @@ For a generated library there are 3 critical checks:
 In addition, we (the Cloud C++ team) require a simple `quickstart.cc` for each
 library.  This program is typically created when the library is generated.
 
-### `BUILD.bazel`
+### `cmake/GoogleCloudCppFeatures.cmake`
 
-Update the top-level `BUILD.bazel` file. Move the library from
-`EXPERIMENTAL_LIBRARIES` to `TRANSITION_LIBRARIES`. Do this first as it helps
-automate the following steps.
+Update `cmake/GoogleCloudCppFeatures.cmake`. Move the library from
+`GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` to
+`GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES`. Do this first as it helps automate the
+following steps.
 
 ```shell
-mapfile -t ga < <(bazel --batch query \
-  --noshow_progress --noshow_loading_progress \
-  'kind(cc_library, //:all) except filter("experimental|mocks", kind(cc_library, //:all))' |
-  sed -e 's;//:;;' | grep -E -v 'storage|bigtable|spanner|pubsub|common|grpc_utils')
+mapfile -t ga < <(cmake -DCMAKE_MODULE_PATH="${PWD}/cmake" \
+  -P cmake/print-ga-libraries.cmake 2>&1 |
+  grep -E -v 'storage|bigtable|spanner|pubsub|common|grpc_utils')
 ```
 
 ### `CHANGELOG.md`
@@ -128,8 +128,9 @@ for lib in "${ga[@]}"; do sed -i 's/experimental-//' google/cloud/${lib}/quickst
 
 ## (Eventually) Remove the `experimental-` rules and targets
 
-In the following release, move the libraries from `TRANSITION_LIBRARIES` to
-`GA_LIBRARIES`, in the top-level `BUILD.bazel`.
+In the following release, move the libraries from
+`GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES` to `GOOGLE_CLOUD_CPP_GA_LIBRARIES`, in
+`cmake/GoogleCloudCppFeatures.cmake`.
 
 Then remove the CMake aliases.
 
