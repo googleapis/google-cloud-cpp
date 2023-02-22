@@ -19,39 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_EKM_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_EKM_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/kms/v1/ekm_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EkmServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~EkmServiceConnectionIdempotencyPolicy();
+/// @deprecated Use kms_v1::MakeDefaultEkmServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::kms_v1::MakeDefaultEkmServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<EkmServiceConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListEkmConnections(
-      google::cloud::kms::v1::ListEkmConnectionsRequest request);
-
-  virtual google::cloud::Idempotency GetEkmConnection(
-      google::cloud::kms::v1::GetEkmConnectionRequest const& request);
-
-  virtual google::cloud::Idempotency CreateEkmConnection(
-      google::cloud::kms::v1::CreateEkmConnectionRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateEkmConnection(
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
-};
-
-std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
-MakeDefaultEkmServiceConnectionIdempotencyPolicy();
+/// @deprecated Use kms_v1::EkmServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::kms_v1::EkmServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms

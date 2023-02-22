@@ -20,51 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_MOCKS_MOCK_EKM_CONNECTION_H
 
 #include "google/cloud/kms/ekm_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/kms/v1/mocks/mock_ekm_connection.h"
 
 namespace google {
 namespace cloud {
 namespace kms_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `EkmServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EkmServiceClient`. To do so,
- * construct an object of type `EkmServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockEkmServiceConnection : public kms::EkmServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::kms::v1::EkmConnection>,
-              ListEkmConnections,
-              (google::cloud::kms::v1::ListEkmConnectionsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::kms::v1::EkmConnection>, GetEkmConnection,
-              (google::cloud::kms::v1::GetEkmConnectionRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::EkmConnection>, CreateEkmConnection,
-      (google::cloud::kms::v1::CreateEkmConnectionRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::kms::v1::EkmConnection>, UpdateEkmConnection,
-      (google::cloud::kms::v1::UpdateEkmConnectionRequest const& request),
-      (override));
-};
+/// @deprecated Use kms_v1_mocks::MockEkmServiceConnection directly.
+using ::google::cloud::kms_v1_mocks::MockEkmServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_mocks

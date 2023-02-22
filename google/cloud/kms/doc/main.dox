@@ -100,13 +100,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `kms::EkmServiceClient`:
+For example, this will override the default endpoint for `kms_v1::EkmServiceClient`:
 
 @snippet ekm_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [kms::EkmServiceClient](@ref kms::EkmServiceClient-endpoint-snippet)
- [kms::KeyManagementServiceClient](@ref kms::KeyManagementServiceClient-endpoint-snippet)
+ [kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-endpoint-snippet)
+ [kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -121,8 +121,8 @@ to explicitly load a service account key file.
 @snippet ekm_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [kms::EkmServiceClient](@ref kms::EkmServiceClient-service-account-snippet)
- [kms::KeyManagementServiceClient](@ref kms::KeyManagementServiceClient-service-account-snippet)
+ [kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-service-account-snippet)
+ [kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -152,27 +152,27 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page kms::EkmServiceClient-endpoint-snippet Override kms::EkmServiceClient Endpoint Configuration
+/*! @page kms_v1::EkmServiceClient-endpoint-snippet Override kms_v1::EkmServiceClient Endpoint Configuration
 
-@snippet google/cloud/kms/samples/ekm_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page kms::EkmServiceClient-service-account-snippet Override kms::EkmServiceClient Authentication Defaults
-
-@snippet google/cloud/kms/samples/ekm_client_samples.cc with-service-account
+@snippet google/cloud/kms/v1/samples/ekm_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page kms::KeyManagementServiceClient-endpoint-snippet Override kms::KeyManagementServiceClient Endpoint Configuration
+/*! @page kms_v1::EkmServiceClient-service-account-snippet Override kms_v1::EkmServiceClient Authentication Defaults
 
-@snippet google/cloud/kms/samples/key_management_client_samples.cc set-client-endpoint
+@snippet google/cloud/kms/v1/samples/ekm_client_samples.cc with-service-account
 
 */
 
-/*! @page kms::KeyManagementServiceClient-service-account-snippet Override kms::KeyManagementServiceClient Authentication Defaults
+/*! @page kms_v1::KeyManagementServiceClient-endpoint-snippet Override kms_v1::KeyManagementServiceClient Endpoint Configuration
 
-@snippet google/cloud/kms/samples/key_management_client_samples.cc with-service-account
+@snippet google/cloud/kms/v1/samples/key_management_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page kms_v1::KeyManagementServiceClient-service-account-snippet Override kms_v1::KeyManagementServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/v1/samples/key_management_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
