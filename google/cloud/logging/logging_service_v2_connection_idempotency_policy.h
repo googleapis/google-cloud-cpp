@@ -19,43 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/logging/v2/logging.grpc.pb.h>
-#include <memory>
+#include "google/cloud/logging/v2/logging_service_v2_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LoggingServiceV2ConnectionIdempotencyPolicy {
- public:
-  virtual ~LoggingServiceV2ConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// logging_v2::MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy directly.
+using ::google::cloud::logging_v2::
+    MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency DeleteLog(
-      google::logging::v2::DeleteLogRequest const& request);
-
-  virtual google::cloud::Idempotency WriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request);
-
-  virtual google::cloud::Idempotency ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request);
-
-  virtual google::cloud::Idempotency ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
-
-  virtual google::cloud::Idempotency ListLogs(
-      google::logging::v2::ListLogsRequest request);
-};
-
-std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
-MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy();
+/// @deprecated Use logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::logging_v2::LoggingServiceV2ConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging

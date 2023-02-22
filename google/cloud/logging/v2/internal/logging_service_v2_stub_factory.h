@@ -16,23 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_MOCKS_MOCK_LOGGING_SERVICE_V2_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_MOCKS_MOCK_LOGGING_SERVICE_V2_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_STUB_FACTORY_H
 
-#include "google/cloud/logging/logging_service_v2_connection.h"
-#include "google/cloud/logging/v2/mocks/mock_logging_service_v2_connection.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace logging_mocks {
+namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use logging_v2_mocks::MockLoggingServiceV2Connection directly.
-using ::google::cloud::logging_v2_mocks::MockLoggingServiceV2Connection;
+std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_mocks
+}  // namespace logging_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_MOCKS_MOCK_LOGGING_SERVICE_V2_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_STUB_FACTORY_H

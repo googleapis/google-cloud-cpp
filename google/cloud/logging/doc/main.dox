@@ -98,6 +98,10 @@ For example, this will override the default endpoint for `logging::LoggingServic
 
 @snippet logging_service_v2_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [logging::LoggingServiceV2Client](@ref logging::LoggingServiceV2Client-endpoint-snippet)
+ [logging_v2::LoggingServiceV2Client](@ref logging_v2::LoggingServiceV2Client-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -109,6 +113,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet logging_service_v2_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [logging::LoggingServiceV2Client](@ref logging::LoggingServiceV2Client-service-account-snippet)
+ [logging_v2::LoggingServiceV2Client](@ref logging_v2::LoggingServiceV2Client-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page logging::LoggingServiceV2Client-service-account-snippet Override logging::LoggingServiceV2Client Authentication Defaults
 
 @snippet google/cloud/logging/samples/logging_service_v2_client_samples.cc with-service-account
+
+*/
+
+/*! @page logging_v2::LoggingServiceV2Client-endpoint-snippet Override logging_v2::LoggingServiceV2Client Endpoint Configuration
+
+@snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page logging_v2::LoggingServiceV2Client-service-account-snippet Override logging_v2::LoggingServiceV2Client Authentication Defaults
+
+@snippet google/cloud/logging/v2/samples/logging_service_v2_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

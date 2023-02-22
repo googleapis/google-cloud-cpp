@@ -21,52 +21,26 @@
 
 #include "google/cloud/logging/logging_service_v2_connection.h"
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/logging/v2/logging_service_v2_options.h"
 
 namespace google {
 namespace cloud {
 namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-logging-options
- */
-struct LoggingServiceV2RetryPolicyOption {
-  using Type = std::shared_ptr<LoggingServiceV2RetryPolicy>;
-};
+/// @deprecated Use logging_v2::LoggingServiceV2BackoffPolicyOption directly.
+using ::google::cloud::logging_v2::LoggingServiceV2BackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-logging-options
- */
-struct LoggingServiceV2BackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::logging_v2::
+    LoggingServiceV2ConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-logging-options
- */
-struct LoggingServiceV2ConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use logging_v2::LoggingServiceV2PolicyOptionList directly.
+using ::google::cloud::logging_v2::LoggingServiceV2PolicyOptionList;
 
-/**
- * The options applicable to LoggingServiceV2.
- *
- * @ingroup google-cloud-logging-options
- */
-using LoggingServiceV2PolicyOptionList =
-    OptionList<LoggingServiceV2RetryPolicyOption,
-               LoggingServiceV2BackoffPolicyOption,
-               LoggingServiceV2ConnectionIdempotencyPolicyOption>;
+/// @deprecated Use logging_v2::LoggingServiceV2RetryPolicyOption directly.
+using ::google::cloud::logging_v2::LoggingServiceV2RetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
