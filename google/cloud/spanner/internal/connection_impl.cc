@@ -555,9 +555,9 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
     std::vector<spanner::ReadPartition> read_partitions;
     for (auto const& partition : response->partitions()) {
       read_partitions.push_back(MakeReadPartition(
-          response->transaction().id(), ctx.tag, session->session_name(),
-          partition.partition_token(), params.table, params.keys,
-          params.columns, params.read_options));
+          response->transaction().id(), ctx.route_to_leader, ctx.tag,
+          session->session_name(), partition.partition_token(), params.table,
+          params.keys, params.columns, params.read_options));
     }
 
     return read_partitions;
@@ -850,9 +850,10 @@ ConnectionImpl::PartitionQueryImpl(
 
     std::vector<spanner::QueryPartition> query_partitions;
     for (auto const& partition : response->partitions()) {
-      query_partitions.push_back(MakeQueryPartition(
-          response->transaction().id(), ctx.tag, session->session_name(),
-          partition.partition_token(), params.statement));
+      query_partitions.push_back(
+          MakeQueryPartition(response->transaction().id(), ctx.route_to_leader,
+                             ctx.tag, session->session_name(),
+                             partition.partition_token(), params.statement));
     }
     return query_partitions;
   }

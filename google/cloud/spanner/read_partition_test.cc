@@ -31,6 +31,7 @@ class ReadPartitionTester {
   std::string PartitionToken() const { return partition_.PartitionToken(); }
   std::string SessionId() const { return partition_.SessionId(); }
   std::string TransactionId() const { return partition_.TransactionId(); }
+  bool RouteToLeader() const { return partition_.RouteToLeader(); }
   std::string TransactionTag() const { return partition_.TransactionTag(); }
   spanner::ReadPartition Partition() const { return partition_; }
   std::string TableName() const { return partition_.TableName(); }
@@ -62,6 +63,7 @@ TEST(ReadPartitionTest, MakeReadPartition) {
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
+  bool route_to_leader = false;
   std::string transaction_tag("tag");
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
@@ -72,11 +74,12 @@ TEST(ReadPartitionTest, MakeReadPartition) {
   read_options.request_tag = "tag";
 
   ReadPartitionTester actual_partition(spanner_internal::MakeReadPartition(
-      transaction_id, transaction_tag, session_id, partition_token, table_name,
-      KeySet::All(), column_names, read_options));
+      transaction_id, route_to_leader, transaction_tag, session_id,
+      partition_token, table_name, KeySet::All(), column_names, read_options));
 
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());
+  EXPECT_EQ(route_to_leader, actual_partition.RouteToLeader());
   EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
   EXPECT_EQ(session_id, actual_partition.SessionId());
   EXPECT_EQ(table_name, actual_partition.TableName());
@@ -90,6 +93,7 @@ TEST(ReadPartitionTest, Constructor) {
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
+  bool route_to_leader = false;
   std::string transaction_tag("tag");
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
@@ -99,10 +103,11 @@ TEST(ReadPartitionTest, Constructor) {
   read_options.request_priority = RequestPriority::kMedium;
 
   ReadPartitionTester actual_partition(spanner_internal::MakeReadPartition(
-      transaction_id, transaction_tag, session_id, partition_token, table_name,
-      KeySet::All(), column_names, read_options));
+      transaction_id, route_to_leader, transaction_tag, session_id,
+      partition_token, table_name, KeySet::All(), column_names, read_options));
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());
+  EXPECT_EQ(route_to_leader, actual_partition.RouteToLeader());
   EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
   EXPECT_EQ(session_id, actual_partition.SessionId());
   EXPECT_EQ(table_name, actual_partition.TableName());
@@ -116,6 +121,7 @@ TEST(ReadPartitionTest, RegularSemantics) {
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
+  bool route_to_leader = true;
   std::string transaction_tag("tag");
   std::string table_name("Students");
   std::vector<std::string> column_names = {"LastName", "FirstName"};
@@ -125,8 +131,8 @@ TEST(ReadPartitionTest, RegularSemantics) {
   read_options.request_priority = RequestPriority::kMedium;
 
   ReadPartition read_partition(spanner_internal::MakeReadPartition(
-      transaction_id, transaction_tag, session_id, partition_token, table_name,
-      KeySet::All(), column_names, read_options));
+      transaction_id, route_to_leader, transaction_tag, session_id,
+      partition_token, table_name, KeySet::All(), column_names, read_options));
 
   EXPECT_NE(read_partition, ReadPartition());
 
@@ -141,13 +147,36 @@ TEST(ReadPartitionTest, RegularSemantics) {
   EXPECT_EQ(moved, assign);
 }
 
+TEST(ReadPartitionTest, RouteToLeaderInequality) {
+  std::string partition_token("token");
+  std::string session_id("session");
+  std::string transaction_id("txn-id");
+  std::string transaction_tag("tag");
+  std::string table_name("Students");
+  std::vector<std::string> column_names = {"LastName", "FirstName"};
+  ReadOptions read_options;
+  read_options.index_name = "secondary";
+  read_options.limit = 42;
+  read_options.request_priority = RequestPriority::kMedium;
+
+  // Verify that operator==(), which uses protobuf message comparison,
+  // considers route_to_leader, which is stored in an "unknown field".
+  auto read_partition_route_to_leader = spanner_internal::MakeReadPartition(
+      transaction_id, /*route_to_leader=*/true, transaction_tag, session_id,
+      partition_token, table_name, KeySet::All(), column_names, read_options);
+  auto read_partition_not_route_to_leader = spanner_internal::MakeReadPartition(
+      transaction_id, /*route_to_leader=*/false, transaction_tag, session_id,
+      partition_token, table_name, KeySet::All(), column_names, read_options);
+  EXPECT_NE(read_partition_route_to_leader, read_partition_not_route_to_leader);
+}
+
 TEST(ReadPartitionTest, SerializeDeserialize) {
   ReadOptions read_options;
   read_options.index_name = "secondary";
   read_options.limit = 42;
   read_options.request_priority = RequestPriority::kMedium;
   ReadPartitionTester expected_partition(spanner_internal::MakeReadPartition(
-      "txn-id", "tag", "session", "token", "Students", KeySet::All(),
+      "txn-id", true, "tag", "session", "token", "Students", KeySet::All(),
       std::vector<std::string>{"LastName", "FirstName"}, read_options));
 
   StatusOr<ReadPartition> partition = DeserializeReadPartition(
@@ -159,6 +188,8 @@ TEST(ReadPartitionTest, SerializeDeserialize) {
             actual_partition.PartitionToken());
   EXPECT_EQ(expected_partition.TransactionId(),
             actual_partition.TransactionId());
+  EXPECT_EQ(expected_partition.RouteToLeader(),
+            actual_partition.RouteToLeader());
   EXPECT_EQ(expected_partition.TransactionTag(),
             actual_partition.TransactionTag());
   EXPECT_EQ(expected_partition.SessionId(), actual_partition.SessionId());
@@ -183,8 +214,8 @@ TEST(ReadPartitionTest, MakeReadParams) {
   read_options.limit = 42;
   read_options.request_priority = RequestPriority::kMedium;
   ReadPartitionTester expected_partition(spanner_internal::MakeReadPartition(
-      "txn-id", "tag", "session", "token", "Students", KeySet::All(), columns,
-      read_options));
+      "txn-id", true, "tag", "session", "token", "Students", KeySet::All(),
+      columns, read_options));
 
   Connection::ReadParams params =
       spanner_internal::MakeReadParams(expected_partition.Partition());
@@ -195,7 +226,7 @@ TEST(ReadPartitionTest, MakeReadParams) {
   EXPECT_EQ(params.keys, KeySet::All());
   EXPECT_EQ(params.table, "Students");
   EXPECT_THAT(params.transaction,
-              HasSessionAndTransaction("session", "txn-id", false, "tag"));
+              HasSessionAndTransaction("session", "txn-id", true, "tag"));
 }
 
 }  // namespace
