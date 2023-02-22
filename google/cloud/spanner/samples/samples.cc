@@ -910,7 +910,7 @@ void EnableFineGrainedAccess(
 }
 //! [END spanner_enable_fine_grained_access]
 
-//! [update-database] [START spanner_add_column]
+//! [add-column] [START spanner_add_column]
 void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
                std::string const& project_id, std::string const& instance_id,
                std::string const& database_id) {
@@ -927,7 +927,7 @@ void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
   if (!metadata) throw std::move(metadata).status();
   std::cout << "Added MarketingBudget column\n";
 }
-//! [update-database] [END spanner_add_column]
+//! [add-column] [END spanner_add_column]
 
 // [START spanner_add_timestamp_column]
 void AddTimestampColumn(
