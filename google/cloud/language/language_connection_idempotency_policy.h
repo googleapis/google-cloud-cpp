@@ -19,47 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_LANGUAGE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_LANGUAGE_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/language/v1/language_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/language/v1/language_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LanguageServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~LanguageServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// language_v1::MakeDefaultLanguageServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::language_v1::
+    MakeDefaultLanguageServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency AnalyzeSentiment(
-      google::cloud::language::v1::AnalyzeSentimentRequest const& request);
-
-  virtual google::cloud::Idempotency AnalyzeEntities(
-      google::cloud::language::v1::AnalyzeEntitiesRequest const& request);
-
-  virtual google::cloud::Idempotency AnalyzeEntitySentiment(
-      google::cloud::language::v1::AnalyzeEntitySentimentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency AnalyzeSyntax(
-      google::cloud::language::v1::AnalyzeSyntaxRequest const& request);
-
-  virtual google::cloud::Idempotency ClassifyText(
-      google::cloud::language::v1::ClassifyTextRequest const& request);
-
-  virtual google::cloud::Idempotency AnnotateText(
-      google::cloud::language::v1::AnnotateTextRequest const& request);
-};
-
-std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
-MakeDefaultLanguageServiceConnectionIdempotencyPolicy();
+/// @deprecated Use language_v1::LanguageServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::language_v1::LanguageServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language

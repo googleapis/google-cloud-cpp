@@ -288,9 +288,10 @@
 ./include/google/cloud/kms/mocks
 ./include/google/cloud/kms/v1
 ./include/google/cloud/language
-./include/google/cloud/language/internal
 ./include/google/cloud/language/mocks
 ./include/google/cloud/language/v1
+./include/google/cloud/language/v1/internal
+./include/google/cloud/language/v1/mocks
 ./include/google/cloud/logging
 ./include/google/cloud/logging/internal
 ./include/google/cloud/logging/mocks

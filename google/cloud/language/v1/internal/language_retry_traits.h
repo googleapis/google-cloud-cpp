@@ -16,23 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/language/v1/language_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_LANGUAGE_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_LANGUAGE_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_RETRY_TRAITS_H
 
-#include "google/cloud/language/language_connection.h"
-#include "google/cloud/language/v1/language_client.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace language {
+namespace language_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use language_v1::LanguageServiceClient directly.
-using ::google::cloud::language_v1::LanguageServiceClient;
+/// Define the gRPC status code semantics for retrying requests.
+struct LanguageServiceRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace language
+}  // namespace language_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_LANGUAGE_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V1_INTERNAL_LANGUAGE_RETRY_TRAITS_H
