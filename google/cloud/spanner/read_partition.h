@@ -168,9 +168,9 @@ struct ReadPartitionInternals {
   static spanner::Connection::ReadParams MakeReadParams(
       spanner::ReadPartition const& read_partition) {
     return spanner::Connection::ReadParams{
-        MakeTransactionFromIds(read_partition.SessionId(),
-                               read_partition.TransactionId(),
-                               read_partition.TransactionTag()),
+        MakeTransactionFromIds(
+            read_partition.SessionId(), read_partition.TransactionId(),
+            /*route_to_leader=*/false, read_partition.TransactionTag()),
         read_partition.TableName(),
         FromProto(read_partition.KeySet()),
         read_partition.ColumnNames(),

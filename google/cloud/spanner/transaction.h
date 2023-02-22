@@ -167,7 +167,7 @@ class Transaction {
   explicit Transaction(SingleUseOptions opts);
   // Construction of a transaction with existing IDs.
   Transaction(std::string session_id, std::string transaction_id,
-              std::string transaction_tag);
+              bool route_to_leader, std::string transaction_tag);
 
   std::shared_ptr<spanner_internal::TransactionImpl> impl_;
 };
@@ -228,7 +228,7 @@ struct TransactionInternals {
   }
 
   static spanner::Transaction MakeTransactionFromIds(
-      std::string session_id, std::string transaction_id,
+      std::string session_id, std::string transaction_id, bool route_to_leader,
       std::string transaction_tag);
 };
 
@@ -247,10 +247,10 @@ VisitInvokeResult<Functor> Visit(spanner::Transaction txn, Functor&& f) {
 }
 
 inline spanner::Transaction MakeTransactionFromIds(
-    std::string session_id, std::string transaction_id,
+    std::string session_id, std::string transaction_id, bool route_to_leader,
     std::string transaction_tag) {
   return TransactionInternals::MakeTransactionFromIds(
-      std::move(session_id), std::move(transaction_id),
+      std::move(session_id), std::move(transaction_id), route_to_leader,
       std::move(transaction_tag));
 }
 

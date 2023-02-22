@@ -94,39 +94,44 @@ Transaction::SingleUseOptions::SingleUseOptions(
 Transaction::Transaction(ReadOnlyOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.ro_opts_));
+  auto const route_to_leader = false;  // read-only
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      std::move(selector), std::string());
+      std::move(selector), route_to_leader, std::string());
 }
 
 Transaction::Transaction(ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
+  auto const route_to_leader = true;  // read-write
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      std::move(selector), std::move(opts.tag_).value_or(std::string()));
+      std::move(selector), route_to_leader,
+      std::move(opts.tag_).value_or(std::string()));
 }
 
 Transaction::Transaction(Transaction const& txn, ReadWriteOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
+  auto const route_to_leader = true;  // read-write
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      *txn.impl_, std::move(selector),
+      *txn.impl_, std::move(selector), route_to_leader,
       std::move(opts.tag_).value_or(std::string()));
 }
 
 Transaction::Transaction(SingleUseOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_single_use() = MakeOpts(std::move(opts.ro_opts_));
+  auto const route_to_leader = false;  // read-only
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
-      std::move(selector), std::string());
+      std::move(selector), route_to_leader, std::string());
 }
 
 Transaction::Transaction(std::string session_id, std::string transaction_id,
-                         std::string transaction_tag) {
+                         bool route_to_leader, std::string transaction_tag) {
   google::spanner::v1::TransactionSelector selector;
   selector.set_id(std::move(transaction_id));
   impl_ = std::make_shared<spanner_internal::TransactionImpl>(
       spanner_internal::MakeDissociatedSessionHolder(std::move(session_id)),
-      std::move(selector), std::move(transaction_tag));
+      std::move(selector), route_to_leader, std::move(transaction_tag));
 }
 
 Transaction::~Transaction() = default;
@@ -138,10 +143,10 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 spanner::Transaction TransactionInternals::MakeTransactionFromIds(
-    std::string session_id, std::string transaction_id,
+    std::string session_id, std::string transaction_id, bool route_to_leader,
     std::string transaction_tag) {
   return spanner::Transaction(std::move(session_id), std::move(transaction_id),
-                              std::move(transaction_tag));
+                              route_to_leader, std::move(transaction_tag));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
