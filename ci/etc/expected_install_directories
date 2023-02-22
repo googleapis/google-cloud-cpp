@@ -278,9 +278,10 @@
 ./include/google/cloud/ids/mocks
 ./include/google/cloud/ids/v1
 ./include/google/cloud/iot
-./include/google/cloud/iot/internal
 ./include/google/cloud/iot/mocks
 ./include/google/cloud/iot/v1
+./include/google/cloud/iot/v1/internal
+./include/google/cloud/iot/v1/mocks
 ./include/google/cloud/kms
 ./include/google/cloud/kms/internal
 ./include/google/cloud/kms/mocks

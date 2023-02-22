@@ -21,51 +21,25 @@
 
 #include "google/cloud/iot/device_manager_connection.h"
 #include "google/cloud/iot/device_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/iot/v1/device_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace iot {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-iot-options
- */
-struct DeviceManagerRetryPolicyOption {
-  using Type = std::shared_ptr<DeviceManagerRetryPolicy>;
-};
+/// @deprecated Use iot_v1::DeviceManagerBackoffPolicyOption directly.
+using ::google::cloud::iot_v1::DeviceManagerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-iot-options
- */
-struct DeviceManagerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use iot_v1::DeviceManagerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::iot_v1::DeviceManagerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-iot-options
- */
-struct DeviceManagerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DeviceManagerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use iot_v1::DeviceManagerPolicyOptionList directly.
+using ::google::cloud::iot_v1::DeviceManagerPolicyOptionList;
 
-/**
- * The options applicable to DeviceManager.
- *
- * @ingroup google-cloud-iot-options
- */
-using DeviceManagerPolicyOptionList =
-    OptionList<DeviceManagerRetryPolicyOption, DeviceManagerBackoffPolicyOption,
-               DeviceManagerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use iot_v1::DeviceManagerRetryPolicyOption directly.
+using ::google::cloud::iot_v1::DeviceManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot

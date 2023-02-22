@@ -16,23 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/iot/v1/device_manager.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_MOCKS_MOCK_DEVICE_MANAGER_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_MOCKS_MOCK_DEVICE_MANAGER_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_OPTION_DEFAULTS_H
 
-#include "google/cloud/iot/device_manager_connection.h"
-#include "google/cloud/iot/v1/mocks/mock_device_manager_connection.h"
+#include "google/cloud/options.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace iot_mocks {
+namespace iot_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use iot_v1_mocks::MockDeviceManagerConnection directly.
-using ::google::cloud::iot_v1_mocks::MockDeviceManagerConnection;
+Options DeviceManagerDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_mocks
+}  // namespace iot_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_MOCKS_MOCK_DEVICE_MANAGER_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IOT_V1_INTERNAL_DEVICE_MANAGER_OPTION_DEFAULTS_H
