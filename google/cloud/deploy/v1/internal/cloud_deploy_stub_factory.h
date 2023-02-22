@@ -16,23 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_CLOUD_DEPLOY_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_CLOUD_DEPLOY_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_STUB_FACTORY_H
 
-#include "google/cloud/deploy/cloud_deploy_connection.h"
-#include "google/cloud/deploy/v1/cloud_deploy_client.h"
+#include "google/cloud/deploy/v1/internal/cloud_deploy_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace deploy {
+namespace deploy_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use deploy_v1::CloudDeployClient directly.
-using ::google::cloud::deploy_v1::CloudDeployClient;
+std::shared_ptr<CloudDeployStub> CreateDefaultCloudDeployStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace deploy
+}  // namespace deploy_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_CLOUD_DEPLOY_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_INTERNAL_CLOUD_DEPLOY_STUB_FACTORY_H

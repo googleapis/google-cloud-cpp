@@ -19,93 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_CLOUD_DEPLOY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_CLOUD_DEPLOY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/deploy/v1/cloud_deploy.grpc.pb.h>
-#include <memory>
+#include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudDeployConnectionIdempotencyPolicy {
- public:
-  virtual ~CloudDeployConnectionIdempotencyPolicy();
+/// @deprecated Use deploy_v1::MakeDefaultCloudDeployConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::deploy_v1::
+    MakeDefaultCloudDeployConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudDeployConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListDeliveryPipelines(
-      google::cloud::deploy::v1::ListDeliveryPipelinesRequest request);
-
-  virtual google::cloud::Idempotency GetDeliveryPipeline(
-      google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request);
-
-  virtual google::cloud::Idempotency CreateDeliveryPipeline(
-      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateDeliveryPipeline(
-      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteDeliveryPipeline(
-      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request);
-
-  virtual google::cloud::Idempotency ListTargets(
-      google::cloud::deploy::v1::ListTargetsRequest request);
-
-  virtual google::cloud::Idempotency GetTarget(
-      google::cloud::deploy::v1::GetTargetRequest const& request);
-
-  virtual google::cloud::Idempotency CreateTarget(
-      google::cloud::deploy::v1::CreateTargetRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateTarget(
-      google::cloud::deploy::v1::UpdateTargetRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteTarget(
-      google::cloud::deploy::v1::DeleteTargetRequest const& request);
-
-  virtual google::cloud::Idempotency ListReleases(
-      google::cloud::deploy::v1::ListReleasesRequest request);
-
-  virtual google::cloud::Idempotency GetRelease(
-      google::cloud::deploy::v1::GetReleaseRequest const& request);
-
-  virtual google::cloud::Idempotency CreateRelease(
-      google::cloud::deploy::v1::CreateReleaseRequest const& request);
-
-  virtual google::cloud::Idempotency AbandonRelease(
-      google::cloud::deploy::v1::AbandonReleaseRequest const& request);
-
-  virtual google::cloud::Idempotency ApproveRollout(
-      google::cloud::deploy::v1::ApproveRolloutRequest const& request);
-
-  virtual google::cloud::Idempotency ListRollouts(
-      google::cloud::deploy::v1::ListRolloutsRequest request);
-
-  virtual google::cloud::Idempotency GetRollout(
-      google::cloud::deploy::v1::GetRolloutRequest const& request);
-
-  virtual google::cloud::Idempotency CreateRollout(
-      google::cloud::deploy::v1::CreateRolloutRequest const& request);
-
-  virtual google::cloud::Idempotency RetryJob(
-      google::cloud::deploy::v1::RetryJobRequest const& request);
-
-  virtual google::cloud::Idempotency ListJobRuns(
-      google::cloud::deploy::v1::ListJobRunsRequest request);
-
-  virtual google::cloud::Idempotency GetJobRun(
-      google::cloud::deploy::v1::GetJobRunRequest const& request);
-
-  virtual google::cloud::Idempotency GetConfig(
-      google::cloud::deploy::v1::GetConfigRequest const& request);
-};
-
-std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>
-MakeDefaultCloudDeployConnectionIdempotencyPolicy();
+/// @deprecated Use deploy_v1::CloudDeployConnectionIdempotencyPolicy directly.
+using ::google::cloud::deploy_v1::CloudDeployConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy
