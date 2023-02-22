@@ -99,6 +99,10 @@ For example, this will override the default endpoint for `edgecontainer::EdgeCon
 
 @snippet edge_container_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [edgecontainer::EdgeContainerClient](@ref edgecontainer::EdgeContainerClient-endpoint-snippet)
+ [edgecontainer_v1::EdgeContainerClient](@ref edgecontainer_v1::EdgeContainerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -110,6 +114,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet edge_container_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [edgecontainer::EdgeContainerClient](@ref edgecontainer::EdgeContainerClient-service-account-snippet)
+ [edgecontainer_v1::EdgeContainerClient](@ref edgecontainer_v1::EdgeContainerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -149,6 +157,18 @@ can override the default policies.
 /*! @page edgecontainer::EdgeContainerClient-service-account-snippet Override edgecontainer::EdgeContainerClient Authentication Defaults
 
 @snippet google/cloud/edgecontainer/samples/edge_container_client_samples.cc with-service-account
+
+*/
+
+/*! @page edgecontainer_v1::EdgeContainerClient-endpoint-snippet Override edgecontainer_v1::EdgeContainerClient Endpoint Configuration
+
+@snippet google/cloud/edgecontainer/v1/samples/edge_container_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page edgecontainer_v1::EdgeContainerClient-service-account-snippet Override edgecontainer_v1::EdgeContainerClient Authentication Defaults
+
+@snippet google/cloud/edgecontainer/v1/samples/edge_container_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

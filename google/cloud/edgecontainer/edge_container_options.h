@@ -21,62 +21,29 @@
 
 #include "google/cloud/edgecontainer/edge_container_connection.h"
 #include "google/cloud/edgecontainer/edge_container_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/edgecontainer/v1/edge_container_options.h"
 
 namespace google {
 namespace cloud {
 namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-edgecontainer-options
- */
-struct EdgeContainerRetryPolicyOption {
-  using Type = std::shared_ptr<EdgeContainerRetryPolicy>;
-};
+/// @deprecated Use edgecontainer_v1::EdgeContainerPollingPolicyOption directly.
+using ::google::cloud::edgecontainer_v1::EdgeContainerPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-edgecontainer-options
- */
-struct EdgeContainerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use edgecontainer_v1::EdgeContainerBackoffPolicyOption directly.
+using ::google::cloud::edgecontainer_v1::EdgeContainerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-edgecontainer-options
- */
-struct EdgeContainerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<EdgeContainerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// edgecontainer_v1::EdgeContainerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::edgecontainer_v1::
+    EdgeContainerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-edgecontainer-options
- */
-struct EdgeContainerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use edgecontainer_v1::EdgeContainerPolicyOptionList directly.
+using ::google::cloud::edgecontainer_v1::EdgeContainerPolicyOptionList;
 
-/**
- * The options applicable to EdgeContainer.
- *
- * @ingroup google-cloud-edgecontainer-options
- */
-using EdgeContainerPolicyOptionList =
-    OptionList<EdgeContainerRetryPolicyOption, EdgeContainerBackoffPolicyOption,
-               EdgeContainerPollingPolicyOption,
-               EdgeContainerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use edgecontainer_v1::EdgeContainerRetryPolicyOption directly.
+using ::google::cloud::edgecontainer_v1::EdgeContainerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer

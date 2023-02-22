@@ -16,23 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_STUB_FACTORY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_STUB_FACTORY_H
 
-#include "google/cloud/edgecontainer/edge_container_connection.h"
-#include "google/cloud/edgecontainer/v1/edge_container_client.h"
+#include "google/cloud/edgecontainer/v1/internal/edge_container_stub.h"
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use edgecontainer_v1::EdgeContainerClient directly.
-using ::google::cloud::edgecontainer_v1::EdgeContainerClient;
+std::shared_ptr<EdgeContainerStub> CreateDefaultEdgeContainerStub(
+    google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_STUB_FACTORY_H

@@ -16,23 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/edgecontainer/v1/service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CLIENT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_RETRY_TRAITS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_RETRY_TRAITS_H
 
-#include "google/cloud/edgecontainer/edge_container_connection.h"
-#include "google/cloud/edgecontainer/v1/edge_container_client.h"
+#include "google/cloud/status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
+namespace edgecontainer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use edgecontainer_v1::EdgeContainerClient directly.
-using ::google::cloud::edgecontainer_v1::EdgeContainerClient;
+/// Define the gRPC status code semantics for retrying requests.
+struct EdgeContainerRetryTraits {
+  static inline bool IsPermanentFailure(google::cloud::Status const& status) {
+    return status.code() != StatusCode::kOk &&
+           status.code() != StatusCode::kUnavailable;
+  }
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace edgecontainer
+}  // namespace edgecontainer_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_EDGE_CONTAINER_CLIENT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_INTERNAL_EDGE_CONTAINER_RETRY_TRAITS_H

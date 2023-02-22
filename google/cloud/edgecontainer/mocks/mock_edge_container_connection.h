@@ -20,132 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_MOCKS_MOCK_EDGE_CONTAINER_CONNECTION_H
 
 #include "google/cloud/edgecontainer/edge_container_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/edgecontainer/v1/mocks/mock_edge_container_connection.h"
 
 namespace google {
 namespace cloud {
 namespace edgecontainer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `EdgeContainerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EdgeContainerClient`. To do so,
- * construct an object of type `EdgeContainerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockEdgeContainerConnection
-    : public edgecontainer::EdgeContainerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::edgecontainer::v1::Cluster>,
-              ListClusters,
-              (google::cloud::edgecontainer::v1::ListClustersRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::Cluster>, GetCluster,
-      (google::cloud::edgecontainer::v1::GetClusterRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
-      CreateCluster,
-      (google::cloud::edgecontainer::v1::CreateClusterRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
-      UpdateCluster,
-      (google::cloud::edgecontainer::v1::UpdateClusterRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
-      DeleteCluster,
-      (google::cloud::edgecontainer::v1::DeleteClusterRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>,
-      GenerateAccessToken,
-      (google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::edgecontainer::v1::NodePool>,
-              ListNodePools,
-              (google::cloud::edgecontainer::v1::ListNodePoolsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::NodePool>, GetNodePool,
-      (google::cloud::edgecontainer::v1::GetNodePoolRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
-      CreateNodePool,
-      (google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
-      UpdateNodePool,
-      (google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
-      DeleteNodePool,
-      (google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::edgecontainer::v1::Machine>,
-              ListMachines,
-              (google::cloud::edgecontainer::v1::ListMachinesRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::edgecontainer::v1::Machine>, GetMachine,
-      (google::cloud::edgecontainer::v1::GetMachineRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::edgecontainer::v1::VpnConnection>,
-      ListVpnConnections,
-      (google::cloud::edgecontainer::v1::ListVpnConnectionsRequest request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::edgecontainer::v1::VpnConnection>,
-              GetVpnConnection,
-              (google::cloud::edgecontainer::v1::GetVpnConnectionRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>,
-      CreateVpnConnection,
-      (google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
-      DeleteVpnConnection,
-      (google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use edgecontainer_v1_mocks::MockEdgeContainerConnection
+/// directly.
+using ::google::cloud::edgecontainer_v1_mocks::MockEdgeContainerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_mocks
