@@ -21,64 +21,34 @@
 
 #include "google/cloud/notebooks/managed_notebook_connection.h"
 #include "google/cloud/notebooks/managed_notebook_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/notebooks/v1/managed_notebook_options.h"
 
 namespace google {
 namespace cloud {
 namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct ManagedNotebookServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ManagedNotebookServiceRetryPolicy>;
-};
+/// @deprecated Use notebooks_v1::ManagedNotebookServicePollingPolicyOption
+/// directly.
+using ::google::cloud::notebooks_v1::ManagedNotebookServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct ManagedNotebookServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use notebooks_v1::ManagedNotebookServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::notebooks_v1::ManagedNotebookServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct ManagedNotebookServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// notebooks_v1::ManagedNotebookServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::notebooks_v1::
+    ManagedNotebookServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct ManagedNotebookServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use notebooks_v1::ManagedNotebookServicePolicyOptionList
+/// directly.
+using ::google::cloud::notebooks_v1::ManagedNotebookServicePolicyOptionList;
 
-/**
- * The options applicable to ManagedNotebookService.
- *
- * @ingroup google-cloud-notebooks-options
- */
-using ManagedNotebookServicePolicyOptionList =
-    OptionList<ManagedNotebookServiceRetryPolicyOption,
-               ManagedNotebookServiceBackoffPolicyOption,
-               ManagedNotebookServicePollingPolicyOption,
-               ManagedNotebookServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use notebooks_v1::ManagedNotebookServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::notebooks_v1::ManagedNotebookServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks

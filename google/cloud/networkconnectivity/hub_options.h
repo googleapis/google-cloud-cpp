@@ -21,62 +21,33 @@
 
 #include "google/cloud/networkconnectivity/hub_connection.h"
 #include "google/cloud/networkconnectivity/hub_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/networkconnectivity/v1/hub_options.h"
 
 namespace google {
 namespace cloud {
 namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-networkconnectivity-options
- */
-struct HubServiceRetryPolicyOption {
-  using Type = std::shared_ptr<HubServiceRetryPolicy>;
-};
+/// @deprecated Use networkconnectivity_v1::HubServicePollingPolicyOption
+/// directly.
+using ::google::cloud::networkconnectivity_v1::HubServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-networkconnectivity-options
- */
-struct HubServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use networkconnectivity_v1::HubServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::networkconnectivity_v1::HubServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-networkconnectivity-options
- */
-struct HubServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<HubServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// networkconnectivity_v1::HubServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::networkconnectivity_v1::
+    HubServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-networkconnectivity-options
- */
-struct HubServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use networkconnectivity_v1::HubServicePolicyOptionList directly.
+using ::google::cloud::networkconnectivity_v1::HubServicePolicyOptionList;
 
-/**
- * The options applicable to HubService.
- *
- * @ingroup google-cloud-networkconnectivity-options
- */
-using HubServicePolicyOptionList =
-    OptionList<HubServiceRetryPolicyOption, HubServiceBackoffPolicyOption,
-               HubServicePollingPolicyOption,
-               HubServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use networkconnectivity_v1::HubServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::networkconnectivity_v1::HubServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity

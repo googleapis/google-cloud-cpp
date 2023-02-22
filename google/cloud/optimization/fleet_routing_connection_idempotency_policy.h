@@ -19,35 +19,22 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_FLEET_ROUTING_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_FLEET_ROUTING_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
-#include <memory>
+#include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class FleetRoutingConnectionIdempotencyPolicy {
- public:
-  virtual ~FleetRoutingConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// optimization_v1::MakeDefaultFleetRoutingConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::optimization_v1::
+    MakeDefaultFleetRoutingConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency OptimizeTours(
-      google::cloud::optimization::v1::OptimizeToursRequest const& request);
-
-  virtual google::cloud::Idempotency BatchOptimizeTours(
-      google::cloud::optimization::v1::BatchOptimizeToursRequest const&
-          request);
-};
-
-std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
-MakeDefaultFleetRoutingConnectionIdempotencyPolicy();
+/// @deprecated Use optimization_v1::FleetRoutingConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::optimization_v1::FleetRoutingConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization

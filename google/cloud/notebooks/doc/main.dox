@@ -104,6 +104,8 @@ For example, this will override the default endpoint for `notebooks::ManagedNote
 Follow these links to find examples for other \c *Client classes:
  [notebooks::ManagedNotebookServiceClient](@ref notebooks::ManagedNotebookServiceClient-endpoint-snippet)
  [notebooks::NotebookServiceClient](@ref notebooks::NotebookServiceClient-endpoint-snippet)
+ [notebooks_v1::ManagedNotebookServiceClient](@ref notebooks_v1::ManagedNotebookServiceClient-endpoint-snippet)
+ [notebooks_v1::NotebookServiceClient](@ref notebooks_v1::NotebookServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -120,6 +122,8 @@ to explicitly load a service account key file.
 Follow these links to find examples for other \c *Client classes:
  [notebooks::ManagedNotebookServiceClient](@ref notebooks::ManagedNotebookServiceClient-service-account-snippet)
  [notebooks::NotebookServiceClient](@ref notebooks::NotebookServiceClient-service-account-snippet)
+ [notebooks_v1::ManagedNotebookServiceClient](@ref notebooks_v1::ManagedNotebookServiceClient-service-account-snippet)
+ [notebooks_v1::NotebookServiceClient](@ref notebooks_v1::NotebookServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -172,6 +176,30 @@ can override the default policies.
 /*! @page notebooks::NotebookServiceClient-service-account-snippet Override notebooks::NotebookServiceClient Authentication Defaults
 
 @snippet google/cloud/notebooks/samples/notebook_client_samples.cc with-service-account
+
+*/
+
+/*! @page notebooks_v1::ManagedNotebookServiceClient-endpoint-snippet Override notebooks_v1::ManagedNotebookServiceClient Endpoint Configuration
+
+@snippet google/cloud/notebooks/v1/samples/managed_notebook_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page notebooks_v1::ManagedNotebookServiceClient-service-account-snippet Override notebooks_v1::ManagedNotebookServiceClient Authentication Defaults
+
+@snippet google/cloud/notebooks/v1/samples/managed_notebook_client_samples.cc with-service-account
+
+*/
+
+/*! @page notebooks_v1::NotebookServiceClient-endpoint-snippet Override notebooks_v1::NotebookServiceClient Endpoint Configuration
+
+@snippet google/cloud/notebooks/v1/samples/notebook_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page notebooks_v1::NotebookServiceClient-service-account-snippet Override notebooks_v1::NotebookServiceClient Authentication Defaults
+
+@snippet google/cloud/notebooks/v1/samples/notebook_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

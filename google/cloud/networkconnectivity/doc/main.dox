@@ -99,6 +99,10 @@ For example, this will override the default endpoint for `networkconnectivity::H
 
 @snippet hub_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [networkconnectivity::HubServiceClient](@ref networkconnectivity::HubServiceClient-endpoint-snippet)
+ [networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -110,6 +114,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet hub_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [networkconnectivity::HubServiceClient](@ref networkconnectivity::HubServiceClient-service-account-snippet)
+ [networkconnectivity_v1::HubServiceClient](@ref networkconnectivity_v1::HubServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -149,6 +157,18 @@ can override the default policies.
 /*! @page networkconnectivity::HubServiceClient-service-account-snippet Override networkconnectivity::HubServiceClient Authentication Defaults
 
 @snippet google/cloud/networkconnectivity/samples/hub_client_samples.cc with-service-account
+
+*/
+
+/*! @page networkconnectivity_v1::HubServiceClient-endpoint-snippet Override networkconnectivity_v1::HubServiceClient Endpoint Configuration
+
+@snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page networkconnectivity_v1::HubServiceClient-service-account-snippet Override networkconnectivity_v1::HubServiceClient Authentication Defaults
+
+@snippet google/cloud/networkconnectivity/v1/samples/hub_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

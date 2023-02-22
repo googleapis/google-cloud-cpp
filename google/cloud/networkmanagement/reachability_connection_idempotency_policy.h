@@ -19,52 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_REACHABILITY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_REACHABILITY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/networkmanagement/v1/reachability.grpc.pb.h>
-#include <memory>
+#include "google/cloud/networkmanagement/v1/reachability_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ReachabilityServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~ReachabilityServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// networkmanagement_v1::MakeDefaultReachabilityServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::networkmanagement_v1::
+    MakeDefaultReachabilityServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListConnectivityTests(
-      google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-          request);
-
-  virtual google::cloud::Idempotency GetConnectivityTest(
-      google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateConnectivityTest(
-      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateConnectivityTest(
-      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-          request);
-
-  virtual google::cloud::Idempotency RerunConnectivityTest(
-      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteConnectivityTest(
-      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-          request);
-};
-
-std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
-MakeDefaultReachabilityServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// networkmanagement_v1::ReachabilityServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::networkmanagement_v1::
+    ReachabilityServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement

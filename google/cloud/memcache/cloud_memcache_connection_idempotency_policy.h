@@ -19,52 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_CLOUD_MEMCACHE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_CLOUD_MEMCACHE_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/memcache/v1/cloud_memcache.grpc.pb.h>
-#include <memory>
+#include "google/cloud/memcache/v1/cloud_memcache_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudMemcacheConnectionIdempotencyPolicy {
- public:
-  virtual ~CloudMemcacheConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// memcache_v1::MakeDefaultCloudMemcacheConnectionIdempotencyPolicy directly.
+using ::google::cloud::memcache_v1::
+    MakeDefaultCloudMemcacheConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::memcache::v1::ListInstancesRequest request);
-
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::memcache::v1::GetInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::memcache::v1::CreateInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateParameters(
-      google::cloud::memcache::v1::UpdateParametersRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency ApplyParameters(
-      google::cloud::memcache::v1::ApplyParametersRequest const& request);
-
-  virtual google::cloud::Idempotency RescheduleMaintenance(
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request);
-};
-
-std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>
-MakeDefaultCloudMemcacheConnectionIdempotencyPolicy();
+/// @deprecated Use memcache_v1::CloudMemcacheConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::memcache_v1::CloudMemcacheConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache

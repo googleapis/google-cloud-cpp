@@ -20,107 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_CLOUD_MEMCACHE_CONNECTION_H
 
 #include "google/cloud/memcache/cloud_memcache_connection_idempotency_policy.h"
-#include "google/cloud/memcache/internal/cloud_memcache_retry_traits.h"
-#include "google/cloud/memcache/internal/cloud_memcache_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/memcache/v1/cloud_memcache_connection.h"
 
 namespace google {
 namespace cloud {
 namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudMemcacheRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        memcache_internal::CloudMemcacheRetryTraits>;
+/// @deprecated Use memcache_v1::MakeCloudMemcacheConnection directly.
+using ::google::cloud::memcache_v1::MakeCloudMemcacheConnection;
 
-using CloudMemcacheLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        memcache_internal::CloudMemcacheRetryTraits>;
+/// @deprecated Use memcache_v1::CloudMemcacheConnection directly.
+using ::google::cloud::memcache_v1::CloudMemcacheConnection;
 
-using CloudMemcacheLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        memcache_internal::CloudMemcacheRetryTraits>;
+/// @deprecated Use memcache_v1::CloudMemcacheLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::memcache_v1::CloudMemcacheLimitedErrorCountRetryPolicy;
 
-/**
- * The `CloudMemcacheConnection` object for `CloudMemcacheClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudMemcacheClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CloudMemcacheClient`.
- *
- * To create a concrete instance, see `MakeCloudMemcacheConnection()`.
- *
- * For mocking, see `memcache_mocks::MockCloudMemcacheConnection`.
- */
-class CloudMemcacheConnection {
- public:
-  virtual ~CloudMemcacheConnection() = 0;
+/// @deprecated Use memcache_v1::CloudMemcacheLimitedTimeRetryPolicy directly.
+using ::google::cloud::memcache_v1::CloudMemcacheLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
-      google::cloud::memcache::v1::ListInstancesRequest request);
-
-  virtual StatusOr<google::cloud::memcache::v1::Instance> GetInstance(
-      google::cloud::memcache::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::memcache::v1::Instance>>
-  CreateInstance(
-      google::cloud::memcache::v1::CreateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::memcache::v1::Instance>>
-  UpdateInstance(
-      google::cloud::memcache::v1::UpdateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::memcache::v1::Instance>>
-  UpdateParameters(
-      google::cloud::memcache::v1::UpdateParametersRequest const& request);
-
-  virtual future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::memcache::v1::DeleteInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::memcache::v1::Instance>>
-  ApplyParameters(
-      google::cloud::memcache::v1::ApplyParametersRequest const& request);
-
-  virtual future<StatusOr<google::cloud::memcache::v1::Instance>>
-  RescheduleMaintenance(
-      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `CloudMemcacheConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CloudMemcacheClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CloudMemcacheConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::memcache::CloudMemcachePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CloudMemcacheConnection` created by
- * this function.
- */
-std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
-    Options options = {});
+/// @deprecated Use memcache_v1::CloudMemcacheRetryPolicy directly.
+using ::google::cloud::memcache_v1::CloudMemcacheRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache

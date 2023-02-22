@@ -20,65 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_MOCKS_MOCK_ORG_POLICY_CONNECTION_H
 
 #include "google/cloud/orgpolicy/org_policy_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/orgpolicy/v2/mocks/mock_org_policy_connection.h"
 
 namespace google {
 namespace cloud {
 namespace orgpolicy_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `OrgPolicyConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `OrgPolicyClient`. To do so,
- * construct an object of type `OrgPolicyClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockOrgPolicyConnection : public orgpolicy::OrgPolicyConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::orgpolicy::v2::Constraint>,
-              ListConstraints,
-              (google::cloud::orgpolicy::v2::ListConstraintsRequest request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::orgpolicy::v2::Policy>, ListPolicies,
-              (google::cloud::orgpolicy::v2::ListPoliciesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::orgpolicy::v2::Policy>, GetPolicy,
-              (google::cloud::orgpolicy::v2::GetPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::Policy>, GetEffectivePolicy,
-      (google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::Policy>, CreatePolicy,
-      (google::cloud::orgpolicy::v2::CreatePolicyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::orgpolicy::v2::Policy>, UpdatePolicy,
-      (google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeletePolicy,
-      (google::cloud::orgpolicy::v2::DeletePolicyRequest const& request),
-      (override));
-};
+/// @deprecated Use orgpolicy_v2_mocks::MockOrgPolicyConnection directly.
+using ::google::cloud::orgpolicy_v2_mocks::MockOrgPolicyConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_mocks
