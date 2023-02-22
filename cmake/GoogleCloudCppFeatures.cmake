@@ -31,8 +31,7 @@ set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     "pubsublite")
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
-    # Promoted to GA circa 2022-10-12
-    "batch")
+)
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sorted
@@ -47,6 +46,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "assuredworkloads"
     "automl"
     "baremetalsolution"
+    "batch"
     "beyondcorp"
     "bigquery"
     "bigtable"
