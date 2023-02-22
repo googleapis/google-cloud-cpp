@@ -1069,7 +1069,8 @@ service {
 # Language
 service {
   service_proto_path: "google/cloud/language/v1/language_service.proto"
-  product_path: "google/cloud/language"
+  product_path: "google/cloud/language/v1"
+  forwarding_product_path: "google/cloud/language"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
