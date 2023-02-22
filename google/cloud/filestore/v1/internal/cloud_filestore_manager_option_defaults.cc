@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#include "google/cloud/filestore/internal/cloud_filestore_manager_option_defaults.h"
-#include "google/cloud/filestore/cloud_filestore_manager_connection.h"
-#include "google/cloud/filestore/cloud_filestore_manager_options.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_option_defaults.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,42 +39,43 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
       "file.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<filestore::CloudFilestoreManagerRetryPolicyOption>()) {
-    options.set<filestore::CloudFilestoreManagerRetryPolicyOption>(
-        filestore::CloudFilestoreManagerLimitedTimeRetryPolicy(
+  if (!options.has<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()) {
+    options.set<filestore_v1::CloudFilestoreManagerRetryPolicyOption>(
+        filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<filestore::CloudFilestoreManagerBackoffPolicyOption>()) {
-    options.set<filestore::CloudFilestoreManagerBackoffPolicyOption>(
+  if (!options.has<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()) {
+    options.set<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<filestore::CloudFilestoreManagerPollingPolicyOption>()) {
-    options.set<filestore::CloudFilestoreManagerPollingPolicyOption>(
+  if (!options.has<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()) {
+    options.set<filestore_v1::CloudFilestoreManagerPollingPolicyOption>(
         GenericPollingPolicy<
-            filestore::CloudFilestoreManagerRetryPolicyOption::Type,
-            filestore::CloudFilestoreManagerBackoffPolicyOption::Type>(
-            options.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
+            filestore_v1::CloudFilestoreManagerRetryPolicyOption::Type,
+            filestore_v1::CloudFilestoreManagerBackoffPolicyOption::Type>(
+            options.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
                 ->clone(),
-            options.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
+            options
+                .get<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
   if (!options
-           .has<filestore::
+           .has<filestore_v1::
                     CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<filestore::CloudFilestoreManagerConnectionIdempotencyPolicyOption>(
-            filestore::
-                MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy());
+    options.set<
+        filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicyOption>(
+        filestore_v1::
+            MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google

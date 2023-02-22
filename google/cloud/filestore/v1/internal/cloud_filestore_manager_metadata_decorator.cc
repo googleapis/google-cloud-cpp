@@ -16,150 +16,154 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#include "google/cloud/filestore/internal/cloud_filestore_manager_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_metadata_decorator.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/status_or.h"
+#include <google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-CloudFilestoreManagerTracingStub::CloudFilestoreManagerTracingStub(
+CloudFilestoreManagerMetadata::CloudFilestoreManagerMetadata(
     std::shared_ptr<CloudFilestoreManagerStub> child)
-    : child_(std::move(child)) {}
+    : child_(std::move(child)),
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
-CloudFilestoreManagerTracingStub::ListInstances(
+CloudFilestoreManagerMetadata::ListInstances(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::ListInstancesRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.filestore.v1.CloudFilestoreManager", "ListInstances");
-  auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
-  return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListInstances(context, request);
 }
 
 StatusOr<google::cloud::filestore::v1::Instance>
-CloudFilestoreManagerTracingStub::GetInstance(
+CloudFilestoreManagerMetadata::GetInstance(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.filestore.v1.CloudFilestoreManager", "GetInstance");
-  auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
-  return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetInstance(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncCreateInstance(
+CloudFilestoreManagerMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncUpdateInstance(
+CloudFilestoreManagerMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
+  SetMetadata(*context, "instance.name=" + request.instance().name());
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncRestoreInstance(
+CloudFilestoreManagerMetadata::AsyncRestoreInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncRestoreInstance(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncDeleteInstance(
+CloudFilestoreManagerMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
-CloudFilestoreManagerTracingStub::ListBackups(
+CloudFilestoreManagerMetadata::ListBackups(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::ListBackupsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.filestore.v1.CloudFilestoreManager", "ListBackups");
-  auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
-  return internal::EndSpan(context, *span,
-                           child_->ListBackups(context, request));
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListBackups(context, request);
 }
 
 StatusOr<google::cloud::filestore::v1::Backup>
-CloudFilestoreManagerTracingStub::GetBackup(
+CloudFilestoreManagerMetadata::GetBackup(
     grpc::ClientContext& context,
     google::cloud::filestore::v1::GetBackupRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.filestore.v1.CloudFilestoreManager", "GetBackup");
-  auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
-  return internal::EndSpan(context, *span, child_->GetBackup(context, request));
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetBackup(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncCreateBackup(
+CloudFilestoreManagerMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncDeleteBackup(
+CloudFilestoreManagerMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteBackup(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncUpdateBackup(
+CloudFilestoreManagerMetadata::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
+  SetMetadata(*context, "backup.name=" + request.backup().name());
   return child_->AsyncUpdateBackup(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-CloudFilestoreManagerTracingStub::AsyncGetOperation(
+CloudFilestoreManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
-future<Status> CloudFilestoreManagerTracingStub::AsyncCancelOperation(
+future<Status> CloudFilestoreManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+void CloudFilestoreManagerMetadata::SetMetadata(
+    grpc::ClientContext& context, std::string const& request_params) {
+  context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
 
-std::shared_ptr<CloudFilestoreManagerStub> MakeCloudFilestoreManagerTracingStub(
-    std::shared_ptr<CloudFilestoreManagerStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<CloudFilestoreManagerTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+void CloudFilestoreManagerMetadata::SetMetadata(grpc::ClientContext& context) {
+  context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google

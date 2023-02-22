@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#include "google/cloud/filestore/internal/cloud_filestore_manager_tracing_connection.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 CloudFilestoreManagerTracingConnection::CloudFilestoreManagerTracingConnection(
-    std::shared_ptr<filestore::CloudFilestoreManagerConnection> child)
+    std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerTracingConnection::ListInstances(
     google::cloud::filestore::v1::ListInstancesRequest request) {
   auto span = internal::MakeSpan(
-      "filestore::CloudFilestoreManagerConnection::ListInstances");
+      "filestore_v1::CloudFilestoreManagerConnection::ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListInstances(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -47,7 +47,7 @@ StatusOr<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerTracingConnection::GetInstance(
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
   auto span = internal::MakeSpan(
-      "filestore::CloudFilestoreManagerConnection::GetInstance");
+      "filestore_v1::CloudFilestoreManagerConnection::GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetInstance(request));
 }
@@ -80,7 +80,7 @@ StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerTracingConnection::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {
   auto span = internal::MakeSpan(
-      "filestore::CloudFilestoreManagerConnection::ListBackups");
+      "filestore_v1::CloudFilestoreManagerConnection::ListBackups");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListBackups(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::filestore::v1::Backup>(
@@ -91,7 +91,7 @@ StatusOr<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerTracingConnection::GetBackup(
     google::cloud::filestore::v1::GetBackupRequest const& request) {
   auto span = internal::MakeSpan(
-      "filestore::CloudFilestoreManagerConnection::GetBackup");
+      "filestore_v1::CloudFilestoreManagerConnection::GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetBackup(request));
 }
@@ -116,9 +116,9 @@ CloudFilestoreManagerTracingConnection::UpdateBackup(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<filestore::CloudFilestoreManagerConnection>
+std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection>
 MakeCloudFilestoreManagerTracingConnection(
-    std::shared_ptr<filestore::CloudFilestoreManagerConnection> conn) {
+    std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<CloudFilestoreManagerTracingConnection>(
@@ -129,6 +129,6 @@ MakeCloudFilestoreManagerTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google

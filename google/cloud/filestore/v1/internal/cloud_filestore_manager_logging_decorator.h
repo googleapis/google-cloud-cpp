@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_AUTH_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_AUTH_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_LOGGING_DECORATOR_H
 
-#include "google/cloud/filestore/internal/cloud_filestore_manager_stub.h"
-#include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -29,15 +29,15 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudFilestoreManagerAuth : public CloudFilestoreManagerStub {
+class CloudFilestoreManagerLogging : public CloudFilestoreManagerStub {
  public:
-  ~CloudFilestoreManagerAuth() override = default;
-  CloudFilestoreManagerAuth(
-      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
-      std::shared_ptr<CloudFilestoreManagerStub> child);
+  ~CloudFilestoreManagerLogging() override = default;
+  CloudFilestoreManagerLogging(std::shared_ptr<CloudFilestoreManagerStub> child,
+                               TracingOptions tracing_options,
+                               std::set<std::string> components);
 
   StatusOr<google::cloud::filestore::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
@@ -109,13 +109,14 @@ class CloudFilestoreManagerAuth : public CloudFilestoreManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<CloudFilestoreManagerStub> child_;
-};
+  TracingOptions tracing_options_;
+  std::set<std::string> components_;
+};  // CloudFilestoreManagerLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_AUTH_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_LOGGING_DECORATOR_H

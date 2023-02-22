@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_CONNECTION_H
 
-#include "google/cloud/filestore/cloud_filestore_manager_connection.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class CloudFilestoreManagerTracingConnection
-    : public filestore::CloudFilestoreManagerConnection {
+    : public filestore_v1::CloudFilestoreManagerConnection {
  public:
   ~CloudFilestoreManagerTracingConnection() override = default;
 
   explicit CloudFilestoreManagerTracingConnection(
-      std::shared_ptr<filestore::CloudFilestoreManagerConnection> child);
+      std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -81,7 +81,7 @@ class CloudFilestoreManagerTracingConnection
       override;
 
  private:
-  std::shared_ptr<filestore::CloudFilestoreManagerConnection> child_;
+  std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -92,13 +92,13 @@ class CloudFilestoreManagerTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<filestore::CloudFilestoreManagerConnection>
+std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection>
 MakeCloudFilestoreManagerTracingConnection(
-    std::shared_ptr<filestore::CloudFilestoreManagerConnection> conn);
+    std::shared_ptr<filestore_v1::CloudFilestoreManagerConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_CONNECTION_H

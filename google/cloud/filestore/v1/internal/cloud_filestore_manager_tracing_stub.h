@@ -16,24 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_STUB_H
 
-#include "google/cloud/filestore/internal/cloud_filestore_manager_stub.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
  public:
-  ~CloudFilestoreManagerMetadata() override = default;
-  explicit CloudFilestoreManagerMetadata(
+  ~CloudFilestoreManagerTracingStub() override = default;
+
+  explicit CloudFilestoreManagerTracingStub(
       std::shared_ptr<CloudFilestoreManagerStub> child);
 
   StatusOr<google::cloud::filestore::v1::ListInstancesResponse> ListInstances(
@@ -106,17 +107,23 @@ class CloudFilestoreManagerMetadata : public CloudFilestoreManagerStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
   std::shared_ptr<CloudFilestoreManagerStub> child_;
-  std::string api_client_header_;
 };
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<CloudFilestoreManagerStub> MakeCloudFilestoreManagerTracingStub(
+    std::shared_ptr<CloudFilestoreManagerStub> stub);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_TRACING_STUB_H

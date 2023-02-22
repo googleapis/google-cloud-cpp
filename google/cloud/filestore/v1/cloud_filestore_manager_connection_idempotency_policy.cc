@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#include "google/cloud/filestore/cloud_filestore_manager_connection_idempotency_policy.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace filestore {
+namespace filestore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -97,6 +97,6 @@ MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore
+}  // namespace filestore_v1
 }  // namespace cloud
 }  // namespace google

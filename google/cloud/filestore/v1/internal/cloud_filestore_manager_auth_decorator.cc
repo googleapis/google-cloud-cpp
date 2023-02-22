@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#include "google/cloud/filestore/internal/cloud_filestore_manager_auth_decorator.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_auth_decorator.h"
 #include <google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFilestoreManagerAuth::CloudFilestoreManagerAuth(
@@ -234,6 +234,6 @@ future<Status> CloudFilestoreManagerAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_CONNECTION_IMPL_H
 
-#include "google/cloud/filestore/cloud_filestore_manager_connection.h"
-#include "google/cloud/filestore/cloud_filestore_manager_connection_idempotency_policy.h"
-#include "google/cloud/filestore/cloud_filestore_manager_options.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_retry_traits.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_stub.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection_idempotency_policy.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_options.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_retry_traits.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/future.h"
@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class CloudFilestoreManagerConnectionImpl
-    : public filestore::CloudFilestoreManagerConnection {
+    : public filestore_v1::CloudFilestoreManagerConnection {
  public:
   ~CloudFilestoreManagerConnectionImpl() override = default;
 
   CloudFilestoreManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<filestore_internal::CloudFilestoreManagerStub> stub,
+      std::shared_ptr<filestore_v1_internal::CloudFilestoreManagerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -93,61 +93,68 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
  private:
-  std::unique_ptr<filestore::CloudFilestoreManagerRetryPolicy> retry_policy() {
+  std::unique_ptr<filestore_v1::CloudFilestoreManagerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerRetryPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
+    if (options.has<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()) {
+      return options
+          .get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
+    return options_.get<filestore_v1::CloudFilestoreManagerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerBackoffPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
+    if (options.has<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()) {
+      return options
+          .get<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
+    return options_
+        .get<filestore_v1::CloudFilestoreManagerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<filestore::CloudFilestoreManagerConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            filestore::
+            filestore_v1::
                 CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<filestore::
+          .get<filestore_v1::
                    CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<
-            filestore::CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
+        .get<filestore_v1::
+                 CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerPollingPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerPollingPolicyOption>()
+    if (options.has<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()) {
+      return options
+          .get<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<filestore::CloudFilestoreManagerPollingPolicyOption>()
+    return options_
+        .get<filestore_v1::CloudFilestoreManagerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<filestore_internal::CloudFilestoreManagerStub> stub_;
+  std::shared_ptr<filestore_v1_internal::CloudFilestoreManagerStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_INTERNAL_CLOUD_FILESTORE_MANAGER_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_INTERNAL_CLOUD_FILESTORE_MANAGER_CONNECTION_IMPL_H

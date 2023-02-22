@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#include "google/cloud/filestore/internal/cloud_filestore_manager_stub_factory.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_auth_decorator.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_logging_decorator.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_metadata_decorator.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_stub.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_tracing_stub.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub_factory.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_auth_decorator.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_logging_decorator.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_metadata_decorator.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
+namespace filestore_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<CloudFilestoreManagerStub>
@@ -68,6 +68,6 @@ CreateDefaultCloudFilestoreManagerStub(google::cloud::CompletionQueue cq,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
+}  // namespace filestore_v1_internal
 }  // namespace cloud
 }  // namespace google

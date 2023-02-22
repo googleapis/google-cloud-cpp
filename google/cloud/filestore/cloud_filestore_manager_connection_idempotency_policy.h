@@ -19,61 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_CLOUD_FILESTORE_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_CLOUD_FILESTORE_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/filestore/v1/cloud_filestore_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudFilestoreManagerConnectionIdempotencyPolicy {
- public:
-  virtual ~CloudFilestoreManagerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// filestore_v1::MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::filestore_v1::
+    MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudFilestoreManagerConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::filestore::v1::ListInstancesRequest request);
-
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::filestore::v1::GetInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::filestore::v1::CreateInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::filestore::v1::UpdateInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency RestoreInstance(
-      google::cloud::filestore::v1::RestoreInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::filestore::v1::DeleteInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency ListBackups(
-      google::cloud::filestore::v1::ListBackupsRequest request);
-
-  virtual google::cloud::Idempotency GetBackup(
-      google::cloud::filestore::v1::GetBackupRequest const& request);
-
-  virtual google::cloud::Idempotency CreateBackup(
-      google::cloud::filestore::v1::CreateBackupRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteBackup(
-      google::cloud::filestore::v1::DeleteBackupRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateBackup(
-      google::cloud::filestore::v1::UpdateBackupRequest const& request);
-};
-
-std::unique_ptr<CloudFilestoreManagerConnectionIdempotencyPolicy>
-MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// filestore_v1::CloudFilestoreManagerConnectionIdempotencyPolicy directly.
+using ::google::cloud::filestore_v1::
+    CloudFilestoreManagerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore

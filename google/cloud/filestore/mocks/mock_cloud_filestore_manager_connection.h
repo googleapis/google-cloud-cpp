@@ -20,86 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_MOCKS_MOCK_CLOUD_FILESTORE_MANAGER_CONNECTION_H
 
 #include "google/cloud/filestore/cloud_filestore_manager_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/filestore/v1/mocks/mock_cloud_filestore_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace filestore_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudFilestoreManagerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudFilestoreManagerClient`. To do
- * so, construct an object of type `CloudFilestoreManagerClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudFilestoreManagerConnection
-    : public filestore::CloudFilestoreManagerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::filestore::v1::Instance>,
-              ListInstances,
-              (google::cloud::filestore::v1::ListInstancesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Instance>, GetInstance,
-              (google::cloud::filestore::v1::GetInstanceRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Instance>>, CreateInstance,
-      (google::cloud::filestore::v1::CreateInstanceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Instance>>, UpdateInstance,
-      (google::cloud::filestore::v1::UpdateInstanceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Instance>>, RestoreInstance,
-      (google::cloud::filestore::v1::RestoreInstanceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::common::OperationMetadata>>,
-      DeleteInstance,
-      (google::cloud::filestore::v1::DeleteInstanceRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::filestore::v1::Backup>, ListBackups,
-              (google::cloud::filestore::v1::ListBackupsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::filestore::v1::Backup>, GetBackup,
-              (google::cloud::filestore::v1::GetBackupRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Backup>>, CreateBackup,
-      (google::cloud::filestore::v1::CreateBackupRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::common::OperationMetadata>>, DeleteBackup,
-      (google::cloud::filestore::v1::DeleteBackupRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::filestore::v1::Backup>>, UpdateBackup,
-      (google::cloud::filestore::v1::UpdateBackupRequest const& request),
-      (override));
-};
+/// @deprecated Use filestore_v1_mocks::MockCloudFilestoreManagerConnection
+/// directly.
+using ::google::cloud::filestore_v1_mocks::MockCloudFilestoreManagerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_mocks

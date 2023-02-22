@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/filestore/v1/cloud_filestore_service.proto
 
-#include "google/cloud/filestore/cloud_filestore_manager_connection.h"
-#include "google/cloud/filestore/cloud_filestore_manager_options.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_connection_impl.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_option_defaults.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_stub_factory.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_tracing_connection.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection.h"
+#include "google/cloud/filestore/v1/cloud_filestore_manager_options.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_connection_impl.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_option_defaults.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_stub_factory.h"
+#include "google/cloud/filestore/v1/internal/cloud_filestore_manager_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace filestore {
+namespace filestore_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CloudFilestoreManagerConnection::~CloudFilestoreManagerConnection() = default;
@@ -126,17 +126,18 @@ MakeCloudFilestoreManagerConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  CloudFilestoreManagerPolicyOptionList>(
       options, __func__);
-  options = filestore_internal::CloudFilestoreManagerDefaultOptions(
+  options = filestore_v1_internal::CloudFilestoreManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = filestore_internal::CreateDefaultCloudFilestoreManagerStub(
+  auto stub = filestore_v1_internal::CreateDefaultCloudFilestoreManagerStub(
       background->cq(), options);
-  return filestore_internal::MakeCloudFilestoreManagerTracingConnection(
-      std::make_shared<filestore_internal::CloudFilestoreManagerConnectionImpl>(
+  return filestore_v1_internal::MakeCloudFilestoreManagerTracingConnection(
+      std::make_shared<
+          filestore_v1_internal::CloudFilestoreManagerConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore
+}  // namespace filestore_v1
 }  // namespace cloud
 }  // namespace google

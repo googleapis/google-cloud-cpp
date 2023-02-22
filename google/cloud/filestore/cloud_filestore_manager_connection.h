@@ -20,118 +20,31 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_CLOUD_FILESTORE_MANAGER_CONNECTION_H
 
 #include "google/cloud/filestore/cloud_filestore_manager_connection_idempotency_policy.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_retry_traits.h"
-#include "google/cloud/filestore/internal/cloud_filestore_manager_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/filestore/v1/cloud_filestore_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudFilestoreManagerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        filestore_internal::CloudFilestoreManagerRetryTraits>;
+/// @deprecated Use filestore_v1::MakeCloudFilestoreManagerConnection directly.
+using ::google::cloud::filestore_v1::MakeCloudFilestoreManagerConnection;
 
-using CloudFilestoreManagerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        filestore_internal::CloudFilestoreManagerRetryTraits>;
+/// @deprecated Use filestore_v1::CloudFilestoreManagerConnection directly.
+using ::google::cloud::filestore_v1::CloudFilestoreManagerConnection;
 
-using CloudFilestoreManagerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        filestore_internal::CloudFilestoreManagerRetryTraits>;
+/// @deprecated Use
+/// filestore_v1::CloudFilestoreManagerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::filestore_v1::
+    CloudFilestoreManagerLimitedErrorCountRetryPolicy;
 
-/**
- * The `CloudFilestoreManagerConnection` object for
- * `CloudFilestoreManagerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudFilestoreManagerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CloudFilestoreManagerClient`.
- *
- * To create a concrete instance, see `MakeCloudFilestoreManagerConnection()`.
- *
- * For mocking, see `filestore_mocks::MockCloudFilestoreManagerConnection`.
- */
-class CloudFilestoreManagerConnection {
- public:
-  virtual ~CloudFilestoreManagerConnection() = 0;
+/// @deprecated Use filestore_v1::CloudFilestoreManagerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::filestore_v1::
+    CloudFilestoreManagerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::filestore::v1::Instance> ListInstances(
-      google::cloud::filestore::v1::ListInstancesRequest request);
-
-  virtual StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
-      google::cloud::filestore::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  CreateInstance(
-      google::cloud::filestore::v1::CreateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  UpdateInstance(
-      google::cloud::filestore::v1::UpdateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::filestore::v1::Instance>>
-  RestoreInstance(
-      google::cloud::filestore::v1::RestoreInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::filestore::v1::DeleteInstanceRequest const& request);
-
-  virtual StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
-      google::cloud::filestore::v1::ListBackupsRequest request);
-
-  virtual StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
-      google::cloud::filestore::v1::GetBackupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
-      google::cloud::filestore::v1::CreateBackupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::common::OperationMetadata>>
-  DeleteBackup(
-      google::cloud::filestore::v1::DeleteBackupRequest const& request);
-
-  virtual future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
-      google::cloud::filestore::v1::UpdateBackupRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `CloudFilestoreManagerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CloudFilestoreManagerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CloudFilestoreManagerConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::filestore::CloudFilestoreManagerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CloudFilestoreManagerConnection`
- * created by this function.
- */
-std::shared_ptr<CloudFilestoreManagerConnection>
-MakeCloudFilestoreManagerConnection(Options options = {});
+/// @deprecated Use filestore_v1::CloudFilestoreManagerRetryPolicy directly.
+using ::google::cloud::filestore_v1::CloudFilestoreManagerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore
