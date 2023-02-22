@@ -94,13 +94,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `language::LanguageServiceClient`:
+For example, this will override the default endpoint for `language_v1::LanguageServiceClient`:
 
 @snippet language_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [language::LanguageServiceClient](@ref language::LanguageServiceClient-endpoint-snippet)
- [language_v1::LanguageServiceClient](@ref language_v1::LanguageServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -113,10 +109,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet language_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [language::LanguageServiceClient](@ref language::LanguageServiceClient-service-account-snippet)
- [language_v1::LanguageServiceClient](@ref language_v1::LanguageServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page language::LanguageServiceClient-endpoint-snippet Override language::LanguageServiceClient Endpoint Configuration
-
-@snippet google/cloud/language/samples/language_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page language::LanguageServiceClient-service-account-snippet Override language::LanguageServiceClient Authentication Defaults
-
-@snippet google/cloud/language/samples/language_client_samples.cc with-service-account
-
-*/
 
 /*! @page language_v1::LanguageServiceClient-endpoint-snippet Override language_v1::LanguageServiceClient Endpoint Configuration
 
