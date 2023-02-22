@@ -38,6 +38,7 @@ class QueryPartitionTester {
   std::string const& TransactionId() const {
     return partition_.transaction_id();
   }
+  bool RouteToLeader() const { return partition_.route_to_leader(); }
   std::string const& TransactionTag() const {
     return partition_.transaction_tag();
   }
@@ -64,15 +65,17 @@ TEST(QueryPartitionTest, MakeQueryPartition) {
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
+  bool route_to_leader = false;
   std::string transaction_tag("tag");
 
   QueryPartitionTester actual_partition(spanner_internal::MakeQueryPartition(
-      transaction_id, transaction_tag, session_id, partition_token,
-      SqlStatement(stmt, params)));
+      transaction_id, route_to_leader, transaction_tag, session_id,
+      partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());
+  EXPECT_EQ(route_to_leader, actual_partition.RouteToLeader());
   EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
   EXPECT_EQ(session_id, actual_partition.SessionId());
 }
@@ -83,15 +86,17 @@ TEST(QueryPartitionTest, Constructor) {
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
+  bool route_to_leader = false;
   std::string transaction_tag("tag");
 
   QueryPartitionTester actual_partition(spanner_internal::MakeQueryPartition(
-      transaction_id, transaction_tag, session_id, partition_token,
-      SqlStatement(stmt, params)));
+      transaction_id, route_to_leader, transaction_tag, session_id,
+      partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
   EXPECT_EQ(transaction_id, actual_partition.TransactionId());
+  EXPECT_EQ(route_to_leader, actual_partition.RouteToLeader());
   EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
   EXPECT_EQ(session_id, actual_partition.SessionId());
 }
@@ -102,11 +107,12 @@ TEST(QueryPartitionTest, RegularSemantics) {
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
+  bool route_to_leader = true;
   std::string transaction_tag("tag");
 
   QueryPartition query_partition(spanner_internal::MakeQueryPartition(
-      transaction_id, transaction_tag, session_id, partition_token,
-      SqlStatement(stmt, params)));
+      transaction_id, route_to_leader, transaction_tag, session_id,
+      partition_token, SqlStatement(stmt, params)));
 
   EXPECT_NE(query_partition, QueryPartition());
 
@@ -123,7 +129,7 @@ TEST(QueryPartitionTest, RegularSemantics) {
 
 TEST(QueryPartitionTest, SerializeDeserialize) {
   QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
-      "txn-id", "tag", "session", "token",
+      "txn-id", true, "tag", "session", "token",
       SqlStatement("SELECT * FROM foo WHERE name = @name",
                    {{"name", Value("Bob")}})));
   StatusOr<QueryPartition> partition = DeserializeQueryPartition(
@@ -135,6 +141,8 @@ TEST(QueryPartitionTest, SerializeDeserialize) {
             actual_partition.PartitionToken());
   EXPECT_EQ(expected_partition.TransactionId(),
             actual_partition.TransactionId());
+  EXPECT_EQ(expected_partition.RouteToLeader(),
+            actual_partition.RouteToLeader());
   EXPECT_EQ(expected_partition.TransactionTag(),
             actual_partition.TransactionTag());
   EXPECT_EQ(expected_partition.SessionId(), actual_partition.SessionId());
@@ -153,7 +161,7 @@ TEST(QueryPartitionTest, FailedDeserialize) {
 
 TEST(QueryPartitionTest, MakeSqlParams) {
   QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
-      "txn-id", "tag", "session", "token",
+      "txn-id", true, "tag", "session", "token",
       SqlStatement("SELECT * FROM foo WHERE name = @name",
                    {{"name", Value("Bob")}})));
 
@@ -165,7 +173,7 @@ TEST(QueryPartitionTest, MakeSqlParams) {
                          {{"name", Value("Bob")}}));
   EXPECT_EQ(*params.partition_token, "token");
   EXPECT_THAT(params.transaction,
-              HasSessionAndTransaction("session", "txn-id", false, "tag"));
+              HasSessionAndTransaction("session", "txn-id", true, "tag"));
 }
 
 }  // namespace

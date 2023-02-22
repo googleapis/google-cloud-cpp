@@ -20,7 +20,11 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ReadPartition::ReadPartition(std::string transaction_id,
+// Local extension to google::spanner::v1::ReadRequest, reserved using
+// Google's conventions.
+constexpr int kRouteToLeaderFieldNumber = 511037315;
+
+ReadPartition::ReadPartition(std::string transaction_id, bool route_to_leader,
                              std::string transaction_tag,
                              std::string session_id,
                              std::string partition_token,
@@ -61,6 +65,11 @@ ReadPartition::ReadPartition(std::string transaction_id,
   }
   proto_.mutable_request_options()->set_transaction_tag(
       std::move(transaction_tag));
+  if (route_to_leader) {
+    google::spanner::v1::ReadRequest::GetReflection()
+        ->MutableUnknownFields(&proto_)
+        ->AddVarint(kRouteToLeaderFieldNumber, 1);
+  }
 }
 
 google::cloud::spanner::ReadOptions ReadPartition::ReadOptions() const {
@@ -88,8 +97,25 @@ google::cloud::spanner::ReadOptions ReadPartition::ReadOptions() const {
   return options;
 }
 
+bool ReadPartition::RouteToLeader() const {
+  auto const& unknown_fields =
+      google::spanner::v1::ReadRequest::GetReflection()->GetUnknownFields(
+          proto_);
+  for (int index = 0; index != unknown_fields.field_count(); ++index) {
+    auto const& field = unknown_fields.field(index);
+    if (field.number() == kRouteToLeaderFieldNumber) {
+      return field.varint() != 0;
+    }
+  }
+  return false;
+}
+
 bool operator==(ReadPartition const& lhs, ReadPartition const& rhs) {
   google::protobuf::util::MessageDifferencer differencer;
+  // This is the default comparison mode, but we set it explicitly
+  // to emphasize that unknown fields are included in the comparison.
+  differencer.set_message_field_comparison(
+      google::protobuf::util::MessageDifferencer::EQUAL);
   return differencer.Compare(lhs.proto_, rhs.proto_);
 }
 

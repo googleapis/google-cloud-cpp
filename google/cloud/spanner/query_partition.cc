@@ -20,12 +20,17 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-QueryPartition::QueryPartition(std::string transaction_id,
+// Local extension to google::spanner::v1::ExecuteSqlRequest, reserved using
+// Google's conventions.
+constexpr int kRouteToLeaderFieldNumber = 511037314;
+
+QueryPartition::QueryPartition(std::string transaction_id, bool route_to_leader,
                                std::string transaction_tag,
                                std::string session_id,
                                std::string partition_token,
                                SqlStatement sql_statement)
     : transaction_id_(std::move(transaction_id)),
+      route_to_leader_(route_to_leader),
       transaction_tag_(std::move(transaction_tag)),
       session_id_(std::move(session_id)),
       partition_token_(std::move(partition_token)),
@@ -33,6 +38,7 @@ QueryPartition::QueryPartition(std::string transaction_id,
 
 bool operator==(QueryPartition const& a, QueryPartition const& b) {
   return a.transaction_id_ == b.transaction_id_ &&
+         a.route_to_leader_ == b.route_to_leader_ &&
          a.transaction_tag_ == b.transaction_tag_ &&
          a.session_id_ == b.session_id_ &&
          a.partition_token_ == b.partition_token_ &&
@@ -59,6 +65,14 @@ StatusOr<std::string> SerializeQueryPartition(
   // However, we do encode any transaction tag in proto.request_options.
   proto.mutable_request_options()->set_transaction_tag(
       query_partition.transaction_tag());
+
+  // Add route_to_leader to an extension field so that we might retrieve it
+  // in DeserializeQueryPartition().
+  if (query_partition.route_to_leader()) {
+    google::spanner::v1::ExecuteSqlRequest::GetReflection()
+        ->MutableUnknownFields(&proto)
+        ->AddVarint(kRouteToLeaderFieldNumber, 1);
+  }
 
   std::string serialized_proto;
   if (proto.SerializeToString(&serialized_proto)) {
@@ -91,7 +105,18 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
     }
   }
 
-  QueryPartition query_partition(proto.transaction().id(),
+  bool route_to_leader = false;
+  auto const& unknown_fields =
+      google::spanner::v1::ExecuteSqlRequest::GetReflection()->GetUnknownFields(
+          proto);
+  for (int index = 0; index != unknown_fields.field_count(); ++index) {
+    auto const& field = unknown_fields.field(index);
+    if (field.number() == kRouteToLeaderFieldNumber) {
+      route_to_leader = field.varint() != 0;
+    }
+  }
+
+  QueryPartition query_partition(proto.transaction().id(), route_to_leader,
                                  proto.request_options().transaction_tag(),
                                  proto.session(), proto.partition_token(),
                                  SqlStatement(proto.sql(), sql_parameters));

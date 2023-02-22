@@ -2584,10 +2584,10 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
 
   std::vector<spanner::ReadPartition> expected_read_partitions = {
       spanner_internal::MakeReadPartition(
-          "CAFEDEAD", "", "test-session-name", "BADDECAF", "table",
+          "CAFEDEAD", false, "", "test-session-name", "BADDECAF", "table",
           spanner::KeySet::All(), {"UserId", "UserName"}, read_options),
       spanner_internal::MakeReadPartition(
-          "CAFEDEAD", "", "test-session-name", "DEADBEEF", "table",
+          "CAFEDEAD", false, "", "test-session-name", "DEADBEEF", "table",
           spanner::KeySet::All(), {"UserId", "UserName"}, read_options)};
 
   EXPECT_THAT(*result, UnorderedPointwise(Eq(), expected_read_partitions));
@@ -2689,10 +2689,12 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
   ASSERT_STATUS_OK(result);
 
   std::vector<spanner::QueryPartition> expected_query_partitions = {
-      spanner_internal::MakeQueryPartition("CAFEDEAD", "", "test-session-name",
-                                           "BADDECAF", sql_statement),
-      spanner_internal::MakeQueryPartition("CAFEDEAD", "", "test-session-name",
-                                           "DEADBEEF", sql_statement)};
+      spanner_internal::MakeQueryPartition("CAFEDEAD", false, "",
+                                           "test-session-name", "BADDECAF",
+                                           sql_statement),
+      spanner_internal::MakeQueryPartition("CAFEDEAD", false, "",
+                                           "test-session-name", "DEADBEEF",
+                                           sql_statement)};
 
   EXPECT_THAT(*result, UnorderedPointwise(Eq(), expected_query_partitions));
 }
