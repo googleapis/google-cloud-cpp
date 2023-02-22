@@ -1,14 +1,10 @@
 # API Keys API C++ Client Library
 
-:construction:
-
 This directory contains an idiomatic C++ client library for the
 [API Keys API][cloud-service-docs], a service to manage the API keys associated
 with developer projects.
 
-This library is **experimental**. Its APIs are subject to change without notice.
-
-Please note that the Google Cloud C++ client libraries do **not** follow
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
 ## Quickstart

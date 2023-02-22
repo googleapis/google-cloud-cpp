@@ -23,15 +23,13 @@ include(CreateBazelConfig)
 set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
     "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
 
-set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
-    # cmake-format: sorted
-    # Introduced circa 2022-08-17
-    "apikeys"
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES # cmake-format: sorted
     # This is WIP, it needs a number of hand-crafted APIs.
     "pubsublite")
 
 set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
-)
+    # Transitioned circa 2023-02-22
+    "apikeys")
 
 set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sorted
