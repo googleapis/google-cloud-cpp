@@ -269,9 +269,10 @@
 ./include/google/cloud/iam/v2/internal
 ./include/google/cloud/iam/v2/mocks
 ./include/google/cloud/iap
-./include/google/cloud/iap/internal
 ./include/google/cloud/iap/mocks
 ./include/google/cloud/iap/v1
+./include/google/cloud/iap/v1/internal
+./include/google/cloud/iap/v1/mocks
 ./include/google/cloud/ids
 ./include/google/cloud/ids/internal
 ./include/google/cloud/ids/mocks

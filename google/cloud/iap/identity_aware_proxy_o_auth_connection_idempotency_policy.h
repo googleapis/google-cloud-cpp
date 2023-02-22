@@ -19,57 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_O_AUTH_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_O_AUTH_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/iap/v1/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/iap/v1/identity_aware_proxy_o_auth_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// iap_v1::MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::iap_v1::
+    MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListBrands(
-      google::cloud::iap::v1::ListBrandsRequest const& request);
-
-  virtual google::cloud::Idempotency CreateBrand(
-      google::cloud::iap::v1::CreateBrandRequest const& request);
-
-  virtual google::cloud::Idempotency GetBrand(
-      google::cloud::iap::v1::GetBrandRequest const& request);
-
-  virtual google::cloud::Idempotency CreateIdentityAwareProxyClient(
-      google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListIdentityAwareProxyClients(
-      google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request);
-
-  virtual google::cloud::Idempotency GetIdentityAwareProxyClient(
-      google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ResetIdentityAwareProxyClientSecret(
-      google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteIdentityAwareProxyClient(
-      google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
-          request);
-};
-
-std::unique_ptr<IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
-MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// iap_v1::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::iap_v1::
+    IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap

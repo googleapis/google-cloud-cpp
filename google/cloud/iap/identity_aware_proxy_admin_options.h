@@ -21,53 +21,31 @@
 
 #include "google/cloud/iap/identity_aware_proxy_admin_connection.h"
 #include "google/cloud/iap/identity_aware_proxy_admin_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/iap/v1/identity_aware_proxy_admin_options.h"
 
 namespace google {
 namespace cloud {
 namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-iap-options
- */
-struct IdentityAwareProxyAdminServiceRetryPolicyOption {
-  using Type = std::shared_ptr<IdentityAwareProxyAdminServiceRetryPolicy>;
-};
+/// @deprecated Use iap_v1::IdentityAwareProxyAdminServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::iap_v1::
+    IdentityAwareProxyAdminServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-iap-options
- */
-struct IdentityAwareProxyAdminServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// iap_v1::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::iap_v1::
+    IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-iap-options
- */
-struct IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<
-      IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use iap_v1::IdentityAwareProxyAdminServicePolicyOptionList
+/// directly.
+using ::google::cloud::iap_v1::IdentityAwareProxyAdminServicePolicyOptionList;
 
-/**
- * The options applicable to IdentityAwareProxyAdminService.
- *
- * @ingroup google-cloud-iap-options
- */
-using IdentityAwareProxyAdminServicePolicyOptionList =
-    OptionList<IdentityAwareProxyAdminServiceRetryPolicyOption,
-               IdentityAwareProxyAdminServiceBackoffPolicyOption,
-               IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::iap_v1::IdentityAwareProxyAdminServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap

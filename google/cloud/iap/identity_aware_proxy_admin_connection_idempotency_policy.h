@@ -19,59 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_IDENTITY_AWARE_PROXY_ADMIN_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/iap/v1/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/iap/v1/identity_aware_proxy_admin_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// iap_v1::MakeDefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::iap_v1::
+    MakeDefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual google::cloud::Idempotency GetIapSettings(
-      google::cloud::iap::v1::GetIapSettingsRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateIapSettings(
-      google::cloud::iap::v1::UpdateIapSettingsRequest const& request);
-
-  virtual google::cloud::Idempotency ListTunnelDestGroups(
-      google::cloud::iap::v1::ListTunnelDestGroupsRequest request);
-
-  virtual google::cloud::Idempotency CreateTunnelDestGroup(
-      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request);
-
-  virtual google::cloud::Idempotency GetTunnelDestGroup(
-      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteTunnelDestGroup(
-      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateTunnelDestGroup(
-      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request);
-};
-
-std::unique_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
-MakeDefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// iap_v1::IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::iap_v1::
+    IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
