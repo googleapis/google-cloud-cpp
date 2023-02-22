@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `iot::DeviceManagerClient`:
+For example, this will override the default endpoint for `iot_v1::DeviceManagerClient`:
 
 @snippet device_manager_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [iot::DeviceManagerClient](@ref iot::DeviceManagerClient-endpoint-snippet)
- [iot_v1::DeviceManagerClient](@ref iot_v1::DeviceManagerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet device_manager_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [iot::DeviceManagerClient](@ref iot::DeviceManagerClient-service-account-snippet)
- [iot_v1::DeviceManagerClient](@ref iot_v1::DeviceManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page iot::DeviceManagerClient-endpoint-snippet Override iot::DeviceManagerClient Endpoint Configuration
-
-@snippet google/cloud/iot/samples/device_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page iot::DeviceManagerClient-service-account-snippet Override iot::DeviceManagerClient Authentication Defaults
-
-@snippet google/cloud/iot/samples/device_manager_client_samples.cc with-service-account
-
-*/
 
 /*! @page iot_v1::DeviceManagerClient-endpoint-snippet Override iot_v1::DeviceManagerClient Endpoint Configuration
 
