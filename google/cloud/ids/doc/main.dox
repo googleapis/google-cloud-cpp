@@ -97,7 +97,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ids::IDSClient`:
+For example, this will override the default endpoint for `ids_v1::IDSClient`:
 
 @snippet ids_client_samples.cc set-client-endpoint
 
@@ -142,15 +142,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ids::IDSClient-endpoint-snippet Override ids::IDSClient Endpoint Configuration
+/*! @page ids_v1::IDSClient-endpoint-snippet Override ids_v1::IDSClient Endpoint Configuration
 
-@snippet google/cloud/ids/samples/ids_client_samples.cc set-client-endpoint
+@snippet google/cloud/ids/v1/samples/ids_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ids::IDSClient-service-account-snippet Override ids::IDSClient Authentication Defaults
+/*! @page ids_v1::IDSClient-service-account-snippet Override ids_v1::IDSClient Authentication Defaults
 
-@snippet google/cloud/ids/samples/ids_client_samples.cc with-service-account
+@snippet google/cloud/ids/v1/samples/ids_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

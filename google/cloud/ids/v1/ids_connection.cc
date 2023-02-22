@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#include "google/cloud/ids/ids_connection.h"
-#include "google/cloud/ids/ids_options.h"
-#include "google/cloud/ids/internal/ids_connection_impl.h"
-#include "google/cloud/ids/internal/ids_option_defaults.h"
-#include "google/cloud/ids/internal/ids_stub_factory.h"
-#include "google/cloud/ids/internal/ids_tracing_connection.h"
+#include "google/cloud/ids/v1/ids_connection.h"
+#include "google/cloud/ids/v1/ids_options.h"
+#include "google/cloud/ids/v1/internal/ids_connection_impl.h"
+#include "google/cloud/ids/v1/internal/ids_option_defaults.h"
+#include "google/cloud/ids/v1/internal/ids_stub_factory.h"
+#include "google/cloud/ids/v1/internal/ids_tracing_connection.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace ids {
+namespace ids_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IDSConnection::~IDSConnection() = default;
@@ -68,15 +68,15 @@ std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  IDSPolicyOptionList>(options, __func__);
-  options = ids_internal::IDSDefaultOptions(std::move(options));
+  options = ids_v1_internal::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = ids_internal::CreateDefaultIDSStub(background->cq(), options);
-  return ids_internal::MakeIDSTracingConnection(
-      std::make_shared<ids_internal::IDSConnectionImpl>(
+  auto stub = ids_v1_internal::CreateDefaultIDSStub(background->cq(), options);
+  return ids_v1_internal::MakeIDSTracingConnection(
+      std::make_shared<ids_v1_internal::IDSConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids
+}  // namespace ids_v1
 }  // namespace cloud
 }  // namespace google

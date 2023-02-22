@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_STUB_H
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class IDSStub {
@@ -107,8 +107,8 @@ class DefaultIDSStub : public IDSStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_STUB_H

@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_LOGGING_DECORATOR_H
 
-#include "google/cloud/ids/internal/ids_stub.h"
+#include "google/cloud/ids/v1/internal/ids_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class IDSLogging : public IDSStub {
@@ -73,8 +73,8 @@ class IDSLogging : public IDSStub {
 };  // IDSLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_LOGGING_DECORATOR_H

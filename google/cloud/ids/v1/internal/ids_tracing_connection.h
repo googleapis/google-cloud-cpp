@@ -16,25 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_TRACING_CONNECTION_H
 
-#include "google/cloud/ids/ids_connection.h"
+#include "google/cloud/ids/v1/ids_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class IDSTracingConnection : public ids::IDSConnection {
+class IDSTracingConnection : public ids_v1::IDSConnection {
  public:
   ~IDSTracingConnection() override = default;
 
-  explicit IDSTracingConnection(std::shared_ptr<ids::IDSConnection> child);
+  explicit IDSTracingConnection(std::shared_ptr<ids_v1::IDSConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -51,7 +51,7 @@ class IDSTracingConnection : public ids::IDSConnection {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
  private:
-  std::shared_ptr<ids::IDSConnection> child_;
+  std::shared_ptr<ids_v1::IDSConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -62,12 +62,12 @@ class IDSTracingConnection : public ids::IDSConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<ids::IDSConnection> MakeIDSTracingConnection(
-    std::shared_ptr<ids::IDSConnection> conn);
+std::shared_ptr<ids_v1::IDSConnection> MakeIDSTracingConnection(
+    std::shared_ptr<ids_v1::IDSConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_TRACING_CONNECTION_H

@@ -16,25 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_AUTH_DECORATOR_H
 
-#include "google/cloud/ids/internal/ids_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/ids/v1/internal/ids_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <set>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class IDSTracingStub : public IDSStub {
+class IDSAuth : public IDSStub {
  public:
-  ~IDSTracingStub() override = default;
-
-  explicit IDSTracingStub(std::shared_ptr<IDSStub> child);
+  ~IDSAuth() override = default;
+  IDSAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+      std::shared_ptr<IDSStub> child);
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
       grpc::ClientContext& context,
@@ -65,22 +68,13 @@ class IDSTracingStub : public IDSStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<IDSStub> child_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<IDSStub> MakeIDSTracingStub(std::shared_ptr<IDSStub> stub);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_INTERNAL_IDS_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_INTERNAL_IDS_AUTH_DECORATOR_H

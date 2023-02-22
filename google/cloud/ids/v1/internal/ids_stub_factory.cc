@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#include "google/cloud/ids/internal/ids_stub_factory.h"
-#include "google/cloud/ids/internal/ids_auth_decorator.h"
-#include "google/cloud/ids/internal/ids_logging_decorator.h"
-#include "google/cloud/ids/internal/ids_metadata_decorator.h"
-#include "google/cloud/ids/internal/ids_stub.h"
-#include "google/cloud/ids/internal/ids_tracing_stub.h"
+#include "google/cloud/ids/v1/internal/ids_stub_factory.h"
+#include "google/cloud/ids/v1/internal/ids_auth_decorator.h"
+#include "google/cloud/ids/v1/internal/ids_logging_decorator.h"
+#include "google/cloud/ids/v1/internal/ids_metadata_decorator.h"
+#include "google/cloud/ids/v1/internal/ids_stub.h"
+#include "google/cloud/ids/v1/internal/ids_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<IDSStub> CreateDefaultIDSStub(google::cloud::CompletionQueue cq,
@@ -64,6 +64,6 @@ std::shared_ptr<IDSStub> CreateDefaultIDSStub(google::cloud::CompletionQueue cq,
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,90 +16,83 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#include "google/cloud/ids/internal/ids_metadata_decorator.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/status_or.h"
-#include <google/cloud/ids/v1/ids.grpc.pb.h>
-#include <memory>
+#include "google/cloud/ids/v1/internal/ids_tracing_stub.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IDSMetadata::IDSMetadata(std::shared_ptr<IDSStub> child)
-    : child_(std::move(child)),
-      api_client_header_(
-          google::cloud::internal::ApiClientHeader("generator")) {}
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+IDSTracingStub::IDSTracingStub(std::shared_ptr<IDSStub> child)
+    : child_(std::move(child)) {}
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
-IDSMetadata::ListEndpoints(
+IDSTracingStub::ListEndpoints(
     grpc::ClientContext& context,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
-  SetMetadata(context, "parent=" + request.parent());
-  return child_->ListEndpoints(context, request);
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "ListEndpoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEndpoints(context, request));
 }
 
-StatusOr<google::cloud::ids::v1::Endpoint> IDSMetadata::GetEndpoint(
+StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingStub::GetEndpoint(
     grpc::ClientContext& context,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
-  SetMetadata(context, "name=" + request.name());
-  return child_->GetEndpoint(context, request);
+  auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "GetEndpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEndpoint(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
-IDSMetadata::AsyncCreateEndpoint(
+IDSTracingStub::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateEndpoint(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-IDSMetadata::AsyncDeleteEndpoint(
+IDSTracingStub::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteEndpoint(cq, std::move(context), request);
 }
 
-future<StatusOr<google::longrunning::Operation>> IDSMetadata::AsyncGetOperation(
+future<StatusOr<google::longrunning::Operation>>
+IDSTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
-future<Status> IDSMetadata::AsyncCancelOperation(
+future<Status> IDSTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-void IDSMetadata::SetMetadata(grpc::ClientContext& context,
-                              std::string const& request_params) {
-  context.AddMetadata("x-goog-request-params", request_params);
-  SetMetadata(context);
-}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-void IDSMetadata::SetMetadata(grpc::ClientContext& context) {
-  context.AddMetadata("x-goog-api-client", api_client_header_);
-  auto const& options = internal::CurrentOptions();
-  if (options.has<UserProjectOption>()) {
-    context.AddMetadata("x-goog-user-project",
-                        options.get<UserProjectOption>());
-  }
-  auto const& authority = options.get<AuthorityOption>();
-  if (!authority.empty()) context.set_authority(authority);
+std::shared_ptr<IDSStub> MakeIDSTracingStub(std::shared_ptr<IDSStub> stub) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return std::make_shared<IDSTracingStub>(std::move(stub));
+#else
+  return stub;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google

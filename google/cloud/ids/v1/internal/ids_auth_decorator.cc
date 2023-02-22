@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#include "google/cloud/ids/internal/ids_auth_decorator.h"
+#include "google/cloud/ids/v1/internal/ids_auth_decorator.h"
 #include <google/cloud/ids/v1/ids.grpc.pb.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IDSAuth::IDSAuth(
@@ -116,6 +116,6 @@ future<Status> IDSAuth::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google

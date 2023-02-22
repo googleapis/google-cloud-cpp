@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#include "google/cloud/ids/ids_client.h"
+#include "google/cloud/ids/v1/ids_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace ids {
+namespace ids_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IDSClient::IDSClient(std::shared_ptr<IDSConnection> connection, Options opts)
@@ -93,6 +93,6 @@ IDSClient::DeleteEndpoint(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids
+}  // namespace ids_v1
 }  // namespace cloud
 }  // namespace google

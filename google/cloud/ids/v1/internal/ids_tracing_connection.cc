@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#include "google/cloud/ids/internal/ids_tracing_connection.h"
+#include "google/cloud/ids/v1/internal/ids_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
+namespace ids_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 IDSTracingConnection::IDSTracingConnection(
-    std::shared_ptr<ids::IDSConnection> child)
+    std::shared_ptr<ids_v1::IDSConnection> child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::ids::v1::Endpoint>
 IDSTracingConnection::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {
-  auto span = internal::MakeSpan("ids::IDSConnection::ListEndpoints");
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::ListEndpoints");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListEndpoints(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::ids::v1::Endpoint>(
@@ -44,7 +44,7 @@ IDSTracingConnection::ListEndpoints(
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingConnection::GetEndpoint(
     google::cloud::ids::v1::GetEndpointRequest const& request) {
-  auto span = internal::MakeSpan("ids::IDSConnection::GetEndpoint");
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::GetEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetEndpoint(request));
 }
@@ -63,8 +63,8 @@ IDSTracingConnection::DeleteEndpoint(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<ids::IDSConnection> MakeIDSTracingConnection(
-    std::shared_ptr<ids::IDSConnection> conn) {
+std::shared_ptr<ids_v1::IDSConnection> MakeIDSTracingConnection(
+    std::shared_ptr<ids_v1::IDSConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<IDSTracingConnection>(std::move(conn));
@@ -74,6 +74,6 @@ std::shared_ptr<ids::IDSConnection> MakeIDSTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
+}  // namespace ids_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/ids/v1/ids.proto
 
-#include "google/cloud/ids/ids_connection_idempotency_policy.h"
+#include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
 #include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace ids {
+namespace ids_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
@@ -60,6 +60,6 @@ MakeDefaultIDSConnectionIdempotencyPolicy() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids
+}  // namespace ids_v1
 }  // namespace cloud
 }  // namespace google

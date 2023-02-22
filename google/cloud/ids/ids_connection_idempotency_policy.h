@@ -19,39 +19,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_IDS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_IDS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/ids/v1/ids.grpc.pb.h>
-#include <memory>
+#include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IDSConnectionIdempotencyPolicy {
- public:
-  virtual ~IDSConnectionIdempotencyPolicy();
+/// @deprecated Use ids_v1::MakeDefaultIDSConnectionIdempotencyPolicy directly.
+using ::google::cloud::ids_v1::MakeDefaultIDSConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<IDSConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListEndpoints(
-      google::cloud::ids::v1::ListEndpointsRequest request);
-
-  virtual google::cloud::Idempotency GetEndpoint(
-      google::cloud::ids::v1::GetEndpointRequest const& request);
-
-  virtual google::cloud::Idempotency CreateEndpoint(
-      google::cloud::ids::v1::CreateEndpointRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteEndpoint(
-      google::cloud::ids::v1::DeleteEndpointRequest const& request);
-};
-
-std::unique_ptr<IDSConnectionIdempotencyPolicy>
-MakeDefaultIDSConnectionIdempotencyPolicy();
+/// @deprecated Use ids_v1::IDSConnectionIdempotencyPolicy directly.
+using ::google::cloud::ids_v1::IDSConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids
