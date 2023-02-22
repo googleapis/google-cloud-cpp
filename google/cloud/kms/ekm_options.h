@@ -21,51 +21,25 @@
 
 #include "google/cloud/kms/ekm_connection.h"
 #include "google/cloud/kms/ekm_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/kms/v1/ekm_options.h"
 
 namespace google {
 namespace cloud {
 namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-kms-options
- */
-struct EkmServiceRetryPolicyOption {
-  using Type = std::shared_ptr<EkmServiceRetryPolicy>;
-};
+/// @deprecated Use kms_v1::EkmServiceBackoffPolicyOption directly.
+using ::google::cloud::kms_v1::EkmServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-kms-options
- */
-struct EkmServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use kms_v1::EkmServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::kms_v1::EkmServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-kms-options
- */
-struct EkmServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<EkmServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use kms_v1::EkmServicePolicyOptionList directly.
+using ::google::cloud::kms_v1::EkmServicePolicyOptionList;
 
-/**
- * The options applicable to EkmService.
- *
- * @ingroup google-cloud-kms-options
- */
-using EkmServicePolicyOptionList =
-    OptionList<EkmServiceRetryPolicyOption, EkmServiceBackoffPolicyOption,
-               EkmServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use kms_v1::EkmServiceRetryPolicyOption directly.
+using ::google::cloud::kms_v1::EkmServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms

@@ -21,52 +21,26 @@
 
 #include "google/cloud/kms/key_management_connection.h"
 #include "google/cloud/kms/key_management_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/kms/v1/key_management_options.h"
 
 namespace google {
 namespace cloud {
 namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-kms-options
- */
-struct KeyManagementServiceRetryPolicyOption {
-  using Type = std::shared_ptr<KeyManagementServiceRetryPolicy>;
-};
+/// @deprecated Use kms_v1::KeyManagementServiceBackoffPolicyOption directly.
+using ::google::cloud::kms_v1::KeyManagementServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-kms-options
- */
-struct KeyManagementServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// kms_v1::KeyManagementServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::kms_v1::
+    KeyManagementServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-kms-options
- */
-struct KeyManagementServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<KeyManagementServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use kms_v1::KeyManagementServicePolicyOptionList directly.
+using ::google::cloud::kms_v1::KeyManagementServicePolicyOptionList;
 
-/**
- * The options applicable to KeyManagementService.
- *
- * @ingroup google-cloud-kms-options
- */
-using KeyManagementServicePolicyOptionList =
-    OptionList<KeyManagementServiceRetryPolicyOption,
-               KeyManagementServiceBackoffPolicyOption,
-               KeyManagementServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use kms_v1::KeyManagementServiceRetryPolicyOption directly.
+using ::google::cloud::kms_v1::KeyManagementServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms

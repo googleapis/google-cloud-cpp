@@ -20,85 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_EKM_CONNECTION_H
 
 #include "google/cloud/kms/ekm_connection_idempotency_policy.h"
-#include "google/cloud/kms/internal/ekm_retry_traits.h"
-#include "google/cloud/kms/internal/ekm_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/kms/v1/ekm_connection.h"
 
 namespace google {
 namespace cloud {
 namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using EkmServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    kms_internal::EkmServiceRetryTraits>;
+/// @deprecated Use kms_v1::MakeEkmServiceConnection directly.
+using ::google::cloud::kms_v1::MakeEkmServiceConnection;
 
-using EkmServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        kms_internal::EkmServiceRetryTraits>;
+/// @deprecated Use kms_v1::EkmServiceConnection directly.
+using ::google::cloud::kms_v1::EkmServiceConnection;
 
-using EkmServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        kms_internal::EkmServiceRetryTraits>;
+/// @deprecated Use kms_v1::EkmServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::kms_v1::EkmServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `EkmServiceConnection` object for `EkmServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `EkmServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `EkmServiceClient`.
- *
- * To create a concrete instance, see `MakeEkmServiceConnection()`.
- *
- * For mocking, see `kms_mocks::MockEkmServiceConnection`.
- */
-class EkmServiceConnection {
- public:
-  virtual ~EkmServiceConnection() = 0;
+/// @deprecated Use kms_v1::EkmServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::kms_v1::EkmServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
-      google::cloud::kms::v1::ListEkmConnectionsRequest request);
-
-  virtual StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      google::cloud::kms::v1::GetEkmConnectionRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      google::cloud::kms::v1::CreateEkmConnectionRequest const& request);
-
-  virtual StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `EkmServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of EkmServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `EkmServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::kms::EkmServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `EkmServiceConnection` created by
- * this function.
- */
-std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
-    Options options = {});
+/// @deprecated Use kms_v1::EkmServiceRetryPolicy directly.
+using ::google::cloud::kms_v1::EkmServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
