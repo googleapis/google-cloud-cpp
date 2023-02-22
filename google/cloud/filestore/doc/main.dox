@@ -92,13 +92,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `filestore::CloudFilestoreManagerClient`:
+For example, this will override the default endpoint for `filestore_v1::CloudFilestoreManagerClient`:
 
 @snippet cloud_filestore_manager_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [filestore::CloudFilestoreManagerClient](@ref filestore::CloudFilestoreManagerClient-endpoint-snippet)
- [filestore_v1::CloudFilestoreManagerClient](@ref filestore_v1::CloudFilestoreManagerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -111,10 +107,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_filestore_manager_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [filestore::CloudFilestoreManagerClient](@ref filestore::CloudFilestoreManagerClient-service-account-snippet)
- [filestore_v1::CloudFilestoreManagerClient](@ref filestore_v1::CloudFilestoreManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -144,18 +136,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page filestore::CloudFilestoreManagerClient-endpoint-snippet Override filestore::CloudFilestoreManagerClient Endpoint Configuration
-
-@snippet google/cloud/filestore/samples/cloud_filestore_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page filestore::CloudFilestoreManagerClient-service-account-snippet Override filestore::CloudFilestoreManagerClient Authentication Defaults
-
-@snippet google/cloud/filestore/samples/cloud_filestore_manager_client_samples.cc with-service-account
-
-*/
 
 /*! @page filestore_v1::CloudFilestoreManagerClient-endpoint-snippet Override filestore_v1::CloudFilestoreManagerClient Endpoint Configuration
 
