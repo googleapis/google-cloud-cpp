@@ -94,13 +94,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `managedidentities::ManagedIdentitiesServiceClient`:
+For example, this will override the default endpoint for `managedidentities_v1::ManagedIdentitiesServiceClient`:
 
 @snippet managed_identities_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [managedidentities::ManagedIdentitiesServiceClient](@ref managedidentities::ManagedIdentitiesServiceClient-endpoint-snippet)
- [managedidentities_v1::ManagedIdentitiesServiceClient](@ref managedidentities_v1::ManagedIdentitiesServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -113,10 +109,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet managed_identities_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [managedidentities::ManagedIdentitiesServiceClient](@ref managedidentities::ManagedIdentitiesServiceClient-service-account-snippet)
- [managedidentities_v1::ManagedIdentitiesServiceClient](@ref managedidentities_v1::ManagedIdentitiesServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page managedidentities::ManagedIdentitiesServiceClient-endpoint-snippet Override managedidentities::ManagedIdentitiesServiceClient Endpoint Configuration
-
-@snippet google/cloud/managedidentities/samples/managed_identities_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page managedidentities::ManagedIdentitiesServiceClient-service-account-snippet Override managedidentities::ManagedIdentitiesServiceClient Authentication Defaults
-
-@snippet google/cloud/managedidentities/samples/managed_identities_client_samples.cc with-service-account
-
-*/
 
 /*! @page managedidentities_v1::ManagedIdentitiesServiceClient-endpoint-snippet Override managedidentities_v1::ManagedIdentitiesServiceClient Endpoint Configuration
 
