@@ -29,6 +29,7 @@ using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Not;
 using ::testing::Return;
 
 class MockExactlyOnceAckHandlerImpl
@@ -50,6 +51,15 @@ TEST(AckHandlerWrapper, Ack) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" ack()"), HasSubstr("uh-oh"),
                              HasSubstr("test-id"))));
+}
+
+TEST(AckHandlerWrapper, AckSuccess) {
+  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  EXPECT_CALL(*mock, ack).WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  ScopedLog log;
+  AckHandlerWrapper tested(std::move(mock), "test-id");
+  tested.ack();
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr(" ack()"))));
 }
 
 TEST(AckHandlerWrapper, AckEmpty) {
@@ -74,6 +84,16 @@ TEST(AckHandlerWrapper, Nack) {
   EXPECT_THAT(log.ExtractLines(),
               Contains(AllOf(HasSubstr(" nack()"), HasSubstr("uh-oh"),
                              HasSubstr("test-id"))));
+}
+
+TEST(AckHandlerWrapper, NackSuccess) {
+  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  EXPECT_CALL(*mock, nack)
+      .WillOnce(Return(ByMove(make_ready_future(Status{}))));
+  ScopedLog log;
+  AckHandlerWrapper tested(std::move(mock), "test-id");
+  tested.nack();
+  EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr(" nack()"))));
 }
 
 TEST(AckHandlerWrapper, NackEmpty) {

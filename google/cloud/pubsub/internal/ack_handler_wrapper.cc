@@ -25,6 +25,7 @@ void AckHandlerWrapper::ack() {
   if (message_id_.empty()) return;
   f.then([id = std::move(message_id_)](auto f) {
     auto status = f.get();
+    if (status.ok()) return;
     GCP_LOG(WARNING) << "error while trying to ack(), status=" << status
                      << ", message_id=" << id;
   });
@@ -35,6 +36,7 @@ void AckHandlerWrapper::nack() {
   if (message_id_.empty()) return;
   f.then([id = std::move(message_id_)](auto f) {
     auto status = f.get();
+    if (status.ok()) return;
     GCP_LOG(WARNING) << "error while trying to nack(), status=" << status
                      << ", message_id=" << id;
   });
