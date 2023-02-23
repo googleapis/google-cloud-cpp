@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `recommender::RecommenderClient`:
+For example, this will override the default endpoint for `recommender_v1::RecommenderClient`:
 
 @snippet recommender_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [recommender::RecommenderClient](@ref recommender::RecommenderClient-endpoint-snippet)
- [recommender_v1::RecommenderClient](@ref recommender_v1::RecommenderClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet recommender_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [recommender::RecommenderClient](@ref recommender::RecommenderClient-service-account-snippet)
- [recommender_v1::RecommenderClient](@ref recommender_v1::RecommenderClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page recommender::RecommenderClient-endpoint-snippet Override recommender::RecommenderClient Endpoint Configuration
-
-@snippet google/cloud/recommender/samples/recommender_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page recommender::RecommenderClient-service-account-snippet Override recommender::RecommenderClient Authentication Defaults
-
-@snippet google/cloud/recommender/samples/recommender_client_samples.cc with-service-account
-
-*/
 
 /*! @page recommender_v1::RecommenderClient-endpoint-snippet Override recommender_v1::RecommenderClient Endpoint Configuration
 

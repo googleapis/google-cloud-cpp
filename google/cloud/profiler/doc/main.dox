@@ -100,13 +100,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `profiler::ProfilerServiceClient`:
+For example, this will override the default endpoint for `profiler_v2::ProfilerServiceClient`:
 
 @snippet profiler_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [profiler::ProfilerServiceClient](@ref profiler::ProfilerServiceClient-endpoint-snippet)
- [profiler_v2::ProfilerServiceClient](@ref profiler_v2::ProfilerServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -119,10 +115,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet profiler_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [profiler::ProfilerServiceClient](@ref profiler::ProfilerServiceClient-service-account-snippet)
- [profiler_v2::ProfilerServiceClient](@ref profiler_v2::ProfilerServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -152,18 +144,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page profiler::ProfilerServiceClient-endpoint-snippet Override profiler::ProfilerServiceClient Endpoint Configuration
-
-@snippet google/cloud/profiler/samples/profiler_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page profiler::ProfilerServiceClient-service-account-snippet Override profiler::ProfilerServiceClient Authentication Defaults
-
-@snippet google/cloud/profiler/samples/profiler_client_samples.cc with-service-account
-
-*/
 
 /*! @page profiler_v2::ProfilerServiceClient-endpoint-snippet Override profiler_v2::ProfilerServiceClient Endpoint Configuration
 
