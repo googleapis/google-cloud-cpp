@@ -144,8 +144,9 @@ TEST(QueryPartitionTest, MakeSqlParams) {
       SqlStatement("SELECT * FROM foo WHERE name = @name",
                    {{"name", Value("Bob")}})));
 
-  Connection::SqlParams params =
-      spanner_internal::MakeSqlParams(expected_partition.Partition());
+  Connection::SqlParams params = spanner_internal::MakeSqlParams(
+      expected_partition.Partition(),
+      QueryOptions{}.set_request_tag("request_tag"));
 
   EXPECT_EQ(params.statement,
             SqlStatement("SELECT * FROM foo WHERE name = @name",
@@ -153,6 +154,7 @@ TEST(QueryPartitionTest, MakeSqlParams) {
   EXPECT_EQ(*params.partition_token, "token");
   EXPECT_THAT(params.transaction,
               HasSessionAndTransaction("session", "txn-id", true, "tag"));
+  EXPECT_EQ(*params.query_options.request_tag(), "request_tag");
 }
 
 }  // namespace

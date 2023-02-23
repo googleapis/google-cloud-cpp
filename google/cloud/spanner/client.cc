@@ -130,9 +130,8 @@ RowStream Client::ExecuteQuery(Transaction transaction, SqlStatement statement,
 
 RowStream Client::ExecuteQuery(QueryPartition const& partition, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
-  auto params = spanner_internal::MakeSqlParams(partition);
-  params.query_options = QueryOptions(internal::CurrentOptions());
-  return conn_->ExecuteQuery(std::move(params));
+  return conn_->ExecuteQuery(spanner_internal::MakeSqlParams(
+      partition, QueryOptions(internal::CurrentOptions())));
 }
 
 ProfileQueryResult Client::ProfileQuery(SqlStatement statement, Options opts) {

@@ -159,8 +159,8 @@ struct QueryPartitionInternals {
   }
 
   static spanner::Connection::SqlParams MakeSqlParams(
-      spanner::QueryPartition const& query_partition) {
-    spanner::QueryOptions query_options;  // not serialized
+      spanner::QueryPartition const& query_partition,
+      spanner::QueryOptions const& query_options) {
     return {MakeTransactionFromIds(query_partition.session_id(),
                                    query_partition.transaction_id(),
                                    query_partition.route_to_leader(),
@@ -181,8 +181,9 @@ inline spanner::QueryPartition MakeQueryPartition(
 }
 
 inline spanner::Connection::SqlParams MakeSqlParams(
-    spanner::QueryPartition const& query_partition) {
-  return QueryPartitionInternals::MakeSqlParams(query_partition);
+    spanner::QueryPartition const& query_partition,
+    spanner::QueryOptions const& query_options) {
+  return QueryPartitionInternals::MakeSqlParams(query_partition, query_options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
