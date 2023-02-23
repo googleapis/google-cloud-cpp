@@ -19,34 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_COMPLETION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_COMPLETION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/retail/v2/completion_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/completion_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CompletionServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~CompletionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// retail_v2::MakeDefaultCompletionServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::retail_v2::
+    MakeDefaultCompletionServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CompleteQuery(
-      google::cloud::retail::v2::CompleteQueryRequest const& request);
-
-  virtual google::cloud::Idempotency ImportCompletionData(
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request);
-};
-
-std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
-MakeDefaultCompletionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use retail_v2::CompletionServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::retail_v2::CompletionServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

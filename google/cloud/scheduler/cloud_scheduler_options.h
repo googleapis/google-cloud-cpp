@@ -21,52 +21,26 @@
 
 #include "google/cloud/scheduler/cloud_scheduler_connection.h"
 #include "google/cloud/scheduler/cloud_scheduler_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/scheduler/v1/cloud_scheduler_options.h"
 
 namespace google {
 namespace cloud {
 namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-scheduler-options
- */
-struct CloudSchedulerRetryPolicyOption {
-  using Type = std::shared_ptr<CloudSchedulerRetryPolicy>;
-};
+/// @deprecated Use scheduler_v1::CloudSchedulerBackoffPolicyOption directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-scheduler-options
- */
-struct CloudSchedulerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// scheduler_v1::CloudSchedulerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::scheduler_v1::
+    CloudSchedulerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-scheduler-options
- */
-struct CloudSchedulerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CloudSchedulerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use scheduler_v1::CloudSchedulerPolicyOptionList directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerPolicyOptionList;
 
-/**
- * The options applicable to CloudScheduler.
- *
- * @ingroup google-cloud-scheduler-options
- */
-using CloudSchedulerPolicyOptionList =
-    OptionList<CloudSchedulerRetryPolicyOption,
-               CloudSchedulerBackoffPolicyOption,
-               CloudSchedulerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use scheduler_v1::CloudSchedulerRetryPolicyOption directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler

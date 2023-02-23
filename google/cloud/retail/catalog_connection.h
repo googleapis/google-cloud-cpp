@@ -20,115 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_CATALOG_CONNECTION_H
 
 #include "google/cloud/retail/catalog_connection_idempotency_policy.h"
-#include "google/cloud/retail/internal/catalog_retry_traits.h"
-#include "google/cloud/retail/internal/catalog_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/retail/v2/catalog_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CatalogServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::CatalogServiceRetryTraits>;
+/// @deprecated Use retail_v2::MakeCatalogServiceConnection directly.
+using ::google::cloud::retail_v2::MakeCatalogServiceConnection;
 
-using CatalogServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::CatalogServiceRetryTraits>;
+/// @deprecated Use retail_v2::CatalogServiceConnection directly.
+using ::google::cloud::retail_v2::CatalogServiceConnection;
 
-using CatalogServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::CatalogServiceRetryTraits>;
+/// @deprecated Use retail_v2::CatalogServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::retail_v2::CatalogServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `CatalogServiceConnection` object for `CatalogServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CatalogServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CatalogServiceClient`.
- *
- * To create a concrete instance, see `MakeCatalogServiceConnection()`.
- *
- * For mocking, see `retail_mocks::MockCatalogServiceConnection`.
- */
-class CatalogServiceConnection {
- public:
-  virtual ~CatalogServiceConnection() = 0;
+/// @deprecated Use retail_v2::CatalogServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::retail_v2::CatalogServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::retail::v2::Catalog> ListCatalogs(
-      google::cloud::retail::v2::ListCatalogsRequest request);
-
-  virtual StatusOr<google::cloud::retail::v2::Catalog> UpdateCatalog(
-      google::cloud::retail::v2::UpdateCatalogRequest const& request);
-
-  virtual Status SetDefaultBranch(
-      google::cloud::retail::v2::SetDefaultBranchRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
-  GetDefaultBranch(
-      google::cloud::retail::v2::GetDefaultBranchRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::CompletionConfig>
-  GetCompletionConfig(
-      google::cloud::retail::v2::GetCompletionConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::CompletionConfig>
-  UpdateCompletionConfig(
-      google::cloud::retail::v2::UpdateCompletionConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  GetAttributesConfig(
-      google::cloud::retail::v2::GetAttributesConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  UpdateAttributesConfig(
-      google::cloud::retail::v2::UpdateAttributesConfigRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  AddCatalogAttribute(
-      google::cloud::retail::v2::AddCatalogAttributeRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  RemoveCatalogAttribute(
-      google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::AttributesConfig>
-  ReplaceCatalogAttribute(
-      google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `CatalogServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CatalogServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CatalogServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::CatalogServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CatalogServiceConnection` created by
- * this function.
- */
-std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
-    Options options = {});
+/// @deprecated Use retail_v2::CatalogServiceRetryPolicy directly.
+using ::google::cloud::retail_v2::CatalogServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

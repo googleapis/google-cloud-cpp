@@ -21,52 +21,26 @@
 
 #include "google/cloud/retail/prediction_connection.h"
 #include "google/cloud/retail/prediction_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/retail/v2/prediction_options.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct PredictionServiceRetryPolicyOption {
-  using Type = std::shared_ptr<PredictionServiceRetryPolicy>;
-};
+/// @deprecated Use retail_v2::PredictionServiceBackoffPolicyOption directly.
+using ::google::cloud::retail_v2::PredictionServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct PredictionServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// retail_v2::PredictionServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::retail_v2::
+    PredictionServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-retail-options
- */
-struct PredictionServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PredictionServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use retail_v2::PredictionServicePolicyOptionList directly.
+using ::google::cloud::retail_v2::PredictionServicePolicyOptionList;
 
-/**
- * The options applicable to PredictionService.
- *
- * @ingroup google-cloud-retail-options
- */
-using PredictionServicePolicyOptionList =
-    OptionList<PredictionServiceRetryPolicyOption,
-               PredictionServiceBackoffPolicyOption,
-               PredictionServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use retail_v2::PredictionServiceRetryPolicyOption directly.
+using ::google::cloud::retail_v2::PredictionServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

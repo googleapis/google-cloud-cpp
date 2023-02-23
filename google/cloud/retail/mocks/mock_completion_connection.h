@@ -20,44 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_MOCKS_MOCK_COMPLETION_CONNECTION_H
 
 #include "google/cloud/retail/completion_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/retail/v2/mocks/mock_completion_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CompletionServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CompletionServiceClient`. To do so,
- * construct an object of type `CompletionServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCompletionServiceConnection
-    : public retail::CompletionServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::CompleteQueryResponse>,
-              CompleteQuery,
-              (google::cloud::retail::v2::CompleteQueryRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
-      ImportCompletionData,
-      (google::cloud::retail::v2::ImportCompletionDataRequest const& request),
-      (override));
-};
+/// @deprecated Use retail_v2_mocks::MockCompletionServiceConnection directly.
+using ::google::cloud::retail_v2_mocks::MockCompletionServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_mocks

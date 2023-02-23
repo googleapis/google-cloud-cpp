@@ -20,65 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_MOCKS_MOCK_CLOUD_SCHEDULER_CONNECTION_H
 
 #include "google/cloud/scheduler/cloud_scheduler_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/scheduler/v1/mocks/mock_cloud_scheduler_connection.h"
 
 namespace google {
 namespace cloud {
 namespace scheduler_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudSchedulerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudSchedulerClient`. To do so,
- * construct an object of type `CloudSchedulerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudSchedulerConnection
-    : public scheduler::CloudSchedulerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::scheduler::v1::Job>, ListJobs,
-              (google::cloud::scheduler::v1::ListJobsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, GetJob,
-              (google::cloud::scheduler::v1::GetJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, CreateJob,
-              (google::cloud::scheduler::v1::CreateJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, UpdateJob,
-              (google::cloud::scheduler::v1::UpdateJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteJob,
-              (google::cloud::scheduler::v1::DeleteJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, PauseJob,
-              (google::cloud::scheduler::v1::PauseJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, ResumeJob,
-              (google::cloud::scheduler::v1::ResumeJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::scheduler::v1::Job>, RunJob,
-              (google::cloud::scheduler::v1::RunJobRequest const& request),
-              (override));
-};
+/// @deprecated Use scheduler_v1_mocks::MockCloudSchedulerConnection directly.
+using ::google::cloud::scheduler_v1_mocks::MockCloudSchedulerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_mocks

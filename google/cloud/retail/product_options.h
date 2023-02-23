@@ -21,63 +21,29 @@
 
 #include "google/cloud/retail/product_connection.h"
 #include "google/cloud/retail/product_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/retail/v2/product_options.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct ProductServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ProductServiceRetryPolicy>;
-};
+/// @deprecated Use retail_v2::ProductServicePollingPolicyOption directly.
+using ::google::cloud::retail_v2::ProductServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct ProductServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use retail_v2::ProductServiceBackoffPolicyOption directly.
+using ::google::cloud::retail_v2::ProductServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-retail-options
- */
-struct ProductServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ProductServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use retail_v2::ProductServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::retail_v2::
+    ProductServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct ProductServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use retail_v2::ProductServicePolicyOptionList directly.
+using ::google::cloud::retail_v2::ProductServicePolicyOptionList;
 
-/**
- * The options applicable to ProductService.
- *
- * @ingroup google-cloud-retail-options
- */
-using ProductServicePolicyOptionList =
-    OptionList<ProductServiceRetryPolicyOption,
-               ProductServiceBackoffPolicyOption,
-               ProductServicePollingPolicyOption,
-               ProductServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use retail_v2::ProductServiceRetryPolicyOption directly.
+using ::google::cloud::retail_v2::ProductServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

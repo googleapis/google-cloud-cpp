@@ -96,6 +96,10 @@ For example, this will override the default endpoint for `securitycenter::Securi
 
 @snippet security_center_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [securitycenter::SecurityCenterClient](@ref securitycenter::SecurityCenterClient-endpoint-snippet)
+ [securitycenter_v1::SecurityCenterClient](@ref securitycenter_v1::SecurityCenterClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +111,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet security_center_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [securitycenter::SecurityCenterClient](@ref securitycenter::SecurityCenterClient-service-account-snippet)
+ [securitycenter_v1::SecurityCenterClient](@ref securitycenter_v1::SecurityCenterClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +154,18 @@ can override the default policies.
 /*! @page securitycenter::SecurityCenterClient-service-account-snippet Override securitycenter::SecurityCenterClient Authentication Defaults
 
 @snippet google/cloud/securitycenter/samples/security_center_client_samples.cc with-service-account
+
+*/
+
+/*! @page securitycenter_v1::SecurityCenterClient-endpoint-snippet Override securitycenter_v1::SecurityCenterClient Endpoint Configuration
+
+@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page securitycenter_v1::SecurityCenterClient-service-account-snippet Override securitycenter_v1::SecurityCenterClient Authentication Defaults
+
+@snippet google/cloud/securitycenter/v1/samples/security_center_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

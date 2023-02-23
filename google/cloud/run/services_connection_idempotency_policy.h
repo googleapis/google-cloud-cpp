@@ -19,51 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_SERVICES_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/run/v2/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/run/v2/services_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ServicesConnectionIdempotencyPolicy {
- public:
-  virtual ~ServicesConnectionIdempotencyPolicy();
+/// @deprecated Use run_v2::MakeDefaultServicesConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::run_v2::MakeDefaultServicesConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ServicesConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency CreateService(
-      google::cloud::run::v2::CreateServiceRequest const& request);
-
-  virtual google::cloud::Idempotency GetService(
-      google::cloud::run::v2::GetServiceRequest const& request);
-
-  virtual google::cloud::Idempotency ListServices(
-      google::cloud::run::v2::ListServicesRequest request);
-
-  virtual google::cloud::Idempotency UpdateService(
-      google::cloud::run::v2::UpdateServiceRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteService(
-      google::cloud::run::v2::DeleteServiceRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<ServicesConnectionIdempotencyPolicy>
-MakeDefaultServicesConnectionIdempotencyPolicy();
+/// @deprecated Use run_v2::ServicesConnectionIdempotencyPolicy directly.
+using ::google::cloud::run_v2::ServicesConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run

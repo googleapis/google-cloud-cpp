@@ -19,96 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_USER_EVENT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_USER_EVENT_CONNECTION_H
 
-#include "google/cloud/retail/internal/user_event_retry_traits.h"
-#include "google/cloud/retail/internal/user_event_stub.h"
 #include "google/cloud/retail/user_event_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/user_event_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using UserEventServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::UserEventServiceRetryTraits>;
+/// @deprecated Use retail_v2::MakeUserEventServiceConnection directly.
+using ::google::cloud::retail_v2::MakeUserEventServiceConnection;
 
-using UserEventServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::UserEventServiceRetryTraits>;
+/// @deprecated Use retail_v2::UserEventServiceConnection directly.
+using ::google::cloud::retail_v2::UserEventServiceConnection;
 
-using UserEventServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::UserEventServiceRetryTraits>;
+/// @deprecated Use retail_v2::UserEventServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::retail_v2::UserEventServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `UserEventServiceConnection` object for `UserEventServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `UserEventServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `UserEventServiceClient`.
- *
- * To create a concrete instance, see `MakeUserEventServiceConnection()`.
- *
- * For mocking, see `retail_mocks::MockUserEventServiceConnection`.
- */
-class UserEventServiceConnection {
- public:
-  virtual ~UserEventServiceConnection() = 0;
+/// @deprecated Use retail_v2::UserEventServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::retail_v2::UserEventServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
-      google::cloud::retail::v2::WriteUserEventRequest const& request);
-
-  virtual StatusOr<google::api::HttpBody> CollectUserEvent(
-      google::cloud::retail::v2::CollectUserEventRequest const& request);
-
-  virtual future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
-  PurgeUserEvents(
-      google::cloud::retail::v2::PurgeUserEventsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
-  ImportUserEvents(
-      google::cloud::retail::v2::ImportUserEventsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
-  RejoinUserEvents(
-      google::cloud::retail::v2::RejoinUserEventsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `UserEventServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of UserEventServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `UserEventServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::UserEventServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `UserEventServiceConnection` created
- * by this function.
- */
-std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
-    Options options = {});
+/// @deprecated Use retail_v2::UserEventServiceRetryPolicy directly.
+using ::google::cloud::retail_v2::UserEventServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

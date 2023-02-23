@@ -20,36 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_MOCKS_MOCK_SEARCH_CONNECTION_H
 
 #include "google/cloud/retail/search_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/retail/v2/mocks/mock_search_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `SearchServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `SearchServiceClient`. To do so,
- * construct an object of type `SearchServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockSearchServiceConnection : public retail::SearchServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>,
-      Search, (google::cloud::retail::v2::SearchRequest request), (override));
-};
+/// @deprecated Use retail_v2_mocks::MockSearchServiceConnection directly.
+using ::google::cloud::retail_v2_mocks::MockSearchServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_mocks

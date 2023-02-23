@@ -21,62 +21,27 @@
 
 #include "google/cloud/run/revisions_connection.h"
 #include "google/cloud/run/revisions_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/run/v2/revisions_options.h"
 
 namespace google {
 namespace cloud {
 namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-run-options
- */
-struct RevisionsRetryPolicyOption {
-  using Type = std::shared_ptr<RevisionsRetryPolicy>;
-};
+/// @deprecated Use run_v2::RevisionsPollingPolicyOption directly.
+using ::google::cloud::run_v2::RevisionsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-run-options
- */
-struct RevisionsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use run_v2::RevisionsBackoffPolicyOption directly.
+using ::google::cloud::run_v2::RevisionsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-run-options
- */
-struct RevisionsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<RevisionsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use run_v2::RevisionsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::run_v2::RevisionsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-run-options
- */
-struct RevisionsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use run_v2::RevisionsPolicyOptionList directly.
+using ::google::cloud::run_v2::RevisionsPolicyOptionList;
 
-/**
- * The options applicable to Revisions.
- *
- * @ingroup google-cloud-run-options
- */
-using RevisionsPolicyOptionList =
-    OptionList<RevisionsRetryPolicyOption, RevisionsBackoffPolicyOption,
-               RevisionsPollingPolicyOption,
-               RevisionsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use run_v2::RevisionsRetryPolicyOption directly.
+using ::google::cloud::run_v2::RevisionsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
