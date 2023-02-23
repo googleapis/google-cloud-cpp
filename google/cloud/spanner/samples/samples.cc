@@ -2492,6 +2492,9 @@ void UsePartitionQuery(google::cloud::spanner::Client client) {
   auto partitions =
       client.PartitionQuery(std::move(txn), std::move(select), {});
   if (!partitions) throw std::move(partitions).status();
+
+  // You would probably choose to execute these partitioned queries in
+  // separate threads/processes, or on a different machine.
   int number_of_rows = 0;
   for (auto const& partition : *partitions) {
     auto rows = client.ExecuteQuery(partition);
