@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/iam/iam_policy_client.h"
+#include "google/cloud/iam/v1/iam_policy_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
@@ -27,7 +27,7 @@ namespace {
 
 void GetTopicPolicy(std::vector<std::string> const& argv) {
   // [START pubsub_get_topic_policy]
-  namespace iam = google::cloud::iam;
+  namespace iam = google::cloud::iam_v1;
   namespace pubsub = google::cloud::pubsub;
   [](std::string project_id, std::string topic_id) {
     auto const topic =
@@ -48,7 +48,7 @@ void GetTopicPolicy(std::vector<std::string> const& argv) {
 
 void SetTopicPolicy(std::vector<std::string> const& argv) {
   // [START pubsub_set_topic_policy]
-  namespace iam = google::cloud::iam;
+  namespace iam = google::cloud::iam_v1;
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::StatusCode;
   [](std::string project_id, std::string topic_id) {
@@ -87,7 +87,7 @@ void SetTopicPolicy(std::vector<std::string> const& argv) {
 
 void TestTopicPermissions(std::vector<std::string> const& argv) {
   // [START pubsub_test_topic_permissions]
-  namespace iam = google::cloud::iam;
+  namespace iam = google::cloud::iam_v1;
   namespace pubsub = google::cloud::pubsub;
   [](std::string project_id, std::string topic_id) {
     auto const topic =
@@ -113,7 +113,7 @@ void TestTopicPermissions(std::vector<std::string> const& argv) {
 
 void GetSubscriptionPolicy(std::vector<std::string> const& argv) {
   // [START pubsub_get_subscription_policy]
-  namespace iam = google::cloud::iam;
+  namespace iam = google::cloud::iam_v1;
   namespace pubsub = google::cloud::pubsub;
   [](std::string project_id, std::string subscription_id) {
     auto const subscription =
@@ -134,7 +134,7 @@ void GetSubscriptionPolicy(std::vector<std::string> const& argv) {
 
 void SetSubscriptionPolicy(std::vector<std::string> const& argv) {
   // [START pubsub_set_subscription_policy]
-  namespace iam = google::cloud::iam;
+  namespace iam = google::cloud::iam_v1;
   namespace pubsub = google::cloud::pubsub;
   using google::cloud::StatusCode;
   [](std::string project_id, std::string subscription_id) {
@@ -173,7 +173,7 @@ void SetSubscriptionPolicy(std::vector<std::string> const& argv) {
 
 void TestSubscriptionPermissions(std::vector<std::string> const& argv) {
   // [START pubsub_test_subscription_permissions]
-  namespace iam = google::cloud::iam;
+  namespace iam = google::cloud::iam_v1;
   namespace pubsub = google::cloud::pubsub;
   [](std::string project_id, std::string subscription_id) {
     auto const subscription =
