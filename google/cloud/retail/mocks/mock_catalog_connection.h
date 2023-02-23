@@ -20,93 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_MOCKS_MOCK_CATALOG_CONNECTION_H
 
 #include "google/cloud/retail/catalog_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/retail/v2/mocks/mock_catalog_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CatalogServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CatalogServiceClient`. To do so,
- * construct an object of type `CatalogServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCatalogServiceConnection : public retail::CatalogServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::retail::v2::Catalog>, ListCatalogs,
-              (google::cloud::retail::v2::ListCatalogsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::Catalog>, UpdateCatalog,
-              (google::cloud::retail::v2::UpdateCatalogRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      Status, SetDefaultBranch,
-      (google::cloud::retail::v2::SetDefaultBranchRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>,
-      GetDefaultBranch,
-      (google::cloud::retail::v2::GetDefaultBranchRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::CompletionConfig>,
-      GetCompletionConfig,
-      (google::cloud::retail::v2::GetCompletionConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::CompletionConfig>,
-      UpdateCompletionConfig,
-      (google::cloud::retail::v2::UpdateCompletionConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::AttributesConfig>,
-      GetAttributesConfig,
-      (google::cloud::retail::v2::GetAttributesConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::AttributesConfig>,
-      UpdateAttributesConfig,
-      (google::cloud::retail::v2::UpdateAttributesConfigRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::AttributesConfig>,
-      AddCatalogAttribute,
-      (google::cloud::retail::v2::AddCatalogAttributeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::retail::v2::AttributesConfig>,
-      RemoveCatalogAttribute,
-      (google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::AttributesConfig>,
-              ReplaceCatalogAttribute,
-              (google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use retail_v2_mocks::MockCatalogServiceConnection directly.
+using ::google::cloud::retail_v2_mocks::MockCatalogServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_mocks

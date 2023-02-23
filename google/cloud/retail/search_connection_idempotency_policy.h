@@ -19,31 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_SEARCH_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_SEARCH_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/retail/v2/search_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/search_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SearchServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~SearchServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// retail_v2::MakeDefaultSearchServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::retail_v2::
+    MakeDefaultSearchServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<SearchServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency Search(
-      google::cloud::retail::v2::SearchRequest request);
-};
-
-std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
-MakeDefaultSearchServiceConnectionIdempotencyPolicy();
+/// @deprecated Use retail_v2::SearchServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::retail_v2::SearchServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

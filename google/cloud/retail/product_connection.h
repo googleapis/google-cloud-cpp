@@ -19,120 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PRODUCT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PRODUCT_CONNECTION_H
 
-#include "google/cloud/retail/internal/product_retry_traits.h"
-#include "google/cloud/retail/internal/product_stub.h"
 #include "google/cloud/retail/product_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/product_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ProductServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::ProductServiceRetryTraits>;
+/// @deprecated Use retail_v2::MakeProductServiceConnection directly.
+using ::google::cloud::retail_v2::MakeProductServiceConnection;
 
-using ProductServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::ProductServiceRetryTraits>;
+/// @deprecated Use retail_v2::ProductServiceConnection directly.
+using ::google::cloud::retail_v2::ProductServiceConnection;
 
-using ProductServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::ProductServiceRetryTraits>;
+/// @deprecated Use retail_v2::ProductServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::retail_v2::ProductServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `ProductServiceConnection` object for `ProductServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ProductServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ProductServiceClient`.
- *
- * To create a concrete instance, see `MakeProductServiceConnection()`.
- *
- * For mocking, see `retail_mocks::MockProductServiceConnection`.
- */
-class ProductServiceConnection {
- public:
-  virtual ~ProductServiceConnection() = 0;
+/// @deprecated Use retail_v2::ProductServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::retail_v2::ProductServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      google::cloud::retail::v2::CreateProductRequest const& request);
-
-  virtual StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      google::cloud::retail::v2::GetProductRequest const& request);
-
-  virtual StreamRange<google::cloud::retail::v2::Product> ListProducts(
-      google::cloud::retail::v2::ListProductsRequest request);
-
-  virtual StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      google::cloud::retail::v2::UpdateProductRequest const& request);
-
-  virtual Status DeleteProduct(
-      google::cloud::retail::v2::DeleteProductRequest const& request);
-
-  virtual future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(
-      google::cloud::retail::v2::ImportProductsRequest const& request);
-
-  virtual future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(
-      google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories(
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `ProductServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ProductServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ProductServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::ProductServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ProductServiceConnection` created by
- * this function.
- */
-std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
-    Options options = {});
+/// @deprecated Use retail_v2::ProductServiceRetryPolicy directly.
+using ::google::cloud::retail_v2::ProductServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

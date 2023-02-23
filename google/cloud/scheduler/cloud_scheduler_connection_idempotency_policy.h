@@ -19,52 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
-#include <memory>
+#include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudSchedulerConnectionIdempotencyPolicy {
- public:
-  virtual ~CloudSchedulerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// scheduler_v1::MakeDefaultCloudSchedulerConnectionIdempotencyPolicy directly.
+using ::google::cloud::scheduler_v1::
+    MakeDefaultCloudSchedulerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListJobs(
-      google::cloud::scheduler::v1::ListJobsRequest request);
-
-  virtual google::cloud::Idempotency GetJob(
-      google::cloud::scheduler::v1::GetJobRequest const& request);
-
-  virtual google::cloud::Idempotency CreateJob(
-      google::cloud::scheduler::v1::CreateJobRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateJob(
-      google::cloud::scheduler::v1::UpdateJobRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::scheduler::v1::DeleteJobRequest const& request);
-
-  virtual google::cloud::Idempotency PauseJob(
-      google::cloud::scheduler::v1::PauseJobRequest const& request);
-
-  virtual google::cloud::Idempotency ResumeJob(
-      google::cloud::scheduler::v1::ResumeJobRequest const& request);
-
-  virtual google::cloud::Idempotency RunJob(
-      google::cloud::scheduler::v1::RunJobRequest const& request);
-};
-
-std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
-MakeDefaultCloudSchedulerConnectionIdempotencyPolicy();
+/// @deprecated Use scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler

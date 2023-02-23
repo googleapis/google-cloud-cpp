@@ -19,43 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_USER_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_USER_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/retail/v2/user_event_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/user_event_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class UserEventServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~UserEventServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// retail_v2::MakeDefaultUserEventServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::retail_v2::
+    MakeDefaultUserEventServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency WriteUserEvent(
-      google::cloud::retail::v2::WriteUserEventRequest const& request);
-
-  virtual google::cloud::Idempotency CollectUserEvent(
-      google::cloud::retail::v2::CollectUserEventRequest const& request);
-
-  virtual google::cloud::Idempotency PurgeUserEvents(
-      google::cloud::retail::v2::PurgeUserEventsRequest const& request);
-
-  virtual google::cloud::Idempotency ImportUserEvents(
-      google::cloud::retail::v2::ImportUserEventsRequest const& request);
-
-  virtual google::cloud::Idempotency RejoinUserEvents(
-      google::cloud::retail::v2::RejoinUserEventsRequest const& request);
-};
-
-std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
-MakeDefaultUserEventServiceConnectionIdempotencyPolicy();
+/// @deprecated Use retail_v2::UserEventServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::retail_v2::UserEventServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

@@ -20,45 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_MOCKS_MOCK_REVISIONS_CONNECTION_H
 
 #include "google/cloud/run/revisions_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/run/v2/mocks/mock_revisions_connection.h"
 
 namespace google {
 namespace cloud {
 namespace run_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `RevisionsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `RevisionsClient`. To do so,
- * construct an object of type `RevisionsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockRevisionsConnection : public run::RevisionsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::run::v2::Revision>, GetRevision,
-              (google::cloud::run::v2::GetRevisionRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::run::v2::Revision>, ListRevisions,
-              (google::cloud::run::v2::ListRevisionsRequest request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Revision>>,
-              DeleteRevision,
-              (google::cloud::run::v2::DeleteRevisionRequest const& request),
-              (override));
-};
+/// @deprecated Use run_v2_mocks::MockRevisionsConnection directly.
+using ::google::cloud::run_v2_mocks::MockRevisionsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_mocks

@@ -19,78 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_SEARCH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_SEARCH_CONNECTION_H
 
-#include "google/cloud/retail/internal/search_retry_traits.h"
-#include "google/cloud/retail/internal/search_stub.h"
 #include "google/cloud/retail/search_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/retail/v2/search_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using SearchServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::SearchServiceRetryTraits>;
+/// @deprecated Use retail_v2::MakeSearchServiceConnection directly.
+using ::google::cloud::retail_v2::MakeSearchServiceConnection;
 
-using SearchServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::SearchServiceRetryTraits>;
+/// @deprecated Use retail_v2::SearchServiceConnection directly.
+using ::google::cloud::retail_v2::SearchServiceConnection;
 
-using SearchServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::SearchServiceRetryTraits>;
+/// @deprecated Use retail_v2::SearchServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::retail_v2::SearchServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `SearchServiceConnection` object for `SearchServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `SearchServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SearchServiceClient`.
- *
- * To create a concrete instance, see `MakeSearchServiceConnection()`.
- *
- * For mocking, see `retail_mocks::MockSearchServiceConnection`.
- */
-class SearchServiceConnection {
- public:
-  virtual ~SearchServiceConnection() = 0;
+/// @deprecated Use retail_v2::SearchServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::retail_v2::SearchServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-  Search(google::cloud::retail::v2::SearchRequest request);
-};
-
-/**
- * A factory function to construct an object of type `SearchServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of SearchServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `SearchServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::SearchServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `SearchServiceConnection` created by
- * this function.
- */
-std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
-    Options options = {});
+/// @deprecated Use retail_v2::SearchServiceRetryPolicy directly.
+using ::google::cloud::retail_v2::SearchServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

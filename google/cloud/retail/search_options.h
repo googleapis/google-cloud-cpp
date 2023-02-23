@@ -21,51 +21,26 @@
 
 #include "google/cloud/retail/search_connection.h"
 #include "google/cloud/retail/search_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/retail/v2/search_options.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct SearchServiceRetryPolicyOption {
-  using Type = std::shared_ptr<SearchServiceRetryPolicy>;
-};
+/// @deprecated Use retail_v2::SearchServiceBackoffPolicyOption directly.
+using ::google::cloud::retail_v2::SearchServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct SearchServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use retail_v2::SearchServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::retail_v2::
+    SearchServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-retail-options
- */
-struct SearchServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<SearchServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use retail_v2::SearchServicePolicyOptionList directly.
+using ::google::cloud::retail_v2::SearchServicePolicyOptionList;
 
-/**
- * The options applicable to SearchService.
- *
- * @ingroup google-cloud-retail-options
- */
-using SearchServicePolicyOptionList =
-    OptionList<SearchServiceRetryPolicyOption, SearchServiceBackoffPolicyOption,
-               SearchServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use retail_v2::SearchServiceRetryPolicyOption directly.
+using ::google::cloud::retail_v2::SearchServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

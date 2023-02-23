@@ -19,77 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_SECRET_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_SECRET_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/secretmanager/v1/service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/secretmanager/v1/secret_manager_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SecretManagerServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~SecretManagerServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// secretmanager_v1::MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::secretmanager_v1::
+    MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListSecrets(
-      google::cloud::secretmanager::v1::ListSecretsRequest request);
-
-  virtual google::cloud::Idempotency CreateSecret(
-      google::cloud::secretmanager::v1::CreateSecretRequest const& request);
-
-  virtual google::cloud::Idempotency AddSecretVersion(
-      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request);
-
-  virtual google::cloud::Idempotency GetSecret(
-      google::cloud::secretmanager::v1::GetSecretRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateSecret(
-      google::cloud::secretmanager::v1::UpdateSecretRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteSecret(
-      google::cloud::secretmanager::v1::DeleteSecretRequest const& request);
-
-  virtual google::cloud::Idempotency ListSecretVersions(
-      google::cloud::secretmanager::v1::ListSecretVersionsRequest request);
-
-  virtual google::cloud::Idempotency GetSecretVersion(
-      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request);
-
-  virtual google::cloud::Idempotency AccessSecretVersion(
-      google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DisableSecretVersion(
-      google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency EnableSecretVersion(
-      google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DestroySecretVersion(
-      google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
-MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::secretmanager_v1::
+    SecretManagerServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager

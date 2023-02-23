@@ -19,134 +19,33 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_SECRET_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECRETMANAGER_SECRET_MANAGER_CONNECTION_H
 
-#include "google/cloud/secretmanager/internal/secret_manager_retry_traits.h"
-#include "google/cloud/secretmanager/internal/secret_manager_stub.h"
 #include "google/cloud/secretmanager/secret_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/secretmanager/v1/secret_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using SecretManagerServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        secretmanager_internal::SecretManagerServiceRetryTraits>;
+/// @deprecated Use secretmanager_v1::MakeSecretManagerServiceConnection
+/// directly.
+using ::google::cloud::secretmanager_v1::MakeSecretManagerServiceConnection;
 
-using SecretManagerServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        secretmanager_internal::SecretManagerServiceRetryTraits>;
+/// @deprecated Use secretmanager_v1::SecretManagerServiceConnection directly.
+using ::google::cloud::secretmanager_v1::SecretManagerServiceConnection;
 
-using SecretManagerServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        secretmanager_internal::SecretManagerServiceRetryTraits>;
+/// @deprecated Use
+/// secretmanager_v1::SecretManagerServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::secretmanager_v1::
+    SecretManagerServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `SecretManagerServiceConnection` object for `SecretManagerServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `SecretManagerServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `SecretManagerServiceClient`.
- *
- * To create a concrete instance, see `MakeSecretManagerServiceConnection()`.
- *
- * For mocking, see `secretmanager_mocks::MockSecretManagerServiceConnection`.
- */
-class SecretManagerServiceConnection {
- public:
-  virtual ~SecretManagerServiceConnection() = 0;
+/// @deprecated Use secretmanager_v1::SecretManagerServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::secretmanager_v1::
+    SecretManagerServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
-      google::cloud::secretmanager::v1::ListSecretsRequest request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
-      google::cloud::secretmanager::v1::CreateSecretRequest const& request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  AddSecretVersion(
-      google::cloud::secretmanager::v1::AddSecretVersionRequest const& request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
-      google::cloud::secretmanager::v1::GetSecretRequest const& request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
-      google::cloud::secretmanager::v1::UpdateSecretRequest const& request);
-
-  virtual Status DeleteSecret(
-      google::cloud::secretmanager::v1::DeleteSecretRequest const& request);
-
-  virtual StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-  ListSecretVersions(
-      google::cloud::secretmanager::v1::ListSecretVersionsRequest request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  GetSecretVersion(
-      google::cloud::secretmanager::v1::GetSecretVersionRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::secretmanager::v1::AccessSecretVersionResponse>
-  AccessSecretVersion(
-      google::cloud::secretmanager::v1::AccessSecretVersionRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DisableSecretVersion(
-      google::cloud::secretmanager::v1::DisableSecretVersionRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  EnableSecretVersion(
-      google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::secretmanager::v1::SecretVersion>
-  DestroySecretVersion(
-      google::cloud::secretmanager::v1::DestroySecretVersionRequest const&
-          request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `SecretManagerServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * SecretManagerServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `SecretManagerServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::secretmanager::SecretManagerServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `SecretManagerServiceConnection`
- * created by this function.
- */
-std::shared_ptr<SecretManagerServiceConnection>
-MakeSecretManagerServiceConnection(Options options = {});
+/// @deprecated Use secretmanager_v1::SecretManagerServiceRetryPolicy directly.
+using ::google::cloud::secretmanager_v1::SecretManagerServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager

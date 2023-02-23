@@ -20,86 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_COMPLETION_CONNECTION_H
 
 #include "google/cloud/retail/completion_connection_idempotency_policy.h"
-#include "google/cloud/retail/internal/completion_retry_traits.h"
-#include "google/cloud/retail/internal/completion_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/completion_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CompletionServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::CompletionServiceRetryTraits>;
+/// @deprecated Use retail_v2::MakeCompletionServiceConnection directly.
+using ::google::cloud::retail_v2::MakeCompletionServiceConnection;
 
-using CompletionServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::CompletionServiceRetryTraits>;
+/// @deprecated Use retail_v2::CompletionServiceConnection directly.
+using ::google::cloud::retail_v2::CompletionServiceConnection;
 
-using CompletionServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::CompletionServiceRetryTraits>;
+/// @deprecated Use retail_v2::CompletionServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::retail_v2::CompletionServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `CompletionServiceConnection` object for `CompletionServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CompletionServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `CompletionServiceClient`.
- *
- * To create a concrete instance, see `MakeCompletionServiceConnection()`.
- *
- * For mocking, see `retail_mocks::MockCompletionServiceConnection`.
- */
-class CompletionServiceConnection {
- public:
-  virtual ~CompletionServiceConnection() = 0;
+/// @deprecated Use retail_v2::CompletionServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::retail_v2::CompletionServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
-  CompleteQuery(google::cloud::retail::v2::CompleteQueryRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
-  ImportCompletionData(
-      google::cloud::retail::v2::ImportCompletionDataRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `CompletionServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * CompletionServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CompletionServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::CompletionServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CompletionServiceConnection` created
- * by this function.
- */
-std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
-    Options options = {});
+/// @deprecated Use retail_v2::CompletionServiceRetryPolicy directly.
+using ::google::cloud::retail_v2::CompletionServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

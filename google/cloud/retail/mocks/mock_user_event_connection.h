@@ -20,60 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_MOCKS_MOCK_USER_EVENT_CONNECTION_H
 
 #include "google/cloud/retail/user_event_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/retail/v2/mocks/mock_user_event_connection.h"
 
 namespace google {
 namespace cloud {
 namespace retail_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `UserEventServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `UserEventServiceClient`. To do so,
- * construct an object of type `UserEventServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockUserEventServiceConnection
-    : public retail::UserEventServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::retail::v2::UserEvent>, WriteUserEvent,
-              (google::cloud::retail::v2::WriteUserEventRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::HttpBody>, CollectUserEvent,
-      (google::cloud::retail::v2::CollectUserEventRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
-      PurgeUserEvents,
-      (google::cloud::retail::v2::PurgeUserEventsRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
-      ImportUserEvents,
-      (google::cloud::retail::v2::ImportUserEventsRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
-      RejoinUserEvents,
-      (google::cloud::retail::v2::RejoinUserEventsRequest const& request),
-      (override));
-};
+/// @deprecated Use retail_v2_mocks::MockUserEventServiceConnection directly.
+using ::google::cloud::retail_v2_mocks::MockUserEventServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_mocks

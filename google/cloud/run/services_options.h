@@ -21,62 +21,27 @@
 
 #include "google/cloud/run/services_connection.h"
 #include "google/cloud/run/services_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/run/v2/services_options.h"
 
 namespace google {
 namespace cloud {
 namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-run-options
- */
-struct ServicesRetryPolicyOption {
-  using Type = std::shared_ptr<ServicesRetryPolicy>;
-};
+/// @deprecated Use run_v2::ServicesPollingPolicyOption directly.
+using ::google::cloud::run_v2::ServicesPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-run-options
- */
-struct ServicesBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use run_v2::ServicesBackoffPolicyOption directly.
+using ::google::cloud::run_v2::ServicesBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-run-options
- */
-struct ServicesConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ServicesConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use run_v2::ServicesConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::run_v2::ServicesConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-run-options
- */
-struct ServicesPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use run_v2::ServicesPolicyOptionList directly.
+using ::google::cloud::run_v2::ServicesPolicyOptionList;
 
-/**
- * The options applicable to Services.
- *
- * @ingroup google-cloud-run-options
- */
-using ServicesPolicyOptionList =
-    OptionList<ServicesRetryPolicyOption, ServicesBackoffPolicyOption,
-               ServicesPollingPolicyOption,
-               ServicesConnectionIdempotencyPolicyOption>;
+/// @deprecated Use run_v2::ServicesRetryPolicyOption directly.
+using ::google::cloud::run_v2::ServicesRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run

@@ -19,31 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PREDICTION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PREDICTION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/retail/v2/prediction_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/prediction_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PredictionServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~PredictionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// retail_v2::MakeDefaultPredictionServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::retail_v2::
+    MakeDefaultPredictionServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency Predict(
-      google::cloud::retail::v2::PredictRequest const& request);
-};
-
-std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
-MakeDefaultPredictionServiceConnectionIdempotencyPolicy();
+/// @deprecated Use retail_v2::PredictionServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::retail_v2::PredictionServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

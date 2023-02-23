@@ -20,98 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SCHEDULER_CLOUD_SCHEDULER_CONNECTION_H
 
 #include "google/cloud/scheduler/cloud_scheduler_connection_idempotency_policy.h"
-#include "google/cloud/scheduler/internal/cloud_scheduler_retry_traits.h"
-#include "google/cloud/scheduler/internal/cloud_scheduler_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/scheduler/v1/cloud_scheduler_connection.h"
 
 namespace google {
 namespace cloud {
 namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudSchedulerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        scheduler_internal::CloudSchedulerRetryTraits>;
+/// @deprecated Use scheduler_v1::MakeCloudSchedulerConnection directly.
+using ::google::cloud::scheduler_v1::MakeCloudSchedulerConnection;
 
-using CloudSchedulerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        scheduler_internal::CloudSchedulerRetryTraits>;
+/// @deprecated Use scheduler_v1::CloudSchedulerConnection directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerConnection;
 
-using CloudSchedulerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        scheduler_internal::CloudSchedulerRetryTraits>;
+/// @deprecated Use scheduler_v1::CloudSchedulerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerLimitedErrorCountRetryPolicy;
 
-/**
- * The `CloudSchedulerConnection` object for `CloudSchedulerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudSchedulerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CloudSchedulerClient`.
- *
- * To create a concrete instance, see `MakeCloudSchedulerConnection()`.
- *
- * For mocking, see `scheduler_mocks::MockCloudSchedulerConnection`.
- */
-class CloudSchedulerConnection {
- public:
-  virtual ~CloudSchedulerConnection() = 0;
+/// @deprecated Use scheduler_v1::CloudSchedulerLimitedTimeRetryPolicy directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::scheduler::v1::Job> ListJobs(
-      google::cloud::scheduler::v1::ListJobsRequest request);
-
-  virtual StatusOr<google::cloud::scheduler::v1::Job> GetJob(
-      google::cloud::scheduler::v1::GetJobRequest const& request);
-
-  virtual StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
-      google::cloud::scheduler::v1::CreateJobRequest const& request);
-
-  virtual StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
-      google::cloud::scheduler::v1::UpdateJobRequest const& request);
-
-  virtual Status DeleteJob(
-      google::cloud::scheduler::v1::DeleteJobRequest const& request);
-
-  virtual StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
-      google::cloud::scheduler::v1::PauseJobRequest const& request);
-
-  virtual StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
-      google::cloud::scheduler::v1::ResumeJobRequest const& request);
-
-  virtual StatusOr<google::cloud::scheduler::v1::Job> RunJob(
-      google::cloud::scheduler::v1::RunJobRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `CloudSchedulerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CloudSchedulerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CloudSchedulerConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::scheduler::CloudSchedulerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CloudSchedulerConnection` created by
- * this function.
- */
-std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
-    Options options = {});
+/// @deprecated Use scheduler_v1::CloudSchedulerRetryPolicy directly.
+using ::google::cloud::scheduler_v1::CloudSchedulerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler

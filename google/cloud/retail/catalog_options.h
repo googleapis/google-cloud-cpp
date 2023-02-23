@@ -21,52 +21,26 @@
 
 #include "google/cloud/retail/catalog_connection.h"
 #include "google/cloud/retail/catalog_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/retail/v2/catalog_options.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct CatalogServiceRetryPolicyOption {
-  using Type = std::shared_ptr<CatalogServiceRetryPolicy>;
-};
+/// @deprecated Use retail_v2::CatalogServiceBackoffPolicyOption directly.
+using ::google::cloud::retail_v2::CatalogServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct CatalogServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use retail_v2::CatalogServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::retail_v2::
+    CatalogServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-retail-options
- */
-struct CatalogServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CatalogServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use retail_v2::CatalogServicePolicyOptionList directly.
+using ::google::cloud::retail_v2::CatalogServicePolicyOptionList;
 
-/**
- * The options applicable to CatalogService.
- *
- * @ingroup google-cloud-retail-options
- */
-using CatalogServicePolicyOptionList =
-    OptionList<CatalogServiceRetryPolicyOption,
-               CatalogServiceBackoffPolicyOption,
-               CatalogServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use retail_v2::CatalogServiceRetryPolicyOption directly.
+using ::google::cloud::retail_v2::CatalogServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

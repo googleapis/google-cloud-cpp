@@ -21,63 +21,29 @@
 
 #include "google/cloud/retail/user_event_connection.h"
 #include "google/cloud/retail/user_event_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/retail/v2/user_event_options.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct UserEventServiceRetryPolicyOption {
-  using Type = std::shared_ptr<UserEventServiceRetryPolicy>;
-};
+/// @deprecated Use retail_v2::UserEventServicePollingPolicyOption directly.
+using ::google::cloud::retail_v2::UserEventServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct UserEventServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use retail_v2::UserEventServiceBackoffPolicyOption directly.
+using ::google::cloud::retail_v2::UserEventServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-retail-options
- */
-struct UserEventServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<UserEventServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use retail_v2::UserEventServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::retail_v2::
+    UserEventServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-retail-options
- */
-struct UserEventServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use retail_v2::UserEventServicePolicyOptionList directly.
+using ::google::cloud::retail_v2::UserEventServicePolicyOptionList;
 
-/**
- * The options applicable to UserEventService.
- *
- * @ingroup google-cloud-retail-options
- */
-using UserEventServicePolicyOptionList =
-    OptionList<UserEventServiceRetryPolicyOption,
-               UserEventServiceBackoffPolicyOption,
-               UserEventServicePollingPolicyOption,
-               UserEventServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use retail_v2::UserEventServiceRetryPolicyOption directly.
+using ::google::cloud::retail_v2::UserEventServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail

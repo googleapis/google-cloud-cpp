@@ -21,52 +21,31 @@
 
 #include "google/cloud/secretmanager/secret_manager_connection.h"
 #include "google/cloud/secretmanager/secret_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/secretmanager/v1/secret_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-secretmanager-options
- */
-struct SecretManagerServiceRetryPolicyOption {
-  using Type = std::shared_ptr<SecretManagerServiceRetryPolicy>;
-};
+/// @deprecated Use secretmanager_v1::SecretManagerServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::secretmanager_v1::
+    SecretManagerServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-secretmanager-options
- */
-struct SecretManagerServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// secretmanager_v1::SecretManagerServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::secretmanager_v1::
+    SecretManagerServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-secretmanager-options
- */
-struct SecretManagerServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<SecretManagerServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use secretmanager_v1::SecretManagerServicePolicyOptionList
+/// directly.
+using ::google::cloud::secretmanager_v1::SecretManagerServicePolicyOptionList;
 
-/**
- * The options applicable to SecretManagerService.
- *
- * @ingroup google-cloud-secretmanager-options
- */
-using SecretManagerServicePolicyOptionList =
-    OptionList<SecretManagerServiceRetryPolicyOption,
-               SecretManagerServiceBackoffPolicyOption,
-               SecretManagerServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use secretmanager_v1::SecretManagerServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::secretmanager_v1::SecretManagerServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager

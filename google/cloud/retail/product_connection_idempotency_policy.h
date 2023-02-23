@@ -19,61 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PRODUCT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_PRODUCT_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/retail/v2/product_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/retail/v2/product_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ProductServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~ProductServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// retail_v2::MakeDefaultProductServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::retail_v2::
+    MakeDefaultProductServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ProductServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateProduct(
-      google::cloud::retail::v2::CreateProductRequest const& request);
-
-  virtual google::cloud::Idempotency GetProduct(
-      google::cloud::retail::v2::GetProductRequest const& request);
-
-  virtual google::cloud::Idempotency ListProducts(
-      google::cloud::retail::v2::ListProductsRequest request);
-
-  virtual google::cloud::Idempotency UpdateProduct(
-      google::cloud::retail::v2::UpdateProductRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteProduct(
-      google::cloud::retail::v2::DeleteProductRequest const& request);
-
-  virtual google::cloud::Idempotency ImportProducts(
-      google::cloud::retail::v2::ImportProductsRequest const& request);
-
-  virtual google::cloud::Idempotency SetInventory(
-      google::cloud::retail::v2::SetInventoryRequest const& request);
-
-  virtual google::cloud::Idempotency AddFulfillmentPlaces(
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request);
-
-  virtual google::cloud::Idempotency RemoveFulfillmentPlaces(
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
-
-  virtual google::cloud::Idempotency AddLocalInventories(
-      google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
-
-  virtual google::cloud::Idempotency RemoveLocalInventories(
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
-};
-
-std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>
-MakeDefaultProductServiceConnectionIdempotencyPolicy();
+/// @deprecated Use retail_v2::ProductServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::retail_v2::ProductServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
