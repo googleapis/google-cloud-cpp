@@ -107,14 +107,17 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `video::LivestreamServiceClient`:
+For example, this will override the default endpoint for `video_livestream_v1::LivestreamServiceClient`:
 
 @snippet livestream_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
+ [video_livestream_v1::LivestreamServiceClient](@ref video_livestream_v1::LivestreamServiceClient-endpoint-snippet)
  [video::LivestreamServiceClient](@ref video::LivestreamServiceClient-endpoint-snippet)
  [video::TranscoderServiceClient](@ref video::TranscoderServiceClient-endpoint-snippet)
  [video::VideoStitcherServiceClient](@ref video::VideoStitcherServiceClient-endpoint-snippet)
+ [video_stitcher_v1::VideoStitcherServiceClient](@ref video_stitcher_v1::VideoStitcherServiceClient-endpoint-snippet)
+ [video_transcoder_v1::TranscoderServiceClient](@ref video_transcoder_v1::TranscoderServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -129,9 +132,12 @@ to explicitly load a service account key file.
 @snippet livestream_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
+ [video_livestream_v1::LivestreamServiceClient](@ref video_livestream_v1::LivestreamServiceClient-service-account-snippet)
  [video::LivestreamServiceClient](@ref video::LivestreamServiceClient-service-account-snippet)
  [video::TranscoderServiceClient](@ref video::TranscoderServiceClient-service-account-snippet)
  [video::VideoStitcherServiceClient](@ref video::VideoStitcherServiceClient-service-account-snippet)
+ [video_stitcher_v1::VideoStitcherServiceClient](@ref video_stitcher_v1::VideoStitcherServiceClient-service-account-snippet)
+ [video_transcoder_v1::TranscoderServiceClient](@ref video_transcoder_v1::TranscoderServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -163,6 +169,18 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page video_livestream_v1::LivestreamServiceClient-endpoint-snippet Override video_livestream_v1::LivestreamServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/livestream/v1/samples/livestream_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page video_livestream_v1::LivestreamServiceClient-service-account-snippet Override video_livestream_v1::LivestreamServiceClient Authentication Defaults
+
+@snippet google/cloud/video/livestream/v1/samples/livestream_client_samples.cc with-service-account
+
+*/
 
 /*! @page video::LivestreamServiceClient-endpoint-snippet Override video::LivestreamServiceClient Endpoint Configuration
 
@@ -197,6 +215,30 @@ can override the default policies.
 /*! @page video::VideoStitcherServiceClient-service-account-snippet Override video::VideoStitcherServiceClient Authentication Defaults
 
 @snippet google/cloud/video/samples/video_stitcher_client_samples.cc with-service-account
+
+*/
+
+/*! @page video_stitcher_v1::VideoStitcherServiceClient-endpoint-snippet Override video_stitcher_v1::VideoStitcherServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/stitcher/v1/samples/video_stitcher_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page video_stitcher_v1::VideoStitcherServiceClient-service-account-snippet Override video_stitcher_v1::VideoStitcherServiceClient Authentication Defaults
+
+@snippet google/cloud/video/stitcher/v1/samples/video_stitcher_client_samples.cc with-service-account
+
+*/
+
+/*! @page video_transcoder_v1::TranscoderServiceClient-endpoint-snippet Override video_transcoder_v1::TranscoderServiceClient Endpoint Configuration
+
+@snippet google/cloud/video/transcoder/v1/samples/transcoder_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page video_transcoder_v1::TranscoderServiceClient-service-account-snippet Override video_transcoder_v1::TranscoderServiceClient Authentication Defaults
+
+@snippet google/cloud/video/transcoder/v1/samples/transcoder_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

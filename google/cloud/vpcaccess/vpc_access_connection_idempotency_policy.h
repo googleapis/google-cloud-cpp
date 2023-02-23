@@ -19,40 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_VPC_ACCESS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_VPC_ACCESS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
-#include <memory>
+#include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VpcAccessServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~VpcAccessServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// vpcaccess_v1::MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::vpcaccess_v1::
+    MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateConnector(
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
-
-  virtual google::cloud::Idempotency GetConnector(
-      google::cloud::vpcaccess::v1::GetConnectorRequest const& request);
-
-  virtual google::cloud::Idempotency ListConnectors(
-      google::cloud::vpcaccess::v1::ListConnectorsRequest request);
-
-  virtual google::cloud::Idempotency DeleteConnector(
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
-};
-
-std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
-MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy();
+/// @deprecated Use vpcaccess_v1::VpcAccessServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::vpcaccess_v1::
+    VpcAccessServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess

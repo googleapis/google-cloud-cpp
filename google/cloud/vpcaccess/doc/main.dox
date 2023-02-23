@@ -96,6 +96,10 @@ For example, this will override the default endpoint for `vpcaccess::VpcAccessSe
 
 @snippet vpc_access_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [vpcaccess::VpcAccessServiceClient](@ref vpcaccess::VpcAccessServiceClient-endpoint-snippet)
+ [vpcaccess_v1::VpcAccessServiceClient](@ref vpcaccess_v1::VpcAccessServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +111,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet vpc_access_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [vpcaccess::VpcAccessServiceClient](@ref vpcaccess::VpcAccessServiceClient-service-account-snippet)
+ [vpcaccess_v1::VpcAccessServiceClient](@ref vpcaccess_v1::VpcAccessServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +154,18 @@ can override the default policies.
 /*! @page vpcaccess::VpcAccessServiceClient-service-account-snippet Override vpcaccess::VpcAccessServiceClient Authentication Defaults
 
 @snippet google/cloud/vpcaccess/samples/vpc_access_client_samples.cc with-service-account
+
+*/
+
+/*! @page vpcaccess_v1::VpcAccessServiceClient-endpoint-snippet Override vpcaccess_v1::VpcAccessServiceClient Endpoint Configuration
+
+@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page vpcaccess_v1::VpcAccessServiceClient-service-account-snippet Override vpcaccess_v1::VpcAccessServiceClient Authentication Defaults
+
+@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

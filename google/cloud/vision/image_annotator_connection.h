@@ -20,95 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_IMAGE_ANNOTATOR_CONNECTION_H
 
 #include "google/cloud/vision/image_annotator_connection_idempotency_policy.h"
-#include "google/cloud/vision/internal/image_annotator_retry_traits.h"
-#include "google/cloud/vision/internal/image_annotator_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/vision/v1/image_annotator_connection.h"
 
 namespace google {
 namespace cloud {
 namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ImageAnnotatorRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        vision_internal::ImageAnnotatorRetryTraits>;
+/// @deprecated Use vision_v1::MakeImageAnnotatorConnection directly.
+using ::google::cloud::vision_v1::MakeImageAnnotatorConnection;
 
-using ImageAnnotatorLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        vision_internal::ImageAnnotatorRetryTraits>;
+/// @deprecated Use vision_v1::ImageAnnotatorConnection directly.
+using ::google::cloud::vision_v1::ImageAnnotatorConnection;
 
-using ImageAnnotatorLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        vision_internal::ImageAnnotatorRetryTraits>;
+/// @deprecated Use vision_v1::ImageAnnotatorLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::vision_v1::ImageAnnotatorLimitedErrorCountRetryPolicy;
 
-/**
- * The `ImageAnnotatorConnection` object for `ImageAnnotatorClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ImageAnnotatorClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ImageAnnotatorClient`.
- *
- * To create a concrete instance, see `MakeImageAnnotatorConnection()`.
- *
- * For mocking, see `vision_mocks::MockImageAnnotatorConnection`.
- */
-class ImageAnnotatorConnection {
- public:
-  virtual ~ImageAnnotatorConnection() = 0;
+/// @deprecated Use vision_v1::ImageAnnotatorLimitedTimeRetryPolicy directly.
+using ::google::cloud::vision_v1::ImageAnnotatorLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
-  BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);
-
-  virtual StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-  BatchAnnotateFiles(
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `ImageAnnotatorConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ImageAnnotatorClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ImageAnnotatorConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::vision::ImageAnnotatorPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ImageAnnotatorConnection` created by
- * this function.
- */
-std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
-    Options options = {});
+/// @deprecated Use vision_v1::ImageAnnotatorRetryPolicy directly.
+using ::google::cloud::vision_v1::ImageAnnotatorRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision

@@ -19,138 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_CLIENT_H
 
+#include "google/cloud/videointelligence/v1/video_intelligence_client.h"
 #include "google/cloud/videointelligence/video_intelligence_connection.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-///
-/// Service that implements the Video Intelligence API.
-///
-/// @par Equality
-///
-/// Instances of this class created via copy-construction or copy-assignment
-/// always compare equal. Instances created with equal
-/// `std::shared_ptr<*Connection>` objects compare equal. Objects that compare
-/// equal share the same underlying resources.
-///
-/// @par Performance
-///
-/// Creating a new instance of this class is a relatively expensive operation,
-/// new objects establish new connections to the service. In contrast,
-/// copy-construction, move-construction, and the corresponding assignment
-/// operations are relatively efficient as the copies share all underlying
-/// resources.
-///
-/// @par Thread Safety
-///
-/// Concurrent access to different instances of this class, even if they compare
-/// equal, is guaranteed to work. Two or more threads operating on the same
-/// instance of this class is not guaranteed to work. Since copy-construction
-/// and move-construction is a relatively efficient operation, consider using
-/// such a copy when using this class from multiple threads.
-///
-class VideoIntelligenceServiceClient {
- public:
-  explicit VideoIntelligenceServiceClient(
-      std::shared_ptr<VideoIntelligenceServiceConnection> connection,
-      Options opts = {});
-  ~VideoIntelligenceServiceClient();
-
-  ///@{
-  /// @name Copy and move support
-  VideoIntelligenceServiceClient(VideoIntelligenceServiceClient const&) =
-      default;
-  VideoIntelligenceServiceClient& operator=(
-      VideoIntelligenceServiceClient const&) = default;
-  VideoIntelligenceServiceClient(VideoIntelligenceServiceClient&&) = default;
-  VideoIntelligenceServiceClient& operator=(VideoIntelligenceServiceClient&&) =
-      default;
-  ///@}
-
-  ///@{
-  /// @name Equality
-  friend bool operator==(VideoIntelligenceServiceClient const& a,
-                         VideoIntelligenceServiceClient const& b) {
-    return a.connection_ == b.connection_;
-  }
-  friend bool operator!=(VideoIntelligenceServiceClient const& a,
-                         VideoIntelligenceServiceClient const& b) {
-    return !(a == b);
-  }
-  ///@}
-
-  ///
-  /// Performs asynchronous video annotation. Progress and results can be
-  /// retrieved through the `google.longrunning.Operations` interface.
-  /// `Operation.metadata` contains `AnnotateVideoProgress` (progress).
-  /// `Operation.response` contains `AnnotateVideoResponse` (results).
-  ///
-  /// @param input_uri  Input video location. Currently, only
-  ///  [Cloud Storage](https://cloud.google.com/storage/) URIs are
-  ///  supported. URIs must be specified in the following format:
-  ///  `gs://bucket-id/object-id` (other URI formats return
-  ///  [google.rpc.Code.INVALID_ARGUMENT][google.rpc.Code.INVALID_ARGUMENT]).
-  ///  For more information, see [Request
-  ///  URIs](https://cloud.google.com/storage/docs/request-endpoints). To
-  ///  identify multiple videos, a video URI may include wildcards in the
-  ///  `object-id`. Supported wildcards: '*' to match 0 or more characters;
-  ///  '?' to match 1 character. If unset, the input video should be embedded
-  ///  in the request as `input_content`. If set, `input_content` must be unset.
-  /// @param features  Required. Requested video annotation features.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoResponse,google/cloud/videointelligence/v1/video_intelligence.proto#L602}
-  ///
-  /// [google.cloud.videointelligence.v1.AnnotateVideoRequest]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L60}
-  /// [google.cloud.videointelligence.v1.AnnotateVideoResponse]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L602}
-  ///
-  future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(
-      std::string const& input_uri,
-      std::vector<google::cloud::videointelligence::v1::Feature> const&
-          features,
-      Options opts = {});
-
-  ///
-  /// Performs asynchronous video annotation. Progress and results can be
-  /// retrieved through the `google.longrunning.Operations` interface.
-  /// `Operation.metadata` contains `AnnotateVideoProgress` (progress).
-  /// `Operation.response` contains `AnnotateVideoResponse` (results).
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoRequest,google/cloud/videointelligence/v1/video_intelligence.proto#L60}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::videointelligence::v1::AnnotateVideoResponse,google/cloud/videointelligence/v1/video_intelligence.proto#L602}
-  ///
-  /// [google.cloud.videointelligence.v1.AnnotateVideoRequest]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L60}
-  /// [google.cloud.videointelligence.v1.AnnotateVideoResponse]:
-  /// @googleapis_reference_link{google/cloud/videointelligence/v1/video_intelligence.proto#L602}
-  ///
-  future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
-      Options opts = {});
-
- private:
-  std::shared_ptr<VideoIntelligenceServiceConnection> connection_;
-  Options options_;
-};
+/// @deprecated Use videointelligence_v1::VideoIntelligenceServiceClient
+/// directly.
+using ::google::cloud::videointelligence_v1::VideoIntelligenceServiceClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence

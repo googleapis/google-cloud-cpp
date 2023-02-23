@@ -21,63 +21,29 @@
 
 #include "google/cloud/vision/image_annotator_connection.h"
 #include "google/cloud/vision/image_annotator_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/vision/v1/image_annotator_options.h"
 
 namespace google {
 namespace cloud {
 namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-vision-options
- */
-struct ImageAnnotatorRetryPolicyOption {
-  using Type = std::shared_ptr<ImageAnnotatorRetryPolicy>;
-};
+/// @deprecated Use vision_v1::ImageAnnotatorPollingPolicyOption directly.
+using ::google::cloud::vision_v1::ImageAnnotatorPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-vision-options
- */
-struct ImageAnnotatorBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use vision_v1::ImageAnnotatorBackoffPolicyOption directly.
+using ::google::cloud::vision_v1::ImageAnnotatorBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-vision-options
- */
-struct ImageAnnotatorConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ImageAnnotatorConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use vision_v1::ImageAnnotatorConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::vision_v1::
+    ImageAnnotatorConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-vision-options
- */
-struct ImageAnnotatorPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use vision_v1::ImageAnnotatorPolicyOptionList directly.
+using ::google::cloud::vision_v1::ImageAnnotatorPolicyOptionList;
 
-/**
- * The options applicable to ImageAnnotator.
- *
- * @ingroup google-cloud-vision-options
- */
-using ImageAnnotatorPolicyOptionList =
-    OptionList<ImageAnnotatorRetryPolicyOption,
-               ImageAnnotatorBackoffPolicyOption,
-               ImageAnnotatorPollingPolicyOption,
-               ImageAnnotatorConnectionIdempotencyPolicyOption>;
+/// @deprecated Use vision_v1::ImageAnnotatorRetryPolicyOption directly.
+using ::google::cloud::vision_v1::ImageAnnotatorRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision

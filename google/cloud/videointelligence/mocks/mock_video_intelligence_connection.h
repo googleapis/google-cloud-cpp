@@ -19,41 +19,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_MOCKS_MOCK_VIDEO_INTELLIGENCE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_MOCKS_MOCK_VIDEO_INTELLIGENCE_CONNECTION_H
 
+#include "google/cloud/videointelligence/v1/mocks/mock_video_intelligence_connection.h"
 #include "google/cloud/videointelligence/video_intelligence_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace videointelligence_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `VideoIntelligenceServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `VideoIntelligenceServiceClient`. To
- * do so, construct an object of type `VideoIntelligenceServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockVideoIntelligenceServiceConnection
-    : public videointelligence::VideoIntelligenceServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(future<StatusOr<
-                  google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
-              AnnotateVideo,
-              (google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use
+/// videointelligence_v1_mocks::MockVideoIntelligenceServiceConnection directly.
+using ::google::cloud::videointelligence_v1_mocks::
+    MockVideoIntelligenceServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_mocks

@@ -19,66 +19,40 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_OPTIONS_H
 
+#include "google/cloud/videointelligence/v1/video_intelligence_options.h"
 #include "google/cloud/videointelligence/video_intelligence_connection.h"
 #include "google/cloud/videointelligence/video_intelligence_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-videointelligence-options
- */
-struct VideoIntelligenceServiceRetryPolicyOption {
-  using Type = std::shared_ptr<VideoIntelligenceServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServicePollingPolicyOption directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-videointelligence-options
- */
-struct VideoIntelligenceServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceBackoffPolicyOption directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-videointelligence-options
- */
-struct VideoIntelligenceServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-videointelligence-options
- */
-struct VideoIntelligenceServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServicePolicyOptionList directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServicePolicyOptionList;
 
-/**
- * The options applicable to VideoIntelligenceService.
- *
- * @ingroup google-cloud-videointelligence-options
- */
-using VideoIntelligenceServicePolicyOptionList =
-    OptionList<VideoIntelligenceServiceRetryPolicyOption,
-               VideoIntelligenceServiceBackoffPolicyOption,
-               VideoIntelligenceServicePollingPolicyOption,
-               VideoIntelligenceServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceRetryPolicyOption directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence

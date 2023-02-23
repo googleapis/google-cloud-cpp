@@ -19,41 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_IMAGE_ANNOTATOR_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_IMAGE_ANNOTATOR_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
-#include <memory>
+#include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ImageAnnotatorConnectionIdempotencyPolicy {
- public:
-  virtual ~ImageAnnotatorConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// vision_v1::MakeDefaultImageAnnotatorConnectionIdempotencyPolicy directly.
+using ::google::cloud::vision_v1::
+    MakeDefaultImageAnnotatorConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);
-
-  virtual google::cloud::Idempotency BatchAnnotateFiles(
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request);
-
-  virtual google::cloud::Idempotency AsyncBatchAnnotateImages(
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-          request);
-
-  virtual google::cloud::Idempotency AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
-};
-
-std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
-MakeDefaultImageAnnotatorConnectionIdempotencyPolicy();
+/// @deprecated Use vision_v1::ImageAnnotatorConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::vision_v1::ImageAnnotatorConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
