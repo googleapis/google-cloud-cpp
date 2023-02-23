@@ -19,82 +19,32 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_SERVICE_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_SERVICE_CONTROLLER_CONNECTION_H
 
-#include "google/cloud/servicecontrol/internal/service_controller_retry_traits.h"
-#include "google/cloud/servicecontrol/internal/service_controller_stub.h"
 #include "google/cloud/servicecontrol/service_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/servicecontrol/v1/service_controller_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ServiceControllerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        servicecontrol_internal::ServiceControllerRetryTraits>;
+/// @deprecated Use servicecontrol_v1::MakeServiceControllerConnection directly.
+using ::google::cloud::servicecontrol_v1::MakeServiceControllerConnection;
 
-using ServiceControllerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        servicecontrol_internal::ServiceControllerRetryTraits>;
+/// @deprecated Use servicecontrol_v1::ServiceControllerConnection directly.
+using ::google::cloud::servicecontrol_v1::ServiceControllerConnection;
 
-using ServiceControllerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        servicecontrol_internal::ServiceControllerRetryTraits>;
+/// @deprecated Use
+/// servicecontrol_v1::ServiceControllerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::servicecontrol_v1::
+    ServiceControllerLimitedErrorCountRetryPolicy;
 
-/**
- * The `ServiceControllerConnection` object for `ServiceControllerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServiceControllerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ServiceControllerClient`.
- *
- * To create a concrete instance, see `MakeServiceControllerConnection()`.
- *
- * For mocking, see `servicecontrol_mocks::MockServiceControllerConnection`.
- */
-class ServiceControllerConnection {
- public:
-  virtual ~ServiceControllerConnection() = 0;
+/// @deprecated Use servicecontrol_v1::ServiceControllerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::servicecontrol_v1::
+    ServiceControllerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
-      google::api::servicecontrol::v1::CheckRequest const& request);
-
-  virtual StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
-      google::api::servicecontrol::v1::ReportRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ServiceControllerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ServiceControllerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ServiceControllerConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::servicecontrol::ServiceControllerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ServiceControllerConnection` created
- * by this function.
- */
-std::shared_ptr<ServiceControllerConnection> MakeServiceControllerConnection(
-    Options options = {});
+/// @deprecated Use servicecontrol_v1::ServiceControllerRetryPolicy directly.
+using ::google::cloud::servicecontrol_v1::ServiceControllerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol

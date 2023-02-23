@@ -20,129 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_MOCKS_MOCK_REGISTRATION_CONNECTION_H
 
 #include "google/cloud/servicedirectory/registration_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/servicedirectory/v1/mocks/mock_registration_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicedirectory_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `RegistrationServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `RegistrationServiceClient`. To do
- * so, construct an object of type `RegistrationServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockRegistrationServiceConnection
-    : public servicedirectory::RegistrationServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, CreateNamespace,
-      (google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::servicedirectory::v1::Namespace>,
-      ListNamespaces,
-      (google::cloud::servicedirectory::v1::ListNamespacesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, GetNamespace,
-      (google::cloud::servicedirectory::v1::GetNamespaceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Namespace>, UpdateNamespace,
-      (google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteNamespace,
-      (google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Service>,
-              CreateService,
-              (google::cloud::servicedirectory::v1::CreateServiceRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::servicedirectory::v1::Service>, ListServices,
-      (google::cloud::servicedirectory::v1::ListServicesRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Service>, GetService,
-      (google::cloud::servicedirectory::v1::GetServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Service>,
-              UpdateService,
-              (google::cloud::servicedirectory::v1::UpdateServiceRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteService,
-              (google::cloud::servicedirectory::v1::DeleteServiceRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
-              CreateEndpoint,
-              (google::cloud::servicedirectory::v1::CreateEndpointRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::servicedirectory::v1::Endpoint>, ListEndpoints,
-      (google::cloud::servicedirectory::v1::ListEndpointsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::Endpoint>, GetEndpoint,
-      (google::cloud::servicedirectory::v1::GetEndpointRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::servicedirectory::v1::Endpoint>,
-              UpdateEndpoint,
-              (google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteEndpoint,
-              (google::cloud::servicedirectory::v1::DeleteEndpointRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-};
+/// @deprecated Use servicedirectory_v1_mocks::MockRegistrationServiceConnection
+/// directly.
+using ::google::cloud::servicedirectory_v1_mocks::
+    MockRegistrationServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_mocks

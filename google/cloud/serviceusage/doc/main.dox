@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `serviceusage::ServiceUsageClient`:
+For example, this will override the default endpoint for `serviceusage_v1::ServiceUsageClient`:
 
 @snippet service_usage_client_samples.cc set-client-endpoint
 
@@ -138,15 +138,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page serviceusage::ServiceUsageClient-endpoint-snippet Override serviceusage::ServiceUsageClient Endpoint Configuration
+/*! @page serviceusage_v1::ServiceUsageClient-endpoint-snippet Override serviceusage_v1::ServiceUsageClient Endpoint Configuration
 
-@snippet google/cloud/serviceusage/samples/service_usage_client_samples.cc set-client-endpoint
+@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page serviceusage::ServiceUsageClient-service-account-snippet Override serviceusage::ServiceUsageClient Authentication Defaults
+/*! @page serviceusage_v1::ServiceUsageClient-service-account-snippet Override serviceusage_v1::ServiceUsageClient Authentication Defaults
 
-@snippet google/cloud/serviceusage/samples/service_usage_client_samples.cc with-service-account
+@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

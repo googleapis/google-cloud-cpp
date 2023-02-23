@@ -20,41 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_MOCKS_MOCK_SERVICE_CONTROLLER_CONNECTION_H
 
 #include "google/cloud/servicecontrol/service_controller_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/servicecontrol/v1/mocks/mock_service_controller_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ServiceControllerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ServiceControllerClient`. To do so,
- * construct an object of type `ServiceControllerClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockServiceControllerConnection
-    : public servicecontrol::ServiceControllerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::CheckResponse>, Check,
-              (google::api::servicecontrol::v1::CheckRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::api::servicecontrol::v1::ReportResponse>, Report,
-              (google::api::servicecontrol::v1::ReportRequest const& request),
-              (override));
-};
+/// @deprecated Use servicecontrol_v1_mocks::MockServiceControllerConnection
+/// directly.
+using ::google::cloud::servicecontrol_v1_mocks::MockServiceControllerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_mocks

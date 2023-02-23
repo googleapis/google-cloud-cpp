@@ -21,63 +21,34 @@
 
 #include "google/cloud/servicemanagement/service_manager_connection.h"
 #include "google/cloud/servicemanagement/service_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/servicemanagement/v1/service_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace servicemanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-servicemanagement-options
- */
-struct ServiceManagerRetryPolicyOption {
-  using Type = std::shared_ptr<ServiceManagerRetryPolicy>;
-};
+/// @deprecated Use servicemanagement_v1::ServiceManagerPollingPolicyOption
+/// directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-servicemanagement-options
- */
-struct ServiceManagerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use servicemanagement_v1::ServiceManagerBackoffPolicyOption
+/// directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-servicemanagement-options
- */
-struct ServiceManagerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ServiceManagerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// servicemanagement_v1::ServiceManagerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::servicemanagement_v1::
+    ServiceManagerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-servicemanagement-options
- */
-struct ServiceManagerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use servicemanagement_v1::ServiceManagerPolicyOptionList
+/// directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerPolicyOptionList;
 
-/**
- * The options applicable to ServiceManager.
- *
- * @ingroup google-cloud-servicemanagement-options
- */
-using ServiceManagerPolicyOptionList =
-    OptionList<ServiceManagerRetryPolicyOption,
-               ServiceManagerBackoffPolicyOption,
-               ServiceManagerPollingPolicyOption,
-               ServiceManagerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use servicemanagement_v1::ServiceManagerRetryPolicyOption
+/// directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement

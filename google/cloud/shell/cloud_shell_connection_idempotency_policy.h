@@ -19,43 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_CLOUD_SHELL_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_CLOUD_SHELL_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
-#include <memory>
+#include "google/cloud/shell/v1/cloud_shell_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace shell {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudShellServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~CloudShellServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// shell_v1::MakeDefaultCloudShellServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::shell_v1::
+    MakeDefaultCloudShellServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::shell::v1::GetEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency StartEnvironment(
-      google::cloud::shell::v1::StartEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency AuthorizeEnvironment(
-      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency AddPublicKey(
-      google::cloud::shell::v1::AddPublicKeyRequest const& request);
-
-  virtual google::cloud::Idempotency RemovePublicKey(
-      google::cloud::shell::v1::RemovePublicKeyRequest const& request);
-};
-
-std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy>
-MakeDefaultCloudShellServiceConnectionIdempotencyPolicy();
+/// @deprecated Use shell_v1::CloudShellServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::shell_v1::CloudShellServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell

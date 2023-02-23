@@ -19,31 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_QUOTA_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_QUOTA_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
-#include <memory>
+#include "google/cloud/servicecontrol/v1/quota_controller_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class QuotaControllerConnectionIdempotencyPolicy {
- public:
-  virtual ~QuotaControllerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicecontrol_v1::MakeDefaultQuotaControllerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::servicecontrol_v1::
+    MakeDefaultQuotaControllerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency AllocateQuota(
-      google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
-};
-
-std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
-MakeDefaultQuotaControllerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicecontrol_v1::
+    QuotaControllerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol

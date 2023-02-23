@@ -21,52 +21,32 @@
 
 #include "google/cloud/servicedirectory/registration_connection.h"
 #include "google/cloud/servicedirectory/registration_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/servicedirectory/v1/registration_options.h"
 
 namespace google {
 namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-struct RegistrationServiceRetryPolicyOption {
-  using Type = std::shared_ptr<RegistrationServiceRetryPolicy>;
-};
+/// @deprecated Use servicedirectory_v1::RegistrationServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    RegistrationServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-struct RegistrationServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// servicedirectory_v1::RegistrationServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    RegistrationServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-struct RegistrationServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<RegistrationServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use servicedirectory_v1::RegistrationServicePolicyOptionList
+/// directly.
+using ::google::cloud::servicedirectory_v1::RegistrationServicePolicyOptionList;
 
-/**
- * The options applicable to RegistrationService.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-using RegistrationServicePolicyOptionList =
-    OptionList<RegistrationServiceRetryPolicyOption,
-               RegistrationServiceBackoffPolicyOption,
-               RegistrationServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use servicedirectory_v1::RegistrationServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    RegistrationServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory

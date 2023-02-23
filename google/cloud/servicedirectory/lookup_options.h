@@ -21,51 +21,29 @@
 
 #include "google/cloud/servicedirectory/lookup_connection.h"
 #include "google/cloud/servicedirectory/lookup_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/servicedirectory/v1/lookup_options.h"
 
 namespace google {
 namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-struct LookupServiceRetryPolicyOption {
-  using Type = std::shared_ptr<LookupServiceRetryPolicy>;
-};
+/// @deprecated Use servicedirectory_v1::LookupServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::servicedirectory_v1::LookupServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-struct LookupServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// servicedirectory_v1::LookupServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    LookupServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-struct LookupServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<LookupServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use servicedirectory_v1::LookupServicePolicyOptionList directly.
+using ::google::cloud::servicedirectory_v1::LookupServicePolicyOptionList;
 
-/**
- * The options applicable to LookupService.
- *
- * @ingroup google-cloud-servicedirectory-options
- */
-using LookupServicePolicyOptionList =
-    OptionList<LookupServiceRetryPolicyOption, LookupServiceBackoffPolicyOption,
-               LookupServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use servicedirectory_v1::LookupServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::servicedirectory_v1::LookupServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory

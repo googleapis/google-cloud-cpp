@@ -97,13 +97,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `servicecontrol::QuotaControllerClient`:
+For example, this will override the default endpoint for `servicecontrol_v1::QuotaControllerClient`:
 
 @snippet quota_controller_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [servicecontrol::QuotaControllerClient](@ref servicecontrol::QuotaControllerClient-endpoint-snippet)
- [servicecontrol::ServiceControllerClient](@ref servicecontrol::ServiceControllerClient-endpoint-snippet)
+ [servicecontrol_v1::QuotaControllerClient](@ref servicecontrol_v1::QuotaControllerClient-endpoint-snippet)
+ [servicecontrol_v1::ServiceControllerClient](@ref servicecontrol_v1::ServiceControllerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -118,8 +118,8 @@ to explicitly load a service account key file.
 @snippet quota_controller_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [servicecontrol::QuotaControllerClient](@ref servicecontrol::QuotaControllerClient-service-account-snippet)
- [servicecontrol::ServiceControllerClient](@ref servicecontrol::ServiceControllerClient-service-account-snippet)
+ [servicecontrol_v1::QuotaControllerClient](@ref servicecontrol_v1::QuotaControllerClient-service-account-snippet)
+ [servicecontrol_v1::ServiceControllerClient](@ref servicecontrol_v1::ServiceControllerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -150,27 +150,27 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page servicecontrol::QuotaControllerClient-endpoint-snippet Override servicecontrol::QuotaControllerClient Endpoint Configuration
+/*! @page servicecontrol_v1::QuotaControllerClient-endpoint-snippet Override servicecontrol_v1::QuotaControllerClient Endpoint Configuration
 
-@snippet google/cloud/servicecontrol/samples/quota_controller_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page servicecontrol::QuotaControllerClient-service-account-snippet Override servicecontrol::QuotaControllerClient Authentication Defaults
-
-@snippet google/cloud/servicecontrol/samples/quota_controller_client_samples.cc with-service-account
+@snippet google/cloud/servicecontrol/v1/samples/quota_controller_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page servicecontrol::ServiceControllerClient-endpoint-snippet Override servicecontrol::ServiceControllerClient Endpoint Configuration
+/*! @page servicecontrol_v1::QuotaControllerClient-service-account-snippet Override servicecontrol_v1::QuotaControllerClient Authentication Defaults
 
-@snippet google/cloud/servicecontrol/samples/service_controller_client_samples.cc set-client-endpoint
+@snippet google/cloud/servicecontrol/v1/samples/quota_controller_client_samples.cc with-service-account
 
 */
 
-/*! @page servicecontrol::ServiceControllerClient-service-account-snippet Override servicecontrol::ServiceControllerClient Authentication Defaults
+/*! @page servicecontrol_v1::ServiceControllerClient-endpoint-snippet Override servicecontrol_v1::ServiceControllerClient Endpoint Configuration
 
-@snippet google/cloud/servicecontrol/samples/service_controller_client_samples.cc with-service-account
+@snippet google/cloud/servicecontrol/v1/samples/service_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page servicecontrol_v1::ServiceControllerClient-service-account-snippet Override servicecontrol_v1::ServiceControllerClient Authentication Defaults
+
+@snippet google/cloud/servicecontrol/v1/samples/service_controller_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

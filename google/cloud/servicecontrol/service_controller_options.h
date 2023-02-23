@@ -21,52 +21,30 @@
 
 #include "google/cloud/servicecontrol/service_controller_connection.h"
 #include "google/cloud/servicecontrol/service_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/servicecontrol/v1/service_controller_options.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-struct ServiceControllerRetryPolicyOption {
-  using Type = std::shared_ptr<ServiceControllerRetryPolicy>;
-};
+/// @deprecated Use servicecontrol_v1::ServiceControllerBackoffPolicyOption
+/// directly.
+using ::google::cloud::servicecontrol_v1::ServiceControllerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-struct ServiceControllerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::servicecontrol_v1::
+    ServiceControllerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-struct ServiceControllerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ServiceControllerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use servicecontrol_v1::ServiceControllerPolicyOptionList
+/// directly.
+using ::google::cloud::servicecontrol_v1::ServiceControllerPolicyOptionList;
 
-/**
- * The options applicable to ServiceController.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-using ServiceControllerPolicyOptionList =
-    OptionList<ServiceControllerRetryPolicyOption,
-               ServiceControllerBackoffPolicyOption,
-               ServiceControllerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use servicecontrol_v1::ServiceControllerRetryPolicyOption
+/// directly.
+using ::google::cloud::servicecontrol_v1::ServiceControllerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol

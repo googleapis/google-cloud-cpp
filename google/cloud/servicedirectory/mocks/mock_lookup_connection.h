@@ -20,40 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_MOCKS_MOCK_LOOKUP_CONNECTION_H
 
 #include "google/cloud/servicedirectory/lookup_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/servicedirectory/v1/mocks/mock_lookup_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicedirectory_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `LookupServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `LookupServiceClient`. To do so,
- * construct an object of type `LookupServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockLookupServiceConnection
-    : public servicedirectory::LookupServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>,
-      ResolveService,
-      (google::cloud::servicedirectory::v1::ResolveServiceRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use servicedirectory_v1_mocks::MockLookupServiceConnection
+/// directly.
+using ::google::cloud::servicedirectory_v1_mocks::MockLookupServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_mocks

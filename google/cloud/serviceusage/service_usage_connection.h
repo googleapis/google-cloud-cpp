@@ -19,102 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_SERVICE_USAGE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_SERVICE_USAGE_CONNECTION_H
 
-#include "google/cloud/serviceusage/internal/service_usage_retry_traits.h"
-#include "google/cloud/serviceusage/internal/service_usage_stub.h"
 #include "google/cloud/serviceusage/service_usage_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/serviceusage/v1/service_usage_connection.h"
 
 namespace google {
 namespace cloud {
 namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ServiceUsageRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        serviceusage_internal::ServiceUsageRetryTraits>;
+/// @deprecated Use serviceusage_v1::MakeServiceUsageConnection directly.
+using ::google::cloud::serviceusage_v1::MakeServiceUsageConnection;
 
-using ServiceUsageLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        serviceusage_internal::ServiceUsageRetryTraits>;
+/// @deprecated Use serviceusage_v1::ServiceUsageConnection directly.
+using ::google::cloud::serviceusage_v1::ServiceUsageConnection;
 
-using ServiceUsageLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        serviceusage_internal::ServiceUsageRetryTraits>;
+/// @deprecated Use serviceusage_v1::ServiceUsageLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::serviceusage_v1::
+    ServiceUsageLimitedErrorCountRetryPolicy;
 
-/**
- * The `ServiceUsageConnection` object for `ServiceUsageClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServiceUsageClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ServiceUsageClient`.
- *
- * To create a concrete instance, see `MakeServiceUsageConnection()`.
- *
- * For mocking, see `serviceusage_mocks::MockServiceUsageConnection`.
- */
-class ServiceUsageConnection {
- public:
-  virtual ~ServiceUsageConnection() = 0;
+/// @deprecated Use serviceusage_v1::ServiceUsageLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::serviceusage_v1::ServiceUsageLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(
-      google::api::serviceusage::v1::EnableServiceRequest const& request);
-
-  virtual future<
-      StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(
-      google::api::serviceusage::v1::DisableServiceRequest const& request);
-
-  virtual StatusOr<google::api::serviceusage::v1::Service> GetService(
-      google::api::serviceusage::v1::GetServiceRequest const& request);
-
-  virtual StreamRange<google::api::serviceusage::v1::Service> ListServices(
-      google::api::serviceusage::v1::ListServicesRequest request);
-
-  virtual future<
-      StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices(
-      google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
-
-  virtual StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(
-      google::api::serviceusage::v1::BatchGetServicesRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `ServiceUsageConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ServiceUsageClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ServiceUsageConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::serviceusage::ServiceUsagePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ServiceUsageConnection` created by
- * this function.
- */
-std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
-    Options options = {});
+/// @deprecated Use serviceusage_v1::ServiceUsageRetryPolicy directly.
+using ::google::cloud::serviceusage_v1::ServiceUsageRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage

@@ -21,52 +21,29 @@
 
 #include "google/cloud/servicecontrol/quota_controller_connection.h"
 #include "google/cloud/servicecontrol/quota_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/servicecontrol/v1/quota_controller_options.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-struct QuotaControllerRetryPolicyOption {
-  using Type = std::shared_ptr<QuotaControllerRetryPolicy>;
-};
+/// @deprecated Use servicecontrol_v1::QuotaControllerBackoffPolicyOption
+/// directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-struct QuotaControllerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// servicecontrol_v1::QuotaControllerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::servicecontrol_v1::
+    QuotaControllerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-struct QuotaControllerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<QuotaControllerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use servicecontrol_v1::QuotaControllerPolicyOptionList directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerPolicyOptionList;
 
-/**
- * The options applicable to QuotaController.
- *
- * @ingroup google-cloud-servicecontrol-options
- */
-using QuotaControllerPolicyOptionList =
-    OptionList<QuotaControllerRetryPolicyOption,
-               QuotaControllerBackoffPolicyOption,
-               QuotaControllerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use servicecontrol_v1::QuotaControllerRetryPolicyOption
+/// directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
