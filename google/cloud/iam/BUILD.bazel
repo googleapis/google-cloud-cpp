@@ -18,6 +18,9 @@ licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
     "",
+    "admin/v1/",
+    "credentials/v1/",
+    "v1/",
     "v2/",
 ]
 
