@@ -21,51 +21,26 @@
 
 #include "google/cloud/monitoring/metric_connection.h"
 #include "google/cloud/monitoring/metric_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/monitoring/v3/metric_options.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct MetricServiceRetryPolicyOption {
-  using Type = std::shared_ptr<MetricServiceRetryPolicy>;
-};
+/// @deprecated Use monitoring_v3::MetricServiceBackoffPolicyOption directly.
+using ::google::cloud::monitoring_v3::MetricServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct MetricServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// monitoring_v3::MetricServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::monitoring_v3::
+    MetricServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct MetricServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<MetricServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use monitoring_v3::MetricServicePolicyOptionList directly.
+using ::google::cloud::monitoring_v3::MetricServicePolicyOptionList;
 
-/**
- * The options applicable to MetricService.
- *
- * @ingroup google-cloud-monitoring-options
- */
-using MetricServicePolicyOptionList =
-    OptionList<MetricServiceRetryPolicyOption, MetricServiceBackoffPolicyOption,
-               MetricServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use monitoring_v3::MetricServiceRetryPolicyOption directly.
+using ::google::cloud::monitoring_v3::MetricServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

@@ -20,80 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_METRIC_CONNECTION_H
 
 #include "google/cloud/monitoring/metric_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/monitoring/v3/mocks/mock_metric_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `MetricServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `MetricServiceClient`. To do so,
- * construct an object of type `MetricServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockMetricServiceConnection : public monitoring::MetricServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::api::MonitoredResourceDescriptor>,
-      ListMonitoredResourceDescriptors,
-      (google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::MonitoredResourceDescriptor>,
-      GetMonitoredResourceDescriptor,
-      (google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::api::MetricDescriptor>, ListMetricDescriptors,
-              (google::monitoring::v3::ListMetricDescriptorsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::MetricDescriptor>, GetMetricDescriptor,
-      (google::monitoring::v3::GetMetricDescriptorRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::MetricDescriptor>, CreateMetricDescriptor,
-      (google::monitoring::v3::CreateMetricDescriptorRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteMetricDescriptor,
-      (google::monitoring::v3::DeleteMetricDescriptorRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::monitoring::v3::TimeSeries>, ListTimeSeries,
-              (google::monitoring::v3::ListTimeSeriesRequest request),
-              (override));
-
-  MOCK_METHOD(Status, CreateTimeSeries,
-              (google::monitoring::v3::CreateTimeSeriesRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, CreateServiceTimeSeries,
-              (google::monitoring::v3::CreateTimeSeriesRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<Status>, AsyncCreateTimeSeries,
-              (google::monitoring::v3::CreateTimeSeriesRequest const& request),
-              (override));
-};
+/// @deprecated Use monitoring_v3_mocks::MockMetricServiceConnection directly.
+using ::google::cloud::monitoring_v3_mocks::MockMetricServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

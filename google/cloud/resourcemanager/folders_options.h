@@ -21,62 +21,29 @@
 
 #include "google/cloud/resourcemanager/folders_connection.h"
 #include "google/cloud/resourcemanager/folders_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/resourcemanager/v3/folders_options.h"
 
 namespace google {
 namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-struct FoldersRetryPolicyOption {
-  using Type = std::shared_ptr<FoldersRetryPolicy>;
-};
+/// @deprecated Use resourcemanager_v3::FoldersPollingPolicyOption directly.
+using ::google::cloud::resourcemanager_v3::FoldersPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-struct FoldersBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use resourcemanager_v3::FoldersBackoffPolicyOption directly.
+using ::google::cloud::resourcemanager_v3::FoldersBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-struct FoldersConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<FoldersConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use resourcemanager_v3::FoldersConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::resourcemanager_v3::
+    FoldersConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-struct FoldersPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use resourcemanager_v3::FoldersPolicyOptionList directly.
+using ::google::cloud::resourcemanager_v3::FoldersPolicyOptionList;
 
-/**
- * The options applicable to Folders.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-using FoldersPolicyOptionList =
-    OptionList<FoldersRetryPolicyOption, FoldersBackoffPolicyOption,
-               FoldersPollingPolicyOption,
-               FoldersConnectionIdempotencyPolicyOption>;
+/// @deprecated Use resourcemanager_v3::FoldersRetryPolicyOption directly.
+using ::google::cloud::resourcemanager_v3::FoldersRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager

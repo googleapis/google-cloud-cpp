@@ -19,61 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_PROJECTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_PROJECTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/resourcemanager/v3/projects.grpc.pb.h>
-#include <memory>
+#include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ProjectsConnectionIdempotencyPolicy {
- public:
-  virtual ~ProjectsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// resourcemanager_v3::MakeDefaultProjectsConnectionIdempotencyPolicy directly.
+using ::google::cloud::resourcemanager_v3::
+    MakeDefaultProjectsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ProjectsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency GetProject(
-      google::cloud::resourcemanager::v3::GetProjectRequest const& request);
-
-  virtual google::cloud::Idempotency ListProjects(
-      google::cloud::resourcemanager::v3::ListProjectsRequest request);
-
-  virtual google::cloud::Idempotency SearchProjects(
-      google::cloud::resourcemanager::v3::SearchProjectsRequest request);
-
-  virtual google::cloud::Idempotency CreateProject(
-      google::cloud::resourcemanager::v3::CreateProjectRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateProject(
-      google::cloud::resourcemanager::v3::UpdateProjectRequest const& request);
-
-  virtual google::cloud::Idempotency MoveProject(
-      google::cloud::resourcemanager::v3::MoveProjectRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteProject(
-      google::cloud::resourcemanager::v3::DeleteProjectRequest const& request);
-
-  virtual google::cloud::Idempotency UndeleteProject(
-      google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-MakeDefaultProjectsConnectionIdempotencyPolicy();
+/// @deprecated Use resourcemanager_v3::ProjectsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::resourcemanager_v3::ProjectsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager

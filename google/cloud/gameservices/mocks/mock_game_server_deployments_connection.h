@@ -20,92 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_MOCKS_MOCK_GAME_SERVER_DEPLOYMENTS_CONNECTION_H
 
 #include "google/cloud/gameservices/game_server_deployments_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/gameservices/v1/mocks/mock_game_server_deployments_connection.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `GameServerDeploymentsServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type
- * `GameServerDeploymentsServiceClient`. To do so, construct an object of type
- * `GameServerDeploymentsServiceClient` with an instance of this class. Then use
- * the Google Test framework functions to program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockGameServerDeploymentsServiceConnection
-    : public gameservices::GameServerDeploymentsServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::gaming::v1::GameServerDeployment>,
-      ListGameServerDeployments,
-      (google::cloud::gaming::v1::ListGameServerDeploymentsRequest request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::GameServerDeployment>,
-              GetGameServerDeployment,
-              (google::cloud::gaming::v1::GetGameServerDeploymentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
-      CreateGameServerDeployment,
-      (google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>,
-      DeleteGameServerDeployment,
-      (google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
-      UpdateGameServerDeployment,
-      (google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>,
-      GetGameServerDeploymentRollout,
-      (google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>,
-              UpdateGameServerDeploymentRollout,
-              (google::cloud::gaming::v1::
-                   UpdateGameServerDeploymentRolloutRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::gaming::v1::
-                           PreviewGameServerDeploymentRolloutResponse>,
-              PreviewGameServerDeploymentRollout,
-              (google::cloud::gaming::v1::
-                   PreviewGameServerDeploymentRolloutRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>,
-      FetchDeploymentState,
-      (google::cloud::gaming::v1::FetchDeploymentStateRequest const& request),
-      (override));
-};
+/// @deprecated Use
+/// gameservices_v1_mocks::MockGameServerDeploymentsServiceConnection directly.
+using ::google::cloud::gameservices_v1_mocks::
+    MockGameServerDeploymentsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_mocks

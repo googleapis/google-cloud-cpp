@@ -19,40 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/gaming/v1/game_server_configs_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/gameservices/v1/game_server_configs_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GameServerConfigsServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~GameServerConfigsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// gameservices_v1::MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListGameServerConfigs(
-      google::cloud::gaming::v1::ListGameServerConfigsRequest request);
-
-  virtual google::cloud::Idempotency GetGameServerConfig(
-      google::cloud::gaming::v1::GetGameServerConfigRequest const& request);
-
-  virtual google::cloud::Idempotency CreateGameServerConfig(
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteGameServerConfig(
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request);
-};
-
-std::unique_ptr<GameServerConfigsServiceConnectionIdempotencyPolicy>
-MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// gameservices_v1::GameServerConfigsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerConfigsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

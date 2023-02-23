@@ -20,95 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_NOTIFICATION_CHANNEL_CONNECTION_H
 
 #include "google/cloud/monitoring/notification_channel_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/monitoring/v3/mocks/mock_notification_channel_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `NotificationChannelServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `NotificationChannelServiceClient`.
- * To do so, construct an object of type `NotificationChannelServiceClient` with
- * an instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockNotificationChannelServiceConnection
-    : public monitoring::NotificationChannelServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::monitoring::v3::NotificationChannelDescriptor>,
-      ListNotificationChannelDescriptors,
-      (google::monitoring::v3::ListNotificationChannelDescriptorsRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannelDescriptor>,
-      GetNotificationChannelDescriptor,
-      (google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::monitoring::v3::NotificationChannel>,
-              ListNotificationChannels,
-              (google::monitoring::v3::ListNotificationChannelsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
-      GetNotificationChannel,
-      (google::monitoring::v3::GetNotificationChannelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
-      CreateNotificationChannel,
-      (google::monitoring::v3::CreateNotificationChannelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
-      UpdateNotificationChannel,
-      (google::monitoring::v3::UpdateNotificationChannelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteNotificationChannel,
-      (google::monitoring::v3::DeleteNotificationChannelRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, SendNotificationChannelVerificationCode,
-      (google::monitoring::v3::
-           SendNotificationChannelVerificationCodeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::
-                   GetNotificationChannelVerificationCodeResponse>,
-      GetNotificationChannelVerificationCode,
-      (google::monitoring::v3::
-           GetNotificationChannelVerificationCodeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::NotificationChannel>,
-      VerifyNotificationChannel,
-      (google::monitoring::v3::VerifyNotificationChannelRequest const& request),
-      (override));
-};
+/// @deprecated Use
+/// monitoring_v3_mocks::MockNotificationChannelServiceConnection directly.
+using ::google::cloud::monitoring_v3_mocks::
+    MockNotificationChannelServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

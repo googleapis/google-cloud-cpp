@@ -21,51 +21,27 @@
 
 #include "google/cloud/resourcemanager/organizations_connection.h"
 #include "google/cloud/resourcemanager/organizations_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/resourcemanager/v3/organizations_options.h"
 
 namespace google {
 namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-struct OrganizationsRetryPolicyOption {
-  using Type = std::shared_ptr<OrganizationsRetryPolicy>;
-};
+/// @deprecated Use resourcemanager_v3::OrganizationsBackoffPolicyOption
+/// directly.
+using ::google::cloud::resourcemanager_v3::OrganizationsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-struct OrganizationsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// resourcemanager_v3::OrganizationsConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::resourcemanager_v3::
+    OrganizationsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-struct OrganizationsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<OrganizationsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use resourcemanager_v3::OrganizationsPolicyOptionList directly.
+using ::google::cloud::resourcemanager_v3::OrganizationsPolicyOptionList;
 
-/**
- * The options applicable to Organizations.
- *
- * @ingroup google-cloud-resourcemanager-options
- */
-using OrganizationsPolicyOptionList =
-    OptionList<OrganizationsRetryPolicyOption, OrganizationsBackoffPolicyOption,
-               OrganizationsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use resourcemanager_v3::OrganizationsRetryPolicyOption directly.
+using ::google::cloud::resourcemanager_v3::OrganizationsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager

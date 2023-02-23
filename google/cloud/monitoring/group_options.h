@@ -21,51 +21,26 @@
 
 #include "google/cloud/monitoring/group_connection.h"
 #include "google/cloud/monitoring/group_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/monitoring/v3/group_options.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct GroupServiceRetryPolicyOption {
-  using Type = std::shared_ptr<GroupServiceRetryPolicy>;
-};
+/// @deprecated Use monitoring_v3::GroupServiceBackoffPolicyOption directly.
+using ::google::cloud::monitoring_v3::GroupServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct GroupServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use monitoring_v3::GroupServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::monitoring_v3::
+    GroupServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-monitoring-options
- */
-struct GroupServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<GroupServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use monitoring_v3::GroupServicePolicyOptionList directly.
+using ::google::cloud::monitoring_v3::GroupServicePolicyOptionList;
 
-/**
- * The options applicable to GroupService.
- *
- * @ingroup google-cloud-monitoring-options
- */
-using GroupServicePolicyOptionList =
-    OptionList<GroupServiceRetryPolicyOption, GroupServiceBackoffPolicyOption,
-               GroupServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use monitoring_v3::GroupServiceRetryPolicyOption directly.
+using ::google::cloud::monitoring_v3::GroupServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

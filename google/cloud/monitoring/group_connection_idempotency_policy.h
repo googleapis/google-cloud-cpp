@@ -19,46 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_GROUP_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_GROUP_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/monitoring/v3/group_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/monitoring/v3/group_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class GroupServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~GroupServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// monitoring_v3::MakeDefaultGroupServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::monitoring_v3::
+    MakeDefaultGroupServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<GroupServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListGroups(
-      google::monitoring::v3::ListGroupsRequest request);
-
-  virtual google::cloud::Idempotency GetGroup(
-      google::monitoring::v3::GetGroupRequest const& request);
-
-  virtual google::cloud::Idempotency CreateGroup(
-      google::monitoring::v3::CreateGroupRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateGroup(
-      google::monitoring::v3::UpdateGroupRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteGroup(
-      google::monitoring::v3::DeleteGroupRequest const& request);
-
-  virtual google::cloud::Idempotency ListGroupMembers(
-      google::monitoring::v3::ListGroupMembersRequest request);
-};
-
-std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>
-MakeDefaultGroupServiceConnectionIdempotencyPolicy();
+/// @deprecated Use monitoring_v3::GroupServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::monitoring_v3::GroupServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring

@@ -20,98 +20,35 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GAMESERVICES_GAME_SERVER_CONFIGS_CONNECTION_H
 
 #include "google/cloud/gameservices/game_server_configs_connection_idempotency_policy.h"
-#include "google/cloud/gameservices/internal/game_server_configs_retry_traits.h"
-#include "google/cloud/gameservices/internal/game_server_configs_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/gameservices/v1/game_server_configs_connection.h"
 
 namespace google {
 namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GameServerConfigsServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        gameservices_internal::GameServerConfigsServiceRetryTraits>;
+/// @deprecated Use gameservices_v1::MakeGameServerConfigsServiceConnection
+/// directly.
+using ::google::cloud::gameservices_v1::MakeGameServerConfigsServiceConnection;
 
-using GameServerConfigsServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        gameservices_internal::GameServerConfigsServiceRetryTraits>;
+/// @deprecated Use gameservices_v1::GameServerConfigsServiceConnection
+/// directly.
+using ::google::cloud::gameservices_v1::GameServerConfigsServiceConnection;
 
-using GameServerConfigsServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        gameservices_internal::GameServerConfigsServiceRetryTraits>;
+/// @deprecated Use
+/// gameservices_v1::GameServerConfigsServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::
+    GameServerConfigsServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `GameServerConfigsServiceConnection` object for
- * `GameServerConfigsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `GameServerConfigsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `GameServerConfigsServiceClient`.
- *
- * To create a concrete instance, see
- * `MakeGameServerConfigsServiceConnection()`.
- *
- * For mocking, see
- * `gameservices_mocks::MockGameServerConfigsServiceConnection`.
- */
-class GameServerConfigsServiceConnection {
- public:
-  virtual ~GameServerConfigsServiceConnection() = 0;
+/// @deprecated Use
+/// gameservices_v1::GameServerConfigsServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::gameservices_v1::
+    GameServerConfigsServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::gaming::v1::GameServerConfig>
-  ListGameServerConfigs(
-      google::cloud::gaming::v1::ListGameServerConfigsRequest request);
-
-  virtual StatusOr<google::cloud::gaming::v1::GameServerConfig>
-  GetGameServerConfig(
-      google::cloud::gaming::v1::GetGameServerConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
-  CreateGameServerConfig(
-      google::cloud::gaming::v1::CreateGameServerConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
-  DeleteGameServerConfig(
-      google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `GameServerConfigsServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * GameServerConfigsServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `GameServerConfigsServiceConnection`. Expected options are any of
- * the types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::gameservices::GameServerConfigsServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `GameServerConfigsServiceConnection`
- * created by this function.
- */
-std::shared_ptr<GameServerConfigsServiceConnection>
-MakeGameServerConfigsServiceConnection(Options options = {});
+/// @deprecated Use gameservices_v1::GameServerConfigsServiceRetryPolicy
+/// directly.
+using ::google::cloud::gameservices_v1::GameServerConfigsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices

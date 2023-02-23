@@ -20,37 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_QUERY_CONNECTION_H
 
 #include "google/cloud/monitoring/query_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/monitoring/v3/mocks/mock_query_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `QueryServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `QueryServiceClient`. To do so,
- * construct an object of type `QueryServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockQueryServiceConnection : public monitoring::QueryServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::monitoring::v3::TimeSeriesData>,
-              QueryTimeSeries,
-              (google::monitoring::v3::QueryTimeSeriesRequest request),
-              (override));
-};
+/// @deprecated Use monitoring_v3_mocks::MockQueryServiceConnection directly.
+using ::google::cloud::monitoring_v3_mocks::MockQueryServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks

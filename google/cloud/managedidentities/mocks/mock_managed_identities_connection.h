@@ -20,95 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDIDENTITIES_MOCKS_MOCK_MANAGED_IDENTITIES_CONNECTION_H
 
 #include "google/cloud/managedidentities/managed_identities_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/managedidentities/v1/mocks/mock_managed_identities_connection.h"
 
 namespace google {
 namespace cloud {
 namespace managedidentities_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ManagedIdentitiesServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ManagedIdentitiesServiceClient`. To
- * do so, construct an object of type `ManagedIdentitiesServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockManagedIdentitiesServiceConnection
-    : public managedidentities::ManagedIdentitiesServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              CreateMicrosoftAdDomain,
-              (google::cloud::managedidentities::v1::
-                   CreateMicrosoftAdDomainRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::managedidentities::v1::ResetAdminPasswordResponse>,
-      ResetAdminPassword,
-      (google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::managedidentities::v1::Domain>, ListDomains,
-      (google::cloud::managedidentities::v1::ListDomainsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::managedidentities::v1::Domain>, GetDomain,
-      (google::cloud::managedidentities::v1::GetDomainRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              UpdateDomain,
-              (google::cloud::managedidentities::v1::UpdateDomainRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
-      DeleteDomain,
-      (google::cloud::managedidentities::v1::DeleteDomainRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-      AttachTrust,
-      (google::cloud::managedidentities::v1::AttachTrustRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-      ReconfigureTrust,
-      (google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-      DetachTrust,
-      (google::cloud::managedidentities::v1::DetachTrustRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              ValidateTrust,
-              (google::cloud::managedidentities::v1::ValidateTrustRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use
+/// managedidentities_v1_mocks::MockManagedIdentitiesServiceConnection directly.
+using ::google::cloud::managedidentities_v1_mocks::
+    MockManagedIdentitiesServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_mocks

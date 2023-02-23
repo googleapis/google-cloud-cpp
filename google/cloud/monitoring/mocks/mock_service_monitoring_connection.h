@@ -20,82 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_MOCKS_MOCK_SERVICE_MONITORING_CONNECTION_H
 
 #include "google/cloud/monitoring/service_monitoring_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/monitoring/v3/mocks/mock_service_monitoring_connection.h"
 
 namespace google {
 namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ServiceMonitoringServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ServiceMonitoringServiceClient`. To
- * do so, construct an object of type `ServiceMonitoringServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockServiceMonitoringServiceConnection
-    : public monitoring::ServiceMonitoringServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Service>, CreateService,
-              (google::monitoring::v3::CreateServiceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Service>, GetService,
-              (google::monitoring::v3::GetServiceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::monitoring::v3::Service>, ListServices,
-              (google::monitoring::v3::ListServicesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::Service>, UpdateService,
-              (google::monitoring::v3::UpdateServiceRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteService,
-              (google::monitoring::v3::DeleteServiceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::ServiceLevelObjective>,
-              CreateServiceLevelObjective,
-              (google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::monitoring::v3::ServiceLevelObjective>,
-      GetServiceLevelObjective,
-      (google::monitoring::v3::GetServiceLevelObjectiveRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::monitoring::v3::ServiceLevelObjective>,
-      ListServiceLevelObjectives,
-      (google::monitoring::v3::ListServiceLevelObjectivesRequest request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::monitoring::v3::ServiceLevelObjective>,
-              UpdateServiceLevelObjective,
-              (google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteServiceLevelObjective,
-              (google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use monitoring_v3_mocks::MockServiceMonitoringServiceConnection
+/// directly.
+using ::google::cloud::monitoring_v3_mocks::
+    MockServiceMonitoringServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks
