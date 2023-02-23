@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#include "google/cloud/logging/logging_service_v2_connection.h"
-#include "google/cloud/logging/internal/logging_service_v2_connection_impl.h"
-#include "google/cloud/logging/internal/logging_service_v2_option_defaults.h"
-#include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
-#include "google/cloud/logging/internal/logging_service_v2_tracing_connection.h"
-#include "google/cloud/logging/logging_service_v2_options.h"
+#include "google/cloud/logging/v2/logging_service_v2_connection.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_connection_impl.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_option_defaults.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub_factory.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_tracing_connection.h"
+#include "google/cloud/logging/v2/logging_service_v2_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace logging {
+namespace logging_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2Connection::~LoggingServiceV2Connection() = default;
@@ -96,16 +96,16 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
                                  LoggingServiceV2PolicyOptionList>(options,
                                                                    __func__);
   options =
-      logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
+      logging_v2_internal::LoggingServiceV2DefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = logging_internal::CreateDefaultLoggingServiceV2Stub(
+  auto stub = logging_v2_internal::CreateDefaultLoggingServiceV2Stub(
       background->cq(), options);
-  return logging_internal::MakeLoggingServiceV2TracingConnection(
-      std::make_shared<logging_internal::LoggingServiceV2ConnectionImpl>(
+  return logging_v2_internal::MakeLoggingServiceV2TracingConnection(
+      std::make_shared<logging_v2_internal::LoggingServiceV2ConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging
+}  // namespace logging_v2
 }  // namespace cloud
 }  // namespace google

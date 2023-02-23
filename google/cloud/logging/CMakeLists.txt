@@ -18,10 +18,22 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Logging C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Logging")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "logging_internal" "logging_testing"
-                            "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "" "v2/")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "${dir}")
+    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND mocks_globs "${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "logging_${ns}internal")
+    if (NOT dir STREQUAL "")
+        list(APPEND DOXYGEN_EXAMPLE_PATH
+             "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    endif ()
+endforeach ()
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("logging" DEPENDS cloud-docs
@@ -29,36 +41,12 @@ google_cloud_cpp_doxygen_targets("logging" DEPENDS cloud-docs
 
 include(GoogleCloudCppCommon)
 
-# configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
-add_library(
-    google_cloud_cpp_logging # cmake-format: sort
-    internal/logging_service_v2_auth_decorator.cc
-    internal/logging_service_v2_auth_decorator.h
-    internal/logging_service_v2_connection_impl.cc
-    internal/logging_service_v2_connection_impl.h
-    internal/logging_service_v2_logging_decorator.cc
-    internal/logging_service_v2_logging_decorator.h
-    internal/logging_service_v2_metadata_decorator.cc
-    internal/logging_service_v2_metadata_decorator.h
-    internal/logging_service_v2_option_defaults.cc
-    internal/logging_service_v2_option_defaults.h
-    internal/logging_service_v2_retry_traits.h
-    internal/logging_service_v2_stub.cc
-    internal/logging_service_v2_stub.h
-    internal/logging_service_v2_stub_factory.cc
-    internal/logging_service_v2_stub_factory.h
-    internal/logging_service_v2_tracing_connection.cc
-    internal/logging_service_v2_tracing_connection.h
-    internal/logging_service_v2_tracing_stub.cc
-    internal/logging_service_v2_tracing_stub.h
-    internal/streaming.cc
-    logging_service_v2_client.cc
-    logging_service_v2_client.h
-    logging_service_v2_connection.cc
-    logging_service_v2_connection.h
-    logging_service_v2_connection_idempotency_policy.cc
-    logging_service_v2_connection_idempotency_policy.h
-    logging_service_v2_options.h)
+file(
+    GLOB source_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    ${source_globs})
+list(SORT source_files)
+add_library(google_cloud_cpp_logging ${source_files})
 target_include_directories(
     google_cloud_cpp_logging
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -79,27 +67,27 @@ target_compile_options(google_cloud_cpp_logging
 
 add_library(google-cloud-cpp::logging ALIAS google_cloud_cpp_logging)
 
-# To avoid maintaining the list of files for the library, export them to a .bzl
-# file.
-include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_logging YEAR "2021")
-
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
+file(
+    GLOB relative_mock_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    ${mocks_globs})
+list(SORT relative_mock_files)
+set(mock_files)
+foreach (file IN LISTS relative_mock_files)
+    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+endforeach ()
 add_library(google_cloud_cpp_logging_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_logging_mocks
-    INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_logging_service_v2_connection.h)
+target_sources(google_cloud_cpp_logging_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_logging_mocks
     INTERFACE google-cloud-cpp::logging GTest::gmock_main GTest::gmock
               GTest::gtest)
 set_target_properties(google_cloud_cpp_logging_mocks
                       PROPERTIES EXPORT_NAME google-cloud-cpp::logging_mocks)
-create_bazel_config(google_cloud_cpp_logging_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_logging_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -181,3 +169,10 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_logging-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_logging"
     COMPONENT google_cloud_cpp_development)
+
+# google-cloud-cpp::logging must be defined before we can add the samples.
+foreach (dir IN LISTS service_dirs)
+    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        google_cloud_cpp_add_samples_relative("logging" "${dir}samples/")
+    endif ()
+endforeach ()

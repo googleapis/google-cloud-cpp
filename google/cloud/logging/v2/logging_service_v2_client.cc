@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#include "google/cloud/logging/logging_service_v2_client.h"
+#include "google/cloud/logging/v2/logging_service_v2_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace logging {
+namespace logging_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 LoggingServiceV2Client::LoggingServiceV2Client(
@@ -138,6 +138,6 @@ LoggingServiceV2Client::AsyncWriteLogEntries(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging
+}  // namespace logging_v2
 }  // namespace cloud
 }  // namespace google

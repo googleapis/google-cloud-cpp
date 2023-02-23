@@ -16,27 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_STUB_H
 
-#include "google/cloud/logging/internal/logging_service_v2_stub.h"
-#include "google/cloud/tracing_options.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
+namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LoggingServiceV2Logging : public LoggingServiceV2Stub {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+class LoggingServiceV2TracingStub : public LoggingServiceV2Stub {
  public:
-  ~LoggingServiceV2Logging() override = default;
-  LoggingServiceV2Logging(std::shared_ptr<LoggingServiceV2Stub> child,
-                          TracingOptions tracing_options,
-                          std::set<std::string> components);
+  ~LoggingServiceV2TracingStub() override = default;
+
+  explicit LoggingServiceV2TracingStub(
+      std::shared_ptr<LoggingServiceV2Stub> child);
 
   Status DeleteLog(
       grpc::ClientContext& context,
@@ -74,13 +73,22 @@ class LoggingServiceV2Logging : public LoggingServiceV2Stub {
 
  private:
   std::shared_ptr<LoggingServiceV2Stub> child_;
-  TracingOptions tracing_options_;
-  std::set<std::string> components_;
-};  // LoggingServiceV2Logging
+};
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Applies the tracing decorator to the given stub.
+ *
+ * The stub is only decorated if the library has been compiled with
+ * OpenTelemetry.
+ */
+std::shared_ptr<LoggingServiceV2Stub> MakeLoggingServiceV2TracingStub(
+    std::shared_ptr<LoggingServiceV2Stub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
+}  // namespace logging_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_STUB_H

@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#include "google/cloud/logging/internal/logging_service_v2_tracing_connection.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
+namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 LoggingServiceV2TracingConnection::LoggingServiceV2TracingConnection(
-    std::shared_ptr<logging::LoggingServiceV2Connection> child)
+    std::shared_ptr<logging_v2::LoggingServiceV2Connection> child)
     : child_(std::move(child)) {}
 
 Status LoggingServiceV2TracingConnection::DeleteLog(
     google::logging::v2::DeleteLogRequest const& request) {
   auto span =
-      internal::MakeSpan("logging::LoggingServiceV2Connection::DeleteLog");
+      internal::MakeSpan("logging_v2::LoggingServiceV2Connection::DeleteLog");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteLog(request));
 }
@@ -44,7 +44,7 @@ StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2TracingConnection::WriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto span = internal::MakeSpan(
-      "logging::LoggingServiceV2Connection::WriteLogEntries");
+      "logging_v2::LoggingServiceV2Connection::WriteLogEntries");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->WriteLogEntries(request));
 }
@@ -52,8 +52,8 @@ LoggingServiceV2TracingConnection::WriteLogEntries(
 StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2TracingConnection::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
-  auto span =
-      internal::MakeSpan("logging::LoggingServiceV2Connection::ListLogEntries");
+  auto span = internal::MakeSpan(
+      "logging_v2::LoggingServiceV2Connection::ListLogEntries");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListLogEntries(std::move(request));
   return internal::MakeTracedStreamRange<google::logging::v2::LogEntry>(
@@ -64,7 +64,8 @@ StreamRange<google::api::MonitoredResourceDescriptor>
 LoggingServiceV2TracingConnection::ListMonitoredResourceDescriptors(
     google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   auto span = internal::MakeSpan(
-      "logging::LoggingServiceV2Connection::ListMonitoredResourceDescriptors");
+      "logging_v2::LoggingServiceV2Connection::"
+      "ListMonitoredResourceDescriptors");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListMonitoredResourceDescriptors(std::move(request));
   return internal::MakeTracedStreamRange<
@@ -74,7 +75,7 @@ LoggingServiceV2TracingConnection::ListMonitoredResourceDescriptors(
 StreamRange<std::string> LoggingServiceV2TracingConnection::ListLogs(
     google::logging::v2::ListLogsRequest request) {
   auto span =
-      internal::MakeSpan("logging::LoggingServiceV2Connection::ListLogs");
+      internal::MakeSpan("logging_v2::LoggingServiceV2Connection::ListLogs");
   auto scope = opentelemetry::trace::Scope(span);
   auto sr = child_->ListLogs(std::move(request));
   return internal::MakeTracedStreamRange<std::string>(std::move(span),
@@ -96,9 +97,9 @@ LoggingServiceV2TracingConnection::AsyncWriteLogEntries(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<logging::LoggingServiceV2Connection>
+std::shared_ptr<logging_v2::LoggingServiceV2Connection>
 MakeLoggingServiceV2TracingConnection(
-    std::shared_ptr<logging::LoggingServiceV2Connection> conn) {
+    std::shared_ptr<logging_v2::LoggingServiceV2Connection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<LoggingServiceV2TracingConnection>(std::move(conn));
@@ -108,6 +109,6 @@ MakeLoggingServiceV2TracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
+}  // namespace logging_v2_internal
 }  // namespace cloud
 }  // namespace google

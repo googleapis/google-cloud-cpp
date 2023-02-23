@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
-#include "google/cloud/logging/internal/logging_service_v2_auth_decorator.h"
-#include "google/cloud/logging/internal/logging_service_v2_logging_decorator.h"
-#include "google/cloud/logging/internal/logging_service_v2_metadata_decorator.h"
-#include "google/cloud/logging/internal/logging_service_v2_stub.h"
-#include "google/cloud/logging/internal/logging_service_v2_tracing_stub.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub_factory.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_auth_decorator.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_logging_decorator.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_metadata_decorator.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -33,7 +33,7 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
+namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
@@ -66,6 +66,6 @@ std::shared_ptr<LoggingServiceV2Stub> CreateDefaultLoggingServiceV2Stub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
+}  // namespace logging_v2_internal
 }  // namespace cloud
 }  // namespace google

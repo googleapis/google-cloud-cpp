@@ -16,23 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_AUTH_DECORATOR_H
 
-#include "google/cloud/logging/internal/logging_service_v2_stub.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
+namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
+class LoggingServiceV2Auth : public LoggingServiceV2Stub {
  public:
-  ~LoggingServiceV2Metadata() override = default;
-  explicit LoggingServiceV2Metadata(
+  ~LoggingServiceV2Auth() override = default;
+  LoggingServiceV2Auth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<LoggingServiceV2Stub> child);
 
   Status DeleteLog(
@@ -70,17 +73,13 @@ class LoggingServiceV2Metadata : public LoggingServiceV2Stub {
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<LoggingServiceV2Stub> child_;
-  std::string api_client_header_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
+}  // namespace logging_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_AUTH_DECORATOR_H

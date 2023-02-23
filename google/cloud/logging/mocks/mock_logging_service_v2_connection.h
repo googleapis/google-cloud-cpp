@@ -20,64 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_MOCKS_MOCK_LOGGING_SERVICE_V2_CONNECTION_H
 
 #include "google/cloud/logging/logging_service_v2_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/logging/v2/mocks/mock_logging_service_v2_connection.h"
 
 namespace google {
 namespace cloud {
 namespace logging_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `LoggingServiceV2Connection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `LoggingServiceV2Client`. To do so,
- * construct an object of type `LoggingServiceV2Client` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockLoggingServiceV2Connection
-    : public logging::LoggingServiceV2Connection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(Status, DeleteLog,
-              (google::logging::v2::DeleteLogRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::logging::v2::WriteLogEntriesResponse>,
-              WriteLogEntries,
-              (google::logging::v2::WriteLogEntriesRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::logging::v2::LogEntry>, ListLogEntries,
-              (google::logging::v2::ListLogEntriesRequest request), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::api::MonitoredResourceDescriptor>,
-      ListMonitoredResourceDescriptors,
-      (google::logging::v2::ListMonitoredResourceDescriptorsRequest request),
-      (override));
-
-  MOCK_METHOD(StreamRange<std::string>, ListLogs,
-              (google::logging::v2::ListLogsRequest request), (override));
-
-  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-                   google::logging::v2::TailLogEntriesRequest,
-                   google::logging::v2::TailLogEntriesResponse>>),
-              AsyncTailLogEntries, (), (override));
-
-  MOCK_METHOD(future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>,
-              AsyncWriteLogEntries,
-              (google::logging::v2::WriteLogEntriesRequest const& request),
-              (override));
-};
+/// @deprecated Use logging_v2_mocks::MockLoggingServiceV2Connection directly.
+using ::google::cloud::logging_v2_mocks::MockLoggingServiceV2Connection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_mocks

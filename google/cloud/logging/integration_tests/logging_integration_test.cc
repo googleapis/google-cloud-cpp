@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/logging/internal/logging_service_v2_stub_factory.h"
-#include "google/cloud/logging/logging_service_v2_client.h"
-#include "google/cloud/logging/logging_service_v2_options.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_stub_factory.h"
+#include "google/cloud/logging/v2/logging_service_v2_client.h"
+#include "google/cloud/logging/v2/logging_service_v2_options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace logging {
+namespace logging_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -117,6 +117,6 @@ TEST_F(LoggingIntegrationTest, ListLogsFailure) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging
+}  // namespace logging_v2
 }  // namespace cloud
 }  // namespace google

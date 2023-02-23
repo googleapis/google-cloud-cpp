@@ -19,102 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CONNECTION_H
 
-#include "google/cloud/logging/internal/logging_service_v2_retry_traits.h"
-#include "google/cloud/logging/internal/logging_service_v2_stub.h"
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/logging/v2/logging_service_v2_connection.h"
 
 namespace google {
 namespace cloud {
 namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using LoggingServiceV2RetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        logging_internal::LoggingServiceV2RetryTraits>;
+/// @deprecated Use logging_v2::MakeLoggingServiceV2Connection directly.
+using ::google::cloud::logging_v2::MakeLoggingServiceV2Connection;
 
-using LoggingServiceV2LimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        logging_internal::LoggingServiceV2RetryTraits>;
+/// @deprecated Use logging_v2::LoggingServiceV2Connection directly.
+using ::google::cloud::logging_v2::LoggingServiceV2Connection;
 
-using LoggingServiceV2LimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        logging_internal::LoggingServiceV2RetryTraits>;
+/// @deprecated Use logging_v2::LoggingServiceV2LimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::logging_v2::LoggingServiceV2LimitedErrorCountRetryPolicy;
 
-/**
- * The `LoggingServiceV2Connection` object for `LoggingServiceV2Client`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `LoggingServiceV2Client`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `LoggingServiceV2Client`.
- *
- * To create a concrete instance, see `MakeLoggingServiceV2Connection()`.
- *
- * For mocking, see `logging_mocks::MockLoggingServiceV2Connection`.
- */
-class LoggingServiceV2Connection {
- public:
-  virtual ~LoggingServiceV2Connection() = 0;
+/// @deprecated Use logging_v2::LoggingServiceV2LimitedTimeRetryPolicy directly.
+using ::google::cloud::logging_v2::LoggingServiceV2LimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual Status DeleteLog(
-      google::logging::v2::DeleteLogRequest const& request);
-
-  virtual StatusOr<google::logging::v2::WriteLogEntriesResponse>
-  WriteLogEntries(google::logging::v2::WriteLogEntriesRequest const& request);
-
-  virtual StreamRange<google::logging::v2::LogEntry> ListLogEntries(
-      google::logging::v2::ListLogEntriesRequest request);
-
-  virtual StreamRange<google::api::MonitoredResourceDescriptor>
-  ListMonitoredResourceDescriptors(
-      google::logging::v2::ListMonitoredResourceDescriptorsRequest request);
-
-  virtual StreamRange<std::string> ListLogs(
-      google::logging::v2::ListLogsRequest request);
-
-  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::logging::v2::TailLogEntriesRequest,
-      google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries();
-
-  virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
-  AsyncWriteLogEntries(
-      google::logging::v2::WriteLogEntriesRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `LoggingServiceV2Connection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of LoggingServiceV2Client.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `LoggingServiceV2Connection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::logging::LoggingServiceV2PolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `LoggingServiceV2Connection` created
- * by this function.
- */
-std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
-    Options options = {});
+/// @deprecated Use logging_v2::LoggingServiceV2RetryPolicy directly.
+using ::google::cloud::logging_v2::LoggingServiceV2RetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging

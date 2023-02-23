@@ -16,27 +16,27 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_CONNECTION_H
 
-#include "google/cloud/logging/logging_service_v2_connection.h"
+#include "google/cloud/logging/v2/logging_service_v2_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
+namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 class LoggingServiceV2TracingConnection
-    : public logging::LoggingServiceV2Connection {
+    : public logging_v2::LoggingServiceV2Connection {
  public:
   ~LoggingServiceV2TracingConnection() override = default;
 
   explicit LoggingServiceV2TracingConnection(
-      std::shared_ptr<logging::LoggingServiceV2Connection> child);
+      std::shared_ptr<logging_v2::LoggingServiceV2Connection> child);
 
   Options options() override { return child_->options(); }
 
@@ -67,7 +67,7 @@ class LoggingServiceV2TracingConnection
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
-  std::shared_ptr<logging::LoggingServiceV2Connection> child_;
+  std::shared_ptr<logging_v2::LoggingServiceV2Connection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,13 +78,13 @@ class LoggingServiceV2TracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<logging::LoggingServiceV2Connection>
+std::shared_ptr<logging_v2::LoggingServiceV2Connection>
 MakeLoggingServiceV2TracingConnection(
-    std::shared_ptr<logging::LoggingServiceV2Connection> conn);
+    std::shared_ptr<logging_v2::LoggingServiceV2Connection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
+}  // namespace logging_v2_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_INTERNAL_LOGGING_SERVICE_V2_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_INTERNAL_LOGGING_SERVICE_V2_TRACING_CONNECTION_H

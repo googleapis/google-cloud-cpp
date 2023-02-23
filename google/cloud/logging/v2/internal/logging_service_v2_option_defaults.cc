@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/logging/v2/logging.proto
 
-#include "google/cloud/logging/internal/logging_service_v2_option_defaults.h"
-#include "google/cloud/logging/logging_service_v2_connection.h"
-#include "google/cloud/logging/logging_service_v2_options.h"
+#include "google/cloud/logging/v2/internal/logging_service_v2_option_defaults.h"
+#include "google/cloud/logging/v2/logging_service_v2_connection.h"
+#include "google/cloud/logging/v2/logging_service_v2_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
+namespace logging_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,28 +39,28 @@ Options LoggingServiceV2DefaultOptions(Options options) {
       "logging.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<logging::LoggingServiceV2RetryPolicyOption>()) {
-    options.set<logging::LoggingServiceV2RetryPolicyOption>(
-        logging::LoggingServiceV2LimitedTimeRetryPolicy(
+  if (!options.has<logging_v2::LoggingServiceV2RetryPolicyOption>()) {
+    options.set<logging_v2::LoggingServiceV2RetryPolicyOption>(
+        logging_v2::LoggingServiceV2LimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<logging::LoggingServiceV2BackoffPolicyOption>()) {
-    options.set<logging::LoggingServiceV2BackoffPolicyOption>(
+  if (!options.has<logging_v2::LoggingServiceV2BackoffPolicyOption>()) {
+    options.set<logging_v2::LoggingServiceV2BackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
-    options.set<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>(
-        logging::MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy());
+  if (!options.has<
+          logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
+    options.set<logging_v2::LoggingServiceV2ConnectionIdempotencyPolicyOption>(
+        logging_v2::MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
+}  // namespace logging_v2_internal
 }  // namespace cloud
 }  // namespace google
