@@ -21,62 +21,27 @@
 
 #include "google/cloud/speech/speech_connection.h"
 #include "google/cloud/speech/speech_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/speech/v1/speech_options.h"
 
 namespace google {
 namespace cloud {
 namespace speech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-speech-options
- */
-struct SpeechRetryPolicyOption {
-  using Type = std::shared_ptr<SpeechRetryPolicy>;
-};
+/// @deprecated Use speech_v1::SpeechPollingPolicyOption directly.
+using ::google::cloud::speech_v1::SpeechPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-speech-options
- */
-struct SpeechBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use speech_v1::SpeechBackoffPolicyOption directly.
+using ::google::cloud::speech_v1::SpeechBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-speech-options
- */
-struct SpeechConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<SpeechConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use speech_v1::SpeechConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::speech_v1::SpeechConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-speech-options
- */
-struct SpeechPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use speech_v1::SpeechPolicyOptionList directly.
+using ::google::cloud::speech_v1::SpeechPolicyOptionList;
 
-/**
- * The options applicable to Speech.
- *
- * @ingroup google-cloud-speech-options
- */
-using SpeechPolicyOptionList =
-    OptionList<SpeechRetryPolicyOption, SpeechBackoffPolicyOption,
-               SpeechPollingPolicyOption,
-               SpeechConnectionIdempotencyPolicyOption>;
+/// @deprecated Use speech_v1::SpeechRetryPolicyOption directly.
+using ::google::cloud::speech_v1::SpeechRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech

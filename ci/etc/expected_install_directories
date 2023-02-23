@@ -476,9 +476,10 @@
 ./include/google/cloud/spanner/admin/internal
 ./include/google/cloud/spanner/admin/mocks
 ./include/google/cloud/speech
-./include/google/cloud/speech/internal
 ./include/google/cloud/speech/mocks
 ./include/google/cloud/speech/v1
+./include/google/cloud/speech/v1/internal
+./include/google/cloud/speech/v1/mocks
 ./include/google/cloud/speech/v2
 ./include/google/cloud/speech/v2/internal
 ./include/google/cloud/speech/v2/mocks

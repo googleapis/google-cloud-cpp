@@ -16,26 +16,41 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
-
 #include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
+#include "absl/memory/memory.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace speech {
+namespace speech_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use speech_v1::MakeDefaultSpeechConnectionIdempotencyPolicy
-/// directly.
-using ::google::cloud::speech_v1::MakeDefaultSpeechConnectionIdempotencyPolicy;
+using ::google::cloud::Idempotency;
 
-/// @deprecated Use speech_v1::SpeechConnectionIdempotencyPolicy directly.
-using ::google::cloud::speech_v1::SpeechConnectionIdempotencyPolicy;
+SpeechConnectionIdempotencyPolicy::~SpeechConnectionIdempotencyPolicy() =
+    default;
+
+std::unique_ptr<SpeechConnectionIdempotencyPolicy>
+SpeechConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SpeechConnectionIdempotencyPolicy>(*this);
+}
+
+Idempotency SpeechConnectionIdempotencyPolicy::Recognize(
+    google::cloud::speech::v1::RecognizeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SpeechConnectionIdempotencyPolicy::LongRunningRecognize(
+    google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+std::unique_ptr<SpeechConnectionIdempotencyPolicy>
+MakeDefaultSpeechConnectionIdempotencyPolicy() {
+  return absl::make_unique<SpeechConnectionIdempotencyPolicy>();
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech
+}  // namespace speech_v1
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
