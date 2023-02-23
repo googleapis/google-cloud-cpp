@@ -1608,7 +1608,8 @@ service {
 # Storage Transfer Service
 service {
   service_proto_path: "google/storagetransfer/v1/transfer.proto"
-  product_path: "google/cloud/storagetransfer"
+  product_path: "google/cloud/storagetransfer/v1"
+  forwarding_product_path: "google/cloud/storagetransfer"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1616,35 +1617,40 @@ service {
 # Talent
 service {
   service_proto_path: "google/cloud/talent/v4/company_service.proto"
-  product_path: "google/cloud/talent"
+  product_path: "google/cloud/talent/v4"
+  forwarding_product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/talent/v4/completion_service.proto"
-  product_path: "google/cloud/talent"
+  product_path: "google/cloud/talent/v4"
+  forwarding_product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/talent/v4/event_service.proto"
-  product_path: "google/cloud/talent"
+  product_path: "google/cloud/talent/v4"
+  forwarding_product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/talent/v4/job_service.proto"
-  product_path: "google/cloud/talent"
+  product_path: "google/cloud/talent/v4"
+  forwarding_product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/talent/v4/tenant_service.proto"
-  product_path: "google/cloud/talent"
+  product_path: "google/cloud/talent/v4"
+  forwarding_product_path: "google/cloud/talent"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1652,7 +1658,8 @@ service {
 # Tasks
 service {
   service_proto_path: "google/cloud/tasks/v2/cloudtasks.proto"
-  product_path: "google/cloud/tasks"
+  product_path: "google/cloud/tasks/v2"
+  forwarding_product_path: "google/cloud/tasks"
   initial_copyright_year: "2021"
   retryable_status_codes: ["kInternal", "kUnavailable"]
 }
@@ -1660,7 +1667,8 @@ service {
 # Text-to-Speech
 service {
   service_proto_path: "google/cloud/texttospeech/v1/cloud_tts.proto"
-  product_path: "google/cloud/texttospeech"
+  product_path: "google/cloud/texttospeech/v1"
+  forwarding_product_path: "google/cloud/texttospeech"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1684,7 +1692,8 @@ service {
 # Cloud Trace
 service {
   service_proto_path: "google/devtools/cloudtrace/v2/tracing.proto"
-  product_path: "google/cloud/trace"
+  product_path: "google/cloud/trace/v2"
+  forwarding_product_path: "google/cloud/trace"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
