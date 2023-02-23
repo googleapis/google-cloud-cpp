@@ -19,119 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_OS_CONFIG_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_OS_CONFIG_CONNECTION_H
 
-#include "google/cloud/osconfig/internal/os_config_retry_traits.h"
-#include "google/cloud/osconfig/internal/os_config_stub.h"
 #include "google/cloud/osconfig/os_config_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/osconfig/v1/os_config_connection.h"
 
 namespace google {
 namespace cloud {
 namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using OsConfigServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        osconfig_internal::OsConfigServiceRetryTraits>;
+/// @deprecated Use osconfig_v1::MakeOsConfigServiceConnection directly.
+using ::google::cloud::osconfig_v1::MakeOsConfigServiceConnection;
 
-using OsConfigServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        osconfig_internal::OsConfigServiceRetryTraits>;
+/// @deprecated Use osconfig_v1::OsConfigServiceConnection directly.
+using ::google::cloud::osconfig_v1::OsConfigServiceConnection;
 
-using OsConfigServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        osconfig_internal::OsConfigServiceRetryTraits>;
+/// @deprecated Use osconfig_v1::OsConfigServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::osconfig_v1::OsConfigServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `OsConfigServiceConnection` object for `OsConfigServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `OsConfigServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `OsConfigServiceClient`.
- *
- * To create a concrete instance, see `MakeOsConfigServiceConnection()`.
- *
- * For mocking, see `osconfig_mocks::MockOsConfigServiceConnection`.
- */
-class OsConfigServiceConnection {
- public:
-  virtual ~OsConfigServiceConnection() = 0;
+/// @deprecated Use osconfig_v1::OsConfigServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::osconfig_v1::OsConfigServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchJob> ExecutePatchJob(
-      google::cloud::osconfig::v1::ExecutePatchJobRequest const& request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchJob> GetPatchJob(
-      google::cloud::osconfig::v1::GetPatchJobRequest const& request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchJob> CancelPatchJob(
-      google::cloud::osconfig::v1::CancelPatchJobRequest const& request);
-
-  virtual StreamRange<google::cloud::osconfig::v1::PatchJob> ListPatchJobs(
-      google::cloud::osconfig::v1::ListPatchJobsRequest request);
-
-  virtual StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-  ListPatchJobInstanceDetails(
-      google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  CreatePatchDeployment(
-      google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  GetPatchDeployment(
-      google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request);
-
-  virtual StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-  ListPatchDeployments(
-      google::cloud::osconfig::v1::ListPatchDeploymentsRequest request);
-
-  virtual Status DeletePatchDeployment(
-      google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  UpdatePatchDeployment(
-      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  PausePatchDeployment(
-      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request);
-
-  virtual StatusOr<google::cloud::osconfig::v1::PatchDeployment>
-  ResumePatchDeployment(
-      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `OsConfigServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of OsConfigServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `OsConfigServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::osconfig::OsConfigServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `OsConfigServiceConnection` created
- * by this function.
- */
-std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
-    Options options = {});
+/// @deprecated Use osconfig_v1::OsConfigServiceRetryPolicy directly.
+using ::google::cloud::osconfig_v1::OsConfigServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig

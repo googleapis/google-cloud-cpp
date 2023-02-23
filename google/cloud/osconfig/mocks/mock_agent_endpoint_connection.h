@@ -20,78 +20,18 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_MOCKS_MOCK_AGENT_ENDPOINT_CONNECTION_H
 
 #include "google/cloud/osconfig/agent_endpoint_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/osconfig/agentendpoint/v1/mocks/mock_agent_endpoint_connection.h"
 
 namespace google {
 namespace cloud {
 namespace osconfig_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AgentEndpointServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AgentEndpointServiceClient`. To do
- * so, construct an object of type `AgentEndpointServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAgentEndpointServiceConnection
-    : public osconfig::AgentEndpointServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::osconfig::agentendpoint::v1::
-                              ReceiveTaskNotificationResponse>,
-              ReceiveTaskNotification,
-              (google::cloud::osconfig::agentendpoint::v1::
-                   ReceiveTaskNotificationRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>,
-      StartNextTask,
-      (google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::agentendpoint::v1::
-                           ReportTaskProgressResponse>,
-              ReportTaskProgress,
-              (google::cloud::osconfig::agentendpoint::v1::
-                   ReportTaskProgressRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::agentendpoint::v1::
-                           ReportTaskCompleteResponse>,
-              ReportTaskComplete,
-              (google::cloud::osconfig::agentendpoint::v1::
-                   ReportTaskCompleteRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>,
-      RegisterAgent,
-      (google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>,
-      ReportInventory,
-      (google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use
+/// osconfig_agentendpoint_v1_mocks::MockAgentEndpointServiceConnection
+/// directly.
+using ::google::cloud::osconfig_agentendpoint_v1_mocks::
+    MockAgentEndpointServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_mocks

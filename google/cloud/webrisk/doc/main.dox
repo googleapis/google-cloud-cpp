@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `webrisk::WebRiskServiceClient`:
+For example, this will override the default endpoint for `webrisk_v1::WebRiskServiceClient`:
 
 @snippet web_risk_client_samples.cc set-client-endpoint
 
@@ -138,15 +138,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page webrisk::WebRiskServiceClient-endpoint-snippet Override webrisk::WebRiskServiceClient Endpoint Configuration
+/*! @page webrisk_v1::WebRiskServiceClient-endpoint-snippet Override webrisk_v1::WebRiskServiceClient Endpoint Configuration
 
-@snippet google/cloud/webrisk/samples/web_risk_client_samples.cc set-client-endpoint
+@snippet google/cloud/webrisk/v1/samples/web_risk_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page webrisk::WebRiskServiceClient-service-account-snippet Override webrisk::WebRiskServiceClient Authentication Defaults
+/*! @page webrisk_v1::WebRiskServiceClient-service-account-snippet Override webrisk_v1::WebRiskServiceClient Authentication Defaults
 
-@snippet google/cloud/webrisk/samples/web_risk_client_samples.cc with-service-account
+@snippet google/cloud/webrisk/v1/samples/web_risk_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

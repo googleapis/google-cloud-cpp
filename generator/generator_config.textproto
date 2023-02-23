@@ -1247,14 +1247,16 @@ service {
 # OS Config
 service {
   service_proto_path: "google/cloud/osconfig/v1/osconfig_service.proto"
-  product_path: "google/cloud/osconfig"
+  product_path: "google/cloud/osconfig/v1"
+  forwarding_product_path: "google/cloud/osconfig"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto"
-  product_path: "google/cloud/osconfig"
+  product_path: "google/cloud/osconfig/agentendpoint/v1"
+  forwarding_product_path: "google/cloud/osconfig"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1715,7 +1717,8 @@ service {
 # Translate
 service {
   service_proto_path: "google/cloud/translate/v3/translation_service.proto"
-  product_path: "google/cloud/translate"
+  product_path: "google/cloud/translate/v3"
+  forwarding_product_path: "google/cloud/translate"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1800,7 +1803,8 @@ service {
 # Web Risk
 service {
   service_proto_path: "google/cloud/webrisk/v1/webrisk.proto"
-  product_path: "google/cloud/webrisk"
+  product_path: "google/cloud/webrisk/v1"
+  forwarding_product_path: "google/cloud/webrisk"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1808,7 +1812,8 @@ service {
 # Web Security Scanner
 service {
   service_proto_path: "google/cloud/websecurityscanner/v1/web_security_scanner.proto"
-  product_path: "google/cloud/websecurityscanner"
+  product_path: "google/cloud/websecurityscanner/v1"
+  forwarding_product_path: "google/cloud/websecurityscanner"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1816,14 +1821,16 @@ service {
 # Workflows
 service {
   service_proto_path: "google/cloud/workflows/v1/workflows.proto"
-  product_path: "google/cloud/workflows"
+  product_path: "google/cloud/workflows/v1"
+  forwarding_product_path: "google/cloud/workflows"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/workflows/executions/v1/executions.proto"
-  product_path: "google/cloud/workflows"
+  product_path: "google/cloud/workflows/executions/v1"
+  forwarding_product_path: "google/cloud/workflows"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

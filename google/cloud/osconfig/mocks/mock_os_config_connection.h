@@ -20,98 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_MOCKS_MOCK_OS_CONFIG_CONNECTION_H
 
 #include "google/cloud/osconfig/os_config_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/osconfig/v1/mocks/mock_os_config_connection.h"
 
 namespace google {
 namespace cloud {
 namespace osconfig_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `OsConfigServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `OsConfigServiceClient`. To do so,
- * construct an object of type `OsConfigServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockOsConfigServiceConnection
-    : public osconfig::OsConfigServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchJob>, ExecutePatchJob,
-      (google::cloud::osconfig::v1::ExecutePatchJobRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchJob>, GetPatchJob,
-              (google::cloud::osconfig::v1::GetPatchJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchJob>, CancelPatchJob,
-      (google::cloud::osconfig::v1::CancelPatchJobRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::osconfig::v1::PatchJob>, ListPatchJobs,
-              (google::cloud::osconfig::v1::ListPatchJobsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>,
-      ListPatchJobInstanceDetails,
-      (google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-              CreatePatchDeployment,
-              (google::cloud::osconfig::v1::CreatePatchDeploymentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-      GetPatchDeployment,
-      (google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::osconfig::v1::PatchDeployment>,
-      ListPatchDeployments,
-      (google::cloud::osconfig::v1::ListPatchDeploymentsRequest request),
-      (override));
-
-  MOCK_METHOD(Status, DeletePatchDeployment,
-              (google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-              UpdatePatchDeployment,
-              (google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-      PausePatchDeployment,
-      (google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
-              ResumePatchDeployment,
-              (google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use osconfig_v1_mocks::MockOsConfigServiceConnection directly.
+using ::google::cloud::osconfig_v1_mocks::MockOsConfigServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_mocks

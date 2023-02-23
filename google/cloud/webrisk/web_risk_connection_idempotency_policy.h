@@ -19,40 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
-#include <memory>
+#include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class WebRiskServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~WebRiskServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// webrisk_v1::MakeDefaultWebRiskServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::webrisk_v1::
+    MakeDefaultWebRiskServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);
-
-  virtual google::cloud::Idempotency SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const& request);
-
-  virtual google::cloud::Idempotency SearchHashes(
-      google::cloud::webrisk::v1::SearchHashesRequest const& request);
-
-  virtual google::cloud::Idempotency CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
-};
-
-std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
-MakeDefaultWebRiskServiceConnectionIdempotencyPolicy();
+/// @deprecated Use webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk

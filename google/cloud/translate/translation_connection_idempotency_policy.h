@@ -19,60 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_TRANSLATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_TRANSLATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/translate/v3/translation_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/translate/v3/translation_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TranslationServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~TranslationServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// translate_v3::MakeDefaultTranslationServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::translate_v3::
+    MakeDefaultTranslationServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency TranslateText(
-      google::cloud::translation::v3::TranslateTextRequest const& request);
-
-  virtual google::cloud::Idempotency DetectLanguage(
-      google::cloud::translation::v3::DetectLanguageRequest const& request);
-
-  virtual google::cloud::Idempotency GetSupportedLanguages(
-      google::cloud::translation::v3::GetSupportedLanguagesRequest const&
-          request);
-
-  virtual google::cloud::Idempotency TranslateDocument(
-      google::cloud::translation::v3::TranslateDocumentRequest const& request);
-
-  virtual google::cloud::Idempotency BatchTranslateText(
-      google::cloud::translation::v3::BatchTranslateTextRequest const& request);
-
-  virtual google::cloud::Idempotency BatchTranslateDocument(
-      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateGlossary(
-      google::cloud::translation::v3::CreateGlossaryRequest const& request);
-
-  virtual google::cloud::Idempotency ListGlossaries(
-      google::cloud::translation::v3::ListGlossariesRequest request);
-
-  virtual google::cloud::Idempotency GetGlossary(
-      google::cloud::translation::v3::GetGlossaryRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteGlossary(
-      google::cloud::translation::v3::DeleteGlossaryRequest const& request);
-};
-
-std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
-MakeDefaultTranslationServiceConnectionIdempotencyPolicy();
+/// @deprecated Use translate_v3::TranslationServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::translate_v3::
+    TranslationServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate

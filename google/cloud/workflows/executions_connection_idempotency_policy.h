@@ -19,42 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_EXECUTIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/workflows/executions/v1/executions.grpc.pb.h>
-#include <memory>
+#include "google/cloud/workflows/executions/v1/executions_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ExecutionsConnectionIdempotencyPolicy {
- public:
-  virtual ~ExecutionsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// workflows_executions_v1::MakeDefaultExecutionsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::workflows_executions_v1::
+    MakeDefaultExecutionsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ExecutionsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListExecutions(
-      google::cloud::workflows::executions::v1::ListExecutionsRequest request);
-
-  virtual google::cloud::Idempotency CreateExecution(
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetExecution(
-      google::cloud::workflows::executions::v1::GetExecutionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CancelExecution(
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const&
-          request);
-};
-
-std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
-MakeDefaultExecutionsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// workflows_executions_v1::ExecutionsConnectionIdempotencyPolicy directly.
+using ::google::cloud::workflows_executions_v1::
+    ExecutionsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
