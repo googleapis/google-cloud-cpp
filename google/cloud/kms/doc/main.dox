@@ -49,9 +49,17 @@ which should give you a taste of the KMS C++ client library API.
   `EndpointOption` (which defaults to "cloudkms.googleapis.com")
   used by `MakeEkmServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_KEY_DASHBOARD_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "kmsinventory.googleapis.com")
+  used by `MakeKeyDashboardServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_KEY_MANAGEMENT_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "cloudkms.googleapis.com")
   used by `MakeKeyManagementServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_KEY_TRACKING_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "kmsinventory.googleapis.com")
+  used by `MakeKeyTrackingServiceConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
 
@@ -100,11 +108,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `kms_v1::EkmServiceClient`:
+For example, this will override the default endpoint for `kms_inventory_v1::KeyDashboardServiceClient`:
 
-@snippet ekm_client_samples.cc set-client-endpoint
+@snippet key_dashboard_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
+ [kms_inventory_v1::KeyDashboardServiceClient](@ref kms_inventory_v1::KeyDashboardServiceClient-endpoint-snippet)
+ [kms_inventory_v1::KeyTrackingServiceClient](@ref kms_inventory_v1::KeyTrackingServiceClient-endpoint-snippet)
  [kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-endpoint-snippet)
  [kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-endpoint-snippet)
 
@@ -118,9 +128,11 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
-@snippet ekm_client_samples.cc with-service-account
+@snippet key_dashboard_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
+ [kms_inventory_v1::KeyDashboardServiceClient](@ref kms_inventory_v1::KeyDashboardServiceClient-service-account-snippet)
+ [kms_inventory_v1::KeyTrackingServiceClient](@ref kms_inventory_v1::KeyTrackingServiceClient-service-account-snippet)
  [kms_v1::EkmServiceClient](@ref kms_v1::EkmServiceClient-service-account-snippet)
  [kms_v1::KeyManagementServiceClient](@ref kms_v1::KeyManagementServiceClient-service-account-snippet)
 
@@ -151,6 +163,30 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page kms_inventory_v1::KeyDashboardServiceClient-endpoint-snippet Override kms_inventory_v1::KeyDashboardServiceClient Endpoint Configuration
+
+@snippet google/cloud/kms/inventory/v1/samples/key_dashboard_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page kms_inventory_v1::KeyDashboardServiceClient-service-account-snippet Override kms_inventory_v1::KeyDashboardServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/inventory/v1/samples/key_dashboard_client_samples.cc with-service-account
+
+*/
+
+/*! @page kms_inventory_v1::KeyTrackingServiceClient-endpoint-snippet Override kms_inventory_v1::KeyTrackingServiceClient Endpoint Configuration
+
+@snippet google/cloud/kms/inventory/v1/samples/key_tracking_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page kms_inventory_v1::KeyTrackingServiceClient-service-account-snippet Override kms_inventory_v1::KeyTrackingServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/inventory/v1/samples/key_tracking_client_samples.cc with-service-account
+
+*/
 
 /*! @page kms_v1::EkmServiceClient-endpoint-snippet Override kms_v1::EkmServiceClient Endpoint Configuration
 

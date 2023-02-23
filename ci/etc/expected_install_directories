@@ -296,6 +296,10 @@
 ./include/google/cloud/iot/v1/internal
 ./include/google/cloud/iot/v1/mocks
 ./include/google/cloud/kms
+./include/google/cloud/kms/inventory
+./include/google/cloud/kms/inventory/v1
+./include/google/cloud/kms/inventory/v1/internal
+./include/google/cloud/kms/inventory/v1/mocks
 ./include/google/cloud/kms/mocks
 ./include/google/cloud/kms/v1
 ./include/google/cloud/kms/v1/internal
