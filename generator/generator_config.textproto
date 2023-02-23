@@ -1000,7 +1000,8 @@ service {
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
-  product_path: "google/cloud/iam"
+  product_path: "google/cloud/iam/credentials/v1"
+  forwarding_product_path: "google/cloud/iam"
   initial_copyright_year: "2020"
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
@@ -1008,7 +1009,8 @@ service {
 
 service {
   service_proto_path: "google/iam/admin/v1/iam.proto"
-  product_path: "google/cloud/iam"
+  product_path: "google/cloud/iam/admin/v1"
+  forwarding_product_path: "google/cloud/iam"
   initial_copyright_year: "2021"
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
   backwards_compatibility_namespace_alias: true
@@ -1021,7 +1023,8 @@ service {
 
 service {
   service_proto_path: "google/iam/v1/iam_policy.proto"
-  product_path: "google/cloud/iam"
+  product_path: "google/cloud/iam/v1"
+  forwarding_product_path: "google/cloud/iam"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
