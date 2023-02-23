@@ -95,13 +95,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `tasks::CloudTasksClient`:
+For example, this will override the default endpoint for `tasks_v2::CloudTasksClient`:
 
 @snippet cloud_tasks_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [tasks::CloudTasksClient](@ref tasks::CloudTasksClient-endpoint-snippet)
- [tasks_v2::CloudTasksClient](@ref tasks_v2::CloudTasksClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -114,10 +110,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_tasks_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [tasks::CloudTasksClient](@ref tasks::CloudTasksClient-service-account-snippet)
- [tasks_v2::CloudTasksClient](@ref tasks_v2::CloudTasksClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page tasks::CloudTasksClient-endpoint-snippet Override tasks::CloudTasksClient Endpoint Configuration
-
-@snippet google/cloud/tasks/samples/cloud_tasks_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page tasks::CloudTasksClient-service-account-snippet Override tasks::CloudTasksClient Authentication Defaults
-
-@snippet google/cloud/tasks/samples/cloud_tasks_client_samples.cc with-service-account
-
-*/
 
 /*! @page tasks_v2::CloudTasksClient-endpoint-snippet Override tasks_v2::CloudTasksClient Endpoint Configuration
 

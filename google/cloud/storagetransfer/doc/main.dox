@@ -93,13 +93,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `storagetransfer::StorageTransferServiceClient`:
+For example, this will override the default endpoint for `storagetransfer_v1::StorageTransferServiceClient`:
 
 @snippet storage_transfer_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [storagetransfer::StorageTransferServiceClient](@ref storagetransfer::StorageTransferServiceClient-endpoint-snippet)
- [storagetransfer_v1::StorageTransferServiceClient](@ref storagetransfer_v1::StorageTransferServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -112,10 +108,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet storage_transfer_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [storagetransfer::StorageTransferServiceClient](@ref storagetransfer::StorageTransferServiceClient-service-account-snippet)
- [storagetransfer_v1::StorageTransferServiceClient](@ref storagetransfer_v1::StorageTransferServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page storagetransfer::StorageTransferServiceClient-endpoint-snippet Override storagetransfer::StorageTransferServiceClient Endpoint Configuration
-
-@snippet google/cloud/storagetransfer/samples/storage_transfer_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page storagetransfer::StorageTransferServiceClient-service-account-snippet Override storagetransfer::StorageTransferServiceClient Authentication Defaults
-
-@snippet google/cloud/storagetransfer/samples/storage_transfer_client_samples.cc with-service-account
-
-*/
 
 /*! @page storagetransfer_v1::StorageTransferServiceClient-endpoint-snippet Override storagetransfer_v1::StorageTransferServiceClient Endpoint Configuration
 
