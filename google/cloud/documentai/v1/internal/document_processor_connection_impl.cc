@@ -193,6 +193,38 @@ DocumentProcessorServiceConnectionImpl::GetProcessor(
       request, __func__);
 }
 
+future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::TrainProcessorVersionResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+                 request) {
+        return stub->AsyncTrainProcessorVersion(cq, std::move(context),
+                                                request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::TrainProcessorVersionResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->TrainProcessorVersion(request), polling_policy(),
+      __func__);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceConnectionImpl::GetProcessorVersion(
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
@@ -503,6 +535,88 @@ DocumentProcessorServiceConnectionImpl::ReviewDocument(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ReviewDocument(request), polling_policy(),
       __func__);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::documentai::v1::EvaluateProcessorVersionResponse>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+              request) {
+        return stub->AsyncEvaluateProcessorVersion(cq, std::move(context),
+                                                   request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::documentai::v1::EvaluateProcessorVersionResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->EvaluateProcessorVersion(request), polling_policy(),
+      __func__);
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceConnectionImpl::GetEvaluation(
+    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetEvaluation(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+        return stub_->GetEvaluation(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceConnectionImpl::ListEvaluations(
+    google::cloud::documentai::v1::ListEvaluationsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListEvaluations(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::documentai::v1::Evaluation>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::documentai::v1::ListEvaluationsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::documentai::v1::ListEvaluationsRequest const&
+                       request) {
+              return stub->ListEvaluations(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::documentai::v1::ListEvaluationsResponse r) {
+        std::vector<google::cloud::documentai::v1::Evaluation> result(
+            r.evaluations().size());
+        auto& messages = *r.mutable_evaluations();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

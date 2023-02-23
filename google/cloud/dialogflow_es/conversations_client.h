@@ -354,12 +354,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestConversationSummaryResponse,google/cloud/dialogflow/v2/conversation.proto#L425}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestConversationSummaryResponse,google/cloud/dialogflow/v2/conversation.proto#L428}
   ///
   /// [google.cloud.dialogflow.v2.SuggestConversationSummaryRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L396}
   /// [google.cloud.dialogflow.v2.SuggestConversationSummaryResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L425}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L428}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
   SuggestConversationSummary(std::string const& conversation,
@@ -375,12 +375,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestConversationSummaryResponse,google/cloud/dialogflow/v2/conversation.proto#L425}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestConversationSummaryResponse,google/cloud/dialogflow/v2/conversation.proto#L428}
   ///
   /// [google.cloud.dialogflow.v2.SuggestConversationSummaryRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L396}
   /// [google.cloud.dialogflow.v2.SuggestConversationSummaryResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L425}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L428}
   ///
   StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
   SuggestConversationSummary(

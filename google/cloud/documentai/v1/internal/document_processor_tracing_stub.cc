@@ -113,6 +113,15 @@ DocumentProcessorServiceTracingStub::GetProcessor(
                            child_->GetProcessor(context, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceTracingStub::AsyncTrainProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  return child_->AsyncTrainProcessorVersion(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceTracingStub::GetProcessorVersion(
     grpc::ClientContext& context,
@@ -219,6 +228,39 @@ DocumentProcessorServiceTracingStub::AsyncReviewDocument(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   return child_->AsyncReviewDocument(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceTracingStub::AsyncEvaluateProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  return child_->AsyncEvaluateProcessorVersion(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceTracingStub::GetEvaluation(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.documentai.v1.DocumentProcessorService", "GetEvaluation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetEvaluation(context, request));
+}
+
+StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
+DocumentProcessorServiceTracingStub::ListEvaluations(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.documentai.v1.DocumentProcessorService", "ListEvaluations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEvaluations(context, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

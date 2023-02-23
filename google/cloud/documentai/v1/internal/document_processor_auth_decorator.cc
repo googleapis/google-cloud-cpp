@@ -104,6 +104,27 @@ DocumentProcessorServiceAuth::GetProcessor(
   return child_->GetProcessor(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceAuth::AsyncTrainProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncTrainProcessorVersion(cq, *std::move(context),
+                                                 request);
+      });
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceAuth::GetProcessorVersion(
     grpc::ClientContext& context,
@@ -290,6 +311,45 @@ DocumentProcessorServiceAuth::AsyncReviewDocument(
         }
         return child->AsyncReviewDocument(cq, *std::move(context), request);
       });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceAuth::AsyncEvaluateProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncEvaluateProcessorVersion(cq, *std::move(context),
+                                                    request);
+      });
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceAuth::GetEvaluation(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEvaluation(context, request);
+}
+
+StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
+DocumentProcessorServiceAuth::ListEvaluations(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListEvaluations(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

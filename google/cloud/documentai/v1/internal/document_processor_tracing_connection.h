@@ -68,6 +68,11 @@ class DocumentProcessorServiceTracingConnection
       google::cloud::documentai::v1::GetProcessorRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+  TrainProcessorVersion(
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request) override;
+
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request)
       override;
@@ -120,6 +125,19 @@ class DocumentProcessorServiceTracingConnection
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(google::cloud::documentai::v1::ReviewDocumentRequest const&
                      request) override;
+
+  future<
+      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion(
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
+      google::cloud::documentai::v1::GetEvaluationRequest const& request)
+      override;
+
+  StreamRange<google::cloud::documentai::v1::Evaluation> ListEvaluations(
+      google::cloud::documentai::v1::ListEvaluationsRequest request) override;
 
  private:
   std::shared_ptr<documentai_v1::DocumentProcessorServiceConnection> child_;

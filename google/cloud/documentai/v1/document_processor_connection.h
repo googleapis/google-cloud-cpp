@@ -96,6 +96,12 @@ class DocumentProcessorServiceConnection {
   virtual StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
       google::cloud::documentai::v1::GetProcessorRequest const& request);
 
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+  TrainProcessorVersion(
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request);
+
   virtual StatusOr<google::cloud::documentai::v1::ProcessorVersion>
   GetProcessorVersion(
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
@@ -150,6 +156,19 @@ class DocumentProcessorServiceConnection {
       StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(
       google::cloud::documentai::v1::ReviewDocumentRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+  EvaluateProcessorVersion(
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
+      google::cloud::documentai::v1::GetEvaluationRequest const& request);
+
+  virtual StreamRange<google::cloud::documentai::v1::Evaluation>
+  ListEvaluations(
+      google::cloud::documentai::v1::ListEvaluationsRequest request);
 };
 
 /**

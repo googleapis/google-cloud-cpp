@@ -99,6 +99,13 @@ DocumentProcessorServiceTracingConnection::GetProcessor(
   return internal::EndSpan(*span, child_->GetProcessor(request));
 }
 
+future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+DocumentProcessorServiceTracingConnection::TrainProcessorVersion(
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  return child_->TrainProcessorVersion(request);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceTracingConnection::GetProcessorVersion(
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
@@ -182,6 +189,35 @@ future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
 DocumentProcessorServiceTracingConnection::ReviewDocument(
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   return child_->ReviewDocument(request);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+DocumentProcessorServiceTracingConnection::EvaluateProcessorVersion(
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  return child_->EvaluateProcessorVersion(request);
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceTracingConnection::GetEvaluation(
+    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "documentai_v1::DocumentProcessorServiceConnection::GetEvaluation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEvaluation(request));
+}
+
+StreamRange<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceTracingConnection::ListEvaluations(
+    google::cloud::documentai::v1::ListEvaluationsRequest request) {
+  auto span = internal::MakeSpan(
+      "documentai_v1::DocumentProcessorServiceConnection::ListEvaluations");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListEvaluations(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::documentai::v1::Evaluation>(std::move(span),
+                                                 std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.EntityType]:
-/// @googleapis_link_reference{google/cloud/dialogflow/v2/entity_type.proto#L292}
+/// @googleapis_link_reference{google/cloud/dialogflow/v2/entity_type.proto#L293}
 ///
 class EntityTypesClient {
  public:
@@ -96,12 +96,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L386}
   ///
   StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
       std::string const& parent, Options opts = {});
@@ -120,12 +120,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L386}
   ///
   StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
       std::string const& parent, std::string const& language_code,
@@ -135,16 +135,16 @@ class EntityTypesClient {
   /// Returns the list of all entity types in the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListEntityTypesRequest,google/cloud/dialogflow/v2/entity_type.proto#L385}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListEntityTypesRequest,google/cloud/dialogflow/v2/entity_type.proto#L386}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.ListEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L385}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L386}
   ///
   StreamRange<google::cloud::dialogflow::v2::EntityType> ListEntityTypes(
       google::cloud::dialogflow::v2::ListEntityTypesRequest request,
@@ -158,12 +158,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L425}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
       std::string const& name, Options opts = {});
@@ -182,12 +182,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L425}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
       std::string const& name, std::string const& language_code,
@@ -197,16 +197,16 @@ class EntityTypesClient {
   /// Retrieves the specified entity type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L424}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L425}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.GetEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L424}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L425}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
       google::cloud::dialogflow::v2::GetEntityTypeRequest const& request,
@@ -225,12 +225,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L444}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L445}
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
       std::string const& parent,
@@ -256,12 +256,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L444}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L445}
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
       std::string const& parent,
@@ -276,16 +276,16 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L444}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L445}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.CreateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L444}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L445}
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
       google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request,
@@ -302,12 +302,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L468}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
       google::cloud::dialogflow::v2::EntityType const& entity_type,
@@ -330,12 +330,12 @@ class EntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L468}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
       google::cloud::dialogflow::v2::EntityType const& entity_type,
@@ -349,16 +349,16 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L467}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L468}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EntityType,google/cloud/dialogflow/v2/entity_type.proto#L293}
   ///
   /// [google.cloud.dialogflow.v2.EntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L292}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L293}
   /// [google.cloud.dialogflow.v2.UpdateEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L467}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L468}
   ///
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
       google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request,
@@ -377,7 +377,7 @@ class EntityTypesClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L485}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L486}
   ///
   Status DeleteEntityType(std::string const& name, Options opts = {});
 
@@ -389,12 +389,12 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L485}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteEntityTypeRequest,google/cloud/dialogflow/v2/entity_type.proto#L486}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L485}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L486}
   ///
   Status DeleteEntityType(
       google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request,
@@ -417,16 +417,16 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest,google/cloud/dialogflow/v2/entity_type.proto#L498}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest,google/cloud/dialogflow/v2/entity_type.proto#L499}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse,google/cloud/dialogflow/v2/entity_type.proto#L539}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse,google/cloud/dialogflow/v2/entity_type.proto#L540}
   ///
   /// [google.cloud.dialogflow.v2.BatchUpdateEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L498}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L499}
   /// [google.cloud.dialogflow.v2.BatchUpdateEntityTypesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L539}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L540}
   ///
   future<
       StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
@@ -463,7 +463,7 @@ class EntityTypesClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L546}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L547}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -488,14 +488,14 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest,google/cloud/dialogflow/v2/entity_type.proto#L546}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest,google/cloud/dialogflow/v2/entity_type.proto#L547}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchDeleteEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L546}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L547}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -530,7 +530,7 @@ class EntityTypesClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L565}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -572,7 +572,7 @@ class EntityTypesClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L565}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -599,14 +599,14 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchCreateEntitiesRequest,google/cloud/dialogflow/v2/entity_type.proto#L564}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchCreateEntitiesRequest,google/cloud/dialogflow/v2/entity_type.proto#L565}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchCreateEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L564}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L565}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -643,7 +643,7 @@ class EntityTypesClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L589}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -688,7 +688,7 @@ class EntityTypesClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L589}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -718,14 +718,14 @@ class EntityTypesClient {
   ///
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest,google/cloud/dialogflow/v2/entity_type.proto#L588}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest,google/cloud/dialogflow/v2/entity_type.proto#L589}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchUpdateEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L588}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L589}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -762,7 +762,7 @@ class EntityTypesClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L617}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -805,7 +805,7 @@ class EntityTypesClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L617}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -830,14 +830,14 @@ class EntityTypesClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest,google/cloud/dialogflow/v2/entity_type.proto#L616}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest,google/cloud/dialogflow/v2/entity_type.proto#L617}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchDeleteEntitiesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L616}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/entity_type.proto#L617}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///

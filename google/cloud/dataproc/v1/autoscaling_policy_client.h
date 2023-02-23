@@ -106,12 +106,12 @@ class AutoscalingPolicyServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L260}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
@@ -123,16 +123,16 @@ class AutoscalingPolicyServiceClient {
   /// Creates new autoscaling policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L260}
+  /// @googleapis_link{google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.CreateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L260}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L274}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
@@ -150,12 +150,12 @@ class AutoscalingPolicyServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L303}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
@@ -169,16 +169,16 @@ class AutoscalingPolicyServiceClient {
   /// replacements.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L303}
+  /// @googleapis_link{google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.UpdateAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L303}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L317}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
@@ -201,12 +201,12 @@ class AutoscalingPolicyServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L283}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
       std::string const& name, Options opts = {});
@@ -215,16 +215,16 @@ class AutoscalingPolicyServiceClient {
   /// Retrieves autoscaling policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L283}
+  /// @googleapis_link{google::cloud::dataproc::v1::GetAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.GetAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L283}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L297}
   ///
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
       google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request,
@@ -245,12 +245,12 @@ class AutoscalingPolicyServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L331}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
   ///
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
   ListAutoscalingPolicies(std::string const& parent, Options opts = {});
@@ -259,16 +259,16 @@ class AutoscalingPolicyServiceClient {
   /// Lists autoscaling policies in the project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L331}
+  /// @googleapis_link{google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_link{google::cloud::dataproc::v1::AutoscalingPolicy,google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   ///
   /// [google.cloud.dataproc.v1.AutoscalingPolicy]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L106}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L112}
   /// [google.cloud.dataproc.v1.ListAutoscalingPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L331}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L345}
   ///
   StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
   ListAutoscalingPolicies(
@@ -292,7 +292,7 @@ class AutoscalingPolicyServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L311}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
   ///
   Status DeleteAutoscalingPolicy(std::string const& name, Options opts = {});
 
@@ -301,12 +301,12 @@ class AutoscalingPolicyServiceClient {
   /// policy that is in use by one or more clusters.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L311}
+  /// @googleapis_link{google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest,google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteAutoscalingPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L311}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/autoscaling_policies.proto#L325}
   ///
   Status DeleteAutoscalingPolicy(
       google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&

@@ -151,6 +151,26 @@ DocumentProcessorServiceClient::GetProcessor(
   return connection_->GetProcessor(request);
 }
 
+future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+DocumentProcessorServiceClient::TrainProcessorVersion(
+    std::string const& parent,
+    google::cloud::documentai::v1::ProcessorVersion const& processor_version,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::TrainProcessorVersionRequest request;
+  request.set_parent(parent);
+  *request.mutable_processor_version() = processor_version;
+  return connection_->TrainProcessorVersion(request);
+}
+
+future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+DocumentProcessorServiceClient::TrainProcessorVersion(
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TrainProcessorVersion(request);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceClient::GetProcessorVersion(std::string const& name,
                                                     Options opts) {
@@ -316,6 +336,60 @@ DocumentProcessorServiceClient::ReviewDocument(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ReviewDocument(request);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+DocumentProcessorServiceClient::EvaluateProcessorVersion(
+    std::string const& processor_version, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::EvaluateProcessorVersionRequest request;
+  request.set_processor_version(processor_version);
+  return connection_->EvaluateProcessorVersion(request);
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+DocumentProcessorServiceClient::EvaluateProcessorVersion(
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EvaluateProcessorVersion(request);
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceClient::GetEvaluation(std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::GetEvaluationRequest request;
+  request.set_name(name);
+  return connection_->GetEvaluation(request);
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceClient::GetEvaluation(
+    google::cloud::documentai::v1::GetEvaluationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEvaluation(request);
+}
+
+StreamRange<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceClient::ListEvaluations(std::string const& parent,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::documentai::v1::ListEvaluationsRequest request;
+  request.set_parent(parent);
+  return connection_->ListEvaluations(request);
+}
+
+StreamRange<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceClient::ListEvaluations(
+    google::cloud::documentai::v1::ListEvaluationsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListEvaluations(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

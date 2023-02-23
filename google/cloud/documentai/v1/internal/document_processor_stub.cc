@@ -120,6 +120,22 @@ DefaultDocumentProcessorServiceStub::GetProcessor(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDocumentProcessorServiceStub::AsyncTrainProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncTrainProcessorVersion(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DefaultDocumentProcessorServiceStub::GetProcessorVersion(
     grpc::ClientContext& client_context,
@@ -284,6 +300,48 @@ DefaultDocumentProcessorServiceStub::AsyncReviewDocument(
         return grpc_stub_->AsyncReviewDocument(context, request, cq);
       },
       request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDocumentProcessorServiceStub::AsyncEvaluateProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  return cq.MakeUnaryRpc(
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+              request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncEvaluateProcessorVersion(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DefaultDocumentProcessorServiceStub::GetEvaluation(
+    grpc::ClientContext& client_context,
+    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  google::cloud::documentai::v1::Evaluation response;
+  auto status = grpc_stub_->GetEvaluation(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
+DefaultDocumentProcessorServiceStub::ListEvaluations(
+    grpc::ClientContext& client_context,
+    google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
+  google::cloud::documentai::v1::ListEvaluationsResponse response;
+  auto status =
+      grpc_stub_->ListEvaluations(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -59,6 +59,10 @@ class DocumentProcessorServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetProcessor(
       google::cloud::documentai::v1::GetProcessorRequest const& request);
 
+  virtual google::cloud::Idempotency TrainProcessorVersion(
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetProcessorVersion(
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request);
 
@@ -95,6 +99,16 @@ class DocumentProcessorServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ReviewDocument(
       google::cloud::documentai::v1::ReviewDocumentRequest const& request);
+
+  virtual google::cloud::Idempotency EvaluateProcessorVersion(
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetEvaluation(
+      google::cloud::documentai::v1::GetEvaluationRequest const& request);
+
+  virtual google::cloud::Idempotency ListEvaluations(
+      google::cloud::documentai::v1::ListEvaluationsRequest request);
 };
 
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>

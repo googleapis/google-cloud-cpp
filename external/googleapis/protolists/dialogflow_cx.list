@@ -8,6 +8,7 @@
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:experiment.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:flow.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:fulfillment.proto
+@com_google_googleapis//google/cloud/dialogflow/cx/v3:gcs.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:intent.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:page.proto
 @com_google_googleapis//google/cloud/dialogflow/cx/v3:response_message.proto

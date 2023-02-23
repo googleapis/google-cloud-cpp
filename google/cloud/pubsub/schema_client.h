@@ -326,9 +326,10 @@ class SchemaServiceClient {
   /// a revision ID
   ///  explicitly included.
   ///  Example: `projects/123/schemas/my-schema@c7cfa2a8`
-  /// @param revision_id  Required. The revision ID to roll back to.
-  ///  It must be a revision of the same schema.
-  ///    Example: c7cfa2a8
+  /// @param revision_id  Optional. This field is deprecated and should not be
+  /// used for specifying
+  ///  the revision ID. The revision ID should be specified via the `name`
+  ///  parameter.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return

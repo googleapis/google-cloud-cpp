@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.Version]:
-/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/version.proto#L147}
+/// @googleapis_link_reference{google/cloud/dialogflow/cx/v3/version.proto#L148}
 ///
 class VersionsClient {
  public:
@@ -97,14 +97,14 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L194}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
       std::string const& parent, Options opts = {});
@@ -114,18 +114,18 @@ class VersionsClient {
   /// [Flow][google.cloud.dialogflow.cx.v3.Flow].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListVersionsRequest,google/cloud/dialogflow/cx/v3/version.proto#L194}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListVersionsRequest,google/cloud/dialogflow/cx/v3/version.proto#L195}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
   /// [google.cloud.dialogflow.cx.v3.ListVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L194}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L195}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Version> ListVersions(
       google::cloud::dialogflow::cx::v3::ListVersionsRequest request,
@@ -141,12 +141,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L228}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L229}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
       std::string const& name, Options opts = {});
@@ -155,16 +155,16 @@ class VersionsClient {
   /// Retrieves the specified [Version][google.cloud.dialogflow.cx.v3.Version].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L228}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L229}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L228}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L229}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Version> GetVersion(
       google::cloud::dialogflow::cx::v3::GetVersionRequest const& request,
@@ -191,16 +191,16 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L138}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L242}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
       std::string const& parent,
@@ -220,20 +220,20 @@ class VersionsClient {
   /// - `response`: [Version][google.cloud.dialogflow.cx.v3.Version]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L242}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L243}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateVersionOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L137}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L138}
   /// [google.cloud.dialogflow.cx.v3.CreateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L242}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L243}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L251}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
@@ -249,12 +249,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L260}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L261}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
       google::cloud::dialogflow::cx::v3::Version const& version,
@@ -264,16 +264,16 @@ class VersionsClient {
   /// Updates the specified [Version][google.cloud.dialogflow.cx.v3.Version].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L260}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L261}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Version,google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L260}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L261}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Version> UpdateVersion(
       google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request,
@@ -290,9 +290,9 @@ class VersionsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L272}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L273}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   Status DeleteVersion(std::string const& name, Options opts = {});
 
@@ -300,14 +300,14 @@ class VersionsClient {
   /// Deletes the specified [Version][google.cloud.dialogflow.cx.v3.Version].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L272}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L273}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L272}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L273}
   /// [google.cloud.dialogflow.cx.v3.Version]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L147}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L148}
   ///
   Status DeleteVersion(
       google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request,
@@ -335,7 +335,7 @@ class VersionsClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L286}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L287}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -355,14 +355,14 @@ class VersionsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::LoadVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L286}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::LoadVersionRequest,google/cloud/dialogflow/cx/v3/version.proto#L287}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.cx.v3.LoadVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L286}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L287}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -381,12 +381,12 @@ class VersionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CompareVersionsResponse,google/cloud/dialogflow/cx/v3/version.proto#L342}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CompareVersionsResponse,google/cloud/dialogflow/cx/v3/version.proto#L343}
   ///
   /// [google.cloud.dialogflow.cx.v3.CompareVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L306}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L307}
   /// [google.cloud.dialogflow.cx.v3.CompareVersionsResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L342}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L343}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
   CompareVersions(std::string const& base_version, Options opts = {});
@@ -395,16 +395,16 @@ class VersionsClient {
   /// Compares the specified base version with target version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CompareVersionsRequest,google/cloud/dialogflow/cx/v3/version.proto#L306}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CompareVersionsRequest,google/cloud/dialogflow/cx/v3/version.proto#L307}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CompareVersionsResponse,google/cloud/dialogflow/cx/v3/version.proto#L342}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CompareVersionsResponse,google/cloud/dialogflow/cx/v3/version.proto#L343}
   ///
   /// [google.cloud.dialogflow.cx.v3.CompareVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L306}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L307}
   /// [google.cloud.dialogflow.cx.v3.CompareVersionsResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L342}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/version.proto#L343}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
   CompareVersions(

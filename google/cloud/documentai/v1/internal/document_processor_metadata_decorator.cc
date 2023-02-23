@@ -91,6 +91,16 @@ DocumentProcessorServiceMetadata::GetProcessor(
   return child_->GetProcessor(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncTrainProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncTrainProcessorVersion(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceMetadata::GetProcessorVersion(
     grpc::ClientContext& context,
@@ -191,6 +201,32 @@ DocumentProcessorServiceMetadata::AsyncReviewDocument(
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   SetMetadata(*context, "human_review_config=" + request.human_review_config());
   return child_->AsyncReviewDocument(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceMetadata::AsyncEvaluateProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  SetMetadata(*context, "processor_version=" + request.processor_version());
+  return child_->AsyncEvaluateProcessorVersion(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceMetadata::GetEvaluation(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetEvaluation(context, request);
+}
+
+StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
+DocumentProcessorServiceMetadata::ListEvaluations(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListEvaluations(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
