@@ -98,6 +98,10 @@ For example, this will override the default endpoint for `resourcesettings::Reso
 
 @snippet resource_settings_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [resourcesettings::ResourceSettingsServiceClient](@ref resourcesettings::ResourceSettingsServiceClient-endpoint-snippet)
+ [resourcesettings_v1::ResourceSettingsServiceClient](@ref resourcesettings_v1::ResourceSettingsServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -109,6 +113,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet resource_settings_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [resourcesettings::ResourceSettingsServiceClient](@ref resourcesettings::ResourceSettingsServiceClient-service-account-snippet)
+ [resourcesettings_v1::ResourceSettingsServiceClient](@ref resourcesettings_v1::ResourceSettingsServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -148,6 +156,18 @@ can override the default policies.
 /*! @page resourcesettings::ResourceSettingsServiceClient-service-account-snippet Override resourcesettings::ResourceSettingsServiceClient Authentication Defaults
 
 @snippet google/cloud/resourcesettings/samples/resource_settings_client_samples.cc with-service-account
+
+*/
+
+/*! @page resourcesettings_v1::ResourceSettingsServiceClient-endpoint-snippet Override resourcesettings_v1::ResourceSettingsServiceClient Endpoint Configuration
+
+@snippet google/cloud/resourcesettings/v1/samples/resource_settings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page resourcesettings_v1::ResourceSettingsServiceClient-service-account-snippet Override resourcesettings_v1::ResourceSettingsServiceClient Authentication Defaults
+
+@snippet google/cloud/resourcesettings/v1/samples/resource_settings_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

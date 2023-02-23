@@ -20,52 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_MOCKS_MOCK_PROFILER_CONNECTION_H
 
 #include "google/cloud/profiler/profiler_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/profiler/v2/mocks/mock_profiler_connection.h"
 
 namespace google {
 namespace cloud {
 namespace profiler_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ProfilerServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ProfilerServiceClient`. To do so,
- * construct an object of type `ProfilerServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockProfilerServiceConnection
-    : public profiler::ProfilerServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::devtools::cloudprofiler::v2::Profile>,
-              CreateProfile,
-              (google::devtools::cloudprofiler::v2::CreateProfileRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::devtools::cloudprofiler::v2::Profile>,
-      CreateOfflineProfile,
-      (google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::devtools::cloudprofiler::v2::Profile>,
-              UpdateProfile,
-              (google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use profiler_v2_mocks::MockProfilerServiceConnection directly.
+using ::google::cloud::profiler_v2_mocks::MockProfilerServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_mocks

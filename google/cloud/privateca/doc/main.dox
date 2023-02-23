@@ -99,6 +99,10 @@ For example, this will override the default endpoint for `privateca::Certificate
 
 @snippet certificate_authority_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [privateca::CertificateAuthorityServiceClient](@ref privateca::CertificateAuthorityServiceClient-endpoint-snippet)
+ [privateca_v1::CertificateAuthorityServiceClient](@ref privateca_v1::CertificateAuthorityServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -110,6 +114,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet certificate_authority_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [privateca::CertificateAuthorityServiceClient](@ref privateca::CertificateAuthorityServiceClient-service-account-snippet)
+ [privateca_v1::CertificateAuthorityServiceClient](@ref privateca_v1::CertificateAuthorityServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -149,6 +157,18 @@ can override the default policies.
 /*! @page privateca::CertificateAuthorityServiceClient-service-account-snippet Override privateca::CertificateAuthorityServiceClient Authentication Defaults
 
 @snippet google/cloud/privateca/samples/certificate_authority_client_samples.cc with-service-account
+
+*/
+
+/*! @page privateca_v1::CertificateAuthorityServiceClient-endpoint-snippet Override privateca_v1::CertificateAuthorityServiceClient Endpoint Configuration
+
+@snippet google/cloud/privateca/v1/samples/certificate_authority_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page privateca_v1::CertificateAuthorityServiceClient-service-account-snippet Override privateca_v1::CertificateAuthorityServiceClient Authentication Defaults
+
+@snippet google/cloud/privateca/v1/samples/certificate_authority_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

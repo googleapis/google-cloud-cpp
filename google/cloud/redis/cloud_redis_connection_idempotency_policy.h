@@ -19,60 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLOUD_REDIS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLOUD_REDIS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/redis/v1/cloud_redis.grpc.pb.h>
-#include <memory>
+#include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CloudRedisConnectionIdempotencyPolicy {
- public:
-  virtual ~CloudRedisConnectionIdempotencyPolicy();
+/// @deprecated Use redis_v1::MakeDefaultCloudRedisConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::redis_v1::
+    MakeDefaultCloudRedisConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CloudRedisConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListInstances(
-      google::cloud::redis::v1::ListInstancesRequest request);
-
-  virtual google::cloud::Idempotency GetInstance(
-      google::cloud::redis::v1::GetInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency GetInstanceAuthString(
-      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request);
-
-  virtual google::cloud::Idempotency CreateInstance(
-      google::cloud::redis::v1::CreateInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateInstance(
-      google::cloud::redis::v1::UpdateInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency UpgradeInstance(
-      google::cloud::redis::v1::UpgradeInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency ImportInstance(
-      google::cloud::redis::v1::ImportInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency ExportInstance(
-      google::cloud::redis::v1::ExportInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency FailoverInstance(
-      google::cloud::redis::v1::FailoverInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteInstance(
-      google::cloud::redis::v1::DeleteInstanceRequest const& request);
-
-  virtual google::cloud::Idempotency RescheduleMaintenance(
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
-};
-
-std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
-MakeDefaultCloudRedisConnectionIdempotencyPolicy();
+/// @deprecated Use redis_v1::CloudRedisConnectionIdempotencyPolicy directly.
+using ::google::cloud::redis_v1::CloudRedisConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis

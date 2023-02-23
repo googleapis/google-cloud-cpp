@@ -97,6 +97,10 @@ For example, this will override the default endpoint for `redis::CloudRedisClien
 
 @snippet cloud_redis_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [redis::CloudRedisClient](@ref redis::CloudRedisClient-endpoint-snippet)
+ [redis_v1::CloudRedisClient](@ref redis_v1::CloudRedisClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -108,6 +112,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_redis_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [redis::CloudRedisClient](@ref redis::CloudRedisClient-service-account-snippet)
+ [redis_v1::CloudRedisClient](@ref redis_v1::CloudRedisClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page redis::CloudRedisClient-service-account-snippet Override redis::CloudRedisClient Authentication Defaults
 
 @snippet google/cloud/redis/samples/cloud_redis_client_samples.cc with-service-account
+
+*/
+
+/*! @page redis_v1::CloudRedisClient-endpoint-snippet Override redis_v1::CloudRedisClient Endpoint Configuration
+
+@snippet google/cloud/redis/v1/samples/cloud_redis_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page redis_v1::CloudRedisClient-service-account-snippet Override redis_v1::CloudRedisClient Authentication Defaults
+
+@snippet google/cloud/redis/v1/samples/cloud_redis_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
