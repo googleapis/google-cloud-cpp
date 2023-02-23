@@ -80,27 +80,6 @@ TEST(QueryPartitionTest, MakeQueryPartition) {
   EXPECT_EQ(session_id, actual_partition.SessionId());
 }
 
-TEST(QueryPartitionTest, Constructor) {
-  std::string stmt("SELECT * FROM foo WHERE name = @name");
-  SqlStatement::ParamType params = {{"name", Value("Bob")}};
-  std::string partition_token("token");
-  std::string session_id("session");
-  std::string transaction_id("txn-id");
-  bool route_to_leader = false;
-  std::string transaction_tag("tag");
-
-  QueryPartitionTester actual_partition(spanner_internal::MakeQueryPartition(
-      transaction_id, route_to_leader, transaction_tag, session_id,
-      partition_token, SqlStatement(stmt, params)));
-  EXPECT_EQ(stmt, actual_partition.Statement().sql());
-  EXPECT_EQ(params, actual_partition.Statement().params());
-  EXPECT_EQ(partition_token, actual_partition.PartitionToken());
-  EXPECT_EQ(transaction_id, actual_partition.TransactionId());
-  EXPECT_EQ(route_to_leader, actual_partition.RouteToLeader());
-  EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
-  EXPECT_EQ(session_id, actual_partition.SessionId());
-}
-
 TEST(QueryPartitionTest, RegularSemantics) {
   std::string stmt("SELECT * FROM foo WHERE name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
