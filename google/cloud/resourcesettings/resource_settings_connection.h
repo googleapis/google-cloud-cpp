@@ -19,89 +19,37 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_RESOURCE_SETTINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_RESOURCE_SETTINGS_CONNECTION_H
 
-#include "google/cloud/resourcesettings/internal/resource_settings_retry_traits.h"
-#include "google/cloud/resourcesettings/internal/resource_settings_stub.h"
 #include "google/cloud/resourcesettings/resource_settings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/resourcesettings/v1/resource_settings_connection.h"
 
 namespace google {
 namespace cloud {
 namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ResourceSettingsServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
+/// @deprecated Use resourcesettings_v1::MakeResourceSettingsServiceConnection
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    MakeResourceSettingsServiceConnection;
 
-using ResourceSettingsServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceConnection
+/// directly.
+using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceConnection;
 
-using ResourceSettingsServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `ResourceSettingsServiceConnection` object for
- * `ResourceSettingsServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ResourceSettingsServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ResourceSettingsServiceClient`.
- *
- * To create a concrete instance, see `MakeResourceSettingsServiceConnection()`.
- *
- * For mocking, see
- * `resourcesettings_mocks::MockResourceSettingsServiceConnection`.
- */
-class ResourceSettingsServiceConnection {
- public:
-  virtual ~ResourceSettingsServiceConnection() = 0;
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::resourcesettings::v1::Setting>
-  ListSettings(
-      google::cloud::resourcesettings::v1::ListSettingsRequest request);
-
-  virtual StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request);
-
-  virtual StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ResourceSettingsServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ResourceSettingsServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ResourceSettingsServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::resourcesettings::ResourceSettingsServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ResourceSettingsServiceConnection`
- * created by this function.
- */
-std::shared_ptr<ResourceSettingsServiceConnection>
-MakeResourceSettingsServiceConnection(Options options = {});
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceRetryPolicy
+/// directly.
+using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings

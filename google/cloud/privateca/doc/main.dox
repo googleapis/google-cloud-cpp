@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `privateca::CertificateAuthorityServiceClient`:
+For example, this will override the default endpoint for `privateca_v1::CertificateAuthorityServiceClient`:
 
 @snippet certificate_authority_client_samples.cc set-client-endpoint
 
@@ -140,15 +140,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page privateca::CertificateAuthorityServiceClient-endpoint-snippet Override privateca::CertificateAuthorityServiceClient Endpoint Configuration
+/*! @page privateca_v1::CertificateAuthorityServiceClient-endpoint-snippet Override privateca_v1::CertificateAuthorityServiceClient Endpoint Configuration
 
-@snippet google/cloud/privateca/samples/certificate_authority_client_samples.cc set-client-endpoint
+@snippet google/cloud/privateca/v1/samples/certificate_authority_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page privateca::CertificateAuthorityServiceClient-service-account-snippet Override privateca::CertificateAuthorityServiceClient Authentication Defaults
+/*! @page privateca_v1::CertificateAuthorityServiceClient-service-account-snippet Override privateca_v1::CertificateAuthorityServiceClient Authentication Defaults
 
-@snippet google/cloud/privateca/samples/certificate_authority_client_samples.cc with-service-account
+@snippet google/cloud/privateca/v1/samples/certificate_authority_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

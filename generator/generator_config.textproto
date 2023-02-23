@@ -333,7 +333,8 @@ service {
 # Certificate Authority
 service {
   service_proto_path: "google/cloud/security/privateca/v1/service.proto"
-  product_path: "google/cloud/privateca"
+  product_path: "google/cloud/privateca/v1"
+  forwarding_product_path: "google/cloud/privateca"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
@@ -1252,7 +1253,8 @@ service {
 # Cloud Profiler
 service {
   service_proto_path: "google/devtools/cloudprofiler/v2/profiler.proto"
-  product_path: "google/cloud/profiler"
+  product_path: "google/cloud/profiler/v2"
+  forwarding_product_path: "google/cloud/profiler"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1331,7 +1333,8 @@ service {
 # Recommender
 service {
   service_proto_path: "google/cloud/recommender/v1/recommender_service.proto"
-  product_path: "google/cloud/recommender"
+  product_path: "google/cloud/recommender/v1"
+  forwarding_product_path: "google/cloud/recommender"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1339,7 +1342,8 @@ service {
 # Redis
 service {
   service_proto_path: "google/cloud/redis/v1/cloud_redis.proto"
-  product_path: "google/cloud/redis"
+  product_path: "google/cloud/redis/v1"
+  forwarding_product_path: "google/cloud/redis"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1369,7 +1373,8 @@ service {
 # Resource Settings
 service {
   service_proto_path: "google/cloud/resourcesettings/v1/resource_settings.proto"
-  product_path: "google/cloud/resourcesettings"
+  product_path: "google/cloud/resourcesettings/v1"
+  forwarding_product_path: "google/cloud/resourcesettings"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

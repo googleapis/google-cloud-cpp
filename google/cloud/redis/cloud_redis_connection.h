@@ -20,112 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REDIS_CLOUD_REDIS_CONNECTION_H
 
 #include "google/cloud/redis/cloud_redis_connection_idempotency_policy.h"
-#include "google/cloud/redis/internal/cloud_redis_retry_traits.h"
-#include "google/cloud/redis/internal/cloud_redis_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/redis/v1/cloud_redis_connection.h"
 
 namespace google {
 namespace cloud {
 namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CloudRedisRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    redis_internal::CloudRedisRetryTraits>;
+/// @deprecated Use redis_v1::MakeCloudRedisConnection directly.
+using ::google::cloud::redis_v1::MakeCloudRedisConnection;
 
-using CloudRedisLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        redis_internal::CloudRedisRetryTraits>;
+/// @deprecated Use redis_v1::CloudRedisConnection directly.
+using ::google::cloud::redis_v1::CloudRedisConnection;
 
-using CloudRedisLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        redis_internal::CloudRedisRetryTraits>;
+/// @deprecated Use redis_v1::CloudRedisLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::redis_v1::CloudRedisLimitedErrorCountRetryPolicy;
 
-/**
- * The `CloudRedisConnection` object for `CloudRedisClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CloudRedisClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CloudRedisClient`.
- *
- * To create a concrete instance, see `MakeCloudRedisConnection()`.
- *
- * For mocking, see `redis_mocks::MockCloudRedisConnection`.
- */
-class CloudRedisConnection {
- public:
-  virtual ~CloudRedisConnection() = 0;
+/// @deprecated Use redis_v1::CloudRedisLimitedTimeRetryPolicy directly.
+using ::google::cloud::redis_v1::CloudRedisLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::redis::v1::Instance> ListInstances(
-      google::cloud::redis::v1::ListInstancesRequest request);
-
-  virtual StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      google::cloud::redis::v1::GetInstanceRequest const& request);
-
-  virtual StatusOr<google::cloud::redis::v1::InstanceAuthString>
-  GetInstanceAuthString(
-      google::cloud::redis::v1::GetInstanceAuthStringRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
-      google::cloud::redis::v1::CreateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
-      google::cloud::redis::v1::UpdateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
-      google::cloud::redis::v1::UpgradeInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
-      google::cloud::redis::v1::ImportInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
-      google::cloud::redis::v1::ExportInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
-      google::cloud::redis::v1::FailoverInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::redis::v1::DeleteInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::redis::v1::Instance>>
-  RescheduleMaintenance(
-      google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `CloudRedisConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CloudRedisClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CloudRedisConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::redis::CloudRedisPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CloudRedisConnection` created by
- * this function.
- */
-std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
-    Options options = {});
+/// @deprecated Use redis_v1::CloudRedisRetryPolicy directly.
+using ::google::cloud::redis_v1::CloudRedisRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis

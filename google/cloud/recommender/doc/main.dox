@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `recommender::RecommenderClient`:
+For example, this will override the default endpoint for `recommender_v1::RecommenderClient`:
 
 @snippet recommender_client_samples.cc set-client-endpoint
 
@@ -138,15 +138,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page recommender::RecommenderClient-endpoint-snippet Override recommender::RecommenderClient Endpoint Configuration
+/*! @page recommender_v1::RecommenderClient-endpoint-snippet Override recommender_v1::RecommenderClient Endpoint Configuration
 
-@snippet google/cloud/recommender/samples/recommender_client_samples.cc set-client-endpoint
+@snippet google/cloud/recommender/v1/samples/recommender_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page recommender::RecommenderClient-service-account-snippet Override recommender::RecommenderClient Authentication Defaults
+/*! @page recommender_v1::RecommenderClient-service-account-snippet Override recommender_v1::RecommenderClient Authentication Defaults
 
-@snippet google/cloud/recommender/samples/recommender_client_samples.cc with-service-account
+@snippet google/cloud/recommender/v1/samples/recommender_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

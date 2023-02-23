@@ -20,109 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RECOMMENDER_MOCKS_MOCK_RECOMMENDER_CONNECTION_H
 
 #include "google/cloud/recommender/recommender_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/recommender/v1/mocks/mock_recommender_connection.h"
 
 namespace google {
 namespace cloud {
 namespace recommender_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `RecommenderConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `RecommenderClient`. To do so,
- * construct an object of type `RecommenderClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockRecommenderConnection : public recommender::RecommenderConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::recommender::v1::Insight>,
-              ListInsights,
-              (google::cloud::recommender::v1::ListInsightsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Insight>, GetInsight,
-      (google::cloud::recommender::v1::GetInsightRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::recommender::v1::Insight>,
-              MarkInsightAccepted,
-              (google::cloud::recommender::v1::MarkInsightAcceptedRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::recommender::v1::Recommendation>,
-      ListRecommendations,
-      (google::cloud::recommender::v1::ListRecommendationsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
-      GetRecommendation,
-      (google::cloud::recommender::v1::GetRecommendationRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
-      MarkRecommendationClaimed,
-      (google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
-      MarkRecommendationSucceeded,
-      (google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::Recommendation>,
-      MarkRecommendationFailed,
-      (google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::RecommenderConfig>,
-      GetRecommenderConfig,
-      (google::cloud::recommender::v1::GetRecommenderConfigRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::RecommenderConfig>,
-      UpdateRecommenderConfig,
-      (google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::InsightTypeConfig>,
-      GetInsightTypeConfig,
-      (google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::recommender::v1::InsightTypeConfig>,
-      UpdateInsightTypeConfig,
-      (google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use recommender_v1_mocks::MockRecommenderConnection directly.
+using ::google::cloud::recommender_v1_mocks::MockRecommenderConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_mocks

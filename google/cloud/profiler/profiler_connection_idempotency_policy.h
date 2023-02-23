@@ -19,38 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_PROFILER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
-#include <memory>
+#include "google/cloud/profiler/v2/profiler_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ProfilerServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~ProfilerServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// profiler_v2::MakeDefaultProfilerServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::profiler_v2::
+    MakeDefaultProfilerServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateProfile(
-      google::devtools::cloudprofiler::v2::CreateProfileRequest const& request);
-
-  virtual google::cloud::Idempotency CreateOfflineProfile(
-      google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateProfile(
-      google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request);
-};
-
-std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy>
-MakeDefaultProfilerServiceConnectionIdempotencyPolicy();
+/// @deprecated Use profiler_v2::ProfilerServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::profiler_v2::ProfilerServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler

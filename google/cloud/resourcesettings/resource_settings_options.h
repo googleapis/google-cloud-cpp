@@ -21,53 +21,33 @@
 
 #include "google/cloud/resourcesettings/resource_settings_connection.h"
 #include "google/cloud/resourcesettings/resource_settings_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/resourcesettings/v1/resource_settings_options.h"
 
 namespace google {
 namespace cloud {
 namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-resourcesettings-options
- */
-struct ResourceSettingsServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ResourceSettingsServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-resourcesettings-options
- */
-struct ResourceSettingsServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-resourcesettings-options
- */
-struct ResourceSettingsServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServicePolicyOptionList
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServicePolicyOptionList;
 
-/**
- * The options applicable to ResourceSettingsService.
- *
- * @ingroup google-cloud-resourcesettings-options
- */
-using ResourceSettingsServicePolicyOptionList =
-    OptionList<ResourceSettingsServiceRetryPolicyOption,
-               ResourceSettingsServiceBackoffPolicyOption,
-               ResourceSettingsServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings

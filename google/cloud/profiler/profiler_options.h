@@ -21,52 +21,26 @@
 
 #include "google/cloud/profiler/profiler_connection.h"
 #include "google/cloud/profiler/profiler_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/profiler/v2/profiler_options.h"
 
 namespace google {
 namespace cloud {
 namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-profiler-options
- */
-struct ProfilerServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ProfilerServiceRetryPolicy>;
-};
+/// @deprecated Use profiler_v2::ProfilerServiceBackoffPolicyOption directly.
+using ::google::cloud::profiler_v2::ProfilerServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-profiler-options
- */
-struct ProfilerServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// profiler_v2::ProfilerServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::profiler_v2::
+    ProfilerServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-profiler-options
- */
-struct ProfilerServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ProfilerServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use profiler_v2::ProfilerServicePolicyOptionList directly.
+using ::google::cloud::profiler_v2::ProfilerServicePolicyOptionList;
 
-/**
- * The options applicable to ProfilerService.
- *
- * @ingroup google-cloud-profiler-options
- */
-using ProfilerServicePolicyOptionList =
-    OptionList<ProfilerServiceRetryPolicyOption,
-               ProfilerServiceBackoffPolicyOption,
-               ProfilerServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use profiler_v2::ProfilerServiceRetryPolicyOption directly.
+using ::google::cloud::profiler_v2::ProfilerServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler
