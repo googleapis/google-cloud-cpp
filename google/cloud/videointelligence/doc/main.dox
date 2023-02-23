@@ -94,13 +94,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `videointelligence::VideoIntelligenceServiceClient`:
+For example, this will override the default endpoint for `videointelligence_v1::VideoIntelligenceServiceClient`:
 
 @snippet video_intelligence_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [videointelligence::VideoIntelligenceServiceClient](@ref videointelligence::VideoIntelligenceServiceClient-endpoint-snippet)
- [videointelligence_v1::VideoIntelligenceServiceClient](@ref videointelligence_v1::VideoIntelligenceServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -113,10 +109,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet video_intelligence_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [videointelligence::VideoIntelligenceServiceClient](@ref videointelligence::VideoIntelligenceServiceClient-service-account-snippet)
- [videointelligence_v1::VideoIntelligenceServiceClient](@ref videointelligence_v1::VideoIntelligenceServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page videointelligence::VideoIntelligenceServiceClient-endpoint-snippet Override videointelligence::VideoIntelligenceServiceClient Endpoint Configuration
-
-@snippet google/cloud/videointelligence/samples/video_intelligence_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page videointelligence::VideoIntelligenceServiceClient-service-account-snippet Override videointelligence::VideoIntelligenceServiceClient Authentication Defaults
-
-@snippet google/cloud/videointelligence/samples/video_intelligence_client_samples.cc with-service-account
-
-*/
 
 /*! @page videointelligence_v1::VideoIntelligenceServiceClient-endpoint-snippet Override videointelligence_v1::VideoIntelligenceServiceClient Endpoint Configuration
 
