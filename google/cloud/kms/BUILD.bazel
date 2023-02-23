@@ -18,6 +18,7 @@ licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
     "",
+    "inventory/v1/",
     "v1/",
 ]
 
@@ -46,6 +47,7 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
+        "@com_google_googleapis//google/cloud/kms/inventory/v1:inventory_cc_grpc",
         "@com_google_googleapis//google/cloud/kms/v1:kms_cc_grpc",
     ],
 )
