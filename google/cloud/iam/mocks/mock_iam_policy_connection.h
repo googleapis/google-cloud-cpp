@@ -20,45 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_MOCKS_MOCK_IAM_POLICY_CONNECTION_H
 
 #include "google/cloud/iam/iam_policy_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/iam/v1/mocks/mock_iam_policy_connection.h"
 
 namespace google {
 namespace cloud {
 namespace iam_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `IAMPolicyConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `IAMPolicyClient`. To do so,
- * construct an object of type `IAMPolicyClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockIAMPolicyConnection : public iam::IAMPolicyConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-};
+/// @deprecated Use iam_v1_mocks::MockIAMPolicyConnection directly.
+using ::google::cloud::iam_v1_mocks::MockIAMPolicyConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_mocks

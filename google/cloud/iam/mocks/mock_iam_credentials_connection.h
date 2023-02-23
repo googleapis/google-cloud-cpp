@@ -19,54 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_MOCKS_MOCK_IAM_CREDENTIALS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_MOCKS_MOCK_IAM_CREDENTIALS_CONNECTION_H
 
+#include "google/cloud/iam/credentials/v1/mocks/mock_iam_credentials_connection.h"
 #include "google/cloud/iam/iam_credentials_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace iam_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `IAMCredentialsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `IAMCredentialsClient`. To do so,
- * construct an object of type `IAMCredentialsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockIAMCredentialsConnection : public iam::IAMCredentialsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>,
-      GenerateAccessToken,
-      (google::iam::credentials::v1::GenerateAccessTokenRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>,
-      GenerateIdToken,
-      (google::iam::credentials::v1::GenerateIdTokenRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignBlobResponse>,
-              SignBlob,
-              (google::iam::credentials::v1::SignBlobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignJwtResponse>, SignJwt,
-              (google::iam::credentials::v1::SignJwtRequest const& request),
-              (override));
-};
+/// @deprecated Use iam_credentials_v1_mocks::MockIAMCredentialsConnection
+/// directly.
+using ::google::cloud::iam_credentials_v1_mocks::MockIAMCredentialsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_mocks

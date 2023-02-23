@@ -19,54 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CREDENTIALS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_CREDENTIALS_OPTIONS_H
 
+#include "google/cloud/iam/credentials/v1/iam_credentials_options.h"
 #include "google/cloud/iam/iam_credentials_connection.h"
 #include "google/cloud/iam/iam_credentials_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-iam-options
- */
-struct IAMCredentialsRetryPolicyOption {
-  using Type = std::shared_ptr<IAMCredentialsRetryPolicy>;
-};
+/// @deprecated Use iam_credentials_v1::IAMCredentialsBackoffPolicyOption
+/// directly.
+using ::google::cloud::iam_credentials_v1::IAMCredentialsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-iam-options
- */
-struct IAMCredentialsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// iam_credentials_v1::IAMCredentialsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::iam_credentials_v1::
+    IAMCredentialsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-iam-options
- */
-struct IAMCredentialsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<IAMCredentialsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use iam_credentials_v1::IAMCredentialsPolicyOptionList directly.
+using ::google::cloud::iam_credentials_v1::IAMCredentialsPolicyOptionList;
 
-/**
- * The options applicable to IAMCredentials.
- *
- * @ingroup google-cloud-iam-options
- */
-using IAMCredentialsPolicyOptionList =
-    OptionList<IAMCredentialsRetryPolicyOption,
-               IAMCredentialsBackoffPolicyOption,
-               IAMCredentialsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use iam_credentials_v1::IAMCredentialsRetryPolicyOption
+/// directly.
+using ::google::cloud::iam_credentials_v1::IAMCredentialsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
