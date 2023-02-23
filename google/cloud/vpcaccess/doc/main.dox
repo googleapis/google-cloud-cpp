@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `vpcaccess::VpcAccessServiceClient`:
+For example, this will override the default endpoint for `vpcaccess_v1::VpcAccessServiceClient`:
 
 @snippet vpc_access_client_samples.cc set-client-endpoint
 
@@ -137,15 +137,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page vpcaccess::VpcAccessServiceClient-endpoint-snippet Override vpcaccess::VpcAccessServiceClient Endpoint Configuration
+/*! @page vpcaccess_v1::VpcAccessServiceClient-endpoint-snippet Override vpcaccess_v1::VpcAccessServiceClient Endpoint Configuration
 
-@snippet google/cloud/vpcaccess/samples/vpc_access_client_samples.cc set-client-endpoint
+@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page vpcaccess::VpcAccessServiceClient-service-account-snippet Override vpcaccess::VpcAccessServiceClient Authentication Defaults
+/*! @page vpcaccess_v1::VpcAccessServiceClient-service-account-snippet Override vpcaccess_v1::VpcAccessServiceClient Authentication Defaults
 
-@snippet google/cloud/vpcaccess/samples/vpc_access_client_samples.cc with-service-account
+@snippet google/cloud/vpcaccess/v1/samples/vpc_access_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

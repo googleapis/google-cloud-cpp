@@ -18,10 +18,22 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Cloud Vision API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Cloud Vision API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "vision_internal" "vision_testing"
-                            "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "" "v1/")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "${dir}")
+    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND mocks_globs "${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "vision_${ns}internal")
+    if (NOT dir STREQUAL "")
+        list(APPEND DOXYGEN_EXAMPLE_PATH
+             "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    endif ()
+endforeach ()
 
 include(GoogleCloudCppDoxygen)
 google_cloud_cpp_doxygen_targets("vision" DEPENDS cloud-docs
@@ -47,7 +59,7 @@ target_link_libraries(google_cloud_cpp_vision_protos PUBLIC ${proto_deps})
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+    ${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_vision ${source_files})
 target_include_directories(
@@ -77,7 +89,7 @@ add_library(google-cloud-cpp::vision ALIAS google_cloud_cpp_vision)
 file(
     GLOB relative_mock_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "mocks/*.h")
+    ${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
@@ -177,3 +189,10 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_vision_protos")
+
+# google-cloud-cpp::vision must be defined before we can add the samples.
+foreach (dir IN LISTS service_dirs)
+    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        google_cloud_cpp_add_samples_relative("vision" "${dir}samples/")
+    endif ()
+endforeach ()

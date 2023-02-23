@@ -19,55 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/video/transcoder/v1/services.grpc.pb.h>
-#include <memory>
+#include "google/cloud/video/transcoder/v1/transcoder_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TranscoderServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~TranscoderServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// video_transcoder_v1::MakeDefaultTranscoderServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::video_transcoder_v1::
+    MakeDefaultTranscoderServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateJob(
-      google::cloud::video::transcoder::v1::CreateJobRequest const& request);
-
-  virtual google::cloud::Idempotency ListJobs(
-      google::cloud::video::transcoder::v1::ListJobsRequest request);
-
-  virtual google::cloud::Idempotency GetJob(
-      google::cloud::video::transcoder::v1::GetJobRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteJob(
-      google::cloud::video::transcoder::v1::DeleteJobRequest const& request);
-
-  virtual google::cloud::Idempotency CreateJobTemplate(
-      google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListJobTemplates(
-      google::cloud::video::transcoder::v1::ListJobTemplatesRequest request);
-
-  virtual google::cloud::Idempotency GetJobTemplate(
-      google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteJobTemplate(
-      google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-          request);
-};
-
-std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy>
-MakeDefaultTranscoderServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_transcoder_v1::
+    TranscoderServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

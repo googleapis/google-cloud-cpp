@@ -19,93 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_VIDEO_STITCHER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_VIDEO_STITCHER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/video/stitcher/v1/video_stitcher_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/video/stitcher/v1/video_stitcher_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VideoStitcherServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~VideoStitcherServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// video_stitcher_v1::MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::video_stitcher_v1::
+    MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency CreateCdnKey(
-      google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request);
-
-  virtual google::cloud::Idempotency ListCdnKeys(
-      google::cloud::video::stitcher::v1::ListCdnKeysRequest request);
-
-  virtual google::cloud::Idempotency GetCdnKey(
-      google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteCdnKey(
-      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateCdnKey(
-      google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request);
-
-  virtual google::cloud::Idempotency CreateVodSession(
-      google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetVodSession(
-      google::cloud::video::stitcher::v1::GetVodSessionRequest const& request);
-
-  virtual google::cloud::Idempotency ListVodStitchDetails(
-      google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request);
-
-  virtual google::cloud::Idempotency GetVodStitchDetail(
-      google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListVodAdTagDetails(
-      google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request);
-
-  virtual google::cloud::Idempotency GetVodAdTagDetail(
-      google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListLiveAdTagDetails(
-      google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request);
-
-  virtual google::cloud::Idempotency GetLiveAdTagDetail(
-      google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateSlate(
-      google::cloud::video::stitcher::v1::CreateSlateRequest const& request);
-
-  virtual google::cloud::Idempotency ListSlates(
-      google::cloud::video::stitcher::v1::ListSlatesRequest request);
-
-  virtual google::cloud::Idempotency GetSlate(
-      google::cloud::video::stitcher::v1::GetSlateRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateSlate(
-      google::cloud::video::stitcher::v1::UpdateSlateRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteSlate(
-      google::cloud::video::stitcher::v1::DeleteSlateRequest const& request);
-
-  virtual google::cloud::Idempotency CreateLiveSession(
-      google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetLiveSession(
-      google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request);
-};
-
-std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
-MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::video_stitcher_v1::
+    VideoStitcherServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

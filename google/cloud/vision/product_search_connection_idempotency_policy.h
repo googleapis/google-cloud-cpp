@@ -19,86 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_PRODUCT_SEARCH_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_PRODUCT_SEARCH_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/vision/v1/product_search_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ProductSearchConnectionIdempotencyPolicy {
- public:
-  virtual ~ProductSearchConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// vision_v1::MakeDefaultProductSearchConnectionIdempotencyPolicy directly.
+using ::google::cloud::vision_v1::
+    MakeDefaultProductSearchConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ProductSearchConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateProductSet(
-      google::cloud::vision::v1::CreateProductSetRequest const& request);
-
-  virtual google::cloud::Idempotency ListProductSets(
-      google::cloud::vision::v1::ListProductSetsRequest request);
-
-  virtual google::cloud::Idempotency GetProductSet(
-      google::cloud::vision::v1::GetProductSetRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateProductSet(
-      google::cloud::vision::v1::UpdateProductSetRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteProductSet(
-      google::cloud::vision::v1::DeleteProductSetRequest const& request);
-
-  virtual google::cloud::Idempotency CreateProduct(
-      google::cloud::vision::v1::CreateProductRequest const& request);
-
-  virtual google::cloud::Idempotency ListProducts(
-      google::cloud::vision::v1::ListProductsRequest request);
-
-  virtual google::cloud::Idempotency GetProduct(
-      google::cloud::vision::v1::GetProductRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateProduct(
-      google::cloud::vision::v1::UpdateProductRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteProduct(
-      google::cloud::vision::v1::DeleteProductRequest const& request);
-
-  virtual google::cloud::Idempotency CreateReferenceImage(
-      google::cloud::vision::v1::CreateReferenceImageRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteReferenceImage(
-      google::cloud::vision::v1::DeleteReferenceImageRequest const& request);
-
-  virtual google::cloud::Idempotency ListReferenceImages(
-      google::cloud::vision::v1::ListReferenceImagesRequest request);
-
-  virtual google::cloud::Idempotency GetReferenceImage(
-      google::cloud::vision::v1::GetReferenceImageRequest const& request);
-
-  virtual google::cloud::Idempotency AddProductToProductSet(
-      google::cloud::vision::v1::AddProductToProductSetRequest const& request);
-
-  virtual google::cloud::Idempotency RemoveProductFromProductSet(
-      google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListProductsInProductSet(
-      google::cloud::vision::v1::ListProductsInProductSetRequest request);
-
-  virtual google::cloud::Idempotency ImportProductSets(
-      google::cloud::vision::v1::ImportProductSetsRequest const& request);
-
-  virtual google::cloud::Idempotency PurgeProducts(
-      google::cloud::vision::v1::PurgeProductsRequest const& request);
-};
-
-std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
-MakeDefaultProductSearchConnectionIdempotencyPolicy();
+/// @deprecated Use vision_v1::ProductSearchConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::vision_v1::ProductSearchConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision

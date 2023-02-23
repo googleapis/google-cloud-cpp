@@ -19,144 +19,33 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_CONNECTION_H
 
-#include "google/cloud/video/internal/livestream_retry_traits.h"
-#include "google/cloud/video/internal/livestream_stub.h"
+#include "google/cloud/video/livestream/v1/livestream_connection.h"
 #include "google/cloud/video/livestream_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using LivestreamServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        video_internal::LivestreamServiceRetryTraits>;
+/// @deprecated Use video_livestream_v1::MakeLivestreamServiceConnection
+/// directly.
+using ::google::cloud::video_livestream_v1::MakeLivestreamServiceConnection;
 
-using LivestreamServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        video_internal::LivestreamServiceRetryTraits>;
+/// @deprecated Use video_livestream_v1::LivestreamServiceConnection directly.
+using ::google::cloud::video_livestream_v1::LivestreamServiceConnection;
 
-using LivestreamServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        video_internal::LivestreamServiceRetryTraits>;
+/// @deprecated Use
+/// video_livestream_v1::LivestreamServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `LivestreamServiceConnection` object for `LivestreamServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `LivestreamServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `LivestreamServiceClient`.
- *
- * To create a concrete instance, see `MakeLivestreamServiceConnection()`.
- *
- * For mocking, see `video_mocks::MockLivestreamServiceConnection`.
- */
-class LivestreamServiceConnection {
- public:
-  virtual ~LivestreamServiceConnection() = 0;
+/// @deprecated Use video_livestream_v1::LivestreamServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  CreateChannel(
-      google::cloud::video::livestream::v1::CreateChannelRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::video::livestream::v1::Channel>
-  ListChannels(
-      google::cloud::video::livestream::v1::ListChannelsRequest request);
-
-  virtual StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
-      google::cloud::video::livestream::v1::GetChannelRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteChannel(
-      google::cloud::video::livestream::v1::DeleteChannelRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::Channel>>
-  UpdateChannel(
-      google::cloud::video::livestream::v1::UpdateChannelRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StartChannel(
-      google::cloud::video::livestream::v1::StartChannelRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StopChannel(
-      google::cloud::video::livestream::v1::StopChannelRequest const& request);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  CreateInput(
-      google::cloud::video::livestream::v1::CreateInputRequest const& request);
-
-  virtual StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
-      google::cloud::video::livestream::v1::ListInputsRequest request);
-
-  virtual StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
-      google::cloud::video::livestream::v1::GetInputRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteInput(
-      google::cloud::video::livestream::v1::DeleteInputRequest const& request);
-
-  virtual future<StatusOr<google::cloud::video::livestream::v1::Input>>
-  UpdateInput(
-      google::cloud::video::livestream::v1::UpdateInputRequest const& request);
-
-  virtual StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
-      google::cloud::video::livestream::v1::CreateEventRequest const& request);
-
-  virtual StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
-      google::cloud::video::livestream::v1::ListEventsRequest request);
-
-  virtual StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
-      google::cloud::video::livestream::v1::GetEventRequest const& request);
-
-  virtual Status DeleteEvent(
-      google::cloud::video::livestream::v1::DeleteEventRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `LivestreamServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * LivestreamServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `LivestreamServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::video::LivestreamServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `LivestreamServiceConnection` created
- * by this function.
- */
-std::shared_ptr<LivestreamServiceConnection> MakeLivestreamServiceConnection(
-    Options options = {});
+/// @deprecated Use video_livestream_v1::LivestreamServiceRetryPolicy directly.
+using ::google::cloud::video_livestream_v1::LivestreamServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

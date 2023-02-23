@@ -19,56 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_MOCKS_MOCK_VPC_ACCESS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_MOCKS_MOCK_VPC_ACCESS_CONNECTION_H
 
+#include "google/cloud/vpcaccess/v1/mocks/mock_vpc_access_connection.h"
 #include "google/cloud/vpcaccess/vpc_access_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace vpcaccess_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `VpcAccessServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `VpcAccessServiceClient`. To do so,
- * construct an object of type `VpcAccessServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockVpcAccessServiceConnection
-    : public vpcaccess::VpcAccessServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
-      CreateConnector,
-      (google::cloud::vpcaccess::v1::CreateConnectorRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::vpcaccess::v1::Connector>, GetConnector,
-      (google::cloud::vpcaccess::v1::GetConnectorRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::vpcaccess::v1::Connector>,
-              ListConnectors,
-              (google::cloud::vpcaccess::v1::ListConnectorsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>,
-      DeleteConnector,
-      (google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request),
-      (override));
-};
+/// @deprecated Use vpcaccess_v1_mocks::MockVpcAccessServiceConnection directly.
+using ::google::cloud::vpcaccess_v1_mocks::MockVpcAccessServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_mocks

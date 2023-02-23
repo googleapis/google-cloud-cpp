@@ -19,54 +19,33 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_VIDEO_STITCHER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_VIDEO_STITCHER_OPTIONS_H
 
+#include "google/cloud/video/stitcher/v1/video_stitcher_options.h"
 #include "google/cloud/video/video_stitcher_connection.h"
 #include "google/cloud/video/video_stitcher_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-video-options
- */
-struct VideoStitcherServiceRetryPolicyOption {
-  using Type = std::shared_ptr<VideoStitcherServiceRetryPolicy>;
-};
+/// @deprecated Use video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::video_stitcher_v1::
+    VideoStitcherServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-video-options
- */
-struct VideoStitcherServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// video_stitcher_v1::VideoStitcherServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::video_stitcher_v1::
+    VideoStitcherServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-video-options
- */
-struct VideoStitcherServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use video_stitcher_v1::VideoStitcherServicePolicyOptionList
+/// directly.
+using ::google::cloud::video_stitcher_v1::VideoStitcherServicePolicyOptionList;
 
-/**
- * The options applicable to VideoStitcherService.
- *
- * @ingroup google-cloud-video-options
- */
-using VideoStitcherServicePolicyOptionList =
-    OptionList<VideoStitcherServiceRetryPolicyOption,
-               VideoStitcherServiceBackoffPolicyOption,
-               VideoStitcherServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use video_stitcher_v1::VideoStitcherServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::video_stitcher_v1::VideoStitcherServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

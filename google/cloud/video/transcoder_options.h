@@ -19,54 +19,33 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_TRANSCODER_OPTIONS_H
 
+#include "google/cloud/video/transcoder/v1/transcoder_options.h"
 #include "google/cloud/video/transcoder_connection.h"
 #include "google/cloud/video/transcoder_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-video-options
- */
-struct TranscoderServiceRetryPolicyOption {
-  using Type = std::shared_ptr<TranscoderServiceRetryPolicy>;
-};
+/// @deprecated Use video_transcoder_v1::TranscoderServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::video_transcoder_v1::
+    TranscoderServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-video-options
- */
-struct TranscoderServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// video_transcoder_v1::TranscoderServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::video_transcoder_v1::
+    TranscoderServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-video-options
- */
-struct TranscoderServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<TranscoderServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use video_transcoder_v1::TranscoderServicePolicyOptionList
+/// directly.
+using ::google::cloud::video_transcoder_v1::TranscoderServicePolicyOptionList;
 
-/**
- * The options applicable to TranscoderService.
- *
- * @ingroup google-cloud-video-options
- */
-using TranscoderServicePolicyOptionList =
-    OptionList<TranscoderServiceRetryPolicyOption,
-               TranscoderServiceBackoffPolicyOption,
-               TranscoderServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use video_transcoder_v1::TranscoderServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::video_transcoder_v1::TranscoderServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

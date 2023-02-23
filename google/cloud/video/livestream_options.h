@@ -19,65 +19,38 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_OPTIONS_H
 
+#include "google/cloud/video/livestream/v1/livestream_options.h"
 #include "google/cloud/video/livestream_connection.h"
 #include "google/cloud/video/livestream_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-video-options
- */
-struct LivestreamServiceRetryPolicyOption {
-  using Type = std::shared_ptr<LivestreamServiceRetryPolicy>;
-};
+/// @deprecated Use video_livestream_v1::LivestreamServicePollingPolicyOption
+/// directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-video-options
- */
-struct LivestreamServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use video_livestream_v1::LivestreamServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-video-options
- */
-struct LivestreamServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<LivestreamServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// video_livestream_v1::LivestreamServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::video_livestream_v1::
+    LivestreamServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-video-options
- */
-struct LivestreamServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use video_livestream_v1::LivestreamServicePolicyOptionList
+/// directly.
+using ::google::cloud::video_livestream_v1::LivestreamServicePolicyOptionList;
 
-/**
- * The options applicable to LivestreamService.
- *
- * @ingroup google-cloud-video-options
- */
-using LivestreamServicePolicyOptionList =
-    OptionList<LivestreamServiceRetryPolicyOption,
-               LivestreamServiceBackoffPolicyOption,
-               LivestreamServicePollingPolicyOption,
-               LivestreamServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use video_livestream_v1::LivestreamServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::video_livestream_v1::LivestreamServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video

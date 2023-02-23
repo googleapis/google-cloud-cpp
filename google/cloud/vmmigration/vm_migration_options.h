@@ -19,64 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_VM_MIGRATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_VM_MIGRATION_OPTIONS_H
 
+#include "google/cloud/vmmigration/v1/vm_migration_options.h"
 #include "google/cloud/vmmigration/vm_migration_connection.h"
 #include "google/cloud/vmmigration/vm_migration_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-vmmigration-options
- */
-struct VmMigrationRetryPolicyOption {
-  using Type = std::shared_ptr<VmMigrationRetryPolicy>;
-};
+/// @deprecated Use vmmigration_v1::VmMigrationPollingPolicyOption directly.
+using ::google::cloud::vmmigration_v1::VmMigrationPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-vmmigration-options
- */
-struct VmMigrationBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use vmmigration_v1::VmMigrationBackoffPolicyOption directly.
+using ::google::cloud::vmmigration_v1::VmMigrationBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-vmmigration-options
- */
-struct VmMigrationConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<VmMigrationConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use vmmigration_v1::VmMigrationConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::vmmigration_v1::
+    VmMigrationConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-vmmigration-options
- */
-struct VmMigrationPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use vmmigration_v1::VmMigrationPolicyOptionList directly.
+using ::google::cloud::vmmigration_v1::VmMigrationPolicyOptionList;
 
-/**
- * The options applicable to VmMigration.
- *
- * @ingroup google-cloud-vmmigration-options
- */
-using VmMigrationPolicyOptionList =
-    OptionList<VmMigrationRetryPolicyOption, VmMigrationBackoffPolicyOption,
-               VmMigrationPollingPolicyOption,
-               VmMigrationConnectionIdempotencyPolicyOption>;
+/// @deprecated Use vmmigration_v1::VmMigrationRetryPolicyOption directly.
+using ::google::cloud::vmmigration_v1::VmMigrationRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration

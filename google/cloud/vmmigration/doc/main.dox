@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `vmmigration::VmMigrationClient`:
+For example, this will override the default endpoint for `vmmigration_v1::VmMigrationClient`:
 
 @snippet vm_migration_client_samples.cc set-client-endpoint
 
@@ -137,15 +137,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page vmmigration::VmMigrationClient-endpoint-snippet Override vmmigration::VmMigrationClient Endpoint Configuration
+/*! @page vmmigration_v1::VmMigrationClient-endpoint-snippet Override vmmigration_v1::VmMigrationClient Endpoint Configuration
 
-@snippet google/cloud/vmmigration/samples/vm_migration_client_samples.cc set-client-endpoint
+@snippet google/cloud/vmmigration/v1/samples/vm_migration_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page vmmigration::VmMigrationClient-service-account-snippet Override vmmigration::VmMigrationClient Authentication Defaults
+/*! @page vmmigration_v1::VmMigrationClient-service-account-snippet Override vmmigration_v1::VmMigrationClient Authentication Defaults
 
-@snippet google/cloud/vmmigration/samples/vm_migration_client_samples.cc with-service-account
+@snippet google/cloud/vmmigration/v1/samples/vm_migration_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

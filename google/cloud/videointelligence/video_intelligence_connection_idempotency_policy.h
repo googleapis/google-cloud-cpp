@@ -19,32 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_VIDEO_INTELLIGENCE_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
-#include <memory>
+#include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class VideoIntelligenceServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~VideoIntelligenceServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// videointelligence_v1::MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::videointelligence_v1::
+    MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency AnnotateVideo(
-      google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-          request);
-};
-
-std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
-MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// videointelligence_v1::VideoIntelligenceServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::videointelligence_v1::
+    VideoIntelligenceServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
