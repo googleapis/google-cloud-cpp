@@ -20,75 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_COMPLETION_CONNECTION_H
 
 #include "google/cloud/talent/completion_connection_idempotency_policy.h"
-#include "google/cloud/talent/internal/completion_retry_traits.h"
-#include "google/cloud/talent/internal/completion_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/talent/v4/completion_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using CompletionRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    talent_internal::CompletionRetryTraits>;
+/// @deprecated Use talent_v4::MakeCompletionConnection directly.
+using ::google::cloud::talent_v4::MakeCompletionConnection;
 
-using CompletionLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::CompletionRetryTraits>;
+/// @deprecated Use talent_v4::CompletionConnection directly.
+using ::google::cloud::talent_v4::CompletionConnection;
 
-using CompletionLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::CompletionRetryTraits>;
+/// @deprecated Use talent_v4::CompletionLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::talent_v4::CompletionLimitedErrorCountRetryPolicy;
 
-/**
- * The `CompletionConnection` object for `CompletionClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `CompletionClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `CompletionClient`.
- *
- * To create a concrete instance, see `MakeCompletionConnection()`.
- *
- * For mocking, see `talent_mocks::MockCompletionConnection`.
- */
-class CompletionConnection {
- public:
-  virtual ~CompletionConnection() = 0;
+/// @deprecated Use talent_v4::CompletionLimitedTimeRetryPolicy directly.
+using ::google::cloud::talent_v4::CompletionLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
-  CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `CompletionConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of CompletionClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `CompletionConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::CompletionPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `CompletionConnection` created by
- * this function.
- */
-std::shared_ptr<CompletionConnection> MakeCompletionConnection(
-    Options options = {});
+/// @deprecated Use talent_v4::CompletionRetryPolicy directly.
+using ::google::cloud::talent_v4::CompletionRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

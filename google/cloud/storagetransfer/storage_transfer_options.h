@@ -21,64 +21,38 @@
 
 #include "google/cloud/storagetransfer/storage_transfer_connection.h"
 #include "google/cloud/storagetransfer/storage_transfer_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/storagetransfer/v1/storage_transfer_options.h"
 
 namespace google {
 namespace cloud {
 namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-storagetransfer-options
- */
-struct StorageTransferServiceRetryPolicyOption {
-  using Type = std::shared_ptr<StorageTransferServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// storagetransfer_v1::StorageTransferServicePollingPolicyOption directly.
+using ::google::cloud::storagetransfer_v1::
+    StorageTransferServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-storagetransfer-options
- */
-struct StorageTransferServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// storagetransfer_v1::StorageTransferServiceBackoffPolicyOption directly.
+using ::google::cloud::storagetransfer_v1::
+    StorageTransferServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-storagetransfer-options
- */
-struct StorageTransferServiceConnectionIdempotencyPolicyOption {
-  using Type =
-      std::shared_ptr<StorageTransferServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// storagetransfer_v1::StorageTransferServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::storagetransfer_v1::
+    StorageTransferServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-storagetransfer-options
- */
-struct StorageTransferServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use storagetransfer_v1::StorageTransferServicePolicyOptionList
+/// directly.
+using ::google::cloud::storagetransfer_v1::
+    StorageTransferServicePolicyOptionList;
 
-/**
- * The options applicable to StorageTransferService.
- *
- * @ingroup google-cloud-storagetransfer-options
- */
-using StorageTransferServicePolicyOptionList =
-    OptionList<StorageTransferServiceRetryPolicyOption,
-               StorageTransferServiceBackoffPolicyOption,
-               StorageTransferServicePollingPolicyOption,
-               StorageTransferServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use storagetransfer_v1::StorageTransferServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::storagetransfer_v1::
+    StorageTransferServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer

@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `storagetransfer::StorageTransferServiceClient`:
+For example, this will override the default endpoint for `storagetransfer_v1::StorageTransferServiceClient`:
 
 @snippet storage_transfer_client_samples.cc set-client-endpoint
 
@@ -138,15 +138,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page storagetransfer::StorageTransferServiceClient-endpoint-snippet Override storagetransfer::StorageTransferServiceClient Endpoint Configuration
+/*! @page storagetransfer_v1::StorageTransferServiceClient-endpoint-snippet Override storagetransfer_v1::StorageTransferServiceClient Endpoint Configuration
 
-@snippet google/cloud/storagetransfer/samples/storage_transfer_client_samples.cc set-client-endpoint
+@snippet google/cloud/storagetransfer/v1/samples/storage_transfer_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page storagetransfer::StorageTransferServiceClient-service-account-snippet Override storagetransfer::StorageTransferServiceClient Authentication Defaults
+/*! @page storagetransfer_v1::StorageTransferServiceClient-service-account-snippet Override storagetransfer_v1::StorageTransferServiceClient Authentication Defaults
 
-@snippet google/cloud/storagetransfer/samples/storage_transfer_client_samples.cc with-service-account
+@snippet google/cloud/storagetransfer/v1/samples/storage_transfer_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

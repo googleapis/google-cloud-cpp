@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `tasks::CloudTasksClient`:
+For example, this will override the default endpoint for `tasks_v2::CloudTasksClient`:
 
 @snippet cloud_tasks_client_samples.cc set-client-endpoint
 
@@ -139,15 +139,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page tasks::CloudTasksClient-endpoint-snippet Override tasks::CloudTasksClient Endpoint Configuration
+/*! @page tasks_v2::CloudTasksClient-endpoint-snippet Override tasks_v2::CloudTasksClient Endpoint Configuration
 
-@snippet google/cloud/tasks/samples/cloud_tasks_client_samples.cc set-client-endpoint
+@snippet google/cloud/tasks/v2/samples/cloud_tasks_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page tasks::CloudTasksClient-service-account-snippet Override tasks::CloudTasksClient Authentication Defaults
+/*! @page tasks_v2::CloudTasksClient-service-account-snippet Override tasks_v2::CloudTasksClient Authentication Defaults
 
-@snippet google/cloud/tasks/samples/cloud_tasks_client_samples.cc with-service-account
+@snippet google/cloud/tasks/v2/samples/cloud_tasks_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

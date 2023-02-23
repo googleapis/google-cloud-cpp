@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `trace::TraceServiceClient`:
+For example, this will override the default endpoint for `trace_v2::TraceServiceClient`:
 
 @snippet trace_client_samples.cc set-client-endpoint
 
@@ -140,15 +140,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page trace::TraceServiceClient-endpoint-snippet Override trace::TraceServiceClient Endpoint Configuration
+/*! @page trace_v2::TraceServiceClient-endpoint-snippet Override trace_v2::TraceServiceClient Endpoint Configuration
 
-@snippet google/cloud/trace/samples/trace_client_samples.cc set-client-endpoint
+@snippet google/cloud/trace/v2/samples/trace_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page trace::TraceServiceClient-service-account-snippet Override trace::TraceServiceClient Authentication Defaults
+/*! @page trace_v2::TraceServiceClient-service-account-snippet Override trace_v2::TraceServiceClient Authentication Defaults
 
-@snippet google/cloud/trace/samples/trace_client_samples.cc with-service-account
+@snippet google/cloud/trace/v2/samples/trace_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

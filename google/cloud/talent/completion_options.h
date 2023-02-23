@@ -21,51 +21,25 @@
 
 #include "google/cloud/talent/completion_connection.h"
 #include "google/cloud/talent/completion_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/talent/v4/completion_options.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct CompletionRetryPolicyOption {
-  using Type = std::shared_ptr<CompletionRetryPolicy>;
-};
+/// @deprecated Use talent_v4::CompletionBackoffPolicyOption directly.
+using ::google::cloud::talent_v4::CompletionBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct CompletionBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use talent_v4::CompletionConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::talent_v4::CompletionConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-talent-options
- */
-struct CompletionConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CompletionConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use talent_v4::CompletionPolicyOptionList directly.
+using ::google::cloud::talent_v4::CompletionPolicyOptionList;
 
-/**
- * The options applicable to Completion.
- *
- * @ingroup google-cloud-talent-options
- */
-using CompletionPolicyOptionList =
-    OptionList<CompletionRetryPolicyOption, CompletionBackoffPolicyOption,
-               CompletionConnectionIdempotencyPolicyOption>;
+/// @deprecated Use talent_v4::CompletionRetryPolicyOption directly.
+using ::google::cloud::talent_v4::CompletionRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

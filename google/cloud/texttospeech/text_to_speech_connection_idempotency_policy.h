@@ -19,34 +19,22 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_TEXT_TO_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_TEXT_TO_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
-#include <memory>
+#include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TextToSpeechConnectionIdempotencyPolicy {
- public:
-  virtual ~TextToSpeechConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// texttospeech_v1::MakeDefaultTextToSpeechConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::texttospeech_v1::
+    MakeDefaultTextToSpeechConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListVoices(
-      google::cloud::texttospeech::v1::ListVoicesRequest const& request);
-
-  virtual google::cloud::Idempotency SynthesizeSpeech(
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
-};
-
-std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>
-MakeDefaultTextToSpeechConnectionIdempotencyPolicy();
+/// @deprecated Use texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::texttospeech_v1::TextToSpeechConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech

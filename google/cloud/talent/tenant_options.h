@@ -21,51 +21,26 @@
 
 #include "google/cloud/talent/tenant_connection.h"
 #include "google/cloud/talent/tenant_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/talent/v4/tenant_options.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct TenantServiceRetryPolicyOption {
-  using Type = std::shared_ptr<TenantServiceRetryPolicy>;
-};
+/// @deprecated Use talent_v4::TenantServiceBackoffPolicyOption directly.
+using ::google::cloud::talent_v4::TenantServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct TenantServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use talent_v4::TenantServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::talent_v4::
+    TenantServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-talent-options
- */
-struct TenantServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<TenantServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use talent_v4::TenantServicePolicyOptionList directly.
+using ::google::cloud::talent_v4::TenantServicePolicyOptionList;
 
-/**
- * The options applicable to TenantService.
- *
- * @ingroup google-cloud-talent-options
- */
-using TenantServicePolicyOptionList =
-    OptionList<TenantServiceRetryPolicyOption, TenantServiceBackoffPolicyOption,
-               TenantServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use talent_v4::TenantServiceRetryPolicyOption directly.
+using ::google::cloud::talent_v4::TenantServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

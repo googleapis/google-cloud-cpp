@@ -19,43 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_TENANT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_TENANT_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/talent/v4/tenant_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TenantServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~TenantServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// talent_v4::MakeDefaultTenantServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::talent_v4::
+    MakeDefaultTenantServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<TenantServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateTenant(
-      google::cloud::talent::v4::CreateTenantRequest const& request);
-
-  virtual google::cloud::Idempotency GetTenant(
-      google::cloud::talent::v4::GetTenantRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateTenant(
-      google::cloud::talent::v4::UpdateTenantRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteTenant(
-      google::cloud::talent::v4::DeleteTenantRequest const& request);
-
-  virtual google::cloud::Idempotency ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest request);
-};
-
-std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
-MakeDefaultTenantServiceConnectionIdempotencyPolicy();
+/// @deprecated Use talent_v4::TenantServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::talent_v4::TenantServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

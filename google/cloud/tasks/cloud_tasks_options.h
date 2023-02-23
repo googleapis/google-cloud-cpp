@@ -21,51 +21,25 @@
 
 #include "google/cloud/tasks/cloud_tasks_connection.h"
 #include "google/cloud/tasks/cloud_tasks_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/tasks/v2/cloud_tasks_options.h"
 
 namespace google {
 namespace cloud {
 namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-tasks-options
- */
-struct CloudTasksRetryPolicyOption {
-  using Type = std::shared_ptr<CloudTasksRetryPolicy>;
-};
+/// @deprecated Use tasks_v2::CloudTasksBackoffPolicyOption directly.
+using ::google::cloud::tasks_v2::CloudTasksBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-tasks-options
- */
-struct CloudTasksBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use tasks_v2::CloudTasksConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::tasks_v2::CloudTasksConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-tasks-options
- */
-struct CloudTasksConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<CloudTasksConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use tasks_v2::CloudTasksPolicyOptionList directly.
+using ::google::cloud::tasks_v2::CloudTasksPolicyOptionList;
 
-/**
- * The options applicable to CloudTasks.
- *
- * @ingroup google-cloud-tasks-options
- */
-using CloudTasksPolicyOptionList =
-    OptionList<CloudTasksRetryPolicyOption, CloudTasksBackoffPolicyOption,
-               CloudTasksConnectionIdempotencyPolicyOption>;
+/// @deprecated Use tasks_v2::CloudTasksRetryPolicyOption directly.
+using ::google::cloud::tasks_v2::CloudTasksRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks

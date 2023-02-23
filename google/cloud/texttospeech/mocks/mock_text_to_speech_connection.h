@@ -20,43 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_MOCKS_MOCK_TEXT_TO_SPEECH_CONNECTION_H
 
 #include "google/cloud/texttospeech/text_to_speech_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/texttospeech/v1/mocks/mock_text_to_speech_connection.h"
 
 namespace google {
 namespace cloud {
 namespace texttospeech_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `TextToSpeechConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `TextToSpeechClient`. To do so,
- * construct an object of type `TextToSpeechClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockTextToSpeechConnection : public texttospeech::TextToSpeechConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>, ListVoices,
-      (google::cloud::texttospeech::v1::ListVoicesRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>,
-      SynthesizeSpeech,
-      (google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request),
-      (override));
-};
+/// @deprecated Use texttospeech_v1_mocks::MockTextToSpeechConnection directly.
+using ::google::cloud::texttospeech_v1_mocks::MockTextToSpeechConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_mocks

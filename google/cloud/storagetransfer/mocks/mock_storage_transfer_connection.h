@@ -20,106 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_MOCKS_MOCK_STORAGE_TRANSFER_CONNECTION_H
 
 #include "google/cloud/storagetransfer/storage_transfer_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/storagetransfer/v1/mocks/mock_storage_transfer_connection.h"
 
 namespace google {
 namespace cloud {
 namespace storagetransfer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `StorageTransferServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `StorageTransferServiceClient`. To
- * do so, construct an object of type `StorageTransferServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockStorageTransferServiceConnection
-    : public storagetransfer::StorageTransferServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::GoogleServiceAccount>,
-      GetGoogleServiceAccount,
-      (google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::TransferJob>, CreateTransferJob,
-      (google::storagetransfer::v1::CreateTransferJobRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::TransferJob>, UpdateTransferJob,
-      (google::storagetransfer::v1::UpdateTransferJobRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::TransferJob>, GetTransferJob,
-      (google::storagetransfer::v1::GetTransferJobRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::storagetransfer::v1::TransferJob>,
-              ListTransferJobs,
-              (google::storagetransfer::v1::ListTransferJobsRequest request),
-              (override));
-
-  MOCK_METHOD(Status, PauseTransferOperation,
-              (google::storagetransfer::v1::PauseTransferOperationRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      Status, ResumeTransferOperation,
-      (google::storagetransfer::v1::ResumeTransferOperationRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::storagetransfer::v1::TransferOperation>>,
-      RunTransferJob,
-      (google::storagetransfer::v1::RunTransferJobRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteTransferJob,
-      (google::storagetransfer::v1::DeleteTransferJobRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::AgentPool>, CreateAgentPool,
-      (google::storagetransfer::v1::CreateAgentPoolRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::storagetransfer::v1::AgentPool>, UpdateAgentPool,
-      (google::storagetransfer::v1::UpdateAgentPoolRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::storagetransfer::v1::AgentPool>, GetAgentPool,
-              (google::storagetransfer::v1::GetAgentPoolRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::storagetransfer::v1::AgentPool>,
-              ListAgentPools,
-              (google::storagetransfer::v1::ListAgentPoolsRequest request),
-              (override));
-
-  MOCK_METHOD(
-      Status, DeleteAgentPool,
-      (google::storagetransfer::v1::DeleteAgentPoolRequest const& request),
-      (override));
-};
+/// @deprecated Use
+/// storagetransfer_v1_mocks::MockStorageTransferServiceConnection directly.
+using ::google::cloud::storagetransfer_v1_mocks::
+    MockStorageTransferServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_mocks

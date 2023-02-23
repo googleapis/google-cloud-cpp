@@ -20,52 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_MOCKS_MOCK_TENANT_CONNECTION_H
 
 #include "google/cloud/talent/tenant_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/talent/v4/mocks/mock_tenant_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `TenantServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `TenantServiceClient`. To do so,
- * construct an object of type `TenantServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockTenantServiceConnection : public talent::TenantServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, CreateTenant,
-              (google::cloud::talent::v4::CreateTenantRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, GetTenant,
-              (google::cloud::talent::v4::GetTenantRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Tenant>, UpdateTenant,
-              (google::cloud::talent::v4::UpdateTenantRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteTenant,
-              (google::cloud::talent::v4::DeleteTenantRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::talent::v4::Tenant>, ListTenants,
-              (google::cloud::talent::v4::ListTenantsRequest request),
-              (override));
-};
+/// @deprecated Use talent_v4_mocks::MockTenantServiceConnection directly.
+using ::google::cloud::talent_v4_mocks::MockTenantServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_mocks

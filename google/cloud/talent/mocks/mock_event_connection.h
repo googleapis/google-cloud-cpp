@@ -20,37 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_MOCKS_MOCK_EVENT_CONNECTION_H
 
 #include "google/cloud/talent/event_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/talent/v4/mocks/mock_event_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `EventServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EventServiceClient`. To do so,
- * construct an object of type `EventServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockEventServiceConnection : public talent::EventServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::talent::v4::ClientEvent>, CreateClientEvent,
-      (google::cloud::talent::v4::CreateClientEventRequest const& request),
-      (override));
-};
+/// @deprecated Use talent_v4_mocks::MockEventServiceConnection directly.
+using ::google::cloud::talent_v4_mocks::MockEventServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_mocks

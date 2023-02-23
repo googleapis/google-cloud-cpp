@@ -21,51 +21,25 @@
 
 #include "google/cloud/talent/event_connection.h"
 #include "google/cloud/talent/event_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/talent/v4/event_options.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct EventServiceRetryPolicyOption {
-  using Type = std::shared_ptr<EventServiceRetryPolicy>;
-};
+/// @deprecated Use talent_v4::EventServiceBackoffPolicyOption directly.
+using ::google::cloud::talent_v4::EventServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct EventServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use talent_v4::EventServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::talent_v4::EventServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-talent-options
- */
-struct EventServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<EventServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use talent_v4::EventServicePolicyOptionList directly.
+using ::google::cloud::talent_v4::EventServicePolicyOptionList;
 
-/**
- * The options applicable to EventService.
- *
- * @ingroup google-cloud-talent-options
- */
-using EventServicePolicyOptionList =
-    OptionList<EventServiceRetryPolicyOption, EventServiceBackoffPolicyOption,
-               EventServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use talent_v4::EventServiceRetryPolicyOption directly.
+using ::google::cloud::talent_v4::EventServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

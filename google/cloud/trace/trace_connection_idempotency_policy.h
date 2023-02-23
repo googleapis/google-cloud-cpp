@@ -19,34 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_TRACE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_TRACE_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/devtools/cloudtrace/v2/tracing.grpc.pb.h>
-#include <memory>
+#include "google/cloud/trace/v2/trace_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class TraceServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~TraceServiceConnectionIdempotencyPolicy();
+/// @deprecated Use trace_v2::MakeDefaultTraceServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::trace_v2::
+    MakeDefaultTraceServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<TraceServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency BatchWriteSpans(
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request);
-
-  virtual google::cloud::Idempotency CreateSpan(
-      google::devtools::cloudtrace::v2::Span const& request);
-};
-
-std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
-MakeDefaultTraceServiceConnectionIdempotencyPolicy();
+/// @deprecated Use trace_v2::TraceServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::trace_v2::TraceServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace

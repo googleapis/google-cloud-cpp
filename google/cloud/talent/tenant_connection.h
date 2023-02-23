@@ -19,90 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_TENANT_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_TENANT_CONNECTION_H
 
-#include "google/cloud/talent/internal/tenant_retry_traits.h"
-#include "google/cloud/talent/internal/tenant_stub.h"
 #include "google/cloud/talent/tenant_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/talent/v4/tenant_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TenantServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        talent_internal::TenantServiceRetryTraits>;
+/// @deprecated Use talent_v4::MakeTenantServiceConnection directly.
+using ::google::cloud::talent_v4::MakeTenantServiceConnection;
 
-using TenantServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::TenantServiceRetryTraits>;
+/// @deprecated Use talent_v4::TenantServiceConnection directly.
+using ::google::cloud::talent_v4::TenantServiceConnection;
 
-using TenantServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::TenantServiceRetryTraits>;
+/// @deprecated Use talent_v4::TenantServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::talent_v4::TenantServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `TenantServiceConnection` object for `TenantServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `TenantServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TenantServiceClient`.
- *
- * To create a concrete instance, see `MakeTenantServiceConnection()`.
- *
- * For mocking, see `talent_mocks::MockTenantServiceConnection`.
- */
-class TenantServiceConnection {
- public:
-  virtual ~TenantServiceConnection() = 0;
+/// @deprecated Use talent_v4::TenantServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::talent_v4::TenantServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      google::cloud::talent::v4::CreateTenantRequest const& request);
-
-  virtual StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      google::cloud::talent::v4::GetTenantRequest const& request);
-
-  virtual StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      google::cloud::talent::v4::UpdateTenantRequest const& request);
-
-  virtual Status DeleteTenant(
-      google::cloud::talent::v4::DeleteTenantRequest const& request);
-
-  virtual StreamRange<google::cloud::talent::v4::Tenant> ListTenants(
-      google::cloud::talent::v4::ListTenantsRequest request);
-};
-
-/**
- * A factory function to construct an object of type `TenantServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of TenantServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `TenantServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::TenantServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `TenantServiceConnection` created by
- * this function.
- */
-std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
-    Options options = {});
+/// @deprecated Use talent_v4::TenantServiceRetryPolicy directly.
+using ::google::cloud::talent_v4::TenantServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
