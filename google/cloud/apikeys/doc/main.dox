@@ -92,13 +92,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `apikeys::ApiKeysClient`:
+For example, this will override the default endpoint for `apikeys_v2::ApiKeysClient`:
 
 @snippet api_keys_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [apikeys::ApiKeysClient](@ref apikeys::ApiKeysClient-endpoint-snippet)
- [apikeys_v2::ApiKeysClient](@ref apikeys_v2::ApiKeysClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -111,10 +107,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet api_keys_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [apikeys::ApiKeysClient](@ref apikeys::ApiKeysClient-service-account-snippet)
- [apikeys_v2::ApiKeysClient](@ref apikeys_v2::ApiKeysClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -144,18 +136,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page apikeys::ApiKeysClient-endpoint-snippet Override apikeys::ApiKeysClient Endpoint Configuration
-
-@snippet google/cloud/apikeys/samples/api_keys_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page apikeys::ApiKeysClient-service-account-snippet Override apikeys::ApiKeysClient Authentication Defaults
-
-@snippet google/cloud/apikeys/samples/api_keys_client_samples.cc with-service-account
-
-*/
 
 /*! @page apikeys_v2::ApiKeysClient-endpoint-snippet Override apikeys_v2::ApiKeysClient Endpoint Configuration
 
