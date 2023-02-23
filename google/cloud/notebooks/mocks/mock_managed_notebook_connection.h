@@ -20,101 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_MOCKS_MOCK_MANAGED_NOTEBOOK_CONNECTION_H
 
 #include "google/cloud/notebooks/managed_notebook_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/notebooks/v1/mocks/mock_managed_notebook_connection.h"
 
 namespace google {
 namespace cloud {
 namespace notebooks_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ManagedNotebookServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ManagedNotebookServiceClient`. To
- * do so, construct an object of type `ManagedNotebookServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockManagedNotebookServiceConnection
-    : public notebooks::ManagedNotebookServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::notebooks::v1::Runtime>, ListRuntimes,
-              (google::cloud::notebooks::v1::ListRuntimesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::notebooks::v1::Runtime>, GetRuntime,
-              (google::cloud::notebooks::v1::GetRuntimeRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, CreateRuntime,
-      (google::cloud::notebooks::v1::CreateRuntimeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, UpdateRuntime,
-      (google::cloud::notebooks::v1::UpdateRuntimeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
-      DeleteRuntime,
-      (google::cloud::notebooks::v1::DeleteRuntimeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, StartRuntime,
-      (google::cloud::notebooks::v1::StartRuntimeRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-              StopRuntime,
-              (google::cloud::notebooks::v1::StopRuntimeRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, SwitchRuntime,
-      (google::cloud::notebooks::v1::SwitchRuntimeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, ResetRuntime,
-      (google::cloud::notebooks::v1::ResetRuntimeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, UpgradeRuntime,
-      (google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>,
-      ReportRuntimeEvent,
-      (google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>,
-      RefreshRuntimeTokenInternal,
-      (google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::notebooks::v1::Runtime>>, DiagnoseRuntime,
-      (google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request),
-      (override));
-};
+/// @deprecated Use notebooks_v1_mocks::MockManagedNotebookServiceConnection
+/// directly.
+using ::google::cloud::notebooks_v1_mocks::MockManagedNotebookServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_mocks

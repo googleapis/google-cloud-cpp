@@ -20,114 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_HUB_CONNECTION_H
 
 #include "google/cloud/networkconnectivity/hub_connection_idempotency_policy.h"
-#include "google/cloud/networkconnectivity/internal/hub_retry_traits.h"
-#include "google/cloud/networkconnectivity/internal/hub_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/networkconnectivity/v1/hub_connection.h"
 
 namespace google {
 namespace cloud {
 namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using HubServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    networkconnectivity_internal::HubServiceRetryTraits>;
+/// @deprecated Use networkconnectivity_v1::MakeHubServiceConnection directly.
+using ::google::cloud::networkconnectivity_v1::MakeHubServiceConnection;
 
-using HubServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        networkconnectivity_internal::HubServiceRetryTraits>;
+/// @deprecated Use networkconnectivity_v1::HubServiceConnection directly.
+using ::google::cloud::networkconnectivity_v1::HubServiceConnection;
 
-using HubServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        networkconnectivity_internal::HubServiceRetryTraits>;
+/// @deprecated Use
+/// networkconnectivity_v1::HubServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::networkconnectivity_v1::
+    HubServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `HubServiceConnection` object for `HubServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `HubServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `HubServiceClient`.
- *
- * To create a concrete instance, see `MakeHubServiceConnection()`.
- *
- * For mocking, see `networkconnectivity_mocks::MockHubServiceConnection`.
- */
-class HubServiceConnection {
- public:
-  virtual ~HubServiceConnection() = 0;
+/// @deprecated Use networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::networkconnectivity_v1::HubServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
-      google::cloud::networkconnectivity::v1::ListHubsRequest request);
-
-  virtual StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      google::cloud::networkconnectivity::v1::GetHubRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-  CreateHub(
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-  UpdateHub(
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request);
-
-  virtual StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
-      google::cloud::networkconnectivity::v1::ListSpokesRequest request);
-
-  virtual StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      google::cloud::networkconnectivity::v1::GetSpokeRequest const& request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-  CreateSpoke(google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
-                  request);
-
-  virtual future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-  UpdateSpoke(google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
-                  request);
-
-  virtual future<
-      StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
-                  request);
-};
-
-/**
- * A factory function to construct an object of type `HubServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of HubServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `HubServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::networkconnectivity::HubServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `HubServiceConnection` created by
- * this function.
- */
-std::shared_ptr<HubServiceConnection> MakeHubServiceConnection(
-    Options options = {});
+/// @deprecated Use networkconnectivity_v1::HubServiceRetryPolicy directly.
+using ::google::cloud::networkconnectivity_v1::HubServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity

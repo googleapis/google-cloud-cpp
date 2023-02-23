@@ -20,75 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_MOCKS_MOCK_REACHABILITY_CONNECTION_H
 
 #include "google/cloud/networkmanagement/reachability_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/networkmanagement/v1/mocks/mock_reachability_connection.h"
 
 namespace google {
 namespace cloud {
 namespace networkmanagement_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ReachabilityServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ReachabilityServiceClient`. To do
- * so, construct an object of type `ReachabilityServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockReachabilityServiceConnection
-    : public networkmanagement::ReachabilityServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>,
-      ListConnectivityTests,
-      (google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>,
-      GetConnectivityTest,
-      (google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
-      CreateConnectivityTest,
-      (google::cloud::networkmanagement::v1::
-           CreateConnectivityTestRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
-      UpdateConnectivityTest,
-      (google::cloud::networkmanagement::v1::
-           UpdateConnectivityTestRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
-      RerunConnectivityTest,
-      (google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>,
-      DeleteConnectivityTest,
-      (google::cloud::networkmanagement::v1::
-           DeleteConnectivityTestRequest const& request),
-      (override));
-};
+/// @deprecated Use
+/// networkmanagement_v1_mocks::MockReachabilityServiceConnection directly.
+using ::google::cloud::networkmanagement_v1_mocks::
+    MockReachabilityServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_mocks

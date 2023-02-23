@@ -21,62 +21,29 @@
 
 #include "google/cloud/optimization/fleet_routing_connection.h"
 #include "google/cloud/optimization/fleet_routing_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/optimization/v1/fleet_routing_options.h"
 
 namespace google {
 namespace cloud {
 namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-optimization-options
- */
-struct FleetRoutingRetryPolicyOption {
-  using Type = std::shared_ptr<FleetRoutingRetryPolicy>;
-};
+/// @deprecated Use optimization_v1::FleetRoutingPollingPolicyOption directly.
+using ::google::cloud::optimization_v1::FleetRoutingPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-optimization-options
- */
-struct FleetRoutingBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use optimization_v1::FleetRoutingBackoffPolicyOption directly.
+using ::google::cloud::optimization_v1::FleetRoutingBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-optimization-options
- */
-struct FleetRoutingConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<FleetRoutingConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// optimization_v1::FleetRoutingConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::optimization_v1::
+    FleetRoutingConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-optimization-options
- */
-struct FleetRoutingPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use optimization_v1::FleetRoutingPolicyOptionList directly.
+using ::google::cloud::optimization_v1::FleetRoutingPolicyOptionList;
 
-/**
- * The options applicable to FleetRouting.
- *
- * @ingroup google-cloud-optimization-options
- */
-using FleetRoutingPolicyOptionList =
-    OptionList<FleetRoutingRetryPolicyOption, FleetRoutingBackoffPolicyOption,
-               FleetRoutingPollingPolicyOption,
-               FleetRoutingConnectionIdempotencyPolicyOption>;
+/// @deprecated Use optimization_v1::FleetRoutingRetryPolicyOption directly.
+using ::google::cloud::optimization_v1::FleetRoutingRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization

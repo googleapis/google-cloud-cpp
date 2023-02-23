@@ -21,51 +21,25 @@
 
 #include "google/cloud/orgpolicy/org_policy_connection.h"
 #include "google/cloud/orgpolicy/org_policy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/orgpolicy/v2/org_policy_options.h"
 
 namespace google {
 namespace cloud {
 namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-orgpolicy-options
- */
-struct OrgPolicyRetryPolicyOption {
-  using Type = std::shared_ptr<OrgPolicyRetryPolicy>;
-};
+/// @deprecated Use orgpolicy_v2::OrgPolicyBackoffPolicyOption directly.
+using ::google::cloud::orgpolicy_v2::OrgPolicyBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-orgpolicy-options
- */
-struct OrgPolicyBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-orgpolicy-options
- */
-struct OrgPolicyConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<OrgPolicyConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use orgpolicy_v2::OrgPolicyPolicyOptionList directly.
+using ::google::cloud::orgpolicy_v2::OrgPolicyPolicyOptionList;
 
-/**
- * The options applicable to OrgPolicy.
- *
- * @ingroup google-cloud-orgpolicy-options
- */
-using OrgPolicyPolicyOptionList =
-    OptionList<OrgPolicyRetryPolicyOption, OrgPolicyBackoffPolicyOption,
-               OrgPolicyConnectionIdempotencyPolicyOption>;
+/// @deprecated Use orgpolicy_v2::OrgPolicyRetryPolicyOption directly.
+using ::google::cloud::orgpolicy_v2::OrgPolicyRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy

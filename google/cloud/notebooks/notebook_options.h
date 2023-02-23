@@ -21,63 +21,29 @@
 
 #include "google/cloud/notebooks/notebook_connection.h"
 #include "google/cloud/notebooks/notebook_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/notebooks/v1/notebook_options.h"
 
 namespace google {
 namespace cloud {
 namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct NotebookServiceRetryPolicyOption {
-  using Type = std::shared_ptr<NotebookServiceRetryPolicy>;
-};
+/// @deprecated Use notebooks_v1::NotebookServicePollingPolicyOption directly.
+using ::google::cloud::notebooks_v1::NotebookServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct NotebookServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use notebooks_v1::NotebookServiceBackoffPolicyOption directly.
+using ::google::cloud::notebooks_v1::NotebookServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct NotebookServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<NotebookServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// notebooks_v1::NotebookServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::notebooks_v1::
+    NotebookServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-notebooks-options
- */
-struct NotebookServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use notebooks_v1::NotebookServicePolicyOptionList directly.
+using ::google::cloud::notebooks_v1::NotebookServicePolicyOptionList;
 
-/**
- * The options applicable to NotebookService.
- *
- * @ingroup google-cloud-notebooks-options
- */
-using NotebookServicePolicyOptionList =
-    OptionList<NotebookServiceRetryPolicyOption,
-               NotebookServiceBackoffPolicyOption,
-               NotebookServicePollingPolicyOption,
-               NotebookServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use notebooks_v1::NotebookServiceRetryPolicyOption directly.
+using ::google::cloud::notebooks_v1::NotebookServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks

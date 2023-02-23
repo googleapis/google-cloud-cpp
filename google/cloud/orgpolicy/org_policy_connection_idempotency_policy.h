@@ -19,48 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_ORG_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
-#include <memory>
+#include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class OrgPolicyConnectionIdempotencyPolicy {
- public:
-  virtual ~OrgPolicyConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// orgpolicy_v2::MakeDefaultOrgPolicyConnectionIdempotencyPolicy directly.
+using ::google::cloud::orgpolicy_v2::
+    MakeDefaultOrgPolicyConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListConstraints(
-      google::cloud::orgpolicy::v2::ListConstraintsRequest request);
-
-  virtual google::cloud::Idempotency ListPolicies(
-      google::cloud::orgpolicy::v2::ListPoliciesRequest request);
-
-  virtual google::cloud::Idempotency GetPolicy(
-      google::cloud::orgpolicy::v2::GetPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency GetEffectivePolicy(
-      google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request);
-
-  virtual google::cloud::Idempotency CreatePolicy(
-      google::cloud::orgpolicy::v2::CreatePolicyRequest const& request);
-
-  virtual google::cloud::Idempotency UpdatePolicy(
-      google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request);
-
-  virtual google::cloud::Idempotency DeletePolicy(
-      google::cloud::orgpolicy::v2::DeletePolicyRequest const& request);
-};
-
-std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
-MakeDefaultOrgPolicyConnectionIdempotencyPolicy();
+/// @deprecated Use orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicy directly.
+using ::google::cloud::orgpolicy_v2::OrgPolicyConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy

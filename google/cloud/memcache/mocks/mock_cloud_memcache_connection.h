@@ -20,72 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_MOCKS_MOCK_CLOUD_MEMCACHE_CONNECTION_H
 
 #include "google/cloud/memcache/cloud_memcache_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/memcache/v1/mocks/mock_cloud_memcache_connection.h"
 
 namespace google {
 namespace cloud {
 namespace memcache_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudMemcacheConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudMemcacheClient`. To do so,
- * construct an object of type `CloudMemcacheClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudMemcacheConnection : public memcache::CloudMemcacheConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::memcache::v1::Instance>, ListInstances,
-              (google::cloud::memcache::v1::ListInstancesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::memcache::v1::Instance>, GetInstance,
-              (google::cloud::memcache::v1::GetInstanceRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, CreateInstance,
-      (google::cloud::memcache::v1::CreateInstanceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateInstance,
-      (google::cloud::memcache::v1::UpdateInstanceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateParameters,
-      (google::cloud::memcache::v1::UpdateParametersRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
-      DeleteInstance,
-      (google::cloud::memcache::v1::DeleteInstanceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::memcache::v1::Instance>>, ApplyParameters,
-      (google::cloud::memcache::v1::ApplyParametersRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              RescheduleMaintenance,
-              (google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
-                   request),
-              (override));
-};
+/// @deprecated Use memcache_v1_mocks::MockCloudMemcacheConnection directly.
+using ::google::cloud::memcache_v1_mocks::MockCloudMemcacheConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_mocks

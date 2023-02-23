@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `orgpolicy::OrgPolicyClient`:
+For example, this will override the default endpoint for `orgpolicy_v2::OrgPolicyClient`:
 
 @snippet org_policy_client_samples.cc set-client-endpoint
 
@@ -137,15 +137,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page orgpolicy::OrgPolicyClient-endpoint-snippet Override orgpolicy::OrgPolicyClient Endpoint Configuration
+/*! @page orgpolicy_v2::OrgPolicyClient-endpoint-snippet Override orgpolicy_v2::OrgPolicyClient Endpoint Configuration
 
-@snippet google/cloud/orgpolicy/samples/org_policy_client_samples.cc set-client-endpoint
+@snippet google/cloud/orgpolicy/v2/samples/org_policy_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page orgpolicy::OrgPolicyClient-service-account-snippet Override orgpolicy::OrgPolicyClient Authentication Defaults
+/*! @page orgpolicy_v2::OrgPolicyClient-service-account-snippet Override orgpolicy_v2::OrgPolicyClient Authentication Defaults
 
-@snippet google/cloud/orgpolicy/samples/org_policy_client_samples.cc with-service-account
+@snippet google/cloud/orgpolicy/v2/samples/org_policy_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

@@ -19,214 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_NOTEBOOK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_NOTEBOOK_CONNECTION_H
 
-#include "google/cloud/notebooks/internal/notebook_retry_traits.h"
-#include "google/cloud/notebooks/internal/notebook_stub.h"
 #include "google/cloud/notebooks/notebook_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/notebooks/v1/notebook_connection.h"
 
 namespace google {
 namespace cloud {
 namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using NotebookServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        notebooks_internal::NotebookServiceRetryTraits>;
+/// @deprecated Use notebooks_v1::MakeNotebookServiceConnection directly.
+using ::google::cloud::notebooks_v1::MakeNotebookServiceConnection;
 
-using NotebookServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        notebooks_internal::NotebookServiceRetryTraits>;
+/// @deprecated Use notebooks_v1::NotebookServiceConnection directly.
+using ::google::cloud::notebooks_v1::NotebookServiceConnection;
 
-using NotebookServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        notebooks_internal::NotebookServiceRetryTraits>;
+/// @deprecated Use notebooks_v1::NotebookServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::notebooks_v1::
+    NotebookServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `NotebookServiceConnection` object for `NotebookServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `NotebookServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `NotebookServiceClient`.
- *
- * To create a concrete instance, see `MakeNotebookServiceConnection()`.
- *
- * For mocking, see `notebooks_mocks::MockNotebookServiceConnection`.
- */
-class NotebookServiceConnection {
- public:
-  virtual ~NotebookServiceConnection() = 0;
+/// @deprecated Use notebooks_v1::NotebookServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::notebooks_v1::NotebookServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::notebooks::v1::Instance> ListInstances(
-      google::cloud::notebooks::v1::ListInstancesRequest request);
-
-  virtual StatusOr<google::cloud::notebooks::v1::Instance> GetInstance(
-      google::cloud::notebooks::v1::GetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  CreateInstance(
-      google::cloud::notebooks::v1::CreateInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  RegisterInstance(
-      google::cloud::notebooks::v1::RegisterInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  SetInstanceAccelerator(
-      google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  SetInstanceMachineType(
-      google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  UpdateInstanceConfig(
-      google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  UpdateShieldedInstanceConfig(
-      google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  SetInstanceLabels(
-      google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
-  UpdateInstanceMetadataItems(
-      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteInstance(
-      google::cloud::notebooks::v1::DeleteInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  StartInstance(
-      google::cloud::notebooks::v1::StartInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>> StopInstance(
-      google::cloud::notebooks::v1::StopInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  ResetInstance(
-      google::cloud::notebooks::v1::ResetInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  ReportInstanceInfo(
-      google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request);
-
-  virtual StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
-  IsInstanceUpgradeable(
-      google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
-  GetInstanceHealth(
-      google::cloud::notebooks::v1::GetInstanceHealthRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  UpgradeInstance(
-      google::cloud::notebooks::v1::UpgradeInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  RollbackInstance(
-      google::cloud::notebooks::v1::RollbackInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  DiagnoseInstance(
-      google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
-  UpgradeInstanceInternal(
-      google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::notebooks::v1::Environment>
-  ListEnvironments(
-      google::cloud::notebooks::v1::ListEnvironmentsRequest request);
-
-  virtual StatusOr<google::cloud::notebooks::v1::Environment> GetEnvironment(
-      google::cloud::notebooks::v1::GetEnvironmentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Environment>>
-  CreateEnvironment(
-      google::cloud::notebooks::v1::CreateEnvironmentRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteEnvironment(
-      google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request);
-
-  virtual StreamRange<google::cloud::notebooks::v1::Schedule> ListSchedules(
-      google::cloud::notebooks::v1::ListSchedulesRequest request);
-
-  virtual StatusOr<google::cloud::notebooks::v1::Schedule> GetSchedule(
-      google::cloud::notebooks::v1::GetScheduleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteSchedule(
-      google::cloud::notebooks::v1::DeleteScheduleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Schedule>>
-  CreateSchedule(
-      google::cloud::notebooks::v1::CreateScheduleRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Schedule>>
-  TriggerSchedule(
-      google::cloud::notebooks::v1::TriggerScheduleRequest const& request);
-
-  virtual StreamRange<google::cloud::notebooks::v1::Execution> ListExecutions(
-      google::cloud::notebooks::v1::ListExecutionsRequest request);
-
-  virtual StatusOr<google::cloud::notebooks::v1::Execution> GetExecution(
-      google::cloud::notebooks::v1::GetExecutionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
-  DeleteExecution(
-      google::cloud::notebooks::v1::DeleteExecutionRequest const& request);
-
-  virtual future<StatusOr<google::cloud::notebooks::v1::Execution>>
-  CreateExecution(
-      google::cloud::notebooks::v1::CreateExecutionRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `NotebookServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of NotebookServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `NotebookServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::notebooks::NotebookServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `NotebookServiceConnection` created
- * by this function.
- */
-std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
-    Options options = {});
+/// @deprecated Use notebooks_v1::NotebookServiceRetryPolicy directly.
+using ::google::cloud::notebooks_v1::NotebookServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
