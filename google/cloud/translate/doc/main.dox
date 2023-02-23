@@ -96,6 +96,10 @@ For example, this will override the default endpoint for `translate::Translation
 
 @snippet translation_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [translate::TranslationServiceClient](@ref translate::TranslationServiceClient-endpoint-snippet)
+ [translate_v3::TranslationServiceClient](@ref translate_v3::TranslationServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +111,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet translation_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [translate::TranslationServiceClient](@ref translate::TranslationServiceClient-service-account-snippet)
+ [translate_v3::TranslationServiceClient](@ref translate_v3::TranslationServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +154,18 @@ can override the default policies.
 /*! @page translate::TranslationServiceClient-service-account-snippet Override translate::TranslationServiceClient Authentication Defaults
 
 @snippet google/cloud/translate/samples/translation_client_samples.cc with-service-account
+
+*/
+
+/*! @page translate_v3::TranslationServiceClient-endpoint-snippet Override translate_v3::TranslationServiceClient Endpoint Configuration
+
+@snippet google/cloud/translate/v3/samples/translation_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page translate_v3::TranslationServiceClient-service-account-snippet Override translate_v3::TranslationServiceClient Authentication Defaults
+
+@snippet google/cloud/translate/v3/samples/translation_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

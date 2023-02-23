@@ -19,58 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_MOCKS_MOCK_WORKFLOWS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_MOCKS_MOCK_WORKFLOWS_CONNECTION_H
 
+#include "google/cloud/workflows/v1/mocks/mock_workflows_connection.h"
 #include "google/cloud/workflows/workflows_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace workflows_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `WorkflowsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `WorkflowsClient`. To do so,
- * construct an object of type `WorkflowsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockWorkflowsConnection : public workflows::WorkflowsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::workflows::v1::Workflow>,
-              ListWorkflows,
-              (google::cloud::workflows::v1::ListWorkflowsRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::workflows::v1::Workflow>, GetWorkflow,
-              (google::cloud::workflows::v1::GetWorkflowRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::Workflow>>, CreateWorkflow,
-      (google::cloud::workflows::v1::CreateWorkflowRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
-      DeleteWorkflow,
-      (google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::workflows::v1::Workflow>>, UpdateWorkflow,
-      (google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
-      (override));
-};
+/// @deprecated Use workflows_v1_mocks::MockWorkflowsConnection directly.
+using ::google::cloud::workflows_v1_mocks::MockWorkflowsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_mocks

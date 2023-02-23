@@ -19,54 +19,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_MOCKS_MOCK_WEB_RISK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_MOCKS_MOCK_WEB_RISK_CONNECTION_H
 
+#include "google/cloud/webrisk/v1/mocks/mock_web_risk_connection.h"
 #include "google/cloud/webrisk/web_risk_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace webrisk_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `WebRiskServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `WebRiskServiceClient`. To do so,
- * construct an object of type `WebRiskServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockWebRiskServiceConnection : public webrisk::WebRiskServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>,
-      ComputeThreatListDiff,
-      (google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>,
-              SearchUris,
-              (google::cloud::webrisk::v1::SearchUrisRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>,
-              SearchHashes,
-              (google::cloud::webrisk::v1::SearchHashesRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::webrisk::v1::Submission>, CreateSubmission,
-      (google::cloud::webrisk::v1::CreateSubmissionRequest const& request),
-      (override));
-};
+/// @deprecated Use webrisk_v1_mocks::MockWebRiskServiceConnection directly.
+using ::google::cloud::webrisk_v1_mocks::MockWebRiskServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_mocks

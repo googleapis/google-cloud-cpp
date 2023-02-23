@@ -19,123 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_TRANSLATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_TRANSLATION_CONNECTION_H
 
-#include "google/cloud/translate/internal/translation_retry_traits.h"
-#include "google/cloud/translate/internal/translation_stub.h"
 #include "google/cloud/translate/translation_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/translate/v3/translation_connection.h"
 
 namespace google {
 namespace cloud {
 namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TranslationServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        translate_internal::TranslationServiceRetryTraits>;
+/// @deprecated Use translate_v3::MakeTranslationServiceConnection directly.
+using ::google::cloud::translate_v3::MakeTranslationServiceConnection;
 
-using TranslationServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        translate_internal::TranslationServiceRetryTraits>;
+/// @deprecated Use translate_v3::TranslationServiceConnection directly.
+using ::google::cloud::translate_v3::TranslationServiceConnection;
 
-using TranslationServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        translate_internal::TranslationServiceRetryTraits>;
+/// @deprecated Use translate_v3::TranslationServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::translate_v3::
+    TranslationServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `TranslationServiceConnection` object for `TranslationServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `TranslationServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `TranslationServiceClient`.
- *
- * To create a concrete instance, see `MakeTranslationServiceConnection()`.
- *
- * For mocking, see `translate_mocks::MockTranslationServiceConnection`.
- */
-class TranslationServiceConnection {
- public:
-  virtual ~TranslationServiceConnection() = 0;
+/// @deprecated Use translate_v3::TranslationServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::translate_v3::TranslationServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::translation::v3::TranslateTextResponse>
-  TranslateText(
-      google::cloud::translation::v3::TranslateTextRequest const& request);
-
-  virtual StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
-  DetectLanguage(
-      google::cloud::translation::v3::DetectLanguageRequest const& request);
-
-  virtual StatusOr<google::cloud::translation::v3::SupportedLanguages>
-  GetSupportedLanguages(
-      google::cloud::translation::v3::GetSupportedLanguagesRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
-  TranslateDocument(
-      google::cloud::translation::v3::TranslateDocumentRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-  BatchTranslateText(
-      google::cloud::translation::v3::BatchTranslateTextRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(
-      google::cloud::translation::v3::BatchTranslateDocumentRequest const&
-          request);
-
-  virtual future<StatusOr<google::cloud::translation::v3::Glossary>>
-  CreateGlossary(
-      google::cloud::translation::v3::CreateGlossaryRequest const& request);
-
-  virtual StreamRange<google::cloud::translation::v3::Glossary> ListGlossaries(
-      google::cloud::translation::v3::ListGlossariesRequest request);
-
-  virtual StatusOr<google::cloud::translation::v3::Glossary> GetGlossary(
-      google::cloud::translation::v3::GetGlossaryRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(
-      google::cloud::translation::v3::DeleteGlossaryRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `TranslationServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * TranslationServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `TranslationServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::translate::TranslationServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `TranslationServiceConnection`
- * created by this function.
- */
-std::shared_ptr<TranslationServiceConnection> MakeTranslationServiceConnection(
-    Options options = {});
+/// @deprecated Use translate_v3::TranslationServiceRetryPolicy directly.
+using ::google::cloud::translate_v3::TranslationServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate

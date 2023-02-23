@@ -19,87 +19,29 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_CONNECTION_H
 
-#include "google/cloud/webrisk/internal/web_risk_retry_traits.h"
-#include "google/cloud/webrisk/internal/web_risk_stub.h"
+#include "google/cloud/webrisk/v1/web_risk_connection.h"
 #include "google/cloud/webrisk/web_risk_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using WebRiskServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        webrisk_internal::WebRiskServiceRetryTraits>;
+/// @deprecated Use webrisk_v1::MakeWebRiskServiceConnection directly.
+using ::google::cloud::webrisk_v1::MakeWebRiskServiceConnection;
 
-using WebRiskServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        webrisk_internal::WebRiskServiceRetryTraits>;
+/// @deprecated Use webrisk_v1::WebRiskServiceConnection directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceConnection;
 
-using WebRiskServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        webrisk_internal::WebRiskServiceRetryTraits>;
+/// @deprecated Use webrisk_v1::WebRiskServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `WebRiskServiceConnection` object for `WebRiskServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `WebRiskServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `WebRiskServiceClient`.
- *
- * To create a concrete instance, see `MakeWebRiskServiceConnection()`.
- *
- * For mocking, see `webrisk_mocks::MockWebRiskServiceConnection`.
- */
-class WebRiskServiceConnection {
- public:
-  virtual ~WebRiskServiceConnection() = 0;
+/// @deprecated Use webrisk_v1::WebRiskServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
-  ComputeThreatListDiff(
-      google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request);
-
-  virtual StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      google::cloud::webrisk::v1::SearchUrisRequest const& request);
-
-  virtual StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
-  SearchHashes(google::cloud::webrisk::v1::SearchHashesRequest const& request);
-
-  virtual StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      google::cloud::webrisk::v1::CreateSubmissionRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `WebRiskServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of WebRiskServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `WebRiskServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::webrisk::WebRiskServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `WebRiskServiceConnection` created by
- * this function.
- */
-std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
-    Options options = {});
+/// @deprecated Use webrisk_v1::WebRiskServiceRetryPolicy directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk

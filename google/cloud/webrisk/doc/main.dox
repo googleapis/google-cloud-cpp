@@ -98,6 +98,10 @@ For example, this will override the default endpoint for `webrisk::WebRiskServic
 
 @snippet web_risk_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [webrisk::WebRiskServiceClient](@ref webrisk::WebRiskServiceClient-endpoint-snippet)
+ [webrisk_v1::WebRiskServiceClient](@ref webrisk_v1::WebRiskServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -109,6 +113,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet web_risk_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [webrisk::WebRiskServiceClient](@ref webrisk::WebRiskServiceClient-service-account-snippet)
+ [webrisk_v1::WebRiskServiceClient](@ref webrisk_v1::WebRiskServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page webrisk::WebRiskServiceClient-service-account-snippet Override webrisk::WebRiskServiceClient Authentication Defaults
 
 @snippet google/cloud/webrisk/samples/web_risk_client_samples.cc with-service-account
+
+*/
+
+/*! @page webrisk_v1::WebRiskServiceClient-endpoint-snippet Override webrisk_v1::WebRiskServiceClient Endpoint Configuration
+
+@snippet google/cloud/webrisk/v1/samples/web_risk_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page webrisk_v1::WebRiskServiceClient-service-account-snippet Override webrisk_v1::WebRiskServiceClient Authentication Defaults
+
+@snippet google/cloud/webrisk/v1/samples/web_risk_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

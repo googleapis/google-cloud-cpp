@@ -19,54 +19,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_WEB_RISK_OPTIONS_H
 
+#include "google/cloud/webrisk/v1/web_risk_options.h"
 #include "google/cloud/webrisk/web_risk_connection.h"
 #include "google/cloud/webrisk/web_risk_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-webrisk-options
- */
-struct WebRiskServiceRetryPolicyOption {
-  using Type = std::shared_ptr<WebRiskServiceRetryPolicy>;
-};
+/// @deprecated Use webrisk_v1::WebRiskServiceBackoffPolicyOption directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-webrisk-options
- */
-struct WebRiskServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use webrisk_v1::WebRiskServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::webrisk_v1::
+    WebRiskServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-webrisk-options
- */
-struct WebRiskServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<WebRiskServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use webrisk_v1::WebRiskServicePolicyOptionList directly.
+using ::google::cloud::webrisk_v1::WebRiskServicePolicyOptionList;
 
-/**
- * The options applicable to WebRiskService.
- *
- * @ingroup google-cloud-webrisk-options
- */
-using WebRiskServicePolicyOptionList =
-    OptionList<WebRiskServiceRetryPolicyOption,
-               WebRiskServiceBackoffPolicyOption,
-               WebRiskServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use webrisk_v1::WebRiskServiceRetryPolicyOption directly.
+using ::google::cloud::webrisk_v1::WebRiskServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk

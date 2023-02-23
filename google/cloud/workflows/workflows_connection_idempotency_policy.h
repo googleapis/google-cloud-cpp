@@ -19,42 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_WORKFLOWS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_WORKFLOWS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/workflows/v1/workflows.grpc.pb.h>
-#include <memory>
+#include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class WorkflowsConnectionIdempotencyPolicy {
- public:
-  virtual ~WorkflowsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// workflows_v1::MakeDefaultWorkflowsConnectionIdempotencyPolicy directly.
+using ::google::cloud::workflows_v1::
+    MakeDefaultWorkflowsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<WorkflowsConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency ListWorkflows(
-      google::cloud::workflows::v1::ListWorkflowsRequest request);
-
-  virtual google::cloud::Idempotency GetWorkflow(
-      google::cloud::workflows::v1::GetWorkflowRequest const& request);
-
-  virtual google::cloud::Idempotency CreateWorkflow(
-      google::cloud::workflows::v1::CreateWorkflowRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteWorkflow(
-      google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateWorkflow(
-      google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
-};
-
-std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
-MakeDefaultWorkflowsConnectionIdempotencyPolicy();
+/// @deprecated Use workflows_v1::WorkflowsConnectionIdempotencyPolicy directly.
+using ::google::cloud::workflows_v1::WorkflowsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows

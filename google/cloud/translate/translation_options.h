@@ -21,63 +21,31 @@
 
 #include "google/cloud/translate/translation_connection.h"
 #include "google/cloud/translate/translation_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/translate/v3/translation_options.h"
 
 namespace google {
 namespace cloud {
 namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-translate-options
- */
-struct TranslationServiceRetryPolicyOption {
-  using Type = std::shared_ptr<TranslationServiceRetryPolicy>;
-};
+/// @deprecated Use translate_v3::TranslationServicePollingPolicyOption
+/// directly.
+using ::google::cloud::translate_v3::TranslationServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-translate-options
- */
-struct TranslationServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use translate_v3::TranslationServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::translate_v3::TranslationServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-translate-options
- */
-struct TranslationServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<TranslationServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// translate_v3::TranslationServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::translate_v3::
+    TranslationServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-translate-options
- */
-struct TranslationServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use translate_v3::TranslationServicePolicyOptionList directly.
+using ::google::cloud::translate_v3::TranslationServicePolicyOptionList;
 
-/**
- * The options applicable to TranslationService.
- *
- * @ingroup google-cloud-translate-options
- */
-using TranslationServicePolicyOptionList =
-    OptionList<TranslationServiceRetryPolicyOption,
-               TranslationServiceBackoffPolicyOption,
-               TranslationServicePollingPolicyOption,
-               TranslationServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use translate_v3::TranslationServiceRetryPolicyOption directly.
+using ::google::cloud::translate_v3::TranslationServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate

@@ -19,64 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_OS_CONFIG_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_OS_CONFIG_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/osconfig/v1/osconfig_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/osconfig/v1/os_config_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class OsConfigServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~OsConfigServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// osconfig_v1::MakeDefaultOsConfigServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::osconfig_v1::
+    MakeDefaultOsConfigServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ExecutePatchJob(
-      google::cloud::osconfig::v1::ExecutePatchJobRequest const& request);
-
-  virtual google::cloud::Idempotency GetPatchJob(
-      google::cloud::osconfig::v1::GetPatchJobRequest const& request);
-
-  virtual google::cloud::Idempotency CancelPatchJob(
-      google::cloud::osconfig::v1::CancelPatchJobRequest const& request);
-
-  virtual google::cloud::Idempotency ListPatchJobs(
-      google::cloud::osconfig::v1::ListPatchJobsRequest request);
-
-  virtual google::cloud::Idempotency ListPatchJobInstanceDetails(
-      google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest request);
-
-  virtual google::cloud::Idempotency CreatePatchDeployment(
-      google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request);
-
-  virtual google::cloud::Idempotency GetPatchDeployment(
-      google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request);
-
-  virtual google::cloud::Idempotency ListPatchDeployments(
-      google::cloud::osconfig::v1::ListPatchDeploymentsRequest request);
-
-  virtual google::cloud::Idempotency DeletePatchDeployment(
-      google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request);
-
-  virtual google::cloud::Idempotency UpdatePatchDeployment(
-      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request);
-
-  virtual google::cloud::Idempotency PausePatchDeployment(
-      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request);
-
-  virtual google::cloud::Idempotency ResumePatchDeployment(
-      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request);
-};
-
-std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy>
-MakeDefaultOsConfigServiceConnectionIdempotencyPolicy();
+/// @deprecated Use osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::osconfig_v1::OsConfigServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig

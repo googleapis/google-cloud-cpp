@@ -99,6 +99,10 @@ For example, this will override the default endpoint for `websecurityscanner::We
 
 @snippet web_security_scanner_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [websecurityscanner::WebSecurityScannerClient](@ref websecurityscanner::WebSecurityScannerClient-endpoint-snippet)
+ [websecurityscanner_v1::WebSecurityScannerClient](@ref websecurityscanner_v1::WebSecurityScannerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -110,6 +114,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet web_security_scanner_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [websecurityscanner::WebSecurityScannerClient](@ref websecurityscanner::WebSecurityScannerClient-service-account-snippet)
+ [websecurityscanner_v1::WebSecurityScannerClient](@ref websecurityscanner_v1::WebSecurityScannerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -148,6 +156,18 @@ can override the default policies.
 /*! @page websecurityscanner::WebSecurityScannerClient-service-account-snippet Override websecurityscanner::WebSecurityScannerClient Authentication Defaults
 
 @snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc with-service-account
+
+*/
+
+/*! @page websecurityscanner_v1::WebSecurityScannerClient-endpoint-snippet Override websecurityscanner_v1::WebSecurityScannerClient Endpoint Configuration
+
+@snippet google/cloud/websecurityscanner/v1/samples/web_security_scanner_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page websecurityscanner_v1::WebSecurityScannerClient-service-account-snippet Override websecurityscanner_v1::WebSecurityScannerClient Authentication Defaults
+
+@snippet google/cloud/websecurityscanner/v1/samples/web_security_scanner_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

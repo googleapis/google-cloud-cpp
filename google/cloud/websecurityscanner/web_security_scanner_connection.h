@@ -19,132 +19,36 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_WEB_SECURITY_SCANNER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBSECURITYSCANNER_WEB_SECURITY_SCANNER_CONNECTION_H
 
-#include "google/cloud/websecurityscanner/internal/web_security_scanner_retry_traits.h"
-#include "google/cloud/websecurityscanner/internal/web_security_scanner_stub.h"
+#include "google/cloud/websecurityscanner/v1/web_security_scanner_connection.h"
 #include "google/cloud/websecurityscanner/web_security_scanner_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace websecurityscanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using WebSecurityScannerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        websecurityscanner_internal::WebSecurityScannerRetryTraits>;
+/// @deprecated Use websecurityscanner_v1::MakeWebSecurityScannerConnection
+/// directly.
+using ::google::cloud::websecurityscanner_v1::MakeWebSecurityScannerConnection;
 
-using WebSecurityScannerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        websecurityscanner_internal::WebSecurityScannerRetryTraits>;
+/// @deprecated Use websecurityscanner_v1::WebSecurityScannerConnection
+/// directly.
+using ::google::cloud::websecurityscanner_v1::WebSecurityScannerConnection;
 
-using WebSecurityScannerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        websecurityscanner_internal::WebSecurityScannerRetryTraits>;
+/// @deprecated Use
+/// websecurityscanner_v1::WebSecurityScannerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::websecurityscanner_v1::
+    WebSecurityScannerLimitedErrorCountRetryPolicy;
 
-/**
- * The `WebSecurityScannerConnection` object for `WebSecurityScannerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `WebSecurityScannerClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `WebSecurityScannerClient`.
- *
- * To create a concrete instance, see `MakeWebSecurityScannerConnection()`.
- *
- * For mocking, see
- * `websecurityscanner_mocks::MockWebSecurityScannerConnection`.
- */
-class WebSecurityScannerConnection {
- public:
-  virtual ~WebSecurityScannerConnection() = 0;
+/// @deprecated Use
+/// websecurityscanner_v1::WebSecurityScannerLimitedTimeRetryPolicy directly.
+using ::google::cloud::websecurityscanner_v1::
+    WebSecurityScannerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  CreateScanConfig(
-      google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
-          request);
-
-  virtual Status DeleteScanConfig(
-      google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  GetScanConfig(
-      google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-  ListScanConfigs(
-      google::cloud::websecurityscanner::v1::ListScanConfigsRequest request);
-
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
-  UpdateScanConfig(
-      google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StartScanRun(
-      google::cloud::websecurityscanner::v1::StartScanRunRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun> GetScanRun(
-      google::cloud::websecurityscanner::v1::GetScanRunRequest const& request);
-
-  virtual StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
-  ListScanRuns(
-      google::cloud::websecurityscanner::v1::ListScanRunsRequest request);
-
-  virtual StatusOr<google::cloud::websecurityscanner::v1::ScanRun> StopScanRun(
-      google::cloud::websecurityscanner::v1::StopScanRunRequest const& request);
-
-  virtual StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-  ListCrawledUrls(
-      google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest request);
-
-  virtual StatusOr<google::cloud::websecurityscanner::v1::Finding> GetFinding(
-      google::cloud::websecurityscanner::v1::GetFindingRequest const& request);
-
-  virtual StreamRange<google::cloud::websecurityscanner::v1::Finding>
-  ListFindings(
-      google::cloud::websecurityscanner::v1::ListFindingsRequest request);
-
-  virtual StatusOr<
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
-  ListFindingTypeStats(
-      google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type
- * `WebSecurityScannerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * WebSecurityScannerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `WebSecurityScannerConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::websecurityscanner::WebSecurityScannerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `WebSecurityScannerConnection`
- * created by this function.
- */
-std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
-    Options options = {});
+/// @deprecated Use websecurityscanner_v1::WebSecurityScannerRetryPolicy
+/// directly.
+using ::google::cloud::websecurityscanner_v1::WebSecurityScannerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner

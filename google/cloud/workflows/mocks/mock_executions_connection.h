@@ -19,60 +19,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_MOCKS_MOCK_EXECUTIONS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_MOCKS_MOCK_EXECUTIONS_CONNECTION_H
 
+#include "google/cloud/workflows/executions/v1/mocks/mock_executions_connection.h"
 #include "google/cloud/workflows/executions_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace workflows_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ExecutionsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ExecutionsClient`. To do so,
- * construct an object of type `ExecutionsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockExecutionsConnection : public workflows::ExecutionsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::workflows::executions::v1::Execution>,
-      ListExecutions,
-      (google::cloud::workflows::executions::v1::ListExecutionsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
-      CreateExecution,
-      (google::cloud::workflows::executions::v1::CreateExecutionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
-      GetExecution,
-      (google::cloud::workflows::executions::v1::GetExecutionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::workflows::executions::v1::Execution>,
-      CancelExecution,
-      (google::cloud::workflows::executions::v1::CancelExecutionRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use workflows_executions_v1_mocks::MockExecutionsConnection
+/// directly.
+using ::google::cloud::workflows_executions_v1_mocks::MockExecutionsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_mocks
