@@ -20,99 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_API_KEYS_CONNECTION_H
 
 #include "google/cloud/apikeys/api_keys_connection_idempotency_policy.h"
-#include "google/cloud/apikeys/internal/api_keys_retry_traits.h"
-#include "google/cloud/apikeys/internal/api_keys_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/apikeys/v2/api_keys_connection.h"
 
 namespace google {
 namespace cloud {
 namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ApiKeysRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    apikeys_internal::ApiKeysRetryTraits>;
+/// @deprecated Use apikeys_v2::MakeApiKeysConnection directly.
+using ::google::cloud::apikeys_v2::MakeApiKeysConnection;
 
-using ApiKeysLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        apikeys_internal::ApiKeysRetryTraits>;
+/// @deprecated Use apikeys_v2::ApiKeysConnection directly.
+using ::google::cloud::apikeys_v2::ApiKeysConnection;
 
-using ApiKeysLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        apikeys_internal::ApiKeysRetryTraits>;
+/// @deprecated Use apikeys_v2::ApiKeysLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::apikeys_v2::ApiKeysLimitedErrorCountRetryPolicy;
 
-/**
- * The `ApiKeysConnection` object for `ApiKeysClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ApiKeysClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ApiKeysClient`.
- *
- * To create a concrete instance, see `MakeApiKeysConnection()`.
- *
- * For mocking, see `apikeys_mocks::MockApiKeysConnection`.
- */
-class ApiKeysConnection {
- public:
-  virtual ~ApiKeysConnection() = 0;
+/// @deprecated Use apikeys_v2::ApiKeysLimitedTimeRetryPolicy directly.
+using ::google::cloud::apikeys_v2::ApiKeysLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
-      google::api::apikeys::v2::CreateKeyRequest const& request);
-
-  virtual StreamRange<google::api::apikeys::v2::Key> ListKeys(
-      google::api::apikeys::v2::ListKeysRequest request);
-
-  virtual StatusOr<google::api::apikeys::v2::Key> GetKey(
-      google::api::apikeys::v2::GetKeyRequest const& request);
-
-  virtual StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      google::api::apikeys::v2::GetKeyStringRequest const& request);
-
-  virtual future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
-      google::api::apikeys::v2::UpdateKeyRequest const& request);
-
-  virtual future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
-      google::api::apikeys::v2::DeleteKeyRequest const& request);
-
-  virtual future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
-      google::api::apikeys::v2::UndeleteKeyRequest const& request);
-
-  virtual StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      google::api::apikeys::v2::LookupKeyRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `ApiKeysConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ApiKeysClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ApiKeysConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::apikeys::ApiKeysPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ApiKeysConnection` created by
- * this function.
- */
-std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options = {});
+/// @deprecated Use apikeys_v2::ApiKeysRetryPolicy directly.
+using ::google::cloud::apikeys_v2::ApiKeysRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys

@@ -62,7 +62,8 @@ service {
 # API Keys
 service {
   service_proto_path: "google/api/apikeys/v2/apikeys.proto"
-  product_path: "google/cloud/apikeys"
+  product_path: "google/cloud/apikeys/v2"
+  forwarding_product_path: "google/cloud/apikeys"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -135,7 +136,8 @@ service {
 # Batch
 service {
   service_proto_path: "google/cloud/batch/v1/batch.proto"
-  product_path: "google/cloud/batch"
+  product_path: "google/cloud/batch/v1"
+  forwarding_product_path: "google/cloud/batch"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -485,7 +487,8 @@ service {
 # Database Migration
 service {
   service_proto_path: "google/cloud/clouddms/v1/clouddms.proto"
-  product_path: "google/cloud/datamigration"
+  product_path: "google/cloud/datamigration/v1"
+  forwarding_product_path: "google/cloud/datamigration"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1033,7 +1036,8 @@ service {
 # IAM Policy Troubleshooter
 service {
   service_proto_path: "google/cloud/policytroubleshooter/v1/checker.proto"
-  product_path: "google/cloud/policytroubleshooter"
+  product_path: "google/cloud/policytroubleshooter/v1"
+  forwarding_product_path: "google/cloud/policytroubleshooter"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1238,7 +1242,8 @@ service {
 # OS Login
 service {
   service_proto_path: "google/cloud/oslogin/v1/oslogin.proto"
-  product_path: "google/cloud/oslogin"
+  product_path: "google/cloud/oslogin/v1"
+  forwarding_product_path: "google/cloud/oslogin"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

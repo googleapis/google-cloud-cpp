@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `policytroubleshooter::IamCheckerClient`:
+For example, this will override the default endpoint for `policytroubleshooter_v1::IamCheckerClient`:
 
 @snippet iam_checker_client_samples.cc set-client-endpoint
 
@@ -139,15 +139,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page policytroubleshooter::IamCheckerClient-endpoint-snippet Override policytroubleshooter::IamCheckerClient Endpoint Configuration
+/*! @page policytroubleshooter_v1::IamCheckerClient-endpoint-snippet Override policytroubleshooter_v1::IamCheckerClient Endpoint Configuration
 
-@snippet google/cloud/policytroubleshooter/samples/iam_checker_client_samples.cc set-client-endpoint
+@snippet google/cloud/policytroubleshooter/v1/samples/iam_checker_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page policytroubleshooter::IamCheckerClient-service-account-snippet Override policytroubleshooter::IamCheckerClient Authentication Defaults
+/*! @page policytroubleshooter_v1::IamCheckerClient-service-account-snippet Override policytroubleshooter_v1::IamCheckerClient Authentication Defaults
 
-@snippet google/cloud/policytroubleshooter/samples/iam_checker_client_samples.cc with-service-account
+@snippet google/cloud/policytroubleshooter/v1/samples/iam_checker_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

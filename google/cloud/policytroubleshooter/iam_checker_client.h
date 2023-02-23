@@ -20,97 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_CHECKER_CLIENT_H
 
 #include "google/cloud/policytroubleshooter/iam_checker_connection.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/policytroubleshooter/v1/iam_checker_client.h"
 
 namespace google {
 namespace cloud {
 namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-///
-/// IAM Policy Troubleshooter service.
-///
-/// This service helps you troubleshoot access issues for Google Cloud
-/// resources.
-///
-/// @par Equality
-///
-/// Instances of this class created via copy-construction or copy-assignment
-/// always compare equal. Instances created with equal
-/// `std::shared_ptr<*Connection>` objects compare equal. Objects that compare
-/// equal share the same underlying resources.
-///
-/// @par Performance
-///
-/// Creating a new instance of this class is a relatively expensive operation,
-/// new objects establish new connections to the service. In contrast,
-/// copy-construction, move-construction, and the corresponding assignment
-/// operations are relatively efficient as the copies share all underlying
-/// resources.
-///
-/// @par Thread Safety
-///
-/// Concurrent access to different instances of this class, even if they compare
-/// equal, is guaranteed to work. Two or more threads operating on the same
-/// instance of this class is not guaranteed to work. Since copy-construction
-/// and move-construction is a relatively efficient operation, consider using
-/// such a copy when using this class from multiple threads.
-///
-class IamCheckerClient {
- public:
-  explicit IamCheckerClient(std::shared_ptr<IamCheckerConnection> connection,
-                            Options opts = {});
-  ~IamCheckerClient();
-
-  ///@{
-  /// @name Copy and move support
-  IamCheckerClient(IamCheckerClient const&) = default;
-  IamCheckerClient& operator=(IamCheckerClient const&) = default;
-  IamCheckerClient(IamCheckerClient&&) = default;
-  IamCheckerClient& operator=(IamCheckerClient&&) = default;
-  ///@}
-
-  ///@{
-  /// @name Equality
-  friend bool operator==(IamCheckerClient const& a, IamCheckerClient const& b) {
-    return a.connection_ == b.connection_;
-  }
-  friend bool operator!=(IamCheckerClient const& a, IamCheckerClient const& b) {
-    return !(a == b);
-  }
-  ///@}
-
-  ///
-  /// Checks whether a member has a specific permission for a specific resource,
-  /// and explains why the member does or does not have that permission.
-  ///
-  /// @param request
-  /// @googleapis_link{google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest,google/cloud/policytroubleshooter/v1/checker.proto#L51}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse,google/cloud/policytroubleshooter/v1/checker.proto#L58}
-  ///
-  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L51}
-  /// [google.cloud.policytroubleshooter.v1.TroubleshootIamPolicyResponse]:
-  /// @googleapis_reference_link{google/cloud/policytroubleshooter/v1/checker.proto#L58}
-  ///
-  StatusOr<
-      google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(google::cloud::policytroubleshooter::v1::
-                            TroubleshootIamPolicyRequest const& request,
-                        Options opts = {});
-
- private:
-  std::shared_ptr<IamCheckerConnection> connection_;
-  Options options_;
-};
+/// @deprecated Use policytroubleshooter_v1::IamCheckerClient directly.
+using ::google::cloud::policytroubleshooter_v1::IamCheckerClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter

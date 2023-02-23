@@ -20,64 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_MOCKS_MOCK_API_KEYS_CONNECTION_H
 
 #include "google/cloud/apikeys/api_keys_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/apikeys/v2/mocks/mock_api_keys_connection.h"
 
 namespace google {
 namespace cloud {
 namespace apikeys_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ApiKeysConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ApiKeysClient`. To do so,
- * construct an object of type `ApiKeysClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockApiKeysConnection : public apikeys::ApiKeysConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, CreateKey,
-              (google::api::apikeys::v2::CreateKeyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::api::apikeys::v2::Key>, ListKeys,
-              (google::api::apikeys::v2::ListKeysRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::api::apikeys::v2::Key>, GetKey,
-              (google::api::apikeys::v2::GetKeyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::api::apikeys::v2::GetKeyStringResponse>,
-              GetKeyString,
-              (google::api::apikeys::v2::GetKeyStringRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UpdateKey,
-              (google::api::apikeys::v2::UpdateKeyRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
-              (google::api::apikeys::v2::DeleteKeyRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
-              (google::api::apikeys::v2::UndeleteKeyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::api::apikeys::v2::LookupKeyResponse>, LookupKey,
-              (google::api::apikeys::v2::LookupKeyRequest const& request),
-              (override));
-};
+/// @deprecated Use apikeys_v2_mocks::MockApiKeysConnection directly.
+using ::google::cloud::apikeys_v2_mocks::MockApiKeysConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_mocks
