@@ -1494,14 +1494,16 @@ service {
 # Service Control
 service {
   service_proto_path: "google/api/servicecontrol/v1/quota_controller.proto"
-  product_path: "google/cloud/servicecontrol"
+  product_path: "google/cloud/servicecontrol/v1"
+  forwarding_product_path: "google/cloud/servicecontrol"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/api/servicecontrol/v1/service_controller.proto"
-  product_path: "google/cloud/servicecontrol"
+  product_path: "google/cloud/servicecontrol/v1"
+  forwarding_product_path: "google/cloud/servicecontrol"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1509,14 +1511,16 @@ service {
 # Service Directory
 service {
   service_proto_path: "google/cloud/servicedirectory/v1/lookup_service.proto"
-  product_path: "google/cloud/servicedirectory"
+  product_path: "google/cloud/servicedirectory/v1"
+  forwarding_product_path: "google/cloud/servicedirectory"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
 
 service {
   service_proto_path: "google/cloud/servicedirectory/v1/registration_service.proto"
-  product_path: "google/cloud/servicedirectory"
+  product_path: "google/cloud/servicedirectory/v1"
+  forwarding_product_path: "google/cloud/servicedirectory"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
@@ -1524,7 +1528,8 @@ service {
 # Service Management
 service {
   service_proto_path: "google/api/servicemanagement/v1/servicemanager.proto"
-  product_path: "google/cloud/servicemanagement"
+  product_path: "google/cloud/servicemanagement/v1"
+  forwarding_product_path: "google/cloud/servicemanagement"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   omitted_rpcs: [
@@ -1535,7 +1540,8 @@ service {
 # Service Usage
 service {
   service_proto_path: "google/api/serviceusage/v1/serviceusage.proto"
-  product_path: "google/cloud/serviceusage"
+  product_path: "google/cloud/serviceusage/v1"
+  forwarding_product_path: "google/cloud/serviceusage"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1543,7 +1549,8 @@ service {
 # Shell
 service {
   service_proto_path: "google/cloud/shell/v1/cloudshell.proto"
-  product_path: "google/cloud/shell"
+  product_path: "google/cloud/shell/v1"
+  forwarding_product_path: "google/cloud/shell"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
