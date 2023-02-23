@@ -19,51 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_API_KEYS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_API_KEYS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/api/apikeys/v2/apikeys.grpc.pb.h>
-#include <memory>
+#include "google/cloud/apikeys/v2/api_keys_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ApiKeysConnectionIdempotencyPolicy {
- public:
-  virtual ~ApiKeysConnectionIdempotencyPolicy();
+/// @deprecated Use apikeys_v2::MakeDefaultApiKeysConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::apikeys_v2::
+    MakeDefaultApiKeysConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ApiKeysConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency CreateKey(
-      google::api::apikeys::v2::CreateKeyRequest const& request);
-
-  virtual google::cloud::Idempotency ListKeys(
-      google::api::apikeys::v2::ListKeysRequest request);
-
-  virtual google::cloud::Idempotency GetKey(
-      google::api::apikeys::v2::GetKeyRequest const& request);
-
-  virtual google::cloud::Idempotency GetKeyString(
-      google::api::apikeys::v2::GetKeyStringRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateKey(
-      google::api::apikeys::v2::UpdateKeyRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteKey(
-      google::api::apikeys::v2::DeleteKeyRequest const& request);
-
-  virtual google::cloud::Idempotency UndeleteKey(
-      google::api::apikeys::v2::UndeleteKeyRequest const& request);
-
-  virtual google::cloud::Idempotency LookupKey(
-      google::api::apikeys::v2::LookupKeyRequest const& request);
-};
-
-std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>
-MakeDefaultApiKeysConnectionIdempotencyPolicy();
+/// @deprecated Use apikeys_v2::ApiKeysConnectionIdempotencyPolicy directly.
+using ::google::cloud::apikeys_v2::ApiKeysConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys

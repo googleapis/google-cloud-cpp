@@ -20,55 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_MOCKS_MOCK_BATCH_CONNECTION_H
 
 #include "google/cloud/batch/batch_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/batch/v1/mocks/mock_batch_connection.h"
 
 namespace google {
 namespace cloud {
 namespace batch_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `BatchServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `BatchServiceClient`. To do so,
- * construct an object of type `BatchServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockBatchServiceConnection : public batch::BatchServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>, CreateJob,
-              (google::cloud::batch::v1::CreateJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Job>, GetJob,
-              (google::cloud::batch::v1::GetJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
-              DeleteJob,
-              (google::cloud::batch::v1::DeleteJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::batch::v1::Job>, ListJobs,
-              (google::cloud::batch::v1::ListJobsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::batch::v1::Task>, GetTask,
-              (google::cloud::batch::v1::GetTaskRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::batch::v1::Task>, ListTasks,
-              (google::cloud::batch::v1::ListTasksRequest request), (override));
-};
+/// @deprecated Use batch_v1_mocks::MockBatchServiceConnection directly.
+using ::google::cloud::batch_v1_mocks::MockBatchServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_mocks

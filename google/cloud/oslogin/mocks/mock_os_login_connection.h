@@ -20,70 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_MOCKS_MOCK_OS_LOGIN_CONNECTION_H
 
 #include "google/cloud/oslogin/os_login_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/oslogin/v1/mocks/mock_os_login_connection.h"
 
 namespace google {
 namespace cloud {
 namespace oslogin_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `OsLoginServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `OsLoginServiceClient`. To do so,
- * construct an object of type `OsLoginServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockOsLoginServiceConnection : public oslogin::OsLoginServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::common::SshPublicKey>,
-      CreateSshPublicKey,
-      (google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeletePosixAccount,
-      (google::cloud::oslogin::v1::DeletePosixAccountRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteSshPublicKey,
-      (google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::v1::LoginProfile>, GetLoginProfile,
-      (google::cloud::oslogin::v1::GetLoginProfileRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::common::SshPublicKey>, GetSshPublicKey,
-      (google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>,
-      ImportSshPublicKey,
-      (google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::oslogin::common::SshPublicKey>,
-      UpdateSshPublicKey,
-      (google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request),
-      (override));
-};
+/// @deprecated Use oslogin_v1_mocks::MockOsLoginServiceConnection directly.
+using ::google::cloud::oslogin_v1_mocks::MockOsLoginServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_mocks

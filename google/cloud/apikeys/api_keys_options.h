@@ -21,62 +21,28 @@
 
 #include "google/cloud/apikeys/api_keys_connection.h"
 #include "google/cloud/apikeys/api_keys_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/apikeys/v2/api_keys_options.h"
 
 namespace google {
 namespace cloud {
 namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-apikeys-options
- */
-struct ApiKeysRetryPolicyOption {
-  using Type = std::shared_ptr<ApiKeysRetryPolicy>;
-};
+/// @deprecated Use apikeys_v2::ApiKeysPollingPolicyOption directly.
+using ::google::cloud::apikeys_v2::ApiKeysPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-apikeys-options
- */
-struct ApiKeysBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use apikeys_v2::ApiKeysBackoffPolicyOption directly.
+using ::google::cloud::apikeys_v2::ApiKeysBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-apikeys-options
- */
-struct ApiKeysConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ApiKeysConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::apikeys_v2::ApiKeysConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-apikeys-options
- */
-struct ApiKeysPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use apikeys_v2::ApiKeysPolicyOptionList directly.
+using ::google::cloud::apikeys_v2::ApiKeysPolicyOptionList;
 
-/**
- * The options applicable to ApiKeys.
- *
- * @ingroup google-cloud-apikeys-options
- */
-using ApiKeysPolicyOptionList =
-    OptionList<ApiKeysRetryPolicyOption, ApiKeysBackoffPolicyOption,
-               ApiKeysPollingPolicyOption,
-               ApiKeysConnectionIdempotencyPolicyOption>;
+/// @deprecated Use apikeys_v2::ApiKeysRetryPolicyOption directly.
+using ::google::cloud::apikeys_v2::ApiKeysRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys

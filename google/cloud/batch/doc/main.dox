@@ -95,6 +95,10 @@ For example, this will override the default endpoint for `batch::BatchServiceCli
 
 @snippet batch_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [batch::BatchServiceClient](@ref batch::BatchServiceClient-endpoint-snippet)
+ [batch_v1::BatchServiceClient](@ref batch_v1::BatchServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -106,6 +110,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet batch_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [batch::BatchServiceClient](@ref batch::BatchServiceClient-service-account-snippet)
+ [batch_v1::BatchServiceClient](@ref batch_v1::BatchServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,6 +153,18 @@ can override the default policies.
 /*! @page batch::BatchServiceClient-service-account-snippet Override batch::BatchServiceClient Authentication Defaults
 
 @snippet google/cloud/batch/samples/batch_client_samples.cc with-service-account
+
+*/
+
+/*! @page batch_v1::BatchServiceClient-endpoint-snippet Override batch_v1::BatchServiceClient Endpoint Configuration
+
+@snippet google/cloud/batch/v1/samples/batch_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page batch_v1::BatchServiceClient-service-account-snippet Override batch_v1::BatchServiceClient Authentication Defaults
+
+@snippet google/cloud/batch/v1/samples/batch_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

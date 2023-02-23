@@ -21,62 +21,28 @@
 
 #include "google/cloud/batch/batch_connection.h"
 #include "google/cloud/batch/batch_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/batch/v1/batch_options.h"
 
 namespace google {
 namespace cloud {
 namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-batch-options
- */
-struct BatchServiceRetryPolicyOption {
-  using Type = std::shared_ptr<BatchServiceRetryPolicy>;
-};
+/// @deprecated Use batch_v1::BatchServicePollingPolicyOption directly.
+using ::google::cloud::batch_v1::BatchServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-batch-options
- */
-struct BatchServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use batch_v1::BatchServiceBackoffPolicyOption directly.
+using ::google::cloud::batch_v1::BatchServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-batch-options
- */
-struct BatchServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<BatchServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use batch_v1::BatchServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::batch_v1::BatchServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-batch-options
- */
-struct BatchServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use batch_v1::BatchServicePolicyOptionList directly.
+using ::google::cloud::batch_v1::BatchServicePolicyOptionList;
 
-/**
- * The options applicable to BatchService.
- *
- * @ingroup google-cloud-batch-options
- */
-using BatchServicePolicyOptionList =
-    OptionList<BatchServiceRetryPolicyOption, BatchServiceBackoffPolicyOption,
-               BatchServicePollingPolicyOption,
-               BatchServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use batch_v1::BatchServiceRetryPolicyOption directly.
+using ::google::cloud::batch_v1::BatchServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch

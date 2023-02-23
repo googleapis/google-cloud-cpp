@@ -97,6 +97,10 @@ For example, this will override the default endpoint for `oslogin::OsLoginServic
 
 @snippet os_login_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [oslogin::OsLoginServiceClient](@ref oslogin::OsLoginServiceClient-endpoint-snippet)
+ [oslogin_v1::OsLoginServiceClient](@ref oslogin_v1::OsLoginServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -108,6 +112,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet os_login_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [oslogin::OsLoginServiceClient](@ref oslogin::OsLoginServiceClient-service-account-snippet)
+ [oslogin_v1::OsLoginServiceClient](@ref oslogin_v1::OsLoginServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page oslogin::OsLoginServiceClient-service-account-snippet Override oslogin::OsLoginServiceClient Authentication Defaults
 
 @snippet google/cloud/oslogin/samples/os_login_client_samples.cc with-service-account
+
+*/
+
+/*! @page oslogin_v1::OsLoginServiceClient-endpoint-snippet Override oslogin_v1::OsLoginServiceClient Endpoint Configuration
+
+@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page oslogin_v1::OsLoginServiceClient-service-account-snippet Override oslogin_v1::OsLoginServiceClient Authentication Defaults
+
+@snippet google/cloud/oslogin/v1/samples/os_login_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

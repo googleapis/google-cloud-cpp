@@ -21,51 +21,30 @@
 
 #include "google/cloud/policytroubleshooter/iam_checker_connection.h"
 #include "google/cloud/policytroubleshooter/iam_checker_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/policytroubleshooter/v1/iam_checker_options.h"
 
 namespace google {
 namespace cloud {
 namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-policytroubleshooter-options
- */
-struct IamCheckerRetryPolicyOption {
-  using Type = std::shared_ptr<IamCheckerRetryPolicy>;
-};
+/// @deprecated Use policytroubleshooter_v1::IamCheckerBackoffPolicyOption
+/// directly.
+using ::google::cloud::policytroubleshooter_v1::IamCheckerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-policytroubleshooter-options
- */
-struct IamCheckerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// policytroubleshooter_v1::IamCheckerConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::policytroubleshooter_v1::
+    IamCheckerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-policytroubleshooter-options
- */
-struct IamCheckerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<IamCheckerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use policytroubleshooter_v1::IamCheckerPolicyOptionList
+/// directly.
+using ::google::cloud::policytroubleshooter_v1::IamCheckerPolicyOptionList;
 
-/**
- * The options applicable to IamChecker.
- *
- * @ingroup google-cloud-policytroubleshooter-options
- */
-using IamCheckerPolicyOptionList =
-    OptionList<IamCheckerRetryPolicyOption, IamCheckerBackoffPolicyOption,
-               IamCheckerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use policytroubleshooter_v1::IamCheckerRetryPolicyOption
+/// directly.
+using ::google::cloud::policytroubleshooter_v1::IamCheckerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter

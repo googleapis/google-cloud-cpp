@@ -96,6 +96,10 @@ For example, this will override the default endpoint for `datamigration::DataMig
 
 @snippet data_migration_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [datamigration::DataMigrationServiceClient](@ref datamigration::DataMigrationServiceClient-endpoint-snippet)
+ [datamigration_v1::DataMigrationServiceClient](@ref datamigration_v1::DataMigrationServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +111,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet data_migration_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [datamigration::DataMigrationServiceClient](@ref datamigration::DataMigrationServiceClient-service-account-snippet)
+ [datamigration_v1::DataMigrationServiceClient](@ref datamigration_v1::DataMigrationServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +154,18 @@ can override the default policies.
 /*! @page datamigration::DataMigrationServiceClient-service-account-snippet Override datamigration::DataMigrationServiceClient Authentication Defaults
 
 @snippet google/cloud/datamigration/samples/data_migration_client_samples.cc with-service-account
+
+*/
+
+/*! @page datamigration_v1::DataMigrationServiceClient-endpoint-snippet Override datamigration_v1::DataMigrationServiceClient Endpoint Configuration
+
+@snippet google/cloud/datamigration/v1/samples/data_migration_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datamigration_v1::DataMigrationServiceClient-service-account-snippet Override datamigration_v1::DataMigrationServiceClient Authentication Defaults
+
+@snippet google/cloud/datamigration/v1/samples/data_migration_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

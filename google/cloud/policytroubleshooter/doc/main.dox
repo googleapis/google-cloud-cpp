@@ -98,6 +98,10 @@ For example, this will override the default endpoint for `policytroubleshooter::
 
 @snippet iam_checker_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [policytroubleshooter::IamCheckerClient](@ref policytroubleshooter::IamCheckerClient-endpoint-snippet)
+ [policytroubleshooter_v1::IamCheckerClient](@ref policytroubleshooter_v1::IamCheckerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -109,6 +113,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet iam_checker_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [policytroubleshooter::IamCheckerClient](@ref policytroubleshooter::IamCheckerClient-service-account-snippet)
+ [policytroubleshooter_v1::IamCheckerClient](@ref policytroubleshooter_v1::IamCheckerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -148,6 +156,18 @@ can override the default policies.
 /*! @page policytroubleshooter::IamCheckerClient-service-account-snippet Override policytroubleshooter::IamCheckerClient Authentication Defaults
 
 @snippet google/cloud/policytroubleshooter/samples/iam_checker_client_samples.cc with-service-account
+
+*/
+
+/*! @page policytroubleshooter_v1::IamCheckerClient-endpoint-snippet Override policytroubleshooter_v1::IamCheckerClient Endpoint Configuration
+
+@snippet google/cloud/policytroubleshooter/v1/samples/iam_checker_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page policytroubleshooter_v1::IamCheckerClient-service-account-snippet Override policytroubleshooter_v1::IamCheckerClient Authentication Defaults
+
+@snippet google/cloud/policytroubleshooter/v1/samples/iam_checker_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

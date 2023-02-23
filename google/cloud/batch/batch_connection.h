@@ -20,95 +20,27 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BATCH_BATCH_CONNECTION_H
 
 #include "google/cloud/batch/batch_connection_idempotency_policy.h"
-#include "google/cloud/batch/internal/batch_retry_traits.h"
-#include "google/cloud/batch/internal/batch_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/batch/v1/batch_connection.h"
 
 namespace google {
 namespace cloud {
 namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using BatchServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        batch_internal::BatchServiceRetryTraits>;
+/// @deprecated Use batch_v1::MakeBatchServiceConnection directly.
+using ::google::cloud::batch_v1::MakeBatchServiceConnection;
 
-using BatchServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        batch_internal::BatchServiceRetryTraits>;
+/// @deprecated Use batch_v1::BatchServiceConnection directly.
+using ::google::cloud::batch_v1::BatchServiceConnection;
 
-using BatchServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        batch_internal::BatchServiceRetryTraits>;
+/// @deprecated Use batch_v1::BatchServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::batch_v1::BatchServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `BatchServiceConnection` object for `BatchServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `BatchServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `BatchServiceClient`.
- *
- * To create a concrete instance, see `MakeBatchServiceConnection()`.
- *
- * For mocking, see `batch_mocks::MockBatchServiceConnection`.
- */
-class BatchServiceConnection {
- public:
-  virtual ~BatchServiceConnection() = 0;
+/// @deprecated Use batch_v1::BatchServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::batch_v1::BatchServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::batch::v1::Job> CreateJob(
-      google::cloud::batch::v1::CreateJobRequest const& request);
-
-  virtual StatusOr<google::cloud::batch::v1::Job> GetJob(
-      google::cloud::batch::v1::GetJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
-  DeleteJob(google::cloud::batch::v1::DeleteJobRequest const& request);
-
-  virtual StreamRange<google::cloud::batch::v1::Job> ListJobs(
-      google::cloud::batch::v1::ListJobsRequest request);
-
-  virtual StatusOr<google::cloud::batch::v1::Task> GetTask(
-      google::cloud::batch::v1::GetTaskRequest const& request);
-
-  virtual StreamRange<google::cloud::batch::v1::Task> ListTasks(
-      google::cloud::batch::v1::ListTasksRequest request);
-};
-
-/**
- * A factory function to construct an object of type `BatchServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of BatchServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `BatchServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::batch::BatchServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `BatchServiceConnection` created by
- * this function.
- */
-std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
-    Options options = {});
+/// @deprecated Use batch_v1::BatchServiceRetryPolicy directly.
+using ::google::cloud::batch_v1::BatchServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch

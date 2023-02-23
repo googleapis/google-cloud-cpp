@@ -20,40 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_MOCKS_MOCK_IAM_CHECKER_CONNECTION_H
 
 #include "google/cloud/policytroubleshooter/iam_checker_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/policytroubleshooter/v1/mocks/mock_iam_checker_connection.h"
 
 namespace google {
 namespace cloud {
 namespace policytroubleshooter_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `IamCheckerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `IamCheckerClient`. To do so,
- * construct an object of type `IamCheckerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockIamCheckerConnection
-    : public policytroubleshooter::IamCheckerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::policytroubleshooter::v1::
-                           TroubleshootIamPolicyResponse>,
-              TroubleshootIamPolicy,
-              (google::cloud::policytroubleshooter::v1::
-                   TroubleshootIamPolicyRequest const& request),
-              (override));
-};
+/// @deprecated Use policytroubleshooter_v1_mocks::MockIamCheckerConnection
+/// directly.
+using ::google::cloud::policytroubleshooter_v1_mocks::MockIamCheckerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_mocks
