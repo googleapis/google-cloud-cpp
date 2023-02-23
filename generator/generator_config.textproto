@@ -1714,21 +1714,24 @@ service {
 # Video
 service {
   service_proto_path: "google/cloud/video/livestream/v1/service.proto"
-  product_path: "google/cloud/video"
+  product_path: "google/cloud/video/livestream/v1"
+  forwarding_product_path: "google/cloud/video"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/video/stitcher/v1/video_stitcher_service.proto"
-  product_path: "google/cloud/video"
+  product_path: "google/cloud/video/stitcher/v1"
+  forwarding_product_path: "google/cloud/video"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/video/transcoder/v1/services.proto"
-  product_path: "google/cloud/video"
+  product_path: "google/cloud/video/transcoder/v1"
+  forwarding_product_path: "google/cloud/video"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1736,7 +1739,8 @@ service {
 # Video Intelligence
 service {
   service_proto_path: "google/cloud/videointelligence/v1/video_intelligence.proto"
-  product_path: "google/cloud/videointelligence"
+  product_path: "google/cloud/videointelligence/v1"
+  forwarding_product_path: "google/cloud/videointelligence"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1744,14 +1748,16 @@ service {
 # Vision
 service {
   service_proto_path: "google/cloud/vision/v1/image_annotator.proto"
-  product_path: "google/cloud/vision"
+  product_path: "google/cloud/vision/v1"
+  forwarding_product_path: "google/cloud/vision"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
 
 service {
   service_proto_path: "google/cloud/vision/v1/product_search_service.proto"
-  product_path: "google/cloud/vision"
+  product_path: "google/cloud/vision/v1"
+  forwarding_product_path: "google/cloud/vision"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1759,7 +1765,8 @@ service {
 # VM Migration
 service {
   service_proto_path: "google/cloud/vmmigration/v1/vmmigration.proto"
-  product_path: "google/cloud/vmmigration"
+  product_path: "google/cloud/vmmigration/v1"
+  forwarding_product_path: "google/cloud/vmmigration"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -1775,7 +1782,8 @@ service {
 # Serverless VPC Access
 service {
   service_proto_path: "google/cloud/vpcaccess/v1/vpc_access.proto"
-  product_path: "google/cloud/vpcaccess"
+  product_path: "google/cloud/vpcaccess/v1"
+  forwarding_product_path: "google/cloud/vpcaccess"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable", "kUnknown"]
 }
