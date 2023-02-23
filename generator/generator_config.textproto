@@ -1590,7 +1590,8 @@ service {
 # Speech
 service {
   service_proto_path: "google/cloud/speech/v1/cloud_speech.proto"
-  product_path: "google/cloud/speech"
+  product_path: "google/cloud/speech/v1"
+  forwarding_product_path: "google/cloud/speech"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
