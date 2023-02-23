@@ -1,3 +1,5 @@
+@com_google_googleapis//google/cloud/kms/inventory/v1:key_dashboard_service.proto
+@com_google_googleapis//google/cloud/kms/inventory/v1:key_tracking_service.proto
 @com_google_googleapis//google/cloud/kms/v1:ekm_service.proto
 @com_google_googleapis//google/cloud/kms/v1:resources.proto
 @com_google_googleapis//google/cloud/kms/v1:service.proto

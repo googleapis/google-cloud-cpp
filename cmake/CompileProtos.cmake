@@ -270,6 +270,7 @@ function (google_cloud_cpp_load_protodeps var file)
 
     # Omit a target from deps.
     set(targets_to_omit
+        "google-cloud-cpp::cloud_kms_v1_kms_protos"
         "google-cloud-cpp::cloud_orgpolicy_v1_orgpolicy_protos"
         "google-cloud-cpp::cloud_oslogin_common_common_protos"
         "google-cloud-cpp::cloud_recommender_v1_recommender_protos"
