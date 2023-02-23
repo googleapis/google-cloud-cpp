@@ -94,13 +94,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `scheduler::CloudSchedulerClient`:
+For example, this will override the default endpoint for `scheduler_v1::CloudSchedulerClient`:
 
 @snippet cloud_scheduler_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [scheduler::CloudSchedulerClient](@ref scheduler::CloudSchedulerClient-endpoint-snippet)
- [scheduler_v1::CloudSchedulerClient](@ref scheduler_v1::CloudSchedulerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -113,10 +109,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_scheduler_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [scheduler::CloudSchedulerClient](@ref scheduler::CloudSchedulerClient-service-account-snippet)
- [scheduler_v1::CloudSchedulerClient](@ref scheduler_v1::CloudSchedulerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,18 +137,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page scheduler::CloudSchedulerClient-endpoint-snippet Override scheduler::CloudSchedulerClient Endpoint Configuration
-
-@snippet google/cloud/scheduler/samples/cloud_scheduler_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page scheduler::CloudSchedulerClient-service-account-snippet Override scheduler::CloudSchedulerClient Authentication Defaults
-
-@snippet google/cloud/scheduler/samples/cloud_scheduler_client_samples.cc with-service-account
-
-*/
 
 /*! @page scheduler_v1::CloudSchedulerClient-endpoint-snippet Override scheduler_v1::CloudSchedulerClient Endpoint Configuration
 

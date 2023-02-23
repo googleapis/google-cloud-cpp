@@ -95,13 +95,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `secretmanager::SecretManagerServiceClient`:
+For example, this will override the default endpoint for `secretmanager_v1::SecretManagerServiceClient`:
 
 @snippet secret_manager_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [secretmanager::SecretManagerServiceClient](@ref secretmanager::SecretManagerServiceClient-endpoint-snippet)
- [secretmanager_v1::SecretManagerServiceClient](@ref secretmanager_v1::SecretManagerServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -114,10 +110,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet secret_manager_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [secretmanager::SecretManagerServiceClient](@ref secretmanager::SecretManagerServiceClient-service-account-snippet)
- [secretmanager_v1::SecretManagerServiceClient](@ref secretmanager_v1::SecretManagerServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page secretmanager::SecretManagerServiceClient-endpoint-snippet Override secretmanager::SecretManagerServiceClient Endpoint Configuration
-
-@snippet google/cloud/secretmanager/samples/secret_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page secretmanager::SecretManagerServiceClient-service-account-snippet Override secretmanager::SecretManagerServiceClient Authentication Defaults
-
-@snippet google/cloud/secretmanager/samples/secret_manager_client_samples.cc with-service-account
-
-*/
 
 /*! @page secretmanager_v1::SecretManagerServiceClient-endpoint-snippet Override secretmanager_v1::SecretManagerServiceClient Endpoint Configuration
 

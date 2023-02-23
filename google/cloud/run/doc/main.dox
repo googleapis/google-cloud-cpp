@@ -105,13 +105,11 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `run::RevisionsClient`:
+For example, this will override the default endpoint for `run_v2::RevisionsClient`:
 
 @snippet revisions_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [run::RevisionsClient](@ref run::RevisionsClient-endpoint-snippet)
- [run::ServicesClient](@ref run::ServicesClient-endpoint-snippet)
  [run_v2::RevisionsClient](@ref run_v2::RevisionsClient-endpoint-snippet)
  [run_v2::ServicesClient](@ref run_v2::ServicesClient-endpoint-snippet)
 
@@ -128,8 +126,6 @@ to explicitly load a service account key file.
 @snippet revisions_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [run::RevisionsClient](@ref run::RevisionsClient-service-account-snippet)
- [run::ServicesClient](@ref run::ServicesClient-service-account-snippet)
  [run_v2::RevisionsClient](@ref run_v2::RevisionsClient-service-account-snippet)
  [run_v2::ServicesClient](@ref run_v2::ServicesClient-service-account-snippet)
 
@@ -161,30 +157,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page run::RevisionsClient-endpoint-snippet Override run::RevisionsClient Endpoint Configuration
-
-@snippet google/cloud/run/samples/revisions_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page run::RevisionsClient-service-account-snippet Override run::RevisionsClient Authentication Defaults
-
-@snippet google/cloud/run/samples/revisions_client_samples.cc with-service-account
-
-*/
-
-/*! @page run::ServicesClient-endpoint-snippet Override run::ServicesClient Endpoint Configuration
-
-@snippet google/cloud/run/samples/services_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page run::ServicesClient-service-account-snippet Override run::ServicesClient Authentication Defaults
-
-@snippet google/cloud/run/samples/services_client_samples.cc with-service-account
-
-*/
 
 /*! @page run_v2::RevisionsClient-endpoint-snippet Override run_v2::RevisionsClient Endpoint Configuration
 
