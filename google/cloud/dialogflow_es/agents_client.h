@@ -60,7 +60,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.v2.Agent]:
-/// @googleapis_link_reference{google/cloud/dialogflow/v2/agent.proto#L258}
+/// @googleapis_link_reference{google/cloud/dialogflow/v2/agent.proto#L259}
 ///
 class AgentsClient {
  public:
@@ -95,12 +95,12 @@ class AgentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
   ///
   /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
   /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L379}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       std::string const& parent, Options opts = {});
@@ -109,16 +109,16 @@ class AgentsClient {
   /// Retrieves the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetAgentRequest,google/cloud/dialogflow/v2/agent.proto#L378}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetAgentRequest,google/cloud/dialogflow/v2/agent.proto#L379}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
   ///
   /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
   /// [google.cloud.dialogflow.v2.GetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L378}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L379}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
       google::cloud::dialogflow::v2::GetAgentRequest const& request,
@@ -135,12 +135,12 @@ class AgentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
   ///
   /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
   /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L392}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::Agent const& agent, Options opts = {});
@@ -153,16 +153,16 @@ class AgentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SetAgentRequest,google/cloud/dialogflow/v2/agent.proto#L391}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SetAgentRequest,google/cloud/dialogflow/v2/agent.proto#L392}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
   ///
   /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
   /// [google.cloud.dialogflow.v2.SetAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L391}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L392}
   ///
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
       google::cloud::dialogflow::v2::SetAgentRequest const& request,
@@ -178,7 +178,7 @@ class AgentsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L402}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L403}
   ///
   Status DeleteAgent(std::string const& parent, Options opts = {});
 
@@ -186,12 +186,12 @@ class AgentsClient {
   /// Deletes the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteAgentRequest,google/cloud/dialogflow/v2/agent.proto#L402}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteAgentRequest,google/cloud/dialogflow/v2/agent.proto#L403}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L402}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L403}
   ///
   Status DeleteAgent(
       google::cloud::dialogflow::v2::DeleteAgentRequest const& request,
@@ -211,12 +211,12 @@ class AgentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
   ///
   /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
   /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L416}
   ///
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       std::string const& parent, Options opts = {});
@@ -231,16 +231,16 @@ class AgentsClient {
   /// Sub-Collections](https://cloud.google.com/apis/design/design_patterns#list_sub-collections).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::SearchAgentsRequest,google/cloud/dialogflow/v2/agent.proto#L415}
+  /// @googleapis_link{google::cloud::dialogflow::v2::SearchAgentsRequest,google/cloud/dialogflow/v2/agent.proto#L416}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Agent,google/cloud/dialogflow/v2/agent.proto#L259}
   ///
   /// [google.cloud.dialogflow.v2.Agent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L259}
   /// [google.cloud.dialogflow.v2.SearchAgentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L415}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L416}
   ///
   StreamRange<google::cloud::dialogflow::v2::Agent> SearchAgents(
       google::cloud::dialogflow::v2::SearchAgentsRequest request,
@@ -271,7 +271,7 @@ class AgentsClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.TrainAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L447}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L448}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -295,14 +295,14 @@ class AgentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::TrainAgentRequest,google/cloud/dialogflow/v2/agent.proto#L447}
+  /// @googleapis_link{google::cloud::dialogflow::v2::TrainAgentRequest,google/cloud/dialogflow/v2/agent.proto#L448}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.TrainAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L447}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L448}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -328,12 +328,12 @@ class AgentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentResponse,google/cloud/dialogflow/v2/agent.proto#L485}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentResponse,google/cloud/dialogflow/v2/agent.proto#L486}
   ///
   /// [google.cloud.dialogflow.v2.ExportAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L460}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L461}
   /// [google.cloud.dialogflow.v2.ExportAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L485}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L486}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(std::string const& parent, Options opts = {});
@@ -351,16 +351,16 @@ class AgentsClient {
   /// [ExportAgentResponse][google.cloud.dialogflow.v2.ExportAgentResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentRequest,google/cloud/dialogflow/v2/agent.proto#L460}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentRequest,google/cloud/dialogflow/v2/agent.proto#L461}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentResponse,google/cloud/dialogflow/v2/agent.proto#L485}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ExportAgentResponse,google/cloud/dialogflow/v2/agent.proto#L486}
   ///
   /// [google.cloud.dialogflow.v2.ExportAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L460}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L461}
   /// [google.cloud.dialogflow.v2.ExportAgentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L485}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L486}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request,
@@ -396,16 +396,16 @@ class AgentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ImportAgentRequest,google/cloud/dialogflow/v2/agent.proto#L499}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ImportAgentRequest,google/cloud/dialogflow/v2/agent.proto#L500}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L112}
   /// [google.cloud.dialogflow.v2.ImportAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L499}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L500}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -441,16 +441,16 @@ class AgentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::RestoreAgentRequest,google/cloud/dialogflow/v2/agent.proto#L528}
+  /// @googleapis_link{google::cloud::dialogflow::v2::RestoreAgentRequest,google/cloud/dialogflow/v2/agent.proto#L529}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.Agents.TrainAgent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L111}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L112}
   /// [google.cloud.dialogflow.v2.RestoreAgentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L528}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L529}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -463,14 +463,14 @@ class AgentsClient {
   /// training time and is updated automatically when training is completed.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetValidationResultRequest,google/cloud/dialogflow/v2/agent.proto#L557}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetValidationResultRequest,google/cloud/dialogflow/v2/agent.proto#L558}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::ValidationResult,google/cloud/dialogflow/v2/validation_result.proto#L71}
   ///
   /// [google.cloud.dialogflow.v2.GetValidationResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L557}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/agent.proto#L558}
   /// [google.cloud.dialogflow.v2.ValidationResult]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/validation_result.proto#L71}
   ///

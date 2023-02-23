@@ -77,6 +77,12 @@ Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessor(
 }
 
 Idempotency
+DocumentProcessorServiceConnectionIdempotencyPolicy::TrainProcessorVersion(
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 DocumentProcessorServiceConnectionIdempotencyPolicy::GetProcessorVersion(
     google::cloud::documentai::v1::GetProcessorVersionRequest const&) {
   return Idempotency::kIdempotent;
@@ -139,6 +145,23 @@ DocumentProcessorServiceConnectionIdempotencyPolicy::SetDefaultProcessorVersion(
 Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::ReviewDocument(
     google::cloud::documentai::v1::ReviewDocumentRequest const&) {
   return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+DocumentProcessorServiceConnectionIdempotencyPolicy::EvaluateProcessorVersion(
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DocumentProcessorServiceConnectionIdempotencyPolicy::GetEvaluation(
+    google::cloud::documentai::v1::GetEvaluationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+DocumentProcessorServiceConnectionIdempotencyPolicy::ListEvaluations(
+    google::cloud::documentai::v1::ListEvaluationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>

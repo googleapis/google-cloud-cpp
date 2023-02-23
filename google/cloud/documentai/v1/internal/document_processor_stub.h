@@ -73,6 +73,13 @@ class DocumentProcessorServiceStub {
       grpc::ClientContext& context,
       google::cloud::documentai::v1::GetProcessorRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncTrainProcessorVersion(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::documentai::v1::ProcessorVersion>
   GetProcessorVersion(
       grpc::ClientContext& context,
@@ -139,6 +146,22 @@ class DocumentProcessorServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::documentai::v1::ReviewDocumentRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncEvaluateProcessorVersion(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
+      grpc::ClientContext& context,
+      google::cloud::documentai::v1::GetEvaluationRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
+  ListEvaluations(
+      grpc::ClientContext& context,
+      google::cloud::documentai::v1::ListEvaluationsRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -197,6 +220,12 @@ class DefaultDocumentProcessorServiceStub
       grpc::ClientContext& client_context,
       google::cloud::documentai::v1::GetProcessorRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncTrainProcessorVersion(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+          request) override;
 
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
       grpc::ClientContext& client_context,
@@ -263,6 +292,23 @@ class DefaultDocumentProcessorServiceStub
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::documentai::v1::ReviewDocumentRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncEvaluateProcessorVersion(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+          request) override;
+
+  StatusOr<google::cloud::documentai::v1::Evaluation> GetEvaluation(
+      grpc::ClientContext& client_context,
+      google::cloud::documentai::v1::GetEvaluationRequest const& request)
+      override;
+
+  StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
+  ListEvaluations(grpc::ClientContext& client_context,
+                  google::cloud::documentai::v1::ListEvaluationsRequest const&
+                      request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

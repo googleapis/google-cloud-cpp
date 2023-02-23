@@ -85,6 +85,14 @@ DocumentProcessorServiceConnection::GetProcessor(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
+DocumentProcessorServiceConnection::TrainProcessorVersion(
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceConnection::GetProcessorVersion(
     google::cloud::documentai::v1::GetProcessorVersionRequest const&) {
@@ -169,6 +177,29 @@ DocumentProcessorServiceConnection::ReviewDocument(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<
+    StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
+DocumentProcessorServiceConnection::EvaluateProcessorVersion(
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceConnection::GetEvaluation(
+    google::cloud::documentai::v1::GetEvaluationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceConnection::ListEvaluations(
+    google::cloud::documentai::v1::
+        ListEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::documentai::v1::Evaluation>>();
 }
 
 std::shared_ptr<DocumentProcessorServiceConnection>

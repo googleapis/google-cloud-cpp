@@ -127,6 +127,23 @@ DocumentProcessorServiceLogging::GetProcessor(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncTrainProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::TrainProcessorVersionRequest const&
+                 request) {
+        return child_->AsyncTrainProcessorVersion(cq, std::move(context),
+                                                  request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceLogging::GetProcessorVersion(
     grpc::ClientContext& context,
@@ -292,6 +309,48 @@ DocumentProcessorServiceLogging::AsyncReviewDocument(
         return child_->AsyncReviewDocument(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncEvaluateProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
+              request) {
+        return child_->AsyncEvaluateProcessorVersion(cq, std::move(context),
+                                                     request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::Evaluation>
+DocumentProcessorServiceLogging::GetEvaluation(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::documentai::v1::GetEvaluationRequest const& request) {
+        return child_->GetEvaluation(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
+DocumentProcessorServiceLogging::ListEvaluations(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::ListEvaluationsRequest const&
+                 request) { return child_->ListEvaluations(context, request); },
+      context, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
