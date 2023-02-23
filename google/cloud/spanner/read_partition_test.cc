@@ -28,12 +28,12 @@ class ReadPartitionTester {
   ReadPartitionTester() = default;
   explicit ReadPartitionTester(spanner::ReadPartition partition)
       : partition_(std::move(partition)) {}
+  spanner::ReadPartition Partition() const { return partition_; }
   std::string PartitionToken() const { return partition_.PartitionToken(); }
   std::string SessionId() const { return partition_.SessionId(); }
   std::string TransactionId() const { return partition_.TransactionId(); }
   bool RouteToLeader() const { return partition_.RouteToLeader(); }
   std::string TransactionTag() const { return partition_.TransactionTag(); }
-  spanner::ReadPartition Partition() const { return partition_; }
   std::string TableName() const { return partition_.TableName(); }
   google::spanner::v1::KeySet KeySet() const { return partition_.KeySet(); }
   std::vector<std::string> ColumnNames() const {

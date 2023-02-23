@@ -80,9 +80,9 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
  * The `QueryPartition` class is a regular type that represents a single slice
  * of a parallel SQL read.
  *
- * Instances of `QueryPartition` are created by `Client::PartitionSql`. Once
+ * Instances of `QueryPartition` are created by `Client::PartitionQuery`. Once
  * created, `QueryPartition` objects can be serialized, transmitted to separate
- * process, and used to read data in parallel using `Client::ExecuteQuery`.
+ * processes, and used to read data in parallel using `Client::ExecuteQuery`.
  */
 class QueryPartition {
  public:

@@ -113,7 +113,9 @@ class ReadPartition {
   /// @name Equality
   ///@{
   friend bool operator==(ReadPartition const& lhs, ReadPartition const& rhs);
-  friend bool operator!=(ReadPartition const& lhs, ReadPartition const& rhs);
+  friend bool operator!=(ReadPartition const& lhs, ReadPartition const& rhs) {
+    return !(lhs == rhs);
+  }
   ///@}
 
  private:

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/session_pool.h"
-#include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/options.h"

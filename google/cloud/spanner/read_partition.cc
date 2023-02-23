@@ -119,10 +119,6 @@ bool operator==(ReadPartition const& lhs, ReadPartition const& rhs) {
   return differencer.Compare(lhs.proto_, rhs.proto_);
 }
 
-bool operator!=(ReadPartition const& lhs, ReadPartition const& rhs) {
-  return !(lhs == rhs);
-}
-
 StatusOr<std::string> SerializeReadPartition(
     ReadPartition const& read_partition) {
   std::string serialized_proto;
