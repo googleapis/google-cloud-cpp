@@ -24,7 +24,7 @@ set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 
 unset(mocks_globs)
 unset(source_globs)
-set(service_dirs "" "v1/")
+set(service_dirs "" "inventory/v1/" "v1/")
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")

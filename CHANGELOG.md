@@ -126,6 +126,10 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Advisory Notifications](/google/cloud/advisorynotifications/README.md)
 - [API Keys](/google/cloud/apikeys/README.md)
 
+### [KMS](/google/cloud/kms/README.md)
+
+The library has been expanded to include the KMS Inventory API.
+
 ### [TPU](/google/cloud/tpu/README.md)
 
 The library has been expanded to include the TPU v2 API.
