@@ -95,13 +95,9 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `websecurityscanner::WebSecurityScannerClient`:
+For example, this will override the default endpoint for `websecurityscanner_v1::WebSecurityScannerClient`:
 
 @snippet web_security_scanner_client_samples.cc set-client-endpoint
-
-Follow these links to find examples for other \c *Client classes:
- [websecurityscanner::WebSecurityScannerClient](@ref websecurityscanner::WebSecurityScannerClient-endpoint-snippet)
- [websecurityscanner_v1::WebSecurityScannerClient](@ref websecurityscanner_v1::WebSecurityScannerClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -114,10 +110,6 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet web_security_scanner_client_samples.cc with-service-account
-
-Follow these links to find examples for other \c *Client classes:
- [websecurityscanner::WebSecurityScannerClient](@ref websecurityscanner::WebSecurityScannerClient-service-account-snippet)
- [websecurityscanner_v1::WebSecurityScannerClient](@ref websecurityscanner_v1::WebSecurityScannerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,18 +138,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page websecurityscanner::WebSecurityScannerClient-endpoint-snippet Override websecurityscanner::WebSecurityScannerClient Endpoint Configuration
-
-@snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page websecurityscanner::WebSecurityScannerClient-service-account-snippet Override websecurityscanner::WebSecurityScannerClient Authentication Defaults
-
-@snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc with-service-account
-
-*/
 
 /*! @page websecurityscanner_v1::WebSecurityScannerClient-endpoint-snippet Override websecurityscanner_v1::WebSecurityScannerClient Endpoint Configuration
 
