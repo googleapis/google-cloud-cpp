@@ -19,88 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_REGISTRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_REGISTRATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/servicedirectory/v1/registration_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/servicedirectory/v1/registration_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RegistrationServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~RegistrationServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicedirectory_v1::MakeDefaultRegistrationServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    MakeDefaultRegistrationServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency CreateNamespace(
-      google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListNamespaces(
-      google::cloud::servicedirectory::v1::ListNamespacesRequest request);
-
-  virtual google::cloud::Idempotency GetNamespace(
-      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateNamespace(
-      google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteNamespace(
-      google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateService(
-      google::cloud::servicedirectory::v1::CreateServiceRequest const& request);
-
-  virtual google::cloud::Idempotency ListServices(
-      google::cloud::servicedirectory::v1::ListServicesRequest request);
-
-  virtual google::cloud::Idempotency GetService(
-      google::cloud::servicedirectory::v1::GetServiceRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateService(
-      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteService(
-      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request);
-
-  virtual google::cloud::Idempotency CreateEndpoint(
-      google::cloud::servicedirectory::v1::CreateEndpointRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListEndpoints(
-      google::cloud::servicedirectory::v1::ListEndpointsRequest request);
-
-  virtual google::cloud::Idempotency GetEndpoint(
-      google::cloud::servicedirectory::v1::GetEndpointRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateEndpoint(
-      google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteEndpoint(
-      google::cloud::servicedirectory::v1::DeleteEndpointRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
-MakeDefaultRegistrationServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicedirectory_v1::RegistrationServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    RegistrationServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory

@@ -20,39 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_MOCKS_MOCK_QUOTA_CONTROLLER_CONNECTION_H
 
 #include "google/cloud/servicecontrol/quota_controller_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/servicecontrol/v1/mocks/mock_quota_controller_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `QuotaControllerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `QuotaControllerClient`. To do so,
- * construct an object of type `QuotaControllerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockQuotaControllerConnection
-    : public servicecontrol::QuotaControllerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>,
-      AllocateQuota,
-      (google::api::servicecontrol::v1::AllocateQuotaRequest const& request),
-      (override));
-};
+/// @deprecated Use servicecontrol_v1_mocks::MockQuotaControllerConnection
+/// directly.
+using ::google::cloud::servicecontrol_v1_mocks::MockQuotaControllerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_mocks

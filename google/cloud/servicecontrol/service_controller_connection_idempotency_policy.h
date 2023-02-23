@@ -19,34 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_SERVICE_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_SERVICE_CONTROLLER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/api/servicecontrol/v1/service_controller.grpc.pb.h>
-#include <memory>
+#include "google/cloud/servicecontrol/v1/service_controller_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ServiceControllerConnectionIdempotencyPolicy {
- public:
-  virtual ~ServiceControllerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicecontrol_v1::MakeDefaultServiceControllerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::servicecontrol_v1::
+    MakeDefaultServiceControllerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency Check(
-      google::api::servicecontrol::v1::CheckRequest const& request);
-
-  virtual google::cloud::Idempotency Report(
-      google::api::servicecontrol::v1::ReportRequest const& request);
-};
-
-std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy>
-MakeDefaultServiceControllerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicecontrol_v1::ServiceControllerConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicecontrol_v1::
+    ServiceControllerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol

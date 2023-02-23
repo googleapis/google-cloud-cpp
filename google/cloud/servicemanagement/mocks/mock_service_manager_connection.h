@@ -20,114 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_MOCKS_MOCK_SERVICE_MANAGER_CONNECTION_H
 
 #include "google/cloud/servicemanagement/service_manager_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/servicemanagement/v1/mocks/mock_service_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicemanagement_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ServiceManagerConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ServiceManagerClient`. To do so,
- * construct an object of type `ServiceManagerClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockServiceManagerConnection
-    : public servicemanagement::ServiceManagerConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::api::servicemanagement::v1::ManagedService>,
-              ListServices,
-              (google::api::servicemanagement::v1::ListServicesRequest request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::servicemanagement::v1::ManagedService>, GetService,
-      (google::api::servicemanagement::v1::GetServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::api::servicemanagement::v1::ManagedService>>,
-      CreateService,
-      (google::api::servicemanagement::v1::CreateServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>,
-      DeleteService,
-      (google::api::servicemanagement::v1::DeleteServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<
-                  google::api::servicemanagement::v1::UndeleteServiceResponse>>,
-              UndeleteService,
-              (google::api::servicemanagement::v1::UndeleteServiceRequest const&
-                   request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::api::Service>, ListServiceConfigs,
-      (google::api::servicemanagement::v1::ListServiceConfigsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::Service>, GetServiceConfig,
-      (google::api::servicemanagement::v1::GetServiceConfigRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::Service>, CreateServiceConfig,
-      (google::api::servicemanagement::v1::CreateServiceConfigRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::api::servicemanagement::v1::SubmitConfigSourceResponse>>,
-      SubmitConfigSource,
-      (google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::api::servicemanagement::v1::Rollout>,
-      ListServiceRollouts,
-      (google::api::servicemanagement::v1::ListServiceRolloutsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::servicemanagement::v1::Rollout>, GetServiceRollout,
-      (google::api::servicemanagement::v1::GetServiceRolloutRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::api::servicemanagement::v1::Rollout>>,
-      CreateServiceRollout,
-      (google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::api::servicemanagement::v1::GenerateConfigReportResponse>,
-      GenerateConfigReport,
-      (google::api::servicemanagement::v1::GenerateConfigReportRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use servicemanagement_v1_mocks::MockServiceManagerConnection
+/// directly.
+using ::google::cloud::servicemanagement_v1_mocks::MockServiceManagerConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_mocks

@@ -97,6 +97,10 @@ For example, this will override the default endpoint for `shell::CloudShellServi
 
 @snippet cloud_shell_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [shell::CloudShellServiceClient](@ref shell::CloudShellServiceClient-endpoint-snippet)
+ [shell_v1::CloudShellServiceClient](@ref shell_v1::CloudShellServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -108,6 +112,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_shell_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [shell::CloudShellServiceClient](@ref shell::CloudShellServiceClient-service-account-snippet)
+ [shell_v1::CloudShellServiceClient](@ref shell_v1::CloudShellServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page shell::CloudShellServiceClient-service-account-snippet Override shell::CloudShellServiceClient Authentication Defaults
 
 @snippet google/cloud/shell/samples/cloud_shell_client_samples.cc with-service-account
+
+*/
+
+/*! @page shell_v1::CloudShellServiceClient-endpoint-snippet Override shell_v1::CloudShellServiceClient Endpoint Configuration
+
+@snippet google/cloud/shell/v1/samples/cloud_shell_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page shell_v1::CloudShellServiceClient-service-account-snippet Override shell_v1::CloudShellServiceClient Authentication Defaults
+
+@snippet google/cloud/shell/v1/samples/cloud_shell_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

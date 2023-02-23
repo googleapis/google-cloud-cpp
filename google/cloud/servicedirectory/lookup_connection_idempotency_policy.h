@@ -19,32 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_LOOKUP_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_LOOKUP_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/servicedirectory/v1/lookup_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class LookupServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~LookupServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicedirectory_v1::MakeDefaultLookupServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::servicedirectory_v1::
+    MakeDefaultLookupServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<LookupServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ResolveService(
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const&
-          request);
-};
-
-std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
-MakeDefaultLookupServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// servicedirectory_v1::LookupServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::servicedirectory_v1::
+    LookupServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory

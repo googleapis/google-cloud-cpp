@@ -19,79 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_QUOTA_CONTROLLER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_QUOTA_CONTROLLER_CONNECTION_H
 
-#include "google/cloud/servicecontrol/internal/quota_controller_retry_traits.h"
-#include "google/cloud/servicecontrol/internal/quota_controller_stub.h"
 #include "google/cloud/servicecontrol/quota_controller_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/servicecontrol/v1/quota_controller_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using QuotaControllerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        servicecontrol_internal::QuotaControllerRetryTraits>;
+/// @deprecated Use servicecontrol_v1::MakeQuotaControllerConnection directly.
+using ::google::cloud::servicecontrol_v1::MakeQuotaControllerConnection;
 
-using QuotaControllerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        servicecontrol_internal::QuotaControllerRetryTraits>;
+/// @deprecated Use servicecontrol_v1::QuotaControllerConnection directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerConnection;
 
-using QuotaControllerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        servicecontrol_internal::QuotaControllerRetryTraits>;
+/// @deprecated Use
+/// servicecontrol_v1::QuotaControllerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::servicecontrol_v1::
+    QuotaControllerLimitedErrorCountRetryPolicy;
 
-/**
- * The `QuotaControllerConnection` object for `QuotaControllerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `QuotaControllerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `QuotaControllerClient`.
- *
- * To create a concrete instance, see `MakeQuotaControllerConnection()`.
- *
- * For mocking, see `servicecontrol_mocks::MockQuotaControllerConnection`.
- */
-class QuotaControllerConnection {
- public:
-  virtual ~QuotaControllerConnection() = 0;
+/// @deprecated Use servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(
-      google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `QuotaControllerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of QuotaControllerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `QuotaControllerConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::servicecontrol::QuotaControllerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `QuotaControllerConnection` created
- * by this function.
- */
-std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
-    Options options = {});
+/// @deprecated Use servicecontrol_v1::QuotaControllerRetryPolicy directly.
+using ::google::cloud::servicecontrol_v1::QuotaControllerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol

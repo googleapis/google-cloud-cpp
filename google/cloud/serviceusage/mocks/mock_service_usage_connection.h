@@ -20,66 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_MOCKS_MOCK_SERVICE_USAGE_CONNECTION_H
 
 #include "google/cloud/serviceusage/service_usage_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/serviceusage/v1/mocks/mock_service_usage_connection.h"
 
 namespace google {
 namespace cloud {
 namespace serviceusage_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ServiceUsageConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ServiceUsageClient`. To do so,
- * construct an object of type `ServiceUsageClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockServiceUsageConnection : public serviceusage::ServiceUsageConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
-      EnableService,
-      (google::api::serviceusage::v1::EnableServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
-      DisableService,
-      (google::api::serviceusage::v1::DisableServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::api::serviceusage::v1::Service>, GetService,
-              (google::api::serviceusage::v1::GetServiceRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::api::serviceusage::v1::Service>, ListServices,
-              (google::api::serviceusage::v1::ListServicesRequest request),
-              (override));
-
-  MOCK_METHOD(
-      future<
-          StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
-      BatchEnableServices,
-      (google::api::serviceusage::v1::BatchEnableServicesRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>,
-      BatchGetServices,
-      (google::api::serviceusage::v1::BatchGetServicesRequest const& request),
-      (override));
-};
+/// @deprecated Use serviceusage_v1_mocks::MockServiceUsageConnection directly.
+using ::google::cloud::serviceusage_v1_mocks::MockServiceUsageConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_mocks

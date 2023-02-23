@@ -95,6 +95,10 @@ For example, this will override the default endpoint for `servicemanagement::Ser
 
 @snippet service_manager_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [servicemanagement::ServiceManagerClient](@ref servicemanagement::ServiceManagerClient-endpoint-snippet)
+ [servicemanagement_v1::ServiceManagerClient](@ref servicemanagement_v1::ServiceManagerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -106,6 +110,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet service_manager_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [servicemanagement::ServiceManagerClient](@ref servicemanagement::ServiceManagerClient-service-account-snippet)
+ [servicemanagement_v1::ServiceManagerClient](@ref servicemanagement_v1::ServiceManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -145,6 +153,18 @@ can override the default policies.
 /*! @page servicemanagement::ServiceManagerClient-service-account-snippet Override servicemanagement::ServiceManagerClient Authentication Defaults
 
 @snippet google/cloud/servicemanagement/samples/service_manager_client_samples.cc with-service-account
+
+*/
+
+/*! @page servicemanagement_v1::ServiceManagerClient-endpoint-snippet Override servicemanagement_v1::ServiceManagerClient Endpoint Configuration
+
+@snippet google/cloud/servicemanagement/v1/samples/service_manager_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page servicemanagement_v1::ServiceManagerClient-service-account-snippet Override servicemanagement_v1::ServiceManagerClient Authentication Defaults
+
+@snippet google/cloud/servicemanagement/v1/samples/service_manager_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

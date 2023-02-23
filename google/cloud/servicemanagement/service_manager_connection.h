@@ -19,137 +19,32 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_SERVICE_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_SERVICE_MANAGER_CONNECTION_H
 
-#include "google/cloud/servicemanagement/internal/service_manager_retry_traits.h"
-#include "google/cloud/servicemanagement/internal/service_manager_stub.h"
 #include "google/cloud/servicemanagement/service_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/servicemanagement/v1/service_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace servicemanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ServiceManagerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        servicemanagement_internal::ServiceManagerRetryTraits>;
+/// @deprecated Use servicemanagement_v1::MakeServiceManagerConnection directly.
+using ::google::cloud::servicemanagement_v1::MakeServiceManagerConnection;
 
-using ServiceManagerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        servicemanagement_internal::ServiceManagerRetryTraits>;
+/// @deprecated Use servicemanagement_v1::ServiceManagerConnection directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerConnection;
 
-using ServiceManagerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        servicemanagement_internal::ServiceManagerRetryTraits>;
+/// @deprecated Use
+/// servicemanagement_v1::ServiceManagerLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::servicemanagement_v1::
+    ServiceManagerLimitedErrorCountRetryPolicy;
 
-/**
- * The `ServiceManagerConnection` object for `ServiceManagerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ServiceManagerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ServiceManagerClient`.
- *
- * To create a concrete instance, see `MakeServiceManagerConnection()`.
- *
- * For mocking, see `servicemanagement_mocks::MockServiceManagerConnection`.
- */
-class ServiceManagerConnection {
- public:
-  virtual ~ServiceManagerConnection() = 0;
+/// @deprecated Use servicemanagement_v1::ServiceManagerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::servicemanagement_v1::
+    ServiceManagerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::api::servicemanagement::v1::ManagedService>
-  ListServices(google::api::servicemanagement::v1::ListServicesRequest request);
-
-  virtual StatusOr<google::api::servicemanagement::v1::ManagedService>
-  GetService(
-      google::api::servicemanagement::v1::GetServiceRequest const& request);
-
-  virtual future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(
-      google::api::servicemanagement::v1::CreateServiceRequest const& request);
-
-  virtual future<
-      StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(
-      google::api::servicemanagement::v1::DeleteServiceRequest const& request);
-
-  virtual future<
-      StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(
-      google::api::servicemanagement::v1::UndeleteServiceRequest const&
-          request);
-
-  virtual StreamRange<google::api::Service> ListServiceConfigs(
-      google::api::servicemanagement::v1::ListServiceConfigsRequest request);
-
-  virtual StatusOr<google::api::Service> GetServiceConfig(
-      google::api::servicemanagement::v1::GetServiceConfigRequest const&
-          request);
-
-  virtual StatusOr<google::api::Service> CreateServiceConfig(
-      google::api::servicemanagement::v1::CreateServiceConfigRequest const&
-          request);
-
-  virtual future<
-      StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(
-      google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
-          request);
-
-  virtual StreamRange<google::api::servicemanagement::v1::Rollout>
-  ListServiceRollouts(
-      google::api::servicemanagement::v1::ListServiceRolloutsRequest request);
-
-  virtual StatusOr<google::api::servicemanagement::v1::Rollout>
-  GetServiceRollout(
-      google::api::servicemanagement::v1::GetServiceRolloutRequest const&
-          request);
-
-  virtual future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(
-      google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
-          request);
-
-  virtual StatusOr<
-      google::api::servicemanagement::v1::GenerateConfigReportResponse>
-  GenerateConfigReport(
-      google::api::servicemanagement::v1::GenerateConfigReportRequest const&
-          request);
-};
-
-/**
- * A factory function to construct an object of type `ServiceManagerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ServiceManagerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ServiceManagerConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::servicemanagement::ServiceManagerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ServiceManagerConnection` created by
- * this function.
- */
-std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
-    Options options = {});
+/// @deprecated Use servicemanagement_v1::ServiceManagerRetryPolicy directly.
+using ::google::cloud::servicemanagement_v1::ServiceManagerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement

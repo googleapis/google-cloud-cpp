@@ -21,62 +21,29 @@
 
 #include "google/cloud/serviceusage/service_usage_connection.h"
 #include "google/cloud/serviceusage/service_usage_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/serviceusage/v1/service_usage_options.h"
 
 namespace google {
 namespace cloud {
 namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-serviceusage-options
- */
-struct ServiceUsageRetryPolicyOption {
-  using Type = std::shared_ptr<ServiceUsageRetryPolicy>;
-};
+/// @deprecated Use serviceusage_v1::ServiceUsagePollingPolicyOption directly.
+using ::google::cloud::serviceusage_v1::ServiceUsagePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-serviceusage-options
- */
-struct ServiceUsageBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use serviceusage_v1::ServiceUsageBackoffPolicyOption directly.
+using ::google::cloud::serviceusage_v1::ServiceUsageBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-serviceusage-options
- */
-struct ServiceUsageConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ServiceUsageConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// serviceusage_v1::ServiceUsageConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::serviceusage_v1::
+    ServiceUsageConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-serviceusage-options
- */
-struct ServiceUsagePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use serviceusage_v1::ServiceUsagePolicyOptionList directly.
+using ::google::cloud::serviceusage_v1::ServiceUsagePolicyOptionList;
 
-/**
- * The options applicable to ServiceUsage.
- *
- * @ingroup google-cloud-serviceusage-options
- */
-using ServiceUsagePolicyOptionList =
-    OptionList<ServiceUsageRetryPolicyOption, ServiceUsageBackoffPolicyOption,
-               ServiceUsagePollingPolicyOption,
-               ServiceUsageConnectionIdempotencyPolicyOption>;
+/// @deprecated Use serviceusage_v1::ServiceUsageRetryPolicyOption directly.
+using ::google::cloud::serviceusage_v1::ServiceUsageRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage

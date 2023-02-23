@@ -20,60 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_MOCKS_MOCK_CLOUD_SHELL_CONNECTION_H
 
 #include "google/cloud/shell/cloud_shell_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/shell/v1/mocks/mock_cloud_shell_connection.h"
 
 namespace google {
 namespace cloud {
 namespace shell_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudShellServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudShellServiceClient`. To do so,
- * construct an object of type `CloudShellServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudShellServiceConnection
-    : public shell::CloudShellServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::shell::v1::Environment>, GetEnvironment,
-              (google::cloud::shell::v1::GetEnvironmentRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
-      StartEnvironment,
-      (google::cloud::shell::v1::StartEnvironmentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
-      AuthorizeEnvironment,
-      (google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
-              AddPublicKey,
-              (google::cloud::shell::v1::AddPublicKeyRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
-      RemovePublicKey,
-      (google::cloud::shell::v1::RemovePublicKeyRequest const& request),
-      (override));
-};
+/// @deprecated Use shell_v1_mocks::MockCloudShellServiceConnection directly.
+using ::google::cloud::shell_v1_mocks::MockCloudShellServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_mocks

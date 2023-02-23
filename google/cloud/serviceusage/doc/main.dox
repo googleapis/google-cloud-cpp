@@ -97,6 +97,10 @@ For example, this will override the default endpoint for `serviceusage::ServiceU
 
 @snippet service_usage_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [serviceusage::ServiceUsageClient](@ref serviceusage::ServiceUsageClient-endpoint-snippet)
+ [serviceusage_v1::ServiceUsageClient](@ref serviceusage_v1::ServiceUsageClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -108,6 +112,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet service_usage_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [serviceusage::ServiceUsageClient](@ref serviceusage::ServiceUsageClient-service-account-snippet)
+ [serviceusage_v1::ServiceUsageClient](@ref serviceusage_v1::ServiceUsageClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page serviceusage::ServiceUsageClient-service-account-snippet Override serviceusage::ServiceUsageClient Authentication Defaults
 
 @snippet google/cloud/serviceusage/samples/service_usage_client_samples.cc with-service-account
+
+*/
+
+/*! @page serviceusage_v1::ServiceUsageClient-endpoint-snippet Override serviceusage_v1::ServiceUsageClient Endpoint Configuration
+
+@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page serviceusage_v1::ServiceUsageClient-service-account-snippet Override serviceusage_v1::ServiceUsageClient Authentication Defaults
+
+@snippet google/cloud/serviceusage/v1/samples/service_usage_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
