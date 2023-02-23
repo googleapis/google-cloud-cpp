@@ -119,6 +119,11 @@ Follow these links to find examples for other \c *Client classes:
  [talent::EventServiceClient](@ref talent::EventServiceClient-endpoint-snippet)
  [talent::JobServiceClient](@ref talent::JobServiceClient-endpoint-snippet)
  [talent::TenantServiceClient](@ref talent::TenantServiceClient-endpoint-snippet)
+ [talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-endpoint-snippet)
+ [talent_v4::CompletionClient](@ref talent_v4::CompletionClient-endpoint-snippet)
+ [talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-endpoint-snippet)
+ [talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-endpoint-snippet)
+ [talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -138,6 +143,11 @@ Follow these links to find examples for other \c *Client classes:
  [talent::EventServiceClient](@ref talent::EventServiceClient-service-account-snippet)
  [talent::JobServiceClient](@ref talent::JobServiceClient-service-account-snippet)
  [talent::TenantServiceClient](@ref talent::TenantServiceClient-service-account-snippet)
+ [talent_v4::CompanyServiceClient](@ref talent_v4::CompanyServiceClient-service-account-snippet)
+ [talent_v4::CompletionClient](@ref talent_v4::CompletionClient-service-account-snippet)
+ [talent_v4::EventServiceClient](@ref talent_v4::EventServiceClient-service-account-snippet)
+ [talent_v4::JobServiceClient](@ref talent_v4::JobServiceClient-service-account-snippet)
+ [talent_v4::TenantServiceClient](@ref talent_v4::TenantServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -225,6 +235,66 @@ can override the default policies.
 /*! @page talent::TenantServiceClient-service-account-snippet Override talent::TenantServiceClient Authentication Defaults
 
 @snippet google/cloud/talent/samples/tenant_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::CompanyServiceClient-endpoint-snippet Override talent_v4::CompanyServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/company_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::CompanyServiceClient-service-account-snippet Override talent_v4::CompanyServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/company_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::CompletionClient-endpoint-snippet Override talent_v4::CompletionClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/completion_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::CompletionClient-service-account-snippet Override talent_v4::CompletionClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/completion_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::EventServiceClient-endpoint-snippet Override talent_v4::EventServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/event_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::EventServiceClient-service-account-snippet Override talent_v4::EventServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/event_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::JobServiceClient-endpoint-snippet Override talent_v4::JobServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/job_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::JobServiceClient-service-account-snippet Override talent_v4::JobServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/job_client_samples.cc with-service-account
+
+*/
+
+/*! @page talent_v4::TenantServiceClient-endpoint-snippet Override talent_v4::TenantServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page talent_v4::TenantServiceClient-service-account-snippet Override talent_v4::TenantServiceClient Authentication Defaults
+
+@snippet google/cloud/talent/v4/samples/tenant_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

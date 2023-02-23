@@ -21,51 +21,26 @@
 
 #include "google/cloud/texttospeech/text_to_speech_connection.h"
 #include "google/cloud/texttospeech/text_to_speech_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/texttospeech/v1/text_to_speech_options.h"
 
 namespace google {
 namespace cloud {
 namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-texttospeech-options
- */
-struct TextToSpeechRetryPolicyOption {
-  using Type = std::shared_ptr<TextToSpeechRetryPolicy>;
-};
+/// @deprecated Use texttospeech_v1::TextToSpeechBackoffPolicyOption directly.
+using ::google::cloud::texttospeech_v1::TextToSpeechBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-texttospeech-options
- */
-struct TextToSpeechBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// texttospeech_v1::TextToSpeechConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::texttospeech_v1::
+    TextToSpeechConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-texttospeech-options
- */
-struct TextToSpeechConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<TextToSpeechConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use texttospeech_v1::TextToSpeechPolicyOptionList directly.
+using ::google::cloud::texttospeech_v1::TextToSpeechPolicyOptionList;
 
-/**
- * The options applicable to TextToSpeech.
- *
- * @ingroup google-cloud-texttospeech-options
- */
-using TextToSpeechPolicyOptionList =
-    OptionList<TextToSpeechRetryPolicyOption, TextToSpeechBackoffPolicyOption,
-               TextToSpeechConnectionIdempotencyPolicyOption>;
+/// @deprecated Use texttospeech_v1::TextToSpeechRetryPolicyOption directly.
+using ::google::cloud::texttospeech_v1::TextToSpeechRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech

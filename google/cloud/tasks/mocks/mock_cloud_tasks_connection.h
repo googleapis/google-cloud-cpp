@@ -20,96 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_MOCKS_MOCK_CLOUD_TASKS_CONNECTION_H
 
 #include "google/cloud/tasks/cloud_tasks_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/tasks/v2/mocks/mock_cloud_tasks_connection.h"
 
 namespace google {
 namespace cloud {
 namespace tasks_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CloudTasksConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CloudTasksClient`. To do so,
- * construct an object of type `CloudTasksClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCloudTasksConnection : public tasks::CloudTasksConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::tasks::v2::Queue>, ListQueues,
-              (google::cloud::tasks::v2::ListQueuesRequest request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Queue>, GetQueue,
-              (google::cloud::tasks::v2::GetQueueRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Queue>, CreateQueue,
-              (google::cloud::tasks::v2::CreateQueueRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Queue>, UpdateQueue,
-              (google::cloud::tasks::v2::UpdateQueueRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteQueue,
-              (google::cloud::tasks::v2::DeleteQueueRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Queue>, PurgeQueue,
-              (google::cloud::tasks::v2::PurgeQueueRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Queue>, PauseQueue,
-              (google::cloud::tasks::v2::PauseQueueRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Queue>, ResumeQueue,
-              (google::cloud::tasks::v2::ResumeQueueRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::tasks::v2::Task>, ListTasks,
-              (google::cloud::tasks::v2::ListTasksRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Task>, GetTask,
-              (google::cloud::tasks::v2::GetTaskRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Task>, CreateTask,
-              (google::cloud::tasks::v2::CreateTaskRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteTask,
-              (google::cloud::tasks::v2::DeleteTaskRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::tasks::v2::Task>, RunTask,
-              (google::cloud::tasks::v2::RunTaskRequest const& request),
-              (override));
-};
+/// @deprecated Use tasks_v2_mocks::MockCloudTasksConnection directly.
+using ::google::cloud::tasks_v2_mocks::MockCloudTasksConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_mocks

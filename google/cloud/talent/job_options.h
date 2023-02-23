@@ -21,62 +21,28 @@
 
 #include "google/cloud/talent/job_connection.h"
 #include "google/cloud/talent/job_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/talent/v4/job_options.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct JobServiceRetryPolicyOption {
-  using Type = std::shared_ptr<JobServiceRetryPolicy>;
-};
+/// @deprecated Use talent_v4::JobServicePollingPolicyOption directly.
+using ::google::cloud::talent_v4::JobServicePollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct JobServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use talent_v4::JobServiceBackoffPolicyOption directly.
+using ::google::cloud::talent_v4::JobServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-talent-options
- */
-struct JobServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<JobServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use talent_v4::JobServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::talent_v4::JobServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-talent-options
- */
-struct JobServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use talent_v4::JobServicePolicyOptionList directly.
+using ::google::cloud::talent_v4::JobServicePolicyOptionList;
 
-/**
- * The options applicable to JobService.
- *
- * @ingroup google-cloud-talent-options
- */
-using JobServicePolicyOptionList =
-    OptionList<JobServiceRetryPolicyOption, JobServiceBackoffPolicyOption,
-               JobServicePollingPolicyOption,
-               JobServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use talent_v4::JobServiceRetryPolicyOption directly.
+using ::google::cloud::talent_v4::JobServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

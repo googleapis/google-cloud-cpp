@@ -19,31 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_EVENT_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/talent/v4/event_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/talent/v4/event_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EventServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~EventServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// talent_v4::MakeDefaultEventServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::talent_v4::
+    MakeDefaultEventServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<EventServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateClientEvent(
-      google::cloud::talent::v4::CreateClientEventRequest const& request);
-};
-
-std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
-MakeDefaultEventServiceConnectionIdempotencyPolicy();
+/// @deprecated Use talent_v4::EventServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::talent_v4::EventServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

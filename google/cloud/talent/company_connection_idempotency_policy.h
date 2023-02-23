@@ -19,43 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_COMPANY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_COMPANY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/talent/v4/company_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CompanyServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~CompanyServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// talent_v4::MakeDefaultCompanyServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::talent_v4::
+    MakeDefaultCompanyServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateCompany(
-      google::cloud::talent::v4::CreateCompanyRequest const& request);
-
-  virtual google::cloud::Idempotency GetCompany(
-      google::cloud::talent::v4::GetCompanyRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateCompany(
-      google::cloud::talent::v4::UpdateCompanyRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteCompany(
-      google::cloud::talent::v4::DeleteCompanyRequest const& request);
-
-  virtual google::cloud::Idempotency ListCompanies(
-      google::cloud::talent::v4::ListCompaniesRequest request);
-};
-
-std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
-MakeDefaultCompanyServiceConnectionIdempotencyPolicy();
+/// @deprecated Use talent_v4::CompanyServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::talent_v4::CompanyServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

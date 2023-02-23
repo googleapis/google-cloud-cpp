@@ -20,37 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_MOCKS_MOCK_COMPLETION_CONNECTION_H
 
 #include "google/cloud/talent/completion_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/talent/v4/mocks/mock_completion_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CompletionConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CompletionClient`. To do so,
- * construct an object of type `CompletionClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCompletionConnection : public talent::CompletionConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::CompleteQueryResponse>,
-              CompleteQuery,
-              (google::cloud::talent::v4::CompleteQueryRequest const& request),
-              (override));
-};
+/// @deprecated Use talent_v4_mocks::MockCompletionConnection directly.
+using ::google::cloud::talent_v4_mocks::MockCompletionConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_mocks

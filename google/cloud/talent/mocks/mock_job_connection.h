@@ -20,79 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_MOCKS_MOCK_JOB_CONNECTION_H
 
 #include "google/cloud/talent/job_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/talent/v4/mocks/mock_job_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `JobServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `JobServiceClient`. To do so,
- * construct an object of type `JobServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockJobServiceConnection : public talent::JobServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, CreateJob,
-              (google::cloud::talent::v4::CreateJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
-      BatchCreateJobs,
-      (google::cloud::talent::v4::BatchCreateJobsRequest const& request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, GetJob,
-              (google::cloud::talent::v4::GetJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, UpdateJob,
-              (google::cloud::talent::v4::UpdateJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
-      BatchUpdateJobs,
-      (google::cloud::talent::v4::BatchUpdateJobsRequest const& request),
-      (override));
-
-  MOCK_METHOD(Status, DeleteJob,
-              (google::cloud::talent::v4::DeleteJobRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
-      BatchDeleteJobs,
-      (google::cloud::talent::v4::BatchDeleteJobsRequest const& request),
-      (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::talent::v4::Job>, ListJobs,
-              (google::cloud::talent::v4::ListJobsRequest request), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,
-              SearchJobs,
-              (google::cloud::talent::v4::SearchJobsRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::SearchJobsResponse>,
-              SearchJobsForAlert,
-              (google::cloud::talent::v4::SearchJobsRequest const& request),
-              (override));
-};
+/// @deprecated Use talent_v4_mocks::MockJobServiceConnection directly.
+using ::google::cloud::talent_v4_mocks::MockJobServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_mocks

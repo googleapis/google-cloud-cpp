@@ -19,111 +19,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_JOB_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_JOB_CONNECTION_H
 
-#include "google/cloud/talent/internal/job_retry_traits.h"
-#include "google/cloud/talent/internal/job_stub.h"
 #include "google/cloud/talent/job_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/talent/v4/job_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using JobServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    talent_internal::JobServiceRetryTraits>;
+/// @deprecated Use talent_v4::MakeJobServiceConnection directly.
+using ::google::cloud::talent_v4::MakeJobServiceConnection;
 
-using JobServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::JobServiceRetryTraits>;
+/// @deprecated Use talent_v4::JobServiceConnection directly.
+using ::google::cloud::talent_v4::JobServiceConnection;
 
-using JobServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::JobServiceRetryTraits>;
+/// @deprecated Use talent_v4::JobServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::talent_v4::JobServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `JobServiceConnection` object for `JobServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `JobServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `JobServiceClient`.
- *
- * To create a concrete instance, see `MakeJobServiceConnection()`.
- *
- * For mocking, see `talent_mocks::MockJobServiceConnection`.
- */
-class JobServiceConnection {
- public:
-  virtual ~JobServiceConnection() = 0;
+/// @deprecated Use talent_v4::JobServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::talent_v4::JobServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::talent::v4::Job> CreateJob(
-      google::cloud::talent::v4::CreateJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(
-      google::cloud::talent::v4::BatchCreateJobsRequest const& request);
-
-  virtual StatusOr<google::cloud::talent::v4::Job> GetJob(
-      google::cloud::talent::v4::GetJobRequest const& request);
-
-  virtual StatusOr<google::cloud::talent::v4::Job> UpdateJob(
-      google::cloud::talent::v4::UpdateJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(
-      google::cloud::talent::v4::BatchUpdateJobsRequest const& request);
-
-  virtual Status DeleteJob(
-      google::cloud::talent::v4::DeleteJobRequest const& request);
-
-  virtual future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(
-      google::cloud::talent::v4::BatchDeleteJobsRequest const& request);
-
-  virtual StreamRange<google::cloud::talent::v4::Job> ListJobs(
-      google::cloud::talent::v4::ListJobsRequest request);
-
-  virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
-      google::cloud::talent::v4::SearchJobsRequest const& request);
-
-  virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse>
-  SearchJobsForAlert(
-      google::cloud::talent::v4::SearchJobsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `JobServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of JobServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `JobServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::JobServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `JobServiceConnection` created by
- * this function.
- */
-std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
-    Options options = {});
+/// @deprecated Use talent_v4::JobServiceRetryPolicy directly.
+using ::google::cloud::talent_v4::JobServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

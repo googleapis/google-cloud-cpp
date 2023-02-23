@@ -99,6 +99,10 @@ For example, this will override the default endpoint for `trace::TraceServiceCli
 
 @snippet trace_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [trace::TraceServiceClient](@ref trace::TraceServiceClient-endpoint-snippet)
+ [trace_v2::TraceServiceClient](@ref trace_v2::TraceServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -110,6 +114,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet trace_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [trace::TraceServiceClient](@ref trace::TraceServiceClient-service-account-snippet)
+ [trace_v2::TraceServiceClient](@ref trace_v2::TraceServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -149,6 +157,18 @@ can override the default policies.
 /*! @page trace::TraceServiceClient-service-account-snippet Override trace::TraceServiceClient Authentication Defaults
 
 @snippet google/cloud/trace/samples/trace_client_samples.cc with-service-account
+
+*/
+
+/*! @page trace_v2::TraceServiceClient-endpoint-snippet Override trace_v2::TraceServiceClient Endpoint Configuration
+
+@snippet google/cloud/trace/v2/samples/trace_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page trace_v2::TraceServiceClient-service-account-snippet Override trace_v2::TraceServiceClient Authentication Defaults
+
+@snippet google/cloud/trace/v2/samples/trace_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

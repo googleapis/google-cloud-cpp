@@ -19,30 +19,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_COMPLETION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_COMPLETION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/talent/v4/completion_service.grpc.pb.h>
-#include <memory>
+#include "google/cloud/talent/v4/completion_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CompletionConnectionIdempotencyPolicy {
- public:
-  virtual ~CompletionConnectionIdempotencyPolicy();
+/// @deprecated Use talent_v4::MakeDefaultCompletionConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::talent_v4::
+    MakeDefaultCompletionConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<CompletionConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency CompleteQuery(
-      google::cloud::talent::v4::CompleteQueryRequest const& request);
-};
-
-std::unique_ptr<CompletionConnectionIdempotencyPolicy>
-MakeDefaultCompletionConnectionIdempotencyPolicy();
+/// @deprecated Use talent_v4::CompletionConnectionIdempotencyPolicy directly.
+using ::google::cloud::talent_v4::CompletionConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent

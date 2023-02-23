@@ -19,80 +19,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_TRACE_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRACE_TRACE_CONNECTION_H
 
-#include "google/cloud/trace/internal/trace_retry_traits.h"
-#include "google/cloud/trace/internal/trace_stub.h"
 #include "google/cloud/trace/trace_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/trace/v2/trace_connection.h"
 
 namespace google {
 namespace cloud {
 namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using TraceServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        trace_internal::TraceServiceRetryTraits>;
+/// @deprecated Use trace_v2::MakeTraceServiceConnection directly.
+using ::google::cloud::trace_v2::MakeTraceServiceConnection;
 
-using TraceServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        trace_internal::TraceServiceRetryTraits>;
+/// @deprecated Use trace_v2::TraceServiceConnection directly.
+using ::google::cloud::trace_v2::TraceServiceConnection;
 
-using TraceServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        trace_internal::TraceServiceRetryTraits>;
+/// @deprecated Use trace_v2::TraceServiceLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::trace_v2::TraceServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `TraceServiceConnection` object for `TraceServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `TraceServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `TraceServiceClient`.
- *
- * To create a concrete instance, see `MakeTraceServiceConnection()`.
- *
- * For mocking, see `trace_mocks::MockTraceServiceConnection`.
- */
-class TraceServiceConnection {
- public:
-  virtual ~TraceServiceConnection() = 0;
+/// @deprecated Use trace_v2::TraceServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::trace_v2::TraceServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual Status BatchWriteSpans(
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request);
-
-  virtual StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      google::devtools::cloudtrace::v2::Span const& request);
-};
-
-/**
- * A factory function to construct an object of type `TraceServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of TraceServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `TraceServiceConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::trace::TraceServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `TraceServiceConnection` created by
- * this function.
- */
-std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
-    Options options = {});
+/// @deprecated Use trace_v2::TraceServiceRetryPolicy directly.
+using ::google::cloud::trace_v2::TraceServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace

@@ -97,6 +97,10 @@ For example, this will override the default endpoint for `texttospeech::TextToSp
 
 @snippet text_to_speech_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [texttospeech::TextToSpeechClient](@ref texttospeech::TextToSpeechClient-endpoint-snippet)
+ [texttospeech_v1::TextToSpeechClient](@ref texttospeech_v1::TextToSpeechClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -108,6 +112,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet text_to_speech_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [texttospeech::TextToSpeechClient](@ref texttospeech::TextToSpeechClient-service-account-snippet)
+ [texttospeech_v1::TextToSpeechClient](@ref texttospeech_v1::TextToSpeechClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -147,6 +155,18 @@ can override the default policies.
 /*! @page texttospeech::TextToSpeechClient-service-account-snippet Override texttospeech::TextToSpeechClient Authentication Defaults
 
 @snippet google/cloud/texttospeech/samples/text_to_speech_client_samples.cc with-service-account
+
+*/
+
+/*! @page texttospeech_v1::TextToSpeechClient-endpoint-snippet Override texttospeech_v1::TextToSpeechClient Endpoint Configuration
+
+@snippet google/cloud/texttospeech/v1/samples/text_to_speech_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page texttospeech_v1::TextToSpeechClient-service-account-snippet Override texttospeech_v1::TextToSpeechClient Authentication Defaults
+
+@snippet google/cloud/texttospeech/v1/samples/text_to_speech_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

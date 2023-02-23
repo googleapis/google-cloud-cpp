@@ -20,52 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_MOCKS_MOCK_COMPANY_CONNECTION_H
 
 #include "google/cloud/talent/company_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/talent/v4/mocks/mock_company_connection.h"
 
 namespace google {
 namespace cloud {
 namespace talent_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `CompanyServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `CompanyServiceClient`. To do so,
- * construct an object of type `CompanyServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockCompanyServiceConnection : public talent::CompanyServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, CreateCompany,
-              (google::cloud::talent::v4::CreateCompanyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, GetCompany,
-              (google::cloud::talent::v4::GetCompanyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::talent::v4::Company>, UpdateCompany,
-              (google::cloud::talent::v4::UpdateCompanyRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteCompany,
-              (google::cloud::talent::v4::DeleteCompanyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StreamRange<google::cloud::talent::v4::Company>, ListCompanies,
-              (google::cloud::talent::v4::ListCompaniesRequest request),
-              (override));
-};
+/// @deprecated Use talent_v4_mocks::MockCompanyServiceConnection directly.
+using ::google::cloud::talent_v4_mocks::MockCompanyServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_mocks
