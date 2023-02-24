@@ -19,67 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_POLICY_TAG_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_POLICY_TAG_MANAGER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
-#include <memory>
+#include "google/cloud/datacatalog/v1/policy_tag_manager_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PolicyTagManagerConnectionIdempotencyPolicy {
- public:
-  virtual ~PolicyTagManagerConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// datacatalog_v1::MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateTaxonomy(
-      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteTaxonomy(
-      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateTaxonomy(
-      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request);
-
-  virtual google::cloud::Idempotency ListTaxonomies(
-      google::cloud::datacatalog::v1::ListTaxonomiesRequest request);
-
-  virtual google::cloud::Idempotency GetTaxonomy(
-      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request);
-
-  virtual google::cloud::Idempotency CreatePolicyTag(
-      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request);
-
-  virtual google::cloud::Idempotency DeletePolicyTag(
-      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request);
-
-  virtual google::cloud::Idempotency UpdatePolicyTag(
-      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request);
-
-  virtual google::cloud::Idempotency ListPolicyTags(
-      google::cloud::datacatalog::v1::ListPolicyTagsRequest request);
-
-  virtual google::cloud::Idempotency GetPolicyTag(
-      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy>
-MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy();
+/// @deprecated Use datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog

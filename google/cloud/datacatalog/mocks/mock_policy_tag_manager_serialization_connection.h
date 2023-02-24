@@ -20,50 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_MOCKS_MOCK_POLICY_TAG_MANAGER_SERIALIZATION_CONNECTION_H
 
 #include "google/cloud/datacatalog/policy_tag_manager_serialization_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/datacatalog/v1/mocks/mock_policy_tag_manager_serialization_connection.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `PolicyTagManagerSerializationConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type
- * `PolicyTagManagerSerializationClient`. To do so, construct an object of type
- * `PolicyTagManagerSerializationClient` with an instance of this class. Then
- * use the Google Test framework functions to program the behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockPolicyTagManagerSerializationConnection
-    : public datacatalog::PolicyTagManagerSerializationConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::Taxonomy>, ReplaceTaxonomy,
-      (google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>,
-      ImportTaxonomies,
-      (google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>,
-      ExportTaxonomies,
-      (google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request),
-      (override));
-};
+/// @deprecated Use
+/// datacatalog_v1_mocks::MockPolicyTagManagerSerializationConnection directly.
+using ::google::cloud::datacatalog_v1_mocks::
+    MockPolicyTagManagerSerializationConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_mocks

@@ -21,52 +21,27 @@
 
 #include "google/cloud/datacatalog/policy_tag_manager_connection.h"
 #include "google/cloud/datacatalog/policy_tag_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/datacatalog/v1/policy_tag_manager_options.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-struct PolicyTagManagerRetryPolicyOption {
-  using Type = std::shared_ptr<PolicyTagManagerRetryPolicy>;
-};
+/// @deprecated Use datacatalog_v1::PolicyTagManagerBackoffPolicyOption
+/// directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-struct PolicyTagManagerBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// datacatalog_v1::PolicyTagManagerConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-struct PolicyTagManagerConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<PolicyTagManagerConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use datacatalog_v1::PolicyTagManagerPolicyOptionList directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerPolicyOptionList;
 
-/**
- * The options applicable to PolicyTagManager.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-using PolicyTagManagerPolicyOptionList =
-    OptionList<PolicyTagManagerRetryPolicyOption,
-               PolicyTagManagerBackoffPolicyOption,
-               PolicyTagManagerConnectionIdempotencyPolicyOption>;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerRetryPolicyOption directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
