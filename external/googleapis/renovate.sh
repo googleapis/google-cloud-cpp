@@ -28,11 +28,11 @@ rm -f "${DOWNLOAD}"
 
 # Update the Bazel dependency.
 sed -i -f - bazel/google_cloud_cpp_deps.bzl <<EOT
-  /name = "com_google_googleapis",/,/sha256 = "/ {
-    s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
+  /name = "com_google_googleapis",/,/strip_prefix = "/ {
     s;/com_google_googleapis/.*.tar.gz",;/com_google_googleapis/${COMMIT}.tar.gz",;
-    s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
+    s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
     s/sha256 = ".*",/sha256 = "${SHA256}",/
+    s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
   }
 EOT
 
