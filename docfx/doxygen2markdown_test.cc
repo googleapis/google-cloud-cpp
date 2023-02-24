@@ -480,6 +480,35 @@ TEST(Doxygen2Markdown, ParagraphSimpleSect) {
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, ParagraphOrderedList) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <para id='test-node'>
+          <orderedlist>
+            <listitem><para>First item.</para></listitem>
+            <listitem>
+              <para>Second item.</para><para>With a second paragraph.</para>
+            </listitem>
+          </orderedlist>
+        </para>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+
+1. First item.
+1. Second item.
+
+   With a second paragraph.)md";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfParagraph(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, ParagraphItemizedList) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
@@ -626,6 +655,27 @@ TEST(Doxygen2Markdown, ItemizedListNested) {
 
       More about Sub 2.2
   - Sub 3)md");
+}
+
+TEST(Doxygen2Markdown, OrderedListWithParagraphs) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <orderedlist id='test-node'>
+        <listitem><para>Item 1</para><para>More about Item 1</para></listitem>
+        <listitem><para>Item 2: <computeroutput>brrr</computeroutput></para></listitem>
+        </orderedlist>
+    </doxygen>)xml";
+  auto constexpr kExpected = R"md(
+1. Item 1
+
+   More about Item 1
+1. Item 2: `brrr`)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfOrderedList(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
 }
 
 TEST(Doxygen2Markdown, VariableListSimple) {

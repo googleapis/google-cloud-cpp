@@ -504,7 +504,7 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: hruler, preformatted
   if (AppendIfProgramListing(os, ctx, node)) return true;
   // Unexpected: verbatim, indexentry
-  // Unexpected: orderedlist
+  if (AppendIfOrderedList(os, ctx, node)) return true;
   if (AppendIfItemizedList(os, ctx, node)) return true;
   if (AppendIfSimpleSect(os, ctx, node)) return true;
   // Unexpected: title
@@ -646,11 +646,26 @@ bool AppendIfHighlightRef(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
+/// Handle `orderedlist` elements.
+bool AppendIfOrderedList(std::ostream& os, MarkdownContext const& ctx,
+                         pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "orderedlist") return false;
+  auto nested = ctx;
+  nested.paragraph_indent = std::string(ctx.paragraph_indent.size(), ' ');
+  nested.item_prefix = "1. ";
+  for (auto const& child : node) {
+    if (AppendIfListItem(os, nested, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+  return true;
+}
+
 bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
                           pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "itemizedlist") return false;
   auto nested = ctx;
   nested.paragraph_indent = std::string(ctx.paragraph_indent.size(), ' ');
+  nested.item_prefix = "- ";
   for (auto const& child : node) {
     if (AppendIfListItem(os, nested, child)) continue;
     UnknownChildType(__func__, child);
@@ -662,15 +677,16 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "listitem") return false;
   // The first paragraph is the list item is indented as needed, and starts
-  // with a "- "
+  // with a the item prefix (typically "- " or "1. ").
   auto nested = ctx;
   nested.paragraph_start = "\n";
-  nested.paragraph_indent = ctx.paragraph_indent + "- ";
+  nested.paragraph_indent = ctx.paragraph_indent + ctx.item_prefix;
   for (auto const& child : node) {
     if (AppendIfParagraph(os, nested, child)) {
       // Subsequence paragraphs within the same list item require a blank line
       nested.paragraph_start = "\n\n";
-      nested.paragraph_indent = ctx.paragraph_indent + "  ";
+      nested.paragraph_indent =
+          ctx.paragraph_indent + std::string(ctx.item_prefix.size(), ' ');
       continue;
     }
     UnknownChildType(__func__, child);

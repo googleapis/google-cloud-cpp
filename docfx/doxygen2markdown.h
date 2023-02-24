@@ -28,7 +28,8 @@
  */
 struct MarkdownContext {
   std::string paragraph_start = "\n\n";
-  std::string paragraph_indent = "";
+  std::string paragraph_indent;
+  std::string item_prefix;
   std::vector<std::string> decorators;
 };
 
@@ -139,6 +140,10 @@ bool AppendIfHighlightRef(std::ostream& os, MarkdownContext const& ctx,
 /// Handle itemized lists.
 bool AppendIfItemizedList(std::ostream& os, MarkdownContext const& ctx,
                           pugi::xml_node const& node);
+
+/// Handle `orderedlist` elements.
+bool AppendIfOrderedList(std::ostream& os, MarkdownContext const& ctx,
+                         pugi::xml_node const& node);
 
 /// Handle a single list item.
 bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
