@@ -21,51 +21,27 @@
 
 #include "google/cloud/bigquery/bigquery_read_connection.h"
 #include "google/cloud/bigquery/bigquery_read_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/storage/v1/bigquery_read_options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct BigQueryReadRetryPolicyOption {
-  using Type = std::shared_ptr<BigQueryReadRetryPolicy>;
-};
+/// @deprecated Use bigquery_storage_v1::BigQueryReadBackoffPolicyOption
+/// directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryReadBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct BigQueryReadBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_storage_v1::BigQueryReadConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::bigquery_storage_v1::
+    BigQueryReadConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct BigQueryReadConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<BigQueryReadConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use bigquery_storage_v1::BigQueryReadPolicyOptionList directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryReadPolicyOptionList;
 
-/**
- * The options applicable to BigQueryRead.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using BigQueryReadPolicyOptionList =
-    OptionList<BigQueryReadRetryPolicyOption, BigQueryReadBackoffPolicyOption,
-               BigQueryReadConnectionIdempotencyPolicyOption>;
+/// @deprecated Use bigquery_storage_v1::BigQueryReadRetryPolicyOption directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryReadRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

@@ -19,174 +19,37 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_CONNECTION_H
 
-#include "google/cloud/bigquery/internal/reservation_retry_traits.h"
-#include "google/cloud/bigquery/internal/reservation_stub.h"
+#include "google/cloud/bigquery/reservation/v1/reservation_connection.h"
 #include "google/cloud/bigquery/reservation_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ReservationServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::ReservationServiceRetryTraits>;
+/// @deprecated Use bigquery_reservation_v1::MakeReservationServiceConnection
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::
+    MakeReservationServiceConnection;
 
-using ReservationServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::ReservationServiceRetryTraits>;
+/// @deprecated Use bigquery_reservation_v1::ReservationServiceConnection
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::ReservationServiceConnection;
 
-using ReservationServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::ReservationServiceRetryTraits>;
+/// @deprecated Use
+/// bigquery_reservation_v1::ReservationServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `ReservationServiceConnection` object for `ReservationServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ReservationServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ReservationServiceClient`.
- *
- * To create a concrete instance, see `MakeReservationServiceConnection()`.
- *
- * For mocking, see `bigquery_mocks::MockReservationServiceConnection`.
- */
-class ReservationServiceConnection {
- public:
-  virtual ~ReservationServiceConnection() = 0;
+/// @deprecated Use
+/// bigquery_reservation_v1::ReservationServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  CreateReservation(
-      google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
-  ListReservations(
-      google::cloud::bigquery::reservation::v1::ListReservationsRequest
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  GetReservation(
-      google::cloud::bigquery::reservation::v1::GetReservationRequest const&
-          request);
-
-  virtual Status DeleteReservation(
-      google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
-  UpdateReservation(
-      google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::
-                               CreateCapacityCommitmentRequest const& request);
-
-  virtual StreamRange<
-      google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  ListCapacityCommitments(
-      google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  GetCapacityCommitment(google::cloud::bigquery::reservation::v1::
-                            GetCapacityCommitmentRequest const& request);
-
-  virtual Status DeleteCapacityCommitment(
-      google::cloud::bigquery::reservation::v1::
-          DeleteCapacityCommitmentRequest const& request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::
-                               UpdateCapacityCommitmentRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
-  SplitCapacityCommitment(google::cloud::bigquery::reservation::v1::
-                              SplitCapacityCommitmentRequest const& request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  MergeCapacityCommitments(google::cloud::bigquery::reservation::v1::
-                               MergeCapacityCommitmentsRequest const& request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  CreateAssignment(
-      google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  ListAssignments(
-      google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request);
-
-  virtual Status DeleteAssignment(
-      google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  SearchAssignments(
-      google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
-          request);
-
-  virtual StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
-  SearchAllAssignments(
-      google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  MoveAssignment(
-      google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
-  UpdateAssignment(
-      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  GetBiReservation(
-      google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  UpdateBiReservation(google::cloud::bigquery::reservation::v1::
-                          UpdateBiReservationRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ReservationServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ReservationServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ReservationServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::ReservationServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ReservationServiceConnection`
- * created by this function.
- */
-std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
-    Options options = {});
+/// @deprecated Use bigquery_reservation_v1::ReservationServiceRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::ReservationServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

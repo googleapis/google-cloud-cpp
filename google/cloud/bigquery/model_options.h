@@ -21,51 +21,26 @@
 
 #include "google/cloud/bigquery/model_connection.h"
 #include "google/cloud/bigquery/model_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/v2/model_options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ModelServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ModelServiceRetryPolicy>;
-};
+/// @deprecated Use bigquery_v2::ModelServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_v2::ModelServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ModelServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use bigquery_v2::ModelServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_v2::
+    ModelServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ModelServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ModelServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use bigquery_v2::ModelServicePolicyOptionList directly.
+using ::google::cloud::bigquery_v2::ModelServicePolicyOptionList;
 
-/**
- * The options applicable to ModelService.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using ModelServicePolicyOptionList =
-    OptionList<ModelServiceRetryPolicyOption, ModelServiceBackoffPolicyOption,
-               ModelServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use bigquery_v2::ModelServiceRetryPolicyOption directly.
+using ::google::cloud::bigquery_v2::ModelServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

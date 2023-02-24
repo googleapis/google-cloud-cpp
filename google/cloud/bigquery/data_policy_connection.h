@@ -20,114 +20,36 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATA_POLICY_CONNECTION_H
 
 #include "google/cloud/bigquery/data_policy_connection_idempotency_policy.h"
-#include "google/cloud/bigquery/internal/data_policy_retry_traits.h"
-#include "google/cloud/bigquery/internal/data_policy_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/datapolicies/v1/data_policy_connection.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DataPolicyServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::DataPolicyServiceRetryTraits>;
+/// @deprecated Use bigquery_datapolicies_v1::MakeDataPolicyServiceConnection
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    MakeDataPolicyServiceConnection;
 
-using DataPolicyServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::DataPolicyServiceRetryTraits>;
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceConnection
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceConnection;
 
-using DataPolicyServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::DataPolicyServiceRetryTraits>;
+/// @deprecated Use
+/// bigquery_datapolicies_v1::DataPolicyServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `DataPolicyServiceConnection` object for `DataPolicyServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataPolicyServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `DataPolicyServiceClient`.
- *
- * To create a concrete instance, see `MakeDataPolicyServiceConnection()`.
- *
- * For mocking, see `bigquery_mocks::MockDataPolicyServiceConnection`.
- */
-class DataPolicyServiceConnection {
- public:
-  virtual ~DataPolicyServiceConnection() = 0;
+/// @deprecated Use
+/// bigquery_datapolicies_v1::DataPolicyServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  CreateDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  UpdateDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  RenameDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-          request);
-
-  virtual Status DeleteDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  GetDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
-  ListDataPolicies(
-      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
-          request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `DataPolicyServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * DataPolicyServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `DataPolicyServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::DataPolicyServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `DataPolicyServiceConnection` created
- * by this function.
- */
-std::shared_ptr<DataPolicyServiceConnection> MakeDataPolicyServiceConnection(
-    Options options = {});
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::DataPolicyServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

@@ -19,39 +19,25 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_READ_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_READ_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
-#include <memory>
+#include "google/cloud/bigquery/storage/v1/bigquery_read_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BigQueryReadConnectionIdempotencyPolicy {
- public:
-  virtual ~BigQueryReadConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_storage_v1::MakeDefaultBigQueryReadConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_storage_v1::
+    MakeDefaultBigQueryReadConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateReadSession(
-      google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-          request);
-
-  virtual google::cloud::Idempotency SplitReadStream(
-      google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-          request);
-};
-
-std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
-MakeDefaultBigQueryReadConnectionIdempotencyPolicy();
+/// @deprecated Use bigquery_storage_v1::BigQueryReadConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_storage_v1::
+    BigQueryReadConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google

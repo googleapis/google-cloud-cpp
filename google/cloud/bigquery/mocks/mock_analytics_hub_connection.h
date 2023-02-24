@@ -20,124 +20,17 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_ANALYTICS_HUB_CONNECTION_H
 
 #include "google/cloud/bigquery/analytics_hub_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/bigquery/analyticshub/v1/mocks/mock_analytics_hub_connection.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `AnalyticsHubServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `AnalyticsHubServiceClient`. To do
- * so, construct an object of type `AnalyticsHubServiceClient` with an instance
- * of this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockAnalyticsHubServiceConnection
-    : public bigquery::AnalyticsHubServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-      ListDataExchanges,
-      (google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-      ListOrgDataExchanges,
-      (google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-      GetDataExchange,
-      (google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-              CreateDataExchange,
-              (google::cloud::bigquery::analyticshub::v1::
-                   CreateDataExchangeRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>,
-              UpdateDataExchange,
-              (google::cloud::bigquery::analyticshub::v1::
-                   UpdateDataExchangeRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteDataExchange,
-              (google::cloud::bigquery::analyticshub::v1::
-                   DeleteDataExchangeRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>,
-      ListListings,
-      (google::cloud::bigquery::analyticshub::v1::ListListingsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>, GetListing,
-      (google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>,
-      CreateListing,
-      (google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>,
-      UpdateListing,
-      (google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteListing,
-      (google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>,
-      SubscribeListing,
-      (google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-};
+/// @deprecated Use
+/// bigquery_analyticshub_v1_mocks::MockAnalyticsHubServiceConnection directly.
+using ::google::cloud::bigquery_analyticshub_v1_mocks::
+    MockAnalyticsHubServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

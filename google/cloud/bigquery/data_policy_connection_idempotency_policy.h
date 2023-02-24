@@ -19,61 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATA_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATA_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/bigquery/datapolicies/v1/datapolicy.grpc.pb.h>
-#include <memory>
+#include "google/cloud/bigquery/datapolicies/v1/data_policy_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DataPolicyServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~DataPolicyServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_datapolicies_v1::MakeDefaultDataPolicyServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    MakeDefaultDataPolicyServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<DataPolicyServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency RenameDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetDataPolicy(
-      google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListDataPolicies(
-      google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest
-          request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<DataPolicyServiceConnectionIdempotencyPolicy>
-MakeDefaultDataPolicyServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

@@ -19,54 +19,35 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_OPTIONS_H
 
+#include "google/cloud/bigquery/reservation/v1/reservation_options.h"
 #include "google/cloud/bigquery/reservation_connection.h"
 #include "google/cloud/bigquery/reservation_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ReservationServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ReservationServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// bigquery_reservation_v1::ReservationServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ReservationServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_reservation_v1::ReservationServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ReservationServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ReservationServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use bigquery_reservation_v1::ReservationServicePolicyOptionList
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServicePolicyOptionList;
 
-/**
- * The options applicable to ReservationService.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using ReservationServicePolicyOptionList =
-    OptionList<ReservationServiceRetryPolicyOption,
-               ReservationServiceBackoffPolicyOption,
-               ReservationServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use bigquery_reservation_v1::ReservationServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::bigquery_reservation_v1::
+    ReservationServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

@@ -19,54 +19,33 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_OPTIONS_H
 
+#include "google/cloud/bigquery/migration/v2/migration_options.h"
 #include "google/cloud/bigquery/migration_connection.h"
 #include "google/cloud/bigquery/migration_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct MigrationServiceRetryPolicyOption {
-  using Type = std::shared_ptr<MigrationServiceRetryPolicy>;
-};
+/// @deprecated Use bigquery_migration_v2::MigrationServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::bigquery_migration_v2::
+    MigrationServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct MigrationServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_migration_v2::MigrationServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_migration_v2::
+    MigrationServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct MigrationServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<MigrationServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use bigquery_migration_v2::MigrationServicePolicyOptionList
+/// directly.
+using ::google::cloud::bigquery_migration_v2::MigrationServicePolicyOptionList;
 
-/**
- * The options applicable to MigrationService.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using MigrationServicePolicyOptionList =
-    OptionList<MigrationServiceRetryPolicyOption,
-               MigrationServiceBackoffPolicyOption,
-               MigrationServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use bigquery_migration_v2::MigrationServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::bigquery_migration_v2::MigrationServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

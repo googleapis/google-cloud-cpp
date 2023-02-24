@@ -19,79 +19,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_MIGRATION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_MIGRATION_CONNECTION_H
 
+#include "google/cloud/bigquery/migration/v2/mocks/mock_migration_connection.h"
 #include "google/cloud/bigquery/migration_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `MigrationServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `MigrationServiceClient`. To do so,
- * construct an object of type `MigrationServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockMigrationServiceConnection
-    : public bigquery::MigrationServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
-      CreateMigrationWorkflow,
-      (google::cloud::bigquery::migration::v2::
-           CreateMigrationWorkflowRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
-      GetMigrationWorkflow,
-      (google::cloud::bigquery::migration::v2::
-           GetMigrationWorkflowRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>,
-      ListMigrationWorkflows,
-      (google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest
-           request),
-      (override));
-
-  MOCK_METHOD(Status, DeleteMigrationWorkflow,
-              (google::cloud::bigquery::migration::v2::
-                   DeleteMigrationWorkflowRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, StartMigrationWorkflow,
-              (google::cloud::bigquery::migration::v2::
-                   StartMigrationWorkflowRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>,
-      GetMigrationSubtask,
-      (google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>,
-      ListMigrationSubtasks,
-      (google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest
-           request),
-      (override));
-};
+/// @deprecated Use bigquery_migration_v2_mocks::MockMigrationServiceConnection
+/// directly.
+using ::google::cloud::bigquery_migration_v2_mocks::
+    MockMigrationServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks
