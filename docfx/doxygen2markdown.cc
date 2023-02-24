@@ -677,7 +677,7 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
                       pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "listitem") return false;
   // The first paragraph is the list item is indented as needed, and starts
-  // with a the item prefix (typically "- " or "1. ").
+  // with the item prefix (typically "- " or "1. ").
   auto nested = ctx;
   nested.paragraph_start = "\n";
   nested.paragraph_indent = ctx.paragraph_indent + ctx.item_prefix;

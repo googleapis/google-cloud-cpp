@@ -661,8 +661,8 @@ TEST(Doxygen2Markdown, OrderedListWithParagraphs) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
         <orderedlist id='test-node'>
-        <listitem><para>Item 1</para><para>More about Item 1</para></listitem>
-        <listitem><para>Item 2: <computeroutput>brrr</computeroutput></para></listitem>
+          <listitem><para>Item 1</para><para>More about Item 1</para></listitem>
+          <listitem><para>Item 2: <computeroutput>brrr</computeroutput></para></listitem>
         </orderedlist>
     </doxygen>)xml";
   auto constexpr kExpected = R"md(
