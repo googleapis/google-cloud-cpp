@@ -21,51 +21,29 @@
 
 #include "google/cloud/bigquery/bigquery_write_connection.h"
 #include "google/cloud/bigquery/bigquery_write_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/storage/v1/bigquery_write_options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct BigQueryWriteRetryPolicyOption {
-  using Type = std::shared_ptr<BigQueryWriteRetryPolicy>;
-};
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteBackoffPolicyOption
+/// directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWriteBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct BigQueryWriteBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_storage_v1::
+    BigQueryWriteConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct BigQueryWriteConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<BigQueryWriteConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use bigquery_storage_v1::BigQueryWritePolicyOptionList directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWritePolicyOptionList;
 
-/**
- * The options applicable to BigQueryWrite.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using BigQueryWritePolicyOptionList =
-    OptionList<BigQueryWriteRetryPolicyOption, BigQueryWriteBackoffPolicyOption,
-               BigQueryWriteConnectionIdempotencyPolicyOption>;
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteRetryPolicyOption
+/// directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWriteRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

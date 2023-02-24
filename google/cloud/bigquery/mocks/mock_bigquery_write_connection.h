@@ -20,72 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_BIGQUERY_WRITE_CONNECTION_H
 
 #include "google/cloud/bigquery/bigquery_write_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/bigquery/storage/v1/mocks/mock_bigquery_write_connection.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `BigQueryWriteConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `BigQueryWriteClient`. To do so,
- * construct an object of type `BigQueryWriteClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockBigQueryWriteConnection : public bigquery::BigQueryWriteConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
-      CreateWriteStream,
-      (google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-                   google::cloud::bigquery::storage::v1::AppendRowsRequest,
-                   google::cloud::bigquery::storage::v1::AppendRowsResponse>>),
-              AsyncAppendRows, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,
-      GetWriteStream,
-      (google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<
-          google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>,
-      FinalizeWriteStream,
-      (google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::storage::v1::
-                           BatchCommitWriteStreamsResponse>,
-              BatchCommitWriteStreams,
-              (google::cloud::bigquery::storage::v1::
-                   BatchCommitWriteStreamsRequest const& request),
-              (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>,
-      FlushRows,
-      (google::cloud::bigquery::storage::v1::FlushRowsRequest const& request),
-      (override));
-};
+/// @deprecated Use bigquery_storage_v1_mocks::MockBigQueryWriteConnection
+/// directly.
+using ::google::cloud::bigquery_storage_v1_mocks::MockBigQueryWriteConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

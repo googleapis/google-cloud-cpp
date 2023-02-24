@@ -20,104 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_WRITE_CONNECTION_H
 
 #include "google/cloud/bigquery/bigquery_write_connection_idempotency_policy.h"
-#include "google/cloud/bigquery/internal/bigquery_write_retry_traits.h"
-#include "google/cloud/bigquery/internal/bigquery_write_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/storage/v1/bigquery_write_connection.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using BigQueryWriteRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::BigQueryWriteRetryTraits>;
+/// @deprecated Use bigquery_storage_v1::MakeBigQueryWriteConnection directly.
+using ::google::cloud::bigquery_storage_v1::MakeBigQueryWriteConnection;
 
-using BigQueryWriteLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::BigQueryWriteRetryTraits>;
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteConnection directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWriteConnection;
 
-using BigQueryWriteLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::BigQueryWriteRetryTraits>;
+/// @deprecated Use
+/// bigquery_storage_v1::BigQueryWriteLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::bigquery_storage_v1::
+    BigQueryWriteLimitedErrorCountRetryPolicy;
 
-/**
- * The `BigQueryWriteConnection` object for `BigQueryWriteClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `BigQueryWriteClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `BigQueryWriteClient`.
- *
- * To create a concrete instance, see `MakeBigQueryWriteConnection()`.
- *
- * For mocking, see `bigquery_mocks::MockBigQueryWriteConnection`.
- */
-class BigQueryWriteConnection {
- public:
-  virtual ~BigQueryWriteConnection() = 0;
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWriteLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  CreateWriteStream(
-      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-          request);
-
-  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::cloud::bigquery::storage::v1::AppendRowsRequest,
-      google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-  AsyncAppendRows();
-
-  virtual StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
-  GetWriteStream(
-      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-          request);
-
-  virtual StatusOr<
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
-  FinalizeWriteStream(
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-          request);
-
-  virtual StatusOr<
-      google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
-  BatchCommitWriteStreams(google::cloud::bigquery::storage::v1::
-                              BatchCommitWriteStreamsRequest const& request);
-
-  virtual StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
-  FlushRows(
-      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `BigQueryWriteConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of BigQueryWriteClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `BigQueryWriteConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::BigQueryWritePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `BigQueryWriteConnection` created by
- * this function.
- */
-std::shared_ptr<BigQueryWriteConnection> MakeBigQueryWriteConnection(
-    Options options = {});
+/// @deprecated Use bigquery_storage_v1::BigQueryWriteRetryPolicy directly.
+using ::google::cloud::bigquery_storage_v1::BigQueryWriteRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

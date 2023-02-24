@@ -93,29 +93,6 @@ Status ConnectionGenerator::GenerateHeader() {
                 // clang-format on
   );
 
-  // TODO(#8234): This is a special case for backwards compatibility of the
-  //     streaming update function.
-  if (vars().at("service_name") == "BigQueryRead") {
-    // streaming updater functions
-    for (auto const& method : methods()) {
-      HeaderPrintMethod(
-          method,
-          {MethodPattern(
-              {// clang-format off
-     {"\n"
-      "GOOGLE_CLOUD_CPP_DEPRECATED(\n"
-      "    \"applications should not need this.\"\n"
-      "    \" Please file a bug at https://github.com/googleapis/google-cloud-cpp\"\n"
-      "    \" if you do.\")"
-      "void $service_name$$method_name$StreamingUpdater(\n"
-      "    $response_type$ const& response,\n"
-      "    $request_type$& request);\n"}
-       }, IsStreamingRead)},
-               // clang-format on
-          __FILE__, __LINE__);
-    }
-  }
-
   // Abstract interface Connection base class
   HeaderPrint(R"""(
 /**
@@ -296,17 +273,6 @@ Status ConnectionGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  if (vars().at("service_name") == "BigQueryRead") {
-    CcPrint(R"""(
-void BigQueryReadReadRowsStreamingUpdater(
-    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
-    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
-  return bigquery_internal::BigQueryReadReadRowsStreamingUpdater(response,
-                                                                 request);
-}
-)""");
-  }
-
   CcPrint(R"""(
 $connection_class_name$::~$connection_class_name$() = default;
 )""");
@@ -465,6 +431,21 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   }
 
   CcCloseNamespaces();
+
+  // TODO(#8234): This is a special case for backwards compatibility of the
+  //     streaming update function.
+  if (vars().at("service_name") == "BigQueryRead") {
+    CcOpenForwardingNamespaces();
+    CcPrint(R"""(
+void BigQueryReadReadRowsStreamingUpdater(
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
+  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(response,
+                                                                 request);
+}
+)""");
+    CcCloseNamespaces();
+  }
 
   return {};
 }

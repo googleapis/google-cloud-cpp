@@ -19,109 +19,36 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_CONNECTION_H
 
+#include "google/cloud/bigquery/connection/v1/connection_connection.h"
 #include "google/cloud/bigquery/connection_connection_idempotency_policy.h"
-#include "google/cloud/bigquery/internal/connection_retry_traits.h"
-#include "google/cloud/bigquery/internal/connection_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ConnectionServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::ConnectionServiceRetryTraits>;
+/// @deprecated Use bigquery_connection_v1::MakeConnectionServiceConnection
+/// directly.
+using ::google::cloud::bigquery_connection_v1::MakeConnectionServiceConnection;
 
-using ConnectionServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::ConnectionServiceRetryTraits>;
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceConnection
+/// directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServiceConnection;
 
-using ConnectionServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::ConnectionServiceRetryTraits>;
+/// @deprecated Use
+/// bigquery_connection_v1::ConnectionServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_connection_v1::
+    ConnectionServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `ConnectionServiceConnection` object for `ConnectionServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ConnectionServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `ConnectionServiceClient`.
- *
- * To create a concrete instance, see `MakeConnectionServiceConnection()`.
- *
- * For mocking, see `bigquery_mocks::MockConnectionServiceConnection`.
- */
-class ConnectionServiceConnection {
- public:
-  virtual ~ConnectionServiceConnection() = 0;
+/// @deprecated Use
+/// bigquery_connection_v1::ConnectionServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::bigquery_connection_v1::
+    ConnectionServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  CreateConnection(
-      google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  GetConnection(
-      google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-          request);
-
-  virtual StreamRange<google::cloud::bigquery::connection::v1::Connection>
-  ListConnections(
-      google::cloud::bigquery::connection::v1::ListConnectionsRequest request);
-
-  virtual StatusOr<google::cloud::bigquery::connection::v1::Connection>
-  UpdateConnection(
-      google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-          request);
-
-  virtual Status DeleteConnection(
-      google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-          request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `ConnectionServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * ConnectionServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ConnectionServiceConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::ConnectionServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ConnectionServiceConnection` created
- * by this function.
- */
-std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
-    Options options = {});
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_connection_v1::ConnectionServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

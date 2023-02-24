@@ -66,6 +66,29 @@ using ::google::cloud::$product_namespace$::$limited_time_retry_policy_name$;
 using ::google::cloud::$product_namespace$::$retry_policy_name$;
 )""");
 
+  // TODO(#8234): This is a special case for backwards compatibility of the
+  //     streaming update function.
+  if (vars().at("service_name") == "BigQueryRead") {
+    // streaming updater functions
+    for (auto const& method : methods()) {
+      HeaderPrintMethod(
+          method,
+          {MethodPattern(
+              {// clang-format off
+     {"\n"
+      "GOOGLE_CLOUD_CPP_DEPRECATED(\n"
+      "    \"applications should not need this.\"\n"
+      "    \" Please file a bug at https://github.com/googleapis/google-cloud-cpp\"\n"
+      "    \" if you do.\")"
+      "void $service_name$$method_name$StreamingUpdater(\n"
+      "    $response_type$ const& response,\n"
+      "    $request_type$& request);\n"}
+       }, IsStreamingRead)},
+               // clang-format on
+          __FILE__, __LINE__);
+    }
+  }
+
   HeaderCloseNamespaces();
   // close header guard
   HeaderPrint(R"""(

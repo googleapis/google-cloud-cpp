@@ -19,47 +19,23 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_WRITE_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_WRITE_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
-#include <memory>
+#include "google/cloud/bigquery/storage/v1/bigquery_write_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class BigQueryWriteConnectionIdempotencyPolicy {
- public:
-  virtual ~BigQueryWriteConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_storage_v1::MakeDefaultBigQueryWriteConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_storage_v1::
+    MakeDefaultBigQueryWriteConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateWriteStream(
-      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetWriteStream(
-      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-          request);
-
-  virtual google::cloud::Idempotency FinalizeWriteStream(
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
-          request);
-
-  virtual google::cloud::Idempotency BatchCommitWriteStreams(
-      google::cloud::bigquery::storage::v1::
-          BatchCommitWriteStreamsRequest const& request);
-
-  virtual google::cloud::Idempotency FlushRows(
-      google::cloud::bigquery::storage::v1::FlushRowsRequest const& request);
-};
-
-std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
-MakeDefaultBigQueryWriteConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_storage_v1::BigQueryWriteConnectionIdempotencyPolicy directly.
+using ::google::cloud::bigquery_storage_v1::
+    BigQueryWriteConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

@@ -19,80 +19,18 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_CONNECTION_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_CONNECTION_CONNECTION_H
 
+#include "google/cloud/bigquery/connection/v1/mocks/mock_connection_connection.h"
 #include "google/cloud/bigquery/connection_connection.h"
-#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ConnectionServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ConnectionServiceClient`. To do so,
- * construct an object of type `ConnectionServiceClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockConnectionServiceConnection
-    : public bigquery::ConnectionServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
-      CreateConnection,
-      (google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
-      GetConnection,
-      (google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::connection::v1::Connection>,
-      ListConnections,
-      (google::cloud::bigquery::connection::v1::ListConnectionsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::connection::v1::Connection>,
-      UpdateConnection,
-      (google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      Status, DeleteConnection,
-      (google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (google::iam::v1::GetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (google::iam::v1::SetIamPolicyRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
-              TestIamPermissions,
-              (google::iam::v1::TestIamPermissionsRequest const& request),
-              (override));
-};
+/// @deprecated Use
+/// bigquery_connection_v1_mocks::MockConnectionServiceConnection directly.
+using ::google::cloud::bigquery_connection_v1_mocks::
+    MockConnectionServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

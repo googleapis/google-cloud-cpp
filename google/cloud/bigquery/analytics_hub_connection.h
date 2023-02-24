@@ -20,140 +20,37 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICS_HUB_CONNECTION_H
 
 #include "google/cloud/bigquery/analytics_hub_connection_idempotency_policy.h"
-#include "google/cloud/bigquery/internal/analytics_hub_retry_traits.h"
-#include "google/cloud/bigquery/internal/analytics_hub_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AnalyticsHubServiceRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::AnalyticsHubServiceRetryTraits>;
+/// @deprecated Use bigquery_analyticshub_v1::MakeAnalyticsHubServiceConnection
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    MakeAnalyticsHubServiceConnection;
 
-using AnalyticsHubServiceLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::AnalyticsHubServiceRetryTraits>;
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceConnection
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceConnection;
 
-using AnalyticsHubServiceLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::AnalyticsHubServiceRetryTraits>;
+/// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServiceLimitedErrorCountRetryPolicy;
 
-/**
- * The `AnalyticsHubServiceConnection` object for `AnalyticsHubServiceClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AnalyticsHubServiceClient`. This allows users to inject custom
- * behavior (e.g., with a Google Mock object) when writing tests that use
- * objects of type `AnalyticsHubServiceClient`.
- *
- * To create a concrete instance, see `MakeAnalyticsHubServiceConnection()`.
- *
- * For mocking, see `bigquery_mocks::MockAnalyticsHubServiceConnection`.
- */
-class AnalyticsHubServiceConnection {
- public:
-  virtual ~AnalyticsHubServiceConnection() = 0;
+/// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServiceLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServiceLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  ListDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
-          request);
-
-  virtual StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  ListOrgDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  GetDataExchange(
-      google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  CreateDataExchange(google::cloud::bigquery::analyticshub::v1::
-                         CreateDataExchangeRequest const& request);
-
-  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
-  UpdateDataExchange(google::cloud::bigquery::analyticshub::v1::
-                         UpdateDataExchangeRequest const& request);
-
-  virtual Status DeleteDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteDataExchangeRequest const& request);
-
-  virtual StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
-  ListListings(
-      google::cloud::bigquery::analyticshub::v1::ListListingsRequest request);
-
-  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  GetListing(google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-                 request);
-
-  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  CreateListing(
-      google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
-  UpdateListing(
-      google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-          request);
-
-  virtual Status DeleteListing(
-      google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-          request);
-
-  virtual StatusOr<
-      google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
-  SubscribeListing(
-      google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-          request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `AnalyticsHubServiceConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of
- * AnalyticsHubServiceClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `AnalyticsHubServiceConnection`. Expected options are any of the
- * types in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::AnalyticsHubServicePolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `AnalyticsHubServiceConnection`
- * created by this function.
- */
-std::shared_ptr<AnalyticsHubServiceConnection>
-MakeAnalyticsHubServiceConnection(Options options = {});
+/// @deprecated Use bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

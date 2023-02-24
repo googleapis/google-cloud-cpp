@@ -21,52 +21,33 @@
 
 #include "google/cloud/bigquery/data_transfer_connection.h"
 #include "google/cloud/bigquery/data_transfer_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/datatransfer/v1/data_transfer_options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct DataTransferServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DataTransferServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct DataTransferServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct DataTransferServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DataTransferServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServicePolicyOptionList directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServicePolicyOptionList;
 
-/**
- * The options applicable to DataTransferService.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using DataTransferServicePolicyOptionList =
-    OptionList<DataTransferServiceRetryPolicyOption,
-               DataTransferServiceBackoffPolicyOption,
-               DataTransferServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServiceRetryPolicyOption directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

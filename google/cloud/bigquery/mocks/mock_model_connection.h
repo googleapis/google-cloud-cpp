@@ -20,49 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_MODEL_CONNECTION_H
 
 #include "google/cloud/bigquery/model_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/bigquery/v2/mocks/mock_model_connection.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ModelServiceConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ModelServiceClient`. To do so,
- * construct an object of type `ModelServiceClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockModelServiceConnection : public bigquery::ModelServiceConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Model>, GetModel,
-              (google::cloud::bigquery::v2::GetModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::ListModelsResponse>,
-              ListModels,
-              (google::cloud::bigquery::v2::ListModelsRequest const& request),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::cloud::bigquery::v2::Model>, PatchModel,
-              (google::cloud::bigquery::v2::PatchModelRequest const& request),
-              (override));
-
-  MOCK_METHOD(Status, DeleteModel,
-              (google::cloud::bigquery::v2::DeleteModelRequest const& request),
-              (override));
-};
+/// @deprecated Use bigquery_v2_mocks::MockModelServiceConnection directly.
+using ::google::cloud::bigquery_v2_mocks::MockModelServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

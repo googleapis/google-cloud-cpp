@@ -19,88 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATA_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATA_TRANSFER_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
-#include <memory>
+#include "google/cloud/bigquery/datatransfer/v1/data_transfer_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class DataTransferServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~DataTransferServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_datatransfer_v1::MakeDefaultDataTransferServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    MakeDefaultDataTransferServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency GetDataSource(
-      google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListDataSources(
-      google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest
-          request);
-
-  virtual google::cloud::Idempotency CreateTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::
-          CreateTransferConfigRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::
-          UpdateTransferConfigRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::
-          DeleteTransferConfigRequest const& request);
-
-  virtual google::cloud::Idempotency GetTransferConfig(
-      google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListTransferConfigs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest
-          request);
-
-  virtual google::cloud::Idempotency ScheduleTransferRuns(
-      google::cloud::bigquery::datatransfer::v1::
-          ScheduleTransferRunsRequest const& request);
-
-  virtual google::cloud::Idempotency StartManualTransferRuns(
-      google::cloud::bigquery::datatransfer::v1::
-          StartManualTransferRunsRequest const& request);
-
-  virtual google::cloud::Idempotency GetTransferRun(
-      google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteTransferRun(
-      google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
-          request);
-
-  virtual google::cloud::Idempotency ListTransferRuns(
-      google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest
-          request);
-
-  virtual google::cloud::Idempotency ListTransferLogs(
-      google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest
-          request);
-
-  virtual google::cloud::Idempotency CheckValidCreds(
-      google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
-          request);
-
-  virtual google::cloud::Idempotency EnrollDataSources(
-      google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
-          request);
-};
-
-std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
-MakeDefaultDataTransferServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_datatransfer_v1::DataTransferServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_datatransfer_v1::
+    DataTransferServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

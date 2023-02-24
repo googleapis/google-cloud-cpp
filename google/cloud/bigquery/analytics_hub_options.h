@@ -21,52 +21,33 @@
 
 #include "google/cloud/bigquery/analytics_hub_connection.h"
 #include "google/cloud/bigquery/analytics_hub_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/analyticshub/v1/analytics_hub_options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct AnalyticsHubServiceRetryPolicyOption {
-  using Type = std::shared_ptr<AnalyticsHubServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct AnalyticsHubServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct AnalyticsHubServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServicePolicyOptionList directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServicePolicyOptionList;
 
-/**
- * The options applicable to AnalyticsHubService.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using AnalyticsHubServicePolicyOptionList =
-    OptionList<AnalyticsHubServiceRetryPolicyOption,
-               AnalyticsHubServiceBackoffPolicyOption,
-               AnalyticsHubServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicyOption directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

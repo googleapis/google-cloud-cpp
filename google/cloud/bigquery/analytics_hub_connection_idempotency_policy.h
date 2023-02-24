@@ -19,84 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICS_HUB_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ANALYTICS_HUB_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
-#include <memory>
+#include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class AnalyticsHubServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~AnalyticsHubServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_analyticshub_v1::MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ListDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest
-          request);
-
-  virtual google::cloud::Idempotency ListOrgDataExchanges(
-      google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesRequest
-          request);
-
-  virtual google::cloud::Idempotency GetDataExchange(
-      google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          CreateDataExchangeRequest const& request);
-
-  virtual google::cloud::Idempotency UpdateDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          UpdateDataExchangeRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteDataExchange(
-      google::cloud::bigquery::analyticshub::v1::
-          DeleteDataExchangeRequest const& request);
-
-  virtual google::cloud::Idempotency ListListings(
-      google::cloud::bigquery::analyticshub::v1::ListListingsRequest request);
-
-  virtual google::cloud::Idempotency GetListing(
-      google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-          request);
-
-  virtual google::cloud::Idempotency CreateListing(
-      google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-          request);
-
-  virtual google::cloud::Idempotency UpdateListing(
-      google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-          request);
-
-  virtual google::cloud::Idempotency DeleteListing(
-      google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-          request);
-
-  virtual google::cloud::Idempotency SubscribeListing(
-      google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
-          request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
-MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_analyticshub_v1::AnalyticsHubServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_analyticshub_v1::
+    AnalyticsHubServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

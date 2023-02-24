@@ -19,54 +19,35 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_OPTIONS_H
 
+#include "google/cloud/bigquery/connection/v1/connection_options.h"
 #include "google/cloud/bigquery/connection_connection.h"
 #include "google/cloud/bigquery/connection_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ConnectionServiceRetryPolicyOption {
-  using Type = std::shared_ptr<ConnectionServiceRetryPolicy>;
-};
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceBackoffPolicyOption
+/// directly.
+using ::google::cloud::bigquery_connection_v1::
+    ConnectionServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ConnectionServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_connection_v1::ConnectionServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_connection_v1::
+    ConnectionServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct ConnectionServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ConnectionServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use bigquery_connection_v1::ConnectionServicePolicyOptionList
+/// directly.
+using ::google::cloud::bigquery_connection_v1::
+    ConnectionServicePolicyOptionList;
 
-/**
- * The options applicable to ConnectionService.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using ConnectionServicePolicyOptionList =
-    OptionList<ConnectionServiceRetryPolicyOption,
-               ConnectionServiceBackoffPolicyOption,
-               ConnectionServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use bigquery_connection_v1::ConnectionServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::bigquery_connection_v1::
+    ConnectionServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

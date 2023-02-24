@@ -19,40 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MODEL_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MODEL_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/bigquery/v2/model.grpc.pb.h>
-#include <memory>
+#include "google/cloud/bigquery/v2/model_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ModelServiceConnectionIdempotencyPolicy {
- public:
-  virtual ~ModelServiceConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// bigquery_v2::MakeDefaultModelServiceConnectionIdempotencyPolicy directly.
+using ::google::cloud::bigquery_v2::
+    MakeDefaultModelServiceConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ModelServiceConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency GetModel(
-      google::cloud::bigquery::v2::GetModelRequest const& request);
-
-  virtual google::cloud::Idempotency ListModels(
-      google::cloud::bigquery::v2::ListModelsRequest const& request);
-
-  virtual google::cloud::Idempotency PatchModel(
-      google::cloud::bigquery::v2::PatchModelRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteModel(
-      google::cloud::bigquery::v2::DeleteModelRequest const& request);
-};
-
-std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
-MakeDefaultModelServiceConnectionIdempotencyPolicy();
+/// @deprecated Use bigquery_v2::ModelServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::bigquery_v2::ModelServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery

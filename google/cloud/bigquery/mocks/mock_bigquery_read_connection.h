@@ -20,52 +20,16 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MOCKS_MOCK_BIGQUERY_READ_CONNECTION_H
 
 #include "google/cloud/bigquery/bigquery_read_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/bigquery/storage/v1/mocks/mock_bigquery_read_connection.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `BigQueryReadConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `BigQueryReadClient`. To do so,
- * construct an object of type `BigQueryReadClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockBigQueryReadConnection : public bigquery::BigQueryReadConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::ReadSession>,
-      CreateReadSession,
-      (google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>,
-      ReadRows,
-      (google::cloud::bigquery::storage::v1::ReadRowsRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>,
-      SplitReadStream,
-      (google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-           request),
-      (override));
-};
+/// @deprecated Use bigquery_storage_v1_mocks::MockBigQueryReadConnection
+/// directly.
+using ::google::cloud::bigquery_storage_v1_mocks::MockBigQueryReadConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_mocks

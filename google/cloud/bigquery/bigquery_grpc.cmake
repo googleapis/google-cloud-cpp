@@ -14,10 +14,31 @@
 # limitations under the License.
 # ~~~
 
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs
+    ""
+    "analyticshub/v1/"
+    "connection/v1/"
+    "datapolicies/v1/"
+    "datatransfer/v1/"
+    "migration/v2/"
+    "reservation/v1/"
+    "storage/v1/"
+    "v2/")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "${dir}")
+    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND mocks_globs "${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "bigquery_${ns}internal")
+    list(APPEND DOXYGEN_EXAMPLE_PATH
+         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+endforeach ()
+
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+    ${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_bigquery ${source_files})
 target_include_directories(
@@ -48,7 +69,7 @@ add_library(google-cloud-cpp::bigquery ALIAS google_cloud_cpp_bigquery)
 file(
     GLOB relative_mock_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "mocks/*.h")
+    ${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
@@ -147,7 +168,9 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    google_cloud_cpp_add_samples_relative("bigquery" "samples/")
+    foreach (dir IN LISTS service_dirs)
+        google_cloud_cpp_add_samples_relative("bigquery" "${dir}samples/")
+    endforeach ()
     target_link_libraries(bigquery_samples_mock_bigquery_read
                           PRIVATE GTest::gmock_main)
 endif ()

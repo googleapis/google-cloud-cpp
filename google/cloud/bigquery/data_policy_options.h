@@ -21,52 +21,33 @@
 
 #include "google/cloud/bigquery/data_policy_connection.h"
 #include "google/cloud/bigquery/data_policy_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/bigquery/datapolicies/v1/data_policy_options.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct DataPolicyServiceRetryPolicyOption {
-  using Type = std::shared_ptr<DataPolicyServiceRetryPolicy>;
-};
+/// @deprecated Use
+/// bigquery_datapolicies_v1::DataPolicyServiceBackoffPolicyOption directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct DataPolicyServiceBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// bigquery_datapolicies_v1::DataPolicyServiceConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-bigquery-options
- */
-struct DataPolicyServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DataPolicyServiceConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServicePolicyOptionList
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServicePolicyOptionList;
 
-/**
- * The options applicable to DataPolicyService.
- *
- * @ingroup google-cloud-bigquery-options
- */
-using DataPolicyServicePolicyOptionList =
-    OptionList<DataPolicyServiceRetryPolicyOption,
-               DataPolicyServiceBackoffPolicyOption,
-               DataPolicyServiceConnectionIdempotencyPolicyOption>;
+/// @deprecated Use bigquery_datapolicies_v1::DataPolicyServiceRetryPolicyOption
+/// directly.
+using ::google::cloud::bigquery_datapolicies_v1::
+    DataPolicyServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
