@@ -31,14 +31,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * - If the application calls `StatusOr<T>::value()`, and the library was
  *   compiled with exceptions disabled, and the `StatusOr<T>` contains an error,
- *   *then* the function throw an exception to report the error and the function
+ *   *then* the function throws an exception to report the error as the function
  *   cannot return a valid value.  Applications that disable exceptions
  *   should query the `StatusOr<T>` status (using `.ok()` or `.status()`) and
  *   avoid calling `.value()` if the `StatusOr<T>` is holding an error.
  * - If the application calls `future<T>::get()`, the library was compiled with
  *   exceptions disabled, and (somehow) the future is satisfied with an
  *   exception. Note that the library APIs typically return
- *   `future<StatusOr<T>>` to avoid this problem, but the application may be
+ *   `future<StatusOr<T>>` to avoid this problem, but the application may
  *   have created `future<T>` and `promise<T>` pairs in their own code.
  *
  * In these cases there is no mechanism to return the error. The library cannot
