@@ -16,25 +16,33 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
+service_dirs = [
+    "",
+    "analyticshub/v1/",
+    "connection/v1/",
+    "datapolicies/v1/",
+    "datatransfer/v1/",
+    "migration/v2/",
+    "reservation/v1/",
+    "storage/v1/",
+    "v2/",
+]
+
+src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+
 filegroup(
     name = "srcs",
-    srcs = glob([
-        "*.cc",
-        "internal/*.cc",
-    ]),
+    srcs = glob([d + "*.cc" for d in src_dirs]),
 )
 
 filegroup(
     name = "hdrs",
-    srcs = glob([
-        "*.h",
-        "internal/*.h",
-    ]),
+    srcs = glob([d + "*.h" for d in src_dirs]),
 )
 
 filegroup(
     name = "mocks",
-    srcs = glob(["mocks/*.h"]),
+    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
 )
 
 cc_library(
@@ -78,7 +86,7 @@ mock_samples_glob = ["samples/mock_*.cc"]
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for sample in glob(
-    include = ["samples/*.cc"],
+    include = [d + "samples/*.cc" for d in service_dirs],
     exclude = mock_samples_glob,
 )]
 
