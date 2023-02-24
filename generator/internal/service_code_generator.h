@@ -79,6 +79,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
       NamespaceType ns_type = NamespaceType::kNormal);
   void HeaderCloseNamespaces();
   Status CcOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
+  Status CcOpenForwardingNamespaces(
+      NamespaceType ns_type = NamespaceType::kNormal);
   void CcCloseNamespaces();
 
   void HeaderPrint(std::string const& text);

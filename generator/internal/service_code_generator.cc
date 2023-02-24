@@ -290,6 +290,11 @@ Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   return OpenNamespaces(cc_, ns_type, "product_path");
 }
 
+Status ServiceCodeGenerator::CcOpenForwardingNamespaces(NamespaceType ns_type) {
+  CcPrint("\n");
+  return OpenNamespaces(cc_, ns_type, "forwarding_product_path");
+}
+
 void ServiceCodeGenerator::CcCloseNamespaces() {
   CcPrint("\n");
   CloseNamespaces(cc_, false);
