@@ -19,53 +19,26 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_OPTIONS_H
 
+#include "google/cloud/iam/admin/v1/iam_options.h"
 #include "google/cloud/iam/iam_connection.h"
 #include "google/cloud/iam/iam_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
 
 namespace google {
 namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-iam-options
- */
-struct IAMRetryPolicyOption {
-  using Type = std::shared_ptr<IAMRetryPolicy>;
-};
+/// @deprecated Use iam_admin_v1::IAMBackoffPolicyOption directly.
+using ::google::cloud::iam_admin_v1::IAMBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-iam-options
- */
-struct IAMBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use iam_admin_v1::IAMConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::iam_admin_v1::IAMConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-iam-options
- */
-struct IAMConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<IAMConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use iam_admin_v1::IAMPolicyOptionList directly.
+using ::google::cloud::iam_admin_v1::IAMPolicyOptionList;
 
-/**
- * The options applicable to IAM.
- *
- * @ingroup google-cloud-iam-options
- */
-using IAMPolicyOptionList =
-    OptionList<IAMRetryPolicyOption, IAMBackoffPolicyOption,
-               IAMConnectionIdempotencyPolicyOption>;
+/// @deprecated Use iam_admin_v1::IAMRetryPolicyOption directly.
+using ::google::cloud::iam_admin_v1::IAMRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam

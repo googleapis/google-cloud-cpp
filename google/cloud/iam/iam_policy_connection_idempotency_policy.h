@@ -19,36 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_IAM_POLICY_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/iam/v1/iam_policy.grpc.pb.h>
-#include <memory>
+#include "google/cloud/iam/v1/iam_policy_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IAMPolicyConnectionIdempotencyPolicy {
- public:
-  virtual ~IAMPolicyConnectionIdempotencyPolicy();
+/// @deprecated Use iam_v1::MakeDefaultIAMPolicyConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::iam_v1::MakeDefaultIAMPolicyConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<IAMPolicyConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-std::unique_ptr<IAMPolicyConnectionIdempotencyPolicy>
-MakeDefaultIAMPolicyConnectionIdempotencyPolicy();
+/// @deprecated Use iam_v1::IAMPolicyConnectionIdempotencyPolicy directly.
+using ::google::cloud::iam_v1::IAMPolicyConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
