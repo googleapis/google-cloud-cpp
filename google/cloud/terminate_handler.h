@@ -22,11 +22,40 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
- * @defgroup terminate Control behavior on unrecoverable errors.
+ * @defgroup terminate Intercepting Unrecoverable Errors
  *
- * If exceptions are not enabled via `GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS`, calling
- * any function from throw_delegate.h will result in calling the handler
- * installed via this API. By default, the library calls `std::abort()`.
+ * @brief Helper types and functions to report unrecoverable errors.
+ *
+ * In some rare cases, the client libraries may need to terminate the
+ * application because it encounters an unrecoverable error. For example:
+ *
+ * - If the application calls `StatusOr<T>::value()`, and the library was
+ *   compiled with exceptions disabled, and the `StatusOr<T>` contains an error,
+ *   *then* the function throw an exception to report the error and the function
+ *   cannot return a valid value.  Applications that disable exceptions
+ *   should query the `StatusOr<T>` status (using `.ok()` or `.status()`) and
+ *   avoid calling `.value()` if the `StatusOr<T>` is holding an error.
+ * - If the application calls `future<T>::get()`, the library was compiled with
+ *   exceptions disabled, and (somehow) the future is satisfied with an
+ *   exception. Note that the library APIs typically return
+ *   `future<StatusOr<T>>` to avoid this problem, but the application may be
+ *   have created `future<T>` and `promise<T>` pairs in their own code.
+ *
+ * In these cases there is no mechanism to return the error. The library cannot
+ * continue working correctly and must terminate the program. The application
+ * may want to intercept these errors, before the application crashes, and log
+ * or otherwise capture additional information to help with debugging or
+ * troubleshooting. The functions in this module can be used to do so.
+ *
+ * By their nature, there is no mechanism to "handle" and "recover" from
+ * unrecoverable errors. All the application can do is log additional
+ * information before the program terminates.
+ *
+ * Note that the libraries do not use functions that can trigger unrecoverable
+ * errors (if they do we consider that a library bug).
+ *
+ * The default behavior in the client library is to call `std::abort()` when
+ * an unrecoverable error occurs.
  */
 
 /**
