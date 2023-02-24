@@ -100,14 +100,11 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `datacatalog::DataCatalogClient`:
+For example, this will override the default endpoint for `datacatalog_v1::DataCatalogClient`:
 
 @snippet data_catalog_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [datacatalog::DataCatalogClient](@ref datacatalog::DataCatalogClient-endpoint-snippet)
- [datacatalog::PolicyTagManagerClient](@ref datacatalog::PolicyTagManagerClient-endpoint-snippet)
- [datacatalog::PolicyTagManagerSerializationClient](@ref datacatalog::PolicyTagManagerSerializationClient-endpoint-snippet)
  [datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-endpoint-snippet)
  [datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-endpoint-snippet)
  [datacatalog_v1::PolicyTagManagerSerializationClient](@ref datacatalog_v1::PolicyTagManagerSerializationClient-endpoint-snippet)
@@ -125,9 +122,6 @@ to explicitly load a service account key file.
 @snippet data_catalog_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [datacatalog::DataCatalogClient](@ref datacatalog::DataCatalogClient-service-account-snippet)
- [datacatalog::PolicyTagManagerClient](@ref datacatalog::PolicyTagManagerClient-service-account-snippet)
- [datacatalog::PolicyTagManagerSerializationClient](@ref datacatalog::PolicyTagManagerSerializationClient-service-account-snippet)
  [datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-service-account-snippet)
  [datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-service-account-snippet)
  [datacatalog_v1::PolicyTagManagerSerializationClient](@ref datacatalog_v1::PolicyTagManagerSerializationClient-service-account-snippet)
@@ -160,42 +154,6 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
-
-/*! @page datacatalog::DataCatalogClient-endpoint-snippet Override datacatalog::DataCatalogClient Endpoint Configuration
-
-@snippet google/cloud/datacatalog/samples/data_catalog_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page datacatalog::DataCatalogClient-service-account-snippet Override datacatalog::DataCatalogClient Authentication Defaults
-
-@snippet google/cloud/datacatalog/samples/data_catalog_client_samples.cc with-service-account
-
-*/
-
-/*! @page datacatalog::PolicyTagManagerClient-endpoint-snippet Override datacatalog::PolicyTagManagerClient Endpoint Configuration
-
-@snippet google/cloud/datacatalog/samples/policy_tag_manager_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page datacatalog::PolicyTagManagerClient-service-account-snippet Override datacatalog::PolicyTagManagerClient Authentication Defaults
-
-@snippet google/cloud/datacatalog/samples/policy_tag_manager_client_samples.cc with-service-account
-
-*/
-
-/*! @page datacatalog::PolicyTagManagerSerializationClient-endpoint-snippet Override datacatalog::PolicyTagManagerSerializationClient Endpoint Configuration
-
-@snippet google/cloud/datacatalog/samples/policy_tag_manager_serialization_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page datacatalog::PolicyTagManagerSerializationClient-service-account-snippet Override datacatalog::PolicyTagManagerSerializationClient Authentication Defaults
-
-@snippet google/cloud/datacatalog/samples/policy_tag_manager_serialization_client_samples.cc with-service-account
-
-*/
 
 /*! @page datacatalog_v1::DataCatalogClient-endpoint-snippet Override datacatalog_v1::DataCatalogClient Endpoint Configuration
 
