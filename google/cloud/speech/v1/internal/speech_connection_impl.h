@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_CONNECTION_IMPL_H
 
-#include "google/cloud/speech/internal/speech_retry_traits.h"
-#include "google/cloud/speech/internal/speech_stub.h"
-#include "google/cloud/speech/speech_connection.h"
-#include "google/cloud/speech/speech_connection_idempotency_policy.h"
-#include "google/cloud/speech/speech_options.h"
+#include "google/cloud/speech/v1/internal/speech_retry_traits.h"
+#include "google/cloud/speech/v1/internal/speech_stub.h"
+#include "google/cloud/speech/v1/speech_connection.h"
+#include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
+#include "google/cloud/speech/v1/speech_options.h"
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SpeechConnectionImpl : public speech::SpeechConnection {
+class SpeechConnectionImpl : public speech_v1::SpeechConnection {
  public:
   ~SpeechConnectionImpl() override = default;
 
   SpeechConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<speech_internal::SpeechStub> stub, Options options);
+      std::shared_ptr<speech_v1_internal::SpeechStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -64,49 +64,49 @@ class SpeechConnectionImpl : public speech::SpeechConnection {
   AsyncStreamingRecognize() override;
 
  private:
-  std::unique_ptr<speech::SpeechRetryPolicy> retry_policy() {
+  std::unique_ptr<speech_v1::SpeechRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechRetryPolicyOption>()) {
-      return options.get<speech::SpeechRetryPolicyOption>()->clone();
+    if (options.has<speech_v1::SpeechRetryPolicyOption>()) {
+      return options.get<speech_v1::SpeechRetryPolicyOption>()->clone();
     }
-    return options_.get<speech::SpeechRetryPolicyOption>()->clone();
+    return options_.get<speech_v1::SpeechRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechBackoffPolicyOption>()) {
-      return options.get<speech::SpeechBackoffPolicyOption>()->clone();
+    if (options.has<speech_v1::SpeechBackoffPolicyOption>()) {
+      return options.get<speech_v1::SpeechBackoffPolicyOption>()->clone();
     }
-    return options_.get<speech::SpeechBackoffPolicyOption>()->clone();
+    return options_.get<speech_v1::SpeechBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<speech::SpeechConnectionIdempotencyPolicy>
+  std::unique_ptr<speech_v1::SpeechConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechConnectionIdempotencyPolicyOption>()) {
-      return options.get<speech::SpeechConnectionIdempotencyPolicyOption>()
+    if (options.has<speech_v1::SpeechConnectionIdempotencyPolicyOption>()) {
+      return options.get<speech_v1::SpeechConnectionIdempotencyPolicyOption>()
           ->clone();
     }
-    return options_.get<speech::SpeechConnectionIdempotencyPolicyOption>()
+    return options_.get<speech_v1::SpeechConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<speech::SpeechPollingPolicyOption>()) {
-      return options.get<speech::SpeechPollingPolicyOption>()->clone();
+    if (options.has<speech_v1::SpeechPollingPolicyOption>()) {
+      return options.get<speech_v1::SpeechPollingPolicyOption>()->clone();
     }
-    return options_.get<speech::SpeechPollingPolicyOption>()->clone();
+    return options_.get<speech_v1::SpeechPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<speech_internal::SpeechStub> stub_;
+  std::shared_ptr<speech_v1_internal::SpeechStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_CONNECTION_IMPL_H

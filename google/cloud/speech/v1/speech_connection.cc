@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#include "google/cloud/speech/speech_connection.h"
-#include "google/cloud/speech/internal/speech_connection_impl.h"
-#include "google/cloud/speech/internal/speech_option_defaults.h"
-#include "google/cloud/speech/internal/speech_stub_factory.h"
-#include "google/cloud/speech/internal/speech_tracing_connection.h"
-#include "google/cloud/speech/speech_options.h"
+#include "google/cloud/speech/v1/speech_connection.h"
+#include "google/cloud/speech/v1/internal/speech_connection_impl.h"
+#include "google/cloud/speech/v1/internal/speech_option_defaults.h"
+#include "google/cloud/speech/v1/internal/speech_stub_factory.h"
+#include "google/cloud/speech/v1/internal/speech_tracing_connection.h"
+#include "google/cloud/speech/v1/speech_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -30,7 +30,7 @@
 
 namespace google {
 namespace cloud {
-namespace speech {
+namespace speech_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpeechConnection::~SpeechConnection() = default;
@@ -64,16 +64,16 @@ std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  SpeechPolicyOptionList>(options, __func__);
-  options = speech_internal::SpeechDefaultOptions(std::move(options));
+  options = speech_v1_internal::SpeechDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      speech_internal::CreateDefaultSpeechStub(background->cq(), options);
-  return speech_internal::MakeSpeechTracingConnection(
-      std::make_shared<speech_internal::SpeechConnectionImpl>(
+      speech_v1_internal::CreateDefaultSpeechStub(background->cq(), options);
+  return speech_v1_internal::MakeSpeechTracingConnection(
+      std::make_shared<speech_v1_internal::SpeechConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech
+}  // namespace speech_v1
 }  // namespace cloud
 }  // namespace google

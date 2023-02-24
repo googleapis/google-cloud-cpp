@@ -16,25 +16,24 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_TRACING_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_TRACING_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_METADATA_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_METADATA_DECORATOR_H
 
-#include "google/cloud/speech/internal/speech_stub.h"
-#include "google/cloud/options.h"
+#include "google/cloud/speech/v1/internal/speech_stub.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-class SpeechTracingStub : public SpeechStub {
+class SpeechMetadata : public SpeechStub {
  public:
-  ~SpeechTracingStub() override = default;
-
-  explicit SpeechTracingStub(std::shared_ptr<SpeechStub> child);
+  ~SpeechMetadata() override = default;
+  explicit SpeechMetadata(std::shared_ptr<SpeechStub> child);
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       grpc::ClientContext& context,
@@ -64,23 +63,17 @@ class SpeechTracingStub : public SpeechStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
+  void SetMetadata(grpc::ClientContext& context,
+                   std::string const& request_params);
+  void SetMetadata(grpc::ClientContext& context);
+
   std::shared_ptr<SpeechStub> child_;
+  std::string api_client_header_;
 };
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-/**
- * Applies the tracing decorator to the given stub.
- *
- * The stub is only decorated if the library has been compiled with
- * OpenTelemetry.
- */
-std::shared_ptr<SpeechStub> MakeSpeechTracingStub(
-    std::shared_ptr<SpeechStub> stub);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_TRACING_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_METADATA_DECORATOR_H

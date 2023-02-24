@@ -16,25 +16,25 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#include "google/cloud/speech/internal/speech_tracing_connection.h"
+#include "google/cloud/speech/v1/internal/speech_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 SpeechTracingConnection::SpeechTracingConnection(
-    std::shared_ptr<speech::SpeechConnection> child)
+    std::shared_ptr<speech_v1::SpeechConnection> child)
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechTracingConnection::Recognize(
     google::cloud::speech::v1::RecognizeRequest const& request) {
-  auto span = internal::MakeSpan("speech::SpeechConnection::Recognize");
+  auto span = internal::MakeSpan("speech_v1::SpeechConnection::Recognize");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Recognize(request));
 }
@@ -54,8 +54,8 @@ SpeechTracingConnection::AsyncStreamingRecognize() {
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<speech::SpeechConnection> MakeSpeechTracingConnection(
-    std::shared_ptr<speech::SpeechConnection> conn) {
+std::shared_ptr<speech_v1::SpeechConnection> MakeSpeechTracingConnection(
+    std::shared_ptr<speech_v1::SpeechConnection> conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
     conn = std::make_shared<SpeechTracingConnection>(std::move(conn));
@@ -65,6 +65,6 @@ std::shared_ptr<speech::SpeechConnection> MakeSpeechTracingConnection(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google

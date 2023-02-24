@@ -16,22 +16,22 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_OPTION_DEFAULTS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_OPTION_DEFAULTS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_OPTION_DEFAULTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_OPTION_DEFAULTS_H
 
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Options SpeechDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_OPTION_DEFAULTS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_OPTION_DEFAULTS_H

@@ -19,89 +19,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CONNECTION_H
 
-#include "google/cloud/speech/internal/speech_retry_traits.h"
-#include "google/cloud/speech/internal/speech_stub.h"
 #include "google/cloud/speech/speech_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/speech/v1/speech_connection.h"
 
 namespace google {
 namespace cloud {
 namespace speech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using SpeechRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    speech_internal::SpeechRetryTraits>;
+/// @deprecated Use speech_v1::MakeSpeechConnection directly.
+using ::google::cloud::speech_v1::MakeSpeechConnection;
 
-using SpeechLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        speech_internal::SpeechRetryTraits>;
+/// @deprecated Use speech_v1::SpeechConnection directly.
+using ::google::cloud::speech_v1::SpeechConnection;
 
-using SpeechLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        speech_internal::SpeechRetryTraits>;
+/// @deprecated Use speech_v1::SpeechLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::speech_v1::SpeechLimitedErrorCountRetryPolicy;
 
-/**
- * The `SpeechConnection` object for `SpeechClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `SpeechClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `SpeechClient`.
- *
- * To create a concrete instance, see `MakeSpeechConnection()`.
- *
- * For mocking, see `speech_mocks::MockSpeechConnection`.
- */
-class SpeechConnection {
- public:
-  virtual ~SpeechConnection() = 0;
+/// @deprecated Use speech_v1::SpeechLimitedTimeRetryPolicy directly.
+using ::google::cloud::speech_v1::SpeechLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      google::cloud::speech::v1::RecognizeRequest const& request);
-
-  virtual future<
-      StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
-  LongRunningRecognize(
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
-
-  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::cloud::speech::v1::StreamingRecognizeRequest,
-      google::cloud::speech::v1::StreamingRecognizeResponse>>
-  AsyncStreamingRecognize();
-};
-
-/**
- * A factory function to construct an object of type `SpeechConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of SpeechClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `SpeechConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::speech::SpeechPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `SpeechConnection` created by
- * this function.
- */
-std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
+/// @deprecated Use speech_v1::SpeechRetryPolicy directly.
+using ::google::cloud::speech_v1::SpeechRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech

@@ -19,33 +19,19 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/speech/v1/cloud_speech.grpc.pb.h>
-#include <memory>
+#include "google/cloud/speech/v1/speech_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace speech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SpeechConnectionIdempotencyPolicy {
- public:
-  virtual ~SpeechConnectionIdempotencyPolicy();
+/// @deprecated Use speech_v1::MakeDefaultSpeechConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::speech_v1::MakeDefaultSpeechConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<SpeechConnectionIdempotencyPolicy> clone() const;
-
-  virtual google::cloud::Idempotency Recognize(
-      google::cloud::speech::v1::RecognizeRequest const& request);
-
-  virtual google::cloud::Idempotency LongRunningRecognize(
-      google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
-};
-
-std::unique_ptr<SpeechConnectionIdempotencyPolicy>
-MakeDefaultSpeechConnectionIdempotencyPolicy();
+/// @deprecated Use speech_v1::SpeechConnectionIdempotencyPolicy directly.
+using ::google::cloud::speech_v1::SpeechConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech

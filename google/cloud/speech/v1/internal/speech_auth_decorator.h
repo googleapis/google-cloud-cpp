@@ -16,24 +16,28 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_METADATA_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_METADATA_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_AUTH_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_AUTH_DECORATOR_H
 
-#include "google/cloud/speech/internal/speech_stub.h"
+#include "google/cloud/speech/v1/internal/speech_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SpeechMetadata : public SpeechStub {
+class SpeechAuth : public SpeechStub {
  public:
-  ~SpeechMetadata() override = default;
-  explicit SpeechMetadata(std::shared_ptr<SpeechStub> child);
+  ~SpeechAuth() override = default;
+  SpeechAuth(
+      std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+      std::shared_ptr<SpeechStub> child);
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       grpc::ClientContext& context,
@@ -63,17 +67,13 @@ class SpeechMetadata : public SpeechStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   std::string const& request_params);
-  void SetMetadata(grpc::ClientContext& context);
-
+  std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<SpeechStub> child_;
-  std::string api_client_header_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_METADATA_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_AUTH_DECORATOR_H

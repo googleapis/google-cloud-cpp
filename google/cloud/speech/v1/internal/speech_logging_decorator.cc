@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#include "google/cloud/speech/internal/speech_logging_decorator.h"
+#include "google/cloud/speech/v1/internal/speech_logging_decorator.h"
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpeechLogging::SpeechLogging(std::shared_ptr<SpeechStub> child,
@@ -111,6 +111,6 @@ future<Status> SpeechLogging::AsyncCancelOperation(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google

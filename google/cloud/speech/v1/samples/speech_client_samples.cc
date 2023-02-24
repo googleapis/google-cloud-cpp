@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#include "google/cloud/speech/speech_client.h"
+#include "google/cloud/speech/v1/speech_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: speech::SpeechClient
+// main-dox-marker: speech_v1::SpeechClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::speech::SpeechClient(
-      google::cloud::speech::MakeSpeechConnection(options));
+  auto client = google::cloud::speech_v1::SpeechClient(
+      google::cloud::speech_v1::MakeSpeechConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::speech::SpeechClient(
-        google::cloud::speech::MakeSpeechConnection(options));
+    return google::cloud::speech_v1::SpeechClient(
+        google::cloud::speech_v1::MakeSpeechConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

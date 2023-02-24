@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#include "google/cloud/speech/speech_client.h"
+#include "google/cloud/speech/v1/speech_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace speech {
+namespace speech_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpeechClient::SpeechClient(std::shared_ptr<SpeechConnection> connection,
@@ -75,6 +75,6 @@ SpeechClient::AsyncStreamingRecognize(Options opts) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech
+}  // namespace speech_v1
 }  // namespace cloud
 }  // namespace google

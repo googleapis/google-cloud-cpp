@@ -16,26 +16,26 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_TRACING_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_TRACING_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_TRACING_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_TRACING_CONNECTION_H
 
-#include "google/cloud/speech/speech_connection.h"
+#include "google/cloud/speech/v1/speech_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class SpeechTracingConnection : public speech::SpeechConnection {
+class SpeechTracingConnection : public speech_v1::SpeechConnection {
  public:
   ~SpeechTracingConnection() override = default;
 
   explicit SpeechTracingConnection(
-      std::shared_ptr<speech::SpeechConnection> child);
+      std::shared_ptr<speech_v1::SpeechConnection> child);
 
   Options options() override { return child_->options(); }
 
@@ -53,7 +53,7 @@ class SpeechTracingConnection : public speech::SpeechConnection {
   AsyncStreamingRecognize() override;
 
  private:
-  std::shared_ptr<speech::SpeechConnection> child_;
+  std::shared_ptr<speech_v1::SpeechConnection> child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -64,12 +64,12 @@ class SpeechTracingConnection : public speech::SpeechConnection {
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<speech::SpeechConnection> MakeSpeechTracingConnection(
-    std::shared_ptr<speech::SpeechConnection> conn);
+std::shared_ptr<speech_v1::SpeechConnection> MakeSpeechTracingConnection(
+    std::shared_ptr<speech_v1::SpeechConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_INTERNAL_SPEECH_TRACING_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_INTERNAL_SPEECH_TRACING_CONNECTION_H

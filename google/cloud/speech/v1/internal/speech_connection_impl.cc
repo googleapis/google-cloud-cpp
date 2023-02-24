@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#include "google/cloud/speech/internal/speech_connection_impl.h"
-#include "google/cloud/speech/internal/speech_option_defaults.h"
+#include "google/cloud/speech/v1/internal/speech_connection_impl.h"
+#include "google/cloud/speech/v1/internal/speech_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpeechConnectionImpl::SpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<speech_internal::SpeechStub> stub, Options options)
+    std::shared_ptr<speech_v1_internal::SpeechStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -82,6 +82,6 @@ SpeechConnectionImpl::LongRunningRecognize(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/speech/internal/speech_connection_impl.h"
+#include "google/cloud/speech/v1/internal/speech_connection_impl.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -29,6 +29,6 @@ SpeechConnectionImpl::AsyncStreamingRecognize() {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google

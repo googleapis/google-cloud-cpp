@@ -16,74 +16,85 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/speech/v1/cloud_speech.proto
 
-#include "google/cloud/speech/internal/speech_tracing_stub.h"
-#include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/speech/v1/internal/speech_metadata_decorator.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/api_client_header.h"
+#include "google/cloud/status_or.h"
+#include <google/cloud/speech/v1/cloud_speech.grpc.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
+namespace speech_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-
-SpeechTracingStub::SpeechTracingStub(std::shared_ptr<SpeechStub> child)
-    : child_(std::move(child)) {}
+SpeechMetadata::SpeechMetadata(std::shared_ptr<SpeechStub> child)
+    : child_(std::move(child)),
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("generator")) {}
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
-SpeechTracingStub::Recognize(
+SpeechMetadata::Recognize(
     grpc::ClientContext& context,
     google::cloud::speech::v1::RecognizeRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.speech.v1.Speech", "Recognize");
-  auto scope = opentelemetry::trace::Scope(span);
-  internal::InjectTraceContext(context, internal::CurrentOptions());
-  return internal::EndSpan(context, *span, child_->Recognize(context, request));
+  SetMetadata(context);
+  return child_->Recognize(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
-SpeechTracingStub::AsyncLongRunningRecognize(
+SpeechMetadata::AsyncLongRunningRecognize(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
+  SetMetadata(*context);
   return child_->AsyncLongRunningRecognize(cq, std::move(context), request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>
-SpeechTracingStub::AsyncStreamingRecognize(
+SpeechMetadata::AsyncStreamingRecognize(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context);
   return child_->AsyncStreamingRecognize(cq, std::move(context));
 }
 
 future<StatusOr<google::longrunning::Operation>>
-SpeechTracingStub::AsyncGetOperation(
+SpeechMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
-future<Status> SpeechTracingStub::AsyncCancelOperation(
+future<Status> SpeechMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+void SpeechMetadata::SetMetadata(grpc::ClientContext& context,
+                                 std::string const& request_params) {
+  context.AddMetadata("x-goog-request-params", request_params);
+  SetMetadata(context);
+}
 
-std::shared_ptr<SpeechStub> MakeSpeechTracingStub(
-    std::shared_ptr<SpeechStub> stub) {
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-  return std::make_shared<SpeechTracingStub>(std::move(stub));
-#else
-  return stub;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+void SpeechMetadata::SetMetadata(grpc::ClientContext& context) {
+  context.AddMetadata("x-goog-api-client", api_client_header_);
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    context.AddMetadata("x-goog-user-project",
+                        options.get<UserProjectOption>());
+  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
+}  // namespace speech_v1_internal
 }  // namespace cloud
 }  // namespace google
