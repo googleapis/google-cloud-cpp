@@ -33,13 +33,6 @@ namespace cloud {
 namespace bigquery_storage_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void BigQueryReadReadRowsStreamingUpdater(
-    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
-    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
-  return bigquery_internal::BigQueryReadReadRowsStreamingUpdater(response,
-                                                                 request);
-}
-
 BigQueryReadConnection::~BigQueryReadConnection() = default;
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
@@ -84,5 +77,22 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_storage_v1
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
+namespace bigquery {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+void BigQueryReadReadRowsStreamingUpdater(
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request) {
+  return bigquery_storage_v1_internal::BigQueryReadReadRowsStreamingUpdater(
+      response, request);
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigquery
 }  // namespace cloud
 }  // namespace google

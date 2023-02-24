@@ -45,6 +45,14 @@ using ::google::cloud::bigquery_storage_v1::BigQueryReadLimitedTimeRetryPolicy;
 /// @deprecated Use bigquery_storage_v1::BigQueryReadRetryPolicy directly.
 using ::google::cloud::bigquery_storage_v1::BigQueryReadRetryPolicy;
 
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "applications should not need this."
+    " Please file a bug at https://github.com/googleapis/google-cloud-cpp"
+    " if you do.")
+void BigQueryReadReadRowsStreamingUpdater(
+    google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
+    google::cloud::bigquery::storage::v1::ReadRowsRequest& request);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
 }  // namespace cloud
