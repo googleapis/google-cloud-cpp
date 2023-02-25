@@ -18,7 +18,9 @@ add_library(
     google_cloud_cpp_bigquery_rest # cmake-format: sort
     v2/minimal/internal/bigquery_http_response.cc
     v2/minimal/internal/bigquery_http_response.h
+    v2/minimal/internal/common_v2_resources.h
     v2/minimal/internal/job.h
+    v2/minimal/internal/job_configuration.h
     v2/minimal/internal/job_idempotency_policy.cc
     v2/minimal/internal/job_idempotency_policy.h
     v2/minimal/internal/job_logging.cc
@@ -91,7 +93,7 @@ function (bigquery_rest_define_tests)
         google_cloud_cpp_add_executable(target "bigquery" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing
+            PRIVATE google_cloud_cpp_testing google_cloud_cpp_testing_rest
                     google-cloud-cpp::experimental-bigquery_rest
                     GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})

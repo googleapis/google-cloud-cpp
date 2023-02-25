@@ -25,7 +25,6 @@ BigQueryJobRestStub::~BigQueryJobRestStub() = default;
 
 StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
     GetJobRequest const& request) {
-  GetJobResponse response;
   if (request.project_id().empty()) {
     return internal::InvalidArgumentError(
         "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
@@ -34,9 +33,24 @@ StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
     return internal::InvalidArgumentError(
         "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
-  // Not Implemented Yet: Call the rest client to get job details from the
-  // server.
-  return response;
+  // Prepare the RestRequest
+  auto const& rest_request = BuildRestRequest(request, options_);
+  if (!rest_request.ok()) {
+    return rest_request.status();
+  }
+  // Call the rest client to get job details from the server as a RestResponse.
+  auto rest_response = rest_stub_->Get(std::move(*rest_request));
+  if (!rest_response.ok()) {
+    return rest_response.status();
+  }
+  // Convert RestResponse to HttpResponse.
+  auto const& http_response =
+      BigQueryHttpResponse::BuildFromRestResponse(std::move(*rest_response));
+  if (!http_response.ok()) {
+    return http_response.status();
+  }
+  // Convert HttpResponse to GetJobResponse.
+  return GetJobResponse::BuildFromHttpResponse(*http_response);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
