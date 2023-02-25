@@ -19,115 +19,31 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_POLICY_TAG_MANAGER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_POLICY_TAG_MANAGER_CONNECTION_H
 
-#include "google/cloud/datacatalog/internal/policy_tag_manager_retry_traits.h"
-#include "google/cloud/datacatalog/internal/policy_tag_manager_stub.h"
 #include "google/cloud/datacatalog/policy_tag_manager_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/datacatalog/v1/policy_tag_manager_connection.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using PolicyTagManagerRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        datacatalog_internal::PolicyTagManagerRetryTraits>;
+/// @deprecated Use datacatalog_v1::MakePolicyTagManagerConnection directly.
+using ::google::cloud::datacatalog_v1::MakePolicyTagManagerConnection;
 
-using PolicyTagManagerLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datacatalog_internal::PolicyTagManagerRetryTraits>;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerConnection directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerConnection;
 
-using PolicyTagManagerLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datacatalog_internal::PolicyTagManagerRetryTraits>;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerLimitedErrorCountRetryPolicy;
 
-/**
- * The `PolicyTagManagerConnection` object for `PolicyTagManagerClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `PolicyTagManagerClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `PolicyTagManagerClient`.
- *
- * To create a concrete instance, see `MakePolicyTagManagerConnection()`.
- *
- * For mocking, see `datacatalog_mocks::MockPolicyTagManagerConnection`.
- */
-class PolicyTagManagerConnection {
- public:
-  virtual ~PolicyTagManagerConnection() = 0;
+/// @deprecated Use datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> CreateTaxonomy(
-      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request);
-
-  virtual Status DeleteTaxonomy(
-      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> UpdateTaxonomy(
-      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request);
-
-  virtual StreamRange<google::cloud::datacatalog::v1::Taxonomy> ListTaxonomies(
-      google::cloud::datacatalog::v1::ListTaxonomiesRequest request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Taxonomy> GetTaxonomy(
-      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> CreatePolicyTag(
-      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request);
-
-  virtual Status DeletePolicyTag(
-      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> UpdatePolicyTag(
-      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request);
-
-  virtual StreamRange<google::cloud::datacatalog::v1::PolicyTag> ListPolicyTags(
-      google::cloud::datacatalog::v1::ListPolicyTagsRequest request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::PolicyTag> GetPolicyTag(
-      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type
- * `PolicyTagManagerConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of PolicyTagManagerClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `PolicyTagManagerConnection`. Expected options are any of the types
- * in the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datacatalog::PolicyTagManagerPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `PolicyTagManagerConnection` created
- * by this function.
- */
-std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
-    Options options = {});
+/// @deprecated Use datacatalog_v1::PolicyTagManagerRetryPolicy directly.
+using ::google::cloud::datacatalog_v1::PolicyTagManagerRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog

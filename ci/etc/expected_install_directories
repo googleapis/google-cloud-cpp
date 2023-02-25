@@ -196,9 +196,10 @@
 ./include/google/cloud/containeranalysis/v1/internal
 ./include/google/cloud/containeranalysis/v1/mocks
 ./include/google/cloud/datacatalog
-./include/google/cloud/datacatalog/internal
 ./include/google/cloud/datacatalog/mocks
 ./include/google/cloud/datacatalog/v1
+./include/google/cloud/datacatalog/v1/internal
+./include/google/cloud/datacatalog/v1/mocks
 ./include/google/cloud/datamigration
 ./include/google/cloud/datamigration/mocks
 ./include/google/cloud/datamigration/v1

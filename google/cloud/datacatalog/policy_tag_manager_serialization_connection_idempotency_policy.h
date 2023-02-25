@@ -19,38 +19,24 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_POLICY_TAG_MANAGER_SERIALIZATION_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_POLICY_TAG_MANAGER_SERIALIZATION_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/datacatalog/v1/policytagmanagerserialization.grpc.pb.h>
-#include <memory>
+#include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class PolicyTagManagerSerializationConnectionIdempotencyPolicy {
- public:
-  virtual ~PolicyTagManagerSerializationConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// datacatalog_v1::MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<
-      PolicyTagManagerSerializationConnectionIdempotencyPolicy>
-  clone() const;
-
-  virtual google::cloud::Idempotency ReplaceTaxonomy(
-      google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request);
-
-  virtual google::cloud::Idempotency ImportTaxonomies(
-      google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request);
-
-  virtual google::cloud::Idempotency ExportTaxonomies(
-      google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request);
-};
-
-std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
-MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// datacatalog_v1::PolicyTagManagerSerializationConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    PolicyTagManagerSerializationConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog

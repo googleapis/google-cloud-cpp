@@ -20,186 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_DATA_CATALOG_CONNECTION_H
 
 #include "google/cloud/datacatalog/data_catalog_connection_idempotency_policy.h"
-#include "google/cloud/datacatalog/internal/data_catalog_retry_traits.h"
-#include "google/cloud/datacatalog/internal/data_catalog_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/datacatalog/v1/data_catalog_connection.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using DataCatalogRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    datacatalog_internal::DataCatalogRetryTraits>;
+/// @deprecated Use datacatalog_v1::MakeDataCatalogConnection directly.
+using ::google::cloud::datacatalog_v1::MakeDataCatalogConnection;
 
-using DataCatalogLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datacatalog_internal::DataCatalogRetryTraits>;
+/// @deprecated Use datacatalog_v1::DataCatalogConnection directly.
+using ::google::cloud::datacatalog_v1::DataCatalogConnection;
 
-using DataCatalogLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datacatalog_internal::DataCatalogRetryTraits>;
+/// @deprecated Use datacatalog_v1::DataCatalogLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::datacatalog_v1::DataCatalogLimitedErrorCountRetryPolicy;
 
-/**
- * The `DataCatalogConnection` object for `DataCatalogClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `DataCatalogClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `DataCatalogClient`.
- *
- * To create a concrete instance, see `MakeDataCatalogConnection()`.
- *
- * For mocking, see `datacatalog_mocks::MockDataCatalogConnection`.
- */
-class DataCatalogConnection {
- public:
-  virtual ~DataCatalogConnection() = 0;
+/// @deprecated Use datacatalog_v1::DataCatalogLimitedTimeRetryPolicy directly.
+using ::google::cloud::datacatalog_v1::DataCatalogLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-  SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
-      google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
-      google::cloud::datacatalog::v1::GetEntryGroupRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
-      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request);
-
-  virtual Status DeleteEntryGroup(
-      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request);
-
-  virtual StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-  ListEntryGroups(
-      google::cloud::datacatalog::v1::ListEntryGroupsRequest request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
-      google::cloud::datacatalog::v1::CreateEntryRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
-      google::cloud::datacatalog::v1::UpdateEntryRequest const& request);
-
-  virtual Status DeleteEntry(
-      google::cloud::datacatalog::v1::DeleteEntryRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
-      google::cloud::datacatalog::v1::GetEntryRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Entry> LookupEntry(
-      google::cloud::datacatalog::v1::LookupEntryRequest const& request);
-
-  virtual StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
-      google::cloud::datacatalog::v1::ListEntriesRequest request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::EntryOverview>
-  ModifyEntryOverview(
-      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Contacts>
-  ModifyEntryContacts(
-      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  CreateTagTemplate(
-      google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
-      google::cloud::datacatalog::v1::GetTagTemplateRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  UpdateTagTemplate(
-      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request);
-
-  virtual Status DeleteTagTemplate(
-      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  CreateTagTemplateField(
-      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  UpdateTagTemplateField(
-      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateField(
-      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateFieldEnumValue(
-      google::cloud::datacatalog::v1::
-          RenameTagTemplateFieldEnumValueRequest const& request);
-
-  virtual Status DeleteTagTemplateField(
-      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
-          request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
-      google::cloud::datacatalog::v1::CreateTagRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
-      google::cloud::datacatalog::v1::UpdateTagRequest const& request);
-
-  virtual Status DeleteTag(
-      google::cloud::datacatalog::v1::DeleteTagRequest const& request);
-
-  virtual StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
-      google::cloud::datacatalog::v1::ListTagsRequest request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
-      google::cloud::datacatalog::v1::StarEntryRequest const& request);
-
-  virtual StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
-  UnstarEntry(
-      google::cloud::datacatalog::v1::UnstarEntryRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `DataCatalogConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of DataCatalogClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `DataCatalogConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datacatalog::DataCatalogPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `DataCatalogConnection` created by
- * this function.
- */
-std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
-    Options options = {});
+/// @deprecated Use datacatalog_v1::DataCatalogRetryPolicy directly.
+using ::google::cloud::datacatalog_v1::DataCatalogRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog

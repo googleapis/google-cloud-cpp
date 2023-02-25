@@ -21,51 +21,26 @@
 
 #include "google/cloud/datacatalog/data_catalog_connection.h"
 #include "google/cloud/datacatalog/data_catalog_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/datacatalog/v1/data_catalog_options.h"
 
 namespace google {
 namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-struct DataCatalogRetryPolicyOption {
-  using Type = std::shared_ptr<DataCatalogRetryPolicy>;
-};
+/// @deprecated Use datacatalog_v1::DataCatalogBackoffPolicyOption directly.
+using ::google::cloud::datacatalog_v1::DataCatalogBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-struct DataCatalogBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::datacatalog_v1::
+    DataCatalogConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-struct DataCatalogConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<DataCatalogConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use datacatalog_v1::DataCatalogPolicyOptionList directly.
+using ::google::cloud::datacatalog_v1::DataCatalogPolicyOptionList;
 
-/**
- * The options applicable to DataCatalog.
- *
- * @ingroup google-cloud-datacatalog-options
- */
-using DataCatalogPolicyOptionList =
-    OptionList<DataCatalogRetryPolicyOption, DataCatalogBackoffPolicyOption,
-               DataCatalogConnectionIdempotencyPolicyOption>;
+/// @deprecated Use datacatalog_v1::DataCatalogRetryPolicyOption directly.
+using ::google::cloud::datacatalog_v1::DataCatalogRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
