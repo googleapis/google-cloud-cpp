@@ -22,13 +22,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
-  GetJobResponse response;
   if (http_response.payload.empty()) {
     return internal::InternalError("Empty payload in HTTP response.",
                                    GCP_ERROR_INFO());
   }
-  // Not Implemented Yet: Parse HttpResponse and build GetJobResponse object.
-  return response;
+  // Build the job response object from Http response.
+  auto json = nlohmann::json::parse(http_response.payload, nullptr, false);
+  if (!json.is_object()) {
+    return internal::InternalError("Error parsing Json from response payload.",
+                                   GCP_ERROR_INFO());
+  }
+  GetJobResponse result;
+  try {
+    result.job = json.get<Job>();
+    result.http_response = http_response;
+  } catch (json::exception& e) {
+    std::string msg = e.what();
+    return internal::InternalError(
+        "Error getting Job details from parsed Json object: " + msg,
+        GCP_ERROR_INFO());
+  }
+  return result;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
