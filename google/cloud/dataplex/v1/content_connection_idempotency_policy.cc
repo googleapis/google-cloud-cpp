@@ -68,7 +68,7 @@ Idempotency ContentServiceConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency ContentServiceConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency ContentServiceConnectionIdempotencyPolicy::ListContent(

@@ -192,7 +192,7 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetIamPolicy(
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetProjectSettings(

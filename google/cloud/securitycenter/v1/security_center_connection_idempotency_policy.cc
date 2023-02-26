@@ -77,7 +77,7 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::GetBigQueryExport(
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::GetMuteConfig(
@@ -159,7 +159,7 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateExternalSystem(

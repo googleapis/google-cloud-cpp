@@ -77,7 +77,7 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::ResumeQueue(
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::SetIamPolicy(
@@ -88,7 +88,7 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::ListTasks(

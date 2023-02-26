@@ -47,7 +47,7 @@ Idempotency OrganizationsConnectionIdempotencyPolicy::SearchOrganizations(
 
 Idempotency OrganizationsConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency OrganizationsConnectionIdempotencyPolicy::SetIamPolicy(
@@ -58,7 +58,7 @@ Idempotency OrganizationsConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency OrganizationsConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>

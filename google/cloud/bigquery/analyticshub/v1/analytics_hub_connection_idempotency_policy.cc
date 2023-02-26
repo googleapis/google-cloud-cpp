@@ -104,7 +104,7 @@ Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SubscribeListing(
 
 Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SetIamPolicy(
@@ -115,7 +115,7 @@ Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>

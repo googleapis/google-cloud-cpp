@@ -77,7 +77,7 @@ Idempotency ProjectsConnectionIdempotencyPolicy::UndeleteProject(
 
 Idempotency ProjectsConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency ProjectsConnectionIdempotencyPolicy::SetIamPolicy(
@@ -88,7 +88,7 @@ Idempotency ProjectsConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency ProjectsConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>

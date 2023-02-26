@@ -119,7 +119,7 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::RestoreTable(
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::SetIamPolicy(
@@ -130,7 +130,7 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>
