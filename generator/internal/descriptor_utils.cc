@@ -430,6 +430,10 @@ void SetHttpGetQueryParameters(
 
 std::string DefaultIdempotencyFromHttpOperation(
     google::protobuf::MethodDescriptor const& method) {
+  if (method.name() == "GetIamPolicy" ||
+      method.name() == "TestIamPermissions") {
+    return "kIdempotent";
+  }
   if (method.options().HasExtension(google::api::http)) {
     google::api::HttpRule http_rule =
         method.options().GetExtension(google::api::http);

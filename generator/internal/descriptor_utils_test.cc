@@ -529,6 +529,20 @@ char const* const kServiceProto =
     "    option (google.api.method_signature) = \"name,parent,number\";\n"
     "    option (google.api.method_signature) = \"name,title,number\";\n"
     "  }\n"
+    "  // Test that the method defaults to kIdempotent.\n"
+    "  rpc GetIamPolicy(Empty) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       post: \"/v1/foo\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Test that the method defaults to kIdempotent.\n"
+    "  rpc TestIamPermissions(Empty) returns (Empty) {\n"
+    "    option (google.api.http) = {\n"
+    "       post: \"/v1/foo\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
     "}\n";
 
 char const* const kMethod6Deprecated1 =  // name,not_used_anymore
@@ -952,7 +966,12 @@ INSTANTIATE_TEST_SUITE_P(
                              R"""(,
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("name", request.name())})""")),
+       std::make_pair("name", request.name())})"""),
+        // IAM idempotency defaults
+        MethodVarsTestValues("google.protobuf.Service.GetIamPolicy",
+                             "idempotency", "kIdempotent"),
+        MethodVarsTestValues("google.protobuf.Service.TestIamPermissions",
+                             "idempotency", "kIdempotent")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
