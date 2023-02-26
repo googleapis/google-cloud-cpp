@@ -84,7 +84,7 @@ BigtableTableAdminConnectionIdempotencyPolicy::GenerateConsistencyToken(
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CreateBackup(

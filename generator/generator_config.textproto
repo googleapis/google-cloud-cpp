@@ -307,6 +307,9 @@ service {
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
   retryable_status_codes: ["kUnavailable", "kAborted"]
+  idempotency_overrides: [
+    {rpc_name: "BigtableTableAdmin.CheckConsistency", idempotency: IDEMPOTENT}
+  ]
 }
 
 # Billing
