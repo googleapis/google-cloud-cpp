@@ -125,7 +125,7 @@ Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::DeleteAppProfile(
 
 Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::SetIamPolicy(
@@ -137,7 +137,7 @@ Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::SetIamPolicy(
 Idempotency
 BigtableInstanceAdminConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::ListHotTablets(

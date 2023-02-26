@@ -111,7 +111,7 @@ Idempotency IAMConnectionIdempotencyPolicy::EnableServiceAccountKey(
 
 Idempotency IAMConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::SetIamPolicy(
@@ -122,7 +122,7 @@ Idempotency IAMConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency IAMConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::QueryGrantableRoles(

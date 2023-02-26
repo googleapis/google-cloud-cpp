@@ -77,7 +77,7 @@ Idempotency FoldersConnectionIdempotencyPolicy::UndeleteFolder(
 
 Idempotency FoldersConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency FoldersConnectionIdempotencyPolicy::SetIamPolicy(
@@ -88,7 +88,7 @@ Idempotency FoldersConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency FoldersConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<FoldersConnectionIdempotencyPolicy>

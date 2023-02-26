@@ -46,13 +46,13 @@ IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::SetIamPolicy(
 Idempotency
 IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency
 IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency

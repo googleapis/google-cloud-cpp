@@ -113,7 +113,7 @@ Idempotency RegistrationServiceConnectionIdempotencyPolicy::DeleteEndpoint(
 
 Idempotency RegistrationServiceConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency RegistrationServiceConnectionIdempotencyPolicy::SetIamPolicy(
@@ -124,7 +124,7 @@ Idempotency RegistrationServiceConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency RegistrationServiceConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>

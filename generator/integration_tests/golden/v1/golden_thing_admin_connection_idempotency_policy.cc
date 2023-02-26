@@ -65,11 +65,11 @@ Idempotency GoldenThingAdminConnectionIdempotencyPolicy::SetIamPolicy(
 }
 
 Idempotency GoldenThingAdminConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency GoldenThingAdminConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency GoldenThingAdminConnectionIdempotencyPolicy::CreateBackup(google::test::admin::database::v1::CreateBackupRequest const&) {

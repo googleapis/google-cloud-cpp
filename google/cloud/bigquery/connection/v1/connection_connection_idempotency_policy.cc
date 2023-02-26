@@ -63,7 +63,7 @@ Idempotency ConnectionServiceConnectionIdempotencyPolicy::DeleteConnection(
 
 Idempotency ConnectionServiceConnectionIdempotencyPolicy::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency ConnectionServiceConnectionIdempotencyPolicy::SetIamPolicy(
@@ -74,7 +74,7 @@ Idempotency ConnectionServiceConnectionIdempotencyPolicy::SetIamPolicy(
 
 Idempotency ConnectionServiceConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
