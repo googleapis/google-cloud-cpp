@@ -134,6 +134,14 @@ The library has been expanded to include the KMS Inventory API.
 
 The library has been expanded to include the TPU v2 API.
 
+### [Common Libraries](/google/cloud/README.md)
+
+We have introduced versioned clients for many services. The version is that of
+the GCP service. While this naming convention is more verbose, it allows us to
+support clients for multiple versions of a GCP service from within the same
+library (e.g. `speech_v1::SpeechClient` and `speech_v2::SpeechClient`). See
+[#10170] for more details.
+
 ## v2.7.0 - 2023-02
 
 ### New Libraries
@@ -3401,6 +3409,7 @@ releases.  The relevant notes are:
   and `ReadModifyWrite()` are missing.
 - Synchronous API for table admin operations is complete.
 
+[#10170]: https://github.com/googleapis/google-cloud-cpp/issues/10170
 [#5726]: https://github.com/googleapis/google-cloud-cpp/issues/5726
 [#5923]: https://github.com/googleapis/google-cloud-cpp/issues/5923
 [#5929]: https://github.com/googleapis/google-cloud-cpp/issues/5929
