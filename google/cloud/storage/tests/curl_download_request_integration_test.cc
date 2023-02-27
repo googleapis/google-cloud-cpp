@@ -30,16 +30,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::StartsWith;
 
-std::string HttpBinEndpoint() {
-  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
-      .value_or("https://httpbin.org");
-}
+std::string HttpBinEndpoint() { return GetEnv("HTTPBIN_ENDPOINT").value(); }
+
+bool UsingEmulator() { return GetEnv("HTTPBIN_ENDPOINT").has_value(); }
 
 Status Make3Attempts(std::function<Status()> const& attempt) {
   Status status;
@@ -54,6 +54,7 @@ Status Make3Attempts(std::function<Status()> const& attempt) {
 }
 
 TEST(CurlDownloadRequestTest, SimpleStream) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // httpbin can generate up to 100 lines, do not try to download more than
   // that.
   constexpr int kDownloadedLines = 100;
@@ -92,6 +93,7 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
 }
 
 TEST(CurlDownloadRequestTest, HashHeaders) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // Run one attempt and return the headers, if any.
   HashValues hashes;
   auto attempt = [&] {
@@ -118,6 +120,7 @@ TEST(CurlDownloadRequestTest, HashHeaders) {
 }
 
 TEST(CurlDownloadRequestTest, Generation) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // Run one attempt and return the headers, if any.
   absl::optional<std::int64_t> received_generation;
   auto attempt = [&] {
@@ -145,6 +148,7 @@ TEST(CurlDownloadRequestTest, Generation) {
 }
 
 TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto constexpr kLineCount = 10;
   auto constexpr kTestPoolSize = 8;
   auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
@@ -182,6 +186,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnRead) {
 }
 
 TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto constexpr kLineCount = 10;
   auto constexpr kTestPoolSize = 8;
   auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
@@ -222,6 +227,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnClose) {
 }
 
 TEST(CurlDownloadRequestTest, HandlesReleasedOnError) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto constexpr kTestPoolSize = 8;
   auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
       kTestPoolSize, Options{});
@@ -250,6 +256,7 @@ TEST(CurlDownloadRequestTest, HandlesReleasedOnError) {
 }
 
 TEST(CurlDownloadRequestTest, SimpleStreamReadAfterClosed) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto constexpr kLineCount = 10;
   auto download = [&]() -> StatusOr<std::string> {
     std::string contents;
@@ -355,16 +362,14 @@ Status AttemptRegression7051() {
 
 /// @test Prevent regressions of #7051: re-using a stream after a partial read.
 TEST(CurlDownloadRequestTest, Regression7051) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto status = Make3Attempts(AttemptRegression7051);
   ASSERT_STATUS_OK(status);
 }
 
 #if CURL_AT_LEAST_VERSION(7, 43, 0)
-bool UsingEmulator() {
-  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
-}
-
 TEST(CurlDownloadRequestTest, HttpVersion) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // Run one attempt and return the response.
   struct Response {
     std::multimap<std::string, std::string> headers;
@@ -426,7 +431,7 @@ TEST(CurlDownloadRequestTest, HttpVersion) {
     EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
 
     // The httpbin.org site strips the `Connection` header.
-    if (supports_http2 && test.version == "2" && UsingEmulator()) {
+    if (supports_http2 && test.version == "2") {
       auto parsed = nlohmann::json::parse(response->payload);
       auto const& request_headers = parsed["headers"];
       auto const& connection = request_headers.value("Connection", "");

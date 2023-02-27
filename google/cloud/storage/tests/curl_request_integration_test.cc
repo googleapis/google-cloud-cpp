@@ -32,6 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::ElementsAreArray;
@@ -40,10 +41,9 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::StartsWith;
 
-std::string HttpBinEndpoint() {
-  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT")
-      .value_or("https://httpbin.org");
-}
+std::string HttpBinEndpoint() { return GetEnv("HTTPBIN_ENDPOINT").value(); }
+
+bool UsingEmulator() { return GetEnv("HTTPBIN_ENDPOINT").has_value(); }
 
 // The integration tests sometimes flake (e.g. DNS failures) if we do not have a
 // retry loop.
@@ -77,6 +77,7 @@ StatusOr<HttpResponse> RetryMakeUploadRequest(
 }
 
 TEST(CurlRequestTest, SimpleGET) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -98,6 +99,7 @@ TEST(CurlRequestTest, SimpleGET) {
 }
 
 TEST(CurlRequestTest, AddParametersToComplexUrl) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get?foo=foo-value",
@@ -119,6 +121,7 @@ TEST(CurlRequestTest, AddParametersToComplexUrl) {
 }
 
 TEST(CurlRequestTest, FailedGET) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // This test fails if somebody manages to run a https server on port 0 (you
   // can't, but just documenting the assumptions in this test).
   CurlRequestBuilder builder("https://localhost:1/",
@@ -129,6 +132,7 @@ TEST(CurlRequestTest, FailedGET) {
 }
 
 TEST(CurlRequestTest, SimplePOST) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto data = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/post",
@@ -170,6 +174,7 @@ TEST(CurlRequestTest, SimplePOST) {
 }
 
 TEST(CurlRequestTest, MultiBufferPUT) {
+  if (!UsingEmulator()) GTEST_SKIP();
   std::vector<std::string> lines = {
       {"line 1"},
       {"line 2"},
@@ -202,6 +207,7 @@ TEST(CurlRequestTest, MultiBufferPUT) {
 }
 
 TEST(CurlRequestTest, MultiBufferEmptyPUT) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/put",
@@ -222,6 +228,7 @@ TEST(CurlRequestTest, MultiBufferEmptyPUT) {
 }
 
 TEST(CurlRequestTest, MultiBufferLargePUT) {
+  if (!UsingEmulator()) GTEST_SKIP();
   std::vector<std::string> lines;
   auto constexpr kLineSize = 1024;
   // libcurl's CURLOPT_READFUNCTION provides at most CURL_MAX_READ_SIZE bytes,
@@ -265,6 +272,7 @@ TEST(CurlRequestTest, MultiBufferLargePUT) {
 }
 
 TEST(CurlRequestTest, Handle404) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/status/404",
@@ -281,6 +289,7 @@ TEST(CurlRequestTest, Handle404) {
 
 /// @test Verify the payload for error status is included in the return value.
 TEST(CurlRequestTest, HandleTeapot) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/status/418",
@@ -298,6 +307,7 @@ TEST(CurlRequestTest, HandleTeapot) {
 
 /// @test Verify the response includes the header values.
 TEST(CurlRequestTest, CheckResponseHeaders) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // Test that headers are parsed correctly. We send capitalized headers
   // because some versions of httpbin capitalize and others do not, in real
   // code (as opposed to a test), we should search for headers in a
@@ -325,6 +335,7 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
 
 /// @test Verify the user agent header.
 TEST(CurlRequestTest, UserAgent) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // Test that headers are parsed correctly. We send capitalized headers
   // because some versions of httpbin capitalize and others do not, in real
   // code (as opposed to a test), we should search for headers in a
@@ -354,12 +365,10 @@ TEST(CurlRequestTest, UserAgent) {
 }
 
 #if CURL_AT_LEAST_VERSION(7, 43, 0)
-bool UsingEmulator() {
-  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
-}
 
 /// @test Verify the HTTP Version option.
 TEST(CurlRequestTest, HttpVersion) {
+  if (!UsingEmulator()) GTEST_SKIP();
   struct Test {
     std::string version;
     std::string prefix;
@@ -394,7 +403,7 @@ TEST(CurlRequestTest, HttpVersion) {
     EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
 
     // The httpbin.org site strips the `Connection` header.
-    if (supports_http2 && test.version == "2" && UsingEmulator()) {
+    if (supports_http2 && test.version == "2") {
       auto parsed = nlohmann::json::parse(response->payload);
       auto const& request_headers = parsed["headers"];
       auto const& connection = request_headers.value("Connection", "");
@@ -406,6 +415,7 @@ TEST(CurlRequestTest, HttpVersion) {
 
 /// @test Verify that the Projection parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -432,6 +442,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
 
 /// @test Verify that the UserProject parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -458,6 +469,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersUserProject) {
 
 /// @test Verify that the IfGenerationMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -484,6 +496,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationMatch) {
 
 /// @test Verify that the IfGenerationNotMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -510,6 +523,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfGenerationNotMatch) {
 
 /// @test Verify that the IfMetagenerationMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -536,6 +550,7 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationMatch) {
 
 /// @test Verify that the IfMetagenerationNotMatch parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -558,10 +573,11 @@ TEST(CurlRequestTest, WellKnownQueryParametersIfMetagenerationNotMatch) {
   EXPECT_EQ(0, args.count("ifGenerationMatch"));
   EXPECT_EQ(0, args.count("ifGenerationNotMatch"));
   EXPECT_EQ(0, args.count("ifMetagenerationMatch"));
-}  // namespace
+}
 
 /// @test Verify that the well-known query parameters are included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersMultiple) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto factory = [] {
     CurlRequestBuilder builder(
         HttpBinEndpoint() + "/get",
@@ -599,6 +615,7 @@ class MockLogBackend : public google::cloud::LogBackend {
 
 /// @test Verify that CurlRequest logs when requested.
 TEST(CurlRequestTest, Logging) {
+  if (!UsingEmulator()) GTEST_SKIP();
   // Prepare the Log subsystem to receive mock calls:
   auto mock_logger = std::make_shared<MockLogBackend>();
   auto backend_id = google::cloud::LogSink::Instance().AddBackend(mock_logger);
@@ -643,6 +660,7 @@ TEST(CurlRequestTest, Logging) {
 }
 
 TEST(CurlRequestTest, HandlesReleasedOnError) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto constexpr kTestPoolSize = 8;
   auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
       kTestPoolSize, Options{});
@@ -658,6 +676,7 @@ TEST(CurlRequestTest, HandlesReleasedOnError) {
 }
 
 TEST(CurlRequestTest, HandlesReusedOnSuccess) {
+  if (!UsingEmulator()) GTEST_SKIP();
   auto constexpr kTestPoolSize = 8;
   auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
       kTestPoolSize, Options{});
