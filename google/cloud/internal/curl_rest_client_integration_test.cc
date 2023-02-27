@@ -43,11 +43,8 @@ class RestClientIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
     auto httpbin_endpoint = google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT");
-    if (httpbin_endpoint) {
-      url_ = *httpbin_endpoint;
-    } else {
-      url_ = "https://httpbin.org";
-    }
+    if (!httpbin_endpoint) GTEST_SKIP();
+    url_ = *httpbin_endpoint;
 
     json_payload_ = R"""({
     "type": "service_account",
