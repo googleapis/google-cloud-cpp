@@ -13,9 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2markdown.h"
-#include <iostream>
 #include <sstream>
-#include <string_view>
 #include <unordered_set>
 
 [[noreturn]] void UnknownChildType(std::string_view where,

@@ -14,6 +14,7 @@
 
 #include "docfx/doxygen_pages.h"
 #include "docfx/doxygen2markdown.h"
+#include <iostream>
 #include <sstream>
 #include <string_view>
 

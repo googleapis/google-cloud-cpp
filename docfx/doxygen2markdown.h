@@ -18,6 +18,7 @@
 #include <pugixml.hpp>
 #include <iosfwd>
 #include <string>
+#include <string_view>
 #include <vector>
 
 /**
