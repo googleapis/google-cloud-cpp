@@ -335,6 +335,14 @@ INSTANTIATE_TEST_SUITE_P(
       return std::get<0>(info.param);
     });
 
+char const* const kIamProto =
+    "syntax = \"proto3\";\n"
+    "package google.iam.v1;\n"
+    "message Policy {}\n"
+    "message GetIamPolicyRequest {}\n"
+    "message TestIamPermissionsRequest {}\n"
+    "message TestIamPermissionsResponse {}\n";
+
 char const* const kClientProto =
     "syntax = \"proto3\";\n"
     "package google.api;\n"
@@ -390,6 +398,7 @@ char const* const kServiceProto =
     "import \"google/api/annotations.proto\";\n"
     "import \"google/api/client.proto\";\n"
     "import \"google/api/http.proto\";\n"
+    "import \"google/iam/v1/fake_iam.proto\";\n"
     "import \"google/longrunning/operation.proto\";\n"
     "// Leading comments about message Foo.\n"
     "message Foo {\n"
@@ -530,14 +539,16 @@ char const* const kServiceProto =
     "    option (google.api.method_signature) = \"name,title,number\";\n"
     "  }\n"
     "  // Test that the method defaults to kIdempotent.\n"
-    "  rpc GetIamPolicy(Empty) returns (Empty) {\n"
+    "  rpc GetIamPolicy(google.iam.v1.GetIamPolicyRequest)\n"
+    "      returns (google.iam.v1.Policy) {\n"
     "    option (google.api.http) = {\n"
     "       post: \"/v1/foo\"\n"
     "       body: \"*\"\n"
     "    };\n"
     "  }\n"
     "  // Test that the method defaults to kIdempotent.\n"
-    "  rpc TestIamPermissions(Empty) returns (Empty) {\n"
+    "  rpc TestIamPermissions(google.iam.v1.TestIamPermissionsRequest)\n"
+    "      returns (google.iam.v1.TestIamPermissionsResponse) {\n"
     "    option (google.api.http) = {\n"
     "       post: \"/v1/foo\"\n"
     "       body: \"*\"\n"
@@ -568,6 +579,7 @@ class CreateMethodVarsTest
             {std::string("google/api/client.proto"), kClientProto},
             {std::string("google/api/http.proto"), kHttpProto},
             {std::string("google/api/annotations.proto"), kAnnotationsProto},
+            {std::string("google/iam/v1/fake_iam.proto"), kIamProto},
             {std::string("google/longrunning/operation.proto"),
              kLongrunningOperationsProto},
             {std::string("test/test.proto"), kSourceLocationTestInput},
@@ -614,7 +626,7 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsProtobufRequest) {
               HasSubstr(R"""(  ///
   /// Leading comments about rpc Method0$$.
   ///
-  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L16}
+  /// @param request @googleapis_link{google::protobuf::Bar,google/foo/v1/service.proto#L17}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
@@ -769,7 +781,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
-                             "foo/v1/service.proto#L31}"),
+                             "foo/v1/service.proto#L32}"),
         MethodVarsTestValues("google.protobuf.Service.Method0",
                              "method_http_query_parameters",
                              "google.protobuf.Service.Method0"),
@@ -785,7 +797,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method1",
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L16}"),
+                             "foo/v1/service.proto#L17}"),
         MethodVarsTestValues("google.protobuf.Service.Method1",
                              "method_http_query_parameters", ""),
         // Method2
@@ -816,7 +828,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L16}"),
+                             "foo/v1/service.proto#L17}"),
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "method_http_query_parameters", ""),
         // Method3
@@ -944,7 +956,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
-                             "foo/v1/service.proto#L16}"),
+                             "foo/v1/service.proto#L17}"),
         // Method8
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "method_signature0",

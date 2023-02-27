@@ -428,12 +428,20 @@ void SetHttpGetQueryParameters(
   absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
 }
 
+bool IsKnownIdempotentMethod(google::protobuf::MethodDescriptor const& m) {
+  return (m.name() == "GetIamPolicy" &&
+          m.output_type()->full_name() == "google.iam.v1.Policy" &&
+          m.input_type()->full_name() == "google.iam.v1.GetIamPolicyRequest") ||
+         (m.name() == "TestIamPermissions" &&
+          m.output_type()->full_name() ==
+              "google.iam.v1.TestIamPermissionsResponse" &&
+          m.input_type()->full_name() ==
+              "google.iam.v1.TestIamPermissionsRequest");
+}
+
 std::string DefaultIdempotencyFromHttpOperation(
     google::protobuf::MethodDescriptor const& method) {
-  if (method.name() == "GetIamPolicy" ||
-      method.name() == "TestIamPermissions") {
-    return "kIdempotent";
-  }
+  if (IsKnownIdempotentMethod(method)) return "kIdempotent";
   if (method.options().HasExtension(google::api::http)) {
     google::api::HttpRule http_rule =
         method.options().GetExtension(google::api::http);
