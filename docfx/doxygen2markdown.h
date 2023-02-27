@@ -18,6 +18,7 @@
 #include <pugixml.hpp>
 #include <iosfwd>
 #include <string>
+#include <string_view>
 #include <vector>
 
 /**
@@ -33,12 +34,13 @@ struct MarkdownContext {
   std::vector<std::string> decorators;
 };
 
-/**
- * Handle "page" nodes, such as the landing page of a library.
- *
- * This creates the root MarkdownContext, so no need to consume it.
- */
-std::string Page2Markdown(pugi::xml_node const& node);
+/// Throws an exception indicating child node with an unknown type was found.
+[[noreturn]] void UnknownChildType(std::string_view where,
+                                   pugi::xml_node const& child);
+
+/// Throws an exception indicating an expected element is missing.
+[[noreturn]] void MissingElement(std::string_view where, std::string_view name,
+                                 pugi::xml_node const& node);
 
 /// Handles a sect4 node.
 bool AppendIfSect4(std::ostream& os, MarkdownContext const& ctx,
