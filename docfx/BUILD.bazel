@@ -37,6 +37,7 @@ cc_library(
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = ["-std=c++17"],
     deps = [
         ":docfx",
         "@com_github_zeux_pugixml//:pugixml",
@@ -47,6 +48,7 @@ cc_library(
 cc_binary(
     name = "doxygen2docfx",
     srcs = ["doxygen2docfx.cc"],
+    copts = ["-std=c++17"],
     visibility = ["//visibility:private"],
     deps = [":docfx"],
 )
