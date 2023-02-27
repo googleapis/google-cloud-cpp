@@ -78,8 +78,7 @@ ForEach($feature in $features) {
         "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
         "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
         "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
-        "-DCMAKE_CXX_COMPILER=cl.exe",
-        "-DGOOGLE_CLOUD_CPP_ENABLE_WERROR=ON"
+        "-DCMAKE_CXX_COMPILER=cl.exe"
     )
 
     Write-Host "$(Get-Date -Format o) Configuring CMake with $cmake_args"
