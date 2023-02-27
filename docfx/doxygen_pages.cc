@@ -17,7 +17,6 @@
 #include <iostream>
 #include <sstream>
 #include <string_view>
-#include <unordered_set>
 
 // A "page" appears in the generated XML as:
 // clang-format off
@@ -84,7 +83,7 @@ std::string Page2Markdown(pugi::xml_node const& node) {
                /*encoding=*/pugi::encoding_auto, /*depth=*/1);
     throw std::runtime_error(std::move(os).str());
   }
-  std::stringstream os;
+  std::ostringstream os;
   MarkdownContext ctx;
   os << "# ";
   AppendTitle(os, ctx, node);

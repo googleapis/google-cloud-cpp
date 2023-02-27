@@ -16,9 +16,7 @@
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
 
 #include <pugixml.hpp>
-#include <iosfwd>
 #include <string>
-#include <vector>
 
 /**
  * Handle "page" nodes, such as the landing page of a library.
