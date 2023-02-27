@@ -37,9 +37,9 @@ using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::StartsWith;
 
-std::string HttpBinEndpoint() { return GetEnv("HTTPBIN_ENDPOINT").value(); }
-
 bool UsingEmulator() { return GetEnv("HTTPBIN_ENDPOINT").has_value(); }
+
+std::string HttpBinEndpoint() { return GetEnv("HTTPBIN_ENDPOINT").value(); }
 
 Status Make3Attempts(std::function<Status()> const& attempt) {
   Status status;

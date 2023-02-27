@@ -41,9 +41,9 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::StartsWith;
 
-std::string HttpBinEndpoint() { return GetEnv("HTTPBIN_ENDPOINT").value(); }
-
 bool UsingEmulator() { return GetEnv("HTTPBIN_ENDPOINT").has_value(); }
+
+std::string HttpBinEndpoint() { return GetEnv("HTTPBIN_ENDPOINT").value(); }
 
 // The integration tests sometimes flake (e.g. DNS failures) if we do not have a
 // retry loop.
@@ -365,7 +365,6 @@ TEST(CurlRequestTest, UserAgent) {
 }
 
 #if CURL_AT_LEAST_VERSION(7, 43, 0)
-
 /// @test Verify the HTTP Version option.
 TEST(CurlRequestTest, HttpVersion) {
   if (!UsingEmulator()) GTEST_SKIP();
