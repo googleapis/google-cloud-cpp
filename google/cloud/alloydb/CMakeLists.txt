@@ -116,11 +116,8 @@ if (BUILD_TESTING)
     google_cloud_cpp_add_common_options(alloydb_quickstart)
     add_test(
         NAME alloydb_quickstart
-        COMMAND
-            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-            $<TARGET_FILE:alloydb_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:alloydb_quickstart> GOOGLE_CLOUD_PROJECT)
     set_tests_properties(alloydb_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()

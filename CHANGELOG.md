@@ -124,6 +124,7 @@ We are happy to announce the following GA libraries.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Advisory Notifications](/google/cloud/advisorynotifications/README.md)
+- [Alloy DB](/google/cloud/alloydb/README.md)
 - [API Keys](/google/cloud/apikeys/README.md)
 
 ### [KMS](/google/cloud/kms/README.md)

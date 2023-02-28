@@ -13,8 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/alloydb/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/alloydb/v1/alloy_db_admin_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,11 +22,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace alloydb = ::google::cloud::alloydb;
-  auto client = alloydb::Client(alloydb::MakeConnection());
+  namespace alloydb = ::google::cloud::alloydb_v1;
+  auto client =
+      alloydb::AlloyDBAdminClient(alloydb::MakeAlloyDBAdminConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto r : client.ListClusters(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

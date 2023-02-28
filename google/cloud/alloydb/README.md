@@ -1,7 +1,18 @@
 # AlloyDB API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[AlloyDB API][cloud-service-docs], a service to AlloyDB for PostgreSQL is an open source-compatible database service that provides a powerful option for migrating, modernizing, or building commercial-grade applications. It offers full compatibility with standard PostgreSQL, and is more than 4x faster for transactional workloads and up to 100x faster for analytical queries than standard PostgreSQL in our performance tests. AlloyDB for PostgreSQL offers a 99.99 percent availability SLA inclusive of maintenance. <br><br> AlloyDB is optimized for the most demanding use cases, allowing you to build new applications that require high transaction throughput, large database sizes, or multiple read resources; scale existing PostgreSQL workloads with no application changes; and modernize legacy proprietary databases.
+[AlloyDB API][cloud-service-docs]. AlloyDB for PostgreSQL is an open
+source-compatible database service that provides a powerful option for
+migrating, modernizing, or building commercial-grade applications. It offers
+full compatibility with standard PostgreSQL, and is more than 4x faster for
+transactional workloads and up to 100x faster for analytical queries than
+standard PostgreSQL in our performance tests. AlloyDB for PostgreSQL offers a
+99.99 percent availability SLA inclusive of maintenance.
+
+AlloyDB is optimized for the most demanding use cases, allowing you to build
+new applications that require high transaction throughput, large database sizes,
+or multiple read resources; scale existing PostgreSQL workloads with no
+application changes; and modernize legacy proprietary databases.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,8 +27,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/alloydb/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/alloydb/v1/alloy_db_admin_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -26,11 +36,12 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace alloydb = ::google::cloud::alloydb;
-  auto client = alloydb::Client(alloydb::MakeConnection());
+  namespace alloydb = ::google::cloud::alloydb_v1;
+  auto client =
+      alloydb::AlloyDBAdminClient(alloydb::MakeAlloyDBAdminConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
+  for (auto r : client.ListClusters(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

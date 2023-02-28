@@ -36,6 +36,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "accessapproval"
     "accesscontextmanager"
     "advisorynotifications"
+    "alloydb"
     "apigateway"
     "apigeeconnect"
     "appengine"
