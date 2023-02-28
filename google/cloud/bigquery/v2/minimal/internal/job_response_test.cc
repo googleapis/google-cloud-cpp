@@ -98,6 +98,19 @@ TEST(JobResponseTest, InvalidJson) {
                        HasSubstr("Error parsing Json from response payload")));
 }
 
+TEST(JobResponseTest, InvalidJob) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail"})";
+  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(job_response, StatusIs(StatusCode::kInternal,
+                                     HasSubstr("Not a valid Json Job object")));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

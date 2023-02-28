@@ -20,27 +20,31 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+bool valid_job(nlohmann::json const& j) {
+  return (exists(j, "kind") && exists(j, "etag") && exists(j, "id") &&
+          exists(j, "status") && exists(j, "reference") &&
+          exists(j, "configuration"));
+}
+
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
   if (http_response.payload.empty()) {
-    return internal::InternalError("Empty payload in HTTP response.",
+    return internal::InternalError("Empty payload in HTTP response",
                                    GCP_ERROR_INFO());
   }
   // Build the job response object from Http response.
-  auto json = nlohmann::json::parse(http_response.payload, nullptr, false);
-  if (!json.is_object()) {
-    return internal::InternalError("Error parsing Json from response payload.",
+  auto json_obj = nlohmann::json::parse(http_response.payload, nullptr, false);
+  if (!json_obj.is_object()) {
+    return internal::InternalError("Error parsing Json from response payload",
                                    GCP_ERROR_INFO());
   }
   GetJobResponse result;
-  try {
-    result.job = json.get<Job>();
+  if (valid_job(json_obj)) {
+    result.job = json_obj.get<Job>();
     result.http_response = http_response;
-  } catch (json::exception& e) {
-    std::string msg = e.what();
-    return internal::InternalError(
-        "Error getting Job details from parsed Json object: " + msg,
-        GCP_ERROR_INFO());
+  } else {
+    return internal::InternalError("Not a valid Json Job object",
+                                   GCP_ERROR_INFO());
   }
   return result;
 }

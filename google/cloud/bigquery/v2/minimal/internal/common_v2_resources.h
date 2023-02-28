@@ -24,7 +24,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using json = nlohmann::json;
 // Disabling clang-tidy here as the namespace is needed for using the
 // NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
 using namespace nlohmann::literals;  // NOLINT
@@ -46,8 +45,6 @@ struct DatasetReference {
   std::string project_id;
 };
 
-struct QueryParameterType;
-
 struct QueryParameterStructType {
   std::string name;
   // Figure out how to change type field to QueryParameterType to match the
@@ -56,17 +53,16 @@ struct QueryParameterStructType {
   std::string description;
 };
 
-// Self refrential structures below is reflecting the protobuf message structure
-// for bigquery v2 QueryParameterType and QueryParameterValue proto definitions.
-// Disabling clang-tidy for these two types as we want to be close to the
-// protobuf definition as possible.
+// Self referential structures below is reflecting the protobuf message
+// structure for bigquery v2 QueryParameterType and QueryParameterValue proto
+// definitions. Disabling clang-tidy for these two types as we want to be close
+// to the protobuf definition as possible.
 
 // NOLINTBEGIN
 struct QueryParameterType {
   std::string type;
-  // Have to use a raw pointer here. Smart pointer causes issues with
-  // from_json() and to_json() due to only-move restrictions.
-  QueryParameterType* array_type = nullptr;
+
+  std::shared_ptr<QueryParameterType> array_type;
   std::vector<QueryParameterStructType> struct_types;
 };
 
@@ -98,35 +94,39 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryParameterStructType, name,
                                                 type, description);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ConnectionProperty, key, value);
 
+inline bool exists(nlohmann::json const& j, std::string const& key) {
+  return j.find(key) != j.end();
+}
+
 // NOLINTBEGIN
-inline void to_json(json& j, QueryParameterType const& q) {
-  if (q.array_type != nullptr) {
-    j = json{{"type", q.type},
-             {"array_type", *q.array_type},
-             {"struct_types", q.struct_types}};
+inline void to_json(nlohmann::json& j, QueryParameterType const& q) {
+  if (q.array_type.get() != nullptr) {
+    j = nlohmann::json{{"type", q.type},
+                       {"array_type", *q.array_type},
+                       {"struct_types", q.struct_types}};
   } else {
-    j = json{{"type", q.type}, {"struct_types", q.struct_types}};
+    j = nlohmann::json{{"type", q.type}, {"struct_types", q.struct_types}};
   }
 }
 
-inline void from_json(json const& j, QueryParameterType& q) {
-  j.at("type").get_to(q.type);
-  if (q.array_type != nullptr) {
+inline void from_json(nlohmann::json const& j, QueryParameterType& q) {
+  if (exists(j, "type")) j.at("type").get_to(q.type);
+  if (q.array_type != nullptr && exists(j, "array_type")) {
     j.at("array_type").get_to(*q.array_type);
   }
-  j.at("struct_types").get_to(q.struct_types);
+  if (exists(j, "struct_types")) j.at("struct_types").get_to(q.struct_types);
 }
 
-inline void to_json(json& j, QueryParameterValue const& q) {
-  j = json{{"value", q.value},
-           {"array_values", q.array_values},
-           {"struct_values", q.struct_values}};
+inline void to_json(nlohmann::json& j, QueryParameterValue const& q) {
+  j = nlohmann::json{{"value", q.value},
+                     {"array_values", q.array_values},
+                     {"struct_values", q.struct_values}};
 }
 
-inline void from_json(json const& j, QueryParameterValue& q) {
-  j.at("value").get_to(q.value);
-  j.at("array_values").get_to(q.array_values);
-  j.at("struct_values").get_to(q.struct_values);
+inline void from_json(nlohmann::json const& j, QueryParameterValue& q) {
+  if (exists(j, "value")) j.at("value").get_to(q.value);
+  if (exists(j, "array_values")) j.at("array_values").get_to(q.array_values);
+  if (exists(j, "struct_values")) j.at("struct_values").get_to(q.struct_values);
 }
 // NOLINTEND
 
@@ -135,6 +135,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryParameter, name,
                                                 parameter_value);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
