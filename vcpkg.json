@@ -31,6 +31,10 @@
     {
       "name": "pugixml",
       "$description": "Only used for the docfx feature"
+    },
+    {
+      "name": "yaml-cpp",
+      "$description": "Only used for the docfx feature"
     }
   ]
 }

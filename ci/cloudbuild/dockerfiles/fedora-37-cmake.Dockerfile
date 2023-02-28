@@ -40,7 +40,7 @@ RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
 RUN dnf makecache && dnf debuginfo-install -y libstdc++
 
 # This is used by the docfx tool.
-RUN dnf makecache && dnf install -y pugixml-devel
+RUN dnf makecache && dnf install -y pugixml-devel yaml-cpp-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because

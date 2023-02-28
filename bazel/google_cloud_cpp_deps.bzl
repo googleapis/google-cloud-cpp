@@ -229,3 +229,14 @@ def google_cloud_cpp_deps(name = None):
         strip_prefix = "pugixml-1.13",
         build_file = Label("//bazel:pugixml.BUILD"),
     )
+
+    maybe(
+        http_archive,
+        name = "com_github_jbeder_yaml_cpp",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/yaml-cpp-0.7.0.tar.gz",
+            "https://github.com/jbeder/yaml-cpp/archive/yaml-cpp-0.7.0.tar.gz",
+        ],
+        sha256 = "43e6a9fcb146ad871515f0d0873947e5d497a1c9c60c58cb102a97b47208b7c3",
+        strip_prefix = "yaml-cpp-yaml-cpp-0.7.0",
+    )
