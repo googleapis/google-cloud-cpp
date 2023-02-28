@@ -93,7 +93,7 @@ function (bigquery_rest_define_tests)
         google_cloud_cpp_add_executable(target "bigquery" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing google_cloud_cpp_testing_rest
+            PRIVATE google_cloud_cpp_testing
                     google-cloud-cpp::experimental-bigquery_rest
                     GTest::gmock_main GTest::gmock GTest::gtest)
         google_cloud_cpp_add_common_options(${target})

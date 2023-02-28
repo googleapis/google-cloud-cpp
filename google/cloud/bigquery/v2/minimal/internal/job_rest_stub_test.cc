@@ -69,9 +69,9 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
 
   GetJobRequest job_request("p123", "j123");
   Options opts;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
 
-  auto result = rest_stub.GetJob(std::move(job_request));
+  auto result = rest_stub.GetJob(std::move(job_request), opts);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(result->http_response.http_status_code, Eq(HttpStatusCode::kOk));
   EXPECT_THAT(result->http_response.payload, Eq(job_response_payload));
@@ -83,8 +83,8 @@ TEST(BigQueryJobStubTest, ProjectIdEmpty) {
   auto mock_rest_client = absl::make_unique<MockRestClient>();
   GetJobRequest job_request("", "j123");
   Options opts;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
-  auto result = rest_stub.GetJob(std::move(job_request));
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+  auto result = rest_stub.GetJob(std::move(job_request), opts);
   EXPECT_THAT(
       result,
       StatusIs(StatusCode::kInvalidArgument,
@@ -95,8 +95,8 @@ TEST(BigQueryJobStubTest, JobIdEmpty) {
   auto mock_rest_client = absl::make_unique<MockRestClient>();
   GetJobRequest job_request("p123", "");
   Options opts;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
-  auto result = rest_stub.GetJob(std::move(job_request));
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+  auto result = rest_stub.GetJob(std::move(job_request), opts);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Invalid GetJobRequest: Job Id is empty")));
@@ -111,8 +111,8 @@ TEST(BigQueryJobStubTest, RestClientError) {
 
   GetJobRequest job_request("p123", "j123");
   Options opts;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
-  auto result = rest_stub.GetJob(std::move(job_request));
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+  auto result = rest_stub.GetJob(std::move(job_request), opts);
   EXPECT_FALSE(result.ok());
   EXPECT_THAT(result.status().code(), Eq(StatusCode::kUnavailable));
 }
@@ -134,8 +134,8 @@ TEST(BigQueryJobStubTest, BuildRestResponseError) {
 
   GetJobRequest job_request("p123", "j123");
   Options opts;
-  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
-  auto result = rest_stub.GetJob(std::move(job_request));
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client));
+  auto result = rest_stub.GetJob(std::move(job_request), opts);
   EXPECT_FALSE(result.ok());
   EXPECT_THAT(result.status().code(), Eq(StatusCode::kInvalidArgument));
 }

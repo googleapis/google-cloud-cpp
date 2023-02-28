@@ -25,7 +25,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using json = nlohmann::json;
 // Disabling clang-tidy here as the namespace is needed for using the
 // NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
 using namespace nlohmann::literals;  // NOLINT
@@ -36,12 +35,12 @@ struct JobConfigurationQuery {
   std::string write_disposition;
   std::string priority;
   std::string parameter_mode;
-  bool preserve_nulls;
-  bool allow_large_results;
-  bool use_query_cache;
-  bool flatten_results;
-  bool use_legacy_sql;
-  bool create_session;
+  bool preserve_nulls = false;
+  bool allow_large_results = false;
+  bool use_query_cache = false;
+  bool flatten_results = false;
+  bool use_legacy_sql = false;
+  bool create_session = false;
   std::int64_t maximum_bytes_billed;
 
   DatasetReference default_dataset;
@@ -53,7 +52,7 @@ struct JobConfigurationQuery {
 
 struct JobConfiguration {
   std::string job_type;
-  bool dry_run;
+  bool dry_run = false;
   std::int64_t job_timeout_ms;
   std::map<std::string, std::string> labels;
 
@@ -70,6 +69,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobConfiguration, job_type,
                                                 query_config, dry_run,
                                                 job_timeout_ms, labels);
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google

@@ -52,7 +52,6 @@ TEST(BigQueryHttpResponseTest, Success) {
       BigQueryHttpResponse::BuildFromRestResponse(std::move(mock_response));
   ASSERT_STATUS_OK(http_response);
   EXPECT_TRUE(http_response->http_headers.empty());
-  EXPECT_FALSE(http_response->payload.empty());
   EXPECT_THAT(http_response->payload, Eq(job_response_payload));
 }
 
@@ -65,8 +64,8 @@ TEST(BigQueryHttpResponseTest, HttpError) {
       .WillOnce(Return(std::move(mock_payload)));
   auto http_response =
       BigQueryHttpResponse::BuildFromRestResponse(std::move(mock_response));
-  EXPECT_FALSE(http_response.ok());
-  EXPECT_THAT(http_response.status().code(), Eq(StatusCode::kInvalidArgument));
+  EXPECT_THAT(http_response, StatusIs(StatusCode::kInvalidArgument,
+                                      HasSubstr("Received HTTP status code")));
 }
 
 TEST(BigQueryHttpResponseTest, PayloadError) {
@@ -82,9 +81,8 @@ TEST(BigQueryHttpResponseTest, PayloadError) {
       .WillOnce(Return(std::move(mock_payload)));
   auto http_response =
       BigQueryHttpResponse::BuildFromRestResponse(std::move(mock_response));
-  EXPECT_FALSE(http_response.ok());
-  EXPECT_THAT(http_response.status().code(), Eq(StatusCode::kAborted));
-  EXPECT_THAT(http_response.status().message(), Eq("invalid payload"));
+  EXPECT_THAT(http_response,
+              StatusIs(StatusCode::kAborted, HasSubstr("invalid payload")));
 }
 
 TEST(BigQueryHttpResponseTest, NullPtr) {
