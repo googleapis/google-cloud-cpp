@@ -17,6 +17,7 @@
 """Automatically generated source lists for docfx - DO NOT EDIT."""
 
 docfx_hdrs = [
+    "config.h",
     "doxygen2markdown.h",
     "doxygen_pages.h",
     "parse_arguments.h",
