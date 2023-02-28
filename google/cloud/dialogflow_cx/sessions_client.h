@@ -150,12 +150,12 @@ class SessionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L839}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::MatchIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L842}
   ///
   /// [google.cloud.dialogflow.cx.v3.MatchIntentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L811}
   /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L839}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L842}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request,
@@ -171,18 +171,18 @@ class SessionsClient {
   /// Otherwise, the behavior is undefined.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L875}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentRequest,google/cloud/dialogflow/cx/v3/session.proto#L878}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L888}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FulfillIntentResponse,google/cloud/dialogflow/cx/v3/session.proto#L891}
   ///
   /// [google.cloud.dialogflow.cx.v3.FulfillIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L875}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L878}
   /// [google.cloud.dialogflow.cx.v3.FulfillIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L888}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L891}
   /// [google.cloud.dialogflow.cx.v3.MatchIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L839}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L842}
   /// [google.cloud.dialogflow.cx.v3.Sessions.MatchIntent]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session.proto#L88}
   ///

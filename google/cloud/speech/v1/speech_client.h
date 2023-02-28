@@ -94,12 +94,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v1::RecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L647}
+  /// @googleapis_link{google::cloud::speech::v1::RecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L670}
   ///
   /// [google.cloud.speech.v1.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L76}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
   /// [google.cloud.speech.v1.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L647}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
   ///
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       google::cloud::speech::v1::RecognitionConfig const& config,
@@ -111,16 +111,16 @@ class SpeechClient {
   /// has been sent and processed.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v1::RecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L76}
+  /// @googleapis_link{google::cloud::speech::v1::RecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L78}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v1::RecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L647}
+  /// @googleapis_link{google::cloud::speech::v1::RecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L670}
   ///
   /// [google.cloud.speech.v1.RecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L76}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L78}
   /// [google.cloud.speech.v1.RecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L647}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L670}
   ///
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
       google::cloud::speech::v1::RecognizeRequest const& request,
@@ -141,12 +141,12 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L668}
+  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L691}
   ///
   /// [google.cloud.speech.v1.LongRunningRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L87}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
   /// [google.cloud.speech.v1.LongRunningRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L668}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
   ///
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
   LongRunningRecognize(
@@ -163,16 +163,16 @@ class SpeechClient {
   /// [how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L87}
+  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L89}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L668}
+  /// @googleapis_link{google::cloud::speech::v1::LongRunningRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L691}
   ///
   /// [google.cloud.speech.v1.LongRunningRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L87}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L89}
   /// [google.cloud.speech.v1.LongRunningRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L668}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L691}
   ///
   future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
   LongRunningRecognize(
@@ -186,14 +186,14 @@ class SpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L114}
+  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeRequest,google/cloud/speech/v1/cloud_speech.proto#L117}
   /// and response (read) type:
-  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L758}
+  /// @googleapis_link{google::cloud::speech::v1::StreamingRecognizeResponse,google/cloud/speech/v1/cloud_speech.proto#L781}
   ///
   /// [google.cloud.speech.v1.StreamingRecognizeRequest]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L114}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L117}
   /// [google.cloud.speech.v1.StreamingRecognizeResponse]:
-  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L758}
+  /// @googleapis_reference_link{google/cloud/speech/v1/cloud_speech.proto#L781}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
