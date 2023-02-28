@@ -20,10 +20,12 @@ docfx_hdrs = [
     "doxygen2markdown.h",
     "doxygen_pages.h",
     "parse_arguments.h",
+    "toc_entry.h",
 ]
 
 docfx_srcs = [
     "doxygen2markdown.cc",
     "doxygen_pages.cc",
     "parse_arguments.cc",
+    "toc_entry.cc",
 ]
