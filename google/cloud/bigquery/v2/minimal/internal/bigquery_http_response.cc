@@ -27,16 +27,17 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
   BigQueryHttpResponse response;
   if (rest_response == nullptr) {
     return internal::InvalidArgumentError(
-        "RestResponse argument passed in is null.", GCP_ERROR_INFO());
+        "RestResponse argument passed in is null", GCP_ERROR_INFO());
   }
   if (rest::IsHttpError(*rest_response)) {
     return rest::AsStatus(std::move(*rest_response));
   }
+  response.http_status_code = rest_response->StatusCode();
+  response.http_headers = rest_response->Headers();
+
   auto payload = rest::ReadAll(std::move(*rest_response).ExtractPayload());
   if (!payload.ok()) return payload.status();
 
-  response.http_status_code = rest_response->StatusCode();
-  response.http_headers = rest_response->Headers();
   response.payload = std::move(*payload);
   return response;
 }

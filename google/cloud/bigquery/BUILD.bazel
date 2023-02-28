@@ -121,7 +121,7 @@ load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
     deps = [
         ":google_cloud_cpp_bigquery_rest",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_rest",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigquery_rest_unit_tests]
