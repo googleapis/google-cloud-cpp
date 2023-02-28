@@ -12,12 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "docfx/doxygen2toc.h"
+#include "docfx/doxygen_pages.h"
 #include "docfx/parse_arguments.h"
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   auto config = docfx::ParseArguments({argv, argv + argc});
+  pugi::xml_document doc;
+  auto load = doc.load_file(config.input_filename.c_str());
+  if (!load) throw std::runtime_error("Error loading XML input file");
+
+  std::ofstream("toc.yml") << docfx::Doxygen2Toc(config, doc);
+  for (auto const& i : doc.select_nodes("//*[@kind='page']")) {
+    auto const& page = i.node();
+    auto const filename = std::string{page.attribute("id").as_string()} + ".md";
+    std::ofstream(filename) << docfx::Page2Markdown(page);
+  }
+
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception thrown: " << ex.what() << "\n";
