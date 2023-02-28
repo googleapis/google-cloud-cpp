@@ -27,8 +27,7 @@ std::string Doxygen2Toc(Config const& config, pugi::xml_document const& doc) {
       << YAML::Key << "uid" << YAML::Value << uid   //
       << YAML::Key << "name" << YAML::Value << uid  //
       << YAML::Key << "items" << YAML::Value        //
-      << YAML::BeginSeq                             //
-      ;
+      << YAML::BeginSeq;
   for (auto const& [filename, name] : pages) {
     out << YAML::BeginMap                                  //
         << YAML::Key << "name" << YAML::Value << name      //
