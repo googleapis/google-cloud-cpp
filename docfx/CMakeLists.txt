@@ -30,6 +30,7 @@ include(EnableWerror)
 
 add_library(
     docfx # cmake-format: sort
+    config.h
     doxygen2markdown.cc
     doxygen2markdown.h
     doxygen_pages.cc

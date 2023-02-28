@@ -12,17 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_DOCFX_PARSE_ARGUMENTS_H
-#define GOOGLE_CLOUD_CPP_DOCFX_PARSE_ARGUMENTS_H
+#ifndef GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
+#define GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
 
-#include "docfx/config.h"
 #include <string>
-#include <vector>
 
 namespace docfx {
 
-Config ParseArguments(std::vector<std::string> const& args);
+struct Config {
+  std::string input_filename;
+  std::string library;
+};
 
 }  // namespace docfx
 
-#endif  // GOOGLE_CLOUD_CPP_DOCFX_PARSE_ARGUMENTS_H
+#endif  // GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
