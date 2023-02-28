@@ -18,11 +18,15 @@
 #include <string>
 #include <vector>
 
+namespace docfx {
+
 struct Config {
   std::string input_filename;
   std::string library;
 };
 
 Config ParseArguments(std::vector<std::string> const& args);
+
+}  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_PARSE_ARGUMENTS_H

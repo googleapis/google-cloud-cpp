@@ -19,6 +19,8 @@
 #include <sstream>
 #include <string_view>
 
+namespace docfx {
+
 // A "page" appears in the generated XML as:
 // clang-format off
 //   <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="indexpage" kind="page">
@@ -118,3 +120,5 @@ std::vector<TocEntry> PagesToc(pugi::xml_document const& doc) {
   });
   return result;
 }
+
+}  // namespace docfx

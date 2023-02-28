@@ -15,6 +15,10 @@
 #include "docfx/toc_entry.h"
 #include <iostream>
 
+namespace docfx {
+
 std::ostream& operator<<(std::ostream& os, TocEntry const& entry) {
   return os << "filename=" << entry.filename << ", name=" << entry.name;
 }
+
+}  // namespace docfx

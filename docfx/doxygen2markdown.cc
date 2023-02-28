@@ -16,6 +16,8 @@
 #include <sstream>
 #include <unordered_set>
 
+namespace docfx {
+
 [[noreturn]] void UnknownChildType(std::string_view where,
                                    pugi::xml_node const& child) {
   std::ostringstream os;
@@ -787,3 +789,5 @@ void AppendTitle(std::ostream& os, MarkdownContext const& ctx,
     }
   }
 }
+
+}  // namespace docfx

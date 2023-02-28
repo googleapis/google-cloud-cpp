@@ -15,6 +15,7 @@
 #include "docfx/doxygen_pages.h"
 #include <gmock/gmock.h>
 
+namespace docfx {
 namespace {
 
 using ::testing::ElementsAre;
@@ -125,3 +126,4 @@ TEST(DoxygenPages, PagesToc) {
 }
 
 }  // namespace
+}  // namespace docfx

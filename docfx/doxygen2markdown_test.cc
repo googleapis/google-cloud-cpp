@@ -15,6 +15,7 @@
 #include "docfx/doxygen2markdown.h"
 #include <gmock/gmock.h>
 
+namespace docfx {
 namespace {
 
 using ::testing::HasSubstr;
@@ -741,3 +742,4 @@ TEST(Doxygen2Markdown, Title) {
 }
 
 }  // namespace
+}  // namespace docfx
