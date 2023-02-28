@@ -14,6 +14,7 @@
 
 #include "docfx/doxygen_pages.h"
 #include "docfx/doxygen2markdown.h"
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <string_view>
@@ -104,4 +105,16 @@ std::string Page2Markdown(pugi::xml_node const& node) {
   }
   os << "\n";
   return std::move(os).str();
+}
+
+std::vector<TocEntry> PagesToc(pugi::xml_document const& doc) {
+  auto nodes = doc.select_nodes("//*[@kind='page']");
+  std::vector<TocEntry> result(nodes.size());
+  std::transform(nodes.begin(), nodes.end(), result.begin(), [](auto const& i) {
+    auto const& page = i.node();
+    auto const id = std::string_view{page.attribute("id").as_string()};
+    if (id == "indexpage") return TocEntry{"indexpage.md", "README"};
+    return TocEntry{std::string(id) + ".md", std::string(id)};
+  });
+  return result;
 }

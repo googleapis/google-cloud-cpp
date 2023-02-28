@@ -30,8 +30,14 @@ include(EnableWerror)
 
 add_library(
     docfx # cmake-format: sort
-    doxygen2markdown.cc doxygen2markdown.h doxygen_pages.cc doxygen_pages.h
-    parse_arguments.cc parse_arguments.h)
+    doxygen2markdown.cc
+    doxygen2markdown.h
+    doxygen_pages.cc
+    doxygen_pages.h
+    parse_arguments.cc
+    parse_arguments.h
+    toc_entry.cc
+    toc_entry.h)
 google_cloud_cpp_add_common_options(docfx)
 target_include_directories(docfx PUBLIC "${PROJECT_SOURCE_DIR}")
 target_compile_features(docfx PUBLIC cxx_std_17)
