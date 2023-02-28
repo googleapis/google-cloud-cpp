@@ -26,7 +26,6 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using json = nlohmann::json;
 // Disabling clang-tidy here as the namespace is needed for using the
 // NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
 using namespace nlohmann::literals;  // NOLINT
