@@ -28,8 +28,6 @@ export USE_BAZEL_VERSION
 bazelisk version || rm -fr "$HOME"/Library/Caches/bazelisk || bazelisk version
 
 bazel_args=(
-  # On macOS gRPC does not compile correctly unless one defines this:
-  "--copt=-DGRPC_BAZEL_BUILD"
   # We need this environment variable because on macOS gRPC crashes if it
   # cannot find the credentials, even if you do not use them. Some of the
   # unit tests do exactly that.
