@@ -16,6 +16,7 @@
 #include <gmock/gmock.h>
 #include <stdexcept>
 
+namespace docfx {
 namespace {
 
 TEST(ParseArguments, Basic) {
@@ -74,3 +75,4 @@ TEST(ParseArguments, TooManyArguments) {
 }
 
 }  // namespace
+}  // namespace docfx

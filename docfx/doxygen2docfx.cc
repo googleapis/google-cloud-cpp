@@ -17,7 +17,7 @@
 #include <stdexcept>
 
 int main(int argc, char* argv[]) try {
-  auto config = ParseArguments({argv, argv + argc});
+  auto config = docfx::ParseArguments({argv, argv + argc});
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception thrown: " << ex.what() << "\n";

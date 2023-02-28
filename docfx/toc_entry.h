@@ -18,6 +18,8 @@
 #include <iosfwd>
 #include <string>
 
+namespace docfx {
+
 /// An entry in table of contents
 struct TocEntry {
   std::string filename;
@@ -25,5 +27,7 @@ struct TocEntry {
 };
 
 std::ostream& operator<<(std::ostream& os, TocEntry const& entry);
+
+}  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_TOC_ENTRY_H

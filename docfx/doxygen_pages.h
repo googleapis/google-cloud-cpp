@@ -20,6 +20,8 @@
 #include <string>
 #include <vector>
 
+namespace docfx {
+
 /**
  * Handle "page" nodes, such as the landing page of a library.
  *
@@ -29,5 +31,7 @@ std::string Page2Markdown(pugi::xml_node const& node);
 
 // Get the table of contents for pages.
 std::vector<TocEntry> PagesToc(pugi::xml_document const& doc);
+
+}  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H

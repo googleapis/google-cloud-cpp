@@ -18,6 +18,7 @@
 #include <sstream>
 #include <stdexcept>
 
+namespace docfx {
 namespace {
 
 std::string Usage(std::string const& cmd) {
@@ -37,3 +38,5 @@ Config ParseArguments(std::vector<std::string> const& args) {
   if (args.size() != 3) throw std::runtime_error(Usage(args[0]));
   return Config{args[1], args[2]};
 }
+
+}  // namespace docfx

@@ -21,6 +21,8 @@
 #include <string_view>
 #include <vector>
 
+namespace docfx {
+
 /**
  * Keeps the state for markdown generation.
  *
@@ -179,5 +181,7 @@ bool AppendIfAnchor(std::ostream& os, MarkdownContext const& ctx,
 /// Handle the title for a section-like element.
 void AppendTitle(std::ostream& os, MarkdownContext const& ctx,
                  pugi::xml_node const& node);
+
+}  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2MARKDOWN_H
