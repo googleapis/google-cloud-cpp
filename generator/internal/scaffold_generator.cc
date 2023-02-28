@@ -827,14 +827,6 @@ curl -Lo roots.pem https://pki.google.com/roots.pem
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$$PWD/roots.pem"
 ```
 
-To workaround a [bug in Bazel][bazel-grpc-macos-bug], gRPC requires this flag on
-macOS builds, you can add the option manually or include it in your `.bazelrc`
-file:
-
-```bash
-bazel build --copt=-DGRPC_BAZEL_BUILD ...
-```
-
 ### Windows
 
 Bazel tends to create very long file names and paths. You may need to use a
@@ -1061,11 +1053,6 @@ void GenerateQuickstartBazelrc(
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-# To workaround a bug in Bazel [1], gRPC requires this flag on macOS builds,
-# and there is (AFAIK) no way to "inherit" their definitions.
-#   [1]: https://github.com/bazelbuild/bazel/issues/4341
-build --copt=-DGRPC_BAZEL_BUILD
 
 # Use host-OS-specific config lines from bazelrc files.
 build --enable_platform_specific_config=true
