@@ -100,6 +100,28 @@ TEST(OpenTelemetry, EndSpan) {
           SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)))));
 }
 
+TEST(OpenTelemetry, EndSpanFuture) {
+  auto span_catcher = InstallSpanCatcher();
+
+  promise<Status> p;
+  auto f = EndSpan(std::make_shared<grpc::ClientContext>(),
+                   MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar"),
+                   p.get_future());
+  EXPECT_FALSE(f.is_ready());
+  p.set_value(Status());
+  EXPECT_TRUE(f.is_ready());
+  EXPECT_STATUS_OK(f.get());
+
+  auto spans = span_catcher->GetSpans();
+  // It is too hard to mock a `grpc::ClientContext`. We will just check that the
+  // expected attribute key is set.
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)))));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
@@ -213,6 +214,58 @@ TEST(OpenTelemetry, EndSpanStatusOr) {
   auto s2 = MakeSpan("s2");
   auto r2 = EndSpan(*s2, v2);
   EXPECT_EQ(r2, v2);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
+}
+
+TEST(OpenTelemetry, EndSpanFutureStatus) {
+  auto span_catcher = InstallSpanCatcher();
+
+  promise<Status> p1;
+  auto v1 = Status();
+  auto r1 = EndSpan(MakeSpan("s1"), p1.get_future());
+  EXPECT_FALSE(r1.is_ready());
+  p1.set_value(v1);
+  EXPECT_TRUE(r1.is_ready());
+  EXPECT_EQ(r1.get(), v1);
+
+  promise<Status> p2;
+  auto v2 = Status(StatusCode::kAborted, "fail");
+  auto r2 = EndSpan(MakeSpan("s2"), p2.get_future());
+  EXPECT_FALSE(r2.is_ready());
+  p2.set_value(v2);
+  EXPECT_TRUE(r2.is_ready());
+  EXPECT_EQ(r2.get(), v2);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
+}
+
+TEST(OpenTelemetry, EndSpanFutureStatusOr) {
+  auto span_catcher = InstallSpanCatcher();
+
+  promise<StatusOr<int>> p1;
+  auto v1 = StatusOr<int>(5);
+  auto r1 = EndSpan(MakeSpan("s1"), p1.get_future());
+  EXPECT_FALSE(r1.is_ready());
+  p1.set_value(v1);
+  EXPECT_TRUE(r1.is_ready());
+  EXPECT_EQ(r1.get(), v1);
+
+  promise<StatusOr<int>> p2;
+  auto v2 = StatusOr<int>(Status(StatusCode::kAborted, "fail"));
+  auto r2 = EndSpan(MakeSpan("s2"), p2.get_future());
+  EXPECT_FALSE(r2.is_ready());
+  p2.set_value(v2);
+  EXPECT_TRUE(r2.is_ready());
+  EXPECT_EQ(r2.get(), v2);
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
