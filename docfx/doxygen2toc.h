@@ -12,27 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
-#define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
+#ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2TOC_H
+#define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2TOC_H
 
 #include "docfx/config.h"
-#include "docfx/toc_entry.h"
 #include <pugixml.hpp>
 #include <string>
-#include <vector>
 
 namespace docfx {
 
-/**
- * Handle "page" nodes, such as the landing page of a library.
- *
- * This creates the root MarkdownContext, so no need to consume it.
- */
-std::string Page2Markdown(pugi::xml_node const& node);
-
-// Get the table of contents for pages.
-std::vector<TocEntry> PagesToc(pugi::xml_document const& doc);
+/// Generates the YAML table of contents.
+std::string Doxygen2Toc(Config const& config, pugi::xml_document const& doc);
 
 }  // namespace docfx
 
-#endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
+#endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2TOC_H
