@@ -46,6 +46,10 @@ which should give you a taste of the Google Cloud Data Catalog API C++ client li
   `EndpointOption` (which defaults to "datacatalog.googleapis.com")
   used by `MakeDataCatalogConnection()`.
 
+- `GOOGLE_CLOUD_CPP_LINEAGE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datalineage.googleapis.com")
+  used by `MakeLineageConnection()`.
+
 - `GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "datacatalog.googleapis.com")
   used by `MakePolicyTagManagerConnection()`.
@@ -100,11 +104,12 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `datacatalog_v1::DataCatalogClient`:
+For example, this will override the default endpoint for `datacatalog_lineage_v1::LineageClient`:
 
-@snippet data_catalog_client_samples.cc set-client-endpoint
+@snippet lineage_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
+ [datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-endpoint-snippet)
  [datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-endpoint-snippet)
  [datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-endpoint-snippet)
  [datacatalog_v1::PolicyTagManagerSerializationClient](@ref datacatalog_v1::PolicyTagManagerSerializationClient-endpoint-snippet)
@@ -119,9 +124,10 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
-@snippet data_catalog_client_samples.cc with-service-account
+@snippet lineage_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
+ [datacatalog_lineage_v1::LineageClient](@ref datacatalog_lineage_v1::LineageClient-service-account-snippet)
  [datacatalog_v1::DataCatalogClient](@ref datacatalog_v1::DataCatalogClient-service-account-snippet)
  [datacatalog_v1::PolicyTagManagerClient](@ref datacatalog_v1::PolicyTagManagerClient-service-account-snippet)
  [datacatalog_v1::PolicyTagManagerSerializationClient](@ref datacatalog_v1::PolicyTagManagerSerializationClient-service-account-snippet)
@@ -154,6 +160,18 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page datacatalog_lineage_v1::LineageClient-endpoint-snippet Override datacatalog_lineage_v1::LineageClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/lineage/v1/samples/lineage_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datacatalog_lineage_v1::LineageClient-service-account-snippet Override datacatalog_lineage_v1::LineageClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/lineage/v1/samples/lineage_client_samples.cc with-service-account
+
+*/
 
 /*! @page datacatalog_v1::DataCatalogClient-endpoint-snippet Override datacatalog_v1::DataCatalogClient Endpoint Configuration
 
