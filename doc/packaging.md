@@ -714,7 +714,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-02-01.tar.gz | \
+curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -880,7 +880,7 @@ We need a newer version of RE2 than the system package provides.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-02-01.tar.gz | \
+curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1080,7 +1080,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-02-01.tar.gz | \
+curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1247,7 +1247,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-02-01.tar.gz | \
+curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1401,7 +1401,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-02-01.tar.gz | \
+curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -1602,7 +1602,7 @@ you are not planning to use pkg-config.
 
 ```bash
 mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
-curl -sSL https://github.com/google/re2/archive/2023-02-01.tar.gz | \
+curl -sSL https://github.com/google/re2/archive/2023-03-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
