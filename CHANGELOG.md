@@ -116,7 +116,7 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
-## v2.8.0 - TBD
+## v2.8.0 - 2023-03
 
 ### New Libraries
 
@@ -127,9 +127,40 @@ the APIs in these libraries are stable, and are ready for production use.
 - [Alloy DB](/google/cloud/alloydb/README.md)
 - [API Keys](/google/cloud/apikeys/README.md)
 
+### [BigQuery](/google/cloud/bigquery/README.md)
+
+- fix: retries for GetIamPolicy, TestIamPermissions ([#10957](https://github.com/googleapis/google-cloud-cpp/pull/10957))
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- fix: retries for GetIamPolicy, TestIamPermissions ([#10957](https://github.com/googleapis/google-cloud-cpp/pull/10957))
+- fix(bigtable): retries for CheckConsistency / AsyncWaitForConsistency ([#10955](https://github.com/googleapis/google-cloud-cpp/pull/10955))
+- docs(bigtable): clean up CreateTable sample ([#10844](https://github.com/googleapis/google-cloud-cpp/pull/10844))
+
+### [Cloud Asset](/google/cloud/asset/README.md)
+
+- feat(generator): prepare comment output for Fedora:37 ([#10749](https://github.com/googleapis/google-cloud-cpp/pull/10749))
+
+### [Cloud Run](/google/cloud/run/README.md)
+
+- fix: retries for GetIamPolicy, TestIamPermissions ([#10957](https://github.com/googleapis/google-cloud-cpp/pull/10957))
+
+### [IAM](/google/cloud/iam/README.md)
+
+- fix: retries for GetIamPolicy, TestIamPermissions ([#10957](https://github.com/googleapis/google-cloud-cpp/pull/10957))
+
 ### [KMS](/google/cloud/kms/README.md)
 
 The library has been expanded to include the KMS Inventory API.
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix(pubsub): no warnings on `ack()/nack()` success ([#10920](https://github.com/googleapis/google-cloud-cpp/pull/10920))
+- fix(pubsub): fewer default threads for 32-bit builds ([#10793](https://github.com/googleapis/google-cloud-cpp/pull/10793))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- fix: retries for GetIamPolicy, TestIamPermissions ([#10957](https://github.com/googleapis/google-cloud-cpp/pull/10957))
 
 ### [TPU](/google/cloud/tpu/README.md)
 
@@ -142,6 +173,11 @@ the GCP service. While this naming convention is more verbose, it allows us to
 support clients for multiple versions of a GCP service from within the same
 library (e.g. `speech_v1::SpeechClient` and `speech_v2::SpeechClient`). See
 [#10170] for more details.
+
+- feat(datacatalog): generate lineage library ([#10977](https://github.com/googleapis/google-cloud-cpp/pull/10977))
+- fix: retries for GetIamPolicy, TestIamPermissions ([#10957](https://github.com/googleapis/google-cloud-cpp/pull/10957))
+- doc: improve description for "terminate" group ([#10950](https://github.com/googleapis/google-cloud-cpp/pull/10950))
+- fix(common): fewer spurious warnings in the log ([#10811](https://github.com/googleapis/google-cloud-cpp/pull/10811))
 
 ## v2.7.0 - 2023-02
 
