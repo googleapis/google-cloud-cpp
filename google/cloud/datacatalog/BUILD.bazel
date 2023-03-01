@@ -18,8 +18,8 @@ licenses(["notice"])  # Apache 2.0
 
 service_dirs = [
     "",
-    "v1/",
     "lineage/v1/",
+    "v1/",
 ]
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
