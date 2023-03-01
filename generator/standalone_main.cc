@@ -15,6 +15,7 @@
 #include "generator/generator.h"
 #include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/discovery_to_proto.h"
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -54,6 +55,18 @@ using google::cloud::generator_internal::GenerateScaffold;
 using google::cloud::generator_internal::LibraryName;
 using google::cloud::generator_internal::LibraryPath;
 using google::cloud::generator_internal::SafeReplaceAll;
+
+struct CommandLineArgs {
+  std::string config_file;
+  std::string protobuf_proto_path;
+  std::string googleapis_proto_path;
+  std::string golden_proto_path;
+  std::string output_path;
+  std::string scaffold_templates_path;
+  std::string scaffold;
+  bool experimental_scaffold;
+  bool update_ci;
+};
 
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
 GetConfig(std::string const& filepath) {
@@ -161,66 +174,52 @@ int WriteFeatureList(
   return 0;
 }
 
-}  // namespace
+google::protobuf::RepeatedPtrField<
+    google::cloud::cpp::generator::ServiceConfiguration>
+GenerateProtosForRestProducts(
+    CommandLineArgs const& generator_args,
+    google::protobuf::RepeatedPtrField<
+        google::cloud::cpp::generator::DiscoveryDocumentDefinedProduct> const&
+        rest_products) {
+  google::protobuf::RepeatedPtrField<
+      google::cloud::cpp::generator::ServiceConfiguration>
+      services;
 
-/**
- * C++ microgenerator.
- *
- * @par Command line arguments:
- *  --config-file=<path> REQUIRED should be a textproto file for
- *      GeneratorConfiguration message.
- *  --protobuf_proto_path=<path> REQUIRED path to .proto files distributed with
- *      protobuf.
- *  --googleapis_proto_path=<path> REQUIRED path to .proto files distributed
- *      with googleapis repo.
- *  --output_path=<path> OPTIONAL defaults to current directory.
- */
-int main(int argc, char** argv) {
-  absl::ParseCommandLine(argc, argv);
-  google::cloud::LogSink::EnableStdClog(
-      google::cloud::Severity::GCP_LS_WARNING);
-
-  auto proto_path = absl::GetFlag(FLAGS_protobuf_proto_path);
-  auto googleapis_path = absl::GetFlag(FLAGS_googleapis_proto_path);
-  auto golden_path = absl::GetFlag(FLAGS_golden_proto_path);
-  auto config_file = absl::GetFlag(FLAGS_config_file);
-  auto output_path = absl::GetFlag(FLAGS_output_path);
-  auto scaffold = absl::GetFlag(FLAGS_scaffold);
-  auto scaffold_templates_path = absl::GetFlag(FLAGS_scaffold_templates_path);
-  auto experimental_scaffold = absl::GetFlag(FLAGS_experimental_scaffold);
-
-  GCP_LOG(INFO) << "proto_path = " << proto_path << "\n";
-  GCP_LOG(INFO) << "googleapis_path = " << googleapis_path << "\n";
-  GCP_LOG(INFO) << "config_file = " << config_file << "\n";
-  GCP_LOG(INFO) << "output_path = " << output_path << "\n";
-
-  auto config = GetConfig(config_file);
-  if (!config.ok()) {
-    GCP_LOG(ERROR) << "Failed to parse config file: " << config_file << "\n";
-  }
-
-  if (absl::GetFlag(FLAGS_update_ci)) {
-    auto const install_result = WriteInstallDirectories(*config, output_path);
-    if (install_result != 0) return install_result;
-    auto const features_result = WriteFeatureList(*config, output_path);
-    if (features_result != 0) return features_result;
-  }
-
-  std::vector<std::future<google::cloud::Status>> tasks;
-  for (auto const& service : config->service()) {
-    if (LibraryPath(service.product_path()) == scaffold) {
-      GenerateScaffold(googleapis_path, scaffold_templates_path, output_path,
-                       service, experimental_scaffold);
+  for (auto const& p : rest_products) {
+    auto status =
+        google::cloud::generator_internal::GenerateProtosFromDiscoveryDoc(
+            p.discovery_document_url(), generator_args.protobuf_proto_path,
+            generator_args.googleapis_proto_path, generator_args.output_path);
+    if (status.ok()) {
+      services.Add(p.rest_service().begin(), p.rest_service().end());
     }
+  }
+
+  return services;
+}
+
+std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
+    CommandLineArgs const& generator_args,
+    google::protobuf::RepeatedPtrField<
+        google::cloud::cpp::generator::ServiceConfiguration> const& services) {
+  std::vector<std::future<google::cloud::Status>> tasks;
+  for (auto const& service : services) {
+    if (LibraryPath(service.product_path()) == generator_args.scaffold) {
+      GenerateScaffold(generator_args.googleapis_proto_path,
+                       generator_args.scaffold_templates_path,
+                       generator_args.output_path, service,
+                       generator_args.experimental_scaffold);
+    }
+
     std::vector<std::string> args;
     // empty arg prevents first real arg from being ignored.
     args.emplace_back("");
-    args.emplace_back("--proto_path=" + proto_path);
-    args.emplace_back("--proto_path=" + googleapis_path);
-    if (!golden_path.empty()) {
-      args.emplace_back("--proto_path=" + golden_path);
+    args.emplace_back("--proto_path=" + generator_args.protobuf_proto_path);
+    args.emplace_back("--proto_path=" + generator_args.googleapis_proto_path);
+    if (!generator_args.golden_proto_path.empty()) {
+      args.emplace_back("--proto_path=" + generator_args.golden_proto_path);
     }
-    args.emplace_back("--cpp_codegen_out=" + output_path);
+    args.emplace_back("--cpp_codegen_out=" + generator_args.output_path);
     args.emplace_back("--cpp_codegen_opt=product_path=" +
                       service.product_path());
     args.emplace_back("--cpp_codegen_opt=copyright_year=" +
@@ -314,8 +313,70 @@ int main(int argc, char** argv) {
       return google::cloud::Status{};
     }));
   }
+  return tasks;
+}
+
+}  // namespace
+
+/**
+ * C++ microgenerator.
+ *
+ * @par Command line arguments:
+ *  --config-file=<path> REQUIRED should be a textproto file for
+ *      GeneratorConfiguration message.
+ *  --protobuf_proto_path=<path> REQUIRED path to .proto files distributed with
+ *      protobuf.
+ *  --googleapis_proto_path=<path> REQUIRED path to .proto files distributed
+ *      with googleapis repo.
+ *  --output_path=<path> OPTIONAL defaults to current directory.
+ */
+int main(int argc, char** argv) {
+  absl::ParseCommandLine(argc, argv);
+  google::cloud::LogSink::EnableStdClog(
+      google::cloud::Severity::GCP_LS_WARNING);
+
+  CommandLineArgs const args{absl::GetFlag(FLAGS_config_file),
+                             absl::GetFlag(FLAGS_protobuf_proto_path),
+                             absl::GetFlag(FLAGS_googleapis_proto_path),
+                             absl::GetFlag(FLAGS_golden_proto_path),
+                             absl::GetFlag(FLAGS_output_path),
+                             absl::GetFlag(FLAGS_scaffold_templates_path),
+                             absl::GetFlag(FLAGS_scaffold),
+                             absl::GetFlag(FLAGS_experimental_scaffold),
+                             absl::GetFlag(FLAGS_update_ci)};
+
+  GCP_LOG(INFO) << "proto_path = " << args.protobuf_proto_path << "\n";
+  GCP_LOG(INFO) << "googleapis_path = " << args.googleapis_proto_path << "\n";
+  GCP_LOG(INFO) << "config_file = " << args.config_file << "\n";
+  GCP_LOG(INFO) << "output_path = " << args.output_path << "\n";
+
+  auto config = GetConfig(args.config_file);
+  if (!config.ok()) {
+    GCP_LOG(ERROR) << "Failed to parse config file: " << args.config_file
+                   << "\n";
+  }
+
+  if (args.update_ci) {
+    auto const install_result =
+        WriteInstallDirectories(*config, args.output_path);
+    if (install_result != 0) return install_result;
+    auto const features_result = WriteFeatureList(*config, args.output_path);
+    if (features_result != 0) return features_result;
+  }
+
+  // Start generating C++ code for services defined in googleapis protos.
+  auto tasks = GenerateCodeFromProtos(args, config->service());
+
+  // For REST only services, generate protos from Discovery Docs as needed.
+  auto rest_services =
+      GenerateProtosForRestProducts(args, config->discovery_products());
+  // After all proto generation is complete, generate C++ code from those
+  // protos.
+  auto rest_tasks = GenerateCodeFromProtos(args, rest_services);
 
   std::string error_message;
+  tasks.insert(tasks.end(), std::make_move_iterator(rest_tasks.begin()),
+               std::make_move_iterator(rest_tasks.end()));
   for (auto& t : tasks) {
     auto result = t.get();
     if (!result.ok()) {

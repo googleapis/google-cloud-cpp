@@ -41,6 +41,8 @@ add_library(
     internal/connection_rest_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/discovery_to_proto.cc
+    internal/discovery_to_proto.h
     internal/format_class_comments.cc
     internal/format_class_comments.h
     internal/format_method_comments.cc
