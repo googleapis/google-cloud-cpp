@@ -132,6 +132,10 @@ the APIs in these libraries are stable, and are ready for production use.
 - fix(bigtable): retries for CheckConsistency / AsyncWaitForConsistency ([#10955](https://github.com/googleapis/google-cloud-cpp/pull/10955))
 - docs(bigtable): clean up CreateTable sample ([#10844](https://github.com/googleapis/google-cloud-cpp/pull/10844))
 
+### [Data Catalog](/google/cloud/datacatalog/README.md)
+
+- feat(datacatalog): generate lineage library ([#10977](https://github.com/googleapis/google-cloud-cpp/pull/10977))
+
 ### [KMS](/google/cloud/kms/README.md)
 
 The library has been expanded to include the KMS Inventory API.
@@ -153,7 +157,6 @@ support clients for multiple versions of a GCP service from within the same
 library (e.g. `speech_v1::SpeechClient` and `speech_v2::SpeechClient`). See
 [#10170] for more details.
 
-- feat(datacatalog): generate lineage library ([#10977](https://github.com/googleapis/google-cloud-cpp/pull/10977))
 - fix: retries for GetIamPolicy, TestIamPermissions ([#10957](https://github.com/googleapis/google-cloud-cpp/pull/10957))
 - doc: improve description for "terminate" group ([#10950](https://github.com/googleapis/google-cloud-cpp/pull/10950))
 - fix(common): fewer spurious warnings in the log ([#10811](https://github.com/googleapis/google-cloud-cpp/pull/10811))
