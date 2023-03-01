@@ -84,7 +84,11 @@ declare -A -r LIBRARIES=(
   ["contactcenterinsights"]="@com_google_googleapis//google/cloud/contactcenterinsights/v1:contactcenterinsights_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
-  ["datacatalog"]="@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc"
+  ["datacatalog"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/datacatalog/v1:datacatalog_cc_grpc" \
+      "@com_google_googleapis//google/cloud/datacatalog/lineage/v1:lineage_cc_grpc"
+  )"
   ["datamigration"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_cc_grpc" \
