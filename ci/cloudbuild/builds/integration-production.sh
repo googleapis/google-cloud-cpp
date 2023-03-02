@@ -32,9 +32,10 @@ bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 excluded_rules=(
   "-//examples:grpc_credential_types"
   "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
+  # These account integration tests / samples use HMAC keys, which are very
+  # limited in production (at most 5 per service account).
   "-//google/cloud/storage/examples:storage_service_account_samples"
   "-//google/cloud/storage/tests:service_account_integration_test"
-  "-//google/cloud/storage/tests:grpc_integration_test"
 )
 
 io::log_h2 "Running the integration tests against prod"
@@ -42,3 +43,19 @@ mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
   --cache_test_results="auto" \
   --test_tag_filters="integration-test" -- ... "${excluded_rules[@]}"
+
+io::log_h2 "Running the GCS+gRPC integration tests against prod"
+mapfile -t integration_args < <(integration::bazel_args)
+io::run bazel test "${args[@]}" "${integration_args[@]}" \
+  --cache_test_results="auto" \
+  --test_tag_filters="integration-test" \
+  --test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media \
+  -- //google/cloud/storage/... "${excluded_rules[@]}"
+
+io::log_h2 "Running the GCS+gRPC integration tests against prod"
+mapfile -t integration_args < <(integration::bazel_args)
+io::run bazel test "${args[@]}" "${integration_args[@]}" \
+  --cache_test_results="auto" \
+  --test_tag_filters="integration-test" \
+  --test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=metadata \
+  -- //google/cloud/storage/... "${excluded_rules[@]}"
