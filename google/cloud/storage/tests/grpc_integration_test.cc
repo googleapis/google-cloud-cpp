@@ -218,6 +218,8 @@ TEST_P(GrpcIntegrationTest, QuotaUser) {
 }
 
 TEST_P(GrpcIntegrationTest, FieldFilter) {
+  // TODO(#10991) - using `Fields()` is not working in GCS+gRPC production
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

@@ -36,8 +36,6 @@ excluded_rules=(
   # limited in production (at most 5 per service account).
   "-//google/cloud/storage/examples:storage_service_account_samples"
   "-//google/cloud/storage/tests:service_account_integration_test"
-  # TODO(#6268) - enable this once this last bit of production stabilizes
-  "-//google/cloud/storage/tests:grpc_integration_test"
 )
 
 io::log_h2 "Running the integration tests against prod"
