@@ -566,6 +566,8 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
+  // TODO(#10991) - using `Fields()` is not working in GCS+gRPC production
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
