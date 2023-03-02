@@ -63,43 +63,38 @@ $binary_dir="cmake-out/${BuildName}"
 $features = Get-Vcpkg-Features "${vcpkg_root}" "google-cloud-cpp"
 Build-Vcpkg-Packages $vcpkg_root @("google-cloud-cpp[$($features  -Join ',')]")
 
-$failures=@()
-ForEach($feature in $features) {
-    if ($feature -eq "experimental-storage-grpc") {
-        # Skip this feature as it is not a separate library with a quickstart.
-        continue
-    }
-    $library = $feature.replace('-', '_')
-    Write-Host "`n$(Get-Date -Format o) Build quickstart for ${library}"
-    $cmake_args=@(
-        "-G$env:GENERATOR",
-        "-S", "google/cloud/${library}/quickstart",
-        "-B", "${binary_dir}/${library}"
-        "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`""
-        "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
-        "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
-        "-DCMAKE_CXX_COMPILER=cl.exe"
-    )
+# The ci/verify_quickstart directory contains a CMake file to parallelize this
+# build.
+$feature_list = $($features -Join ';')
+Write-Host "`n$(Get-Date -Format o) Build quickstart for ${libraries}"
+$cmake_args=@(
+    "-G$env:GENERATOR",
+    "-S", "ci/verify_quickstart",
+    "-B", "${binary_dir}/verify_quickstart",
+    # Test all the features found in vcpkg.
+    "-DFEATURES=${feature_list}",
+    # Disable the Makefile tests on Windows. They do not work, and there is not
+    # that much demand for them.
+    "-DGOOGLE_CLOUD_CPP_ENABLE_MAKE=OFF",
+    # The rest is just usual CMake configuration stuff.
+    "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`"",
+    "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
+    "-DVCPKG_TARGET_TRIPLET=${env:VCPKG_TRIPLET}",
+    "-DCMAKE_CXX_COMPILER=cl.exe"
+)
 
-    Write-Host "$(Get-Date -Format o) Configuring CMake with $cmake_args"
-    cmake $cmake_args
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "CMake configuration failed with ${LastExitCode}."
-        $failures += (${library})
-        continue
-    }
-    Write-Host "$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
-    cmake --build "${binary_dir}/${library}" --config $env:CONFIG
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "CMake configuration failed with ${LastExitCode}."
-        $failures += (${library})
-    }
+Write-Host "$(Get-Date -Format o) Configuring CMake with $cmake_args"
+cmake $cmake_args
+if ($LastExitCode) {
+    Write-Host -ForegroundColor Red "CMake configuration failed with ${LastExitCode}."
+    Exit 1
+}
+Write-Host "$(Get-Date -Format o) Compiling $target with CMake $env:CONFIG"
+cmake --build "${binary_dir}/verify_quickstart" --config $env:CONFIG
+if ($LastExitCode) {
+    Write-Host -ForegroundColor Red "CMake configuration failed with ${LastExitCode}."
+    Exit 1
 }
 
-if ($failures.count -eq 0) {
-    Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) All quickstarts built successfully"
-    Exit 0
-}
-
-Write-Host -ForegroundColor Red "`n$(Get-Date -Format o) The following quickstarts failed to build: ${failures}"
-Exit 1
+Write-Host -ForegroundColor Green "`n$(Get-Date -Format o) All quickstarts built successfully"
+Exit 0

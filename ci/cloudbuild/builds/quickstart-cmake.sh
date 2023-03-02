@@ -38,5 +38,5 @@ cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
   -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake" \
-  -DLIBRARIES="${libraries}"
+  -DFEATURES="${libraries}"
 cmake --build "${PROJECT_ROOT}/cmake-out/quickstart" --target verify-quickstart-cmake
