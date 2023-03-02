@@ -35,20 +35,17 @@ StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
   }
   // Prepare the RestRequest
   auto rest_request = BuildRestRequest(request, opts);
-  if (!rest_request.ok()) {
-    return rest_request.status();
-  }
+  if (!rest_request) return std::move(rest_request).status();
+
   // Call the rest client to get job details from the server as a RestResponse.
   auto rest_response = rest_stub_->Get(std::move(*rest_request));
-  if (!rest_response.ok()) {
-    return rest_response.status();
-  }
+  if (!rest_response) return std::move(rest_response).status();
+
   // Convert RestResponse to HttpResponse.
   auto http_response =
       BigQueryHttpResponse::BuildFromRestResponse(std::move(*rest_response));
-  if (!http_response.ok()) {
-    return http_response.status();
-  }
+  if (!http_response) return std::move(http_response).status();
+
   // Convert HttpResponse to GetJobResponse.
   return GetJobResponse::BuildFromHttpResponse(*http_response);
 }

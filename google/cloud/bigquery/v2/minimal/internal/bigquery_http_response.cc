@@ -36,7 +36,7 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
   response.http_headers = rest_response->Headers();
 
   auto payload = rest::ReadAll(std::move(*rest_response).ExtractPayload());
-  if (!payload.ok()) return payload.status();
+  if (!payload) return std::move(payload).status();
 
   response.payload = std::move(*payload);
   return response;
