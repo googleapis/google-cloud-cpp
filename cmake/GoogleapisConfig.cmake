@@ -27,9 +27,9 @@ set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
 mark_as_advanced(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256)
 
 set(_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA
-    "b6b4ed5d7ebdfc0ff8855311bd63ba258b94ae2b")
+    "0ed6338d8ff91118c161dd837d002cbfc47f7d00")
 set(_GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-    "faefdf45528de8c5c9a8a0454134c2f9a0916fbd55ccae1d2b15af9cbee30ee6")
+    "2b55acf11a4656b31980177f0bb941e4cbe65471bd4439d3d0a6599fb64ad598")
 
 set(DOXYGEN_ALIASES
     "googleapis_link{2}=\"[\\1](https://github.com/googleapis/googleapis/blob/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}/\\2)\""
