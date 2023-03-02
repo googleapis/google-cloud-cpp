@@ -104,7 +104,7 @@ class TranscoderServiceClient {
   /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   /// [google.cloud.video.transcoder.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L112}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L116}
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
@@ -116,14 +116,14 @@ class TranscoderServiceClient {
   /// Creates a job in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::CreateJobRequest,google/cloud/video/transcoder/v1/services.proto#L112}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::CreateJobRequest,google/cloud/video/transcoder/v1/services.proto#L116}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   /// [google.cloud.video.transcoder.v1.CreateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L112}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L116}
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
@@ -143,7 +143,7 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L128}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
   ///
   StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
       std::string const& parent, Options opts = {});
@@ -152,7 +152,7 @@ class TranscoderServiceClient {
   /// Lists jobs in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::ListJobsRequest,google/cloud/video/transcoder/v1/services.proto#L128}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::ListJobsRequest,google/cloud/video/transcoder/v1/services.proto#L132}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -161,7 +161,7 @@ class TranscoderServiceClient {
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   /// [google.cloud.video.transcoder.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L128}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L132}
   ///
   StreamRange<google::cloud::video::transcoder::v1::Job> ListJobs(
       google::cloud::video::transcoder::v1::ListJobsRequest request,
@@ -178,7 +178,7 @@ class TranscoderServiceClient {
   /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   /// [google.cloud.video.transcoder.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L154}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L158}
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
@@ -189,14 +189,14 @@ class TranscoderServiceClient {
   /// Returns the job data.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::GetJobRequest,google/cloud/video/transcoder/v1/services.proto#L154}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::GetJobRequest,google/cloud/video/transcoder/v1/services.proto#L158}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::transcoder::v1::Job,google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
   /// [google.cloud.video.transcoder.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L154}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L158}
   /// [google.cloud.video.transcoder.v1.Job]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L31}
   ///
@@ -213,7 +213,7 @@ class TranscoderServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.video.transcoder.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L166}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
   ///
   Status DeleteJob(std::string const& name, Options opts = {});
 
@@ -221,12 +221,12 @@ class TranscoderServiceClient {
   /// Deletes a job.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::transcoder::v1::DeleteJobRequest,google/cloud/video/transcoder/v1/services.proto#L166}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::DeleteJobRequest,google/cloud/video/transcoder/v1/services.proto#L168}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.video.transcoder.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L166}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L168}
   ///
   Status DeleteJob(
       google::cloud::video::transcoder::v1::DeleteJobRequest const& request,
@@ -239,19 +239,19 @@ class TranscoderServiceClient {
   ///  Format: `projects/{project}/locations/{location}`
   /// @param job_template  Required. Parameters for creating job template.
   /// @param job_template_id  Required. The ID to use for the job template,
-  /// which will become the final component
-  ///  of the job template's resource name.
+  /// which will become the final
+  ///  component of the job template's resource name.
   ///  This value should be 4-63 characters, and valid characters must match the
   ///  regular expression `[a-zA-Z][a-zA-Z0-9_-]*`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
       std::string const& parent,
@@ -266,12 +266,12 @@ class TranscoderServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   /// [google.cloud.video.transcoder.v1.CreateJobTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L194}
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> CreateJobTemplate(
       google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
@@ -282,15 +282,15 @@ class TranscoderServiceClient {
   /// Lists job templates in the specified region.
   ///
   /// @param parent  Required. The parent location from which to retrieve the
-  /// collection of job templates.
-  ///  Format: `projects/{project}/locations/{location}`
+  /// collection of job
+  ///  templates. Format: `projects/{project}/locations/{location}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L124}
   /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
@@ -305,10 +305,10 @@ class TranscoderServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L124}
   /// [google.cloud.video.transcoder.v1.ListJobTemplatesRequest]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L216}
   ///
@@ -326,12 +326,12 @@ class TranscoderServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
       std::string const& name, Options opts = {});
@@ -344,12 +344,12 @@ class TranscoderServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_link{google::cloud::video::transcoder::v1::JobTemplate,google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   /// [google.cloud.video.transcoder.v1.GetJobTemplateRequest]:
   /// @googleapis_reference_link{google/cloud/video/transcoder/v1/services.proto#L243}
   /// [google.cloud.video.transcoder.v1.JobTemplate]:
-  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L121}
+  /// @googleapis_reference_link{google/cloud/video/transcoder/v1/resources.proto#L124}
   ///
   StatusOr<google::cloud::video::transcoder::v1::JobTemplate> GetJobTemplate(
       google::cloud::video::transcoder::v1::GetJobTemplateRequest const&

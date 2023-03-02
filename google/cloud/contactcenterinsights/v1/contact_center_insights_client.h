@@ -1333,12 +1333,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1237}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       std::string const& parent,
@@ -1353,12 +1353,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.CreateViewRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1237}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StatusOr<google::cloud::contactcenterinsights::v1::View> CreateView(
       google::cloud::contactcenterinsights::v1::CreateViewRequest const&
@@ -1372,12 +1372,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.GetViewRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1254}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
       std::string const& name, Options opts = {});
@@ -1390,12 +1390,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.GetViewRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1254}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StatusOr<google::cloud::contactcenterinsights::v1::View> GetView(
       google::cloud::contactcenterinsights::v1::GetViewRequest const& request,
@@ -1408,12 +1408,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1265}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
       std::string const& parent, Options opts = {});
@@ -1426,12 +1426,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.ListViewsRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1265}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StreamRange<google::cloud::contactcenterinsights::v1::View> ListViews(
       google::cloud::contactcenterinsights::v1::ListViewsRequest request,
@@ -1445,12 +1445,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1297}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
       google::cloud::contactcenterinsights::v1::View const& view,
@@ -1464,12 +1464,12 @@ class ContactCenterInsightsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_link{google::cloud::contactcenterinsights::v1::View,google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   /// [google.cloud.contactcenterinsights.v1.UpdateViewRequest]:
   /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/contact_center_insights.proto#L1297}
   /// [google.cloud.contactcenterinsights.v1.View]:
-  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/contactcenterinsights/v1/resources.proto#L1140}
   ///
   StatusOr<google::cloud::contactcenterinsights::v1::View> UpdateView(
       google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
