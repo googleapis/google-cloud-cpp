@@ -44,7 +44,7 @@ io::run bazel test "${args[@]}" "${integration_args[@]}" \
   --cache_test_results="auto" \
   --test_tag_filters="integration-test" -- ... "${excluded_rules[@]}"
 
-io::log_h2 "Running the GCS+gRPC integration tests against prod"
+io::log_h2 "Running the GCS+gRPC [media] integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
   --cache_test_results="auto" \
@@ -52,7 +52,7 @@ io::run bazel test "${args[@]}" "${integration_args[@]}" \
   --test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media \
   -- //google/cloud/storage/... "${excluded_rules[@]}"
 
-io::log_h2 "Running the GCS+gRPC integration tests against prod"
+io::log_h2 "Running the GCS+gRPC [metadata] integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
   --cache_test_results="auto" \
