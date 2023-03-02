@@ -174,8 +174,8 @@ int WriteFeatureList(
   return 0;
 }
 
-google::protobuf::RepeatedPtrField<
-    google::cloud::cpp::generator::ServiceConfiguration>
+google::cloud::StatusOr<google::protobuf::RepeatedPtrField<
+    google::cloud::cpp::generator::ServiceConfiguration>>
 GenerateProtosForRestProducts(
     CommandLineArgs const& generator_args,
     google::protobuf::RepeatedPtrField<
@@ -190,9 +190,8 @@ GenerateProtosForRestProducts(
         google::cloud::generator_internal::GenerateProtosFromDiscoveryDoc(
             p.discovery_document_url(), generator_args.protobuf_proto_path,
             generator_args.googleapis_proto_path, generator_args.output_path);
-    if (status.ok()) {
-      services.Add(p.rest_service().begin(), p.rest_service().end());
-    }
+    if (!status.ok()) return status;
+    services.Add(p.rest_service().begin(), p.rest_service().end());
   }
 
   return services;
@@ -331,6 +330,7 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
  *  --output_path=<path> OPTIONAL defaults to current directory.
  */
 int main(int argc, char** argv) {
+  int rc = 0;
   absl::ParseCommandLine(argc, argv);
   google::cloud::LogSink::EnableStdClog(
       google::cloud::Severity::GCP_LS_WARNING);
@@ -352,7 +352,7 @@ int main(int argc, char** argv) {
 
   auto config = GetConfig(args.config_file);
   if (!config.ok()) {
-    GCP_LOG(ERROR) << "Failed to parse config file: " << args.config_file
+    GCP_LOG(FATAL) << "Failed to parse config file: " << args.config_file
                    << "\n";
   }
 
@@ -370,9 +370,10 @@ int main(int argc, char** argv) {
   // For REST only services, generate protos from Discovery Docs as needed.
   auto rest_services =
       GenerateProtosForRestProducts(args, config->discovery_products());
+  if (!rest_services.ok()) GCP_LOG(FATAL) << rest_services.status();
   // After all proto generation is complete, generate C++ code from those
   // protos.
-  auto rest_tasks = GenerateCodeFromProtos(args, rest_services);
+  auto rest_tasks = GenerateCodeFromProtos(args, *rest_services);
 
   std::string error_message;
   tasks.insert(tasks.end(), std::make_move_iterator(rest_tasks.begin()),
@@ -380,13 +381,10 @@ int main(int argc, char** argv) {
   for (auto& t : tasks) {
     auto result = t.get();
     if (!result.ok()) {
-      absl::StrAppend(&error_message, result.message(), "\n");
+      GCP_LOG(ERROR) << result;
+      rc = 1;
     }
   }
 
-  if (!error_message.empty()) {
-    GCP_LOG(ERROR) << error_message;
-    return 1;
-  }
-  return 0;
+  return rc;
 }
