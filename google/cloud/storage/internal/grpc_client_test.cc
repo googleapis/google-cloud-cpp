@@ -202,8 +202,9 @@ TEST_F(GrpcClientTest, CreateBucket) {
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
                                   Pair("x-goog-fieldmask", "field1,field2")));
-        EXPECT_THAT(request.parent(), "projects/test-project");
+        EXPECT_THAT(request.parent(), "projects/_");
         EXPECT_THAT(request.bucket_id(), "test-bucket");
+        EXPECT_THAT(request.bucket().project(), "projects/test-project");
         return PermanentError();
       });
   auto client = CreateTestClient(mock);
@@ -224,18 +225,7 @@ TEST_F(GrpcClientTest, CreateBucketAlreadyExists) {
     SCOPED_TRACE("Testing with code " + StatusCodeToString(code));
     auto mock = std::make_shared<MockStorageStub>();
     EXPECT_CALL(*mock, CreateBucket)
-        .WillOnce([this, code](
-                      grpc::ClientContext& context,
-                      google::storage::v2::CreateBucketRequest const& request) {
-          auto metadata = GetMetadata(context);
-          EXPECT_THAT(
-              metadata,
-              UnorderedElementsAre(Pair("x-goog-quota-user", "test-quota-user"),
-                                   Pair("x-goog-fieldmask", "field1,field2")));
-          EXPECT_THAT(request.parent(), "projects/test-project");
-          EXPECT_THAT(request.bucket_id(), "test-bucket");
-          return Status(code, "bucket already exists");
-        });
+        .WillOnce(Return(Status(code, "bucket already exists")));
     auto client = CreateTestClient(mock);
     auto response = client->CreateBucket(
         storage::internal::CreateBucketRequest(

@@ -354,7 +354,7 @@ google::storage::v2::GetBucketRequest ToProto(
 google::storage::v2::CreateBucketRequest ToProto(
     storage::internal::CreateBucketRequest const& request) {
   google::storage::v2::CreateBucketRequest result;
-  result.set_parent("projects/" + request.project_id());
+  result.set_parent("projects/_");
   result.set_bucket_id(request.metadata().name());
   if (request.HasOption<storage::PredefinedAcl>()) {
     result.set_predefined_acl(
@@ -365,12 +365,12 @@ google::storage::v2::CreateBucketRequest ToProto(
         request.GetOption<storage::PredefinedDefaultObjectAcl>().value());
   }
   *result.mutable_bucket() = storage_internal::ToProto(request.metadata());
+  result.mutable_bucket()->set_project("projects/" + request.project_id());
   // Ignore fields commonly set by ToProto().
   result.mutable_bucket()->set_name("");
   result.mutable_bucket()->set_bucket_id("");
   result.mutable_bucket()->clear_create_time();
   result.mutable_bucket()->clear_update_time();
-  result.mutable_bucket()->clear_project();
   return result;
 }
 
