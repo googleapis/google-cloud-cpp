@@ -39,13 +39,13 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
                                    GCP_ERROR_INFO());
   }
   GetJobResponse result;
-  if (valid_job(json_obj)) {
-    result.job = json_obj.get<Job>();
-    result.http_response = http_response;
-  } else {
+  if (!valid_job(json_obj)) {
     return internal::InternalError("Not a valid Json Job object",
                                    GCP_ERROR_INFO());
   }
+  result.job = json_obj.get<Job>();
+  result.http_response = http_response;
+
   return result;
 }
 

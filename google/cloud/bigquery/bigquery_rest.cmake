@@ -18,6 +18,7 @@ add_library(
     google_cloud_cpp_bigquery_rest # cmake-format: sort
     v2/minimal/internal/bigquery_http_response.cc
     v2/minimal/internal/bigquery_http_response.h
+    v2/minimal/internal/common_v2_resources.cc
     v2/minimal/internal/common_v2_resources.h
     v2/minimal/internal/job.h
     v2/minimal/internal/job_configuration.h
@@ -76,6 +77,7 @@ function (bigquery_rest_define_tests)
     set(bigquery_rest_unit_tests
         # cmake-format: sort
         v2/minimal/internal/bigquery_http_response_test.cc
+        v2/minimal/internal/common_v2_resources_test.cc
         v2/minimal/internal/job_request_test.cc
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc)
