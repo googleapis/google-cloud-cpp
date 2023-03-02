@@ -68,6 +68,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobConfiguration, job_type,
                                                 query_config, dry_run,
                                                 job_timeout_ms, labels);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 }  // namespace bigquery_v2_minimal_internal

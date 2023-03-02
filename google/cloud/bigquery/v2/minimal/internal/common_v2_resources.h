@@ -44,6 +44,7 @@ struct DatasetReference {
   std::string dataset_id;
   std::string project_id;
 };
+struct QueryParameterType;
 
 struct QueryParameterStructType {
   std::string name;
@@ -98,44 +99,19 @@ inline bool exists(nlohmann::json const& j, std::string const& key) {
   return j.find(key) != j.end();
 }
 
-// NOLINTBEGIN
-inline void to_json(nlohmann::json& j, QueryParameterType const& q) {
-  if (q.array_type.get() != nullptr) {
-    j = nlohmann::json{{"type", q.type},
-                       {"array_type", *q.array_type},
-                       {"struct_types", q.struct_types}};
-  } else {
-    j = nlohmann::json{{"type", q.type}, {"struct_types", q.struct_types}};
-  }
-}
+void to_json(nlohmann::json& j, QueryParameterType const& q);
 
-inline void from_json(nlohmann::json const& j, QueryParameterType& q) {
-  if (exists(j, "type")) j.at("type").get_to(q.type);
-  if (q.array_type != nullptr && exists(j, "array_type")) {
-    j.at("array_type").get_to(*q.array_type);
-  }
-  if (exists(j, "struct_types")) j.at("struct_types").get_to(q.struct_types);
-}
+void from_json(nlohmann::json const& j, QueryParameterType& q);
 
-inline void to_json(nlohmann::json& j, QueryParameterValue const& q) {
-  j = nlohmann::json{{"value", q.value},
-                     {"array_values", q.array_values},
-                     {"struct_values", q.struct_values}};
-}
+void to_json(nlohmann::json& j, QueryParameterValue const& q);
 
-inline void from_json(nlohmann::json const& j, QueryParameterValue& q) {
-  if (exists(j, "value")) j.at("value").get_to(q.value);
-  if (exists(j, "array_values")) j.at("array_values").get_to(q.array_values);
-  if (exists(j, "struct_values")) j.at("struct_values").get_to(q.struct_values);
-}
-// NOLINTEND
+void from_json(nlohmann::json const& j, QueryParameterValue& q);
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryParameter, name,
                                                 parameter_type,
                                                 parameter_value);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
