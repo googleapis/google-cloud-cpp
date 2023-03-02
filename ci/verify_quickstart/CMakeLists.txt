@@ -23,8 +23,9 @@ if (NOT FEATURES)
                         " -DFEATURES=\"storage;spanner\"")
 endif ()
 
-option(GOOGLE_CLOUD_CPP_ENABLE_MAKE "Test with Make" ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_CMAKE "Test with CMake" ON)
+option(VERIFY_QUICKSTART_ENABLE_MAKE "Test with Make" ON)
+option(VERIFY_QUICKSTART_ENABLE_CMAKE "Test with CMake" ON)
+option(VERIFY_QUICKSTART_ENABLE_CMAKE_PREFIX_PATH "Use CMAKE_PREFIX_PATH" ON)
 
 add_custom_target(verify-quickstart-cmake ALL)
 add_custom_target(verify-quickstart-make ALL)
@@ -32,10 +33,14 @@ add_custom_target(verify-quickstart-make ALL)
 include(ExternalProject)
 
 function (add_cmake_quickstart_target feature library target)
-    if (NOT GOOGLE_CLOUD_CPP_ENABLE_CMAKE)
+    if (NOT VERIFY_QUICKSTART_ENABLE_CMAKE)
         return()
     endif ()
     set(COMMON_CMAKE_ARGS)
+    if (VERIFY_QUICKSTART_ENABLE_CMAKE_PREFIX_PATH AND CMAKE_PREFIX_PATH)
+        list(APPEND COMMON_CMAKE_ARGS
+             "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}")
+    endif ()
     if (CMAKE_TOOLCHAIN_FILE)
         list(APPEND COMMON_CMAKE_ARGS
              "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}")
@@ -65,7 +70,7 @@ function (add_cmake_quickstart_target feature library target)
 endfunction ()
 
 function (add_make_quickstart_target feature library target)
-    if (NOT GOOGLE_CLOUD_CPP_ENABLE_MAKE)
+    if (NOT VERIFY_QUICKSTART_ENABLE_MAKE)
         return()
     endif ()
     externalproject_add(

@@ -75,7 +75,10 @@ $cmake_args=@(
     "-DFEATURES=${feature_list}",
     # Disable the Makefile tests on Windows. They do not work, and there is not
     # that much demand for them.
-    "-DGOOGLE_CLOUD_CPP_ENABLE_MAKE=OFF",
+    "-DVERIFY_QUICKSTART_ENABLE_MAKE=OFF",
+    # Disable CMAKE_PREFIX_PATH.  We are just going to rely on vcpkg to set the
+    # right environment.
+    "-DVERIFY_QUICKSTART_ENABLE_CMAKE_PREFIX_PATH=OFF",
     # The rest is just usual CMake configuration stuff.
     "-DCMAKE_TOOLCHAIN_FILE=`"${vcpkg_root}/scripts/buildsystems/vcpkg.cmake`"",
     "-DCMAKE_BUILD_TYPE=${env:CONFIG}",
