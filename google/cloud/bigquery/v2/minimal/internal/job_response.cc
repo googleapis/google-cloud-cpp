@@ -21,9 +21,9 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 bool valid_job(nlohmann::json const& j) {
-  return (exists(j, "kind") && exists(j, "etag") && exists(j, "id") &&
-          exists(j, "status") && exists(j, "reference") &&
-          exists(j, "configuration"));
+  return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
+          j.contains("status") && j.contains("reference") &&
+          j.contains("configuration"));
 }
 
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
@@ -38,11 +38,12 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     return internal::InternalError("Error parsing Json from response payload",
                                    GCP_ERROR_INFO());
   }
-  GetJobResponse result;
   if (!valid_job(json_obj)) {
     return internal::InternalError("Not a valid Json Job object",
                                    GCP_ERROR_INFO());
   }
+
+  GetJobResponse result;
   result.job = json_obj.get<Job>();
   result.http_response = http_response;
 

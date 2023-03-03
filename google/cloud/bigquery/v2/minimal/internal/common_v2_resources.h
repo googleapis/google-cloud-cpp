@@ -44,22 +44,21 @@ struct DatasetReference {
   std::string dataset_id;
   std::string project_id;
 };
+
+// Self referential and circular structures below is based on the bigquery v2
+// QueryParameterType and QueryParameterValue proto definitions. Disabling
+// clang-tidy warnings for these two types as we want to be close to the
+// protobuf definition as possible.
+
+// NOLINTBEGIN
 struct QueryParameterType;
 
 struct QueryParameterStructType {
   std::string name;
-  // Figure out how to change type field to QueryParameterType to match the
-  // proto.
-  std::string type;
+  std::shared_ptr<QueryParameterType> type;
   std::string description;
 };
 
-// Self referential structures below is reflecting the protobuf message
-// structure for bigquery v2 QueryParameterType and QueryParameterValue proto
-// definitions. Disabling clang-tidy for these two types as we want to be close
-// to the protobuf definition as possible.
-
-// NOLINTBEGIN
 struct QueryParameterType {
   std::string type;
 
@@ -91,13 +90,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(TableReference, project_id,
                                                 dataset_id, table_id);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DatasetReference, project_id,
                                                 dataset_id);
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(QueryParameterStructType, name,
-                                                type, description);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ConnectionProperty, key, value);
-
-inline bool exists(nlohmann::json const& j, std::string const& key) {
-  return j.find(key) != j.end();
-}
 
 void to_json(nlohmann::json& j, QueryParameterType const& q);
 
