@@ -1,0 +1,36 @@
+name: "Build and Test"
+
+# Build on pull requests and pushes to `main`. The PR builds will be
+# non-blocking for now, but that is configured elsewhere.
+on:
+  pull_request:
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  # Compiles and runs unit tests with macOS and Bazel
+  macos-bazel:
+    runs-on: 'macos-latest'
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      - uses: 'actions/checkout@v3'
+      - uses: 'bazelbuild/setup-bazelisk@v2'
+      - name: dump machine info
+        run: |
+          printf "%10s %s\n" "host:" "$(date -u -R)"
+          printf "%10s %s\n" "google:" "$(google_time)"
+          printf "%10s %s\n" "kernel:" "$(uname -v)"
+          printf "%10s %s\n" "os:" "$(sw_vers | xargs)"
+          printf "%10s %s\n" "arch:" "$(arch)"
+          printf "%10s %s\n" "cpus:" "$(sysctl -n hw.logicalcpu)"
+          printf "%10s %s\n" "mem:" "$(($(sysctl -n hw.memsize) / 1024 / 1024 / 1024)) GB"
+          printf "%10s %s\n" "term:" "${TERM-}"
+          printf "%10s %s\n" "bash:" "$(bash --version 2>&1 | head -1)"
+          printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
+          printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
+          printf "%10s %s\n" "branch:" "${BRANCH}"
+          printf "%10s %s\n" "bazelisk:" "$(bazelisk version | head -1)"
+          printf "%10s %s\n" "bazel:" "$(bazelisk --batch version | head -1)"
