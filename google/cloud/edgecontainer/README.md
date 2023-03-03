@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/edgecontainer/edge_container_client.h"
+#include "google/cloud/edgecontainer/v1/edge_container_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace edgecontainer = ::google::cloud::edgecontainer;
+  namespace edgecontainer = ::google::cloud::edgecontainer_v1;
   auto client = edgecontainer::EdgeContainerClient(
       edgecontainer::MakeEdgeContainerConnection());
 

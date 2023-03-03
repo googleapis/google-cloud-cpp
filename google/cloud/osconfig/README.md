@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/osconfig/os_config_client.h"
+#include "google/cloud/osconfig/v1/os_config_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace osconfig = ::google::cloud::osconfig;
+  namespace osconfig = ::google::cloud::osconfig_v1;
   auto client = osconfig::OsConfigServiceClient(
       osconfig::MakeOsConfigServiceConnection());
 

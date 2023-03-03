@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/managedidentities/managed_identities_client.h"
+#include "google/cloud/managedidentities/v1/managed_identities_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace managedidentities = ::google::cloud::managedidentities;
+  namespace managedidentities = ::google::cloud::managedidentities_v1;
   auto client = managedidentities::ManagedIdentitiesServiceClient(
       managedidentities::MakeManagedIdentitiesServiceConnection());
 

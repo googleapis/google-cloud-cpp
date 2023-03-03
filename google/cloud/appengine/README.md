@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/appengine/services_client.h"
+#include "google/cloud/appengine/v1/services_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace appengine = ::google::cloud::appengine;
+  namespace appengine = ::google::cloud::appengine_v1;
   auto client = appengine::ServicesClient(appengine::MakeServicesConnection());
 
   ::google::appengine::v1::ListServicesRequest request;

@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/gkehub/gke_hub_client.h"
+#include "google/cloud/gkehub/v1/gke_hub_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace gkehub = ::google::cloud::gkehub;
+  namespace gkehub = ::google::cloud::gkehub_v1;
   auto client = gkehub::GkeHubClient(gkehub::MakeGkeHubConnection());
 
   auto const location = std::string{"projects/"} + argv[1] + "/locations/-";

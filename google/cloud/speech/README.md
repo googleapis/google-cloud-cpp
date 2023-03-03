@@ -23,7 +23,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/speech/speech_client.h"
+#include "google/cloud/speech/v1/speech_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) try {
   }
   auto uri = std::string{argc == 2 ? argv[1] : kDefaultUri};
 
-  namespace speech = ::google::cloud::speech;
+  namespace speech = ::google::cloud::speech_v1;
   auto client = speech::SpeechClient(speech::MakeSpeechConnection());
 
   google::cloud::speech::v1::RecognitionConfig config;

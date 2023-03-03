@@ -19,7 +19,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/eventarc/eventarc_client.h"
+#include "google/cloud/eventarc/v1/eventarc_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace eventarc = ::google::cloud::eventarc;
+  namespace eventarc = ::google::cloud::eventarc_v1;
   auto client = eventarc::EventarcClient(eventarc::MakeEventarcConnection());
 
   auto const project = google::cloud::Project(argv[1]);
