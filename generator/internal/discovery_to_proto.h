@@ -15,12 +15,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TO_PROTO_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TO_PROTO_H
 
-#include "google/cloud/status.h"
+#include "generator/internal/discovery_type_vertex.h"
+#include "google/cloud/status_or.h"
+#include <nlohmann/json.hpp>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
+
+StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
+    nlohmann::json const& discovery_doc);
 
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const& protobuf_proto_path,

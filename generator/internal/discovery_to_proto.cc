@@ -13,14 +13,18 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_to_proto.h"
+#include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
+#include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <map>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -68,6 +72,48 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
 }
 
 }  // namespace
+
+StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
+    nlohmann::json const& discovery_doc) {
+  std::map<std::string, DiscoveryTypeVertex> types;
+  if (!discovery_doc.contains("schemas")) {
+    return internal::InvalidArgumentError(
+        "Discovery Document does not contain schemas element.");
+  }
+
+  auto const& schemas = discovery_doc["schemas"];
+  bool schemas_all_type_object = true;
+  bool schemas_all_have_id = true;
+  for (auto const& s : schemas) {
+    if (!s.contains("id")) {
+      GCP_LOG(ERROR) << " schema has no id";
+      schemas_all_have_id = false;
+      continue;
+    }
+    std::string id = s["id"];
+    if (!s.contains("type") || s["type"] != "object") {
+      std::string type = s.contains("type") ? s["type"] : "untyped";
+      GCP_LOG(ERROR) << id << " not type:object is " << type;
+      schemas_all_type_object = false;
+      continue;
+    }
+    types.emplace(
+        std::string(s["id"]),
+        google::cloud::generator_internal::DiscoveryTypeVertex{id, s});
+  }
+
+  if (!schemas_all_have_id) {
+    return internal::InvalidArgumentError(
+        "Discovery Document contains schema without id field.");
+  }
+
+  if (!schemas_all_type_object) {
+    return internal::InvalidArgumentError(
+        "Discovery Document contains non object schema.");
+  }
+
+  return types;
+}
 
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const&, std::string const&,
