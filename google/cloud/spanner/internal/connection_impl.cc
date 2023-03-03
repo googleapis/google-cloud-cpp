@@ -426,6 +426,9 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   request->set_limit(params.read_options.limit);
   if (params.partition_token) {
     request->set_partition_token(*std::move(params.partition_token));
+    if (params.partition_data_boost) {
+      request->set_data_boost_enabled(true);
+    }
   }
   request->mutable_request_options()->set_priority(
       ProtoRequestPriority(params.read_options.request_priority));
@@ -552,12 +555,17 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
       return status;
     }
 
+    // Note: This is not `ReadParams::data_boost`. While that is the ultimate
+    // destination for the `PartitionOptions::data_boost` value, first it is
+    // encapsulated in a `ReadPartition`.
+    bool const data_boost = partition_options.data_boost;
+
     std::vector<spanner::ReadPartition> read_partitions;
     for (auto const& partition : response->partitions()) {
       read_partitions.push_back(MakeReadPartition(
           response->transaction().id(), ctx.route_to_leader, ctx.tag,
           session->session_name(), partition.partition_token(), params.table,
-          params.keys, params.columns, params.read_options));
+          params.keys, params.columns, data_boost, params.read_options));
     }
 
     return read_partitions;
@@ -589,6 +597,9 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
   request.set_query_mode(query_mode);
   if (params.partition_token) {
     request.set_partition_token(*std::move(params.partition_token));
+    if (params.partition_data_boost) {
+      request.set_data_boost_enabled(true);
+    }
   }
   if (params.query_options.optimizer_version()) {
     request.mutable_query_options()->set_optimizer_version(
@@ -811,8 +822,7 @@ ConnectionImpl::PartitionQueryImpl(
   *request.mutable_params() = std::move(*sql_statement.mutable_params());
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
-  *request.mutable_partition_options() =
-      ToProto(std::move(params.partition_options));
+  *request.mutable_partition_options() = ToProto(params.partition_options);
 
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
@@ -850,10 +860,10 @@ ConnectionImpl::PartitionQueryImpl(
 
     std::vector<spanner::QueryPartition> query_partitions;
     for (auto const& partition : response->partitions()) {
-      query_partitions.push_back(
-          MakeQueryPartition(response->transaction().id(), ctx.route_to_leader,
-                             ctx.tag, session->session_name(),
-                             partition.partition_token(), params.statement));
+      query_partitions.push_back(MakeQueryPartition(
+          response->transaction().id(), ctx.route_to_leader, ctx.tag,
+          session->session_name(), partition.partition_token(),
+          params.partition_options.data_boost, params.statement));
     }
     return query_partitions;
   }

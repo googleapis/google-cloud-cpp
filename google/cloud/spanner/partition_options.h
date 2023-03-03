@@ -54,11 +54,20 @@ struct PartitionOptions {
    * returned may be smaller or larger than this maximum count request.
    */
   absl::optional<std::int64_t> max_partitions;
+
+  /**
+   * Use "data boost" in the returned partitions.
+   *
+   * If true, the requests from the subsequent partitioned `Client::Read()`
+   * and `Client::ExecuteQuery()` requests will be executed via Spanner
+   * independent compute resources.
+   */
+  bool data_boost = false;
 };
 
 inline bool operator==(PartitionOptions const& a, PartitionOptions const& b) {
   return a.partition_size_bytes == b.partition_size_bytes &&
-         a.max_partitions == b.max_partitions;
+         a.max_partitions == b.max_partitions && a.data_boost == b.data_boost;
 }
 
 inline bool operator!=(PartitionOptions const& a, PartitionOptions const& b) {

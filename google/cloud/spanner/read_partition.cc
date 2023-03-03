@@ -31,6 +31,7 @@ ReadPartition::ReadPartition(std::string transaction_id, bool route_to_leader,
                              std::string table_name,
                              google::cloud::spanner::KeySet key_set,
                              std::vector<std::string> column_names,
+                             bool data_boost,
                              google::cloud::spanner::ReadOptions read_options) {
   proto_.set_session(std::move(session_id));
   proto_.mutable_transaction()->set_id(std::move(transaction_id));
@@ -42,6 +43,9 @@ ReadPartition::ReadPartition(std::string transaction_id, bool route_to_leader,
   *proto_.mutable_key_set() = spanner_internal::ToProto(std::move(key_set));
   proto_.set_limit(read_options.limit);
   proto_.set_partition_token(std::move(partition_token));
+  if (data_boost) {
+    proto_.set_data_boost_enabled(true);
+  }
   if (read_options.request_priority) {
     auto* request_options = proto_.mutable_request_options();
     switch (*read_options.request_priority) {

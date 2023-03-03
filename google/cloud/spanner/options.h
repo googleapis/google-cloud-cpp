@@ -300,6 +300,20 @@ struct PartitionsMaximumOption {
 };
 
 /**
+ * Option for `google::cloud::Options` to use "data boost" in the
+ * partitions returned from `Client::PartitionRead()` or `PartitionQuery()`.
+ *
+ * If true, the requests from the subsequent partitioned `Client::Read()`
+ * and `Client::ExecuteQuery()` requests will be executed via Spanner
+ * independent compute resources.
+ *
+ * @ingroup spanner-options
+ */
+struct PartitionDataBoostOption {
+  using Type = bool;
+};
+
+/**
  * Option for `google::cloud::Options` to set a per-transaction tag.
  *
  * @ingroup spanner-options

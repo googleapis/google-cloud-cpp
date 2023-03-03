@@ -83,6 +83,8 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
  * Instances of `QueryPartition` are created by `Client::PartitionQuery`. Once
  * created, `QueryPartition` objects can be serialized, transmitted to separate
  * processes, and used to read data in parallel using `Client::ExecuteQuery`.
+ * If `data_boost` is set, those requests will be executed via Spanner
+ * independent compute resources.
  */
 class QueryPartition {
  public:
@@ -123,7 +125,8 @@ class QueryPartition {
 
   QueryPartition(std::string transaction_id, bool route_to_leader,
                  std::string transaction_tag, std::string session_id,
-                 std::string partition_token, SqlStatement sql_statement);
+                 std::string partition_token, bool data_boost,
+                 SqlStatement sql_statement);
 
   // Accessor methods for use by friends.
   std::string const& transaction_id() const { return transaction_id_; }
@@ -131,12 +134,14 @@ class QueryPartition {
   std::string const& transaction_tag() const { return transaction_tag_; }
   std::string const& session_id() const { return session_id_; }
   std::string const& partition_token() const { return partition_token_; }
+  bool data_boost() const { return data_boost_; }
 
   std::string transaction_id_;
   bool route_to_leader_;
   std::string transaction_tag_;
   std::string session_id_;
   std::string partition_token_;
+  bool data_boost_;
   SqlStatement sql_statement_;
 };
 
@@ -151,11 +156,11 @@ struct QueryPartitionInternals {
   static spanner::QueryPartition MakeQueryPartition(
       std::string const& transaction_id, bool route_to_leader,
       std::string const& transaction_tag, std::string const& session_id,
-      std::string const& partition_token,
+      std::string const& partition_token, bool data_boost,
       spanner::SqlStatement const& sql_statement) {
     return spanner::QueryPartition(transaction_id, route_to_leader,
                                    transaction_tag, session_id, partition_token,
-                                   sql_statement);
+                                   data_boost, sql_statement);
   }
 
   static spanner::Connection::SqlParams MakeSqlParams(
@@ -166,18 +171,18 @@ struct QueryPartitionInternals {
                                    query_partition.route_to_leader(),
                                    query_partition.transaction_tag()),
             query_partition.sql_statement(), query_options,
-            query_partition.partition_token()};
+            query_partition.partition_token(), query_partition.data_boost()};
   }
 };
 
 inline spanner::QueryPartition MakeQueryPartition(
     std::string const& transaction_id, bool route_to_leader,
     std::string const& transaction_tag, std::string const& session_id,
-    std::string const& partition_token,
+    std::string const& partition_token, bool data_boost,
     spanner::SqlStatement const& sql_statement) {
   return QueryPartitionInternals::MakeQueryPartition(
       transaction_id, route_to_leader, transaction_tag, session_id,
-      partition_token, sql_statement);
+      partition_token, data_boost, sql_statement);
 }
 
 inline spanner::Connection::SqlParams MakeSqlParams(

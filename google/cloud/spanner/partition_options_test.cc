@@ -41,17 +41,23 @@ TEST(PartitionOptionsTest, Regular) {
 }
 
 TEST(PartitionOptionsTest, Proto) {
-  PartitionOptions po{1, 2};
+  PartitionOptions po{1, 2, true};
   auto proto = spanner_internal::ToProto(po);
   EXPECT_EQ(*po.partition_size_bytes, proto.partition_size_bytes());
   EXPECT_EQ(*po.max_partitions, proto.max_partitions());
 }
 
 TEST(PartitionOptionsTest, OptionsRoundTrip) {
-  for (auto const& po :
-       {PartitionOptions{absl::nullopt, absl::nullopt},
-        PartitionOptions{42, absl::nullopt},
-        PartitionOptions{absl::nullopt, 42}, PartitionOptions{32, 64}}) {
+  for (auto const& po : {
+           PartitionOptions{absl::nullopt, absl::nullopt, false},
+           PartitionOptions{42, absl::nullopt, false},
+           PartitionOptions{absl::nullopt, 42, false},
+           PartitionOptions{32, 64, false},
+           PartitionOptions{absl::nullopt, absl::nullopt, true},
+           PartitionOptions{42, absl::nullopt, true},
+           PartitionOptions{absl::nullopt, 42, true},
+           PartitionOptions{32, 64, true},
+       }) {
     EXPECT_EQ(po, ToPartitionOptions(ToOptions(po)));
   }
 }

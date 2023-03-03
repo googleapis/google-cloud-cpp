@@ -31,6 +31,7 @@ class QueryPartitionTester {
   spanner::SqlStatement const& Statement() const {
     return partition_.sql_statement();
   }
+  bool DataBoost() const { return partition_.data_boost(); }
   std::string const& PartitionToken() const {
     return partition_.partition_token();
   }
@@ -62,6 +63,7 @@ using ::testing::Not;
 TEST(QueryPartitionTest, MakeQueryPartition) {
   std::string stmt("SELECT * FROM foo WHERE name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
+  bool data_boost = true;
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
@@ -70,7 +72,7 @@ TEST(QueryPartitionTest, MakeQueryPartition) {
 
   QueryPartitionTester actual_partition(spanner_internal::MakeQueryPartition(
       transaction_id, route_to_leader, transaction_tag, session_id,
-      partition_token, SqlStatement(stmt, params)));
+      partition_token, data_boost, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
@@ -78,11 +80,13 @@ TEST(QueryPartitionTest, MakeQueryPartition) {
   EXPECT_EQ(route_to_leader, actual_partition.RouteToLeader());
   EXPECT_EQ(transaction_tag, actual_partition.TransactionTag());
   EXPECT_EQ(session_id, actual_partition.SessionId());
+  EXPECT_EQ(data_boost, actual_partition.DataBoost());
 }
 
 TEST(QueryPartitionTest, RegularSemantics) {
   std::string stmt("SELECT * FROM foo WHERE name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
+  bool data_boost = true;
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("txn-id");
@@ -91,7 +95,7 @@ TEST(QueryPartitionTest, RegularSemantics) {
 
   QueryPartition query_partition(spanner_internal::MakeQueryPartition(
       transaction_id, route_to_leader, transaction_tag, session_id,
-      partition_token, SqlStatement(stmt, params)));
+      partition_token, data_boost, SqlStatement(stmt, params)));
 
   EXPECT_NE(query_partition, QueryPartition());
 
@@ -108,7 +112,7 @@ TEST(QueryPartitionTest, RegularSemantics) {
 
 TEST(QueryPartitionTest, SerializeDeserialize) {
   QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
-      "txn-id", true, "tag", "session", "token",
+      "txn-id", true, "tag", "session", "token", false,
       SqlStatement("SELECT * FROM foo WHERE name = @name",
                    {{"name", Value("Bob")}})));
   StatusOr<QueryPartition> partition = DeserializeQueryPartition(
@@ -129,6 +133,7 @@ TEST(QueryPartitionTest, SerializeDeserialize) {
             actual_partition.Statement().sql());
   EXPECT_EQ(expected_partition.Statement().params(),
             actual_partition.Statement().params());
+  EXPECT_EQ(expected_partition.DataBoost(), actual_partition.DataBoost());
 }
 
 TEST(QueryPartitionTest, FailedDeserialize) {
@@ -140,7 +145,7 @@ TEST(QueryPartitionTest, FailedDeserialize) {
 
 TEST(QueryPartitionTest, MakeSqlParams) {
   QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
-      "txn-id", true, "tag", "session", "token",
+      "txn-id", true, "tag", "session", "token", true,
       SqlStatement("SELECT * FROM foo WHERE name = @name",
                    {{"name", Value("Bob")}})));
 
@@ -152,6 +157,7 @@ TEST(QueryPartitionTest, MakeSqlParams) {
             SqlStatement("SELECT * FROM foo WHERE name = @name",
                          {{"name", Value("Bob")}}));
   EXPECT_EQ(*params.partition_token, "token");
+  EXPECT_TRUE(params.partition_data_boost);
   EXPECT_THAT(params.transaction,
               HasSessionAndTransaction("session", "txn-id", true, "tag"));
   EXPECT_EQ(*params.query_options.request_tag(), "request_tag");
