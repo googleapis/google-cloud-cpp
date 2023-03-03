@@ -20,40 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_MOCKS_MOCK_IMAGE_VERSIONS_CONNECTION_H
 
 #include "google/cloud/composer/image_versions_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/composer/v1/mocks/mock_image_versions_connection.h"
 
 namespace google {
 namespace cloud {
 namespace composer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `ImageVersionsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ImageVersionsClient`. To do so,
- * construct an object of type `ImageVersionsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockImageVersionsConnection : public composer::ImageVersionsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      StreamRange<
-          google::cloud::orchestration::airflow::service::v1::ImageVersion>,
-      ListImageVersions,
-      (google::cloud::orchestration::airflow::service::v1::
-           ListImageVersionsRequest request),
-      (override));
-};
+/// @deprecated Use composer_v1_mocks::MockImageVersionsConnection directly.
+using ::google::cloud::composer_v1_mocks::MockImageVersionsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_mocks

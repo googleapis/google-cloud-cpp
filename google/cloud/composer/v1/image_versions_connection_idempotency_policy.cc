@@ -16,23 +16,37 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CLIENT_H
-
-#include "google/cloud/composer/image_versions_connection.h"
-#include "google/cloud/composer/v1/image_versions_client.h"
+#include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.h"
+#include "absl/memory/memory.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace composer {
+namespace composer_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use composer_v1::ImageVersionsClient directly.
-using ::google::cloud::composer_v1::ImageVersionsClient;
+using ::google::cloud::Idempotency;
+
+ImageVersionsConnectionIdempotencyPolicy::
+    ~ImageVersionsConnectionIdempotencyPolicy() = default;
+
+std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
+ImageVersionsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ImageVersionsConnectionIdempotencyPolicy>(*this);
+}
+
+Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
+MakeDefaultImageVersionsConnectionIdempotencyPolicy() {
+  return absl::make_unique<ImageVersionsConnectionIdempotencyPolicy>();
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace composer
+}  // namespace composer_v1
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CLIENT_H

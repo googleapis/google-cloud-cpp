@@ -16,23 +16,32 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CLIENT_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CLIENT_H
-
-#include "google/cloud/composer/image_versions_connection.h"
-#include "google/cloud/composer/v1/image_versions_client.h"
+#include "google/cloud/composer/v1/internal/image_versions_auth_decorator.h"
+#include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
-namespace composer {
+namespace composer_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use composer_v1::ImageVersionsClient directly.
-using ::google::cloud::composer_v1::ImageVersionsClient;
+ImageVersionsAuth::ImageVersionsAuth(
+    std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
+    std::shared_ptr<ImageVersionsStub> child)
+    : auth_(std::move(auth)), child_(std::move(child)) {}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListImageVersionsResponse>
+ImageVersionsAuth::ListImageVersions(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListImageVersions(context, request);
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace composer
+}  // namespace composer_v1_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CLIENT_H

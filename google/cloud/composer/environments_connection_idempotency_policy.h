@@ -19,56 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_ENVIRONMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_ENVIRONMENTS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
-#include <memory>
+#include "google/cloud/composer/v1/environments_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class EnvironmentsConnectionIdempotencyPolicy {
- public:
-  virtual ~EnvironmentsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// composer_v1::MakeDefaultEnvironmentsConnectionIdempotencyPolicy directly.
+using ::google::cloud::composer_v1::
+    MakeDefaultEnvironmentsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency CreateEnvironment(
-      google::cloud::orchestration::airflow::service::v1::
-          CreateEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency GetEnvironment(
-      google::cloud::orchestration::airflow::service::v1::
-          GetEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency ListEnvironments(
-      google::cloud::orchestration::airflow::service::v1::
-          ListEnvironmentsRequest request);
-
-  virtual google::cloud::Idempotency UpdateEnvironment(
-      google::cloud::orchestration::airflow::service::v1::
-          UpdateEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency DeleteEnvironment(
-      google::cloud::orchestration::airflow::service::v1::
-          DeleteEnvironmentRequest const& request);
-
-  virtual google::cloud::Idempotency SaveSnapshot(
-      google::cloud::orchestration::airflow::service::v1::
-          SaveSnapshotRequest const& request);
-
-  virtual google::cloud::Idempotency LoadSnapshot(
-      google::cloud::orchestration::airflow::service::v1::
-          LoadSnapshotRequest const& request);
-};
-
-std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
-MakeDefaultEnvironmentsConnectionIdempotencyPolicy();
+/// @deprecated Use composer_v1::EnvironmentsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::composer_v1::EnvironmentsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer

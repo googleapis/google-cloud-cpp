@@ -20,79 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CONNECTION_H
 
 #include "google/cloud/composer/image_versions_connection_idempotency_policy.h"
-#include "google/cloud/composer/internal/image_versions_retry_traits.h"
-#include "google/cloud/composer/internal/image_versions_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/composer/v1/image_versions_connection.h"
 
 namespace google {
 namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ImageVersionsRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        composer_internal::ImageVersionsRetryTraits>;
+/// @deprecated Use composer_v1::MakeImageVersionsConnection directly.
+using ::google::cloud::composer_v1::MakeImageVersionsConnection;
 
-using ImageVersionsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        composer_internal::ImageVersionsRetryTraits>;
+/// @deprecated Use composer_v1::ImageVersionsConnection directly.
+using ::google::cloud::composer_v1::ImageVersionsConnection;
 
-using ImageVersionsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        composer_internal::ImageVersionsRetryTraits>;
+/// @deprecated Use composer_v1::ImageVersionsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::composer_v1::ImageVersionsLimitedErrorCountRetryPolicy;
 
-/**
- * The `ImageVersionsConnection` object for `ImageVersionsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `ImageVersionsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ImageVersionsClient`.
- *
- * To create a concrete instance, see `MakeImageVersionsConnection()`.
- *
- * For mocking, see `composer_mocks::MockImageVersionsConnection`.
- */
-class ImageVersionsConnection {
- public:
-  virtual ~ImageVersionsConnection() = 0;
+/// @deprecated Use composer_v1::ImageVersionsLimitedTimeRetryPolicy directly.
+using ::google::cloud::composer_v1::ImageVersionsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<
-      google::cloud::orchestration::airflow::service::v1::ImageVersion>
-  ListImageVersions(google::cloud::orchestration::airflow::service::v1::
-                        ListImageVersionsRequest request);
-};
-
-/**
- * A factory function to construct an object of type `ImageVersionsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ImageVersionsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `ImageVersionsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::composer::ImageVersionsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `ImageVersionsConnection` created by
- * this function.
- */
-std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
-    Options options = {});
+/// @deprecated Use composer_v1::ImageVersionsRetryPolicy directly.
+using ::google::cloud::composer_v1::ImageVersionsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer

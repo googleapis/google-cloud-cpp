@@ -21,62 +21,29 @@
 
 #include "google/cloud/composer/environments_connection.h"
 #include "google/cloud/composer/environments_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/composer/v1/environments_options.h"
 
 namespace google {
 namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-composer-options
- */
-struct EnvironmentsRetryPolicyOption {
-  using Type = std::shared_ptr<EnvironmentsRetryPolicy>;
-};
+/// @deprecated Use composer_v1::EnvironmentsPollingPolicyOption directly.
+using ::google::cloud::composer_v1::EnvironmentsPollingPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-composer-options
- */
-struct EnvironmentsBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use composer_v1::EnvironmentsBackoffPolicyOption directly.
+using ::google::cloud::composer_v1::EnvironmentsBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-composer-options
- */
-struct EnvironmentsConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<EnvironmentsConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use composer_v1::EnvironmentsConnectionIdempotencyPolicyOption
+/// directly.
+using ::google::cloud::composer_v1::
+    EnvironmentsConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the long-running operations
- * polling policy.
- *
- * @ingroup google-cloud-composer-options
- */
-struct EnvironmentsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use composer_v1::EnvironmentsPolicyOptionList directly.
+using ::google::cloud::composer_v1::EnvironmentsPolicyOptionList;
 
-/**
- * The options applicable to Environments.
- *
- * @ingroup google-cloud-composer-options
- */
-using EnvironmentsPolicyOptionList =
-    OptionList<EnvironmentsRetryPolicyOption, EnvironmentsBackoffPolicyOption,
-               EnvironmentsPollingPolicyOption,
-               EnvironmentsConnectionIdempotencyPolicyOption>;
+/// @deprecated Use composer_v1::EnvironmentsRetryPolicyOption directly.
+using ::google::cloud::composer_v1::EnvironmentsRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
