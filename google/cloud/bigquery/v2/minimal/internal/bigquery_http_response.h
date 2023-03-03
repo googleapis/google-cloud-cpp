@@ -24,14 +24,15 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Parses the RestResponse and builds an BigQueryHttpResponse.
-struct BigQueryHttpResponse {
-  // Builds BigqueryHttpResponse from RestResponse.
+class BigQueryHttpResponse {
+ public:
+  BigQueryHttpResponse() = default;
+  // Parses the RestResponse and builds an BigQueryHttpResponse.
   static StatusOr<BigQueryHttpResponse> BuildFromRestResponse(
-      rest_internal::RestResponse& rest_response);
+      std::unique_ptr<rest_internal::RestResponse> rest_response);
 
   rest_internal::HttpStatusCode http_status_code;
-  std::unordered_map<std::string, std::string> http_headers;
+  std::multimap<std::string, std::string> http_headers;
   std::string payload;
 };
 

@@ -13,18 +13,32 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace rest = ::google::cloud::rest_internal;
+
 StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
-    rest_internal::RestResponse& rest_response) {
+    std::unique_ptr<rest::RestResponse> rest_response) {
   BigQueryHttpResponse response;
-  auto payload =
-      rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
-  if (!payload.ok()) return payload.status();
+  if (rest_response == nullptr) {
+    return internal::InvalidArgumentError(
+        "RestResponse argument passed in is null", GCP_ERROR_INFO());
+  }
+  if (rest::IsHttpError(*rest_response)) {
+    return rest::AsStatus(std::move(*rest_response));
+  }
+  response.http_status_code = rest_response->StatusCode();
+  response.http_headers = rest_response->Headers();
+
+  auto payload = rest::ReadAll(std::move(*rest_response).ExtractPayload());
+  if (!payload) return std::move(payload).status();
+
+  response.payload = std::move(*payload);
   return response;
 }
 

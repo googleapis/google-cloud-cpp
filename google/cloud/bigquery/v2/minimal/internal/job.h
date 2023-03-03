@@ -15,7 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job_configuration.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
+#include <nlohmann/json.hpp>
 #include <string>
 
 namespace google {
@@ -23,20 +26,20 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-struct JobConfiguration {
-  // Not Implemented Yet.
+// Disabling clang-tidy here as the namespace is needed for using the
+// NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT.
+using namespace nlohmann::literals;  // NOLINT
+
+struct JobStatus {
+  ErrorProto error_result;
+  std::vector<ErrorProto> errors;
+  std::string state;
 };
 
 struct JobReference {
-  // Not Implemented Yet.
-};
-
-struct JobStatistics {
-  // Not Implemented Yet.
-};
-
-struct JobStatus {
-  // Not Implemented Yet.
+  std::string project_id;
+  std::string job_id;
+  std::string location;
 };
 
 // Custom object for V2 Job proto fields.
@@ -48,10 +51,17 @@ struct Job {
   std::string user_email;
 
   JobStatus status;
-  JobConfiguration configuration;
-  JobStatistics stats;
   JobReference reference;
+  JobConfiguration configuration;
 };
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, error_result, errors,
+                                                state);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, project_id,
+                                                job_id, location);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Job, kind, etag, id, self_link,
+                                                user_email, status, reference,
+                                                configuration);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

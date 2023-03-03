@@ -20,15 +20,34 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+bool valid_job(nlohmann::json const& j) {
+  return (j.contains("kind") && j.contains("etag") && j.contains("id") &&
+          j.contains("status") && j.contains("reference") &&
+          j.contains("configuration"));
+}
+
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
-  GetJobResponse response;
   if (http_response.payload.empty()) {
-    return internal::InternalError("Empty payload in HTTP response.",
+    return internal::InternalError("Empty payload in HTTP response",
                                    GCP_ERROR_INFO());
   }
-  // Not Implemented Yet: Parse HttpResponse and build GetJobResponse object.
-  return response;
+  // Build the job response object from Http response.
+  auto json_obj = nlohmann::json::parse(http_response.payload, nullptr, false);
+  if (!json_obj.is_object()) {
+    return internal::InternalError("Error parsing Json from response payload",
+                                   GCP_ERROR_INFO());
+  }
+  if (!valid_job(json_obj)) {
+    return internal::InternalError("Not a valid Json Job object",
+                                   GCP_ERROR_INFO());
+  }
+
+  GetJobResponse result;
+  result.job = json_obj.get<Job>();
+  result.http_response = http_response;
+
+  return result;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

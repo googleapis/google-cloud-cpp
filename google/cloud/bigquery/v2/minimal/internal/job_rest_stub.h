@@ -18,6 +18,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
 #include "google/cloud/internal/rest_client.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -31,7 +32,8 @@ class BigQueryJobRestStub {
  public:
   virtual ~BigQueryJobRestStub() = 0;
 
-  virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request) = 0;
+  virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request,
+                                          Options const& opts) = 0;
 };
 
 class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
@@ -40,7 +42,8 @@ class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
       std::unique_ptr<rest_internal::RestClient> rest_stub)
       : rest_stub_(std::move(rest_stub)) {}
 
-  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request) override;
+  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request,
+                                  Options const& opts) override;
 
  private:
   std::unique_ptr<rest_internal::RestClient> rest_stub_;
