@@ -57,16 +57,16 @@ readonly PRODUCTION_ONLY_BASE=(
   "//google/cloud/storage/tests:signed_url_integration_test"
   "//google/cloud/storage/tests:unified_credentials_integration_test"
 )
-for base in "${PROJECTION_ONLY_BASE[@]}"; do
+for base in "${PRODUCTION_ONLY_BASE[@]}"; do
   production_only_targets+=(
     "${base}-default"
+    "${base}-legacy-http"
     "${base}-grpc-media"
     "${base}-grpc-metadata"
-    "${base}-legacy-http"
   )
 done
 
-"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+io::run "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   -- "${production_only_targets[@]}" "${excluded_targets[@]}"
 
 # `start_emulator` creates unsightly *.log files in the current directory
@@ -122,8 +122,9 @@ emulator_args=(
 # We need to forward some environment variables suitable for running against
 # the emulator. Note that the HMAC service account is completely invalid and
 # it is not unique to each test, neither is a problem when using the emulator.
-"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" "${emulator_args[@]}" \
-  -- "//google/cloud/storage/...:all" "${excluded_targets[@]}"
+io::run "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+  "${emulator_args[@]}" -- \
+  "//google/cloud/storage/...:all" "${excluded_targets[@]}"
 exit_status=$?
 
 if [[ "$exit_status" -ne 0 ]]; then
