@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/shell/cloud_shell_client.h"
+#include "google/cloud/shell/v1/cloud_shell_client.h"
 #include <iostream>
 #include <string>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace shell = ::google::cloud::shell;
+  namespace shell = ::google::cloud::shell_v1;
   auto client =
       shell::CloudShellServiceClient(shell::MakeCloudShellServiceConnection());
 

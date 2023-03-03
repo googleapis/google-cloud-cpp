@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/servicemanagement/service_manager_client.h"
+#include "google/cloud/servicemanagement/v1/service_manager_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace servicemanagement = ::google::cloud::servicemanagement;
+  namespace servicemanagement = ::google::cloud::servicemanagement_v1;
   auto client = servicemanagement::ServiceManagerClient(
       servicemanagement::MakeServiceManagerConnection());
 

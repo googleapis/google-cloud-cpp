@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/datastream/datastream_client.h"
+#include "google/cloud/datastream/v1/datastream_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace datastream = ::google::cloud::datastream;
+  namespace datastream = ::google::cloud::datastream_v1;
   auto client =
       datastream::DatastreamClient(datastream::MakeDatastreamConnection());
 

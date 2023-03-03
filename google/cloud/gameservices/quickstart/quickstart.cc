@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/gameservices/game_server_clusters_client.h"
+#include "google/cloud/gameservices/v1/game_server_clusters_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace gameservices = ::google::cloud::gameservices;
+  namespace gameservices = ::google::cloud::gameservices_v1;
   auto client = gameservices::GameServerClustersServiceClient(
       gameservices::MakeGameServerClustersServiceConnection());
 

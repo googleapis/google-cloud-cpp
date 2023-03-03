@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/cloudbuild/cloud_build_client.h"
+#include "google/cloud/cloudbuild/v1/cloud_build_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace cloudbuild = ::google::cloud::cloudbuild;
+  namespace cloudbuild = ::google::cloud::cloudbuild_v1;
   auto client =
       cloudbuild::CloudBuildClient(cloudbuild::MakeCloudBuildConnection());
   auto const* filter = R"""(status="WORKING")""";  // List only running builds

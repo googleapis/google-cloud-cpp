@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/translate/translation_client.h"
+#include "google/cloud/translate/v3/translation_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace translate = ::google::cloud::translate;
+  namespace translate = ::google::cloud::translate_v3;
   auto client = translate::TranslationServiceClient(
       translate::MakeTranslationServiceConnection());
 

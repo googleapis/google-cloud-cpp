@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/artifactregistry/artifact_registry_client.h"
+#include "google/cloud/artifactregistry/v1/artifact_registry_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace artifactregistry = ::google::cloud::artifactregistry;
+  namespace artifactregistry = ::google::cloud::artifactregistry_v1;
   auto client = artifactregistry::ArtifactRegistryClient(
       artifactregistry::MakeArtifactRegistryConnection());
 

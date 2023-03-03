@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/dlp/dlp_client.h"
+#include "google/cloud/dlp/v2/dlp_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace dlp = ::google::cloud::dlp;
+  namespace dlp = ::google::cloud::dlp_v2;
   auto client = dlp::DlpServiceClient(dlp::MakeDlpServiceConnection());
 
   auto const location =

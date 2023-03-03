@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/run/services_client.h"
+#include "google/cloud/run/v2/services_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace run = ::google::cloud::run;
+  namespace run = ::google::cloud::run_v2;
   auto client = run::ServicesClient(run::MakeServicesConnection());
 
   auto const parent =

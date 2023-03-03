@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/kms/key_management_client.h"
+#include "google/cloud/kms/v1/key_management_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace kms = ::google::cloud::kms;
+  namespace kms = ::google::cloud::kms_v1;
   auto client = kms::KeyManagementServiceClient(
       kms::MakeKeyManagementServiceConnection());
 

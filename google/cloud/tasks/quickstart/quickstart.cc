@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/tasks/cloud_tasks_client.h"
+#include "google/cloud/tasks/v2/cloud_tasks_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace tasks = ::google::cloud::tasks;
+  namespace tasks = ::google::cloud::tasks_v2;
   auto client = tasks::CloudTasksClient(tasks::MakeCloudTasksConnection());
   auto const parent =
       std::string("projects/") + argv[1] + "/locations/" + argv[2];

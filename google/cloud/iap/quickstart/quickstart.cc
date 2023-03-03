@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/iap/identity_aware_proxy_o_auth_client.h"
+#include "google/cloud/iap/v1/identity_aware_proxy_o_auth_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace iap = ::google::cloud::iap;
+  namespace iap = ::google::cloud::iap_v1;
   auto client = iap::IdentityAwareProxyOAuthServiceClient(
       iap::MakeIdentityAwareProxyOAuthServiceConnection());
 

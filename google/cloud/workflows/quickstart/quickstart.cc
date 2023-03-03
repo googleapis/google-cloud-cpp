@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/workflows/workflows_client.h"
+#include "google/cloud/workflows/v1/workflows_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace workflows = ::google::cloud::workflows;
+  namespace workflows = ::google::cloud::workflows_v1;
   auto client =
       workflows::WorkflowsClient(workflows::MakeWorkflowsConnection());
 

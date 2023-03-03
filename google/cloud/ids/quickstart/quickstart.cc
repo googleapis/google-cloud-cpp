@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/ids/ids_client.h"
+#include "google/cloud/ids/v1/ids_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace ids = ::google::cloud::ids;
+  namespace ids = ::google::cloud::ids_v1;
   auto client = ids::IDSClient(ids::MakeIDSConnection());
 
   auto const parent = std::string{"projects/"} + argv[1] + "/locations/-";
