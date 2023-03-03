@@ -74,6 +74,9 @@
 
 set -euo pipefail
 
+# TODO(coryan) - testing with GHA, disable Kokoro builds
+exit 0
+
 source "$(dirname "$0")/../lib/init.sh"
 source module ci/lib/io.sh
 cd "${PROJECT_ROOT}"

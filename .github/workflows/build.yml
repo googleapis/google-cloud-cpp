@@ -10,7 +10,7 @@ on:
 jobs:
   # Compiles and runs unit tests with macOS and Bazel
   macos-bazel:
-    runs-on: 'macos-latest'
+    runs-on: 'macos-12-xl'
     # Add "id-token" with the intended permissions.
     permissions:
       contents: 'read'
@@ -32,5 +32,5 @@ jobs:
           printf "%10s %s\n" "clang:" "$(clang --version 2>&1 | head -1)"
           printf "%10s %s\n" "brew:" "$(brew --version 2>&1 | head -1)"
           printf "%10s %s\n" "branch:" "${BRANCH}"
-          printf "%10s %s\n" "bazelisk:" "$(bazelisk version | head -1)"
-          printf "%10s %s\n" "bazel:" "$(bazelisk --batch version | head -1)"
+          printf "%10s %s\n" "bazelisk:" "$(bazelisk version 2>&1 | head -1)"
+          printf "%10s %s\n" "bazel:" "$(bazelisk --batch version 2>&1 | head -1)"
