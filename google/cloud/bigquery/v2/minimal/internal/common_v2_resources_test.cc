@@ -93,10 +93,13 @@ void AssertParamValueEquals(QueryParameterValue& expected,
 
   ASSERT_THAT(expected.array_values, Not(IsEmpty()));
   ASSERT_THAT(actual.array_values, Not(IsEmpty()));
+  EXPECT_EQ(expected.array_values.size(), actual.array_values.size());
   EXPECT_EQ(expected.array_values[0].value, actual.array_values[0].value);
 
   ASSERT_THAT(expected.array_values[0].array_values, Not(IsEmpty()));
   ASSERT_THAT(actual.array_values[0].array_values, Not(IsEmpty()));
+  EXPECT_EQ(expected.array_values[0].array_values.size(),
+            actual.array_values[0].array_values.size());
   EXPECT_EQ(expected.array_values[0].array_values[0].value,
             actual.array_values[0].array_values[0].value);
 
@@ -114,6 +117,8 @@ void AssertParamTypeEquals(QueryParameterType& expected,
 
   ASSERT_THAT(expected.array_type->struct_types, Not(IsEmpty()));
   ASSERT_THAT(actual.array_type->struct_types, Not(IsEmpty()));
+  EXPECT_EQ(expected.array_type->struct_types.size(),
+            actual.array_type->struct_types.size());
   EXPECT_EQ(expected.array_type->struct_types[0].name,
             actual.array_type->struct_types[0].name);
   EXPECT_EQ(expected.array_type->struct_types[0].type->type,
@@ -123,6 +128,7 @@ void AssertParamTypeEquals(QueryParameterType& expected,
 
   ASSERT_THAT(expected.struct_types, Not(IsEmpty()));
   ASSERT_THAT(actual.struct_types, Not(IsEmpty()));
+  EXPECT_EQ(expected.struct_types.size(), actual.struct_types.size());
   EXPECT_EQ(expected.struct_types[0].name, actual.struct_types[0].name);
   EXPECT_EQ(expected.struct_types[0].type->type,
             actual.struct_types[0].type->type);
@@ -158,7 +164,7 @@ TEST(CommonV2ResourcesTest, QueryParameterTypeFromJson) {
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterTypeToJson) {
-  auto expected_text =
+  auto const expected_text =
       R"({
         "array_type":{
             "struct_types":[{
@@ -207,7 +213,7 @@ TEST(CommonV2ResourcesTest, QueryParameterValueFromJson) {
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterValueToJson) {
-  auto expected_text =
+  auto const expected_text =
       R"({
         "array_values":[{
             "array_values":[{
@@ -266,7 +272,7 @@ TEST(CommonV2ResourcesTest, QueryParameterFromJson) {
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterToJson) {
-  auto expected_text =
+  auto const expected_text =
       R"({
         "name":"query-parameter-name",
         "parameter_type":{
