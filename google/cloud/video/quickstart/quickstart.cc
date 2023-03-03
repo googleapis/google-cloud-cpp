@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/video/transcoder_client.h"
+#include "google/cloud/video/transcoder/v1/transcoder_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,9 +22,9 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace video = ::google::cloud::video;
-  auto client =
-      video::TranscoderServiceClient(video::MakeTranscoderServiceConnection());
+  namespace transcoder = ::google::cloud::video_transcoder_v1;
+  auto client = transcoder::TranscoderServiceClient(
+      transcoder::MakeTranscoderServiceConnection());
 
   auto const parent =
       std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
