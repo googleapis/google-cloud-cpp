@@ -17,6 +17,9 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
+# TODO(coryan) - testing with GHA, disable Kokoro builds
+Exit 0
+
 $BuildName = ""
 if ($args.count -eq 1) {
     $BuildName = $args[0]

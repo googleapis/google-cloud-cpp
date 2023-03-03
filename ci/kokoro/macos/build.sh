@@ -21,6 +21,9 @@ source module ci/lib/io.sh
 
 cd "${PROJECT_ROOT}"
 
+# TODO(coryan) - testing with GHA, disable Kokoro builds
+exit 0
+
 export RUN_INTEGRATION_TESTS="no"
 
 BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-main}"
