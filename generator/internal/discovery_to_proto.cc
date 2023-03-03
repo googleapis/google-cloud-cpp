@@ -13,17 +13,70 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_to_proto.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
-#include <string>
+#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/status_or.h"
+#include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
 
-Status GenerateProtosFromDiscoveryDoc(std::string const&, std::string const&,
-                                      std::string const&, std::string const&) {
-  // TODO(10980): Implement this function.
-  return google::cloud::internal::UnimplementedError("not yet implemented");
+namespace rest = google::cloud::rest_internal;
+
+google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
+  std::pair<std::string, std::string> url_pieces =
+      absl::StrSplit(url, absl::ByString("com/"));
+  auto client = rest::MakeDefaultRestClient(url_pieces.first + "com", {});
+  rest::RestRequest request;
+  request.SetPath(url_pieces.second);
+  auto response = client->Get(request);
+  if (!response) {
+    return std::move(response).status();
+  }
+
+  auto payload = std::move(**response).ExtractPayload();
+  return rest::ReadAll(std::move(payload));
+}
+
+StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
+  nlohmann::json parsed_discovery_doc;
+  if (absl::StartsWith(url, "file://")) {
+    auto file_path = std::string(absl::StripPrefix(url, "file://"));
+    std::ifstream json_file(file_path);
+    if (!json_file.is_open()) {
+      return internal::InvalidArgumentError(
+          absl::StrCat("Unable to open file ", file_path));
+    }
+    parsed_discovery_doc = nlohmann::json::parse(json_file, nullptr, false);
+  } else {
+    auto page = GetPage(url);
+    if (!page) return page.status();
+    parsed_discovery_doc = nlohmann::json::parse(*page, nullptr, false);
+  }
+
+  if (!parsed_discovery_doc.is_object()) {
+    return internal::InvalidArgumentError("Error parsing Discovery Doc");
+  }
+
+  return parsed_discovery_doc;
+}
+
+}  // namespace
+
+Status GenerateProtosFromDiscoveryDoc(std::string const& url,
+                                      std::string const&, std::string const&,
+                                      std::string const&) {
+  auto discovery_doc = GetDiscoveryDoc(url);
+  if (!discovery_doc) return discovery_doc.status();
+
+  // TODO(10980): Finish implementing this function.
+  return internal::UnimplementedError("Not implemented.");
 }
 
 }  // namespace generator_internal

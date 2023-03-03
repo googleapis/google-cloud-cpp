@@ -25,6 +25,7 @@ cc_library(
     deps = [
         ":generator_config_cc_proto",
         "//:common",
+        "//google/cloud:google_cloud_cpp_rest_internal",
         "@com_github_nlohmann_json//:nlohmann_json",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",

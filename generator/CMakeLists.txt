@@ -114,6 +114,7 @@ target_link_libraries(
     google_cloud_cpp_generator
     PUBLIC google_cloud_cpp_generator_config
            google-cloud-cpp::common
+           google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
            google-cloud-cpp::api_client_protos
            google-cloud-cpp::api_routing_protos
