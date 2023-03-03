@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) try {
       webrisk::WebRiskServiceClient(webrisk::MakeWebRiskServiceConnection());
 
   auto const uri = std::string{argc == 2 ? argv[1] : "https://www.google.com/"};
-  auto const threat_types = std::vector<webrisk::v1::ThreatType>{
-      webrisk::v1::MALWARE, webrisk::v1::UNWANTED_SOFTWARE};
+  auto const threat_types = {google::cloud::webrisk::v1::MALWARE,
+                             google::cloud::webrisk::v1::UNWANTED_SOFTWARE};
   auto response = client.SearchUris("https://www.google.com/", threat_types);
   if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
