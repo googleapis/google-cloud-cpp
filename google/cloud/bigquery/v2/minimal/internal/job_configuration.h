@@ -41,7 +41,7 @@ struct JobConfigurationQuery {
   bool flatten_results = false;
   bool use_legacy_sql = false;
   bool create_session = false;
-  std::int64_t maximum_bytes_billed;
+  std::int64_t maximum_bytes_billed = 0;
 
   DatasetReference default_dataset;
   TableReference destination_table;
@@ -53,7 +53,7 @@ struct JobConfigurationQuery {
 struct JobConfiguration {
   std::string job_type;
   bool dry_run = false;
-  std::int64_t job_timeout_ms;
+  std::int64_t job_timeout_ms = 0;
   std::map<std::string, std::string> labels;
 
   JobConfigurationQuery query_config;

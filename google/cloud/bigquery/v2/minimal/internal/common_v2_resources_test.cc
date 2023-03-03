@@ -26,18 +26,24 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::testing::IsEmpty;
+using ::testing::Not;
+
 // Helper functions.
 
-QueryParameterType query_parameter_type() {
+QueryParameterType GetQueryParameterType() {
   QueryParameterType expected_qp_type;
   QueryParameterStructType array_st;
   QueryParameterStructType qp_st;
 
   array_st.name = "array-struct-name";
-  array_st.type = "array-struct-type";
+  array_st.type = std::make_shared<QueryParameterType>();
+  array_st.type->type = "array-struct-type";
+
   array_st.description = "array-struct-description";
   qp_st.name = "qp-struct-name";
-  qp_st.type = "qp-struct-type";
+  qp_st.type = std::make_shared<QueryParameterType>();
+  qp_st.type->type = "qp-struct-type";
   qp_st.description = "qp-struct-description";
 
   expected_qp_type.type = "query-parameter-type";
@@ -49,7 +55,7 @@ QueryParameterType query_parameter_type() {
   return expected_qp_type;
 }
 
-QueryParameterValue query_parameter_value() {
+QueryParameterValue GetQueryParameterValue() {
   QueryParameterValue expected_qp_val;
   QueryParameterValue qp_struct_val;
   QueryParameterValue array_val;
@@ -72,39 +78,54 @@ QueryParameterValue query_parameter_value() {
   return expected_qp_val;
 }
 
-QueryParameter query_parameter() {
+QueryParameter GetQueryParameter() {
   QueryParameter expected;
   expected.name = "query-parameter-name";
-  expected.parameter_type = query_parameter_type();
-  expected.parameter_value = query_parameter_value();
+  expected.parameter_type = GetQueryParameterType();
+  expected.parameter_value = GetQueryParameterValue();
 
   return expected;
 }
 
-void assert_parameter_value_equals(QueryParameterValue& expected,
-                                   QueryParameterValue& actual) {
+void AssertParamValueEquals(QueryParameterValue& expected,
+                            QueryParameterValue& actual) {
   EXPECT_EQ(expected.value, actual.value);
+
+  ASSERT_THAT(expected.array_values, Not(IsEmpty()));
+  ASSERT_THAT(actual.array_values, Not(IsEmpty()));
   EXPECT_EQ(expected.array_values[0].value, actual.array_values[0].value);
+
+  ASSERT_THAT(expected.array_values[0].array_values, Not(IsEmpty()));
+  ASSERT_THAT(actual.array_values[0].array_values, Not(IsEmpty()));
   EXPECT_EQ(expected.array_values[0].array_values[0].value,
             actual.array_values[0].array_values[0].value);
+
   EXPECT_EQ(expected.array_values[0].struct_values["array-map-key"].value,
             actual.array_values[0].struct_values["array-map-key"].value);
   EXPECT_EQ(expected.struct_values["qp-map-key"].value,
             actual.struct_values["qp-map-key"].value);
 }
 
-void assert_parameter_type_equals(QueryParameterType& expected,
-                                  QueryParameterType& actual) {
+void AssertParamTypeEquals(QueryParameterType& expected,
+                           QueryParameterType& actual) {
   EXPECT_EQ(expected.type, actual.type);
+
   EXPECT_EQ(expected.array_type->type, actual.array_type->type);
+
+  ASSERT_THAT(expected.array_type->struct_types, Not(IsEmpty()));
+  ASSERT_THAT(actual.array_type->struct_types, Not(IsEmpty()));
   EXPECT_EQ(expected.array_type->struct_types[0].name,
             actual.array_type->struct_types[0].name);
-  EXPECT_EQ(expected.array_type->struct_types[0].type,
-            actual.array_type->struct_types[0].type);
+  EXPECT_EQ(expected.array_type->struct_types[0].type->type,
+            actual.array_type->struct_types[0].type->type);
   EXPECT_EQ(expected.array_type->struct_types[0].description,
             actual.array_type->struct_types[0].description);
+
+  ASSERT_THAT(expected.struct_types, Not(IsEmpty()));
+  ASSERT_THAT(actual.struct_types, Not(IsEmpty()));
   EXPECT_EQ(expected.struct_types[0].name, actual.struct_types[0].name);
-  EXPECT_EQ(expected.struct_types[0].type, actual.struct_types[0].type);
+  EXPECT_EQ(expected.struct_types[0].type->type,
+            actual.struct_types[0].type->type);
   EXPECT_EQ(expected.struct_types[0].description,
             actual.struct_types[0].description);
 }
@@ -115,12 +136,12 @@ TEST(CommonV2ResourcesTest, QueryParameterTypeFromJson) {
           "type": "query-parameter-type",
           "array_type": {"type": "array-type", "struct_types": [{
                             "name": "array-struct-name",
-                            "type": "array-struct-type",
+                            "type": {"type": "array-struct-type"},
                             "description": "array-struct-description"
                           }]},
           "struct_types": [{
               "name": "qp-struct-name",
-              "type": "qp-struct-type",
+              "type": {"type": "qp-struct-type"},
               "description": "qp-struct-description"
               }]
       })";
@@ -131,25 +152,37 @@ TEST(CommonV2ResourcesTest, QueryParameterTypeFromJson) {
   QueryParameterType actual;
   from_json(json, actual);
 
-  auto expected = query_parameter_type();
+  auto expected = GetQueryParameterType();
 
-  assert_parameter_type_equals(expected, actual);
+  AssertParamTypeEquals(expected, actual);
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterTypeToJson) {
-  std::string expected_text =
-      "{\"array_type\":{\"struct_types\":[{\"description\":\"array-struct-"
-      "description\",\"name\":\"array-struct-name\",\"type\":\"array-struct-"
-      "type\"}],\"type\":\"array-type\"},\"struct_types\":[{\"description\":"
-      "\"qp-struct-description\",\"name\":\"qp-struct-name\",\"type\":\"qp-"
-      "struct-type\"}],\"type\":\"query-parameter-type\"}";
+  auto expected_text =
+      R"({
+        "array_type":{
+            "struct_types":[{
+                "description":"array-struct-description",
+                "name":"array-struct-name",
+                "type":{
+                    "struct_types":[],
+                    "type":"array-struct-type"
+                }
+            }],
+        "type":"array-type"},
+        "struct_types":[{
+            "description":"qp-struct-description",
+            "name":"qp-struct-name",
+            "type":{"struct_types":[],"type":"qp-struct-type"}
+        }],
+        "type":"query-parameter-type"})"_json;
 
-  auto expected = query_parameter_type();
+  auto expected = GetQueryParameterType();
 
   nlohmann::json j;
   to_json(j, expected);
 
-  EXPECT_EQ(j.dump(), expected_text);
+  EXPECT_EQ(j, expected_text);
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterValueFromJson) {
@@ -158,7 +191,7 @@ TEST(CommonV2ResourcesTest, QueryParameterValueFromJson) {
           "value": "query-parameter-value",
           "array_values": [{"value": "array-val-1", "array_values": [{
                             "value": "array-val-2",
-                            "struct_values": {"array-map-key": {"value": "array-map-value"}}
+                            "struct_values": {"array-map-key": {"value":"array-map-value"}}
                           }]}],
           "struct_values": {"qp-map-key": {"value": "qp-map-value"}}
       })";
@@ -168,24 +201,30 @@ TEST(CommonV2ResourcesTest, QueryParameterValueFromJson) {
   QueryParameterValue actual_qp;
   from_json(json, actual_qp);
 
-  auto expected_qp = query_parameter_value();
+  auto expected_qp = GetQueryParameterValue();
 
-  assert_parameter_value_equals(expected_qp, actual_qp);
+  AssertParamValueEquals(expected_qp, actual_qp);
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterValueToJson) {
-  std::string expected_text =
-      "{\"array_values\":[{\"array_values\":[{\"array_values\":[],\"struct_"
-      "values\":{\"array-map-key\":{\"array_values\":[],\"struct_values\":{},"
-      "\"value\":\"array-map-value\"}},\"value\":\"array-val-2\"}],\"struct_"
-      "values\":{},\"value\":\"array-val-1\"}],\"struct_values\":{\"qp-map-"
-      "key\":{\"array_values\":[],\"struct_values\":{},\"value\":\"qp-map-"
-      "value\"}},\"value\":\"query-parameter-value\"}";
-  auto expected = query_parameter_value();
+  auto expected_text =
+      R"({
+        "array_values":[{
+            "array_values":[{
+                "array_values":[],
+                "struct_values":{"array-map-key":{"array_values":[],"struct_values":{},"value":"array-map-value"}},
+                "value":"array-val-2"
+            }],
+            "struct_values":{},
+            "value":"array-val-1"
+        }],
+        "struct_values":{"qp-map-key":{"array_values":[],"struct_values":{},"value":"qp-map-value"}},
+        "value":"query-parameter-value"})"_json;
+  auto expected = GetQueryParameterValue();
   nlohmann::json j;
   to_json(j, expected);
 
-  EXPECT_EQ(j.dump(), expected_text);
+  EXPECT_EQ(j, expected_text);
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterFromJson) {
@@ -196,12 +235,12 @@ TEST(CommonV2ResourcesTest, QueryParameterFromJson) {
           "type": "query-parameter-type",
           "array_type": {"type": "array-type", "struct_types": [{
                             "name": "array-struct-name",
-                            "type": "array-struct-type",
+                            "type": {"type": "array-struct-type"},
                             "description": "array-struct-description"
                           }]},
           "struct_types": [{
               "name": "qp-struct-name",
-              "type": "qp-struct-type",
+              "type": {"type": "qp-struct-type"},
               "description": "qp-struct-description"
               }]
        },
@@ -209,43 +248,61 @@ TEST(CommonV2ResourcesTest, QueryParameterFromJson) {
           "value": "query-parameter-value",
           "array_values": [{"value": "array-val-1", "array_values": [{
                             "value": "array-val-2",
-                            "struct_values": {"array-map-key": {"value": "array-map-value"}}
+                            "struct_values": {"array-map-key": {"value":"array-map-value"}}
                           }]}],
           "struct_values": {"qp-map-key": {"value": "qp-map-value"}}
       }})";
   auto json = nlohmann::json::parse(text, nullptr, false);
   EXPECT_TRUE(json.is_object());
 
-  QueryParameter expected = query_parameter();
+  QueryParameter expected = GetQueryParameter();
 
   QueryParameter actual;
   from_json(json, actual);
 
   EXPECT_EQ(expected.name, actual.name);
-  assert_parameter_type_equals(expected.parameter_type, actual.parameter_type);
-  assert_parameter_value_equals(expected.parameter_value,
-                                actual.parameter_value);
+  AssertParamTypeEquals(expected.parameter_type, actual.parameter_type);
+  AssertParamValueEquals(expected.parameter_value, actual.parameter_value);
 }
 
 TEST(CommonV2ResourcesTest, QueryParameterToJson) {
-  std::string expected_text =
-      "{\"name\":\"query-parameter-name\",\"parameter_type\":{\"array_type\":{"
-      "\"struct_types\":[{\"description\":\"array-struct-description\","
-      "\"name\":\"array-struct-name\",\"type\":\"array-struct-type\"}],"
-      "\"type\":\"array-type\"},\"struct_types\":[{\"description\":\"qp-struct-"
-      "description\",\"name\":\"qp-struct-name\",\"type\":\"qp-struct-type\"}],"
-      "\"type\":\"query-parameter-type\"},\"parameter_value\":{\"array_"
-      "values\":[{\"array_values\":[{\"array_values\":[],\"struct_values\":{"
-      "\"array-map-key\":{\"array_values\":[],\"struct_values\":{},\"value\":"
-      "\"array-map-value\"}},\"value\":\"array-val-2\"}],\"struct_values\":{},"
-      "\"value\":\"array-val-1\"}],\"struct_values\":{\"qp-map-key\":{\"array_"
-      "values\":[],\"struct_values\":{},\"value\":\"qp-map-value\"}},\"value\":"
-      "\"query-parameter-value\"}}";
-  auto expected = query_parameter();
+  auto expected_text =
+      R"({
+        "name":"query-parameter-name",
+        "parameter_type":{
+            "array_type":{
+                "struct_types":[{
+                    "description":"array-struct-description",
+                    "name":"array-struct-name",
+                    "type":{"struct_types":[],"type":"array-struct-type"}
+                }],
+                "type":"array-type"
+            },
+            "struct_types":[{
+                "description":"qp-struct-description",
+                "name":"qp-struct-name",
+                "type":{"struct_types":[],"type":"qp-struct-type"}
+            }],
+            "type":"query-parameter-type"
+        },
+        "parameter_value":{
+            "array_values":[{
+                "array_values":[{
+                    "array_values":[],
+                    "struct_values":{"array-map-key":{"array_values":[],"struct_values":{},"value":"array-map-value"}},
+                    "value":"array-val-2"
+                }],
+                "struct_values":{},
+                "value":"array-val-1"
+            }],
+            "struct_values":{"qp-map-key":{"array_values":[],"struct_values":{},"value":"qp-map-value"}},
+            "value":"query-parameter-value"
+        }})"_json;
+  auto expected = GetQueryParameter();
   nlohmann::json j;
   to_json(j, expected);
 
-  EXPECT_EQ(j.dump(), expected_text);
+  EXPECT_EQ(j, expected_text);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
