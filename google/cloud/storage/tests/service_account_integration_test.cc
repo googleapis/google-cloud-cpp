@@ -63,8 +63,8 @@ TEST_F(ServiceAccountIntegrationTest, Get) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
-  // HMAC keys are a scarse resource. Testing in production would require
-  // redesigning the tests to use a random service account (or creating one) on
+  // HMAC keys are a scarce resource. Testing in production would require
+  // redesigning the tests to use a random service account (or creating one)
   // dynamically.  For now, simply skip these tests.
   if (!UsingEmulator()) GTEST_SKIP();
   Client client(Options{}.set<ProjectIdOption>(project_id_));
@@ -85,8 +85,8 @@ TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
-  // HMAC keys are a scarse resource. Testing in production would require
-  // redesigning the tests to use a random service account (or creating one) on
+  // HMAC keys are a scarce resource. Testing in production would require
+  // redesigning the tests to use a random service account (or creating one)
   // dynamically.  For now, simply skip these tests.
   if (!UsingEmulator()) GTEST_SKIP();
   Client client(Options{}.set<ProjectIdOption>(project_id_));
