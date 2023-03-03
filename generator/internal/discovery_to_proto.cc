@@ -37,7 +37,7 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   request.SetPath(url_pieces.second);
   auto response = client->Get(request);
   if (!response.ok()) {
-    return response.status();
+    return std::move(response).status();
   }
 
   auto payload = std::move(**response).ExtractPayload();
@@ -60,8 +60,8 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
     parsed_discovery_doc = nlohmann::json::parse(*page, nullptr, false);
   }
 
-  if (parsed_discovery_doc.is_discarded() || parsed_discovery_doc.is_null()) {
-    return internal::DataLossError("Error parsing Discovery Doc");
+  if (!parsed_discovery_doc.is_object()) {
+    return internal::InvalidArgumentError("Error parsing Discovery Doc");
   }
 
   return parsed_discovery_doc;
@@ -73,7 +73,7 @@ Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const&, std::string const&,
                                       std::string const&) {
   auto discovery_doc = GetDiscoveryDoc(url);
-  if (!discovery_doc.ok()) return discovery_doc.status();
+  if (!discovery_doc) return discovery_doc.status();
 
   // TODO(10980): Finish implementing this function.
   return internal::UnimplementedError("Not implemented.");
