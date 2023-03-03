@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/datamigration/data_migration_client.h"
+#include "google/cloud/datamigration/v1/data_migration_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace datamigration = ::google::cloud::datamigration;
+  namespace datamigration = ::google::cloud::datamigration_v1;
   auto client = datamigration::DataMigrationServiceClient(
       datamigration::MakeDataMigrationServiceConnection());
 

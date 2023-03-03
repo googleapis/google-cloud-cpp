@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/dataplex/dataplex_client.h"
+#include "google/cloud/dataplex/v1/dataplex_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace dataplex = ::google::cloud::dataplex;
+  namespace dataplex = ::google::cloud::dataplex_v1;
   auto client = dataplex::DataplexServiceClient(
       dataplex::MakeDataplexServiceConnection());
 

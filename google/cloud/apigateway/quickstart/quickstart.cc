@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/apigateway/api_gateway_client.h"
+#include "google/cloud/apigateway/v1/api_gateway_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace apigateway = ::google::cloud::apigateway;
+  namespace apigateway = ::google::cloud::apigateway_v1;
   auto client = apigateway::ApiGatewayServiceClient(
       apigateway::MakeApiGatewayServiceConnection());
 

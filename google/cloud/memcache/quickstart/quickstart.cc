@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/memcache/cloud_memcache_client.h"
+#include "google/cloud/memcache/v1/cloud_memcache_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace memcache = ::google::cloud::memcache;
+  namespace memcache = ::google::cloud::memcache_v1;
   auto client =
       memcache::CloudMemcacheClient(memcache::MakeCloudMemcacheConnection());
 

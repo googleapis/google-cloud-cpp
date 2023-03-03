@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/language/language_client.h"
+#include "google/cloud/language/v1/language_client.h"
 #include <iostream>
 
 auto constexpr kText = R"""(
@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace language = ::google::cloud::language;
+  namespace language = ::google::cloud::language_v1;
   auto client = language::LanguageServiceClient(
       language::MakeLanguageServiceConnection());
 

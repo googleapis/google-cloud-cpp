@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/certificatemanager/certificate_manager_client.h"
+#include "google/cloud/certificatemanager/v1/certificate_manager_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace certificatemanager = ::google::cloud::certificatemanager;
+  namespace certificatemanager = ::google::cloud::certificatemanager_v1;
   auto client = certificatemanager::CertificateManagerClient(
       certificatemanager::MakeCertificateManagerConnection());
 

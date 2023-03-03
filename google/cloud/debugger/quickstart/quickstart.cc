@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/debugger/debugger2_client.h"
+#include "google/cloud/debugger/v2/debugger2_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace debugger = ::google::cloud::debugger;
+  namespace debugger = ::google::cloud::debugger_v2;
   auto client = debugger::Debugger2Client(debugger::MakeDebugger2Connection());
   auto response = client.ListDebuggees(argv[1], "quickstart");
   if (!response) throw std::move(response).status();

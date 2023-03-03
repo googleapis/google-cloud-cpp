@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/webrisk/web_risk_client.h"
+#include "google/cloud/webrisk/v1/web_risk_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace webrisk = ::google::cloud::webrisk;
+  namespace webrisk = ::google::cloud::webrisk_v1;
   auto client =
       webrisk::WebRiskServiceClient(webrisk::MakeWebRiskServiceConnection());
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/logging/logging_service_v2_client.h"
+#include "google/cloud/logging/v2/logging_service_v2_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace logging = ::google::cloud::logging;
+  namespace logging = ::google::cloud::logging_v2;
   auto client = logging::LoggingServiceV2Client(
       logging::MakeLoggingServiceV2Connection());
   auto const project = google::cloud::Project(argv[1]);

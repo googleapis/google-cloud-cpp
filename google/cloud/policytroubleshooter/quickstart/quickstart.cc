@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/policytroubleshooter/iam_checker_client.h"
+#include "google/cloud/policytroubleshooter/v1/iam_checker_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace policytroubleshooter = ::google::cloud::policytroubleshooter;
+  namespace policytroubleshooter = ::google::cloud::policytroubleshooter_v1;
   auto client = policytroubleshooter::IamCheckerClient(
       policytroubleshooter::MakeIamCheckerConnection());
 

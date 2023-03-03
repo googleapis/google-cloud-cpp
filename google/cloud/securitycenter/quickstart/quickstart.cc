@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/securitycenter/security_center_client.h"
+#include "google/cloud/securitycenter/v1/security_center_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace securitycenter = ::google::cloud::securitycenter;
+  namespace securitycenter = ::google::cloud::securitycenter_v1;
   auto client = securitycenter::SecurityCenterClient(
       securitycenter::MakeSecurityCenterConnection());
 

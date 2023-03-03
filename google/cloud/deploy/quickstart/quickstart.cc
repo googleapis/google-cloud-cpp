@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/deploy/cloud_deploy_client.h"
+#include "google/cloud/deploy/v1/cloud_deploy_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace deploy = ::google::cloud::deploy;
+  namespace deploy = ::google::cloud::deploy_v1;
   auto client = deploy::CloudDeployClient(deploy::MakeCloudDeployConnection());
 
   auto const parent =

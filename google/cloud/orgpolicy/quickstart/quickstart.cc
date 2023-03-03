@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/orgpolicy/org_policy_client.h"
+#include "google/cloud/orgpolicy/v2/org_policy_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace orgpolicy = ::google::cloud::orgpolicy;
+  namespace orgpolicy = ::google::cloud::orgpolicy_v2;
   auto client =
       orgpolicy::OrgPolicyClient(orgpolicy::MakeOrgPolicyConnection());
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/batch/batch_client.h"
+#include "google/cloud/batch/v1/batch_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace batch = ::google::cloud::batch;
+  namespace batch = ::google::cloud::batch_v1;
   auto client = batch::BatchServiceClient(batch::MakeBatchServiceConnection());
 
   auto const location =

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/recommender/recommender_client.h"
+#include "google/cloud/recommender/v1/recommender_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace recommender = ::google::cloud::recommender;
+  namespace recommender = ::google::cloud::recommender_v1;
   auto client =
       recommender::RecommenderClient(recommender::MakeRecommenderConnection());
   // For additional recommenders see:
