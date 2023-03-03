@@ -2529,6 +2529,37 @@ TEST(ConnectionImplTest, RollbackInvalidatedTransaction) {
                                         HasSubstr("constraint error")));
 }
 
+TEST(ConnectionImplTest, ReadPartition) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  EXPECT_CALL(*mock, StreamingRead)
+      .WillOnce([](grpc::ClientContext&,
+                   google::spanner::v1::ReadRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ("Table", request.table());
+        EXPECT_EQ("DEADBEEF", request.partition_token());
+        EXPECT_TRUE(request.data_boost_enabled());
+        return MakeReader(
+            {R"pb(metadata: { transaction: { id: " ABCDEF00 " } })pb"});
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto rows = conn->Read({spanner::MakeReadOnlyTransaction(),
+                          "Table",
+                          spanner::KeySet::All(),
+                          {"Column"},
+                          {},
+                          "DEADBEEF",
+                          true});
+  EXPECT_TRUE(ContainsNoRows(rows));
+}
+
 TEST(ConnectionImplTest, PartitionReadSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
@@ -2572,12 +2603,14 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
   read_options.index_name = "index";
   read_options.limit = 21;
   read_options.request_priority = spanner::RequestPriority::kLow;
+  bool data_boost = true;
   StatusOr<std::vector<spanner::ReadPartition>> result =
       conn->PartitionRead({{txn,
                             "table",
                             spanner::KeySet::All(),
                             {"UserId", "UserName"},
-                            read_options}});
+                            read_options},
+                           {absl::nullopt, absl::nullopt, data_boost}});
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(txn, HasSessionAndTransaction("test-session-name", "CAFEDEAD",
                                             false, ""));
@@ -2585,10 +2618,12 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
   std::vector<spanner::ReadPartition> expected_read_partitions = {
       spanner_internal::MakeReadPartition(
           "CAFEDEAD", false, "", "test-session-name", "BADDECAF", "table",
-          spanner::KeySet::All(), {"UserId", "UserName"}, read_options),
+          spanner::KeySet::All(), {"UserId", "UserName"}, data_boost,
+          read_options),
       spanner_internal::MakeReadPartition(
           "CAFEDEAD", false, "", "test-session-name", "DEADBEEF", "table",
-          spanner::KeySet::All(), {"UserId", "UserName"}, read_options)};
+          spanner::KeySet::All(), {"UserId", "UserName"}, data_boost,
+          read_options)};
 
   EXPECT_THAT(*result, UnorderedPointwise(Eq(), expected_read_partitions));
 }
@@ -2649,6 +2684,35 @@ TEST(ConnectionImplTest, PartitionReadTooManyTransientFailures) {
               StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
 
+TEST(ConnectionImplTest, QueryPartition) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  EXPECT_CALL(*mock, BeginTransaction).Times(0);
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .WillOnce([](grpc::ClientContext&,
+                   google::spanner::v1::ExecuteSqlRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ("SELECT * FROM Table", request.sql());
+        EXPECT_EQ("DEADBEEF", request.partition_token());
+        EXPECT_TRUE(request.data_boost_enabled());
+        return MakeReader(
+            {R"pb(metadata: { transaction: { id: " ABCDEF00 " } })pb"});
+      });
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto rows = conn->ExecuteQuery({spanner::MakeReadOnlyTransaction(),
+                                  spanner::SqlStatement("SELECT * FROM Table"),
+                                  {},
+                                  "DEADBEEF",
+                                  true});
+  EXPECT_TRUE(ContainsNoRows(rows));
+}
+
 TEST(ConnectionImplTest, PartitionQuerySuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
@@ -2683,18 +2747,20 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
   spanner::SqlStatement sql_statement("SELECT * FROM Table");
+  bool data_boost = true;
   StatusOr<std::vector<spanner::QueryPartition>> result = conn->PartitionQuery(
       {MakeReadOnlyTransaction(spanner::Transaction::ReadOnlyOptions()),
-       sql_statement, spanner::PartitionOptions()});
+       sql_statement,
+       {absl::nullopt, absl::nullopt, data_boost}});
   ASSERT_STATUS_OK(result);
 
   std::vector<spanner::QueryPartition> expected_query_partitions = {
       spanner_internal::MakeQueryPartition("CAFEDEAD", false, "",
                                            "test-session-name", "BADDECAF",
-                                           sql_statement),
+                                           data_boost, sql_statement),
       spanner_internal::MakeQueryPartition("CAFEDEAD", false, "",
                                            "test-session-name", "DEADBEEF",
-                                           sql_statement)};
+                                           data_boost, sql_statement)};
 
   EXPECT_THAT(*result, UnorderedPointwise(Eq(), expected_query_partitions));
 }

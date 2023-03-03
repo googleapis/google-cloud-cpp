@@ -78,6 +78,7 @@ class Connection {
     std::vector<std::string> columns;
     ReadOptions read_options;
     absl::optional<std::string> partition_token;
+    bool partition_data_boost = false;  // when partition_token
   };
 
   /// Wrap the arguments to `PartitionRead()`.
@@ -93,6 +94,7 @@ class Connection {
     SqlStatement statement;
     QueryOptions query_options;
     absl::optional<std::string> partition_token;
+    bool partition_data_boost = false;  // when partition_token
   };
 
   /// Wrap the arguments to `ExecutePartitionedDml()`.

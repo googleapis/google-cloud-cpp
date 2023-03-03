@@ -27,13 +27,14 @@ constexpr int kRouteToLeaderFieldNumber = 511037314;
 QueryPartition::QueryPartition(std::string transaction_id, bool route_to_leader,
                                std::string transaction_tag,
                                std::string session_id,
-                               std::string partition_token,
+                               std::string partition_token, bool data_boost,
                                SqlStatement sql_statement)
     : transaction_id_(std::move(transaction_id)),
       route_to_leader_(route_to_leader),
       transaction_tag_(std::move(transaction_tag)),
       session_id_(std::move(session_id)),
       partition_token_(std::move(partition_token)),
+      data_boost_(data_boost),
       sql_statement_(std::move(sql_statement)) {}
 
 bool operator==(QueryPartition const& a, QueryPartition const& b) {
@@ -42,7 +43,7 @@ bool operator==(QueryPartition const& a, QueryPartition const& b) {
          a.transaction_tag_ == b.transaction_tag_ &&
          a.session_id_ == b.session_id_ &&
          a.partition_token_ == b.partition_token_ &&
-         a.sql_statement_ == b.sql_statement_;
+         a.data_boost_ == b.data_boost_ && a.sql_statement_ == b.sql_statement_;
 }
 
 StatusOr<std::string> SerializeQueryPartition(
@@ -58,6 +59,9 @@ StatusOr<std::string> SerializeQueryPartition(
     auto const& type_value = spanner_internal::ToProto(param.second);
     (*proto.mutable_params()->mutable_fields())[param_name] = type_value.second;
     (*proto.mutable_param_types())[param_name] = type_value.first;
+  }
+  if (query_partition.data_boost()) {
+    proto.set_data_boost_enabled(true);
   }
 
   // QueryOptions are not serialized, but are instead applied on the remote
@@ -119,6 +123,7 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
   QueryPartition query_partition(proto.transaction().id(), route_to_leader,
                                  proto.request_options().transaction_tag(),
                                  proto.session(), proto.partition_token(),
+                                 proto.data_boost_enabled(),
                                  SqlStatement(proto.sql(), sql_parameters));
   return query_partition;
 }

@@ -28,6 +28,9 @@ Options ToOptions(PartitionOptions const& po) {
   if (po.max_partitions) {
     opts.set<PartitionsMaximumOption>(*po.max_partitions);
   }
+  if (po.data_boost) {
+    opts.set<PartitionDataBoostOption>(true);
+  }
   return opts;
 }
 
@@ -38,6 +41,9 @@ PartitionOptions ToPartitionOptions(Options const& opts) {
   }
   if (opts.has<PartitionsMaximumOption>()) {
     po.max_partitions = opts.get<PartitionsMaximumOption>();
+  }
+  if (opts.has<PartitionDataBoostOption>()) {
+    po.data_boost = opts.get<PartitionDataBoostOption>();
   }
   return po;
 }
@@ -55,6 +61,10 @@ google::spanner::v1::PartitionOptions ToProto(
   if (po.partition_size_bytes) {
     proto.set_partition_size_bytes(*po.partition_size_bytes);
   }
+  // Note: PartitionOptions.data_boost sets the data_boost_enabled
+  // field of the ReadRequest and ExecuteSqlRequest messages in
+  // ConnectionImpl::ReadImpl() and ConnectionImpl::ExecuteSqlImpl()
+  // respectively.
   return proto;
 }
 

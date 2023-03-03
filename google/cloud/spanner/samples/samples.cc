@@ -2489,8 +2489,9 @@ void UsePartitionQuery(google::cloud::spanner::Client client) {
       "SELECT SingerId, FirstName, LastName FROM Singers");
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
 
-  auto partitions =
-      client.PartitionQuery(std::move(txn), std::move(select), {});
+  auto partitions = client.PartitionQuery(
+      std::move(txn), std::move(select),
+      google::cloud::Options{}.set<spanner::PartitionDataBoostOption>(true));
   if (!partitions) throw std::move(partitions).status();
 
   // You would probably choose to execute these partitioned queries in
@@ -3682,8 +3683,11 @@ void PartitionRead(google::cloud::spanner::Client client) {
   //! [partition-read]
   spanner::Transaction ro_transaction = spanner::MakeReadOnlyTransaction();
   google::cloud::StatusOr<std::vector<spanner::ReadPartition>> partitions =
-      client.PartitionRead(ro_transaction, "Singers", key_set,
-                           {"SingerId", "FirstName", "LastName"});
+      client.PartitionRead(
+          ro_transaction, "Singers", key_set,
+          {"SingerId", "FirstName", "LastName"},
+          google::cloud::Options{}.set<spanner::PartitionDataBoostOption>(
+              true));
   if (!partitions) throw std::move(partitions).status();
   for (auto& partition : *partitions) {
     remote_connection.SendPartitionToRemoteMachine(partition);
@@ -3730,7 +3734,9 @@ void PartitionQuery(google::cloud::spanner::Client client) {
       client.PartitionQuery(
           spanner::MakeReadOnlyTransaction(),
           spanner::SqlStatement(
-              "SELECT SingerId, FirstName, LastName FROM Singers"));
+              "SELECT SingerId, FirstName, LastName FROM Singers"),
+          google::cloud::Options{}.set<spanner::PartitionDataBoostOption>(
+              true));
   if (!partitions) throw std::move(partitions).status();
   for (auto& partition : *partitions) {
     remote_connection.SendPartitionToRemoteMachine(partition);
