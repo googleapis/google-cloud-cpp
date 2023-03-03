@@ -22,7 +22,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/vision/image_annotator_client.h"
+#include "google/cloud/vision/v1/image_annotator_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) try {
   }
   auto uri = std::string{argc == 2 ? argv[1] : kDefaultUri};
 
-  namespace vision = ::google::cloud::vision;
+  namespace vision = ::google::cloud::vision_v1;
   auto client =
       vision::ImageAnnotatorClient(vision::MakeImageAnnotatorConnection());
 

@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/secretmanager/secret_manager_client.h"
+#include "google/cloud/secretmanager/v1/secret_manager_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace secretmanager = ::google::cloud::secretmanager;
+  namespace secretmanager = ::google::cloud::secretmanager_v1;
   auto client = secretmanager::SecretManagerServiceClient(
       secretmanager::MakeSecretManagerServiceConnection());
 

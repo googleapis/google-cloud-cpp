@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/serviceusage/service_usage_client.h"
+#include "google/cloud/serviceusage/v1/service_usage_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace serviceusage = ::google::cloud::serviceusage;
+  namespace serviceusage = ::google::cloud::serviceusage_v1;
   auto client = serviceusage::ServiceUsageClient(
       serviceusage::MakeServiceUsageConnection());
 

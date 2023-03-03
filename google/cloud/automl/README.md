@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/automl/auto_ml_client.h"
+#include "google/cloud/automl/v1/auto_ml_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace automl = ::google::cloud::automl;
+  namespace automl = ::google::cloud::automl_v1;
   auto client = automl::AutoMlClient(automl::MakeAutoMlConnection());
 
   auto const parent =

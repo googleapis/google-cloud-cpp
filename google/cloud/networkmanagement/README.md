@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/networkmanagement/reachability_client.h"
+#include "google/cloud/networkmanagement/v1/reachability_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace networkmanagement = ::google::cloud::networkmanagement;
+  namespace networkmanagement = ::google::cloud::networkmanagement_v1;
   auto client = networkmanagement::ReachabilityServiceClient(
       networkmanagement::MakeReachabilityServiceConnection());
 

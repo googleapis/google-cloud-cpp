@@ -27,7 +27,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/apigeeconnect/connection_client.h"
+#include "google/cloud/apigeeconnect/v1/connection_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace apigeeconnect = ::google::cloud::apigeeconnect;
+  namespace apigeeconnect = ::google::cloud::apigeeconnect_v1;
   auto client = apigeeconnect::ConnectionServiceClient(
       apigeeconnect::MakeConnectionServiceConnection());
 

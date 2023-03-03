@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/servicedirectory/registration_client.h"
+#include "google/cloud/servicedirectory/v1/registration_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace servicedirectory = ::google::cloud::servicedirectory;
+  namespace servicedirectory = ::google::cloud::servicedirectory_v1;
   auto client = servicedirectory::RegistrationServiceClient(
       servicedirectory::MakeRegistrationServiceConnection());
 

@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/scheduler/cloud_scheduler_client.h"
+#include "google/cloud/scheduler/v1/cloud_scheduler_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace scheduler = ::google::cloud::scheduler;
+  namespace scheduler = ::google::cloud::scheduler_v1;
   auto client = scheduler::CloudSchedulerClient(
       scheduler::MakeCloudSchedulerConnection());
   auto const parent =

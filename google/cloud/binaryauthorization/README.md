@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/binaryauthorization/binauthz_management_service_v1_client.h"
+#include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace binaryauthorization = ::google::cloud::binaryauthorization;
+  namespace binaryauthorization = ::google::cloud::binaryauthorization_v1;
   auto client = binaryauthorization::BinauthzManagementServiceV1Client(
       binaryauthorization::MakeBinauthzManagementServiceV1Connection());
 

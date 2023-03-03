@@ -23,7 +23,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/monitoring/alert_policy_client.h"
+#include "google/cloud/monitoring/v3/alert_policy_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace monitoring = ::google::cloud::monitoring;
+  namespace monitoring = ::google::cloud::monitoring_v3;
   auto client = monitoring::AlertPolicyServiceClient(
       monitoring::MakeAlertPolicyServiceConnection());
 

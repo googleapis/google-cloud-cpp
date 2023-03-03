@@ -21,7 +21,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/documentai/document_processor_client.h"
+#include "google/cloud/documentai/v1/document_processor_client.h"
 #include <fstream>
 #include <iostream>
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace documentai = ::google::cloud::documentai;
+  namespace documentai = ::google::cloud::documentai_v1;
   auto client = documentai::DocumentProcessorServiceClient(
       documentai::MakeDocumentProcessorServiceConnection(location));
 

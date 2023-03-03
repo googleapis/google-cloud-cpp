@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/apikeys/api_keys_client.h"
+#include "google/cloud/apikeys/v2/api_keys_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace apikeys = ::google::cloud::apikeys;
+  namespace apikeys = ::google::cloud::apikeys_v2;
   auto client = apikeys::ApiKeysClient(apikeys::MakeApiKeysConnection());
 
   auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";

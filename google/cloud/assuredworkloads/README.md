@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/assuredworkloads/assured_workloads_client.h"
+#include "google/cloud/assuredworkloads/v1/assured_workloads_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace assuredworkloads = ::google::cloud::assuredworkloads;
+  namespace assuredworkloads = ::google::cloud::assuredworkloads_v1;
   auto client = assuredworkloads::AssuredWorkloadsServiceClient(
       assuredworkloads::MakeAssuredWorkloadsServiceConnection());
   auto const parent =

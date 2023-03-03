@@ -20,7 +20,7 @@ top-level [README](/README.md#building-and-installing).
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/resourcemanager/projects_client.h"
+#include "google/cloud/resourcemanager/v3/projects_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace resourcemanager = ::google::cloud::resourcemanager;
+  namespace resourcemanager = ::google::cloud::resourcemanager_v3;
   auto client = resourcemanager::ProjectsClient(
       resourcemanager::MakeProjectsConnection());
 
