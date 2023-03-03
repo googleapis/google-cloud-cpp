@@ -43,6 +43,8 @@ add_library(
     internal/descriptor_utils.h
     internal/discovery_to_proto.cc
     internal/discovery_to_proto.h
+    internal/discovery_type_vertex.cc
+    internal/discovery_type_vertex.h
     internal/format_class_comments.cc
     internal/format_class_comments.h
     internal/format_method_comments.cc
