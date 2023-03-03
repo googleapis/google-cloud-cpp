@@ -32,14 +32,17 @@ bazel test "${args[@]}" --test_tag_filters=-integration-test ...
 excluded_rules=(
   "-//examples:grpc_credential_types"
   "-//google/cloud/bigtable/examples:bigtable_grpc_credentials"
-  # These account integration tests / samples use HMAC keys, which are very
-  # limited in production (at most 5 per service account).
+  # This sample uses HMAC keys, which are very limited in production (at most
+  # 5 per service account). Disabled for now.
   "-//google/cloud/storage/examples:storage_service_account_samples"
-  "-//google/cloud/storage/tests:service_account_integration_test"
 )
 
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
+# TODO(#6268) - disable the GCS+gRPC integration tests for now.  Eventually they
+# should run here, but they are too unstable. A custom build (gcs-grpc), which
+# is not required for PRs, runs them.
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
   --cache_test_results="auto" \
-  --test_tag_filters="integration-test" -- ... "${excluded_rules[@]}"
+  --test_tag_filters="integration-test,-integration-test-grpc-media,-integration-test-grpc-metadata" \
+  -- ... "${excluded_rules[@]}"
