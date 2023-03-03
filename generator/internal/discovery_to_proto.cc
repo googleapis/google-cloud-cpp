@@ -36,7 +36,7 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   rest::RestRequest request;
   request.SetPath(url_pieces.second);
   auto response = client->Get(request);
-  if (!response.ok()) {
+  if (!response) {
     return std::move(response).status();
   }
 
@@ -56,7 +56,7 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
     parsed_discovery_doc = nlohmann::json::parse(json_file, nullptr, false);
   } else {
     auto page = GetPage(url);
-    if (!page.ok()) return page.status();
+    if (!page) return page.status();
     parsed_discovery_doc = nlohmann::json::parse(*page, nullptr, false);
   }
 
