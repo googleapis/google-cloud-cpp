@@ -24,21 +24,15 @@ export CC=clang
 export CXX=clang++
 
 excluded_rules=(
+  # This sample uses HMAC keys, which are very limited in production (at most
+  # 5 per service account). Disabled for now.
   "-//google/cloud/storage/examples:storage_service_account_samples"
-  "-//google/cloud/storage/tests:service_account_integration_test"
 )
 
 mapfile -t args < <(bazel::common_args)
 mapfile -t integration_args < <(integration::bazel_args)
 
-io::log_h2 "Running the GCS+gRPC [media] integration tests against prod"
+io::log_h2 "Running the GCS+gRPC integration tests against prod"
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
   --test_tag_filters="integration-test" \
-  --test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media \
-  -- //google/cloud/storage/... "${excluded_rules[@]}"
-
-io::log_h2 "Running the GCS+gRPC [metadata] integration tests against prod"
-io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --test_tag_filters="integration-test" \
-  --test_env=GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=metadata \
   -- //google/cloud/storage/... "${excluded_rules[@]}"

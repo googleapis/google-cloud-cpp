@@ -43,17 +43,29 @@ for arg in "$@"; do
   fi
 done
 
-# These can only run against production
+# These can only run against production. They are a bit messy to compute because
+# each integration test has 4 variants.
 production_only_targets=(
   "//google/cloud/storage/examples:storage_policy_doc_samples"
   "//google/cloud/storage/examples:storage_signed_url_v2_samples"
   "//google/cloud/storage/examples:storage_signed_url_v4_samples"
+)
+readonly PRODUCTION_ONLY_BASE=(
   "//google/cloud/storage/tests:alternative_endpoint_integration_test"
   "//google/cloud/storage/tests:key_file_integration_test"
   "//google/cloud/storage/tests:minimal_iam_credentials_rest_integration_test"
   "//google/cloud/storage/tests:signed_url_integration_test"
   "//google/cloud/storage/tests:unified_credentials_integration_test"
 )
+for base in "${PROJECTION_ONLY_BASE[@]}"; do
+  production_only_targets+=(
+    "${base}-default"
+    "${base}-grpc-media"
+    "${base}-grpc-metadata"
+    "${base}-legacy-http"
+  )
+done
+
 "${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
   -- "${production_only_targets[@]}" "${excluded_targets[@]}"
 
@@ -70,7 +82,10 @@ excluded_targets+=(
   # This test does not work with Bazel, because it depends on dynamic loading
   # and some CMake magic. It is also skipped against production, so most Bazel
   # builds run it but it is a no-op.
-  "-//google/cloud/storage/tests:error_injection_integration_test"
+  "-//google/cloud/storage/tests:error_injection_integration_test-default"
+  "-//google/cloud/storage/tests:error_injection_integration_test-grpc-media"
+  "-//google/cloud/storage/tests:error_injection_integration_test-grpc-metadata"
+  "-//google/cloud/storage/tests:error_injection_integration_test-legacy-http"
 )
 for target in "${production_only_targets[@]}"; do
   excluded_targets+=("-${target}")

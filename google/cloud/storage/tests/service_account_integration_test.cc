@@ -63,6 +63,10 @@ TEST_F(ServiceAccountIntegrationTest, Get) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
+  // HMAC keys are a scarse resource. Testing in production would require
+  // redesigning the tests to use a random service account (or creating one) on
+  // dynamically.  For now, simply skip these tests.
+  if (!UsingEmulator()) GTEST_SKIP();
   Client client(Options{}.set<ProjectIdOption>(project_id_));
 
   StatusOr<std::pair<HmacKeyMetadata, std::string>> key = client.CreateHmacKey(
@@ -81,6 +85,10 @@ TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
+  // HMAC keys are a scarse resource. Testing in production would require
+  // redesigning the tests to use a random service account (or creating one) on
+  // dynamically.  For now, simply skip these tests.
+  if (!UsingEmulator()) GTEST_SKIP();
   Client client(Options{}.set<ProjectIdOption>(project_id_));
 
   auto get_current_access_ids = [&client, this]() {

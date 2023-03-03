@@ -34,10 +34,18 @@ cc_proto_library(
     deps = [":storage_conformance_tests_proto"],
 )
 
+VARIATIONS = {
+    "default": {},
+    "grpc-media": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": "media"},
+    "grpc-metadata": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": "metadata"},
+    "legacy-http": {"GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP": "yes"},
+}
+
 [cc_test(
-    name = test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", "") + "-" + v_label,
     timeout = "long",
     srcs = [test],
+    env = v_env,
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": [
@@ -47,6 +55,7 @@ cc_proto_library(
     }),
     tags = [
         "integration-test",
+        "integration-test-" + v_label,
     ],
     deps = [
         ":storage_conformance_tests_cc_proto",
@@ -57,4 +66,4 @@ cc_proto_library(
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
-) for test in storage_client_integration_tests]
+) for test in storage_client_integration_tests for v_label, v_env in VARIATIONS.items()]
