@@ -46,7 +46,7 @@ GoldenThingAdminMetadata::ListDatabases(
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateDatabase(cq, std::move(context), request);
@@ -63,7 +63,7 @@ GoldenThingAdminMetadata::GetDatabase(
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   SetMetadata(*context, "database=" + request.database());
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
@@ -152,7 +152,7 @@ GoldenThingAdminMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::CreateBackupRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateBackup(cq, std::move(context), request);
@@ -193,7 +193,7 @@ GoldenThingAdminMetadata::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncRestoreDatabase(cq, std::move(context), request);
@@ -218,7 +218,7 @@ GoldenThingAdminMetadata::ListBackupOperations(
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncLongRunningWithoutRouting(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncLongRunningWithoutRouting(cq, std::move(context), request);
@@ -227,7 +227,7 @@ GoldenThingAdminMetadata::AsyncLongRunningWithoutRouting(
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminMetadata::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetDatabase(cq, std::move(context), request);
@@ -236,7 +236,7 @@ GoldenThingAdminMetadata::AsyncGetDatabase(
 future<Status>
 GoldenThingAdminMetadata::AsyncDropDatabase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
   std::vector<std::string> params;
   params.reserve(3);
@@ -285,7 +285,7 @@ GoldenThingAdminMetadata::AsyncDropDatabase(
 future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -293,7 +293,7 @@ GoldenThingAdminMetadata::AsyncGetOperation(
 
 future<Status> GoldenThingAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

@@ -74,17 +74,17 @@ GoldenThingAdminConnectionImpl::CreateDatabase(google::test::admin::database::v1
   return google::cloud::internal::AsyncLongRunningOperation<google::test::admin::database::v1::Database>(
     background_->cq(), request,
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::test::admin::database::v1::CreateDatabaseRequest const& request) {
      return stub->AsyncCreateDatabase(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::GetOperationRequest const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::CancelOperationRequest const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },
@@ -113,17 +113,17 @@ GoldenThingAdminConnectionImpl::UpdateDatabaseDdl(google::test::admin::database:
   return google::cloud::internal::AsyncLongRunningOperation<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>(
     background_->cq(), request,
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
      return stub->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::GetOperationRequest const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::CancelOperationRequest const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },
@@ -200,17 +200,17 @@ GoldenThingAdminConnectionImpl::CreateBackup(google::test::admin::database::v1::
   return google::cloud::internal::AsyncLongRunningOperation<google::test::admin::database::v1::Backup>(
     background_->cq(), request,
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::test::admin::database::v1::CreateBackupRequest const& request) {
      return stub->AsyncCreateBackup(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::GetOperationRequest const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::CancelOperationRequest const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },
@@ -290,17 +290,17 @@ GoldenThingAdminConnectionImpl::RestoreDatabase(google::test::admin::database::v
   return google::cloud::internal::AsyncLongRunningOperation<google::test::admin::database::v1::Database>(
     background_->cq(), request,
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
      return stub->AsyncRestoreDatabase(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::GetOperationRequest const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::CancelOperationRequest const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },
@@ -371,17 +371,17 @@ GoldenThingAdminConnectionImpl::LongRunningWithoutRouting(google::test::admin::d
   return google::cloud::internal::AsyncLongRunningOperation<google::test::admin::database::v1::Database>(
     background_->cq(), request,
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
      return stub->AsyncLongRunningWithoutRouting(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::GetOperationRequest const& request) {
      return stub->AsyncGetOperation(cq, std::move(context), request);
     },
     [stub](google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::longrunning::CancelOperationRequest const& request) {
      return stub->AsyncCancelOperation(cq, std::move(context), request);
     },
@@ -400,7 +400,7 @@ GoldenThingAdminConnectionImpl::AsyncGetDatabase(google::test::admin::database::
       idempotency_policy()->GetDatabase(request),
       background_->cq(),
       [stub](CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::test::admin::database::v1::GetDatabaseRequest const& request) {
         return stub->AsyncGetDatabase(cq, std::move(context), request);
       },
@@ -415,7 +415,7 @@ GoldenThingAdminConnectionImpl::AsyncDropDatabase(google::test::admin::database:
       idempotency_policy()->DropDatabase(request),
       background_->cq(),
       [stub](CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::test::admin::database::v1::DropDatabaseRequest const& request) {
         return stub->AsyncDropDatabase(cq, std::move(context), request);
       },

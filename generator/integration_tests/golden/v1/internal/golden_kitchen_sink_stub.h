@@ -71,21 +71,21 @@ class GoldenKitchenSinkStub {
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::Request const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   StreamingWrite(
-      std::unique_ptr<grpc::ClientContext> context) = 0;
+      std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) = 0;
+      std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual Status ExplicitRouting1(
     grpc::ClientContext& context,
@@ -99,14 +99,14 @@ class GoldenKitchenSinkStub {
       google::test::admin::database::v1::Response>>
   AsyncStreamingRead(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::Request const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) = 0;
+      std::shared_ptr<grpc::ClientContext> context) = 0;
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
@@ -152,21 +152,21 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(
-    std::unique_ptr<grpc::ClientContext> client_context,
+    std::shared_ptr<grpc::ClientContext> client_context,
     google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   StreamingWrite(
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
   Status
   ExplicitRouting1(
@@ -182,14 +182,14 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Response>>
   AsyncStreamingRead(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
  private:
   std::unique_ptr<google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;
