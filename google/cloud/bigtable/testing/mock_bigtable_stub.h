@@ -28,13 +28,13 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::bigtable::v2::ReadRowsResponse>>,
               ReadRows,
-              (std::unique_ptr<grpc::ClientContext>,
+              (std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::ReadRowsRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::bigtable::v2::SampleRowKeysResponse>>,
               SampleRowKeys,
-              (std::unique_ptr<grpc::ClientContext>,
+              (std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::SampleRowKeysRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::bigtable::v2::MutateRowResponse>, MutateRow,
@@ -44,7 +44,7 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
                   google::bigtable::v2::MutateRowsResponse>>,
               MutateRows,
-              (std::unique_ptr<grpc::ClientContext>,
+              (std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::MutateRowsRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>,
@@ -65,39 +65,39 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
                   google::bigtable::v2::ReadRowsResponse>>,
               AsyncReadRows,
               (google::cloud::CompletionQueue const&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::ReadRowsRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
                   google::bigtable::v2::SampleRowKeysResponse>>,
               AsyncSampleRowKeys,
               (google::cloud::CompletionQueue const&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::SampleRowKeysRequest const&),
               (override));
   MOCK_METHOD(future<StatusOr<google::bigtable::v2::MutateRowResponse>>,
               AsyncMutateRow,
               (google::cloud::CompletionQueue&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::MutateRowRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
                   google::bigtable::v2::MutateRowsResponse>>,
               AsyncMutateRows,
               (google::cloud::CompletionQueue const&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::MutateRowsRequest const&),
               (override));
   MOCK_METHOD(future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>,
               AsyncCheckAndMutateRow,
               (google::cloud::CompletionQueue&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::bigtable::v2::CheckAndMutateRowRequest const&),
               (override));
   MOCK_METHOD(
       future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>,
       AsyncReadModifyWriteRow,
-      (google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      (google::cloud::CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
        google::bigtable::v2::ReadModifyWriteRowRequest const&),
       (override));
 };
