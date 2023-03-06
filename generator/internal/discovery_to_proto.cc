@@ -86,21 +86,20 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   bool schemas_all_have_id = true;
   std::string id;
   for (auto const& s : schemas) {
-    if (!s.contains("id")) {
-      GCP_LOG(ERROR) << " current schema has no id. last schema with id=" << id;
+    if (!s.contains("id") || s["id"].empty()) {
+      GCP_LOG(ERROR) << "current schema has no id. last schema with id=" << id;
       schemas_all_have_id = false;
       continue;
     }
     id = s["id"];
     if (!s.contains("type") || s["type"] != "object") {
       std::string type = s.contains("type") ? s["type"] : "untyped";
-      GCP_LOG(ERROR) << id << " not type:object is " << type;
+      GCP_LOG(ERROR) << id << " not type:object; is instead " << type;
       schemas_all_type_object = false;
       continue;
     }
     types.emplace(
-        std::string(id),
-        google::cloud::generator_internal::DiscoveryTypeVertex{id, s});
+        id, google::cloud::generator_internal::DiscoveryTypeVertex{id, s});
   }
 
   if (!schemas_all_have_id) {

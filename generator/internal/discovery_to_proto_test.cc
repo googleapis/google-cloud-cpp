@@ -25,9 +25,9 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
-using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Key;
+using ::testing::UnorderedElementsAre;
 
 TEST(ExtractTypesFromSchema, Success) {
   auto constexpr kDiscoveryDocWithCorrectSchema = R"""(
@@ -50,9 +50,7 @@ TEST(ExtractTypesFromSchema, Success) {
   ASSERT_FALSE(parsed_json.is_discarded() || parsed_json.is_null());
   auto types = ExtractTypesFromSchema(parsed_json);
   ASSERT_THAT(types, IsOk());
-  EXPECT_THAT(*types, ::testing::UnorderedElementsAre(Key("Foo"), Key("Bar")));
-  EXPECT_THAT(*types, Contains(Key(Eq(std::string("Foo")))));
-  EXPECT_THAT(*types, Contains(Key(Eq(std::string("Bar")))));
+  EXPECT_THAT(*types, UnorderedElementsAre(Key("Foo"), Key("Bar")));
 }
 
 TEST(ExtractTypesFromSchema, MissingSchema) {
@@ -110,8 +108,9 @@ TEST(ExtractTypesFromSchema, SchemaMissingType) {
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(HasSubstr("MissingType not type:object is untyped")));
+  EXPECT_THAT(
+      log_lines,
+      Contains(HasSubstr("MissingType not type:object; is instead untyped")));
 }
 
 TEST(ExtractTypesFromSchema, SchemaNonObject) {
@@ -134,8 +133,9 @@ TEST(ExtractTypesFromSchema, SchemaNonObject) {
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines,
-              Contains(HasSubstr("NonObject not type:object is array")));
+  EXPECT_THAT(
+      log_lines,
+      Contains(HasSubstr("NonObject not type:object; is instead array")));
 }
 
 }  // namespace
