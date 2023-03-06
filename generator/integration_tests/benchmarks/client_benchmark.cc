@@ -108,7 +108,7 @@ class TestStub : public GoldenKitchenSinkStub {
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::test::admin::database::v1::Response>>
-  StreamingRead(std::unique_ptr<grpc::ClientContext>,
+  StreamingRead(std::shared_ptr<grpc::ClientContext>,
                 google::test::admin::database::v1::Request const&) override {
     return nullptr;
   }
@@ -116,7 +116,7 @@ class TestStub : public GoldenKitchenSinkStub {
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
-  StreamingWrite(std::unique_ptr<grpc::ClientContext>) override {
+  StreamingWrite(std::shared_ptr<grpc::ClientContext>) override {
     return nullptr;
   }
 
@@ -124,7 +124,7 @@ class TestStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(google::cloud::CompletionQueue const&,
-                          std::unique_ptr<grpc::ClientContext>) override {
+                          std::shared_ptr<grpc::ClientContext>) override {
     return nullptr;
   }
 
@@ -146,7 +146,7 @@ class TestStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Response>>
   AsyncStreamingRead(
       google::cloud::CompletionQueue const&,
-      std::unique_ptr<grpc::ClientContext>,
+      std::shared_ptr<grpc::ClientContext>,
       google::test::admin::database::v1::Request const&) override {
     return nullptr;
   }
@@ -155,7 +155,7 @@ class TestStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(google::cloud::CompletionQueue const&,
-                      std::unique_ptr<grpc::ClientContext>) override {
+                      std::shared_ptr<grpc::ClientContext>) override {
     return nullptr;
   }
 };

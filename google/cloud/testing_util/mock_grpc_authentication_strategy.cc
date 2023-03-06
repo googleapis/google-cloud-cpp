@@ -35,7 +35,7 @@ std::shared_ptr<MockAuthenticationStrategy> MakeTypicalMockAuth() {
 }
 
 std::shared_ptr<MockAuthenticationStrategy> MakeTypicalAsyncMockAuth() {
-  using ReturnType = StatusOr<std::unique_ptr<grpc::ClientContext>>;
+  using ReturnType = StatusOr<std::shared_ptr<grpc::ClientContext>>;
   auto auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*auth, AsyncConfigureContext)
       .WillOnce([](auto) {

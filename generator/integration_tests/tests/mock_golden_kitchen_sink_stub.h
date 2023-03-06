@@ -72,19 +72,19 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
                    ::google::test::admin::database::v1::Response>>),
               AsyncStreamingReadWrite,
               (google::cloud::CompletionQueue const&,
-               std::unique_ptr<grpc::ClientContext>),
+               std::shared_ptr<grpc::ClientContext>),
               (override));
 
   MOCK_METHOD((std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
                    ::google::test::admin::database::v1::Request,
                    ::google::test::admin::database::v1::Response>>),
-              StreamingWrite, (std::unique_ptr<grpc::ClientContext>),
+              StreamingWrite, (std::shared_ptr<grpc::ClientContext>),
               (override));
 
   MOCK_METHOD((std::unique_ptr<::google::cloud::internal::StreamingReadRpc<
                    ::google::test::admin::database::v1::Response>>),
               StreamingRead,
-              (std::unique_ptr<grpc::ClientContext>,
+              (std::shared_ptr<grpc::ClientContext>,
                ::google::test::admin::database::v1::Request const&),
               (override));
 
@@ -104,7 +104,7 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
                    ::google::test::admin::database::v1::Response>>),
               AsyncStreamingRead,
               (google::cloud::CompletionQueue const&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::test::admin::database::v1::Request const&),
               (override));
 
@@ -114,7 +114,7 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
            ::google::test::admin::database::v1::Response>>),
       AsyncStreamingWrite,
       (google::cloud::CompletionQueue const& cq,
-       std::unique_ptr<grpc::ClientContext> context),
+       std::shared_ptr<grpc::ClientContext> context),
       (override));
 };
 
