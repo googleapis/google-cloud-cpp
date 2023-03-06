@@ -50,6 +50,7 @@ TEST(ExtractTypesFromSchema, Success) {
   ASSERT_FALSE(parsed_json.is_discarded() || parsed_json.is_null());
   auto types = ExtractTypesFromSchema(parsed_json);
   ASSERT_THAT(types, IsOk());
+  EXPECT_THAT(*types, ::testing::UnorderedElementsAre(Key("Foo"), Key("Bar")));
   EXPECT_THAT(*types, Contains(Key(Eq(std::string("Foo")))));
   EXPECT_THAT(*types, Contains(Key(Eq(std::string("Bar")))));
 }
@@ -64,9 +65,8 @@ TEST(ExtractTypesFromSchema, MissingSchema) {
       nlohmann::json::parse(kDiscoveryDocMissingSchema, nullptr, false);
   ASSERT_FALSE(parsed_json.is_discarded() || parsed_json.is_null());
   auto types = ExtractTypesFromSchema(parsed_json);
-  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument));
-  EXPECT_THAT(types.status().message(),
-              HasSubstr("does not contain schemas element"));
+  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("does not contain schemas element")));
 }
 
 TEST(ExtractTypesFromSchema, SchemaIdMissing) {
@@ -85,8 +85,8 @@ TEST(ExtractTypesFromSchema, SchemaIdMissing) {
       nlohmann::json::parse(kDiscoveryDocSchemaIdMissing, nullptr, false);
   ASSERT_FALSE(parsed_json.is_discarded() || parsed_json.is_null());
   auto types = ExtractTypesFromSchema(parsed_json);
-  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument));
-  EXPECT_THAT(types.status().message(), HasSubstr("schema without id"));
+  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("schema without id")));
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("schema has no id")));
 }
@@ -107,9 +107,8 @@ TEST(ExtractTypesFromSchema, SchemaMissingType) {
       nlohmann::json::parse(kDiscoveryDocWithMissingType, nullptr, false);
   ASSERT_FALSE(parsed_json.is_discarded() || parsed_json.is_null());
   auto types = ExtractTypesFromSchema(parsed_json);
-  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument));
-  EXPECT_THAT(types.status().message(),
-              HasSubstr("contains non object schema"));
+  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(HasSubstr("MissingType not type:object is untyped")));
@@ -132,9 +131,8 @@ TEST(ExtractTypesFromSchema, SchemaNonObject) {
       nlohmann::json::parse(kDiscoveryDocWithNonObjectSchema, nullptr, false);
   ASSERT_FALSE(parsed_json.is_discarded() || parsed_json.is_null());
   auto types = ExtractTypesFromSchema(parsed_json);
-  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument));
-  EXPECT_THAT(types.status().message(),
-              HasSubstr("contains non object schema"));
+  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("contains non object schema")));
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
               Contains(HasSubstr("NonObject not type:object is array")));
