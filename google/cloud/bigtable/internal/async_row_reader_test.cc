@@ -1070,20 +1070,19 @@ TEST(AsyncRowReaderTest, CurrentOptionsContinuedOnRetries) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
       .Times(2)
-      .WillRepeatedly([](CompletionQueue const&,
-                         std::unique_ptr<grpc::ClientContext>,
-                         v2::ReadRowsRequest const&) {
-        EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
-        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([] {
-          return make_ready_future(false);
-        });
-        EXPECT_CALL(*stream, Finish).WillOnce([] {
-          return make_ready_future(
-              Status(StatusCode::kUnavailable, "try again"));
-        });
-        return stream;
-      });
+      .WillRepeatedly(
+          [](CompletionQueue const&, auto, v2::ReadRowsRequest const&) {
+            EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
+            auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+            EXPECT_CALL(*stream, Start).WillOnce([] {
+              return make_ready_future(false);
+            });
+            EXPECT_CALL(*stream, Finish).WillOnce([] {
+              return make_ready_future(
+                  Status(StatusCode::kUnavailable, "try again"));
+            });
+            return stream;
+          });
 
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
   EXPECT_CALL(on_row, Call).Times(0);

@@ -123,7 +123,7 @@ TEST(AsyncBulkApplyTest, Success) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue const&, auto,
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -178,7 +178,7 @@ TEST(AsyncBulkApplyTest, PartialStreamIsRetried) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue const&, auto,
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -203,7 +203,7 @@ TEST(AsyncBulkApplyTest, PartialStreamIsRetried) {
         });
         return stream;
       })
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue const&, auto,
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -261,7 +261,7 @@ TEST(AsyncBulkApplyTest, IdempotentMutationPolicy) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue const&, auto,
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -286,7 +286,7 @@ TEST(AsyncBulkApplyTest, IdempotentMutationPolicy) {
         });
         return stream;
       })
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue const&, auto,
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -341,8 +341,7 @@ TEST(AsyncBulkApplyTest, TooManyStreamFailures) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([](CompletionQueue const&,
-                         std::unique_ptr<grpc::ClientContext>,
+      .WillRepeatedly([](CompletionQueue const&, auto,
                          v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -389,7 +388,7 @@ TEST(AsyncBulkApplyTest, TimerError) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
-      .WillOnce([](CompletionQueue const&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue const&, auto,
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -434,8 +433,7 @@ TEST(AsyncBulkApplyTest, CancelAfterSuccess) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
-      .WillOnce([&p](CompletionQueue const&,
-                     std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([&p](CompletionQueue const&, auto,
                      v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -491,8 +489,7 @@ TEST(AsyncBulkApplyTest, CancelMidStream) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
-      .WillOnce([&p](CompletionQueue const&,
-                     std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([&p](CompletionQueue const&, auto,
                      v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -558,20 +555,19 @@ TEST(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(2)
-      .WillRepeatedly([](CompletionQueue const&,
-                         std::unique_ptr<grpc::ClientContext>,
-                         v2::MutateRowsRequest const&) {
-        EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
-        EXPECT_CALL(*stream, Start).WillOnce([] {
-          return make_ready_future(false);
-        });
-        EXPECT_CALL(*stream, Finish).WillOnce([] {
-          return make_ready_future(
-              Status(StatusCode::kUnavailable, "try again"));
-        });
-        return stream;
-      });
+      .WillRepeatedly(
+          [](CompletionQueue const&, auto, v2::MutateRowsRequest const&) {
+            EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
+            auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+            EXPECT_CALL(*stream, Start).WillOnce([] {
+              return make_ready_future(false);
+            });
+            EXPECT_CALL(*stream, Finish).WillOnce([] {
+              return make_ready_future(
+                  Status(StatusCode::kUnavailable, "try again"));
+            });
+            return stream;
+          });
 
   promise<StatusOr<std::chrono::system_clock::time_point>> timer_promise;
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
@@ -610,8 +606,7 @@ TEST(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRows)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([](CompletionQueue const&,
-                         std::unique_ptr<grpc::ClientContext>,
+      .WillRepeatedly([](CompletionQueue const&, auto,
                          v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
