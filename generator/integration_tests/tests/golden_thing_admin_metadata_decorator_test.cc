@@ -104,8 +104,7 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
 TEST_F(MetadataDecoratorTest, CreateDatabase) {
   EXPECT_CALL(*mock_, AsyncCreateDatabase)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext> context,
+          [this](google::cloud::CompletionQueue&, auto context,
                  google::test::admin::database::v1::CreateDatabaseRequest const&
                      request) {
             IsContextMDValid(*context,
@@ -128,8 +127,7 @@ TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
   EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
       .WillOnce(
           [this](
-              google::cloud::CompletionQueue&,
-              std::unique_ptr<grpc::ClientContext> context,
+              google::cloud::CompletionQueue&, auto context,
               google::test::admin::database::v1::UpdateDatabaseDdlRequest const&
                   request) {
             IsContextMDValid(*context,
@@ -257,8 +255,7 @@ TEST_F(MetadataDecoratorTest, TestIamPermissions) {
 TEST_F(MetadataDecoratorTest, CreateBackup) {
   EXPECT_CALL(*mock_, AsyncCreateBackup)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext> context,
+          [this](google::cloud::CompletionQueue&, auto context,
                  google::test::admin::database::v1::CreateBackupRequest const&
                      request) {
             IsContextMDValid(
@@ -365,8 +362,7 @@ TEST_F(MetadataDecoratorTest, ListBackups) {
 
 TEST_F(MetadataDecoratorTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, AsyncRestoreDatabase)
-      .WillOnce([this](google::cloud::CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](google::cloud::CompletionQueue&, auto context,
                        google::test::admin::database::v1::
                            RestoreDatabaseRequest const& request) {
         IsContextMDValid(
@@ -428,8 +424,7 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
 TEST_F(MetadataDecoratorTest, AsyncGetDatabase) {
   EXPECT_CALL(*mock_, AsyncGetDatabase)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext> context,
+          [this](google::cloud::CompletionQueue&, auto context,
                  google::test::admin::database::v1::GetDatabaseRequest const&
                      request) {
             IsContextMDValid(*context,
@@ -454,8 +449,7 @@ TEST_F(MetadataDecoratorTest, AsyncGetDatabase) {
 TEST_F(MetadataDecoratorTest, AsyncDropDatabase) {
   EXPECT_CALL(*mock_, AsyncDropDatabase)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext> context,
+          [this](google::cloud::CompletionQueue&, auto context,
                  google::test::admin::database::v1::DropDatabaseRequest const&
                      request) {
             IsContextMDValid(*context,
@@ -479,8 +473,7 @@ TEST_F(MetadataDecoratorTest, LongRunningWithoutRouting) {
   EXPECT_CALL(*mock_, AsyncLongRunningWithoutRouting)
       .WillOnce(
           [this](
-              google::cloud::CompletionQueue&,
-              std::unique_ptr<grpc::ClientContext> context,
+              google::cloud::CompletionQueue&, auto context,
               google::test::admin::database::v1::RestoreDatabaseRequest const&
                   request) {
             IsContextMDValid(*context,
@@ -502,8 +495,7 @@ TEST_F(MetadataDecoratorTest, LongRunningWithoutRouting) {
 TEST_F(MetadataDecoratorTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation)
       .WillOnce([this](
-                    google::cloud::CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext> context,
+                    google::cloud::CompletionQueue&, auto context,
                     google::longrunning::GetOperationRequest const& request) {
         IsContextMDValid(*context, "google.longrunning.Operations.GetOperation",
                          request);
@@ -522,8 +514,7 @@ TEST_F(MetadataDecoratorTest, GetOperation) {
 TEST_F(MetadataDecoratorTest, CancelOperation) {
   EXPECT_CALL(*mock_, AsyncCancelOperation)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext> context,
+          [this](google::cloud::CompletionQueue&, auto context,
                  google::longrunning::CancelOperationRequest const& request) {
             IsContextMDValid(*context,
                              "google.longrunning.Operations.CancelOperation",

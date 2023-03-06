@@ -161,17 +161,14 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
 
 TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingWrite) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, StreamingWrite)
-      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
-        auto stream = absl::make_unique<MockStreamingWriteRpc>();
-        EXPECT_CALL(*stream, Write)
-            .WillOnce(Return(true))
-            .WillOnce(Return(false));
-        EXPECT_CALL(*stream, Close)
-            .WillOnce(Return(StatusOr<Response>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"))));
-        return stream;
-      });
+  EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto) {
+    auto stream = absl::make_unique<MockStreamingWriteRpc>();
+    EXPECT_CALL(*stream, Write).WillOnce(Return(true)).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Close)
+        .WillOnce(Return(StatusOr<Response>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"))));
+    return stream;
+  });
 
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   auto stream =
