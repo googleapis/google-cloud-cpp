@@ -64,11 +64,11 @@ TEST_F(InstanceAdminLoggingTest, GetInstance) {
 
 TEST_F(InstanceAdminLoggingTest, CreateInstance) {
   EXPECT_CALL(*mock_, AsyncCreateInstance)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsai::v1::CreateInstanceRequest const&) {
-        return make_ready_future(
-            StatusOr<google::longrunning::Operation>(TransientError()));
-      });
+      .WillOnce(
+          [](CompletionQueue&, auto, gsai::v1::CreateInstanceRequest const&) {
+            return make_ready_future(
+                StatusOr<google::longrunning::Operation>(TransientError()));
+          });
 
   InstanceAdminLogging stub(mock_, TracingOptions{});
 
@@ -85,11 +85,11 @@ TEST_F(InstanceAdminLoggingTest, CreateInstance) {
 
 TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
   EXPECT_CALL(*mock_, AsyncUpdateInstance)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsai::v1::UpdateInstanceRequest const&) {
-        return make_ready_future(
-            StatusOr<google::longrunning::Operation>(TransientError()));
-      });
+      .WillOnce(
+          [](CompletionQueue&, auto, gsai::v1::UpdateInstanceRequest const&) {
+            return make_ready_future(
+                StatusOr<google::longrunning::Operation>(TransientError()));
+          });
 
   InstanceAdminLogging stub(mock_, TracingOptions{});
 

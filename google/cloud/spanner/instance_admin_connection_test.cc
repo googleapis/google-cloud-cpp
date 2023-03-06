@@ -122,8 +122,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
       "projects/test-project/instances/test-instance";
 
   EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([&expected_name](CompletionQueue&,
-                                 std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([&expected_name](CompletionQueue&, auto,
                                  gsai::v1::CreateInstanceRequest const& r) {
         EXPECT_EQ("test-instance", r.instance_id());
         EXPECT_EQ("projects/test-project", r.parent());
@@ -140,18 +139,18 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
         return make_ready_future(make_status_or(op));
       });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([&expected_name](
-                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                    google::longrunning::GetOperationRequest const& r) {
-        EXPECT_EQ("test-operation-name", r.name());
-        google::longrunning::Operation op;
-        op.set_name(r.name());
-        op.set_done(true);
-        gsai::v1::Instance instance;
-        instance.set_name(expected_name);
-        op.mutable_response()->PackFrom(instance);
-        return make_ready_future(make_status_or(op));
-      });
+      .WillOnce(
+          [&expected_name](CompletionQueue&, auto,
+                           google::longrunning::GetOperationRequest const& r) {
+            EXPECT_EQ("test-operation-name", r.name());
+            google::longrunning::Operation op;
+            op.set_name(r.name());
+            op.set_done(true);
+            gsai::v1::Instance instance;
+            instance.set_name(expected_name);
+            op.mutable_response()->PackFrom(instance);
+            return make_ready_future(make_status_or(op));
+          });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   Instance in("test-project", "test-instance");
@@ -171,11 +170,11 @@ TEST(InstanceAdminClientTest, CreateInstanceError) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
   EXPECT_CALL(*mock, AsyncCreateInstance)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsai::v1::CreateInstanceRequest const&) {
-        return make_ready_future(StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh")));
-      });
+      .WillOnce(
+          [](CompletionQueue&, auto, gsai::v1::CreateInstanceRequest const&) {
+            return make_ready_future(StatusOr<google::longrunning::Operation>(
+                Status(StatusCode::kPermissionDenied, "uh-oh")));
+          });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   Instance in("test-project", "test-instance");
@@ -194,13 +193,12 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
   std::string expected_name = "projects/test-project/instances/test-instance";
 
   EXPECT_CALL(*mock, AsyncUpdateInstance)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsai::v1::UpdateInstanceRequest const&) {
-        return make_ready_future(StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kUnavailable, "try-again")));
-      })
-      .WillOnce([&expected_name](CompletionQueue&,
-                                 std::unique_ptr<grpc::ClientContext>,
+      .WillOnce(
+          [](CompletionQueue&, auto, gsai::v1::UpdateInstanceRequest const&) {
+            return make_ready_future(StatusOr<google::longrunning::Operation>(
+                Status(StatusCode::kUnavailable, "try-again")));
+          })
+      .WillOnce([&expected_name](CompletionQueue&, auto,
                                  gsai::v1::UpdateInstanceRequest const& r) {
         EXPECT_EQ(expected_name, r.instance().name());
         google::longrunning::Operation op;
@@ -209,18 +207,18 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
         return make_ready_future(make_status_or(op));
       });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([&expected_name](
-                    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                    google::longrunning::GetOperationRequest const& r) {
-        EXPECT_EQ("test-operation-name", r.name());
-        google::longrunning::Operation op;
-        op.set_name(r.name());
-        op.set_done(true);
-        gsai::v1::Instance instance;
-        instance.set_name(expected_name);
-        op.mutable_response()->PackFrom(instance);
-        return make_ready_future(make_status_or(op));
-      });
+      .WillOnce(
+          [&expected_name](CompletionQueue&, auto,
+                           google::longrunning::GetOperationRequest const& r) {
+            EXPECT_EQ("test-operation-name", r.name());
+            google::longrunning::Operation op;
+            op.set_name(r.name());
+            op.set_done(true);
+            gsai::v1::Instance instance;
+            instance.set_name(expected_name);
+            op.mutable_response()->PackFrom(instance);
+            return make_ready_future(make_status_or(op));
+          });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   gsai::v1::UpdateInstanceRequest req;
@@ -236,11 +234,11 @@ TEST(InstanceAdminClientTest, UpdateInstancePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
   EXPECT_CALL(*mock, AsyncUpdateInstance)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsai::v1::UpdateInstanceRequest const&) {
-        return make_ready_future(StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kPermissionDenied, "uh-oh")));
-      });
+      .WillOnce(
+          [](CompletionQueue&, auto, gsai::v1::UpdateInstanceRequest const&) {
+            return make_ready_future(StatusOr<google::longrunning::Operation>(
+                Status(StatusCode::kPermissionDenied, "uh-oh")));
+          });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gsai::v1::UpdateInstanceRequest()});
@@ -253,11 +251,11 @@ TEST(InstanceAdminClientTest, UpdateInstanceTooManyTransients) {
 
   EXPECT_CALL(*mock, AsyncUpdateInstance)
       .Times(AtLeast(2))
-      .WillRepeatedly([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                         gsai::v1::UpdateInstanceRequest const&) {
-        return make_ready_future(StatusOr<google::longrunning::Operation>(
-            Status(StatusCode::kUnavailable, "try-again")));
-      });
+      .WillRepeatedly(
+          [](CompletionQueue&, auto, gsai::v1::UpdateInstanceRequest const&) {
+            return make_ready_future(StatusOr<google::longrunning::Operation>(
+                Status(StatusCode::kUnavailable, "try-again")));
+          });
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gsai::v1::UpdateInstanceRequest()});
   auto instance = fut.get();

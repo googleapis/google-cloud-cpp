@@ -118,8 +118,7 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
 
 TEST_F(InstanceAdminMetadataTest, CreateInstance) {
   EXPECT_CALL(*mock_, AsyncCreateInstance)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](CompletionQueue&, auto context,
                        gsai::v1::CreateInstanceRequest const& request) {
         IsContextMDValid(*context,
                          "google.spanner.admin.instance.v1.InstanceAdmin."
@@ -141,8 +140,7 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
 
 TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
   EXPECT_CALL(*mock_, AsyncUpdateInstance)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](CompletionQueue&, auto context,
                        gsai::v1::UpdateInstanceRequest const& request) {
         IsContextMDValid(*context,
                          "google.spanner.admin.instance.v1.InstanceAdmin."

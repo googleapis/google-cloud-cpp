@@ -58,8 +58,7 @@ class DatabaseAdminMetadataTest : public ::testing::Test {
 
 TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
   EXPECT_CALL(*mock_, AsyncCreateDatabase)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](CompletionQueue&, auto context,
                        gsad::v1::CreateDatabaseRequest const& request) {
         IsContextMDValid(*context,
                          "google.spanner.admin.database.v1.DatabaseAdmin."
@@ -83,8 +82,7 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
 
 TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
   EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](CompletionQueue&, auto context,
                        gsad::v1::UpdateDatabaseDdlRequest const& request) {
         IsContextMDValid(*context,
                          "google.spanner.admin.database.v1.DatabaseAdmin."
@@ -156,8 +154,7 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
 
 TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, AsyncRestoreDatabase)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](CompletionQueue&, auto context,
                        gsad::v1::RestoreDatabaseRequest const& request) {
         IsContextMDValid(*context,
                          "google.spanner.admin.database.v1.DatabaseAdmin."
@@ -260,8 +257,7 @@ TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
 
 TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
   EXPECT_CALL(*mock_, AsyncCreateBackup)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](CompletionQueue&, auto context,
                        gsad::v1::CreateBackupRequest const& request) {
         IsContextMDValid(*context,
                          "google.spanner.admin.database.v1.DatabaseAdmin."
@@ -423,15 +419,14 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabaseOperations) {
 
 TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation)
-      .WillOnce(
-          [this](CompletionQueue&, std::unique_ptr<grpc::ClientContext> context,
-                 google::longrunning::GetOperationRequest const& request) {
-            IsContextMDValid(*context,
-                             "google.longrunning.Operations.GetOperation",
-                             request);
-            return make_ready_future(
-                StatusOr<google::longrunning::Operation>(TransientError()));
-          });
+      .WillOnce([this](
+                    CompletionQueue&, auto context,
+                    google::longrunning::GetOperationRequest const& request) {
+        IsContextMDValid(*context, "google.longrunning.Operations.GetOperation",
+                         request);
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
@@ -445,7 +440,7 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
 TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
   EXPECT_CALL(*mock_, AsyncCancelOperation)
       .WillOnce(
-          [this](CompletionQueue&, std::unique_ptr<grpc::ClientContext> context,
+          [this](CompletionQueue&, auto context,
                  google::longrunning::CancelOperationRequest const& request) {
             IsContextMDValid(*context,
                              "google.longrunning.Operations.CancelOperation",
