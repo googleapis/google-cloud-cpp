@@ -32,6 +32,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::ByMove;
 using ::testing::InSequence;
 using ::testing::Return;
+using ::testing::Unused;
 
 // All the tests have nearly identical structure. They create 3 mocks, setup
 // each mock to receive 2 calls of some function, then call the
@@ -56,8 +57,7 @@ std::vector<std::shared_ptr<StorageStub>> AsPlainStubs(
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
-MakeReadObjectStream(std::unique_ptr<grpc::ClientContext>,
-                     google::storage::v2::ReadObjectRequest const&) {
+MakeReadObjectStream(Unused, google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
   return absl::make_unique<ErrorStream>(
@@ -66,8 +66,7 @@ MakeReadObjectStream(std::unique_ptr<grpc::ClientContext>,
 
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
-MakeAsyncReadObjectStream(google::cloud::CompletionQueue const&,
-                          std::unique_ptr<grpc::ClientContext>,
+MakeAsyncReadObjectStream(google::cloud::CompletionQueue const&, Unused,
                           google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
@@ -78,8 +77,7 @@ MakeAsyncReadObjectStream(google::cloud::CompletionQueue const&,
 std::unique_ptr<google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-MakeAsyncWriteObjectStream(google::cloud::CompletionQueue const&,
-                           std::unique_ptr<grpc::ClientContext>) {
+MakeAsyncWriteObjectStream(google::cloud::CompletionQueue const&, Unused) {
   using ErrorStream = ::google::cloud::internal::AsyncStreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
@@ -90,7 +88,7 @@ MakeAsyncWriteObjectStream(google::cloud::CompletionQueue const&,
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-MakeInsertStream(std::unique_ptr<grpc::ClientContext>) {
+MakeInsertStream(Unused) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;

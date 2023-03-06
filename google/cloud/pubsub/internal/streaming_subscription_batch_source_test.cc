@@ -67,8 +67,7 @@ class FakeStream {
   }
 
   std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeWriteFailureStream(
-      google::cloud::CompletionQueue const&,
-      std::unique_ptr<grpc::ClientContext>) {
+      google::cloud::CompletionQueue const&, Unused) {
     auto start_response = [this] {
       return AddAction("Start").then([](future<bool> g) { return g.get(); });
     };
@@ -135,8 +134,7 @@ TEST(StreamingSubscriptionBatchSourceTest, Start) {
   FakeStream success_stream(Status{});
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const& cq,
-                    std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([&](google::cloud::CompletionQueue const& cq, auto context) {
         return success_stream.MakeWriteFailureStream(cq, std::move(context));
       });
 
@@ -167,8 +165,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartWithRetry) {
   FakeStream success_stream(Status{});
 
   auto make_async_pull_mock = [](FakeStream& fake) {
-    return [&fake](google::cloud::CompletionQueue const& cq,
-                   std::unique_ptr<grpc::ClientContext> context) {
+    return [&fake](google::cloud::CompletionQueue const& cq, auto context) {
       return fake.MakeWriteFailureStream(cq, std::move(context));
     };
   };
@@ -211,7 +208,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
 
   auto async_pull_mock =
       [transient](google::cloud::CompletionQueue const& completion_queue,
-                  std::unique_ptr<grpc::ClientContext>) {
+                  auto) {
         using us = std::chrono::microseconds;
         using F = future<StatusOr<std::chrono::system_clock::time_point>>;
         using Response = ::google::pubsub::v1::StreamingPullResponse;
@@ -272,7 +269,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
 
   auto async_pull_mock =
       [transient](google::cloud::CompletionQueue const& completion_queue,
-                  std::unique_ptr<grpc::ClientContext>) {
+                  auto) {
         using us = std::chrono::microseconds;
         using F = future<StatusOr<std::chrono::system_clock::time_point>>;
         using Response = ::google::pubsub::v1::StreamingPullResponse;
@@ -329,8 +326,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartUnexpected) {
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(1)
-      .WillRepeatedly([](google::cloud::CompletionQueue const&,
-                         std::unique_ptr<grpc::ClientContext>) {
+      .WillRepeatedly([](google::cloud::CompletionQueue const&, auto) {
         return std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
             google::pubsub::v1::StreamingPullRequest,
             google::pubsub::v1::StreamingPullResponse>>{};
@@ -358,8 +354,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterStartAndShutdown) {
   FakeStream success_stream(Status{StatusCode::kCancelled, "cancelled"});
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const& cq,
-                    std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([&](google::cloud::CompletionQueue const& cq, auto context) {
         return success_stream.MakeWriteFailureStream(cq, std::move(context));
       });
 
@@ -386,8 +381,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartSucceedsAfterWriteAndShutdown) {
   FakeStream success_stream(Status{StatusCode::kCancelled, "cancelled"});
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const& cq,
-                    std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([&](google::cloud::CompletionQueue const& cq, auto context) {
         return success_stream.MakeWriteFailureStream(cq, std::move(context));
       });
 
@@ -415,8 +409,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
 
   auto make_async_pull_mock = [](int start, int count) {
     return [start, count](
-               google::cloud::CompletionQueue const& completion_queue,
-               std::unique_ptr<grpc::ClientContext>) {
+               google::cloud::CompletionQueue const& completion_queue, auto) {
       using us = std::chrono::microseconds;
       using F = future<StatusOr<std::chrono::system_clock::time_point>>;
       using Response = ::google::pubsub::v1::StreamingPullResponse;
@@ -465,8 +458,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .WillOnce(make_async_pull_mock(0, 3))
       .WillOnce(make_async_pull_mock(3, 2))
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         ready.set_value();
         wait.get_future().wait();
         return nullptr;
@@ -488,13 +480,12 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
   EXPECT_THAT(ids, ElementsAre("ack-0", "ack-1", "ack-2", "ack-3", "ack-4"));
 }
 
-future<Status> OnAck(google::cloud::CompletionQueue&,
-                     std::unique_ptr<grpc::ClientContext>, AckRequest const&) {
+future<Status> OnAck(google::cloud::CompletionQueue&, Unused,
+                     AckRequest const&) {
   return make_ready_future(Status{});
 }
 
-future<Status> OnModify(google::cloud::CompletionQueue&,
-                        std::unique_ptr<grpc::ClientContext>,
+future<Status> OnModify(google::cloud::CompletionQueue&, Unused,
                         ModifyRequest const&) {
   return make_ready_future(Status{});
 }
@@ -505,8 +496,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
 
   FakeStream success_stream(Status{});
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const& cq,
-                    std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([&](google::cloud::CompletionQueue const& cq, auto context) {
         return success_stream.MakeWriteFailureStream(cq, std::move(context));
       });
   EXPECT_CALL(
@@ -663,8 +653,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ReadErrorWaitsForWrite) {
   // We need a request that will trigger a `Write()` call, only subscriptions
   // with exactly-once delivery do so, so we can create one.
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         return MakeExactlyOnceStream(aseq, finish_status);
       });
 
@@ -704,8 +693,7 @@ TEST(StreamingSubscriptionBatchSourceTest, WriteErrorWaitsForRead) {
   // We need a request that will trigger a `Write()` call, only subscriptions
   // with exactly-once delivery do so, so we can create one.
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         return MakeExactlyOnceStream(aseq, finish_status);
       });
 
@@ -744,8 +732,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingRead) {
   FakeStream fake_stream(expected_status);
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const& cq,
-                    std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([&](google::cloud::CompletionQueue const& cq, auto context) {
         return fake_stream.MakeWriteFailureStream(cq, std::move(context));
       });
   using CallbackArg = StatusOr<google::pubsub::v1::StreamingPullResponse>;
@@ -782,8 +769,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
     return std::move(p.first);
   };
 
-  auto async_pull_mock = [&](google::cloud::CompletionQueue const&,
-                             std::unique_ptr<grpc::ClientContext>) {
+  auto async_pull_mock = [&](google::cloud::CompletionQueue const&, auto) {
     using Response = ::google::pubsub::v1::StreamingPullResponse;
     using Request = ::google::pubsub::v1::StreamingPullRequest;
     auto start_response = [&async] {
@@ -861,8 +847,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         // We cannot reuse MakeExactlyOnceStream() because we need a more
         // interesting set of `Read()` results.
         auto start_response = [&] {
@@ -989,8 +974,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         return MakeExactlyOnceStream(aseq, Status{});
       });
 
@@ -1061,8 +1045,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         return MakeExactlyOnceStream(aseq, Status{});
       });
 
@@ -1213,8 +1196,7 @@ TEST(StreamingSubscriptionBatchSourceTest, BulkNackMultipleRequests) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         return MakeUnusedStream(false);
       });
 
@@ -1271,8 +1253,7 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
-      .WillOnce([&](google::cloud::CompletionQueue const&,
-                    std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([&](google::cloud::CompletionQueue const&, auto) {
         return MakeUnusedStream(enable_exactly_once);
       });
 

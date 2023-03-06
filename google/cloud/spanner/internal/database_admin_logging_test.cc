@@ -50,11 +50,11 @@ class DatabaseAdminLoggingTest : public ::testing::Test {
 
 TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   EXPECT_CALL(*mock_, AsyncCreateDatabase)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsad::v1::CreateDatabaseRequest const&) {
-        return make_ready_future(
-            StatusOr<google::longrunning::Operation>(TransientError()));
-      });
+      .WillOnce(
+          [](CompletionQueue&, auto, gsad::v1::CreateDatabaseRequest const&) {
+            return make_ready_future(
+                StatusOr<google::longrunning::Operation>(TransientError()));
+          });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -100,7 +100,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
 
 TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    gsad::v1::UpdateDatabaseDdlRequest const&) {
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
@@ -149,11 +149,11 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
 
 TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, AsyncRestoreDatabase)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsad::v1::RestoreDatabaseRequest const&) {
-        return make_ready_future(
-            StatusOr<google::longrunning::Operation>(TransientError()));
-      });
+      .WillOnce(
+          [](CompletionQueue&, auto, gsad::v1::RestoreDatabaseRequest const&) {
+            return make_ready_future(
+                StatusOr<google::longrunning::Operation>(TransientError()));
+          });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -215,11 +215,11 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
 
 TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
   EXPECT_CALL(*mock_, AsyncCreateBackup)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gsad::v1::CreateBackupRequest const&) {
-        return make_ready_future(
-            StatusOr<google::longrunning::Operation>(TransientError()));
-      });
+      .WillOnce(
+          [](CompletionQueue&, auto, gsad::v1::CreateBackupRequest const&) {
+            return make_ready_future(
+                StatusOr<google::longrunning::Operation>(TransientError()));
+          });
 
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
@@ -323,7 +323,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
 
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    google::longrunning::GetOperationRequest const&) {
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
@@ -344,7 +344,7 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
 
 TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
   EXPECT_CALL(*mock_, AsyncCancelOperation)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    google::longrunning::CancelOperationRequest const&) {
         return make_ready_future(TransientError());
       });

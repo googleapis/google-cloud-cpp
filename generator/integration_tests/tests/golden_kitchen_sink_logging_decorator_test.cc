@@ -221,17 +221,14 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcWithRpcStreams) {
 }
 
 TEST_F(LoggingDecoratorTest, StreamingWrite) {
-  EXPECT_CALL(*mock_, StreamingWrite)
-      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
-        auto stream = absl::make_unique<MockStreamingWriteRpc>();
-        EXPECT_CALL(*stream, Write)
-            .WillOnce(Return(true))
-            .WillOnce(Return(false));
-        auto response = Response{};
-        response.set_response("test-only");
-        EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
-        return stream;
-      });
+  EXPECT_CALL(*mock_, StreamingWrite).WillOnce([](auto) {
+    auto stream = absl::make_unique<MockStreamingWriteRpc>();
+    EXPECT_CALL(*stream, Write).WillOnce(Return(true)).WillOnce(Return(false));
+    auto response = Response{};
+    response.set_response("test-only");
+    EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
+    return stream;
+  });
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
@@ -249,17 +246,14 @@ TEST_F(LoggingDecoratorTest, StreamingWrite) {
 }
 
 TEST_F(LoggingDecoratorTest, StreamingWriteFullTracing) {
-  EXPECT_CALL(*mock_, StreamingWrite)
-      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
-        auto stream = absl::make_unique<MockStreamingWriteRpc>();
-        EXPECT_CALL(*stream, Write)
-            .WillOnce(Return(true))
-            .WillOnce(Return(false));
-        auto response = Response{};
-        response.set_response("test-only");
-        EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
-        return stream;
-      });
+  EXPECT_CALL(*mock_, StreamingWrite).WillOnce([](auto) {
+    auto stream = absl::make_unique<MockStreamingWriteRpc>();
+    EXPECT_CALL(*stream, Write).WillOnce(Return(true)).WillOnce(Return(false));
+    auto response = Response{};
+    response.set_response("test-only");
+    EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
+    return stream;
+  });
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
   auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));

@@ -259,7 +259,7 @@ TEST(SpannerAuthTest, PartitionRead) {
 TEST(SpannerAuthTest, AsyncBatchCreateSessions) {
   auto mock = std::make_shared<MockSpannerStub>();
   EXPECT_CALL(*mock, AsyncBatchCreateSessions)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    google::spanner::v1::BatchCreateSessionsRequest const&) {
         return make_ready_future(
             StatusOr<google::spanner::v1::BatchCreateSessionsResponse>(
@@ -281,7 +281,7 @@ TEST(SpannerAuthTest, AsyncBatchCreateSessions) {
 TEST(SpannerAuthTest, AsyncDeleteSession) {
   auto mock = std::make_shared<MockSpannerStub>();
   EXPECT_CALL(*mock, AsyncDeleteSession)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    google::spanner::v1::DeleteSessionRequest const&) {
         return make_ready_future(
             Status(StatusCode::kPermissionDenied, "uh-oh"));
@@ -302,7 +302,7 @@ TEST(SpannerAuthTest, AsyncDeleteSession) {
 TEST(SpannerAuthTest, AsyncExecuteSql) {
   auto mock = std::make_shared<MockSpannerStub>();
   EXPECT_CALL(*mock, AsyncExecuteSql)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    google::spanner::v1::ExecuteSqlRequest const&) {
         return make_ready_future(StatusOr<google::spanner::v1::ResultSet>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));

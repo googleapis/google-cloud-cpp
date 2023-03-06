@@ -123,7 +123,7 @@ TEST(DefaultBatchSinkTest, TooManyTransients) {
 TEST(DefaultBatchSinkTest, BasicWithCompression) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([](Unused, std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([](Unused, auto context,
                    google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(context->compression_algorithm(), GRPC_COMPRESS_GZIP);
         EXPECT_THAT(request, IsProtoEqual(MakeRequest(3)));

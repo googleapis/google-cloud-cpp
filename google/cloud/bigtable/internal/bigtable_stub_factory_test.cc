@@ -93,7 +93,7 @@ TEST_F(BigtableStubFactory, ReadRows) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, ReadRows)
             .WillOnce(
-                [this](std::unique_ptr<grpc::ClientContext> context,
+                [this](auto context,
                        google::bigtable::v2::ReadRowsRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
@@ -175,8 +175,7 @@ TEST_F(BigtableStubFactory, AsyncReadRows) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, AsyncReadRows)
             .WillOnce(
-                [this](CompletionQueue const&,
-                       std::unique_ptr<grpc::ClientContext> context,
+                [this](CompletionQueue const&, auto context,
                        google::bigtable::v2::ReadRowsRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
@@ -221,8 +220,7 @@ TEST_F(BigtableStubFactory, AsyncMutateRow) {
         auto mock = std::make_shared<MockBigtableStub>();
         EXPECT_CALL(*mock, AsyncMutateRow)
             .WillOnce(
-                [this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+                [this](CompletionQueue&, auto context,
                        google::bigtable::v2::MutateRowRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());

@@ -48,17 +48,16 @@ static_assert(
 /// @verify that stall timeouts are reported correctly.
 TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject)
-      .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
-        ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
-        EXPECT_CALL(*stream, Cancel).Times(1);
-        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
-        EXPECT_CALL(*stream, Close)
-            .WillOnce(Return(
-                make_status_or(google::storage::v2::WriteObjectResponse{})));
-        return stream;
-      });
+  EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
+    ::testing::InSequence sequence;
+    auto stream = absl::make_unique<MockInsertStream>();
+    EXPECT_CALL(*stream, Cancel).Times(1);
+    EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Close)
+        .WillOnce(
+            Return(make_status_or(google::storage::v2::WriteObjectResponse{})));
+    return stream;
+  });
 
   auto const expected = std::chrono::seconds(42);
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
@@ -83,17 +82,16 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
 /// @verify that stall timeouts are reported correctly.
 TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject)
-      .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
-        ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
-        EXPECT_CALL(*stream, Write).WillOnce(Return(true));
-        EXPECT_CALL(*stream, Cancel).Times(1);
-        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
-        EXPECT_CALL(*stream, Close)
-            .WillOnce(Return(google::storage::v2::WriteObjectResponse{}));
-        return stream;
-      });
+  EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
+    ::testing::InSequence sequence;
+    auto stream = absl::make_unique<MockInsertStream>();
+    EXPECT_CALL(*stream, Write).WillOnce(Return(true));
+    EXPECT_CALL(*stream, Cancel).Times(1);
+    EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Close)
+        .WillOnce(Return(google::storage::v2::WriteObjectResponse{}));
+    return stream;
+  });
 
   auto const expected = std::chrono::seconds(42);
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
@@ -122,17 +120,16 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
 /// @verify that stall timeouts are reported correctly.
 TEST(GrpcClientUploadChunkTest, StallTimeoutClose) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject)
-      .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
-        ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
-        EXPECT_CALL(*stream, Write).Times(2).WillRepeatedly(Return(true));
-        EXPECT_CALL(*stream, Cancel).Times(1);
-        EXPECT_CALL(*stream, Close)
-            .WillOnce(Return(
-                make_status_or(google::storage::v2::WriteObjectResponse{})));
-        return stream;
-      });
+  EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
+    ::testing::InSequence sequence;
+    auto stream = absl::make_unique<MockInsertStream>();
+    EXPECT_CALL(*stream, Write).Times(2).WillRepeatedly(Return(true));
+    EXPECT_CALL(*stream, Cancel).Times(1);
+    EXPECT_CALL(*stream, Close)
+        .WillOnce(
+            Return(make_status_or(google::storage::v2::WriteObjectResponse{})));
+    return stream;
+  });
 
   auto const expected = std::chrono::seconds(42);
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();

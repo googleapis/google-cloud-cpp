@@ -137,9 +137,7 @@ class TestStubAuth : public TestStub,
       GetTableRequest const& request) override {
     auto self = shared_from_this();
     return auth_->AsyncConfigureContext(std::move(context))
-        .then([self, cq,
-               request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
-                            f) mutable {
+        .then([self, cq, request](auto f) mutable {
           auto context = f.get();
           if (!context)
             return make_ready_future<StatusOr<Table>>(
@@ -174,8 +172,7 @@ class TestStubLogging : public TestStub {
       std::unique_ptr<grpc::ClientContext> context,
       GetTableRequest const& request) override {
     return LogWrapper(
-        [this](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
+        [this](google::cloud::CompletionQueue& cq, auto context,
                GetTableRequest const& request) {
           return child_->AsyncGetTable(cq, std::move(context), request);
         },

@@ -121,7 +121,7 @@ TEST(AsyncRetryLoopTest, Success) {
   auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      [](google::cloud::CompletionQueue&, auto,
          int request) -> future<StatusOr<int>> {
         EXPECT_EQ(CurrentOptions().get<TestOption>(), "Success");
         return make_ready_future(StatusOr<int>(2 * request));
@@ -142,8 +142,7 @@ TEST(AsyncRetryLoopTest, TransientThenSuccess) {
   auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-          int request) {
+      [&](google::cloud::CompletionQueue&, auto, int request) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(), "TransientThenSuccess");
         if (++counter < 3) {
           return make_ready_future(
@@ -167,8 +166,7 @@ TEST(AsyncRetryLoopTest, ReturnJustStatus) {
   auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-          int) {
+      [&](google::cloud::CompletionQueue&, auto, int) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(), "ReturnJustStatus");
         if (++counter <= 3) {
           return make_ready_future(
@@ -214,8 +212,7 @@ TEST(AsyncRetryLoopTest, UsesBackoffPolicy) {
   auto pending = AsyncRetryLoop(
       TestRetryPolicy(), std::move(mock), Idempotency::kIdempotent,
       background.cq(),
-      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-          int request) {
+      [&](google::cloud::CompletionQueue&, auto, int request) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(), "UsesBackoffPolicy");
         if (++counter <= 3) {
           return make_ready_future(
@@ -239,8 +236,7 @@ TEST(AsyncRetryLoopTest, TransientFailureNonIdempotent) {
   auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
       background.cq(),
-      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-         int) {
+      [](google::cloud::CompletionQueue&, auto, int) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(),
                   "TransientFailureNonIdempotent");
         return make_ready_future(StatusOr<int>(
@@ -263,8 +259,7 @@ TEST(AsyncRetryLoopTest, PermanentFailureIdempotent) {
   auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-         int) {
+      [](google::cloud::CompletionQueue&, auto, int) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(),
                   "PermanentFailureIdempotent");
         return make_ready_future(StatusOr<int>(
@@ -289,8 +284,7 @@ TEST(AsyncRetryLoopTest, TooManyTransientFailuresIdempotent) {
   auto pending = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
-      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-         int) {
+      [](google::cloud::CompletionQueue&, auto, int) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(),
                   "TooManyTransientFailuresIdempotent");
         return make_ready_future(StatusOr<int>(
@@ -315,8 +309,7 @@ TEST(AsyncRetryLoopTest, ExhaustedDuringBackoff) {
       LimitedErrorCountRetryPolicy<TestRetryablePolicy>(0).clone(),
       ExponentialBackoffPolicy(ms(0), ms(0), 2.0).clone(),
       Idempotency::kIdempotent, background.cq(),
-      [](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-         int) {
+      [](google::cloud::CompletionQueue&, auto, int) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(), "ExhaustedDuringBackoff");
         return make_ready_future(StatusOr<int>(
             Status(StatusCode::kUnavailable, "test-message-try-again")));
@@ -344,8 +337,7 @@ TEST(AsyncRetryLoopTest, ExhaustedBeforeStart) {
       AsyncRetryLoop(
           std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
           TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
-          [](google::cloud::CompletionQueue&,
-             std::unique_ptr<grpc::ClientContext>, int) {
+          [](google::cloud::CompletionQueue&, auto, int) {
             return make_ready_future(StatusOr<int>(
                 Status(StatusCode::kUnavailable, "test-message-try-again")));
           },
@@ -379,8 +371,7 @@ TEST(AsyncRetryLoopTest, SetsTimeout) {
   auto pending = AsyncRetryLoop(
       std::unique_ptr<RetryPolicyWithSetup>(std::move(mock)),
       TestBackoffPolicy(), Idempotency::kIdempotent, background.cq(),
-      [&](google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-          int /*request*/) {
+      [&](google::cloud::CompletionQueue&, auto, int /*request*/) {
         EXPECT_EQ(CurrentOptions().get<TestOption>(), "SetsTimeout");
         return make_ready_future(
             StatusOr<int>(Status(StatusCode::kUnavailable, "try again")));
@@ -439,9 +430,9 @@ TEST_F(AsyncRetryLoopCancelTest, CancelAndSuccess) {
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](google::cloud::CompletionQueue&,
-             std::unique_ptr<grpc::ClientContext>,
-             int x) { return SimulateRequest(x); },
+      [this](google::cloud::CompletionQueue&, auto, int x) {
+        return SimulateRequest(x);
+      },
       42, "test-location");
 
   // First simulate a regular request that results in a transient failure.
@@ -470,9 +461,9 @@ TEST_F(AsyncRetryLoopCancelTest, CancelWithFailure) {
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](google::cloud::CompletionQueue&,
-             std::unique_ptr<grpc::ClientContext>,
-             int x) { return SimulateRequest(x); },
+      [this](google::cloud::CompletionQueue&, auto, int x) {
+        return SimulateRequest(x);
+      },
       42, "test-location");
 
   // First simulate a regular request.
@@ -503,9 +494,9 @@ TEST_F(AsyncRetryLoopCancelTest, CancelDuringTimer) {
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](google::cloud::CompletionQueue&,
-             std::unique_ptr<grpc::ClientContext>,
-             int x) { return SimulateRequest(x); },
+      [this](google::cloud::CompletionQueue&, auto, int x) {
+        return SimulateRequest(x);
+      },
       42, "test-location");
 
   // First simulate a regular request.
@@ -538,9 +529,9 @@ TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
   google::cloud::CompletionQueue cq(mock);
   future<StatusOr<int>> actual = AsyncRetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent, cq,
-      [this](google::cloud::CompletionQueue&,
-             std::unique_ptr<grpc::ClientContext>,
-             int x) { return SimulateRequest(x); },
+      [this](google::cloud::CompletionQueue&, auto, int x) {
+        return SimulateRequest(x);
+      },
       42, "test-location");
 
   // First simulate a regular request.

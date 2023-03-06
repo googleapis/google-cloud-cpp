@@ -167,22 +167,21 @@ TEST_F(GrpcClientTest, DeleteResumableUpload) {
 
 TEST_F(GrpcClientTest, UploadChunk) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject)
-      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
-        auto metadata = GetMetadata(*context);
-        EXPECT_THAT(metadata,
-                    UnorderedElementsAre(
-                        Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)"),
-                        Pair("x-goog-request-params",
-                             "bucket=projects/_/buckets/test-bucket")));
-        ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
-        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
-        EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
-        return stream;
-      });
+  EXPECT_CALL(*mock, WriteObject).WillOnce([this](auto context) {
+    auto metadata = GetMetadata(*context);
+    EXPECT_THAT(metadata,
+                UnorderedElementsAre(
+                    Pair("x-goog-quota-user", "test-quota-user"),
+                    // Map JSON names to the `resource` subobject
+                    Pair("x-goog-fieldmask", "resource(field1,field2)"),
+                    Pair("x-goog-request-params",
+                         "bucket=projects/_/buckets/test-bucket")));
+    ::testing::InSequence sequence;
+    auto stream = absl::make_unique<MockInsertStream>();
+    EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
+    return stream;
+  });
   auto client = CreateTestClient(mock);
   auto response = client->UploadChunk(
       storage::internal::UploadChunkRequest(
@@ -430,22 +429,21 @@ TEST_F(GrpcClientTest, TestBucketIamPermissions) {
 
 TEST_F(GrpcClientTest, InsertObjectMedia) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, WriteObject)
-      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
-        auto metadata = GetMetadata(*context);
-        EXPECT_THAT(metadata,
-                    UnorderedElementsAre(
-                        Pair("x-goog-quota-user", "test-quota-user"),
-                        // Map JSON names to the `resource` subobject
-                        Pair("x-goog-fieldmask", "resource(field1,field2)"),
-                        Pair("x-goog-request-params",
-                             "bucket=projects/_/buckets/test-bucket")));
-        ::testing::InSequence sequence;
-        auto stream = absl::make_unique<MockInsertStream>();
-        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
-        EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
-        return stream;
-      });
+  EXPECT_CALL(*mock, WriteObject).WillOnce([this](auto context) {
+    auto metadata = GetMetadata(*context);
+    EXPECT_THAT(metadata,
+                UnorderedElementsAre(
+                    Pair("x-goog-quota-user", "test-quota-user"),
+                    // Map JSON names to the `resource` subobject
+                    Pair("x-goog-fieldmask", "resource(field1,field2)"),
+                    Pair("x-goog-request-params",
+                         "bucket=projects/_/buckets/test-bucket")));
+    ::testing::InSequence sequence;
+    auto stream = absl::make_unique<MockInsertStream>();
+    EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+    EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
+    return stream;
+  });
   auto client = CreateTestClient(mock);
   auto response = client->InsertObjectMedia(
       storage::internal::InsertObjectMediaRequest(
@@ -540,8 +538,7 @@ TEST_F(GrpcClientTest, GetObjectMetadata) {
 TEST_F(GrpcClientTest, ReadObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
-                       v2::ReadObjectRequest const& request) {
+      .WillOnce([this](auto context, v2::ReadObjectRequest const& request) {
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),

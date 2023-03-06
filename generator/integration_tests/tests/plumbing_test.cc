@@ -101,7 +101,7 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
 
   auto stub = std::make_shared<golden_v1_internal::MockGoldenThingAdminStub>();
   EXPECT_CALL(*stub, AsyncCreateDatabase)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    ::google::test::admin::database::v1::
                        CreateDatabaseRequest const&) {
         google::longrunning::Operation op;
@@ -110,7 +110,7 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
         return make_ready_future(make_status_or(op));
       });
   EXPECT_CALL(*stub, AsyncGetOperation)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      .WillOnce([](CompletionQueue&, auto,
                    google::longrunning::GetOperationRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");

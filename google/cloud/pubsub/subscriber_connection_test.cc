@@ -64,14 +64,12 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&,
-                         std::unique_ptr<grpc::ClientContext>,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&,
-                         std::unique_ptr<grpc::ClientContext>,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
@@ -118,33 +116,31 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&,
-                         std::unique_ptr<grpc::ClientContext>,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&,
-                         std::unique_ptr<grpc::ClientContext>,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue const& cq,
-                          std::unique_ptr<grpc::ClientContext> context) {
-        ValidateMetadataFixture fixture;
-        auto metadata = fixture.GetMetadata(*context);
-        EXPECT_THAT(
-            metadata,
-            UnorderedElementsAre(
-                Pair("x-goog-api-client",
-                     google::cloud::internal::ApiClientHeader("generator")),
-                Pair("x-goog-request-params",
-                     "subscription=" + subscription.FullName())));
-        return FakeAsyncStreamingPull(cq, std::move(context));
-      });
+      .WillRepeatedly(
+          [&](google::cloud::CompletionQueue const& cq, auto context) {
+            ValidateMetadataFixture fixture;
+            auto metadata = fixture.GetMetadata(*context);
+            EXPECT_THAT(
+                metadata,
+                UnorderedElementsAre(
+                    Pair("x-goog-api-client",
+                         google::cloud::internal::ApiClientHeader("generator")),
+                    Pair("x-goog-request-params",
+                         "subscription=" + subscription.FullName())));
+            return FakeAsyncStreamingPull(cq, std::move(context));
+          });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock);
   std::atomic_flag received_one{false};

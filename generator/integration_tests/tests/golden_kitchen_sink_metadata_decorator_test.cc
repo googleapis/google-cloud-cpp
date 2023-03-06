@@ -215,8 +215,7 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
 
 TEST_F(MetadataDecoratorTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead)
-      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context,
-                       Request const& request) {
+      .WillOnce([this](auto context, Request const& request) {
         auto mock_response = absl::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*mock_response, Read)
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -233,22 +232,19 @@ TEST_F(MetadataDecoratorTest, StreamingRead) {
 }
 
 TEST_F(MetadataDecoratorTest, StreamingWrite) {
-  EXPECT_CALL(*mock_, StreamingWrite)
-      .WillOnce([this](std::unique_ptr<grpc::ClientContext> context) {
-        IsContextMDValid(
-            *context,
-            "google.test.admin.database.v1.GoldenKitchenSink.StreamingWrite",
-            Request{});
+  EXPECT_CALL(*mock_, StreamingWrite).WillOnce([this](auto context) {
+    IsContextMDValid(
+        *context,
+        "google.test.admin.database.v1.GoldenKitchenSink.StreamingWrite",
+        Request{});
 
-        auto stream = absl::make_unique<MockStreamingWriteRpc>();
-        EXPECT_CALL(*stream, Write)
-            .WillOnce(Return(true))
-            .WillOnce(Return(false));
-        auto response = Response{};
-        response.set_response("test-only");
-        EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
-        return stream;
-      });
+    auto stream = absl::make_unique<MockStreamingWriteRpc>();
+    EXPECT_CALL(*stream, Write).WillOnce(Return(true)).WillOnce(Return(false));
+    auto response = Response{};
+    response.set_response("test-only");
+    EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
+    return stream;
+  });
 
   GoldenKitchenSinkMetadata stub(mock_);
   auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
@@ -261,8 +257,7 @@ TEST_F(MetadataDecoratorTest, StreamingWrite) {
 
 TEST_F(MetadataDecoratorTest, AsyncStreamingRead) {
   EXPECT_CALL(*mock_, AsyncStreamingRead)
-      .WillOnce([this](google::cloud::CompletionQueue const&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](google::cloud::CompletionQueue const&, auto context,
                        Request const& request) {
         IsContextMDValid(
             *context,
@@ -287,8 +282,7 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingRead) {
 
 TEST_F(MetadataDecoratorTest, AsyncStreamingWrite) {
   EXPECT_CALL(*mock_, AsyncStreamingWrite)
-      .WillOnce([this](google::cloud::CompletionQueue const&,
-                       std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([this](google::cloud::CompletionQueue const&, auto context) {
         IsContextMDValid(
             *context,
             "google.test.admin.database.v1.GoldenKitchenSink.StreamingWrite",
