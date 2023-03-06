@@ -57,10 +57,9 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   /// Prepare the operation to receive the response and start the RPC.
   template <typename AsyncFunctionType>
   void Start(AsyncFunctionType async_call,
-             std::unique_ptr<grpc::ClientContext> ctx, Request const& request,
-             grpc::CompletionQueue* cq, void* tag) {
-    // Need a copyable holder to use in the `std::function<>` callback:
-    auto context = std::shared_ptr<grpc::ClientContext>(std::move(ctx));
+             // NOLINTNEXTLINE(performance-unnecessary-value-param)
+             std::shared_ptr<grpc::ClientContext> context,
+             Request const& request, grpc::CompletionQueue* cq, void* tag) {
     promise_ = promise<StatusOr<Response>>([context] { context->TryCancel(); });
     auto rpc = async_call(context.get(), request, cq);
     rpc->Finish(&response_, &status_, tag);
