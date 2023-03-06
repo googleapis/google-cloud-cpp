@@ -20,112 +20,28 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_ENVIRONMENTS_CONNECTION_H
 
 #include "google/cloud/composer/environments_connection_idempotency_policy.h"
-#include "google/cloud/composer/internal/environments_retry_traits.h"
-#include "google/cloud/composer/internal/environments_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "google/cloud/composer/v1/environments_connection.h"
 
 namespace google {
 namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using EnvironmentsRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        composer_internal::EnvironmentsRetryTraits>;
+/// @deprecated Use composer_v1::MakeEnvironmentsConnection directly.
+using ::google::cloud::composer_v1::MakeEnvironmentsConnection;
 
-using EnvironmentsLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        composer_internal::EnvironmentsRetryTraits>;
+/// @deprecated Use composer_v1::EnvironmentsConnection directly.
+using ::google::cloud::composer_v1::EnvironmentsConnection;
 
-using EnvironmentsLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        composer_internal::EnvironmentsRetryTraits>;
+/// @deprecated Use composer_v1::EnvironmentsLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::composer_v1::EnvironmentsLimitedErrorCountRetryPolicy;
 
-/**
- * The `EnvironmentsConnection` object for `EnvironmentsClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `EnvironmentsClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `EnvironmentsClient`.
- *
- * To create a concrete instance, see `MakeEnvironmentsConnection()`.
- *
- * For mocking, see `composer_mocks::MockEnvironmentsConnection`.
- */
-class EnvironmentsConnection {
- public:
-  virtual ~EnvironmentsConnection() = 0;
+/// @deprecated Use composer_v1::EnvironmentsLimitedTimeRetryPolicy directly.
+using ::google::cloud::composer_v1::EnvironmentsLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        CreateEnvironmentRequest const& request);
-
-  virtual StatusOr<
-      google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(google::cloud::orchestration::airflow::service::v1::
-                     GetEnvironmentRequest const& request);
-
-  virtual StreamRange<
-      google::cloud::orchestration::airflow::service::v1::Environment>
-  ListEnvironments(google::cloud::orchestration::airflow::service::v1::
-                       ListEnvironmentsRequest request);
-
-  virtual future<
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        UpdateEnvironmentRequest const& request);
-
-  virtual future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
-                        DeleteEnvironmentRequest const& request);
-
-  virtual future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
-                   SaveSnapshotRequest const& request);
-
-  virtual future<StatusOr<
-      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
-                   LoadSnapshotRequest const& request);
-};
-
-/**
- * A factory function to construct an object of type `EnvironmentsConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of EnvironmentsClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `EnvironmentsConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::composer::EnvironmentsPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `EnvironmentsConnection` created by
- * this function.
- */
-std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
-    Options options = {});
+/// @deprecated Use composer_v1::EnvironmentsRetryPolicy directly.
+using ::google::cloud::composer_v1::EnvironmentsRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer

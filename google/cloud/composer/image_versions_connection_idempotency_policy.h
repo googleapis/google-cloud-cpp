@@ -19,32 +19,21 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_IMAGE_VERSIONS_CONNECTION_IDEMPOTENCY_POLICY_H
 
-#include "google/cloud/idempotency.h"
-#include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/version.h"
-#include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
-#include <memory>
+#include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.h"
 
 namespace google {
 namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class ImageVersionsConnectionIdempotencyPolicy {
- public:
-  virtual ~ImageVersionsConnectionIdempotencyPolicy();
+/// @deprecated Use
+/// composer_v1::MakeDefaultImageVersionsConnectionIdempotencyPolicy directly.
+using ::google::cloud::composer_v1::
+    MakeDefaultImageVersionsConnectionIdempotencyPolicy;
 
-  /// Create a new copy of this object.
-  virtual std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy> clone()
-      const;
-
-  virtual google::cloud::Idempotency ListImageVersions(
-      google::cloud::orchestration::airflow::service::v1::
-          ListImageVersionsRequest request);
-};
-
-std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
-MakeDefaultImageVersionsConnectionIdempotencyPolicy();
+/// @deprecated Use composer_v1::ImageVersionsConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::composer_v1::ImageVersionsConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer

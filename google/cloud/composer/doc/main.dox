@@ -96,13 +96,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `composer::EnvironmentsClient`:
+For example, this will override the default endpoint for `composer_v1::EnvironmentsClient`:
 
 @snippet environments_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [composer::EnvironmentsClient](@ref composer::EnvironmentsClient-endpoint-snippet)
- [composer::ImageVersionsClient](@ref composer::ImageVersionsClient-endpoint-snippet)
+ [composer_v1::EnvironmentsClient](@ref composer_v1::EnvironmentsClient-endpoint-snippet)
+ [composer_v1::ImageVersionsClient](@ref composer_v1::ImageVersionsClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -117,8 +117,8 @@ to explicitly load a service account key file.
 @snippet environments_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [composer::EnvironmentsClient](@ref composer::EnvironmentsClient-service-account-snippet)
- [composer::ImageVersionsClient](@ref composer::ImageVersionsClient-service-account-snippet)
+ [composer_v1::EnvironmentsClient](@ref composer_v1::EnvironmentsClient-service-account-snippet)
+ [composer_v1::ImageVersionsClient](@ref composer_v1::ImageVersionsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -149,27 +149,27 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page composer::EnvironmentsClient-endpoint-snippet Override composer::EnvironmentsClient Endpoint Configuration
+/*! @page composer_v1::EnvironmentsClient-endpoint-snippet Override composer_v1::EnvironmentsClient Endpoint Configuration
 
-@snippet google/cloud/composer/samples/environments_client_samples.cc set-client-endpoint
-
-*/
-
-/*! @page composer::EnvironmentsClient-service-account-snippet Override composer::EnvironmentsClient Authentication Defaults
-
-@snippet google/cloud/composer/samples/environments_client_samples.cc with-service-account
+@snippet google/cloud/composer/v1/samples/environments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page composer::ImageVersionsClient-endpoint-snippet Override composer::ImageVersionsClient Endpoint Configuration
+/*! @page composer_v1::EnvironmentsClient-service-account-snippet Override composer_v1::EnvironmentsClient Authentication Defaults
 
-@snippet google/cloud/composer/samples/image_versions_client_samples.cc set-client-endpoint
+@snippet google/cloud/composer/v1/samples/environments_client_samples.cc with-service-account
 
 */
 
-/*! @page composer::ImageVersionsClient-service-account-snippet Override composer::ImageVersionsClient Authentication Defaults
+/*! @page composer_v1::ImageVersionsClient-endpoint-snippet Override composer_v1::ImageVersionsClient Endpoint Configuration
 
-@snippet google/cloud/composer/samples/image_versions_client_samples.cc with-service-account
+@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page composer_v1::ImageVersionsClient-service-account-snippet Override composer_v1::ImageVersionsClient Authentication Defaults
+
+@snippet google/cloud/composer/v1/samples/image_versions_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

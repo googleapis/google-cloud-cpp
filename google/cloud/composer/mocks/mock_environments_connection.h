@@ -20,84 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPOSER_MOCKS_MOCK_ENVIRONMENTS_CONNECTION_H
 
 #include "google/cloud/composer/environments_connection.h"
-#include <gmock/gmock.h>
+#include "google/cloud/composer/v1/mocks/mock_environments_connection.h"
 
 namespace google {
 namespace cloud {
 namespace composer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A class to mock `EnvironmentsConnection`.
- *
- * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `EnvironmentsClient`. To do so,
- * construct an object of type `EnvironmentsClient` with an instance of this
- * class. Then use the Google Test framework functions to program the behavior
- * of this mock.
- *
- * @see [This example][bq-mock] for how to test your application with GoogleTest.
- * While the example showcases types from the BigQuery library, the underlying
- * principles apply for any pair of `*Client` and `*Connection`.
- *
- * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
- */
-class MockEnvironmentsConnection : public composer::EnvironmentsConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::orchestration::airflow::service::v1::Environment>>,
-      CreateEnvironment,
-      (google::cloud::orchestration::airflow::service::v1::
-           CreateEnvironmentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>,
-      GetEnvironment,
-      (google::cloud::orchestration::airflow::service::v1::
-           GetEnvironmentRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      StreamRange<
-          google::cloud::orchestration::airflow::service::v1::Environment>,
-      ListEnvironments,
-      (google::cloud::orchestration::airflow::service::v1::
-           ListEnvironmentsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      future<StatusOr<
-          google::cloud::orchestration::airflow::service::v1::Environment>>,
-      UpdateEnvironment,
-      (google::cloud::orchestration::airflow::service::v1::
-           UpdateEnvironmentRequest const& request),
-      (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
-                                  v1::OperationMetadata>>,
-              DeleteEnvironment,
-              (google::cloud::orchestration::airflow::service::v1::
-                   DeleteEnvironmentRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
-                                  v1::SaveSnapshotResponse>>,
-              SaveSnapshot,
-              (google::cloud::orchestration::airflow::service::v1::
-                   SaveSnapshotRequest const& request),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
-                                  v1::LoadSnapshotResponse>>,
-              LoadSnapshot,
-              (google::cloud::orchestration::airflow::service::v1::
-                   LoadSnapshotRequest const& request),
-              (override));
-};
+/// @deprecated Use composer_v1_mocks::MockEnvironmentsConnection directly.
+using ::google::cloud::composer_v1_mocks::MockEnvironmentsConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_mocks
