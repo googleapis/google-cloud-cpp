@@ -59,21 +59,20 @@ std::shared_ptr<AsyncConnection> MakeTestConnection(
 TEST_F(AsyncConnectionImplTest, AsyncDeleteObject) {
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
   EXPECT_CALL(*mock, AsyncDeleteObject)
-      .WillOnce(
-          [this](CompletionQueue&, std::unique_ptr<grpc::ClientContext> context,
-                 google::storage::v2::DeleteObjectRequest const& request) {
-            // Verify at least one option is initialized with the correct
-            // values.
-            EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
-            auto metadata = GetMetadata(*context);
-            EXPECT_THAT(metadata,
-                        UnorderedElementsAre(
-                            Pair("x-goog-quota-user", "test-quota-user"),
-                            Pair("x-goog-fieldmask", "field1,field2")));
-            EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
-            EXPECT_THAT(request.object(), "test-object");
-            return make_ready_future(PermanentError());
-          });
+      .WillOnce([this](
+                    CompletionQueue&, auto context,
+                    google::storage::v2::DeleteObjectRequest const& request) {
+        // Verify at least one option is initialized with the correct
+        // values.
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        auto metadata = GetMetadata(*context);
+        EXPECT_THAT(metadata, UnorderedElementsAre(
+                                  Pair("x-goog-quota-user", "test-quota-user"),
+                                  Pair("x-goog-fieldmask", "field1,field2")));
+        EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
+        EXPECT_THAT(request.object(), "test-object");
+        return make_ready_future(PermanentError());
+      });
   CompletionQueue cq;
   auto connection = MakeTestConnection(cq, mock);
   // Simulate the option span created by the `*Client` class. The

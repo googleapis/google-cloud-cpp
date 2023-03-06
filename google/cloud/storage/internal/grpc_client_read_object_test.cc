@@ -52,8 +52,7 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
 
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([&](std::unique_ptr<grpc::ClientContext>,
-                    ReadObjectRequest const& request) {
+      .WillOnce([&](auto, ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
         auto stream = absl::make_unique<MockObjectMediaStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status{}));
@@ -94,8 +93,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
 
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject)
-      .WillOnce([&](std::unique_ptr<grpc::ClientContext>,
-                    ReadObjectRequest const& request) {
+      .WillOnce([&](auto, ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
         auto stream = absl::make_unique<MockObjectMediaStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status{}));

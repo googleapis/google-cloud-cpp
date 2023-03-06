@@ -92,7 +92,7 @@ TEST_F(StorageStubFactory, ReadObject) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, ReadObject)
             .WillOnce(
-                [this](std::unique_ptr<grpc::ClientContext> context,
+                [this](auto context,
                        google::storage::v2::ReadObjectRequest const& request) {
                   // Verify the Auth decorator is present
                   EXPECT_THAT(context->credentials(), NotNull());
@@ -134,7 +134,7 @@ TEST_F(StorageStubFactory, WriteObject) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, AsyncWriteObject)
             .WillOnce([this](google::cloud::CompletionQueue const&,
-                             std::unique_ptr<grpc::ClientContext> context) {
+                             auto context) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context->credentials(), NotNull());
               // Verify the Metadata decorator is present
