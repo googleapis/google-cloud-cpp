@@ -45,7 +45,7 @@ class StreamingWriteRpcImpl
     : public StreamingWriteRpc<RequestType, ResponseType> {
  public:
   StreamingWriteRpcImpl(
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       std::unique_ptr<ResponseType> response,
       std::unique_ptr<grpc::ClientWriterInterface<RequestType>> stream)
       : context_(std::move(context)),
@@ -84,7 +84,7 @@ class StreamingWriteRpcImpl
     return status;
   }
 
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<ResponseType> response_;
   std::unique_ptr<grpc::ClientWriterInterface<RequestType>> stream_;
   bool finished_ = false;

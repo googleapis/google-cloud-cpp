@@ -34,9 +34,9 @@ Status GrpcChannelCredentialsAuthentication::ConfigureContext(
   return Status{};
 }
 
-future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
 GrpcChannelCredentialsAuthentication::AsyncConfigureContext(
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return make_ready_future(make_status_or(std::move(context)));
 }
 

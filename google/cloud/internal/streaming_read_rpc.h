@@ -77,7 +77,7 @@ template <typename ResponseType>
 class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
  public:
   StreamingReadRpcImpl(
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       std::unique_ptr<grpc::ClientReaderInterface<ResponseType>> stream)
       : context_(std::move(context)), stream_(std::move(stream)) {}
 
@@ -108,7 +108,7 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
     return status;
   }
 
-  std::unique_ptr<grpc::ClientContext> const context_;
+  std::shared_ptr<grpc::ClientContext> const context_;
   std::unique_ptr<grpc::ClientReaderInterface<ResponseType>> const stream_;
   bool finished_ = false;
 };

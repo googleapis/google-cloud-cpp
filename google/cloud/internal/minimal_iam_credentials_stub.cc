@@ -40,7 +40,7 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
   ~MinimalIamCredentialsImpl() override = default;
 
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     using ResultType = StatusOr<GenerateAccessTokenResponse>;
     auto& impl = impl_;
@@ -51,7 +51,7 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
     };
     return auth_strategy_->AsyncConfigureContext(std::move(context))
         .then([cq, async_call,
-               request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+               request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                             f) mutable -> future<ResultType> {
           auto context = f.get();
           if (!context)
@@ -87,7 +87,7 @@ class AsyncAccessTokenGeneratorMetadata : public MinimalIamCredentialsStub {
   ~AsyncAccessTokenGeneratorMetadata() override = default;
 
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     context->AddMetadata("x-goog-request-params", "name=" + request.name());
     context->AddMetadata("x-goog-api-client", x_goog_api_client_);
@@ -117,7 +117,7 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
   ~AsyncAccessTokenGeneratorLogging() override = default;
 
   future<StatusOr<GenerateAccessTokenResponse>> AsyncGenerateAccessToken(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     auto prefix = std::string(__func__) + "(" + RequestIdForLogging() + ")";
     auto const& opts = tracing_options_;

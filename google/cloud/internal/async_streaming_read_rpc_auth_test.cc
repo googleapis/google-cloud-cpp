@@ -89,7 +89,7 @@ TEST(AsyncStreamReadWriteAuth, AuthFails) {
   });
   auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
   EXPECT_CALL(*strategy, AsyncConfigureContext).WillOnce([](auto) {
-    return make_ready_future(StatusOr<std::unique_ptr<grpc::ClientContext>>(
+    return make_ready_future(StatusOr<std::shared_ptr<grpc::ClientContext>>(
         Status(StatusCode::kPermissionDenied, "uh-oh")));
   });
   auto uut = absl::make_unique<AuthStream>(

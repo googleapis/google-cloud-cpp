@@ -44,15 +44,15 @@ struct StringOption {
 class MockStub {
  public:
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncCreateInstance,
-              (CompletionQueue & cq, std::unique_ptr<grpc::ClientContext>,
+              (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
                CreateInstanceRequest const&),
               ());
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
-              (CompletionQueue & cq, std::unique_ptr<grpc::ClientContext>,
+              (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               ());
   MOCK_METHOD(future<Status>, AsyncCancelOperation,
-              (CompletionQueue & cq, std::unique_ptr<grpc::ClientContext>,
+              (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::CancelOperationRequest const&),
               ());
 };
@@ -82,7 +82,7 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
 
 using StartOperation =
     std::function<future<StatusOr<google::longrunning::Operation>>(
-        CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
         CreateInstanceRequest const&)>;
 
 StartOperation MakeStart(std::shared_ptr<MockStub> const& m) {

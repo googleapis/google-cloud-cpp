@@ -140,7 +140,7 @@ class AsyncReadStreamImpl
    */
   template <typename AsyncFunctionType, typename Request>
   void Start(AsyncFunctionType&& async_call, Request const& request,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              std::shared_ptr<CompletionQueueImpl> cq) {
     // An adapter to call OnStart() via the completion queue.
     class NotifyStart final : public AsyncGrpcOperation {
@@ -317,7 +317,7 @@ class AsyncReadStreamImpl
 
   typename std::decay<OnReadHandler>::type on_read_;
   typename std::decay<OnFinishHandler>::type on_finish_;
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<CompletionQueueImpl> cq_;
   std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> reader_;
 };

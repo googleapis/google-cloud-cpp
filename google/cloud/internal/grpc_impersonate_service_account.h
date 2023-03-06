@@ -46,8 +46,8 @@ class GrpcImpersonateServiceAccount
       grpc::ChannelArguments const& arguments) override;
   bool RequiresConfigureContext() const override;
   Status ConfigureContext(grpc::ClientContext&) override;
-  future<StatusOr<std::unique_ptr<grpc::ClientContext>>> AsyncConfigureContext(
-      std::unique_ptr<grpc::ClientContext>) override;
+  future<StatusOr<std::shared_ptr<grpc::ClientContext>>> AsyncConfigureContext(
+      std::shared_ptr<grpc::ClientContext>) override;
 
  private:
   GrpcImpersonateServiceAccount(CompletionQueue cq,
@@ -56,8 +56,8 @@ class GrpcImpersonateServiceAccount
 
   std::shared_ptr<grpc::CallCredentials> UpdateCallCredentials(
       std::string token);
-  StatusOr<std::unique_ptr<grpc::ClientContext>> OnGetCallCredentials(
-      std::unique_ptr<grpc::ClientContext> context,
+  StatusOr<std::shared_ptr<grpc::ClientContext>> OnGetCallCredentials(
+      std::shared_ptr<grpc::ClientContext> context,
       StatusOr<AccessToken> result);
 
   std::weak_ptr<GrpcImpersonateServiceAccount> WeakFromThis() {

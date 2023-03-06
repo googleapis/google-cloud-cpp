@@ -32,11 +32,11 @@ namespace internal {
 
 using AsyncPollLongRunningOperation =
     std::function<future<StatusOr<google::longrunning::Operation>>(
-        CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
         google::longrunning::GetOperationRequest const&)>;
 
 using AsyncCancelLongRunningOperation = std::function<future<Status>(
-    CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+    CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
     google::longrunning::CancelOperationRequest const&)>;
 
 /**
@@ -79,11 +79,11 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  *  public:
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
  *     google::cloud::CompletionQueue& cq,
- *     std::unique_ptr<grpc::ClientContext> context,
+ *     std::shared_ptr<grpc::ClientContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
  *   virtual future<Status> AsyncCancelOperation(
  *     google::cloud::CompletionQueue& cq,
- *     std::unique_ptr<grpc::ClientContext> context,
+ *     std::shared_ptr<grpc::ClientContext> context,
  *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode

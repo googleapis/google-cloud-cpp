@@ -80,7 +80,7 @@ class TestStub {
 
   virtual future<StatusOr<Table>> AsyncGetTable(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       GetTableRequest const& request) = 0;
 };
 
@@ -101,7 +101,7 @@ class TestStubImpl : public TestStub {
 
   future<StatusOr<Table>> AsyncGetTable(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       GetTableRequest const& request) override {
     return MakeUnaryRpcImpl<GetTableRequest, Table>(
         cq,
@@ -134,7 +134,7 @@ class TestStubAuth : public TestStub,
 
   future<StatusOr<Table>> AsyncGetTable(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       GetTableRequest const& request) override {
     auto self = shared_from_this();
     return auth_->AsyncConfigureContext(std::move(context))
@@ -170,7 +170,7 @@ class TestStubLogging : public TestStub {
 
   future<StatusOr<Table>> AsyncGetTable(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       GetTableRequest const& request) override {
     return LogWrapper(
         [this](google::cloud::CompletionQueue& cq, auto context,

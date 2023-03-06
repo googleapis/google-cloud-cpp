@@ -67,16 +67,16 @@ using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
  *  public:
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncFoo(
  *     google::cloud::CompletionQueue& cq,
- *     std::unique_ptr<grpc::ClientContext> context,
+ *     std::shared_ptr<grpc::ClientContext> context,
  *     FooRequest const& request) = 0;
  *
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
  *     google::cloud::CompletionQueue& cq,
- *     std::unique_ptr<grpc::ClientContext> context,
+ *     std::shared_ptr<grpc::ClientContext> context,
  *     google::longrunning::GetOperationRequest const& request) = 0;
  *   virtual future<Status> AsyncCancelOperation(
  *     google::cloud::CompletionQueue& cq,
- *     std::unique_ptr<grpc::ClientContext> context,
+ *     std::shared_ptr<grpc::ClientContext> context,
  *     google::longrunning::CancelOperationRequest const& request) = 0;
  * };
  * @endcode
