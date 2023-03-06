@@ -37,7 +37,7 @@ ClusterControllerMetadata::ClusterControllerMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncCreateCluster(cq, std::move(context), request);
@@ -46,7 +46,7 @@ ClusterControllerMetadata::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
@@ -55,7 +55,7 @@ ClusterControllerMetadata::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerMetadata::AsyncStopCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncStopCluster(cq, std::move(context), request);
@@ -64,7 +64,7 @@ ClusterControllerMetadata::AsyncStopCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerMetadata::AsyncStartCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncStartCluster(cq, std::move(context), request);
@@ -73,7 +73,7 @@ ClusterControllerMetadata::AsyncStartCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
@@ -98,7 +98,7 @@ ClusterControllerMetadata::ListClusters(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerMetadata::AsyncDiagnoseCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncDiagnoseCluster(cq, std::move(context), request);
@@ -107,7 +107,7 @@ ClusterControllerMetadata::AsyncDiagnoseCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -115,7 +115,7 @@ ClusterControllerMetadata::AsyncGetOperation(
 
 future<Status> ClusterControllerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

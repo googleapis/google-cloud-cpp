@@ -79,7 +79,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
 ParticipantsMetadata::AsyncStreamingAnalyzeContent(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->AsyncStreamingAnalyzeContent(cq, std::move(context));
 }

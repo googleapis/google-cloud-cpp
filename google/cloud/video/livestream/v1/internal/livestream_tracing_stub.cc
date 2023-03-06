@@ -33,7 +33,7 @@ LivestreamServiceTracingStub::LivestreamServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   return child_->AsyncCreateChannel(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ LivestreamServiceTracingStub::GetChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   return child_->AsyncDeleteChannel(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ LivestreamServiceTracingStub::AsyncDeleteChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   return child_->AsyncUpdateChannel(cq, std::move(context), request);
 }
@@ -81,7 +81,7 @@ LivestreamServiceTracingStub::AsyncUpdateChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncStartChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   return child_->AsyncStartChannel(cq, std::move(context), request);
 }
@@ -89,7 +89,7 @@ LivestreamServiceTracingStub::AsyncStartChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   return child_->AsyncStopChannel(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ LivestreamServiceTracingStub::AsyncStopChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   return child_->AsyncCreateInput(cq, std::move(context), request);
 }
@@ -128,7 +128,7 @@ LivestreamServiceTracingStub::GetInput(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncDeleteInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   return child_->AsyncDeleteInput(cq, std::move(context), request);
 }
@@ -136,7 +136,7 @@ LivestreamServiceTracingStub::AsyncDeleteInput(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   return child_->AsyncUpdateInput(cq, std::move(context), request);
 }
@@ -190,14 +190,14 @@ Status LivestreamServiceTracingStub::DeleteEvent(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> LivestreamServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

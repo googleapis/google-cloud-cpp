@@ -39,7 +39,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PublishResponse>>
 PublisherServiceMetadata::AsyncPublish(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->AsyncPublish(cq, std::move(context));
 }

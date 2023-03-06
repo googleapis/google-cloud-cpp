@@ -36,7 +36,7 @@ ApiKeysMetadata::ApiKeysMetadata(std::shared_ptr<ApiKeysStub> child)
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateKey(cq, std::move(context), request);
@@ -67,7 +67,7 @@ ApiKeysMetadata::GetKeyString(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   SetMetadata(*context, "key.name=" + request.key().name());
   return child_->AsyncUpdateKey(cq, std::move(context), request);
@@ -76,7 +76,7 @@ ApiKeysMetadata::AsyncUpdateKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteKey(cq, std::move(context), request);
@@ -85,7 +85,7 @@ ApiKeysMetadata::AsyncDeleteKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncUndeleteKey(cq, std::move(context), request);
@@ -102,7 +102,7 @@ ApiKeysMetadata::LookupKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -110,7 +110,7 @@ ApiKeysMetadata::AsyncGetOperation(
 
 future<Status> ApiKeysMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

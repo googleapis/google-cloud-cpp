@@ -45,7 +45,7 @@ DocumentProcessorServiceTracingStub::ProcessDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncBatchProcessDocuments(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
   return child_->AsyncBatchProcessDocuments(cq, std::move(context), request);
 }
@@ -116,7 +116,7 @@ DocumentProcessorServiceTracingStub::GetProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncTrainProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&
         request) {
   return child_->AsyncTrainProcessorVersion(cq, std::move(context), request);
@@ -152,7 +152,7 @@ DocumentProcessorServiceTracingStub::ListProcessorVersions(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDeleteProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
         request) {
   return child_->AsyncDeleteProcessorVersion(cq, std::move(context), request);
@@ -161,7 +161,7 @@ DocumentProcessorServiceTracingStub::AsyncDeleteProcessorVersion(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
         request) {
   return child_->AsyncDeployProcessorVersion(cq, std::move(context), request);
@@ -170,7 +170,7 @@ DocumentProcessorServiceTracingStub::AsyncDeployProcessorVersion(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncUndeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request) {
   return child_->AsyncUndeployProcessorVersion(cq, std::move(context), request);
@@ -191,7 +191,7 @@ DocumentProcessorServiceTracingStub::CreateProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDeleteProcessor(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   return child_->AsyncDeleteProcessor(cq, std::move(context), request);
 }
@@ -199,7 +199,7 @@ DocumentProcessorServiceTracingStub::AsyncDeleteProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncEnableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   return child_->AsyncEnableProcessor(cq, std::move(context), request);
 }
@@ -207,7 +207,7 @@ DocumentProcessorServiceTracingStub::AsyncEnableProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncDisableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   return child_->AsyncDisableProcessor(cq, std::move(context), request);
 }
@@ -215,7 +215,7 @@ DocumentProcessorServiceTracingStub::AsyncDisableProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncSetDefaultProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request) {
   return child_->AsyncSetDefaultProcessorVersion(cq, std::move(context),
@@ -225,7 +225,7 @@ DocumentProcessorServiceTracingStub::AsyncSetDefaultProcessorVersion(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   return child_->AsyncReviewDocument(cq, std::move(context), request);
 }
@@ -233,7 +233,7 @@ DocumentProcessorServiceTracingStub::AsyncReviewDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncEvaluateProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request) {
   return child_->AsyncEvaluateProcessorVersion(cq, std::move(context), request);
@@ -266,14 +266,14 @@ DocumentProcessorServiceTracingStub::ListEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> DocumentProcessorServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

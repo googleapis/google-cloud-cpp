@@ -58,11 +58,11 @@ StatusOr<google::cloud::tpu::v2::Node> TpuLogging::GetNode(
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncCreateNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::tpu::v2::CreateNodeRequest const& request) {
         return child_->AsyncCreateNode(cq, std::move(context), request);
       },
@@ -71,11 +71,11 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncCreateNode(
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::tpu::v2::DeleteNodeRequest const& request) {
         return child_->AsyncDeleteNode(cq, std::move(context), request);
       },
@@ -84,11 +84,11 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncDeleteNode(
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StopNodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::tpu::v2::StopNodeRequest const& request) {
         return child_->AsyncStopNode(cq, std::move(context), request);
       },
@@ -97,11 +97,11 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStopNode(
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StartNodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::tpu::v2::StartNodeRequest const& request) {
         return child_->AsyncStartNode(cq, std::move(context), request);
       },
@@ -110,11 +110,11 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStartNode(
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncUpdateNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::tpu::v2::UpdateNodeRequest const& request) {
         return child_->AsyncUpdateNode(cq, std::move(context), request);
       },
@@ -197,11 +197,11 @@ TpuLogging::GetGuestAttributes(
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -210,11 +210,11 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncGetOperation(
 
 future<Status> TpuLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

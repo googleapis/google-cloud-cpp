@@ -39,7 +39,7 @@ class CursorServiceStub {
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(google::cloud::CompletionQueue const& cq,
-                             std::unique_ptr<grpc::ClientContext> context) = 0;
+                             std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
   CommitCursor(
@@ -66,7 +66,7 @@ class DefaultCursorServiceStub : public CursorServiceStub {
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
       grpc::ClientContext& client_context,

@@ -33,7 +33,7 @@ ApiKeysStub::~ApiKeysStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiKeysStub::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::api::apikeys::v2::CreateKeyRequest,
                                     google::longrunning::Operation>(
@@ -84,7 +84,7 @@ DefaultApiKeysStub::GetKeyString(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiKeysStub::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::api::apikeys::v2::UpdateKeyRequest,
                                     google::longrunning::Operation>(
@@ -100,7 +100,7 @@ DefaultApiKeysStub::AsyncUpdateKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiKeysStub::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::api::apikeys::v2::DeleteKeyRequest,
                                     google::longrunning::Operation>(
@@ -116,7 +116,7 @@ DefaultApiKeysStub::AsyncDeleteKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiKeysStub::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::api::apikeys::v2::UndeleteKeyRequest,
@@ -145,7 +145,7 @@ DefaultApiKeysStub::LookupKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiKeysStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -160,7 +160,7 @@ DefaultApiKeysStub::AsyncGetOperation(
 
 future<Status> DefaultApiKeysStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

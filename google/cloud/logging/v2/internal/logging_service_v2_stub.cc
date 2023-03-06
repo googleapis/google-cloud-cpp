@@ -97,7 +97,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>(
@@ -110,7 +110,7 @@ DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 DefaultLoggingServiceV2Stub::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::logging::v2::WriteLogEntriesRequest,

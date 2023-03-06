@@ -57,7 +57,7 @@ BareMetalSolutionTracingStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
         request) {
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -66,7 +66,7 @@ BareMetalSolutionTracingStub::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
   return child_->AsyncResetInstance(cq, std::move(context), request);
 }
@@ -74,7 +74,7 @@ BareMetalSolutionTracingStub::AsyncResetInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
   return child_->AsyncStartInstance(cq, std::move(context), request);
 }
@@ -82,7 +82,7 @@ BareMetalSolutionTracingStub::AsyncStartInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncStopInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
   return child_->AsyncStopInstance(cq, std::move(context), request);
 }
@@ -90,7 +90,7 @@ BareMetalSolutionTracingStub::AsyncStopInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncDetachLun(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
   return child_->AsyncDetachLun(cq, std::move(context), request);
 }
@@ -121,7 +121,7 @@ BareMetalSolutionTracingStub::GetVolume(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncUpdateVolume(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
   return child_->AsyncUpdateVolume(cq, std::move(context), request);
 }
@@ -129,7 +129,7 @@ BareMetalSolutionTracingStub::AsyncUpdateVolume(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncResizeVolume(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
   return child_->AsyncResizeVolume(cq, std::move(context), request);
 }
@@ -175,7 +175,7 @@ BareMetalSolutionTracingStub::GetNetwork(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncUpdateNetwork(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
   return child_->AsyncUpdateNetwork(cq, std::move(context), request);
 }
@@ -229,7 +229,7 @@ BareMetalSolutionTracingStub::ListNfsShares(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncUpdateNfsShare(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
         request) {
   return child_->AsyncUpdateNfsShare(cq, std::move(context), request);
@@ -238,14 +238,14 @@ BareMetalSolutionTracingStub::AsyncUpdateNfsShare(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> BareMetalSolutionTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -51,7 +51,7 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceMetadata::GetJob(
 future<StatusOr<google::longrunning::Operation>>
 BatchServiceMetadata::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteJob(cq, std::move(context), request);
@@ -83,7 +83,7 @@ BatchServiceMetadata::ListTasks(
 future<StatusOr<google::longrunning::Operation>>
 BatchServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -91,7 +91,7 @@ BatchServiceMetadata::AsyncGetOperation(
 
 future<Status> BatchServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

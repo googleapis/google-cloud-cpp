@@ -60,11 +60,11 @@ StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminLogging::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::CreateClusterRequest const& request) {
         return child_->AsyncCreateCluster(cq, std::move(context), request);
       },
@@ -74,11 +74,11 @@ AlloyDBAdminLogging::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
         return child_->AsyncUpdateCluster(cq, std::move(context), request);
       },
@@ -88,11 +88,11 @@ AlloyDBAdminLogging::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
         return child_->AsyncDeleteCluster(cq, std::move(context), request);
       },
@@ -102,11 +102,11 @@ AlloyDBAdminLogging::AsyncDeleteCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
         return child_->AsyncRestoreCluster(cq, std::move(context), request);
       },
@@ -139,11 +139,11 @@ StatusOr<google::cloud::alloydb::v1::Instance> AlloyDBAdminLogging::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
         return child_->AsyncCreateInstance(cq, std::move(context), request);
       },
@@ -153,11 +153,11 @@ AlloyDBAdminLogging::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncBatchCreateInstances(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::BatchCreateInstancesRequest const&
                  request) {
         return child_->AsyncBatchCreateInstances(cq, std::move(context),
@@ -169,11 +169,11 @@ AlloyDBAdminLogging::AsyncBatchCreateInstances(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
         return child_->AsyncUpdateInstance(cq, std::move(context), request);
       },
@@ -183,11 +183,11 @@ AlloyDBAdminLogging::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
         return child_->AsyncDeleteInstance(cq, std::move(context), request);
       },
@@ -197,12 +197,12 @@ AlloyDBAdminLogging::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
         return child_->AsyncFailoverInstance(cq, std::move(context), request);
       },
@@ -212,12 +212,12 @@ AlloyDBAdminLogging::AsyncFailoverInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
         return child_->AsyncRestartInstance(cq, std::move(context), request);
       },
@@ -250,11 +250,11 @@ StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminLogging::GetBackup(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::CreateBackupRequest const& request) {
         return child_->AsyncCreateBackup(cq, std::move(context), request);
       },
@@ -264,11 +264,11 @@ AlloyDBAdminLogging::AsyncCreateBackup(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
         return child_->AsyncUpdateBackup(cq, std::move(context), request);
       },
@@ -278,11 +278,11 @@ AlloyDBAdminLogging::AsyncUpdateBackup(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
         return child_->AsyncDeleteBackup(cq, std::move(context), request);
       },
@@ -307,11 +307,11 @@ AlloyDBAdminLogging::ListSupportedDatabaseFlags(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -320,11 +320,11 @@ AlloyDBAdminLogging::AsyncGetOperation(
 
 future<Status> AlloyDBAdminLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

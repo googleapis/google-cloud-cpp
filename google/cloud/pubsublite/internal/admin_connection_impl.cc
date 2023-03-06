@@ -262,18 +262,18 @@ AdminServiceConnectionImpl::SeekSubscription(
       google::cloud::pubsublite::v1::SeekSubscriptionResponse>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
                  request) {
         return stub->AsyncSeekSubscription(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -410,7 +410,7 @@ AdminServiceConnectionImpl::AsyncGetTopicPartitions(
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetTopicPartitions(request), background_->cq(),
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
                  request) {
         return stub->AsyncGetTopicPartitions(cq, std::move(context), request);

@@ -37,11 +37,11 @@ AutoMlLogging::AutoMlLogging(std::shared_ptr<AutoMlStub> child,
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::CreateDatasetRequest const& request) {
         return child_->AsyncCreateDataset(cq, std::move(context), request);
       },
@@ -85,11 +85,11 @@ StatusOr<google::cloud::automl::v1::Dataset> AutoMlLogging::UpdateDataset(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::DeleteDatasetRequest const& request) {
         return child_->AsyncDeleteDataset(cq, std::move(context), request);
       },
@@ -98,11 +98,11 @@ AutoMlLogging::AsyncDeleteDataset(
 
 future<StatusOr<google::longrunning::Operation>> AutoMlLogging::AsyncImportData(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ImportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::ImportDataRequest const& request) {
         return child_->AsyncImportData(cq, std::move(context), request);
       },
@@ -111,11 +111,11 @@ future<StatusOr<google::longrunning::Operation>> AutoMlLogging::AsyncImportData(
 
 future<StatusOr<google::longrunning::Operation>> AutoMlLogging::AsyncExportData(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ExportDataRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::ExportDataRequest const& request) {
         return child_->AsyncExportData(cq, std::move(context), request);
       },
@@ -138,11 +138,11 @@ AutoMlLogging::GetAnnotationSpec(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::CreateModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::CreateModelRequest const& request) {
         return child_->AsyncCreateModel(cq, std::move(context), request);
       },
@@ -175,11 +175,11 @@ AutoMlLogging::ListModels(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeleteModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::DeleteModelRequest const& request) {
         return child_->AsyncDeleteModel(cq, std::move(context), request);
       },
@@ -200,11 +200,11 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlLogging::UpdateModel(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeployModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::DeployModelRequest const& request) {
         return child_->AsyncDeployModel(cq, std::move(context), request);
       },
@@ -214,11 +214,11 @@ AutoMlLogging::AsyncDeployModel(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::UndeployModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::UndeployModelRequest const& request) {
         return child_->AsyncUndeployModel(cq, std::move(context), request);
       },
@@ -228,11 +228,11 @@ AutoMlLogging::AsyncUndeployModel(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ExportModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::automl::v1::ExportModelRequest const& request) {
         return child_->AsyncExportModel(cq, std::move(context), request);
       },
@@ -268,11 +268,11 @@ AutoMlLogging::ListModelEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -281,11 +281,11 @@ AutoMlLogging::AsyncGetOperation(
 
 future<Status> AutoMlLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

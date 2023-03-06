@@ -175,7 +175,7 @@ Status AdminServiceTracingStub::DeleteSubscription(
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceTracingStub::AsyncSeekSubscription(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   return child_->AsyncSeekSubscription(cq, std::move(context), request);
 }
@@ -255,7 +255,7 @@ AdminServiceTracingStub::ListReservationTopics(
 future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceTracingStub::AsyncGetTopicPartitions(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   return child_->AsyncGetTopicPartitions(cq, std::move(context), request);
 }
@@ -263,14 +263,14 @@ AdminServiceTracingStub::AsyncGetTopicPartitions(
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> AdminServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

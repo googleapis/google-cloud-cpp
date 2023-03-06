@@ -65,7 +65,7 @@ class SubscriberStub {
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
   AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
-                     std::unique_ptr<grpc::ClientContext> context) = 0;
+                     std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual Status ModifyPushConfig(
       grpc::ClientContext& context,
@@ -97,12 +97,12 @@ class SubscriberStub {
 
   virtual future<Status> AsyncModifyAckDeadline(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) = 0;
 
   virtual future<Status> AsyncAcknowledge(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::pubsub::v1::AcknowledgeRequest const& request) = 0;
 };
 
@@ -140,7 +140,7 @@ class DefaultSubscriberStub : public SubscriberStub {
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
   AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
-                     std::unique_ptr<grpc::ClientContext> context) override;
+                     std::shared_ptr<grpc::ClientContext> context) override;
 
   Status ModifyPushConfig(
       grpc::ClientContext& client_context,
@@ -172,12 +172,12 @@ class DefaultSubscriberStub : public SubscriberStub {
 
   future<Status> AsyncModifyAckDeadline(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
 
   future<Status> AsyncAcknowledge(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::pubsub::v1::AcknowledgeRequest const& request) override;
 
  private:

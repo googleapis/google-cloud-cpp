@@ -33,7 +33,7 @@ ManagedIdentitiesServiceTracingStub::ManagedIdentitiesServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncCreateMicrosoftAdDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
   return child_->AsyncCreateMicrosoftAdDomain(cq, std::move(context), request);
@@ -81,7 +81,7 @@ ManagedIdentitiesServiceTracingStub::GetDomain(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncUpdateDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   return child_->AsyncUpdateDomain(cq, std::move(context), request);
 }
@@ -89,7 +89,7 @@ ManagedIdentitiesServiceTracingStub::AsyncUpdateDomain(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   return child_->AsyncDeleteDomain(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ ManagedIdentitiesServiceTracingStub::AsyncDeleteDomain(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   return child_->AsyncAttachTrust(cq, std::move(context), request);
 }
@@ -105,7 +105,7 @@ ManagedIdentitiesServiceTracingStub::AsyncAttachTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncReconfigureTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
   return child_->AsyncReconfigureTrust(cq, std::move(context), request);
@@ -114,7 +114,7 @@ ManagedIdentitiesServiceTracingStub::AsyncReconfigureTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   return child_->AsyncDetachTrust(cq, std::move(context), request);
 }
@@ -122,7 +122,7 @@ ManagedIdentitiesServiceTracingStub::AsyncDetachTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   return child_->AsyncValidateTrust(cq, std::move(context), request);
 }
@@ -130,14 +130,14 @@ ManagedIdentitiesServiceTracingStub::AsyncValidateTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ManagedIdentitiesServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -52,7 +52,7 @@ StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceMetadata::GetRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceMetadata::AsyncCreateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateRealmRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateRealm(cq, std::move(context), request);
@@ -61,7 +61,7 @@ RealmsServiceMetadata::AsyncCreateRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceMetadata::AsyncDeleteRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteRealmRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteRealm(cq, std::move(context), request);
@@ -70,7 +70,7 @@ RealmsServiceMetadata::AsyncDeleteRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceMetadata::AsyncUpdateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateRealmRequest const& request) {
   SetMetadata(*context, "realm.name=" + request.realm().name());
   return child_->AsyncUpdateRealm(cq, std::move(context), request);
@@ -87,7 +87,7 @@ RealmsServiceMetadata::PreviewRealmUpdate(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -95,7 +95,7 @@ RealmsServiceMetadata::AsyncGetOperation(
 
 future<Status> RealmsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

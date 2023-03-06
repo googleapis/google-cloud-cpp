@@ -46,17 +46,17 @@ class RealmsServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRealm(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::CreateRealmRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRealm(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::DeleteRealmRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateRealm(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateRealmRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
@@ -66,12 +66,12 @@ class RealmsServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -94,17 +94,17 @@ class DefaultRealmsServiceStub : public RealmsServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRealm(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::CreateRealmRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRealm(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::DeleteRealmRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRealm(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateRealmRequest const& request) override;
 
   StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
@@ -114,12 +114,12 @@ class DefaultRealmsServiceStub : public RealmsServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

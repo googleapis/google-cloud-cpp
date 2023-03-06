@@ -63,13 +63,13 @@ WorkflowTemplateServiceLogging::GetWorkflowTemplate(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceLogging::AsyncInstantiateWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
               request) {
         return child_->AsyncInstantiateWorkflowTemplate(cq, std::move(context),
@@ -81,12 +81,12 @@ WorkflowTemplateServiceLogging::AsyncInstantiateWorkflowTemplate(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceLogging::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::dataproc::v1::
                  InstantiateInlineWorkflowTemplateRequest const& request) {
         return child_->AsyncInstantiateInlineWorkflowTemplate(
@@ -136,11 +136,11 @@ Status WorkflowTemplateServiceLogging::DeleteWorkflowTemplate(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -149,11 +149,11 @@ WorkflowTemplateServiceLogging::AsyncGetOperation(
 
 future<Status> WorkflowTemplateServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

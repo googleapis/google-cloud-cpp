@@ -81,13 +81,13 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
 ParticipantsAuth::AsyncStreamingAnalyzeContent(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>;
 
   auto& child = child_;
-  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingAnalyzeContent(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(

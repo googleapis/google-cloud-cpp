@@ -33,7 +33,7 @@ ConversationDatasetsTracingStub::ConversationDatasetsTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncCreateConversationDataset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
   return child_->AsyncCreateConversationDataset(cq, std::move(context),
@@ -71,7 +71,7 @@ ConversationDatasetsTracingStub::ListConversationDatasets(
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncDeleteConversationDataset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
   return child_->AsyncDeleteConversationDataset(cq, std::move(context),
@@ -81,7 +81,7 @@ ConversationDatasetsTracingStub::AsyncDeleteConversationDataset(
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncImportConversationData(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
   return child_->AsyncImportConversationData(cq, std::move(context), request);
@@ -90,14 +90,14 @@ ConversationDatasetsTracingStub::AsyncImportConversationData(
 future<StatusOr<google::longrunning::Operation>>
 ConversationDatasetsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ConversationDatasetsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

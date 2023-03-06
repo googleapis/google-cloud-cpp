@@ -32,7 +32,7 @@ SpeechTracingStub::SpeechTracingStub(std::shared_ptr<SpeechStub> child)
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncCreateRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   return child_->AsyncCreateRecognizer(cq, std::move(context), request);
 }
@@ -64,7 +64,7 @@ SpeechTracingStub::GetRecognizer(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUpdateRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   return child_->AsyncUpdateRecognizer(cq, std::move(context), request);
 }
@@ -72,7 +72,7 @@ SpeechTracingStub::AsyncUpdateRecognizer(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncDeleteRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   return child_->AsyncDeleteRecognizer(cq, std::move(context), request);
 }
@@ -80,7 +80,7 @@ SpeechTracingStub::AsyncDeleteRecognizer(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUndeleteRecognizer(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   return child_->AsyncUndeleteRecognizer(cq, std::move(context), request);
 }
@@ -101,14 +101,14 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v2::StreamingRecognizeResponse>>
 SpeechTracingStub::AsyncStreamingRecognize(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->AsyncStreamingRecognize(cq, std::move(context));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncBatchRecognize(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   return child_->AsyncBatchRecognize(cq, std::move(context), request);
 }
@@ -137,7 +137,7 @@ StatusOr<google::cloud::speech::v2::Config> SpeechTracingStub::UpdateConfig(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncCreateCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   return child_->AsyncCreateCustomClass(cq, std::move(context), request);
 }
@@ -169,7 +169,7 @@ SpeechTracingStub::GetCustomClass(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUpdateCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   return child_->AsyncUpdateCustomClass(cq, std::move(context), request);
 }
@@ -177,7 +177,7 @@ SpeechTracingStub::AsyncUpdateCustomClass(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncDeleteCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   return child_->AsyncDeleteCustomClass(cq, std::move(context), request);
 }
@@ -185,7 +185,7 @@ SpeechTracingStub::AsyncDeleteCustomClass(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUndeleteCustomClass(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   return child_->AsyncUndeleteCustomClass(cq, std::move(context), request);
 }
@@ -193,7 +193,7 @@ SpeechTracingStub::AsyncUndeleteCustomClass(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncCreatePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   return child_->AsyncCreatePhraseSet(cq, std::move(context), request);
 }
@@ -224,7 +224,7 @@ StatusOr<google::cloud::speech::v2::PhraseSet> SpeechTracingStub::GetPhraseSet(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUpdatePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   return child_->AsyncUpdatePhraseSet(cq, std::move(context), request);
 }
@@ -232,7 +232,7 @@ SpeechTracingStub::AsyncUpdatePhraseSet(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncDeletePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   return child_->AsyncDeletePhraseSet(cq, std::move(context), request);
 }
@@ -240,7 +240,7 @@ SpeechTracingStub::AsyncDeletePhraseSet(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncUndeletePhraseSet(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   return child_->AsyncUndeletePhraseSet(cq, std::move(context), request);
 }
@@ -248,14 +248,14 @@ SpeechTracingStub::AsyncUndeletePhraseSet(
 future<StatusOr<google::longrunning::Operation>>
 SpeechTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> SpeechTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

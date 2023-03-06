@@ -79,7 +79,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Metadata::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->AsyncTailLogEntries(cq, std::move(context));
 }
@@ -87,7 +87,7 @@ LoggingServiceV2Metadata::AsyncTailLogEntries(
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2Metadata::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncWriteLogEntries(cq, std::move(context), request);

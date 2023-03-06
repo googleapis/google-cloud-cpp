@@ -33,7 +33,7 @@ ServiceUsageTracingStub::ServiceUsageTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncEnableService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
   return child_->AsyncEnableService(cq, std::move(context), request);
 }
@@ -41,7 +41,7 @@ ServiceUsageTracingStub::AsyncEnableService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
   return child_->AsyncDisableService(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ ServiceUsageTracingStub::ListServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncBatchEnableServices(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   return child_->AsyncBatchEnableServices(cq, std::move(context), request);
 }
@@ -93,14 +93,14 @@ ServiceUsageTracingStub::BatchGetServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ServiceUsageTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

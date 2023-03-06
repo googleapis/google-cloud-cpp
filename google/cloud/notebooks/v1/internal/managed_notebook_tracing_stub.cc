@@ -57,7 +57,7 @@ ManagedNotebookServiceTracingStub::GetRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncCreateRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
   return child_->AsyncCreateRuntime(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ ManagedNotebookServiceTracingStub::AsyncCreateRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncUpdateRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
   return child_->AsyncUpdateRuntime(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ ManagedNotebookServiceTracingStub::AsyncUpdateRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
   return child_->AsyncDeleteRuntime(cq, std::move(context), request);
 }
@@ -81,7 +81,7 @@ ManagedNotebookServiceTracingStub::AsyncDeleteRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncStartRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
   return child_->AsyncStartRuntime(cq, std::move(context), request);
 }
@@ -89,7 +89,7 @@ ManagedNotebookServiceTracingStub::AsyncStartRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncStopRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
   return child_->AsyncStopRuntime(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ ManagedNotebookServiceTracingStub::AsyncStopRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncSwitchRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
   return child_->AsyncSwitchRuntime(cq, std::move(context), request);
 }
@@ -105,7 +105,7 @@ ManagedNotebookServiceTracingStub::AsyncSwitchRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncResetRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
   return child_->AsyncResetRuntime(cq, std::move(context), request);
 }
@@ -113,7 +113,7 @@ ManagedNotebookServiceTracingStub::AsyncResetRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncUpgradeRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
   return child_->AsyncUpgradeRuntime(cq, std::move(context), request);
 }
@@ -121,7 +121,7 @@ ManagedNotebookServiceTracingStub::AsyncUpgradeRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
   return child_->AsyncReportRuntimeEvent(cq, std::move(context), request);
 }
@@ -143,7 +143,7 @@ ManagedNotebookServiceTracingStub::RefreshRuntimeTokenInternal(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncDiagnoseRuntime(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
   return child_->AsyncDiagnoseRuntime(cq, std::move(context), request);
 }
@@ -151,14 +151,14 @@ ManagedNotebookServiceTracingStub::AsyncDiagnoseRuntime(
 future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ManagedNotebookServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

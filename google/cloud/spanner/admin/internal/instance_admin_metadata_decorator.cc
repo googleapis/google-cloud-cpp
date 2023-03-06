@@ -55,7 +55,7 @@ InstanceAdminMetadata::GetInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncCreateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -65,7 +65,7 @@ InstanceAdminMetadata::AsyncCreateInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   SetMetadata(*context,
@@ -110,7 +110,7 @@ InstanceAdminMetadata::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -120,7 +120,7 @@ InstanceAdminMetadata::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
@@ -160,7 +160,7 @@ InstanceAdminMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -168,7 +168,7 @@ InstanceAdminMetadata::AsyncGetOperation(
 
 future<Status> InstanceAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

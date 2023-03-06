@@ -53,7 +53,7 @@ GameServerClustersServiceMetadata::GetGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceMetadata::AsyncCreateGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateGameServerCluster(cq, std::move(context), request);
@@ -71,7 +71,7 @@ GameServerClustersServiceMetadata::PreviewCreateGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceMetadata::AsyncDeleteGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteGameServerCluster(cq, std::move(context), request);
@@ -89,7 +89,7 @@ GameServerClustersServiceMetadata::PreviewDeleteGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceMetadata::AsyncUpdateGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
   SetMetadata(*context, "game_server_cluster.name=" +
                             request.game_server_cluster().name());
@@ -109,7 +109,7 @@ GameServerClustersServiceMetadata::PreviewUpdateGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -117,7 +117,7 @@ GameServerClustersServiceMetadata::AsyncGetOperation(
 
 future<Status> GameServerClustersServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

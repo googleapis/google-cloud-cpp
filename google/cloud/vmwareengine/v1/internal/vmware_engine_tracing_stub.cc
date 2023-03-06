@@ -57,7 +57,7 @@ VmwareEngineTracingStub::GetPrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   return child_->AsyncCreatePrivateCloud(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ VmwareEngineTracingStub::AsyncCreatePrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   return child_->AsyncUpdatePrivateCloud(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ VmwareEngineTracingStub::AsyncUpdatePrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   return child_->AsyncDeletePrivateCloud(cq, std::move(context), request);
 }
@@ -81,7 +81,7 @@ VmwareEngineTracingStub::AsyncDeletePrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUndeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
   return child_->AsyncUndeletePrivateCloud(cq, std::move(context), request);
@@ -114,7 +114,7 @@ VmwareEngineTracingStub::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
@@ -122,7 +122,7 @@ VmwareEngineTracingStub::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
@@ -130,7 +130,7 @@ VmwareEngineTracingStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
@@ -199,7 +199,7 @@ VmwareEngineTracingStub::ShowVcenterCredentials(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncResetNsxCredentials(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
   return child_->AsyncResetNsxCredentials(cq, std::move(context), request);
@@ -208,7 +208,7 @@ VmwareEngineTracingStub::AsyncResetNsxCredentials(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncResetVcenterCredentials(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
   return child_->AsyncResetVcenterCredentials(cq, std::move(context), request);
@@ -217,7 +217,7 @@ VmwareEngineTracingStub::AsyncResetVcenterCredentials(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateHcxActivationKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
   return child_->AsyncCreateHcxActivationKey(cq, std::move(context), request);
@@ -277,7 +277,7 @@ VmwareEngineTracingStub::ListNetworkPolicies(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
   return child_->AsyncCreateNetworkPolicy(cq, std::move(context), request);
@@ -286,7 +286,7 @@ VmwareEngineTracingStub::AsyncCreateNetworkPolicy(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   return child_->AsyncUpdateNetworkPolicy(cq, std::move(context), request);
@@ -295,7 +295,7 @@ VmwareEngineTracingStub::AsyncUpdateNetworkPolicy(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeleteNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
   return child_->AsyncDeleteNetworkPolicy(cq, std::move(context), request);
@@ -304,7 +304,7 @@ VmwareEngineTracingStub::AsyncDeleteNetworkPolicy(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncCreateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
   return child_->AsyncCreateVmwareEngineNetwork(cq, std::move(context),
@@ -314,7 +314,7 @@ VmwareEngineTracingStub::AsyncCreateVmwareEngineNetwork(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncUpdateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
   return child_->AsyncUpdateVmwareEngineNetwork(cq, std::move(context),
@@ -324,7 +324,7 @@ VmwareEngineTracingStub::AsyncUpdateVmwareEngineNetwork(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncDeleteVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
   return child_->AsyncDeleteVmwareEngineNetwork(cq, std::move(context),
@@ -360,14 +360,14 @@ VmwareEngineTracingStub::ListVmwareEngineNetworks(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> VmwareEngineTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -53,7 +53,7 @@ CloudMemcacheMetadata::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
@@ -62,7 +62,7 @@ CloudMemcacheMetadata::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -71,7 +71,7 @@ CloudMemcacheMetadata::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncUpdateParameters(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncUpdateParameters(cq, std::move(context), request);
@@ -80,7 +80,7 @@ CloudMemcacheMetadata::AsyncUpdateParameters(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
@@ -89,7 +89,7 @@ CloudMemcacheMetadata::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncApplyParameters(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncApplyParameters(cq, std::move(context), request);
@@ -98,7 +98,7 @@ CloudMemcacheMetadata::AsyncApplyParameters(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
   SetMetadata(*context, "instance=" + request.instance());
   return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
@@ -107,7 +107,7 @@ CloudMemcacheMetadata::AsyncRescheduleMaintenance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -115,7 +115,7 @@ CloudMemcacheMetadata::AsyncGetOperation(
 
 future<Status> CloudMemcacheMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

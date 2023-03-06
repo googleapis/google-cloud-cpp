@@ -57,7 +57,7 @@ ClientGatewaysServiceMetadata::GetClientGateway(
 future<StatusOr<google::longrunning::Operation>>
 ClientGatewaysServiceMetadata::AsyncCreateClientGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientgateways::v1::
         CreateClientGatewayRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -67,7 +67,7 @@ ClientGatewaysServiceMetadata::AsyncCreateClientGateway(
 future<StatusOr<google::longrunning::Operation>>
 ClientGatewaysServiceMetadata::AsyncDeleteClientGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientgateways::v1::
         DeleteClientGatewayRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -77,7 +77,7 @@ ClientGatewaysServiceMetadata::AsyncDeleteClientGateway(
 future<StatusOr<google::longrunning::Operation>>
 ClientGatewaysServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -85,7 +85,7 @@ ClientGatewaysServiceMetadata::AsyncGetOperation(
 
 future<Status> ClientGatewaysServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

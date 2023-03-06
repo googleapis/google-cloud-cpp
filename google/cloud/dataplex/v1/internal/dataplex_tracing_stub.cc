@@ -33,7 +33,7 @@ DataplexServiceTracingStub::DataplexServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateLake(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateLakeRequest const& request) {
   return child_->AsyncCreateLake(cq, std::move(context), request);
 }
@@ -41,7 +41,7 @@ DataplexServiceTracingStub::AsyncCreateLake(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   return child_->AsyncUpdateLake(cq, std::move(context), request);
 }
@@ -49,7 +49,7 @@ DataplexServiceTracingStub::AsyncUpdateLake(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
   return child_->AsyncDeleteLake(cq, std::move(context), request);
 }
@@ -90,7 +90,7 @@ DataplexServiceTracingStub::ListLakeActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateZone(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateZoneRequest const& request) {
   return child_->AsyncCreateZone(cq, std::move(context), request);
 }
@@ -98,7 +98,7 @@ DataplexServiceTracingStub::AsyncCreateZone(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   return child_->AsyncUpdateZone(cq, std::move(context), request);
 }
@@ -106,7 +106,7 @@ DataplexServiceTracingStub::AsyncUpdateZone(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
   return child_->AsyncDeleteZone(cq, std::move(context), request);
 }
@@ -147,7 +147,7 @@ DataplexServiceTracingStub::ListZoneActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateAssetRequest const& request) {
   return child_->AsyncCreateAsset(cq, std::move(context), request);
 }
@@ -155,7 +155,7 @@ DataplexServiceTracingStub::AsyncCreateAsset(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   return child_->AsyncUpdateAsset(cq, std::move(context), request);
 }
@@ -163,7 +163,7 @@ DataplexServiceTracingStub::AsyncUpdateAsset(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
   return child_->AsyncDeleteAsset(cq, std::move(context), request);
 }
@@ -206,7 +206,7 @@ DataplexServiceTracingStub::ListAssetActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateTask(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateTaskRequest const& request) {
   return child_->AsyncCreateTask(cq, std::move(context), request);
 }
@@ -214,7 +214,7 @@ DataplexServiceTracingStub::AsyncCreateTask(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   return child_->AsyncUpdateTask(cq, std::move(context), request);
 }
@@ -222,7 +222,7 @@ DataplexServiceTracingStub::AsyncUpdateTask(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
   return child_->AsyncDeleteTask(cq, std::move(context), request);
 }
@@ -282,7 +282,7 @@ Status DataplexServiceTracingStub::CancelJob(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
   return child_->AsyncCreateEnvironment(cq, std::move(context), request);
 }
@@ -290,7 +290,7 @@ DataplexServiceTracingStub::AsyncCreateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
   return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
 }
@@ -298,7 +298,7 @@ DataplexServiceTracingStub::AsyncUpdateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
   return child_->AsyncDeleteEnvironment(cq, std::move(context), request);
 }
@@ -342,14 +342,14 @@ DataplexServiceTracingStub::ListSessions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> DataplexServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

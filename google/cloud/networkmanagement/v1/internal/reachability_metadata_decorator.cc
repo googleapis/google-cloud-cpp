@@ -55,7 +55,7 @@ ReachabilityServiceMetadata::GetConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceMetadata::AsyncCreateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -65,7 +65,7 @@ ReachabilityServiceMetadata::AsyncCreateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceMetadata::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   SetMetadata(*context, "resource.name=" + request.resource().name());
@@ -75,7 +75,7 @@ ReachabilityServiceMetadata::AsyncUpdateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceMetadata::AsyncRerunConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -85,7 +85,7 @@ ReachabilityServiceMetadata::AsyncRerunConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceMetadata::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -95,7 +95,7 @@ ReachabilityServiceMetadata::AsyncDeleteConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -103,7 +103,7 @@ ReachabilityServiceMetadata::AsyncGetOperation(
 
 future<Status> ReachabilityServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

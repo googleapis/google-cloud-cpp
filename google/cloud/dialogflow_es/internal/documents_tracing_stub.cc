@@ -56,7 +56,7 @@ DocumentsTracingStub::GetDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncCreateDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
   return child_->AsyncCreateDocument(cq, std::move(context), request);
 }
@@ -64,7 +64,7 @@ DocumentsTracingStub::AsyncCreateDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
   return child_->AsyncImportDocuments(cq, std::move(context), request);
 }
@@ -72,7 +72,7 @@ DocumentsTracingStub::AsyncImportDocuments(
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncDeleteDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
   return child_->AsyncDeleteDocument(cq, std::move(context), request);
 }
@@ -80,7 +80,7 @@ DocumentsTracingStub::AsyncDeleteDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncUpdateDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
   return child_->AsyncUpdateDocument(cq, std::move(context), request);
 }
@@ -88,7 +88,7 @@ DocumentsTracingStub::AsyncUpdateDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncReloadDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
   return child_->AsyncReloadDocument(cq, std::move(context), request);
 }
@@ -96,7 +96,7 @@ DocumentsTracingStub::AsyncReloadDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncExportDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
   return child_->AsyncExportDocument(cq, std::move(context), request);
 }
@@ -104,14 +104,14 @@ DocumentsTracingStub::AsyncExportDocument(
 future<StatusOr<google::longrunning::Operation>>
 DocumentsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> DocumentsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

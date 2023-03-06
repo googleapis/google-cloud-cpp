@@ -51,7 +51,7 @@ class GameServerClustersServiceTracingStub
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGameServerCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::CreateGameServerClusterRequest const& request)
       override;
 
@@ -63,7 +63,7 @@ class GameServerClustersServiceTracingStub
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGameServerCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request)
       override;
 
@@ -75,7 +75,7 @@ class GameServerClustersServiceTracingStub
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGameServerCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request)
       override;
 
@@ -87,12 +87,12 @@ class GameServerClustersServiceTracingStub
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

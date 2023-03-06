@@ -33,7 +33,7 @@ BigtableInstanceAdminStub::~BigtableInstanceAdminStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::CreateInstanceRequest,
@@ -86,7 +86,7 @@ DefaultBigtableInstanceAdminStub::UpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncPartialUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::PartialUpdateInstanceRequest,
@@ -115,7 +115,7 @@ Status DefaultBigtableInstanceAdminStub::DeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::CreateClusterRequest,
@@ -156,7 +156,7 @@ DefaultBigtableInstanceAdminStub::ListClusters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::Cluster const& request) {
   return internal::MakeUnaryRpcImpl<google::bigtable::admin::v2::Cluster,
                                     google::longrunning::Operation>(
@@ -172,7 +172,7 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::PartialUpdateClusterRequest,
@@ -239,7 +239,7 @@ DefaultBigtableInstanceAdminStub::ListAppProfiles(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncUpdateAppProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::UpdateAppProfileRequest,
@@ -318,7 +318,7 @@ DefaultBigtableInstanceAdminStub::ListHotTablets(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -333,7 +333,7 @@ DefaultBigtableInstanceAdminStub::AsyncGetOperation(
 
 future<Status> DefaultBigtableInstanceAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

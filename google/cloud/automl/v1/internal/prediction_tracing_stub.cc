@@ -44,7 +44,7 @@ PredictionServiceTracingStub::Predict(
 future<StatusOr<google::longrunning::Operation>>
 PredictionServiceTracingStub::AsyncBatchPredict(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::BatchPredictRequest const& request) {
   return child_->AsyncBatchPredict(cq, std::move(context), request);
 }
@@ -52,14 +52,14 @@ PredictionServiceTracingStub::AsyncBatchPredict(
 future<StatusOr<google::longrunning::Operation>>
 PredictionServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> PredictionServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

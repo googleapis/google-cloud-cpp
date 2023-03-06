@@ -237,10 +237,10 @@ StatusOr<google::storage::v2::Object> StorageLogging::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageLogging::ReadObject(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](std::unique_ptr<grpc::ClientContext> context,
+      [this](std::shared_ptr<grpc::ClientContext> context,
              google::storage::v2::ReadObjectRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::storage::v2::ReadObjectResponse>> {
@@ -271,7 +271,7 @@ StatusOr<google::storage::v2::Object> StorageLogging::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageLogging::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
+StorageLogging::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
@@ -402,11 +402,11 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageLogging::UpdateHmacKey(
 
 future<Status> StorageLogging::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::DeleteObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::storage::v2::DeleteObjectRequest const& request) {
         return child_->AsyncDeleteObject(cq, std::move(context), request);
       },
@@ -417,7 +417,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageLogging::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   using LoggingStream = ::google::cloud::internal::AsyncStreamingReadRpcLogging<
       google::storage::v2::ReadObjectResponse>;
@@ -436,7 +436,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
 StorageLogging::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                                 std::unique_ptr<grpc::ClientContext> context) {
+                                 std::shared_ptr<grpc::ClientContext> context) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
           google::storage::v2::WriteObjectRequest,
@@ -455,11 +455,11 @@ StorageLogging::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageLogging::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::StartResumableWriteRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::storage::v2::StartResumableWriteRequest const& request) {
         return child_->AsyncStartResumableWrite(cq, std::move(context),
                                                 request);
@@ -470,11 +470,11 @@ StorageLogging::AsyncStartResumableWrite(
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageLogging::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::storage::v2::QueryWriteStatusRequest const& request) {
         return child_->AsyncQueryWriteStatus(cq, std::move(context), request);
       },

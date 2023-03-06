@@ -55,7 +55,7 @@ HubServiceTracingStub::GetHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncCreateHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   return child_->AsyncCreateHub(cq, std::move(context), request);
 }
@@ -63,7 +63,7 @@ HubServiceTracingStub::AsyncCreateHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   return child_->AsyncUpdateHub(cq, std::move(context), request);
 }
@@ -71,7 +71,7 @@ HubServiceTracingStub::AsyncUpdateHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   return child_->AsyncDeleteHub(cq, std::move(context), request);
 }
@@ -102,7 +102,7 @@ HubServiceTracingStub::GetSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncCreateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   return child_->AsyncCreateSpoke(cq, std::move(context), request);
 }
@@ -110,7 +110,7 @@ HubServiceTracingStub::AsyncCreateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   return child_->AsyncUpdateSpoke(cq, std::move(context), request);
 }
@@ -118,7 +118,7 @@ HubServiceTracingStub::AsyncUpdateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   return child_->AsyncDeleteSpoke(cq, std::move(context), request);
 }
@@ -126,14 +126,14 @@ HubServiceTracingStub::AsyncDeleteSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> HubServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

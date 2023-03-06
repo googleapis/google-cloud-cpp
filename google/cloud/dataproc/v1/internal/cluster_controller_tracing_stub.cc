@@ -33,7 +33,7 @@ ClusterControllerTracingStub::ClusterControllerTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
@@ -41,7 +41,7 @@ ClusterControllerTracingStub::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
@@ -49,7 +49,7 @@ ClusterControllerTracingStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncStopCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
   return child_->AsyncStopCluster(cq, std::move(context), request);
 }
@@ -57,7 +57,7 @@ ClusterControllerTracingStub::AsyncStopCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncStartCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
   return child_->AsyncStartCluster(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ ClusterControllerTracingStub::AsyncStartCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ ClusterControllerTracingStub::ListClusters(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncDiagnoseCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   return child_->AsyncDiagnoseCluster(cq, std::move(context), request);
 }
@@ -105,14 +105,14 @@ ClusterControllerTracingStub::AsyncDiagnoseCluster(
 future<StatusOr<google::longrunning::Operation>>
 ClusterControllerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ClusterControllerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

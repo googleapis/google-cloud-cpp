@@ -56,7 +56,7 @@ StatusOr<google::api::HttpBody> UserEventServiceTracingStub::CollectUserEvent(
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncPurgeUserEvents(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   return child_->AsyncPurgeUserEvents(cq, std::move(context), request);
 }
@@ -64,7 +64,7 @@ UserEventServiceTracingStub::AsyncPurgeUserEvents(
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncImportUserEvents(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   return child_->AsyncImportUserEvents(cq, std::move(context), request);
 }
@@ -72,7 +72,7 @@ UserEventServiceTracingStub::AsyncImportUserEvents(
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncRejoinUserEvents(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   return child_->AsyncRejoinUserEvents(cq, std::move(context), request);
 }
@@ -80,14 +80,14 @@ UserEventServiceTracingStub::AsyncRejoinUserEvents(
 future<StatusOr<google::longrunning::Operation>>
 UserEventServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> UserEventServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -167,7 +167,7 @@ LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->WriteLogEntries(request), background_->cq(),
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::logging::v2::WriteLogEntriesRequest const& request) {
         return stub->AsyncWriteLogEntries(cq, std::move(context), request);
       },

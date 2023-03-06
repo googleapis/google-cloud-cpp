@@ -92,7 +92,7 @@ Status EntityTypesTracingStub::DeleteEntityType(
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesTracingStub::AsyncBatchUpdateEntityTypes(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
   return child_->AsyncBatchUpdateEntityTypes(cq, std::move(context), request);
@@ -101,7 +101,7 @@ EntityTypesTracingStub::AsyncBatchUpdateEntityTypes(
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesTracingStub::AsyncBatchDeleteEntityTypes(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
   return child_->AsyncBatchDeleteEntityTypes(cq, std::move(context), request);
@@ -110,7 +110,7 @@ EntityTypesTracingStub::AsyncBatchDeleteEntityTypes(
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesTracingStub::AsyncBatchCreateEntities(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   return child_->AsyncBatchCreateEntities(cq, std::move(context), request);
 }
@@ -118,7 +118,7 @@ EntityTypesTracingStub::AsyncBatchCreateEntities(
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesTracingStub::AsyncBatchUpdateEntities(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   return child_->AsyncBatchUpdateEntities(cq, std::move(context), request);
 }
@@ -126,7 +126,7 @@ EntityTypesTracingStub::AsyncBatchUpdateEntities(
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesTracingStub::AsyncBatchDeleteEntities(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   return child_->AsyncBatchDeleteEntities(cq, std::move(context), request);
 }
@@ -134,14 +134,14 @@ EntityTypesTracingStub::AsyncBatchDeleteEntities(
 future<StatusOr<google::longrunning::Operation>>
 EntityTypesTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> EntityTypesTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -101,7 +101,7 @@ PublisherMetadata::DetachSubscription(
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherMetadata::AsyncPublish(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::PublishRequest const& request) {
   SetMetadata(*context, "topic=" + request.topic());
   return child_->AsyncPublish(cq, std::move(context), request);

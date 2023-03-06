@@ -37,7 +37,7 @@ BigtableInstanceAdminMetadata::BigtableInstanceAdminMetadata(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
@@ -70,7 +70,7 @@ BigtableInstanceAdminMetadata::UpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncPartialUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
   return child_->AsyncPartialUpdateInstance(cq, std::move(context), request);
@@ -86,7 +86,7 @@ Status BigtableInstanceAdminMetadata::DeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateCluster(cq, std::move(context), request);
@@ -111,7 +111,7 @@ BigtableInstanceAdminMetadata::ListClusters(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::Cluster const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
@@ -120,7 +120,7 @@ BigtableInstanceAdminMetadata::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   SetMetadata(*context, "cluster.name=" + request.cluster().name());
   return child_->AsyncPartialUpdateCluster(cq, std::move(context), request);
@@ -160,7 +160,7 @@ BigtableInstanceAdminMetadata::ListAppProfiles(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncUpdateAppProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   SetMetadata(*context, "app_profile.name=" + request.app_profile().name());
   return child_->AsyncUpdateAppProfile(cq, std::move(context), request);
@@ -206,7 +206,7 @@ BigtableInstanceAdminMetadata::ListHotTablets(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -214,7 +214,7 @@ BigtableInstanceAdminMetadata::AsyncGetOperation(
 
 future<Status> BigtableInstanceAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

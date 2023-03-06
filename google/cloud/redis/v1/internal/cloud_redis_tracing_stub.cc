@@ -68,7 +68,7 @@ CloudRedisTracingStub::GetInstanceAuthString(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -76,7 +76,7 @@ CloudRedisTracingStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
@@ -84,7 +84,7 @@ CloudRedisTracingStub::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncUpgradeInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
   return child_->AsyncUpgradeInstance(cq, std::move(context), request);
 }
@@ -92,7 +92,7 @@ CloudRedisTracingStub::AsyncUpgradeInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
   return child_->AsyncImportInstance(cq, std::move(context), request);
 }
@@ -100,7 +100,7 @@ CloudRedisTracingStub::AsyncImportInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncExportInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
   return child_->AsyncExportInstance(cq, std::move(context), request);
 }
@@ -108,7 +108,7 @@ CloudRedisTracingStub::AsyncExportInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
   return child_->AsyncFailoverInstance(cq, std::move(context), request);
 }
@@ -116,7 +116,7 @@ CloudRedisTracingStub::AsyncFailoverInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
@@ -124,7 +124,7 @@ CloudRedisTracingStub::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
   return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
 }
@@ -132,14 +132,14 @@ CloudRedisTracingStub::AsyncRescheduleMaintenance(
 future<StatusOr<google::longrunning::Operation>>
 CloudRedisTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> CloudRedisTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

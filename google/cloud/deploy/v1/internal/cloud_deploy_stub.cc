@@ -59,7 +59,7 @@ DefaultCloudDeployStub::GetDeliveryPipeline(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncCreateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest,
@@ -77,7 +77,7 @@ DefaultCloudDeployStub::AsyncCreateDeliveryPipeline(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncUpdateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest,
@@ -95,7 +95,7 @@ DefaultCloudDeployStub::AsyncUpdateDeliveryPipeline(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncDeleteDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest,
@@ -136,7 +136,7 @@ StatusOr<google::cloud::deploy::v1::Target> DefaultCloudDeployStub::GetTarget(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncCreateTarget(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::CreateTargetRequest,
@@ -153,7 +153,7 @@ DefaultCloudDeployStub::AsyncCreateTarget(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncUpdateTarget(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::UpdateTargetRequest,
@@ -170,7 +170,7 @@ DefaultCloudDeployStub::AsyncUpdateTarget(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncDeleteTarget(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::DeleteTargetRequest,
@@ -210,7 +210,7 @@ StatusOr<google::cloud::deploy::v1::Release> DefaultCloudDeployStub::GetRelease(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncCreateRelease(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::CreateReleaseRequest,
@@ -274,7 +274,7 @@ StatusOr<google::cloud::deploy::v1::Rollout> DefaultCloudDeployStub::GetRollout(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncCreateRollout(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::deploy::v1::CreateRolloutRequest,
@@ -337,7 +337,7 @@ StatusOr<google::cloud::deploy::v1::Config> DefaultCloudDeployStub::GetConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudDeployStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -352,7 +352,7 @@ DefaultCloudDeployStub::AsyncGetOperation(
 
 future<Status> DefaultCloudDeployStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

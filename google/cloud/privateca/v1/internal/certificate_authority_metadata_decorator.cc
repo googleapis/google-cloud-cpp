@@ -82,7 +82,7 @@ CertificateAuthorityServiceMetadata::UpdateCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncActivateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -93,7 +93,7 @@ CertificateAuthorityServiceMetadata::AsyncActivateCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -104,7 +104,7 @@ CertificateAuthorityServiceMetadata::AsyncCreateCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDisableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -115,7 +115,7 @@ CertificateAuthorityServiceMetadata::AsyncDisableCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncEnableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -155,7 +155,7 @@ CertificateAuthorityServiceMetadata::ListCertificateAuthorities(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUndeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -166,7 +166,7 @@ CertificateAuthorityServiceMetadata::AsyncUndeleteCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -177,7 +177,7 @@ CertificateAuthorityServiceMetadata::AsyncDeleteCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
   SetMetadata(*context, "certificate_authority.name=" +
@@ -189,7 +189,7 @@ CertificateAuthorityServiceMetadata::AsyncUpdateCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -199,7 +199,7 @@ CertificateAuthorityServiceMetadata::AsyncCreateCaPool(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   SetMetadata(*context, "ca_pool.name=" + request.ca_pool().name());
@@ -225,7 +225,7 @@ CertificateAuthorityServiceMetadata::ListCaPools(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCaPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -263,7 +263,7 @@ CertificateAuthorityServiceMetadata::ListCertificateRevocationLists(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCertificateRevocationList(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
   SetMetadata(*context, "certificate_revocation_list.name=" +
@@ -275,7 +275,7 @@ CertificateAuthorityServiceMetadata::AsyncUpdateCertificateRevocationList(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -286,7 +286,7 @@ CertificateAuthorityServiceMetadata::AsyncCreateCertificateTemplate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -316,7 +316,7 @@ CertificateAuthorityServiceMetadata::ListCertificateTemplates(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   SetMetadata(*context, "certificate_template.name=" +
@@ -328,7 +328,7 @@ CertificateAuthorityServiceMetadata::AsyncUpdateCertificateTemplate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -336,7 +336,7 @@ CertificateAuthorityServiceMetadata::AsyncGetOperation(
 
 future<Status> CertificateAuthorityServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

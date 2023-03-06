@@ -59,7 +59,7 @@ GameServerClustersServiceTracingStub::GetGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceTracingStub::AsyncCreateGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
   return child_->AsyncCreateGameServerCluster(cq, std::move(context), request);
 }
@@ -81,7 +81,7 @@ GameServerClustersServiceTracingStub::PreviewCreateGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceTracingStub::AsyncDeleteGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
   return child_->AsyncDeleteGameServerCluster(cq, std::move(context), request);
 }
@@ -103,7 +103,7 @@ GameServerClustersServiceTracingStub::PreviewDeleteGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceTracingStub::AsyncUpdateGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
   return child_->AsyncUpdateGameServerCluster(cq, std::move(context), request);
 }
@@ -125,14 +125,14 @@ GameServerClustersServiceTracingStub::PreviewUpdateGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 GameServerClustersServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> GameServerClustersServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

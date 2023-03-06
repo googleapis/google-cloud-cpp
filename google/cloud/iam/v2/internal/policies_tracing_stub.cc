@@ -52,7 +52,7 @@ StatusOr<google::iam::v2::Policy> PoliciesTracingStub::GetPolicy(
 future<StatusOr<google::longrunning::Operation>>
 PoliciesTracingStub::AsyncCreatePolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::CreatePolicyRequest const& request) {
   return child_->AsyncCreatePolicy(cq, std::move(context), request);
 }
@@ -60,7 +60,7 @@ PoliciesTracingStub::AsyncCreatePolicy(
 future<StatusOr<google::longrunning::Operation>>
 PoliciesTracingStub::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::UpdatePolicyRequest const& request) {
   return child_->AsyncUpdatePolicy(cq, std::move(context), request);
 }
@@ -68,7 +68,7 @@ PoliciesTracingStub::AsyncUpdatePolicy(
 future<StatusOr<google::longrunning::Operation>>
 PoliciesTracingStub::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::iam::v2::DeletePolicyRequest const& request) {
   return child_->AsyncDeletePolicy(cq, std::move(context), request);
 }
@@ -76,14 +76,14 @@ PoliciesTracingStub::AsyncDeletePolicy(
 future<StatusOr<google::longrunning::Operation>>
 PoliciesTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> PoliciesTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -37,11 +37,11 @@ LivestreamServiceLogging::LivestreamServiceLogging(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::CreateChannelRequest const&
                  request) {
         return child_->AsyncCreateChannel(cq, std::move(context), request);
@@ -74,11 +74,11 @@ LivestreamServiceLogging::GetChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::DeleteChannelRequest const&
                  request) {
         return child_->AsyncDeleteChannel(cq, std::move(context), request);
@@ -89,11 +89,11 @@ LivestreamServiceLogging::AsyncDeleteChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::UpdateChannelRequest const&
                  request) {
         return child_->AsyncUpdateChannel(cq, std::move(context), request);
@@ -104,11 +104,11 @@ LivestreamServiceLogging::AsyncUpdateChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncStartChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::StartChannelRequest const&
                  request) {
         return child_->AsyncStartChannel(cq, std::move(context), request);
@@ -119,11 +119,11 @@ LivestreamServiceLogging::AsyncStartChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::StopChannelRequest const&
                  request) {
         return child_->AsyncStopChannel(cq, std::move(context), request);
@@ -134,11 +134,11 @@ LivestreamServiceLogging::AsyncStopChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::CreateInputRequest const&
                  request) {
         return child_->AsyncCreateInput(cq, std::move(context), request);
@@ -171,11 +171,11 @@ LivestreamServiceLogging::GetInput(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncDeleteInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::DeleteInputRequest const&
                  request) {
         return child_->AsyncDeleteInput(cq, std::move(context), request);
@@ -186,11 +186,11 @@ LivestreamServiceLogging::AsyncDeleteInput(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::video::livestream::v1::UpdateInputRequest const&
                  request) {
         return child_->AsyncUpdateInput(cq, std::move(context), request);
@@ -244,11 +244,11 @@ Status LivestreamServiceLogging::DeleteEvent(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -257,11 +257,11 @@ LivestreamServiceLogging::AsyncGetOperation(
 
 future<Status> LivestreamServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

@@ -109,7 +109,7 @@ ArtifactRegistryMetadata::GetPythonPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -119,7 +119,7 @@ ArtifactRegistryMetadata::AsyncImportAptArtifacts(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -147,7 +147,7 @@ ArtifactRegistryMetadata::GetRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -166,7 +166,7 @@ ArtifactRegistryMetadata::UpdateRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -193,7 +193,7 @@ ArtifactRegistryMetadata::GetPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncDeletePackage(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -220,7 +220,7 @@ ArtifactRegistryMetadata::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -344,7 +344,7 @@ ArtifactRegistryMetadata::UpdateVPCSCConfig(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -352,7 +352,7 @@ ArtifactRegistryMetadata::AsyncGetOperation(
 
 future<Status> ArtifactRegistryMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

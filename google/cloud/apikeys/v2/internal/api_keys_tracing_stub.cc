@@ -32,7 +32,7 @@ ApiKeysTracingStub::ApiKeysTracingStub(std::shared_ptr<ApiKeysStub> child)
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   return child_->AsyncCreateKey(cq, std::move(context), request);
 }
@@ -72,7 +72,7 @@ ApiKeysTracingStub::GetKeyString(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   return child_->AsyncUpdateKey(cq, std::move(context), request);
 }
@@ -80,7 +80,7 @@ ApiKeysTracingStub::AsyncUpdateKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   return child_->AsyncDeleteKey(cq, std::move(context), request);
 }
@@ -88,7 +88,7 @@ ApiKeysTracingStub::AsyncDeleteKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   return child_->AsyncUndeleteKey(cq, std::move(context), request);
 }
@@ -107,14 +107,14 @@ ApiKeysTracingStub::LookupKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ApiKeysTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

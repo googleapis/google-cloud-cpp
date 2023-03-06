@@ -41,7 +41,7 @@ class AzureClustersAuth : public AzureClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureClient(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request)
       override;
 
@@ -58,19 +58,19 @@ class AzureClustersAuth : public AzureClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAzureClient(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAzureCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
           request) override;
 
@@ -87,7 +87,7 @@ class AzureClustersAuth : public AzureClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAzureCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request) override;
 
@@ -99,13 +99,13 @@ class AzureClustersAuth : public AzureClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAzureNodePool(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAzureNodePool(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
           request) override;
 
@@ -122,7 +122,7 @@ class AzureClustersAuth : public AzureClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAzureNodePool(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
           request) override;
 
@@ -134,12 +134,12 @@ class AzureClustersAuth : public AzureClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

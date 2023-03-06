@@ -222,7 +222,7 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageTracingStub::ReadObject(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   return child_->ReadObject(std::move(context), request);
 }
@@ -241,7 +241,7 @@ StatusOr<google::storage::v2::Object> StorageTracingStub::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageTracingStub::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
+StorageTracingStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   return child_->WriteObject(std::move(context));
 }
 
@@ -364,7 +364,7 @@ StorageTracingStub::UpdateHmacKey(
 
 future<Status> StorageTracingStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::DeleteObjectRequest const& request) {
   return child_->AsyncDeleteObject(cq, std::move(context), request);
 }
@@ -373,7 +373,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageTracingStub::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   return child_->AsyncReadObject(cq, std::move(context), request);
 }
@@ -383,14 +383,14 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectResponse>>
 StorageTracingStub::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->AsyncWriteObject(cq, std::move(context));
 }
 
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageTracingStub::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::StartResumableWriteRequest const& request) {
   return child_->AsyncStartResumableWrite(cq, std::move(context), request);
 }
@@ -398,7 +398,7 @@ StorageTracingStub::AsyncStartResumableWrite(
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageTracingStub::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   return child_->AsyncQueryWriteStatus(cq, std::move(context), request);
 }

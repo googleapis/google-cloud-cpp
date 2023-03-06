@@ -37,7 +37,7 @@ BatchControllerMetadata::BatchControllerMetadata(
 future<StatusOr<google::longrunning::Operation>>
 BatchControllerMetadata::AsyncCreateBatch(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateBatch(cq, std::move(context), request);
@@ -68,7 +68,7 @@ Status BatchControllerMetadata::DeleteBatch(
 future<StatusOr<google::longrunning::Operation>>
 BatchControllerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -76,7 +76,7 @@ BatchControllerMetadata::AsyncGetOperation(
 
 future<Status> BatchControllerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

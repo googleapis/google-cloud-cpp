@@ -53,7 +53,7 @@ WorkflowTemplateServiceMetadata::GetWorkflowTemplate(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceMetadata::AsyncInstantiateWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -64,7 +64,7 @@ WorkflowTemplateServiceMetadata::AsyncInstantiateWorkflowTemplate(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceMetadata::AsyncInstantiateInlineWorkflowTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -98,7 +98,7 @@ Status WorkflowTemplateServiceMetadata::DeleteWorkflowTemplate(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowTemplateServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -106,7 +106,7 @@ WorkflowTemplateServiceMetadata::AsyncGetOperation(
 
 future<Status> WorkflowTemplateServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

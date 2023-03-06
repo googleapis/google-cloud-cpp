@@ -110,7 +110,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullResponse>>
 DefaultSubscriberStub::AsyncStreamingPull(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>(
@@ -201,7 +201,7 @@ StatusOr<google::pubsub::v1::SeekResponse> DefaultSubscriberStub::Seek(
 
 future<Status> DefaultSubscriberStub::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
   return internal::MakeUnaryRpcImpl<
              google::pubsub::v1::ModifyAckDeadlineRequest,
@@ -220,7 +220,7 @@ future<Status> DefaultSubscriberStub::AsyncModifyAckDeadline(
 
 future<Status> DefaultSubscriberStub::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::AcknowledgeRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::pubsub::v1::AcknowledgeRequest,
                                     google::protobuf::Empty>(

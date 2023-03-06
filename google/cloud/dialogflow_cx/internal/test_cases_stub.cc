@@ -94,7 +94,7 @@ DefaultTestCasesStub::UpdateTestCase(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncRunTestCase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest,
@@ -112,7 +112,7 @@ DefaultTestCasesStub::AsyncRunTestCase(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -145,7 +145,7 @@ DefaultTestCasesStub::CalculateCoverage(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncImportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest,
@@ -163,7 +163,7 @@ DefaultTestCasesStub::AsyncImportTestCases(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest,
@@ -209,7 +209,7 @@ DefaultTestCasesStub::GetTestCaseResult(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -224,7 +224,7 @@ DefaultTestCasesStub::AsyncGetOperation(
 
 future<Status> DefaultTestCasesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

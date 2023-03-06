@@ -33,7 +33,7 @@ AzureClustersStub::~AzureClustersStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncCreateAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest,
@@ -76,7 +76,7 @@ DefaultAzureClustersStub::ListAzureClients(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncDeleteAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest,
@@ -94,7 +94,7 @@ DefaultAzureClustersStub::AsyncDeleteAzureClient(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -113,7 +113,7 @@ DefaultAzureClustersStub::AsyncCreateAzureCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncUpdateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -158,7 +158,7 @@ DefaultAzureClustersStub::ListAzureClusters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncDeleteAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -191,7 +191,7 @@ DefaultAzureClustersStub::GenerateAzureAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncCreateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -210,7 +210,7 @@ DefaultAzureClustersStub::AsyncCreateAzureNodePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -256,7 +256,7 @@ DefaultAzureClustersStub::ListAzureNodePools(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncDeleteAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -289,7 +289,7 @@ DefaultAzureClustersStub::GetAzureServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAzureClustersStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -304,7 +304,7 @@ DefaultAzureClustersStub::AsyncGetOperation(
 
 future<Status> DefaultAzureClustersStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

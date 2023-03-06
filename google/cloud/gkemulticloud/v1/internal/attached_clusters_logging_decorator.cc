@@ -37,13 +37,13 @@ AttachedClustersLogging::AttachedClustersLogging(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncCreateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
               request) {
         return child_->AsyncCreateAttachedCluster(cq, std::move(context),
@@ -55,13 +55,13 @@ AttachedClustersLogging::AsyncCreateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
               request) {
         return child_->AsyncUpdateAttachedCluster(cq, std::move(context),
@@ -73,13 +73,13 @@ AttachedClustersLogging::AsyncUpdateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
               request) {
         return child_->AsyncImportAttachedCluster(cq, std::move(context),
@@ -120,13 +120,13 @@ AttachedClustersLogging::ListAttachedClusters(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncDeleteAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
               request) {
         return child_->AsyncDeleteAttachedCluster(cq, std::move(context),
@@ -167,11 +167,11 @@ AttachedClustersLogging::GenerateAttachedClusterInstallManifest(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -180,11 +180,11 @@ AttachedClustersLogging::AsyncGetOperation(
 
 future<Status> AttachedClustersLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

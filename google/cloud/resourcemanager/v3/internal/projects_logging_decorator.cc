@@ -70,11 +70,11 @@ ProjectsLogging::SearchProjects(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncCreateProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::resourcemanager::v3::CreateProjectRequest const&
                  request) {
         return child_->AsyncCreateProject(cq, std::move(context), request);
@@ -85,11 +85,11 @@ ProjectsLogging::AsyncCreateProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::resourcemanager::v3::UpdateProjectRequest const&
                  request) {
         return child_->AsyncUpdateProject(cq, std::move(context), request);
@@ -100,11 +100,11 @@ ProjectsLogging::AsyncUpdateProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncMoveProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::resourcemanager::v3::MoveProjectRequest const&
                  request) {
         return child_->AsyncMoveProject(cq, std::move(context), request);
@@ -115,11 +115,11 @@ ProjectsLogging::AsyncMoveProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::resourcemanager::v3::DeleteProjectRequest const&
                  request) {
         return child_->AsyncDeleteProject(cq, std::move(context), request);
@@ -130,11 +130,11 @@ ProjectsLogging::AsyncDeleteProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::resourcemanager::v3::UndeleteProjectRequest const&
                  request) {
         return child_->AsyncUndeleteProject(cq, std::move(context), request);
@@ -179,11 +179,11 @@ ProjectsLogging::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -192,11 +192,11 @@ ProjectsLogging::AsyncGetOperation(
 
 future<Status> ProjectsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

@@ -61,12 +61,12 @@ StatusOr<google::cloud::vmmigration::v1::Source> VmMigrationLogging::GetSource(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateSource(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
         return child_->AsyncCreateSource(cq, std::move(context), request);
       },
@@ -76,12 +76,12 @@ VmMigrationLogging::AsyncCreateSource(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
         return child_->AsyncUpdateSource(cq, std::move(context), request);
       },
@@ -91,12 +91,12 @@ VmMigrationLogging::AsyncUpdateSource(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
         return child_->AsyncDeleteSource(cq, std::move(context), request);
       },
@@ -146,13 +146,13 @@ VmMigrationLogging::GetUtilizationReport(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateUtilizationReport(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
               request) {
         return child_->AsyncCreateUtilizationReport(cq, std::move(context),
@@ -164,13 +164,13 @@ VmMigrationLogging::AsyncCreateUtilizationReport(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteUtilizationReport(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
               request) {
         return child_->AsyncDeleteUtilizationReport(cq, std::move(context),
@@ -212,12 +212,12 @@ VmMigrationLogging::GetDatacenterConnector(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateDatacenterConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::
                  CreateDatacenterConnectorRequest const& request) {
         return child_->AsyncCreateDatacenterConnector(cq, std::move(context),
@@ -229,12 +229,12 @@ VmMigrationLogging::AsyncCreateDatacenterConnector(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteDatacenterConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::
                  DeleteDatacenterConnectorRequest const& request) {
         return child_->AsyncDeleteDatacenterConnector(cq, std::move(context),
@@ -246,11 +246,11 @@ VmMigrationLogging::AsyncDeleteDatacenterConnector(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpgradeAppliance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
                  request) {
         return child_->AsyncUpgradeAppliance(cq, std::move(context), request);
@@ -261,11 +261,11 @@ VmMigrationLogging::AsyncUpgradeAppliance(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::CreateMigratingVmRequest const&
                  request) {
         return child_->AsyncCreateMigratingVm(cq, std::move(context), request);
@@ -300,11 +300,11 @@ VmMigrationLogging::GetMigratingVm(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpdateMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::UpdateMigratingVmRequest const&
                  request) {
         return child_->AsyncUpdateMigratingVm(cq, std::move(context), request);
@@ -315,11 +315,11 @@ VmMigrationLogging::AsyncUpdateMigratingVm(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::DeleteMigratingVmRequest const&
                  request) {
         return child_->AsyncDeleteMigratingVm(cq, std::move(context), request);
@@ -330,11 +330,11 @@ VmMigrationLogging::AsyncDeleteMigratingVm(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncStartMigration(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::StartMigrationRequest const&
                  request) {
         return child_->AsyncStartMigration(cq, std::move(context), request);
@@ -345,11 +345,11 @@ VmMigrationLogging::AsyncStartMigration(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncResumeMigration(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::ResumeMigrationRequest const&
                  request) {
         return child_->AsyncResumeMigration(cq, std::move(context), request);
@@ -360,11 +360,11 @@ VmMigrationLogging::AsyncResumeMigration(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncPauseMigration(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::PauseMigrationRequest const&
                  request) {
         return child_->AsyncPauseMigration(cq, std::move(context), request);
@@ -375,11 +375,11 @@ VmMigrationLogging::AsyncPauseMigration(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncFinalizeMigration(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::FinalizeMigrationRequest const&
                  request) {
         return child_->AsyncFinalizeMigration(cq, std::move(context), request);
@@ -390,11 +390,11 @@ VmMigrationLogging::AsyncFinalizeMigration(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateCloneJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::CreateCloneJobRequest const&
                  request) {
         return child_->AsyncCreateCloneJob(cq, std::move(context), request);
@@ -405,11 +405,11 @@ VmMigrationLogging::AsyncCreateCloneJob(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCancelCloneJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::CancelCloneJobRequest const&
                  request) {
         return child_->AsyncCancelCloneJob(cq, std::move(context), request);
@@ -446,11 +446,11 @@ VmMigrationLogging::GetCloneJob(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateCutoverJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::CreateCutoverJobRequest const&
                  request) {
         return child_->AsyncCreateCutoverJob(cq, std::move(context), request);
@@ -461,11 +461,11 @@ VmMigrationLogging::AsyncCreateCutoverJob(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCancelCutoverJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::CancelCutoverJobRequest const&
                  request) {
         return child_->AsyncCancelCutoverJob(cq, std::move(context), request);
@@ -523,12 +523,12 @@ StatusOr<google::cloud::vmmigration::v1::Group> VmMigrationLogging::GetGroup(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateGroup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
         return child_->AsyncCreateGroup(cq, std::move(context), request);
       },
@@ -538,12 +538,12 @@ VmMigrationLogging::AsyncCreateGroup(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
         return child_->AsyncUpdateGroup(cq, std::move(context), request);
       },
@@ -553,12 +553,12 @@ VmMigrationLogging::AsyncUpdateGroup(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
         return child_->AsyncDeleteGroup(cq, std::move(context), request);
       },
@@ -568,11 +568,11 @@ VmMigrationLogging::AsyncDeleteGroup(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncAddGroupMigration(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::AddGroupMigrationRequest const&
                  request) {
         return child_->AsyncAddGroupMigration(cq, std::move(context), request);
@@ -583,12 +583,12 @@ VmMigrationLogging::AsyncAddGroupMigration(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncRemoveGroupMigration(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
                  request) {
         return child_->AsyncRemoveGroupMigration(cq, std::move(context),
@@ -626,11 +626,11 @@ VmMigrationLogging::GetTargetProject(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncCreateTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
                  request) {
         return child_->AsyncCreateTargetProject(cq, std::move(context),
@@ -642,11 +642,11 @@ VmMigrationLogging::AsyncCreateTargetProject(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncUpdateTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
                  request) {
         return child_->AsyncUpdateTargetProject(cq, std::move(context),
@@ -658,11 +658,11 @@ VmMigrationLogging::AsyncUpdateTargetProject(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncDeleteTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
                  request) {
         return child_->AsyncDeleteTargetProject(cq, std::move(context),
@@ -701,11 +701,11 @@ VmMigrationLogging::GetReplicationCycle(
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -714,11 +714,11 @@ VmMigrationLogging::AsyncGetOperation(
 
 future<Status> VmMigrationLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

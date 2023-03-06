@@ -57,7 +57,7 @@ DefaultWorkflowsStub::GetWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncCreateWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workflows::v1::CreateWorkflowRequest,
@@ -74,7 +74,7 @@ DefaultWorkflowsStub::AsyncCreateWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncDeleteWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workflows::v1::DeleteWorkflowRequest,
@@ -91,7 +91,7 @@ DefaultWorkflowsStub::AsyncDeleteWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncUpdateWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::workflows::v1::UpdateWorkflowRequest,
@@ -108,7 +108,7 @@ DefaultWorkflowsStub::AsyncUpdateWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultWorkflowsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -123,7 +123,7 @@ DefaultWorkflowsStub::AsyncGetOperation(
 
 future<Status> DefaultWorkflowsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

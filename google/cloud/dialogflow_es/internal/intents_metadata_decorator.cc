@@ -72,7 +72,7 @@ Status IntentsMetadata::DeleteIntent(
 future<StatusOr<google::longrunning::Operation>>
 IntentsMetadata::AsyncBatchUpdateIntents(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBatchUpdateIntents(cq, std::move(context), request);
@@ -81,7 +81,7 @@ IntentsMetadata::AsyncBatchUpdateIntents(
 future<StatusOr<google::longrunning::Operation>>
 IntentsMetadata::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBatchDeleteIntents(cq, std::move(context), request);
@@ -90,7 +90,7 @@ IntentsMetadata::AsyncBatchDeleteIntents(
 future<StatusOr<google::longrunning::Operation>>
 IntentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -98,7 +98,7 @@ IntentsMetadata::AsyncGetOperation(
 
 future<Status> IntentsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

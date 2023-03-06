@@ -50,7 +50,7 @@ StatusOr<google::cloud::tpu::v2::Node> TpuTracingStub::GetNode(
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncCreateNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
   return child_->AsyncCreateNode(cq, std::move(context), request);
 }
@@ -58,21 +58,21 @@ TpuTracingStub::AsyncCreateNode(
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
   return child_->AsyncDeleteNode(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StopNodeRequest const& request) {
   return child_->AsyncStopNode(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::StartNodeRequest const& request) {
   return child_->AsyncStartNode(cq, std::move(context), request);
 }
@@ -80,7 +80,7 @@ future<StatusOr<google::longrunning::Operation>> TpuTracingStub::AsyncStartNode(
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncUpdateNode(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   return child_->AsyncUpdateNode(cq, std::move(context), request);
 }
@@ -160,14 +160,14 @@ TpuTracingStub::GetGuestAttributes(
 future<StatusOr<google::longrunning::Operation>>
 TpuTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> TpuTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

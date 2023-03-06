@@ -48,55 +48,55 @@ class DataMigrationServiceMetadata : public DataMigrationServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResumeMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPromoteMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncVerifyMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestartMigrationJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request)
       override;
 
@@ -118,30 +118,30 @@ class DataMigrationServiceMetadata : public DataMigrationServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnectionProfile(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnectionProfile(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnectionProfile(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

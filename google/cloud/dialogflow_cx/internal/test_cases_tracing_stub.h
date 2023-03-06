@@ -63,13 +63,13 @@ class TestCasesTracingStub : public TestCasesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunTestCase(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchRunTestCases(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request) override;
 
@@ -81,13 +81,13 @@ class TestCasesTracingStub : public TestCasesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportTestCases(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportTestCases(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request)
       override;
 
@@ -104,12 +104,12 @@ class TestCasesTracingStub : public TestCasesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

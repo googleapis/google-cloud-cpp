@@ -51,7 +51,7 @@ StatusOr<google::appengine::v1::Version> VersionsMetadata::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateVersionRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateVersion(cq, std::move(context), request);
@@ -60,7 +60,7 @@ VersionsMetadata::AsyncCreateVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateVersionRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncUpdateVersion(cq, std::move(context), request);
@@ -69,7 +69,7 @@ VersionsMetadata::AsyncUpdateVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteVersionRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteVersion(cq, std::move(context), request);
@@ -78,7 +78,7 @@ VersionsMetadata::AsyncDeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -86,7 +86,7 @@ VersionsMetadata::AsyncGetOperation(
 
 future<Status> VersionsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

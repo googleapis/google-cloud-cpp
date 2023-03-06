@@ -95,11 +95,11 @@ Status ProductServiceLogging::DeleteProduct(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::retail::v2::ImportProductsRequest const& request) {
         return child_->AsyncImportProducts(cq, std::move(context), request);
       },
@@ -109,11 +109,11 @@ ProductServiceLogging::AsyncImportProducts(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::SetInventoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::retail::v2::SetInventoryRequest const& request) {
         return child_->AsyncSetInventory(cq, std::move(context), request);
       },
@@ -123,11 +123,11 @@ ProductServiceLogging::AsyncSetInventory(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncAddFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::retail::v2::AddFulfillmentPlacesRequest const&
                  request) {
         return child_->AsyncAddFulfillmentPlaces(cq, std::move(context),
@@ -139,11 +139,11 @@ ProductServiceLogging::AsyncAddFulfillmentPlaces(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
                  request) {
         return child_->AsyncRemoveFulfillmentPlaces(cq, std::move(context),
@@ -155,11 +155,11 @@ ProductServiceLogging::AsyncRemoveFulfillmentPlaces(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncAddLocalInventories(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::retail::v2::AddLocalInventoriesRequest const&
                  request) {
         return child_->AsyncAddLocalInventories(cq, std::move(context),
@@ -171,11 +171,11 @@ ProductServiceLogging::AsyncAddLocalInventories(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::retail::v2::RemoveLocalInventoriesRequest const&
                  request) {
         return child_->AsyncRemoveLocalInventories(cq, std::move(context),
@@ -187,11 +187,11 @@ ProductServiceLogging::AsyncRemoveLocalInventories(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -200,11 +200,11 @@ ProductServiceLogging::AsyncGetOperation(
 
 future<Status> ProductServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

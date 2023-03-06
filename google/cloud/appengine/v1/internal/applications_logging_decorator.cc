@@ -49,11 +49,11 @@ ApplicationsLogging::GetApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsLogging::AsyncCreateApplication(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::CreateApplicationRequest const& request) {
         return child_->AsyncCreateApplication(cq, std::move(context), request);
       },
@@ -63,11 +63,11 @@ ApplicationsLogging::AsyncCreateApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsLogging::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::UpdateApplicationRequest const& request) {
         return child_->AsyncUpdateApplication(cq, std::move(context), request);
       },
@@ -77,11 +77,11 @@ ApplicationsLogging::AsyncUpdateApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsLogging::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::RepairApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::RepairApplicationRequest const& request) {
         return child_->AsyncRepairApplication(cq, std::move(context), request);
       },
@@ -91,11 +91,11 @@ ApplicationsLogging::AsyncRepairApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -104,11 +104,11 @@ ApplicationsLogging::AsyncGetOperation(
 
 future<Status> ApplicationsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

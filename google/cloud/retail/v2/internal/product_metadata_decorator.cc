@@ -75,7 +75,7 @@ Status ProductServiceMetadata::DeleteProduct(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncImportProducts(cq, std::move(context), request);
@@ -84,7 +84,7 @@ ProductServiceMetadata::AsyncImportProducts(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::SetInventoryRequest const& request) {
   SetMetadata(*context, "inventory.name=" + request.inventory().name());
   return child_->AsyncSetInventory(cq, std::move(context), request);
@@ -93,7 +93,7 @@ ProductServiceMetadata::AsyncSetInventory(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncAddFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   SetMetadata(*context, "product=" + request.product());
   return child_->AsyncAddFulfillmentPlaces(cq, std::move(context), request);
@@ -102,7 +102,7 @@ ProductServiceMetadata::AsyncAddFulfillmentPlaces(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   SetMetadata(*context, "product=" + request.product());
   return child_->AsyncRemoveFulfillmentPlaces(cq, std::move(context), request);
@@ -111,7 +111,7 @@ ProductServiceMetadata::AsyncRemoveFulfillmentPlaces(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncAddLocalInventories(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   SetMetadata(*context, "product=" + request.product());
   return child_->AsyncAddLocalInventories(cq, std::move(context), request);
@@ -120,7 +120,7 @@ ProductServiceMetadata::AsyncAddLocalInventories(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   SetMetadata(*context, "product=" + request.product());
   return child_->AsyncRemoveLocalInventories(cq, std::move(context), request);
@@ -129,7 +129,7 @@ ProductServiceMetadata::AsyncRemoveLocalInventories(
 future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -137,7 +137,7 @@ ProductServiceMetadata::AsyncGetOperation(
 
 future<Status> ProductServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

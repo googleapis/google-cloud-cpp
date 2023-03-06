@@ -53,7 +53,7 @@ DomainMappingsMetadata::GetDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncCreateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateDomainMapping(cq, std::move(context), request);
@@ -62,7 +62,7 @@ DomainMappingsMetadata::AsyncCreateDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncUpdateDomainMapping(cq, std::move(context), request);
@@ -71,7 +71,7 @@ DomainMappingsMetadata::AsyncUpdateDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteDomainMapping(cq, std::move(context), request);
@@ -80,7 +80,7 @@ DomainMappingsMetadata::AsyncDeleteDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -88,7 +88,7 @@ DomainMappingsMetadata::AsyncGetOperation(
 
 future<Status> DomainMappingsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

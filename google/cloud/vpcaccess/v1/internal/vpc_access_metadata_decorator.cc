@@ -37,7 +37,7 @@ VpcAccessServiceMetadata::VpcAccessServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceMetadata::AsyncCreateConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateConnector(cq, std::move(context), request);
@@ -62,7 +62,7 @@ VpcAccessServiceMetadata::ListConnectors(
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceMetadata::AsyncDeleteConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteConnector(cq, std::move(context), request);
@@ -71,7 +71,7 @@ VpcAccessServiceMetadata::AsyncDeleteConnector(
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -79,7 +79,7 @@ VpcAccessServiceMetadata::AsyncGetOperation(
 
 future<Status> VpcAccessServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

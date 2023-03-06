@@ -52,7 +52,7 @@ HubServiceMetadata::GetHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncCreateHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateHub(cq, std::move(context), request);
@@ -61,7 +61,7 @@ HubServiceMetadata::AsyncCreateHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   SetMetadata(*context, "hub.name=" + request.hub().name());
   return child_->AsyncUpdateHub(cq, std::move(context), request);
@@ -70,7 +70,7 @@ HubServiceMetadata::AsyncUpdateHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteHub(cq, std::move(context), request);
@@ -95,7 +95,7 @@ HubServiceMetadata::GetSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncCreateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateSpoke(cq, std::move(context), request);
@@ -104,7 +104,7 @@ HubServiceMetadata::AsyncCreateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   SetMetadata(*context, "spoke.name=" + request.spoke().name());
   return child_->AsyncUpdateSpoke(cq, std::move(context), request);
@@ -113,7 +113,7 @@ HubServiceMetadata::AsyncUpdateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteSpoke(cq, std::move(context), request);
@@ -122,7 +122,7 @@ HubServiceMetadata::AsyncDeleteSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -130,7 +130,7 @@ HubServiceMetadata::AsyncGetOperation(
 
 future<Status> HubServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

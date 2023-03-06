@@ -43,7 +43,7 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerTracingStub::SubmitJob(
 future<StatusOr<google::longrunning::Operation>>
 JobControllerTracingStub::AsyncSubmitJobAsOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   return child_->AsyncSubmitJobAsOperation(cq, std::move(context), request);
 }
@@ -102,14 +102,14 @@ Status JobControllerTracingStub::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 JobControllerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> JobControllerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

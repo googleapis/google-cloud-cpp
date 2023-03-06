@@ -72,7 +72,7 @@ Status AgentsMetadata::DeleteAgent(
 future<StatusOr<google::longrunning::Operation>>
 AgentsMetadata::AsyncExportAgent(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncExportAgent(cq, std::move(context), request);
@@ -81,7 +81,7 @@ AgentsMetadata::AsyncExportAgent(
 future<StatusOr<google::longrunning::Operation>>
 AgentsMetadata::AsyncRestoreAgent(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncRestoreAgent(cq, std::move(context), request);
@@ -107,7 +107,7 @@ AgentsMetadata::GetAgentValidationResult(
 future<StatusOr<google::longrunning::Operation>>
 AgentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -115,7 +115,7 @@ AgentsMetadata::AsyncGetOperation(
 
 future<Status> AgentsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

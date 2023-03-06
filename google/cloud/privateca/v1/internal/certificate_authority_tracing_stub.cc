@@ -103,7 +103,7 @@ CertificateAuthorityServiceTracingStub::UpdateCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncActivateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
   return child_->AsyncActivateCertificateAuthority(cq, std::move(context),
@@ -113,7 +113,7 @@ CertificateAuthorityServiceTracingStub::AsyncActivateCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncCreateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
   return child_->AsyncCreateCertificateAuthority(cq, std::move(context),
@@ -123,7 +123,7 @@ CertificateAuthorityServiceTracingStub::AsyncCreateCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncDisableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
   return child_->AsyncDisableCertificateAuthority(cq, std::move(context),
@@ -133,7 +133,7 @@ CertificateAuthorityServiceTracingStub::AsyncDisableCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncEnableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
   return child_->AsyncEnableCertificateAuthority(cq, std::move(context),
@@ -187,7 +187,7 @@ CertificateAuthorityServiceTracingStub::ListCertificateAuthorities(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncUndeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
   return child_->AsyncUndeleteCertificateAuthority(cq, std::move(context),
@@ -197,7 +197,7 @@ CertificateAuthorityServiceTracingStub::AsyncUndeleteCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncDeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
   return child_->AsyncDeleteCertificateAuthority(cq, std::move(context),
@@ -207,7 +207,7 @@ CertificateAuthorityServiceTracingStub::AsyncDeleteCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
   return child_->AsyncUpdateCertificateAuthority(cq, std::move(context),
@@ -217,7 +217,7 @@ CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateAuthority(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncCreateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   return child_->AsyncCreateCaPool(cq, std::move(context), request);
@@ -226,7 +226,7 @@ CertificateAuthorityServiceTracingStub::AsyncCreateCaPool(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncUpdateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   return child_->AsyncUpdateCaPool(cq, std::move(context), request);
@@ -260,7 +260,7 @@ CertificateAuthorityServiceTracingStub::ListCaPools(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncDeleteCaPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   return child_->AsyncDeleteCaPool(cq, std::move(context), request);
@@ -312,7 +312,7 @@ CertificateAuthorityServiceTracingStub::ListCertificateRevocationLists(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateRevocationList(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
   return child_->AsyncUpdateCertificateRevocationList(cq, std::move(context),
@@ -322,7 +322,7 @@ CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateRevocationList(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncCreateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
   return child_->AsyncCreateCertificateTemplate(cq, std::move(context),
@@ -332,7 +332,7 @@ CertificateAuthorityServiceTracingStub::AsyncCreateCertificateTemplate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncDeleteCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
   return child_->AsyncDeleteCertificateTemplate(cq, std::move(context),
@@ -371,7 +371,7 @@ CertificateAuthorityServiceTracingStub::ListCertificateTemplates(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   return child_->AsyncUpdateCertificateTemplate(cq, std::move(context),
@@ -381,14 +381,14 @@ CertificateAuthorityServiceTracingStub::AsyncUpdateCertificateTemplate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> CertificateAuthorityServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

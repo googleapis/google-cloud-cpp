@@ -55,7 +55,7 @@ AccessContextManagerMetadata::GetAccessPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
   SetMetadata(*context);
   return child_->AsyncCreateAccessPolicy(cq, std::move(context), request);
@@ -64,7 +64,7 @@ AccessContextManagerMetadata::AsyncCreateAccessPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
   SetMetadata(*context, "policy.name=" + request.policy().name());
@@ -74,7 +74,7 @@ AccessContextManagerMetadata::AsyncUpdateAccessPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -102,7 +102,7 @@ AccessContextManagerMetadata::GetAccessLevel(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -112,7 +112,7 @@ AccessContextManagerMetadata::AsyncCreateAccessLevel(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
   SetMetadata(*context, "access_level.name=" + request.access_level().name());
@@ -122,7 +122,7 @@ AccessContextManagerMetadata::AsyncUpdateAccessLevel(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -132,7 +132,7 @@ AccessContextManagerMetadata::AsyncDeleteAccessLevel(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncReplaceAccessLevels(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -161,7 +161,7 @@ AccessContextManagerMetadata::GetServicePerimeter(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -171,7 +171,7 @@ AccessContextManagerMetadata::AsyncCreateServicePerimeter(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
   SetMetadata(*context,
@@ -182,7 +182,7 @@ AccessContextManagerMetadata::AsyncUpdateServicePerimeter(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -192,7 +192,7 @@ AccessContextManagerMetadata::AsyncDeleteServicePerimeter(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncReplaceServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -202,7 +202,7 @@ AccessContextManagerMetadata::AsyncReplaceServicePerimeters(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCommitServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -231,7 +231,7 @@ AccessContextManagerMetadata::GetGcpUserAccessBinding(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -242,7 +242,7 @@ AccessContextManagerMetadata::AsyncCreateGcpUserAccessBinding(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
   SetMetadata(*context, "gcp_user_access_binding.name=" +
@@ -254,7 +254,7 @@ AccessContextManagerMetadata::AsyncUpdateGcpUserAccessBinding(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -287,7 +287,7 @@ AccessContextManagerMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -295,7 +295,7 @@ AccessContextManagerMetadata::AsyncGetOperation(
 
 future<Status> AccessContextManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

@@ -57,7 +57,7 @@ ServiceManagerTracingStub::GetService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   return child_->AsyncCreateService(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ ServiceManagerTracingStub::AsyncCreateService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   return child_->AsyncDeleteService(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ ServiceManagerTracingStub::AsyncDeleteService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   return child_->AsyncUndeleteService(cq, std::move(context), request);
 }
@@ -118,7 +118,7 @@ StatusOr<google::api::Service> ServiceManagerTracingStub::CreateServiceConfig(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncSubmitConfigSource(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   return child_->AsyncSubmitConfigSource(cq, std::move(context), request);
@@ -153,7 +153,7 @@ ServiceManagerTracingStub::GetServiceRollout(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncCreateServiceRollout(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   return child_->AsyncCreateServiceRollout(cq, std::move(context), request);
@@ -175,14 +175,14 @@ ServiceManagerTracingStub::GenerateConfigReport(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ServiceManagerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

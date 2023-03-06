@@ -71,7 +71,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsMetadata::UpdateFlow(
 
 future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncTrainFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncTrainFlow(cq, std::move(context), request);
@@ -96,7 +96,7 @@ FlowsMetadata::GetFlowValidationResult(
 
 future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncImportFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncImportFlow(cq, std::move(context), request);
@@ -104,7 +104,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncImportFlow(
 
 future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncExportFlow(cq, std::move(context), request);
@@ -113,7 +113,7 @@ future<StatusOr<google::longrunning::Operation>> FlowsMetadata::AsyncExportFlow(
 future<StatusOr<google::longrunning::Operation>>
 FlowsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -121,7 +121,7 @@ FlowsMetadata::AsyncGetOperation(
 
 future<Status> FlowsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

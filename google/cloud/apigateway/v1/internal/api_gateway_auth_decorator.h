@@ -50,19 +50,19 @@ class ApiGatewayServiceAuth : public ApiGatewayServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGateway(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::CreateGatewayRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGateway(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGateway(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request)
       override;
 
@@ -76,17 +76,17 @@ class ApiGatewayServiceAuth : public ApiGatewayServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApi(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::CreateApiRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateApi(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::UpdateApiRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteApi(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
 
   StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -101,30 +101,30 @@ class ApiGatewayServiceAuth : public ApiGatewayServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApiConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateApiConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteApiConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

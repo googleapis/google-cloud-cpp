@@ -415,7 +415,7 @@ StatusOr<google::storage::v2::Object> StorageMetadata::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageMetadata::ReadObject(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -453,7 +453,7 @@ StatusOr<google::storage::v2::Object> StorageMetadata::UpdateObject(
 std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageMetadata::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
+StorageMetadata::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->WriteObject(std::move(context));
 }
@@ -659,7 +659,7 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageMetadata::UpdateHmacKey(
 
 future<Status> StorageMetadata::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::DeleteObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -680,7 +680,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageMetadata::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -702,7 +702,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectResponse>>
 StorageMetadata::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->AsyncWriteObject(cq, std::move(context));
 }
@@ -710,7 +710,7 @@ StorageMetadata::AsyncWriteObject(
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageMetadata::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::StartResumableWriteRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -731,7 +731,7 @@ StorageMetadata::AsyncStartResumableWrite(
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageMetadata::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);

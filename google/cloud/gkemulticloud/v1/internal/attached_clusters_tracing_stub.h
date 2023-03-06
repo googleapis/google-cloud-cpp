@@ -39,19 +39,19 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAttachedCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAttachedCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportAttachedCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request) override;
 
@@ -69,7 +69,7 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAttachedCluster(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request) override;
 
@@ -89,12 +89,12 @@ class AttachedClustersTracingStub : public AttachedClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

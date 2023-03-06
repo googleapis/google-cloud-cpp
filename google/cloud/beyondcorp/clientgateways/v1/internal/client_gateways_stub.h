@@ -50,24 +50,24 @@ class ClientGatewaysServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateClientGateway(google::cloud::CompletionQueue& cq,
-                           std::unique_ptr<grpc::ClientContext> context,
+                           std::shared_ptr<grpc::ClientContext> context,
                            google::cloud::beyondcorp::clientgateways::v1::
                                CreateClientGatewayRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteClientGateway(google::cloud::CompletionQueue& cq,
-                           std::unique_ptr<grpc::ClientContext> context,
+                           std::shared_ptr<grpc::ClientContext> context,
                            google::cloud::beyondcorp::clientgateways::v1::
                                DeleteClientGatewayRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -94,24 +94,24 @@ class DefaultClientGatewaysServiceStub : public ClientGatewaysServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateClientGateway(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::beyondcorp::clientgateways::v1::
           CreateClientGatewayRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteClientGateway(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::beyondcorp::clientgateways::v1::
           DeleteClientGatewayRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

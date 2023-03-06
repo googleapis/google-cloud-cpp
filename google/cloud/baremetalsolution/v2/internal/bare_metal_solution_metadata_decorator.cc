@@ -53,7 +53,7 @@ BareMetalSolutionMetadata::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
         request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
@@ -63,7 +63,7 @@ BareMetalSolutionMetadata::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncResetInstance(cq, std::move(context), request);
@@ -72,7 +72,7 @@ BareMetalSolutionMetadata::AsyncResetInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncStartInstance(cq, std::move(context), request);
@@ -81,7 +81,7 @@ BareMetalSolutionMetadata::AsyncStartInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncStopInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncStopInstance(cq, std::move(context), request);
@@ -90,7 +90,7 @@ BareMetalSolutionMetadata::AsyncStopInstance(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncDetachLun(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
   SetMetadata(*context, "instance=" + request.instance());
   return child_->AsyncDetachLun(cq, std::move(context), request);
@@ -115,7 +115,7 @@ BareMetalSolutionMetadata::GetVolume(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncUpdateVolume(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
   SetMetadata(*context, "volume.name=" + request.volume().name());
   return child_->AsyncUpdateVolume(cq, std::move(context), request);
@@ -124,7 +124,7 @@ BareMetalSolutionMetadata::AsyncUpdateVolume(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncResizeVolume(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
   SetMetadata(*context, "volume=" + request.volume());
   return child_->AsyncResizeVolume(cq, std::move(context), request);
@@ -158,7 +158,7 @@ BareMetalSolutionMetadata::GetNetwork(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncUpdateNetwork(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
   SetMetadata(*context, "network.name=" + request.network().name());
   return child_->AsyncUpdateNetwork(cq, std::move(context), request);
@@ -199,7 +199,7 @@ BareMetalSolutionMetadata::ListNfsShares(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncUpdateNfsShare(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
         request) {
   SetMetadata(*context, "nfs_share.name=" + request.nfs_share().name());
@@ -209,7 +209,7 @@ BareMetalSolutionMetadata::AsyncUpdateNfsShare(
 future<StatusOr<google::longrunning::Operation>>
 BareMetalSolutionMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -217,7 +217,7 @@ BareMetalSolutionMetadata::AsyncGetOperation(
 
 future<Status> BareMetalSolutionMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

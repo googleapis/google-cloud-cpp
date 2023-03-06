@@ -45,7 +45,7 @@ DefaultFleetRoutingStub::OptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFleetRoutingStub::AsyncBatchOptimizeTours(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::optimization::v1::BatchOptimizeToursRequest,
@@ -63,7 +63,7 @@ DefaultFleetRoutingStub::AsyncBatchOptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFleetRoutingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -78,7 +78,7 @@ DefaultFleetRoutingStub::AsyncGetOperation(
 
 future<Status> DefaultFleetRoutingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

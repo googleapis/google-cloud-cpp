@@ -93,7 +93,7 @@ RevisionsMetadata::ListRevisions(
 future<StatusOr<google::longrunning::Operation>>
 RevisionsMetadata::AsyncDeleteRevision(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -122,7 +122,7 @@ RevisionsMetadata::AsyncDeleteRevision(
 future<StatusOr<google::longrunning::Operation>>
 RevisionsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -130,7 +130,7 @@ RevisionsMetadata::AsyncGetOperation(
 
 future<Status> RevisionsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

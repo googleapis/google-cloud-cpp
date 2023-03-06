@@ -37,7 +37,7 @@ AttachedClustersMetadata::AttachedClustersMetadata(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncCreateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -47,7 +47,7 @@ AttachedClustersMetadata::AsyncCreateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
         request) {
   SetMetadata(*context,
@@ -58,7 +58,7 @@ AttachedClustersMetadata::AsyncUpdateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -86,7 +86,7 @@ AttachedClustersMetadata::ListAttachedClusters(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncDeleteAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -115,7 +115,7 @@ AttachedClustersMetadata::GenerateAttachedClusterInstallManifest(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -123,7 +123,7 @@ AttachedClustersMetadata::AsyncGetOperation(
 
 future<Status> AttachedClustersMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

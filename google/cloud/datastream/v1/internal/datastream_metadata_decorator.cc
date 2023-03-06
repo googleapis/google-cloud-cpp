@@ -53,7 +53,7 @@ DatastreamMetadata::GetConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncCreateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -63,7 +63,7 @@ DatastreamMetadata::AsyncCreateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
         request) {
   SetMetadata(*context,
@@ -74,7 +74,7 @@ DatastreamMetadata::AsyncUpdateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -108,7 +108,7 @@ StatusOr<google::cloud::datastream::v1::Stream> DatastreamMetadata::GetStream(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncCreateStream(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateStream(cq, std::move(context), request);
@@ -117,7 +117,7 @@ DatastreamMetadata::AsyncCreateStream(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncUpdateStream(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
   SetMetadata(*context, "stream.name=" + request.stream().name());
   return child_->AsyncUpdateStream(cq, std::move(context), request);
@@ -126,7 +126,7 @@ DatastreamMetadata::AsyncUpdateStream(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncDeleteStream(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteStream(cq, std::move(context), request);
@@ -183,7 +183,7 @@ DatastreamMetadata::FetchStaticIps(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -210,7 +210,7 @@ DatastreamMetadata::ListPrivateConnections(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -220,7 +220,7 @@ DatastreamMetadata::AsyncDeletePrivateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncCreateRoute(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateRoute(cq, std::move(context), request);
@@ -244,7 +244,7 @@ DatastreamMetadata::ListRoutes(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncDeleteRoute(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteRoute(cq, std::move(context), request);
@@ -253,7 +253,7 @@ DatastreamMetadata::AsyncDeleteRoute(
 future<StatusOr<google::longrunning::Operation>>
 DatastreamMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -261,7 +261,7 @@ DatastreamMetadata::AsyncGetOperation(
 
 future<Status> DatastreamMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

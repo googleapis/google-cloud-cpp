@@ -79,7 +79,7 @@ StatusOr<google::cloud::gkehub::v1::Feature> GkeHubTracingStub::GetFeature(
 future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncCreateMembership(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   return child_->AsyncCreateMembership(cq, std::move(context), request);
 }
@@ -87,7 +87,7 @@ GkeHubTracingStub::AsyncCreateMembership(
 future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   return child_->AsyncCreateFeature(cq, std::move(context), request);
 }
@@ -95,7 +95,7 @@ GkeHubTracingStub::AsyncCreateFeature(
 future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncDeleteMembership(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   return child_->AsyncDeleteMembership(cq, std::move(context), request);
 }
@@ -103,7 +103,7 @@ GkeHubTracingStub::AsyncDeleteMembership(
 future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   return child_->AsyncDeleteFeature(cq, std::move(context), request);
 }
@@ -111,7 +111,7 @@ GkeHubTracingStub::AsyncDeleteFeature(
 future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncUpdateMembership(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   return child_->AsyncUpdateMembership(cq, std::move(context), request);
 }
@@ -119,7 +119,7 @@ GkeHubTracingStub::AsyncUpdateMembership(
 future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   return child_->AsyncUpdateFeature(cq, std::move(context), request);
 }
@@ -139,14 +139,14 @@ GkeHubTracingStub::GenerateConnectManifest(
 future<StatusOr<google::longrunning::Operation>>
 GkeHubTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> GkeHubTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

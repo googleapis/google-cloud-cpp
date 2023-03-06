@@ -57,7 +57,7 @@ ConnectorsTracingStub::GetConnection(
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   return child_->AsyncCreateConnection(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ ConnectorsTracingStub::AsyncCreateConnection(
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   return child_->AsyncUpdateConnection(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ ConnectorsTracingStub::AsyncUpdateConnection(
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   return child_->AsyncDeleteConnection(cq, std::move(context), request);
 }
@@ -205,14 +205,14 @@ ConnectorsTracingStub::GetRuntimeConfig(
 future<StatusOr<google::longrunning::Operation>>
 ConnectorsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ConnectorsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

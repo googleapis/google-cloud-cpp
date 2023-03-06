@@ -61,7 +61,7 @@ ReachabilityServiceTracingStub::GetConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncCreateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   return child_->AsyncCreateConnectivityTest(cq, std::move(context), request);
@@ -70,7 +70,7 @@ ReachabilityServiceTracingStub::AsyncCreateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   return child_->AsyncUpdateConnectivityTest(cq, std::move(context), request);
@@ -79,7 +79,7 @@ ReachabilityServiceTracingStub::AsyncUpdateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncRerunConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   return child_->AsyncRerunConnectivityTest(cq, std::move(context), request);
@@ -88,7 +88,7 @@ ReachabilityServiceTracingStub::AsyncRerunConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   return child_->AsyncDeleteConnectivityTest(cq, std::move(context), request);
@@ -97,14 +97,14 @@ ReachabilityServiceTracingStub::AsyncDeleteConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ReachabilityServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

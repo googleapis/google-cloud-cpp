@@ -131,7 +131,7 @@ Status AdminServiceMetadata::DeleteSubscription(
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceMetadata::AsyncSeekSubscription(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncSeekSubscription(cq, std::move(context), request);
@@ -188,7 +188,7 @@ AdminServiceMetadata::ListReservationTopics(
 future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceMetadata::AsyncGetTopicPartitions(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetTopicPartitions(cq, std::move(context), request);
@@ -197,7 +197,7 @@ AdminServiceMetadata::AsyncGetTopicPartitions(
 future<StatusOr<google::longrunning::Operation>>
 AdminServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -205,7 +205,7 @@ AdminServiceMetadata::AsyncGetOperation(
 
 future<Status> AdminServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

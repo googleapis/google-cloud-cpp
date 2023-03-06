@@ -93,7 +93,7 @@ Status StorageTransferServiceMetadata::ResumeTransferOperation(
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceMetadata::AsyncRunTransferJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   SetMetadata(*context, "job_name=" + request.job_name());
   return child_->AsyncRunTransferJob(cq, std::move(context), request);
@@ -148,7 +148,7 @@ Status StorageTransferServiceMetadata::DeleteAgentPool(
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -156,7 +156,7 @@ StorageTransferServiceMetadata::AsyncGetOperation(
 
 future<Status> StorageTransferServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

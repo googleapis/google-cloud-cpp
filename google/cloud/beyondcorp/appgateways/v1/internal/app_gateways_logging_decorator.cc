@@ -65,12 +65,12 @@ AppGatewaysServiceLogging::GetAppGateway(
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceLogging::AsyncCreateAppGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::beyondcorp::appgateways::v1::
                  CreateAppGatewayRequest const& request) {
         return child_->AsyncCreateAppGateway(cq, std::move(context), request);
@@ -81,12 +81,12 @@ AppGatewaysServiceLogging::AsyncCreateAppGateway(
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceLogging::AsyncDeleteAppGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::beyondcorp::appgateways::v1::
                  DeleteAppGatewayRequest const& request) {
         return child_->AsyncDeleteAppGateway(cq, std::move(context), request);
@@ -97,11 +97,11 @@ AppGatewaysServiceLogging::AsyncDeleteAppGateway(
 future<StatusOr<google::longrunning::Operation>>
 AppGatewaysServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -110,11 +110,11 @@ AppGatewaysServiceLogging::AsyncGetOperation(
 
 future<Status> AppGatewaysServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

@@ -51,7 +51,7 @@ StatusOr<google::cloud::ids::v1::Endpoint> IDSMetadata::GetEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 IDSMetadata::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateEndpoint(cq, std::move(context), request);
@@ -60,7 +60,7 @@ IDSMetadata::AsyncCreateEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 IDSMetadata::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteEndpoint(cq, std::move(context), request);
@@ -68,7 +68,7 @@ IDSMetadata::AsyncDeleteEndpoint(
 
 future<StatusOr<google::longrunning::Operation>> IDSMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -76,7 +76,7 @@ future<StatusOr<google::longrunning::Operation>> IDSMetadata::AsyncGetOperation(
 
 future<Status> IDSMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

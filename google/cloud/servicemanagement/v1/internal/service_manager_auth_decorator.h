@@ -51,19 +51,19 @@ class ServiceManagerAuth : public ServiceManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateService(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::servicemanagement::v1::CreateServiceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteService(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::servicemanagement::v1::DeleteServiceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteService(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::servicemanagement::v1::UndeleteServiceRequest const& request)
       override;
 
@@ -85,7 +85,7 @@ class ServiceManagerAuth : public ServiceManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubmitConfigSource(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
           request) override;
 
@@ -102,7 +102,7 @@ class ServiceManagerAuth : public ServiceManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceRollout(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
           request) override;
 
@@ -114,12 +114,12 @@ class ServiceManagerAuth : public ServiceManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

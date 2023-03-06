@@ -55,7 +55,7 @@ CertificateManagerMetadata::GetCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -65,7 +65,7 @@ CertificateManagerMetadata::AsyncCreateCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateCertificate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
         request) {
   SetMetadata(*context, "certificate.name=" + request.certificate().name());
@@ -75,7 +75,7 @@ CertificateManagerMetadata::AsyncUpdateCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -103,7 +103,7 @@ CertificateManagerMetadata::GetCertificateMap(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -113,7 +113,7 @@ CertificateManagerMetadata::AsyncCreateCertificateMap(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
         request) {
   SetMetadata(*context,
@@ -124,7 +124,7 @@ CertificateManagerMetadata::AsyncUpdateCertificateMap(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -153,7 +153,7 @@ CertificateManagerMetadata::GetCertificateMapEntry(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         CreateCertificateMapEntryRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -164,7 +164,7 @@ CertificateManagerMetadata::AsyncCreateCertificateMapEntry(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         UpdateCertificateMapEntryRequest const& request) {
   SetMetadata(*context, "certificate_map_entry.name=" +
@@ -176,7 +176,7 @@ CertificateManagerMetadata::AsyncUpdateCertificateMapEntry(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         DeleteCertificateMapEntryRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -205,7 +205,7 @@ CertificateManagerMetadata::GetDnsAuthorization(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -215,7 +215,7 @@ CertificateManagerMetadata::AsyncCreateDnsAuthorization(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncUpdateDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
         request) {
   SetMetadata(*context,
@@ -226,7 +226,7 @@ CertificateManagerMetadata::AsyncUpdateDnsAuthorization(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -255,7 +255,7 @@ CertificateManagerMetadata::GetCertificateIssuanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncCreateCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         CreateCertificateIssuanceConfigRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -266,7 +266,7 @@ CertificateManagerMetadata::AsyncCreateCertificateIssuanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncDeleteCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -277,7 +277,7 @@ CertificateManagerMetadata::AsyncDeleteCertificateIssuanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -285,7 +285,7 @@ CertificateManagerMetadata::AsyncGetOperation(
 
 future<Status> CertificateManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

@@ -88,11 +88,11 @@ TranslationServiceLogging::TranslateDocument(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncBatchTranslateText(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::translation::v3::BatchTranslateTextRequest const&
                  request) {
         return child_->AsyncBatchTranslateText(cq, std::move(context), request);
@@ -103,13 +103,13 @@ TranslationServiceLogging::AsyncBatchTranslateText(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::translation::v3::BatchTranslateDocumentRequest const&
               request) {
         return child_->AsyncBatchTranslateDocument(cq, std::move(context),
@@ -121,11 +121,11 @@ TranslationServiceLogging::AsyncBatchTranslateDocument(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::translation::v3::CreateGlossaryRequest const&
                  request) {
         return child_->AsyncCreateGlossary(cq, std::move(context), request);
@@ -160,11 +160,11 @@ TranslationServiceLogging::GetGlossary(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncDeleteGlossary(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::translation::v3::DeleteGlossaryRequest const&
                  request) {
         return child_->AsyncDeleteGlossary(cq, std::move(context), request);
@@ -175,11 +175,11 @@ TranslationServiceLogging::AsyncDeleteGlossary(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -188,11 +188,11 @@ TranslationServiceLogging::AsyncGetOperation(
 
 future<Status> TranslationServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

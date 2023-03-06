@@ -57,7 +57,7 @@ CloudDeployTracingStub::GetDeliveryPipeline(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   return child_->AsyncCreateDeliveryPipeline(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ CloudDeployTracingStub::AsyncCreateDeliveryPipeline(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncUpdateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   return child_->AsyncUpdateDeliveryPipeline(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ CloudDeployTracingStub::AsyncUpdateDeliveryPipeline(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncDeleteDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   return child_->AsyncDeleteDeliveryPipeline(cq, std::move(context), request);
 }
@@ -103,7 +103,7 @@ StatusOr<google::cloud::deploy::v1::Target> CloudDeployTracingStub::GetTarget(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateTarget(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
   return child_->AsyncCreateTarget(cq, std::move(context), request);
 }
@@ -111,7 +111,7 @@ CloudDeployTracingStub::AsyncCreateTarget(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncUpdateTarget(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   return child_->AsyncUpdateTarget(cq, std::move(context), request);
 }
@@ -119,7 +119,7 @@ CloudDeployTracingStub::AsyncUpdateTarget(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncDeleteTarget(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   return child_->AsyncDeleteTarget(cq, std::move(context), request);
 }
@@ -150,7 +150,7 @@ StatusOr<google::cloud::deploy::v1::Release> CloudDeployTracingStub::GetRelease(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateRelease(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   return child_->AsyncCreateRelease(cq, std::move(context), request);
 }
@@ -205,7 +205,7 @@ StatusOr<google::cloud::deploy::v1::Rollout> CloudDeployTracingStub::GetRollout(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateRollout(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   return child_->AsyncCreateRollout(cq, std::move(context), request);
 }
@@ -256,14 +256,14 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployTracingStub::GetConfig(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> CloudDeployTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

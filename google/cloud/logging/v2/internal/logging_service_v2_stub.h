@@ -64,12 +64,12 @@ class LoggingServiceV2Stub {
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
-                      std::unique_ptr<grpc::ClientContext> context) = 0;
+                      std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 };
 
@@ -106,12 +106,12 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
-                      std::unique_ptr<grpc::ClientContext> context) override;
+                      std::shared_ptr<grpc::ClientContext> context) override;
 
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:

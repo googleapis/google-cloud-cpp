@@ -60,11 +60,11 @@ StatusOr<google::cloud::ids::v1::Endpoint> IDSLogging::GetEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 IDSLogging::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::ids::v1::CreateEndpointRequest const& request) {
         return child_->AsyncCreateEndpoint(cq, std::move(context), request);
       },
@@ -74,11 +74,11 @@ IDSLogging::AsyncCreateEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 IDSLogging::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::ids::v1::DeleteEndpointRequest const& request) {
         return child_->AsyncDeleteEndpoint(cq, std::move(context), request);
       },
@@ -87,11 +87,11 @@ IDSLogging::AsyncDeleteEndpoint(
 
 future<StatusOr<google::longrunning::Operation>> IDSLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -100,11 +100,11 @@ future<StatusOr<google::longrunning::Operation>> IDSLogging::AsyncGetOperation(
 
 future<Status> IDSLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

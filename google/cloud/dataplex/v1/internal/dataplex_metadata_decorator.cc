@@ -37,7 +37,7 @@ DataplexServiceMetadata::DataplexServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncCreateLake(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateLakeRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateLake(cq, std::move(context), request);
@@ -46,7 +46,7 @@ DataplexServiceMetadata::AsyncCreateLake(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateLake(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateLakeRequest const& request) {
   SetMetadata(*context, "lake.name=" + request.lake().name());
   return child_->AsyncUpdateLake(cq, std::move(context), request);
@@ -55,7 +55,7 @@ DataplexServiceMetadata::AsyncUpdateLake(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteLake(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteLakeRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteLake(cq, std::move(context), request);
@@ -87,7 +87,7 @@ DataplexServiceMetadata::ListLakeActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncCreateZone(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateZoneRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateZone(cq, std::move(context), request);
@@ -96,7 +96,7 @@ DataplexServiceMetadata::AsyncCreateZone(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateZone(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateZoneRequest const& request) {
   SetMetadata(*context, "zone.name=" + request.zone().name());
   return child_->AsyncUpdateZone(cq, std::move(context), request);
@@ -105,7 +105,7 @@ DataplexServiceMetadata::AsyncUpdateZone(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteZone(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteZoneRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteZone(cq, std::move(context), request);
@@ -137,7 +137,7 @@ DataplexServiceMetadata::ListZoneActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateAssetRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateAsset(cq, std::move(context), request);
@@ -146,7 +146,7 @@ DataplexServiceMetadata::AsyncCreateAsset(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateAsset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateAssetRequest const& request) {
   SetMetadata(*context, "asset.name=" + request.asset().name());
   return child_->AsyncUpdateAsset(cq, std::move(context), request);
@@ -155,7 +155,7 @@ DataplexServiceMetadata::AsyncUpdateAsset(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteAsset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteAssetRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteAsset(cq, std::move(context), request);
@@ -187,7 +187,7 @@ DataplexServiceMetadata::ListAssetActions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncCreateTask(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateTaskRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateTask(cq, std::move(context), request);
@@ -196,7 +196,7 @@ DataplexServiceMetadata::AsyncCreateTask(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateTask(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateTaskRequest const& request) {
   SetMetadata(*context, "task.name=" + request.task().name());
   return child_->AsyncUpdateTask(cq, std::move(context), request);
@@ -205,7 +205,7 @@ DataplexServiceMetadata::AsyncUpdateTask(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteTask(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteTaskRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteTask(cq, std::move(context), request);
@@ -251,7 +251,7 @@ Status DataplexServiceMetadata::CancelJob(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::CreateEnvironmentRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateEnvironment(cq, std::move(context), request);
@@ -260,7 +260,7 @@ DataplexServiceMetadata::AsyncCreateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request) {
   SetMetadata(*context, "environment.name=" + request.environment().name());
   return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
@@ -269,7 +269,7 @@ DataplexServiceMetadata::AsyncUpdateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteEnvironment(cq, std::move(context), request);
@@ -302,7 +302,7 @@ DataplexServiceMetadata::ListSessions(
 future<StatusOr<google::longrunning::Operation>>
 DataplexServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -310,7 +310,7 @@ DataplexServiceMetadata::AsyncGetOperation(
 
 future<Status> DataplexServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

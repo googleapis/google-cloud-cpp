@@ -168,7 +168,7 @@ ProductSearchMetadata::ListProductsInProductSet(
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchMetadata::AsyncImportProductSets(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncImportProductSets(cq, std::move(context), request);
@@ -177,7 +177,7 @@ ProductSearchMetadata::AsyncImportProductSets(
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchMetadata::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncPurgeProducts(cq, std::move(context), request);
@@ -186,7 +186,7 @@ ProductSearchMetadata::AsyncPurgeProducts(
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -194,7 +194,7 @@ ProductSearchMetadata::AsyncGetOperation(
 
 future<Status> ProductSearchMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

@@ -63,11 +63,11 @@ ImageAnnotatorLogging::BatchAnnotateFiles(
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorLogging::AsyncAsyncBatchAnnotateImages(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
                  request) {
         return child_->AsyncAsyncBatchAnnotateImages(cq, std::move(context),
@@ -79,11 +79,11 @@ ImageAnnotatorLogging::AsyncAsyncBatchAnnotateImages(
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorLogging::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
                  request) {
         return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context),
@@ -95,11 +95,11 @@ ImageAnnotatorLogging::AsyncAsyncBatchAnnotateFiles(
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -108,11 +108,11 @@ ImageAnnotatorLogging::AsyncGetOperation(
 
 future<Status> ImageAnnotatorLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

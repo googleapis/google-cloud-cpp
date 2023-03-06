@@ -81,7 +81,7 @@ Status ContactCenterInsightsMetadata::DeleteConversation(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncCreateAnalysis(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -117,7 +117,7 @@ Status ContactCenterInsightsMetadata::DeleteAnalysis(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncBulkAnalyzeConversations(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -127,7 +127,7 @@ ContactCenterInsightsMetadata::AsyncBulkAnalyzeConversations(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -137,7 +137,7 @@ ContactCenterInsightsMetadata::AsyncIngestConversations(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -147,7 +147,7 @@ ContactCenterInsightsMetadata::AsyncExportInsightsData(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -184,7 +184,7 @@ ContactCenterInsightsMetadata::ListIssueModels(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncDeleteIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -194,7 +194,7 @@ ContactCenterInsightsMetadata::AsyncDeleteIssueModel(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -204,7 +204,7 @@ ContactCenterInsightsMetadata::AsyncDeployIssueModel(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -372,7 +372,7 @@ Status ContactCenterInsightsMetadata::DeleteView(
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -380,7 +380,7 @@ ContactCenterInsightsMetadata::AsyncGetOperation(
 
 future<Status> ContactCenterInsightsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

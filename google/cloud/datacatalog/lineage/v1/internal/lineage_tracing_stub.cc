@@ -83,7 +83,7 @@ LineageTracingStub::ListProcesses(
 future<StatusOr<google::longrunning::Operation>>
 LineageTracingStub::AsyncDeleteProcess(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   return child_->AsyncDeleteProcess(cq, std::move(context), request);
@@ -136,7 +136,7 @@ LineageTracingStub::ListRuns(
 future<StatusOr<google::longrunning::Operation>>
 LineageTracingStub::AsyncDeleteRun(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   return child_->AsyncDeleteRun(cq, std::move(context), request);
 }
@@ -223,14 +223,14 @@ LineageTracingStub::BatchSearchLinkProcesses(
 future<StatusOr<google::longrunning::Operation>>
 LineageTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> LineageTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -52,7 +52,7 @@ StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminMetadata::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateCluster(cq, std::move(context), request);
@@ -61,7 +61,7 @@ AlloyDBAdminMetadata::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   SetMetadata(*context, "cluster.name=" + request.cluster().name());
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
@@ -70,7 +70,7 @@ AlloyDBAdminMetadata::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
@@ -79,7 +79,7 @@ AlloyDBAdminMetadata::AsyncDeleteCluster(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncRestoreCluster(cq, std::move(context), request);
@@ -104,7 +104,7 @@ AlloyDBAdminMetadata::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
@@ -113,7 +113,7 @@ AlloyDBAdminMetadata::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncBatchCreateInstances(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBatchCreateInstances(cq, std::move(context), request);
@@ -122,7 +122,7 @@ AlloyDBAdminMetadata::AsyncBatchCreateInstances(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -131,7 +131,7 @@ AlloyDBAdminMetadata::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
@@ -140,7 +140,7 @@ AlloyDBAdminMetadata::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncFailoverInstance(cq, std::move(context), request);
@@ -149,7 +149,7 @@ AlloyDBAdminMetadata::AsyncFailoverInstance(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncRestartInstance(cq, std::move(context), request);
@@ -173,7 +173,7 @@ StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminMetadata::GetBackup(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateBackup(cq, std::move(context), request);
@@ -182,7 +182,7 @@ AlloyDBAdminMetadata::AsyncCreateBackup(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   SetMetadata(*context, "backup.name=" + request.backup().name());
   return child_->AsyncUpdateBackup(cq, std::move(context), request);
@@ -191,7 +191,7 @@ AlloyDBAdminMetadata::AsyncUpdateBackup(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteBackup(cq, std::move(context), request);
@@ -209,7 +209,7 @@ AlloyDBAdminMetadata::ListSupportedDatabaseFlags(
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -217,7 +217,7 @@ AlloyDBAdminMetadata::AsyncGetOperation(
 
 future<Status> AlloyDBAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

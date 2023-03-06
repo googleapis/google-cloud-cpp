@@ -33,7 +33,7 @@ CloudBuildTracingStub::CloudBuildTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncCreateBuild(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   return child_->AsyncCreateBuild(cq, std::move(context), request);
 }
@@ -76,7 +76,7 @@ CloudBuildTracingStub::CancelBuild(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncRetryBuild(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   return child_->AsyncRetryBuild(cq, std::move(context), request);
 }
@@ -84,7 +84,7 @@ CloudBuildTracingStub::AsyncRetryBuild(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncApproveBuild(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   return child_->AsyncApproveBuild(cq, std::move(context), request);
 }
@@ -154,7 +154,7 @@ CloudBuildTracingStub::UpdateBuildTrigger(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncRunBuildTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   return child_->AsyncRunBuildTrigger(cq, std::move(context), request);
 }
@@ -175,7 +175,7 @@ CloudBuildTracingStub::ReceiveTriggerWebhook(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncCreateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   return child_->AsyncCreateWorkerPool(cq, std::move(context), request);
 }
@@ -195,7 +195,7 @@ CloudBuildTracingStub::GetWorkerPool(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncDeleteWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   return child_->AsyncDeleteWorkerPool(cq, std::move(context), request);
 }
@@ -203,7 +203,7 @@ CloudBuildTracingStub::AsyncDeleteWorkerPool(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncUpdateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   return child_->AsyncUpdateWorkerPool(cq, std::move(context), request);
 }
@@ -223,14 +223,14 @@ CloudBuildTracingStub::ListWorkerPools(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> CloudBuildTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
