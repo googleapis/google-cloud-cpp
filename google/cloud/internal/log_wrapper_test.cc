@@ -126,8 +126,7 @@ TEST(LogWrapper, FutureStatusOrError) {
 /// @test the overload for functions returning FutureStatusOr and using
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusOrValueWithContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext>,
+  auto mock = [](google::cloud::CompletionQueue&, auto,
                  google::spanner::v1::Mutation m) {
     return make_ready_future(make_status_or(std::move(m)));
   };
@@ -150,8 +149,7 @@ TEST(LogWrapper, FutureStatusOrValueWithContextAndCQ) {
 /// @test the overload for functions returning FutureStatusOr and using
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
-  auto mock = [](google::cloud::CompletionQueue&,
-                 std::unique_ptr<grpc::ClientContext>,
+  auto mock = [](google::cloud::CompletionQueue&, auto,
                  google::spanner::v1::Mutation const&) {
     return make_ready_future(StatusOr<google::spanner::v1::Mutation>(
         Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -178,8 +176,7 @@ TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusWithContextAndCQ) {
   auto const status = Status(StatusCode::kPermissionDenied, "uh-oh");
-  auto mock = [&](google::cloud::CompletionQueue&,
-                  std::unique_ptr<grpc::ClientContext>,
+  auto mock = [&](google::cloud::CompletionQueue&, auto,
                   google::spanner::v1::Mutation const&) {
     return make_ready_future(status);
   };

@@ -62,8 +62,7 @@ class MinimalIamCredentialsStubTest : public ::testing::Test {
 TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenLogging) {
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
   EXPECT_CALL(*mock, AsyncGenerateAccessToken)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   GenerateAccessTokenRequest const&) {
+      .WillOnce([](CompletionQueue&, auto, GenerateAccessTokenRequest const&) {
         GenerateAccessTokenResponse response;
         response.set_access_token("test-only-token");
         return make_ready_future(make_status_or(response));
@@ -89,8 +88,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenLogging) {
 TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenNoLogging) {
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
   EXPECT_CALL(*mock, AsyncGenerateAccessToken)
-      .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   GenerateAccessTokenRequest const&) {
+      .WillOnce([](CompletionQueue&, auto, GenerateAccessTokenRequest const&) {
         GenerateAccessTokenResponse response;
         response.set_access_token("test-only-token");
         return make_ready_future(make_status_or(response));
@@ -164,8 +162,7 @@ TEST_F(MinimalIamCredentialsStubTest,
        DISABLED_AsyncGenerateAccessTokenMetadata) {
   auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
   EXPECT_CALL(*mock, AsyncGenerateAccessToken)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
+      .WillOnce([this](CompletionQueue&, auto context,
                        GenerateAccessTokenRequest const& request) {
         IsContextMDValid(
             *context,
