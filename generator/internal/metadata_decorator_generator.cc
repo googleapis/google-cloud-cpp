@@ -200,7 +200,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $request_type$,
     $response_type$>>
 $metadata_class_name$::$method_name$(
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->$method_name$(std::move(context));
 }
@@ -219,7 +219,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->Async$method_name$(cq, std::move(context));
 }
@@ -247,7 +247,7 @@ $metadata_class_name$::Async$method_name$(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
 )"""},
                         {SetMetadataText(method, kPointer)},
@@ -262,7 +262,7 @@ $metadata_class_name$::Async$method_name$(
    {"\n"
     "std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
     "$metadata_class_name$::$method_name$(\n"
-    "    std::unique_ptr<grpc::ClientContext> context,\n"
+    "    std::shared_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) {\n"},
    {SetMetadataText(method, kPointer)},
    {"\n  return child_->$method_name$(std::move(context), request);\n"
@@ -281,7 +281,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
 )""",
           SetMetadataText(method, kPointer),
@@ -303,7 +303,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->Async$method_name$(cq, std::move(context));
 }
@@ -320,7 +320,7 @@ $metadata_class_name$::Async$method_name$(
     "\nfuture<StatusOr<$response_type$>>\n"},
     {R"""($metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
 )"""},
    {SetMetadataText(method, kPointer)}, {R"""(
@@ -338,7 +338,7 @@ $metadata_class_name$::Async$method_name$(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -346,7 +346,7 @@ $metadata_class_name$::AsyncGetOperation(
 
 future<Status> $metadata_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

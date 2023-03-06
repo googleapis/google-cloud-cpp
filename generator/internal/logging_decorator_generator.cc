@@ -140,7 +140,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $request_type$,
     $response_type$>>
 $logging_class_name$::$method_name$(
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
       $request_type$, $response_type$>;
 
@@ -164,7 +164,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $response_type$>>
 $logging_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   using LoggingStream =
      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<$request_type$, $response_type$>;
 
@@ -204,11 +204,11 @@ $logging_class_name$::Async$method_name$(
 future<StatusOr<google::longrunning::Operation>>
 $logging_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              $request_type$ const& request) {
         return child_->Async$method_name$(cq, std::move(context), request);
       },
@@ -222,10 +222,10 @@ $logging_class_name$::Async$method_name$(
                "std::unique_ptr<google::cloud::internal::StreamingReadRpc<$"
                "response_type$>>\n"
                "$logging_class_name$::$method_name$(\n"
-               "    std::unique_ptr<grpc::ClientContext> context,\n"
+               "    std::shared_ptr<grpc::ClientContext> context,\n"
                "    $request_type$ const& request) {\n"
                "  return google::cloud::internal::LogWrapper(\n"
-               "      [this](std::unique_ptr<grpc::ClientContext> context,\n"
+               "      [this](std::shared_ptr<grpc::ClientContext> context,\n"
                "             $request_type$ const& request) ->\n"
                "      "
                "std::unique_ptr<google::cloud::internal::StreamingReadRpc<\n"
@@ -258,7 +258,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     $response_type$>>
 $logging_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
   using LoggingStream =
      ::google::cloud::internal::AsyncStreamingReadRpcLogging<$response_type$>;
@@ -282,7 +282,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 $logging_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   using LoggingStream = ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
       $request_type$, $response_type$>;
 
@@ -308,11 +308,11 @@ $logging_class_name$::Async$method_name$(
     "\nfuture<StatusOr<$response_type$>>\n"},
     {R"""($logging_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              $request_type$ const& request) {
         return child_->Async$method_name$(cq, std::move(context), request);
       },
@@ -330,11 +330,11 @@ $logging_class_name$::Async$method_name$(
 future<StatusOr<google::longrunning::Operation>>
 $logging_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -343,11 +343,11 @@ $logging_class_name$::AsyncGetOperation(
 
 future<Status> $logging_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

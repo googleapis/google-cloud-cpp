@@ -121,7 +121,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $request_type$,
     $response_type$>>
 $tracing_stub_class_name$::$method_name$(
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->$method_name$(std::move(context));
 }
 )""");
@@ -134,7 +134,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $response_type$>>
 $tracing_stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->Async$method_name$(cq, std::move(context));
 }
 )""");
@@ -162,7 +162,7 @@ StatusOr<$response_type$> $tracing_stub_class_name$::$method_name$()"""},
 future<StatusOr<google::longrunning::Operation>>
 $tracing_stub_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       $request_type$ const& request) {
   return child_->Async$method_name$(cq, std::move(context), request);
 }
@@ -171,7 +171,7 @@ $tracing_stub_class_name$::Async$method_name$(
          MethodPattern({{R"""(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 $tracing_stub_class_name$::$method_name$(
-   std::unique_ptr<grpc::ClientContext> context,
+   std::shared_ptr<grpc::ClientContext> context,
    $request_type$ const& request) {
   return child_->$method_name$(std::move(context), request);
 }
@@ -187,7 +187,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     $response_type$>>
 $tracing_stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
   return child_->Async$method_name$(cq, std::move(context), request);
 }
@@ -201,7 +201,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     $request_type$, $response_type$>>
 $tracing_stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->Async$method_name$(cq, std::move(context));
 }
 )""";
@@ -218,7 +218,7 @@ future<StatusOr<$response_type$>> $tracing_stub_class_name$::Async$method_name$(
                         {
                             R"""(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       $request_type$ const& request) {
   return child_->Async$method_name$(cq, std::move(context), request);
 }
@@ -233,14 +233,14 @@ future<StatusOr<$response_type$>> $tracing_stub_class_name$::Async$method_name$(
 future<StatusOr<google::longrunning::Operation>>
 $tracing_stub_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> $tracing_stub_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
