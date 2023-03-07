@@ -109,8 +109,6 @@ Status EndSpan(opentelemetry::trace::Span& span, Status const& status);
  * composition.
  */
 template <typename T>
-StatusOr<T> EndSpan(opentelemetry::trace::Span& span, StatusOr<T> const& value);
-template <typename T>
 StatusOr<T> EndSpan(opentelemetry::trace::Span& span,
                     StatusOr<T> const& value) {
   EndSpanImpl(span, value.status());
