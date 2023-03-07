@@ -71,18 +71,18 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
 
   MOCK_METHOD(std::unique_ptr<StreamingPullStream>, AsyncStreamingPull,
               (google::cloud::CompletionQueue const&,
-               std::unique_ptr<grpc::ClientContext>),
+               std::shared_ptr<grpc::ClientContext>),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncAcknowledge,
               (google::cloud::CompletionQueue&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::pubsub::v1::AcknowledgeRequest const&),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncModifyAckDeadline,
               (google::cloud::CompletionQueue&,
-               std::unique_ptr<grpc::ClientContext>,
+               std::shared_ptr<grpc::ClientContext>,
                google::pubsub::v1::ModifyAckDeadlineRequest const&),
               (override));
 

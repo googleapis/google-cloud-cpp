@@ -52,7 +52,7 @@ DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
       options_.get<pubsub::RetryPolicyOption>()->clone(),
       options_.get<pubsub::BackoffPolicyOption>()->clone(),
       Idempotency::kIdempotent, cq_,
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::pubsub::v1::PublishRequest const& request) {
         auto const& current = internal::CurrentOptions();
         if (current.has<CompressionThresholdOption>() &&

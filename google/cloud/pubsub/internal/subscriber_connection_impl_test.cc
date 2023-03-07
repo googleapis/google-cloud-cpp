@@ -65,7 +65,7 @@ Options MakeTestOptions(Subscription subscription, CompletionQueue const& cq) {
 using StreamingPullMock =
     std::function<std::unique_ptr<pubsub_testing::MockAsyncPullStream>(
         google::cloud::CompletionQueue const&,
-        std::unique_ptr<grpc::ClientContext>)>;
+        std::shared_ptr<grpc::ClientContext>)>;
 
 StreamingPullMock MakeAsyncStreamingPullMock(
     std::string const& expected_subscription_name) {
