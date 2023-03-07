@@ -150,7 +150,7 @@ StatusOr<google::storage::v2::Object> StorageRoundRobin::GetObject(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageRoundRobin::ReadObject(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   return Child()->ReadObject(std::move(context), request);
 }
@@ -164,7 +164,7 @@ StatusOr<google::storage::v2::Object> StorageRoundRobin::UpdateObject(
 std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageRoundRobin::WriteObject(std::unique_ptr<grpc::ClientContext> context) {
+StorageRoundRobin::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   return Child()->WriteObject(std::move(context));
 }
 
@@ -236,7 +236,7 @@ StatusOr<google::storage::v2::HmacKeyMetadata> StorageRoundRobin::UpdateHmacKey(
 
 future<Status> StorageRoundRobin::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::DeleteObjectRequest const& request) {
   return Child()->AsyncDeleteObject(cq, std::move(context), request);
 }
@@ -245,7 +245,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::storage::v2::ReadObjectResponse>>
 StorageRoundRobin::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
   return Child()->AsyncReadObject(cq, std::move(context), request);
 }
@@ -255,14 +255,14 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectResponse>>
 StorageRoundRobin::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return Child()->AsyncWriteObject(cq, std::move(context));
 }
 
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageRoundRobin::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::StartResumableWriteRequest const& request) {
   return Child()->AsyncStartResumableWrite(cq, std::move(context), request);
 }
@@ -270,7 +270,7 @@ StorageRoundRobin::AsyncStartResumableWrite(
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageRoundRobin::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   return Child()->AsyncQueryWriteStatus(cq, std::move(context), request);
 }
