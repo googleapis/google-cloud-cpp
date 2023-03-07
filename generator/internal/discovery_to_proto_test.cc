@@ -71,6 +71,10 @@ TEST(ExtractTypesFromSchema, SchemaIdMissing) {
   auto constexpr kDiscoveryDocSchemaIdMissing = R"""(
 {
   "schemas": {
+    "Foo": {
+      "id": "Foo",
+      "type": "object"
+    },
     "NoId": {
       "type": "object"
     }
@@ -86,7 +90,38 @@ TEST(ExtractTypesFromSchema, SchemaIdMissing) {
   EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
                               HasSubstr("schema without id")));
   auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("schema has no id")));
+  EXPECT_THAT(
+      log_lines,
+      Contains(HasSubstr("current schema has no id. last schema with id=Foo")));
+}
+
+TEST(ExtractTypesFromSchema, SchemaIdEmpty) {
+  auto constexpr kDiscoveryDocSchemaIdEmpty = R"""(
+{
+  "schemas": {
+    "Empty": {
+      "id": null,
+      "type": "object"
+    },
+    "NoId": {
+      "id": null,
+      "type": "object"
+    }
+  }
+}
+)""";
+
+  testing_util::ScopedLog log;
+  auto parsed_json =
+      nlohmann::json::parse(kDiscoveryDocSchemaIdEmpty, nullptr, false);
+  ASSERT_FALSE(parsed_json.is_discarded() || parsed_json.is_null());
+  auto types = ExtractTypesFromSchema(parsed_json);
+  EXPECT_THAT(types, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("schema without id")));
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr(
+                  "current schema has no id. last schema with id=(none)")));
 }
 
 TEST(ExtractTypesFromSchema, SchemaMissingType) {
