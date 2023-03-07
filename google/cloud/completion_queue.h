@@ -35,14 +35,10 @@ namespace internal {
 std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
     CompletionQueue const& cq);
 
-template <
-    typename AsyncCallType, typename Request,
-    typename Sig = internal::AsyncCallResponseType<AsyncCallType, Request>,
-    typename Response = typename Sig::type,
-    typename std::enable_if<Sig::value, int>::type = 0>
+template <typename Request, typename Response>
 future<StatusOr<Response>> MakeUnaryRpcImpl(
-    CompletionQueue& cq, AsyncCallType async_call, Request const& request,
-    std::shared_ptr<grpc::ClientContext> context);
+    CompletionQueue& cq, GrpcAsyncCall<Request, Response> async_call,
+    Request const& request, std::shared_ptr<grpc::ClientContext> context);
 
 }  // namespace internal
 
@@ -136,9 +132,9 @@ class CompletionQueue {
       typename std::enable_if<Sig::value, int>::type = 0>
   future<StatusOr<Response>> MakeUnaryRpc(
       AsyncCallType async_call, Request const& request,
-      std::shared_ptr<grpc::ClientContext> context) {
-    return internal::MakeUnaryRpcImpl(*this, std::move(async_call), request,
-                                      std::move(context));
+      std::unique_ptr<grpc::ClientContext> context) {
+    return internal::MakeUnaryRpcImpl<Request, Response>(
+        *this, std::move(async_call), request, std::move(context));
   }
 
   /**
@@ -268,11 +264,10 @@ inline std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
   return cq.impl_;
 }
 
-template <typename AsyncCallType, typename Request, typename Sig,
-          typename Response, typename std::enable_if<Sig::value, int>::type>
+template <typename Request, typename Response>
 future<StatusOr<Response>> MakeUnaryRpcImpl(
-    CompletionQueue& cq, AsyncCallType async_call, Request const& request,
-    std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue& cq, GrpcAsyncCall<Request, Response> async_call,
+    Request const& request, std::shared_ptr<grpc::ClientContext> context) {
   auto op =
       std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
   auto impl = GetCompletionQueueImpl(cq);

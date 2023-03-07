@@ -292,7 +292,7 @@ TEST(CompletionQueueTest, MakeUnaryRpcImpl) {
   btadmin::GetTableRequest request;
   request.set_name("test-table-name");
   future<void> done =
-      internal::MakeUnaryRpcImpl(
+      internal::MakeUnaryRpcImpl<btadmin::GetTableRequest, btadmin::Table>(
           cq,
           [&mock_client](grpc::ClientContext* context,
                          btadmin::GetTableRequest const& request,
@@ -389,7 +389,7 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
   btadmin::GetTableRequest get_table_request;
   get_table_request.set_name("test-table-name");
   future<void> done =
-      internal::MakeUnaryRpcImpl(
+      internal::MakeUnaryRpcImpl<btadmin::GetTableRequest, btadmin::Table>(
           cq,
           [&mock_client](grpc::ClientContext* context,
                          btadmin::GetTableRequest const& request,
