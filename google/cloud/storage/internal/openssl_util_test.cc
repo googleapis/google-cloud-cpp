@@ -81,7 +81,7 @@ TEST(OpensslUtilTest, Base64DecodePadding) {
 }
 
 TEST(OpensslUtilTest, MD5HashEmpty) {
-  auto const actual = MD5Hash("");
+  auto const actual = MD5Hash({});
   // I used this command to get the expected value:
   // /bin/echo -n "" | openssl md5
   auto const expected =

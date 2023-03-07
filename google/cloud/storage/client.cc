@@ -165,7 +165,7 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
     return Status(StatusCode::kInternal, std::move(os).str());
   }
   is.close();
-  request.set_contents(std::move(payload));
+  request.set_payload(payload);
 
   return raw_client_->InsertObjectMedia(request);
 }

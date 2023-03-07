@@ -372,13 +372,13 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
   if (request.HasOption<MD5HashValue>()) {
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
   } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
-    metadata["md5Hash"] = ComputeMD5Hash(request.contents());
+    metadata["md5Hash"] = ComputeMD5Hash(request.payload());
   }
 
   if (request.HasOption<Crc32cChecksumValue>()) {
     metadata["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
   } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
-    metadata["crc32c"] = ComputeCrc32cChecksum(request.contents());
+    metadata["crc32c"] = ComputeCrc32cChecksum(request.payload());
   }
 
   std::string crlf = "\r\n";
@@ -407,7 +407,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
   // 6. Return the results as usual.
   return CheckedFromString<ObjectMetadataParser>(storage_rest_client_->Post(
       std::move(builder).BuildRequest(),
-      {absl::MakeConstSpan(header), absl::MakeConstSpan(request.contents()),
+      {absl::MakeConstSpan(header), absl::MakeConstSpan(request.payload()),
        absl::MakeConstSpan(trailer)}));
 }
 
@@ -434,7 +434,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaSimple(
   builder.AddQueryParameter("name", request.object_name());
   return CheckedFromString<ObjectMetadataParser>(
       storage_rest_client_->Post(std::move(builder).BuildRequest(),
-                                 {absl::MakeConstSpan(request.contents())}));
+                                 {absl::MakeConstSpan(request.payload())}));
 }
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMedia(

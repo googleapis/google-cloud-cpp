@@ -1122,13 +1122,13 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   if (request.HasOption<MD5HashValue>()) {
     metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
   } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
-    metadata["md5Hash"] = ComputeMD5Hash(request.contents());
+    metadata["md5Hash"] = ComputeMD5Hash(request.payload());
   }
 
   if (request.HasOption<Crc32cChecksumValue>()) {
     metadata["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
   } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
-    metadata["crc32c"] = ComputeCrc32cChecksum(request.contents());
+    metadata["crc32c"] = ComputeCrc32cChecksum(request.payload());
   }
 
   std::string crlf = "\r\n";
@@ -1149,7 +1149,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   } else {
     writer << "content-type: application/octet-stream" << crlf;
   }
-  writer << crlf << request.contents() << crlf << marker << "--" << crlf;
+  writer << crlf << request.payload() << crlf << marker << "--" << crlf;
 
   // 6. Return the results as usual.
   auto contents = std::move(writer).str();
@@ -1179,9 +1179,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
   builder.AddQueryParameter("uploadType", "media");
   builder.AddQueryParameter("name", request.object_name());
   builder.AddHeader("Content-Length: " +
-                    std::to_string(request.contents().size()));
+                    std::to_string(request.payload().size()));
   return CheckedFromString<ObjectMetadataParser>(
-      std::move(builder).BuildRequest().MakeRequest(request.contents()));
+      std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
 }  // namespace internal

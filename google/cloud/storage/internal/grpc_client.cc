@@ -449,7 +449,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
   using ContentType = std::remove_const_t<std::remove_reference_t<
       decltype(std::declval<google::storage::v2::ChecksummedData>()
                    .content())>>;
-  auto splitter = SplitObjectWriteData<ContentType>(request.contents());
+  auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   std::int64_t offset = 0;
 
   // This loop must run at least once because we need to send at least one

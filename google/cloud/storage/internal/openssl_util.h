@@ -18,6 +18,7 @@
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/string_view.h"
 #include "absl/types/span.h"
 #include <algorithm>
 #include <string>
@@ -80,7 +81,15 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
 StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(std::string const& str);
 
 /// Compute the MD5 hash of @p payload
-std::vector<std::uint8_t> MD5Hash(std::string const& payload);
+std::vector<std::uint8_t> MD5Hash(absl::Span<char const> payload);
+
+inline std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
+  return MD5Hash(absl::Span<char const>(payload.data(), payload.size()));
+}
+
+inline std::vector<std::uint8_t> MD5Hash(char const* payload) {
+  return MD5Hash(absl::string_view(payload));
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

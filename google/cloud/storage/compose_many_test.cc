@@ -73,7 +73,7 @@ TEST(ComposeMany, One) {
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
-        EXPECT_EQ("", request.contents());
+        EXPECT_EQ("", request.payload());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
   EXPECT_CALL(*mock, DeleteObject)
@@ -112,7 +112,7 @@ TEST(ComposeMany, Three) {
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
-        EXPECT_EQ("", request.contents());
+        EXPECT_EQ("", request.payload());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
   EXPECT_CALL(*mock, DeleteObject)
@@ -184,7 +184,7 @@ TEST(ComposeMany, ThreeLayers) {
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
-        EXPECT_EQ("", request.contents());
+        EXPECT_EQ("", request.payload());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
   EXPECT_CALL(*mock, DeleteObject)
@@ -234,7 +234,7 @@ TEST(ComposeMany, ComposeFails) {
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
-        EXPECT_EQ("", request.contents());
+        EXPECT_EQ("", request.payload());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
 
@@ -285,7 +285,7 @@ TEST(ComposeMany, CleanupFailsLoudly) {
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
-        EXPECT_EQ("", request.contents());
+        EXPECT_EQ("", request.payload());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
 
@@ -324,7 +324,7 @@ TEST(ComposeMany, CleanupFailsSilently) {
       .WillOnce([](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket", request.bucket_name());
         EXPECT_EQ("prefix", request.object_name());
-        EXPECT_EQ("", request.contents());
+        EXPECT_EQ("", request.payload());
         return make_status_or(MockObject("test-bucket", "prefix", 42));
       });
 

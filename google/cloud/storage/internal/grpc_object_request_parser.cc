@@ -489,7 +489,8 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
                  false)) {
     // Nothing to do, the option is disabled (mostly useful in tests).
   } else {
-    checksums.set_crc32c(crc32c::Crc32c(request.contents()));
+    checksums.set_crc32c(
+        crc32c::Crc32c(request.payload().data(), request.payload().size()));
   }
 
   if (request.HasOption<storage::MD5HashValue>()) {
@@ -500,8 +501,7 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
   } else if (request.GetOption<storage::DisableMD5Hash>().value_or(false)) {
     // Nothing to do, the option is disabled.
   } else {
-    checksums.set_md5_hash(
-        storage_internal::ComputeMD5Hash(request.contents()));
+    checksums.set_md5_hash(storage_internal::ComputeMD5Hash(request.payload()));
   }
 
   return r;

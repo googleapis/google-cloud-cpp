@@ -604,6 +604,70 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   }
 }
 
+TEST_F(ObjectMediaIntegrationTest, StringView) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto const object_name = MakeRandomObjectName();
+  auto const contents = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  StatusOr<ObjectMetadata> meta =
+      client->InsertObject(bucket_name_, object_name,
+                           absl::string_view(contents), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+
+  // Create an iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(contents, actual);
+}
+
+TEST_F(ObjectMediaIntegrationTest, String) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto const object_name = MakeRandomObjectName();
+  std::string const contents = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, contents, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+
+  // Create an iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(contents, actual);
+}
+
+TEST_F(ObjectMediaIntegrationTest, CharConstPointer) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto const object_name = MakeRandomObjectName();
+  std::string const contents = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name_, object_name, contents.c_str(), IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  ScheduleForDelete(*meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name_, meta->bucket());
+
+  // Create an iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(contents, actual);
+}
+
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

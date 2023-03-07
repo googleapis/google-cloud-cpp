@@ -161,14 +161,32 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r) {
   return os << "}";
 }
 
+void InsertObjectMediaRequest::set_payload(absl::string_view payload) {
+  payload_ = payload;
+  dirty_ = true;
+}
+
+std::string const& InsertObjectMediaRequest::contents() const {
+  if (!dirty_) return contents_;
+  contents_ = std::string{payload_};
+  dirty_ = false;
+  return contents_;
+}
+
+void InsertObjectMediaRequest::set_contents(std::string v) {
+  contents_ = std::move(v);
+  payload_ = contents_;
+  dirty_ = false;
+}
+
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
   os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
   std::size_t constexpr kMaxDumpSize = 128;
+  auto const payload = r.payload();
   os << ", contents="
-     << BinaryDataAsDebugString(r.contents().data(), r.contents().size(),
-                                kMaxDumpSize);
+     << BinaryDataAsDebugString(payload.data(), payload.size(), kMaxDumpSize);
   return os << "}";
 }
 

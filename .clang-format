@@ -47,4 +47,4 @@ RawStringFormats:
   - 'proto'
   BasedOnStyle: Google
 
-CommentPragmas: '(@copydoc|@copybrief|@see)'
+CommentPragmas: '(@copydoc|@copybrief|@see|@overload)'
