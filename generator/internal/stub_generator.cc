@@ -466,7 +466,9 @@ Default$stub_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       $request_type$ const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<$request_type$,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              $request_type$ const& request,
              grpc::CompletionQueue* cq) {
@@ -543,7 +545,9 @@ Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<$request_type$,
+                                    $response_type$>(
+      cq,
       [this](grpc::ClientContext* context,
              $request_type$ const& request,
              grpc::CompletionQueue* cq) {
@@ -567,7 +571,9 @@ Default$stub_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -580,7 +586,9 @@ future<Status> Default$stub_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+      cq,
       [this](grpc::ClientContext* context,
              google::longrunning::CancelOperationRequest const& request,
              grpc::CompletionQueue* cq) {
