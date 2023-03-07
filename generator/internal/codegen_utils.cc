@@ -306,6 +306,68 @@ std::string CopyrightLicenseFileHeader() {
   return kHeader;
 }
 
+std::string CapitalizeFirstLetter(std::string str) {
+  str[0] = static_cast<unsigned char>(
+      std::toupper(static_cast<unsigned char>(str[0])));
+  return str;
+}
+
+std::string FormatCommentBlock(std::string const& comment,
+                               std::size_t indent_level,
+                               std::string const& comment_introducer,
+                               std::size_t indent_width,
+                               std::size_t line_length) {
+  if (comment.empty()) return {};
+  auto offset = indent_level * indent_width + comment_introducer.length() +
+                (comment_introducer.empty() ? 0 : 1);
+  if (offset >= line_length) return {};
+  auto comment_width = line_length - offset;
+  if (comment.find(' ') > comment_width) return {};
+
+  std::vector<std::string> lines;
+  if (comment.length() <= comment_width) {
+    lines.push_back(comment);
+  } else {
+    auto characters_remaining = comment.length();
+    std::size_t start_pos = 0;
+    std::size_t end_pos = comment_width;
+    std::string line;
+    while (characters_remaining > comment_width) {
+      end_pos = comment.rfind(' ', end_pos);
+      line = comment.substr(start_pos, end_pos - start_pos);
+      start_pos = end_pos + 1;
+      end_pos = start_pos + comment_width;
+      characters_remaining -= line.length();
+      lines.push_back(std::move(line));
+    }
+    lines.push_back(comment.substr(start_pos, characters_remaining));
+  }
+
+  std::string indent(indent_level * indent_width, ' ');
+  std::string joiner = absl::StrCat("\n", indent, comment_introducer,
+                                    (comment_introducer.empty() ? "" : " "));
+  return absl::StrCat(indent, comment_introducer,
+                      (comment_introducer.empty() ? "" : " "),
+                      absl::StrJoin(lines, joiner));
+}
+
+std::string FormatCommentKeyValueList(
+    std::vector<std::pair<std::string, std::string>> const& comment,
+    std::size_t indent_level, std::string const& separator,
+    std::string const& comment_introducer, std::size_t indent_width,
+    std::size_t line_length) {
+  if (comment.empty() || line_length == 0) return {};
+  auto formatter = [&](std::string* s,
+                       std::pair<std::string, std::string> const& p) {
+    auto raw = absl::StrCat(p.first, separator, " ", p.second);
+    auto formatted = FormatCommentBlock(raw, indent_level, comment_introducer,
+                                        indent_width, line_length);
+    *s += formatted;
+  };
+
+  return absl::StrCat(absl::StrJoin(comment, "\n", formatter));
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
