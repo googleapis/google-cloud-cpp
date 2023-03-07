@@ -90,6 +90,13 @@ void InjectTraceContext(grpc::ClientContext& context, Options const& options) {
   propagator->Inject(carrier, current);
 }
 
+void ExtractAttributes(grpc::ClientContext& context,
+                       opentelemetry::trace::Span& span) {
+  // TODO(#10489): extract IP version, IP address, port from peer URI.
+  // https://github.com/grpc/grpc/blob/master/src/core/lib/address_utils/parse_address.h
+  span.SetAttribute("grpc.peer", context.peer());
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace internal

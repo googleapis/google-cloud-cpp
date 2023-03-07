@@ -60,6 +60,12 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
 void InjectTraceContext(grpc::ClientContext& context, Options const& options);
 
 /**
+ * Extracts attributes from the `context` and adds them to the `span`.
+ */
+void ExtractAttributes(grpc::ClientContext& context,
+                       opentelemetry::trace::Span& span);
+
+/**
  * Extracts information from the `grpc::ClientContext`, and adds it to a span.
  *
  * The span is ended. The original value is returned, for the sake of
@@ -70,10 +76,19 @@ void InjectTraceContext(grpc::ClientContext& context, Options const& options);
 template <typename T>
 T EndSpan(grpc::ClientContext& context, opentelemetry::trace::Span& span,
           T value) {
-  // TODO(#10489): extract IP version, IP address, port from peer URI.
-  // https://github.com/grpc/grpc/blob/master/src/core/lib/address_utils/parse_address.h
-  span.SetAttribute("grpc.peer", context.peer());
+  ExtractAttributes(context, span);
   return EndSpan(span, std::move(value));
+}
+
+template <typename T>
+future<T> EndSpan(
+    std::shared_ptr<grpc::ClientContext> context,
+    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span,
+    future<T> fut) {
+  return fut.then([c = std::move(context), s = std::move(span)](auto f) {
+    ExtractAttributes(*c, *s);
+    return EndSpan(*s, f.get());
+  });
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
