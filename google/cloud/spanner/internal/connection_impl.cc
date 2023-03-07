@@ -61,7 +61,7 @@ using ::google::cloud::Idempotency;
 class DefaultPartialResultSetReader : public PartialResultSetReader {
  public:
   DefaultPartialResultSetReader(
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       std::unique_ptr<
           grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
           reader)
@@ -84,7 +84,7 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
   }
 
  private:
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
       reader_;

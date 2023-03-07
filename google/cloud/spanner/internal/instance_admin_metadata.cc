@@ -36,7 +36,7 @@ StatusOr<gsai::v1::Instance> InstanceAdminMetadata::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncCreateInstance(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsai::v1::CreateInstanceRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInstance(cq, std::move(context), request);
@@ -44,7 +44,7 @@ InstanceAdminMetadata::AsyncCreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncUpdateInstance(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsai::v1::UpdateInstanceRequest const& request) {
   SetMetadata(*context, "instance.name=" + request.instance().name());
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -103,14 +103,14 @@ InstanceAdminMetadata::TestIamPermissions(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminMetadata::AsyncGetOperation(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> InstanceAdminMetadata::AsyncCancelOperation(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

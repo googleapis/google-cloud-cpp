@@ -71,17 +71,17 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         gsai::v1::Instance>(
         background_threads_->cq(), std::move(p.request),
         [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
+               std::shared_ptr<grpc::ClientContext> context,
                gsai::v1::CreateInstanceRequest const& request) {
           return stub->AsyncCreateInstance(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
+               std::shared_ptr<grpc::ClientContext> context,
                google::longrunning::GetOperationRequest const& request) {
           return stub->AsyncGetOperation(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
+               std::shared_ptr<grpc::ClientContext> context,
                google::longrunning::CancelOperationRequest const& request) {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
@@ -99,17 +99,17 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         gsai::v1::Instance>(
         background_threads_->cq(), std::move(p.request),
         [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
+               std::shared_ptr<grpc::ClientContext> context,
                gsai::v1::UpdateInstanceRequest const& request) {
           return stub->AsyncUpdateInstance(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
+               std::shared_ptr<grpc::ClientContext> context,
                google::longrunning::GetOperationRequest const& request) {
           return stub->AsyncGetOperation(cq, std::move(context), request);
         },
         [stub](google::cloud::CompletionQueue& cq,
-               std::unique_ptr<grpc::ClientContext> context,
+               std::shared_ptr<grpc::ClientContext> context,
                google::longrunning::CancelOperationRequest const& request) {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
