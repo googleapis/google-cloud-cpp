@@ -31,8 +31,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CompletionQueue;
 
 namespace internal {
+
 std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
     CompletionQueue const& cq);
+
+template <typename Request, typename Response>
+future<StatusOr<Response>> MakeUnaryRpcImpl(
+    CompletionQueue& cq, GrpcAsyncCall<Request, Response> async_call,
+    Request const& request, std::shared_ptr<grpc::ClientContext> context);
+
 }  // namespace internal
 
 /**
@@ -126,12 +133,8 @@ class CompletionQueue {
   future<StatusOr<Response>> MakeUnaryRpc(
       AsyncCallType async_call, Request const& request,
       std::unique_ptr<grpc::ClientContext> context) {
-    auto op =
-        std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
-    impl_->StartOperation(op, [&](void* tag) {
-      op->Start(async_call, std::move(context), request, impl_->cq(), tag);
-    });
-    return op->GetFuture();
+    return internal::MakeUnaryRpcImpl<Request, Response>(
+        *this, std::move(async_call), request, std::move(context));
   }
 
   /**
@@ -259,6 +262,19 @@ namespace internal {
 inline std::shared_ptr<CompletionQueueImpl> GetCompletionQueueImpl(
     CompletionQueue const& cq) {
   return cq.impl_;
+}
+
+template <typename Request, typename Response>
+future<StatusOr<Response>> MakeUnaryRpcImpl(
+    CompletionQueue& cq, GrpcAsyncCall<Request, Response> async_call,
+    Request const& request, std::shared_ptr<grpc::ClientContext> context) {
+  auto op =
+      std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
+  auto impl = GetCompletionQueueImpl(cq);
+  impl->StartOperation(op, [&, c = std::move(context)](void* tag) {
+    op->Start(async_call, std::move(c), request, impl->cq(), tag);
+  });
+  return op->GetFuture();
 }
 
 }  // namespace internal

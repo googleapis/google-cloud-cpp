@@ -21,6 +21,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "absl/functional/function_ref.h"
 #include <grpcpp/support/async_unary_call.h>
 
 namespace google {
@@ -57,10 +58,9 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   /// Prepare the operation to receive the response and start the RPC.
   template <typename AsyncFunctionType>
   void Start(AsyncFunctionType async_call,
-             std::unique_ptr<grpc::ClientContext> ctx, Request const& request,
-             grpc::CompletionQueue* cq, void* tag) {
-    // Need a copyable holder to use in the `std::function<>` callback:
-    auto context = std::shared_ptr<grpc::ClientContext>(std::move(ctx));
+             // NOLINTNEXTLINE(performance-unnecessary-value-param)
+             std::shared_ptr<grpc::ClientContext> context,
+             Request const& request, grpc::CompletionQueue* cq, void* tag) {
     promise_ = promise<StatusOr<Response>>([context] { context->TryCancel(); });
     auto rpc = async_call(context.get(), request, cq);
     rpc->Finish(&response_, &status_, tag);
@@ -89,7 +89,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
  private:
   // These are the parameters for the RPC, most of them have obvious semantics.
   // The promise will hold the grpc::ClientContext (in its cancel callback). It
-  // uses a `unique_ptr` because (a) we need to receive it as a parameter,
+  // uses a `shared_ptr` because (a) we need to receive it as a parameter,
   // otherwise the caller could not set timeouts, metadata, or any other
   // attributes, and (b) there is no move or assignment operator for
   // `grpc::ClientContext`.
@@ -188,6 +188,11 @@ using AsyncCallResponseType = AsyncCallResponseTypeUnwrap<
     typename google::cloud::internal::invoke_result_t<
         AsyncCallType, grpc::ClientContext*, RequestType const&,
         grpc::CompletionQueue*>>;
+
+template <typename Request, typename Response>
+using GrpcAsyncCall = absl::FunctionRef<
+    std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>(
+        grpc::ClientContext*, Request const&, grpc::CompletionQueue*)>;
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -261,6 +261,59 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
   runner.join();
 }
 
+TEST(CompletionQueueTest, MakeUnaryRpcImpl) {
+  using ms = std::chrono::milliseconds;
+
+  auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(mock_cq);
+
+  auto mock_reader = absl::make_unique<MockTableReader>();
+  EXPECT_CALL(*mock_reader, Finish)
+      .WillOnce([](btadmin::Table* table, grpc::Status* status, void*) {
+        table->set_name("test-table-name");
+        *status = grpc::Status::OK;
+      });
+  MockClient mock_client;
+  EXPECT_CALL(mock_client, AsyncGetTable)
+      .WillOnce([&mock_reader](grpc::ClientContext*,
+                               btadmin::GetTableRequest const& request,
+                               grpc::CompletionQueue*) {
+        EXPECT_EQ("test-table-name", request.name());
+        // This looks like a double delete, but it is not because
+        // std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<T>> is
+        // specialized to not delete. :shrug:
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
+            mock_reader.get());
+      });
+
+  std::thread runner([&cq] { cq.Run(); });
+
+  btadmin::GetTableRequest request;
+  request.set_name("test-table-name");
+  future<void> done =
+      internal::MakeUnaryRpcImpl<btadmin::GetTableRequest, btadmin::Table>(
+          cq,
+          [&mock_client](grpc::ClientContext* context,
+                         btadmin::GetTableRequest const& request,
+                         grpc::CompletionQueue* cq) {
+            return mock_client.AsyncGetTable(context, request, cq);
+          },
+          request, std::make_shared<grpc::ClientContext>())
+          .then([](future<StatusOr<btadmin::Table>> f) {
+            auto table = f.get();
+            ASSERT_STATUS_OK(table);
+            EXPECT_EQ("test-table-name", table->name());
+          });
+
+  mock_cq->SimulateCompletion(true);
+
+  EXPECT_EQ(std::future_status::ready, done.wait_for(ms(0)));
+
+  cq.Shutdown();
+  runner.join();
+}
+
 TEST(CompletionQueueTest, MakeStreamingReadRpc) {
   auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(mock_cq);
@@ -336,13 +389,14 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
   btadmin::GetTableRequest get_table_request;
   get_table_request.set_name("test-table-name");
   future<void> done =
-      cq.MakeUnaryRpc(
-            [&mock_client](grpc::ClientContext* context,
-                           btadmin::GetTableRequest const& request,
-                           grpc::CompletionQueue* cq) {
-              return mock_client.AsyncGetTable(context, request, cq);
-            },
-            get_table_request, absl::make_unique<grpc::ClientContext>())
+      internal::MakeUnaryRpcImpl<btadmin::GetTableRequest, btadmin::Table>(
+          cq,
+          [&mock_client](grpc::ClientContext* context,
+                         btadmin::GetTableRequest const& request,
+                         grpc::CompletionQueue* cq) {
+            return mock_client.AsyncGetTable(context, request, cq);
+          },
+          get_table_request, absl::make_unique<grpc::ClientContext>())
           .then([](future<StatusOr<btadmin::Table>> f) {
             EXPECT_EQ(StatusCode::kCancelled, f.get().status().code());
           });
