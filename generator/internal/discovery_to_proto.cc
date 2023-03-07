@@ -87,7 +87,8 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   std::string id;
   for (auto const& s : schemas) {
     if (!s.contains("id") || s["id"].empty()) {
-      GCP_LOG(ERROR) << "current schema has no id. last schema with id=" << id;
+      GCP_LOG(ERROR) << "current schema has no id. last schema with id="
+                     << (id.empty() ? "(none)" : id);
       schemas_all_have_id = false;
       continue;
     }
