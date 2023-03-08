@@ -55,7 +55,9 @@ std::string ComputeMD5Hash(std::string const& payload);
 
 /// @copydoc ComputeMD5Hash(absl::string_view)
 inline std::string ComputeMD5Hash(char const* payload) {
-  return ComputeMD5Hash(absl::string_view(payload));
+  auto p =
+      payload == nullptr ? absl::string_view{} : absl::string_view{payload};
+  return ComputeMD5Hash(std::move(p));
 }
 
 /**
@@ -117,7 +119,9 @@ std::string ComputeCrc32cChecksum(std::string const& payload);
 
 /// @copydoc ComputeCrc32cChecksum(absl::string_view payload)
 inline std::string ComputeCrc32cChecksum(char const* payload) {
-  return ComputeCrc32cChecksum(absl::string_view(payload));
+  auto p =
+      payload == nullptr ? absl::string_view{} : absl::string_view{payload};
+  return ComputeCrc32cChecksum(std::move(p));
 }
 
 /**

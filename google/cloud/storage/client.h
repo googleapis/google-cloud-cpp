@@ -890,7 +890,9 @@ class Client {
                                         std::string const& object_name,
                                         char const* contents,
                                         Options&&... options) {
-    return InsertObject(bucket_name, object_name, absl::string_view(contents),
+    auto c =
+        contents == nullptr ? absl::string_view{} : absl::string_view{contents};
+    return InsertObject(bucket_name, object_name, std::move(c),
                         std::forward<Options>(options)...);
   }
 
