@@ -38,11 +38,11 @@ std::shared_ptr<MockAuthenticationStrategy> MakeTypicalAsyncMockAuth() {
   using ReturnType = StatusOr<std::unique_ptr<grpc::ClientContext>>;
   auto auth = std::make_shared<MockAuthenticationStrategy>();
   EXPECT_CALL(*auth, AsyncConfigureContext)
-      .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
+      .WillOnce([](auto) {
         return make_ready_future(ReturnType(
             Status(StatusCode::kInvalidArgument, "cannot-set-credentials")));
       })
-      .WillOnce([](std::unique_ptr<grpc::ClientContext> context) {
+      .WillOnce([](auto context) {
         context->set_credentials(
             grpc::AccessTokenCredentials("test-only-invalid"));
         return make_ready_future(make_status_or(std::move(context)));
