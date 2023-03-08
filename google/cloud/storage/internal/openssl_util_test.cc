@@ -92,7 +92,7 @@ TEST(OpensslUtilTest, MD5HashEmpty) {
       MD5Hash({}),
       MD5Hash(nullptr),
       MD5Hash(""),
-      MD5Hash(std::string_view{}),
+      MD5Hash(absl::string_view{}),
       MD5Hash(absl::Span<char const>{}),
   };
 
