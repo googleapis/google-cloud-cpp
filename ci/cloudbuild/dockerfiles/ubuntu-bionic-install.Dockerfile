@@ -180,7 +180,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.52.1.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/
-RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.2.tar.gz | \
+RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=14 \
@@ -190,6 +190,7 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.2
         -DWITH_EXAMPLES=OFF \
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
         -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
