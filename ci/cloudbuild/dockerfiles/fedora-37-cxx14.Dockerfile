@@ -189,6 +189,7 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.3
         -DWITH_EXAMPLES=OFF \
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
         -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
