@@ -140,7 +140,8 @@ class SimpleUpload : public ThroughputExperiment {
     // truncate the object to the right size.
     auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
-    auto data = absl::string_view{random_data_->data(), config.object_size};
+    auto data = absl::string_view{*random_data_}.substr(
+        0, static_cast<std::size_t>(config.object_size));
     auto object_metadata =
         client_.InsertObject(bucket_name, object_name, data,
                              gcs::DisableCrc32cChecksum(!config.enable_crc32c),
