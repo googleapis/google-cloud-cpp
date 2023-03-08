@@ -17,12 +17,28 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_IDEMPOTENCY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_IDEMPOTENCY_POLICY_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
+#include "google/cloud/idempotency.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+class BigQueryJobIdempotencyPolicy {
+ public:
+  virtual ~BigQueryJobIdempotencyPolicy();
+
+  virtual std::unique_ptr<BigQueryJobIdempotencyPolicy> clone() const;
+
+  virtual google::cloud::Idempotency GetJob(GetJobRequest const& request);
+};
+
+std::unique_ptr<BigQueryJobIdempotencyPolicy>
+MakeDefaultBigQueryJobIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

@@ -22,6 +22,8 @@ add_library(
     v2/minimal/internal/common_v2_resources.h
     v2/minimal/internal/job.h
     v2/minimal/internal/job_configuration.h
+    v2/minimal/internal/job_connection.cc
+    v2/minimal/internal/job_connection.h
     v2/minimal/internal/job_idempotency_policy.cc
     v2/minimal/internal/job_idempotency_policy.h
     v2/minimal/internal/job_logging.cc
@@ -47,8 +49,9 @@ target_include_directories(
            $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-    google_cloud_cpp_bigquery_rest PUBLIC google-cloud-cpp::rest_internal
-                                          google-cloud-cpp::common)
+    google_cloud_cpp_bigquery_rest
+    PUBLIC google-cloud-cpp::rest_internal google-cloud-cpp::grpc_utils
+           google-cloud-cpp::common)
 google_cloud_cpp_add_common_options(google_cloud_cpp_bigquery_rest)
 set_target_properties(
     google_cloud_cpp_bigquery_rest
@@ -78,6 +81,9 @@ function (bigquery_rest_define_tests)
         # cmake-format: sort
         v2/minimal/internal/bigquery_http_response_test.cc
         v2/minimal/internal/common_v2_resources_test.cc
+        v2/minimal/internal/job_connection_test.cc
+        v2/minimal/internal/job_idempotency_policy_test.cc
+        v2/minimal/internal/job_options_test.cc
         v2/minimal/internal/job_request_test.cc
         v2/minimal/internal/job_response_test.cc
         v2/minimal/internal/job_rest_stub_test.cc)

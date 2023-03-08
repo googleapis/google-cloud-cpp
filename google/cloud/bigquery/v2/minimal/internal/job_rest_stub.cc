@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
 
@@ -24,7 +25,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigQueryJobRestStub::~BigQueryJobRestStub() = default;
 
 StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
-    GetJobRequest const& request, Options const& opts) {
+    rest_internal::RestContext& rest_context, GetJobRequest const& request) {
+  internal::OptionsSpan span(options_);
+
   if (request.project_id().empty()) {
     return internal::InvalidArgumentError(
         "Invalid GetJobRequest: Project Id is empty", GCP_ERROR_INFO());
@@ -34,8 +37,17 @@ StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
         "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
   // Prepare the RestRequest
-  auto rest_request = BuildRestRequest(request, opts);
+  auto rest_request = BuildRestRequest(request, options_);
   if (!rest_request) return std::move(rest_request).status();
+
+  // Copy over any headers if provided.
+  if (!rest_context.headers().empty()) {
+    for (auto const& h : rest_context.headers()) {
+      if (!h.second.empty()) {
+        rest_request->AddHeader(h.first, absl::StrJoin(h.second, "&"));
+      }
+    }
+  }
 
   // Call the rest client to get job details from the server as a RestResponse.
   auto rest_response = rest_stub_->Get(std::move(*rest_request));

@@ -12,17 +12,67 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Internal interface for Bigquery V2 Job resource.
-
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_CONNECTION_IMPL_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job_connection.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_idempotency_policy.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_options.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_retry_policy.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+class BigQueryJobRestConnectionImpl : public BigQueryJobConnection {
+ public:
+  ~BigQueryJobRestConnectionImpl() override = default;
+
+  BigQueryJobRestConnectionImpl(
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<BigQueryJobRestStub> stub, Options options);
+
+  Options options() override { return options_; }
+
+  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request) override;
+
+ private:
+  std::unique_ptr<BigQueryJobRetryPolicy> retry_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<BigQueryJobRetryPolicyOption>()) {
+      return options.get<BigQueryJobRetryPolicyOption>()->clone();
+    }
+    return options_.get<BigQueryJobRetryPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<BackoffPolicy> backoff_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<BigQueryJobBackoffPolicyOption>()) {
+      return options.get<BigQueryJobBackoffPolicyOption>()->clone();
+    }
+    return options_.get<BigQueryJobBackoffPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<BigQueryJobIdempotencyPolicy> idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<BigQueryJobIdempotencyPolicyOption>()) {
+      return options.get<BigQueryJobIdempotencyPolicyOption>()->clone();
+    }
+    return options_.get<BigQueryJobIdempotencyPolicyOption>()->clone();
+  }
+
+  std::unique_ptr<google::cloud::BackgroundThreads> background_;
+  std::shared_ptr<BigQueryJobRestStub> stub_;
+  Options options_;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
