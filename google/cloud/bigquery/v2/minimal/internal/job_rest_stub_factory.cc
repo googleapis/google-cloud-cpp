@@ -15,11 +15,44 @@
 // Implementation of internal interface for Bigquery V2 Job resource.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub_factory.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_metadata.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/algorithm.h"
+#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
+    Options const& opts) {
+  Options local_opts = opts;
+  if (!local_opts.has<UnifiedCredentialsOption>()) {
+    local_opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  }
+  if (!local_opts.has<EndpointOption>()) {
+    local_opts.set<EndpointOption>("https://bigquery.googleapis.com/");
+  }
+
+  auto curl_rest_client = rest_internal::MakePooledRestClient(
+      opts.get<EndpointOption>(), local_opts);
+
+  std::shared_ptr<BigQueryJobRestStub> stub =
+      std::make_shared<DefaultBigQueryJobRestStub>(std::move(curl_rest_client),
+                                                   local_opts);
+
+  stub = std::make_shared<BigQueryJobMetadata>(std::move(stub));
+
+  if (internal::Contains(local_opts.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
+    stub = std::make_shared<BigQueryJobLogging>(
+        std::move(stub), local_opts.get<RestTracingOptionsOption>(),
+        local_opts.get<TracingComponentsOption>());
+  }
+  return stub;
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
