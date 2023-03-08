@@ -56,7 +56,9 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
           auto context = f.get();
           if (!context)
             return make_ready_future(ResultType(std::move(context).status()));
-          return cq.MakeUnaryRpc(async_call, request, *std::move(context));
+          return MakeUnaryRpcImpl<GenerateAccessTokenRequest,
+                                  GenerateAccessTokenResponse>(
+              cq, async_call, request, *std::move(context));
         });
   }
 

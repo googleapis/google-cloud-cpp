@@ -129,7 +129,10 @@ DefaultSpannerStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::spanner::v1::BatchCreateSessionsRequest,
+      google::spanner::v1::BatchCreateSessionsResponse>(
+      cq,
       [this](grpc::ClientContext* context,
              google::spanner::v1::BatchCreateSessionsRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -151,14 +154,15 @@ future<Status> DefaultSpannerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::spanner::v1::DeleteSessionRequest const& request) {
-  return cq
-      .MakeUnaryRpc(
-          [this](grpc::ClientContext* context,
-                 google::spanner::v1::DeleteSessionRequest const& request,
-                 grpc::CompletionQueue* cq) {
-            return grpc_stub_->AsyncDeleteSession(context, request, cq);
-          },
-          request, std::move(context))
+  return internal::MakeUnaryRpcImpl<google::spanner::v1::DeleteSessionRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::spanner::v1::DeleteSessionRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return grpc_stub_->AsyncDeleteSession(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });
@@ -181,7 +185,9 @@ DefaultSpannerStub::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::spanner::v1::ExecuteSqlRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::spanner::v1::ExecuteSqlRequest,
+                                    google::spanner::v1::ResultSet>(
+      cq,
       [this](grpc::ClientContext* context,
              google::spanner::v1::ExecuteSqlRequest const& request,
              grpc::CompletionQueue* cq) {

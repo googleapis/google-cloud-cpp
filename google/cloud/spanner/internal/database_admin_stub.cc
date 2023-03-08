@@ -44,7 +44,9 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gsad::v1::CreateDatabaseRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<gsad::v1::CreateDatabaseRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                gsad::v1::CreateDatabaseRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -80,7 +82,9 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gsad::v1::UpdateDatabaseDdlRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<gsad::v1::UpdateDatabaseDdlRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                gsad::v1::UpdateDatabaseDdlRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -115,7 +119,9 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gsad::v1::RestoreDatabaseRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<gsad::v1::RestoreDatabaseRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                gsad::v1::RestoreDatabaseRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -163,7 +169,9 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gsad::v1::CreateBackupRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<gsad::v1::CreateBackupRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                gsad::v1::CreateBackupRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -248,7 +256,9 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                google::longrunning::GetOperationRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -260,14 +270,17 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   future<Status> AsyncCancelOperation(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override {
-    return cq
-        .MakeUnaryRpc(
-            [this](grpc::ClientContext* context,
+    return internal::MakeUnaryRpcImpl<
+               google::longrunning::CancelOperationRequest,
+               google::protobuf::Empty>(
+               cq,
+               [this](
+                   grpc::ClientContext* context,
                    google::longrunning::CancelOperationRequest const& request,
                    grpc::CompletionQueue* cq) {
-              return operations_->AsyncCancelOperation(context, request, cq);
-            },
-            request, std::move(context))
+                 return operations_->AsyncCancelOperation(context, request, cq);
+               },
+               request, std::move(context))
         .then([](future<StatusOr<google::protobuf::Empty>> f) {
           return f.get().status();
         });

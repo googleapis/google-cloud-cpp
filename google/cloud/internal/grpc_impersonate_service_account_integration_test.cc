@@ -103,7 +103,8 @@ class TestStubImpl : public TestStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       GetTableRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return MakeUnaryRpcImpl<GetTableRequest, Table>(
+        cq,
         [this](grpc::ClientContext* context, GetTableRequest const& request,
                grpc::CompletionQueue* cq) {
           return stub_->AsyncGetTable(context, request, cq);
