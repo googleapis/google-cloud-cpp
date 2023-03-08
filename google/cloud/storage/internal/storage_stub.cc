@@ -393,14 +393,15 @@ future<Status> DefaultStorageStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::DeleteObjectRequest const& request) {
-  return cq
-      .MakeUnaryRpc(
-          [this](grpc::ClientContext* context,
-                 google::storage::v2::DeleteObjectRequest const& request,
-                 grpc::CompletionQueue* cq) {
-            return grpc_stub_->AsyncDeleteObject(context, request, cq);
-          },
-          request, std::move(context))
+  return internal::MakeUnaryRpcImpl<google::storage::v2::DeleteObjectRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::storage::v2::DeleteObjectRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return grpc_stub_->AsyncDeleteObject(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });
@@ -445,7 +446,10 @@ DefaultStorageStub::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::StartResumableWriteRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::storage::v2::StartResumableWriteRequest,
+      google::storage::v2::StartResumableWriteResponse>(
+      cq,
       [this](grpc::ClientContext* context,
              google::storage::v2::StartResumableWriteRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -459,7 +463,10 @@ DefaultStorageStub::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::storage::v2::QueryWriteStatusRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::storage::v2::QueryWriteStatusRequest,
+      google::storage::v2::QueryWriteStatusResponse>(
+      cq,
       [this](grpc::ClientContext* context,
              google::storage::v2::QueryWriteStatusRequest const& request,
              grpc::CompletionQueue* cq) {

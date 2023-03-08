@@ -105,7 +105,10 @@ DefaultCertificateAuthorityServiceStub::AsyncActivateCertificateAuthority(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
+                                        ActivateCertificateAuthorityRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  ActivateCertificateAuthorityRequest const& request,
@@ -122,7 +125,10 @@ DefaultCertificateAuthorityServiceStub::AsyncCreateCertificateAuthority(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::CreateCertificateAuthorityRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  CreateCertificateAuthorityRequest const& request,
@@ -139,7 +145,10 @@ DefaultCertificateAuthorityServiceStub::AsyncDisableCertificateAuthority(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
+                                        DisableCertificateAuthorityRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  DisableCertificateAuthorityRequest const& request,
@@ -156,7 +165,10 @@ DefaultCertificateAuthorityServiceStub::AsyncEnableCertificateAuthority(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  EnableCertificateAuthorityRequest const& request,
@@ -219,7 +231,10 @@ DefaultCertificateAuthorityServiceStub::AsyncUndeleteCertificateAuthority(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
+                                        UndeleteCertificateAuthorityRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  UndeleteCertificateAuthorityRequest const& request,
@@ -236,7 +251,10 @@ DefaultCertificateAuthorityServiceStub::AsyncDeleteCertificateAuthority(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  DeleteCertificateAuthorityRequest const& request,
@@ -253,7 +271,10 @@ DefaultCertificateAuthorityServiceStub::AsyncUpdateCertificateAuthority(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::UpdateCertificateAuthorityRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  UpdateCertificateAuthorityRequest const& request,
@@ -270,7 +291,10 @@ DefaultCertificateAuthorityServiceStub::AsyncCreateCaPool(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::CreateCaPoolRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::CreateCaPoolRequest const&
                  request,
@@ -286,7 +310,10 @@ DefaultCertificateAuthorityServiceStub::AsyncUpdateCaPool(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::UpdateCaPoolRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
                  request,
@@ -326,7 +353,10 @@ DefaultCertificateAuthorityServiceStub::AsyncDeleteCaPool(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::DeleteCaPoolRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
                  request,
@@ -385,7 +415,10 @@ DefaultCertificateAuthorityServiceStub::AsyncUpdateCertificateRevocationList(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::cloud::security::privateca::v1::
+                                        UpdateCertificateRevocationListRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  UpdateCertificateRevocationListRequest const& request,
@@ -402,7 +435,10 @@ DefaultCertificateAuthorityServiceStub::AsyncCreateCertificateTemplate(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::CreateCertificateTemplateRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  CreateCertificateTemplateRequest const& request,
@@ -418,7 +454,10 @@ DefaultCertificateAuthorityServiceStub::AsyncDeleteCertificateTemplate(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  DeleteCertificateTemplateRequest const& request,
@@ -464,7 +503,10 @@ DefaultCertificateAuthorityServiceStub::AsyncUpdateCertificateTemplate(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::security::privateca::v1::UpdateCertificateTemplateRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::security::privateca::v1::
                  UpdateCertificateTemplateRequest const& request,
@@ -479,7 +521,9 @@ DefaultCertificateAuthorityServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -492,14 +536,15 @@ future<Status> DefaultCertificateAuthorityServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq
-      .MakeUnaryRpc(
-          [this](grpc::ClientContext* context,
-                 google::longrunning::CancelOperationRequest const& request,
-                 grpc::CompletionQueue* cq) {
-            return operations_->AsyncCancelOperation(context, request, cq);
-          },
-          request, std::move(context))
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

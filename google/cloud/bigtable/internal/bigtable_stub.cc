@@ -153,7 +153,9 @@ DefaultBigtableStub::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::bigtable::v2::MutateRowRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::bigtable::v2::MutateRowRequest,
+                                    google::bigtable::v2::MutateRowResponse>(
+      cq,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::MutateRowRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -184,7 +186,10 @@ DefaultBigtableStub::AsyncCheckAndMutateRow(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::v2::CheckAndMutateRowRequest,
+      google::bigtable::v2::CheckAndMutateRowResponse>(
+      cq,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::CheckAndMutateRowRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -198,7 +203,10 @@ DefaultBigtableStub::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::v2::ReadModifyWriteRowRequest,
+      google::bigtable::v2::ReadModifyWriteRowResponse>(
+      cq,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::ReadModifyWriteRowRequest const& request,
              grpc::CompletionQueue* cq) {
