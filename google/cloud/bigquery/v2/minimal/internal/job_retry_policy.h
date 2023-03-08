@@ -27,7 +27,7 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 // Rest status code semantics for retrying requests.
-struct BigQueryV2JobRetryTraits {
+struct BigQueryJobRetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kResourceExhausted &&
@@ -35,15 +35,15 @@ struct BigQueryV2JobRetryTraits {
   }
 };
 
-using BigQueryV2JobRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<BigQueryV2JobRetryTraits>;
+using BigQueryJobRetryPolicy =
+    ::google::cloud::internal::TraitBasedRetryPolicy<BigQueryJobRetryTraits>;
 
-using BigQueryReadLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<BigQueryV2JobRetryTraits>;
+using BigQueryJobLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<BigQueryJobRetryTraits>;
 
-using BigQueryReadLimitedErrorCountRetryPolicy =
+using BigQueryJobLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        BigQueryV2JobRetryTraits>;
+        BigQueryJobRetryTraits>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

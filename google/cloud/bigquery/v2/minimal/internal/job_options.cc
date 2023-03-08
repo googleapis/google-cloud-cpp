@@ -15,11 +15,41 @@
 // Implementation of internal interface for Bigquery V2 Job resource.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_options.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_retry_policy.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+auto constexpr kBackoffScaling = 2.0;
+}  // namespace
+
+Options BigQueryJobDefaultOptions(Options options) {
+  options = google::cloud::internal::PopulateCommonOptions(
+      std::move(options), "GOOGLE_CLOUD_CPP_BIGQUERY_V2_JOB_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BIGQUERY_V2_JOB_AUTHORITY", "bigquery.googleapis.com");
+
+  if (!options.has<BigQueryJobRetryPolicyOption>()) {
+    options.set<BigQueryJobRetryPolicyOption>(
+        BigQueryJobLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  }
+  if (!options.has<BigQueryJobBackoffPolicyOption>()) {
+    options.set<BigQueryJobBackoffPolicyOption>(
+        ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                 std::chrono::minutes(5), kBackoffScaling)
+            .clone());
+  }
+  if (!options.has<BigQueryJobIdempotencyPolicyOption>()) {
+    options.set<BigQueryJobIdempotencyPolicyOption>(
+        MakeDefaultBigQueryJobIdempotencyPolicy());
+  }
+
+  return options;
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

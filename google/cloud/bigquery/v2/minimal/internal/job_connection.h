@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Internal interface for Bigquery V2 Job resource.
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_CONNECTION_H
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_STUB_FACTORY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_STUB_FACTORY_H
-
+#include "google/cloud/bigquery/v2/minimal/internal/job_options.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/unified_rest_credentials.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -29,12 +28,21 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
-    Options const& opts);
+class BigQueryJobConnection {
+ public:
+  virtual ~BigQueryJobConnection() = 0;
+
+  virtual Options options() { return Options{}; }
+
+  virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request);
+};
+
+std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(
+    Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_REST_STUB_FACTORY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_CONNECTION_H

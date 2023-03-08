@@ -32,21 +32,23 @@ class BigQueryJobRestStub {
  public:
   virtual ~BigQueryJobRestStub() = 0;
 
-  virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request,
-                                          Options const& opts) = 0;
+  virtual StatusOr<GetJobResponse> GetJob(
+      rest_internal::RestContext& rest_context,
+      GetJobRequest const& request) = 0;
 };
 
 class DefaultBigQueryJobRestStub : public BigQueryJobRestStub {
  public:
   explicit DefaultBigQueryJobRestStub(
-      std::unique_ptr<rest_internal::RestClient> rest_stub)
-      : rest_stub_(std::move(rest_stub)) {}
+      std::unique_ptr<rest_internal::RestClient> rest_stub, Options options)
+      : rest_stub_(std::move(rest_stub)), options_(std::move(options)) {}
 
-  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request,
-                                  Options const& opts) override;
+  StatusOr<GetJobResponse> GetJob(rest_internal::RestContext& rest_context,
+                                  GetJobRequest const& request) override;
 
  private:
   std::unique_ptr<rest_internal::RestClient> rest_stub_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

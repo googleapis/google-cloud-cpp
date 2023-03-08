@@ -15,11 +15,55 @@
 // Implementation of internal interface for Bigquery V2 Job resource.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_metadata.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/api_client_header.h"
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+BigQueryJobMetadata::BigQueryJobMetadata(
+    std::shared_ptr<BigQueryJobRestStub> child)
+    : child_(std::move(child)),
+      api_client_header_(
+          google::cloud::internal::ApiClientHeader("bigquery_v2_job")) {}
+
+StatusOr<GetJobResponse> BigQueryJobMetadata::GetJob(
+    rest_internal::RestContext& context, GetJobRequest const& request) {
+  SetMetadata(context, {"GetJob[project_id=" + request.project_id() +
+                        "job_id=" + request.job_id() +
+                        "location=" + request.location() + "]"});
+  return child_->GetJob(context, request);
+}
+
+void BigQueryJobMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                      std::vector<std::string> const& params) {
+  rest_context.AddHeader("x-goog-api-client", api_client_header_);
+  if (!params.empty()) {
+    rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
+  }
+  auto const& options = internal::CurrentOptions();
+  if (options.has<UserProjectOption>()) {
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
+  }
+  if (options.has<google::cloud::QuotaUserOption>()) {
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
+  }
+  if (options.has<google::cloud::ServerTimeoutOption>()) {
+    auto ms_rep = absl::StrCat(
+        absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
+                  absl::kZeroPad4));
+    rest_context.AddHeader("x-server-timeout",
+                           ms_rep.insert(ms_rep.size() - 3, "."));
+  }
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
