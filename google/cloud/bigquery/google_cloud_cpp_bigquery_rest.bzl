@@ -21,6 +21,7 @@ google_cloud_cpp_bigquery_rest_hdrs = [
     "v2/minimal/internal/common_v2_resources.h",
     "v2/minimal/internal/job.h",
     "v2/minimal/internal/job_configuration.h",
+    "v2/minimal/internal/job_connection.h",
     "v2/minimal/internal/job_idempotency_policy.h",
     "v2/minimal/internal/job_logging.h",
     "v2/minimal/internal/job_metadata.h",
@@ -36,6 +37,7 @@ google_cloud_cpp_bigquery_rest_hdrs = [
 google_cloud_cpp_bigquery_rest_srcs = [
     "v2/minimal/internal/bigquery_http_response.cc",
     "v2/minimal/internal/common_v2_resources.cc",
+    "v2/minimal/internal/job_connection.cc",
     "v2/minimal/internal/job_idempotency_policy.cc",
     "v2/minimal/internal/job_logging.cc",
     "v2/minimal/internal/job_metadata.cc",

@@ -17,12 +17,50 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_OPTIONS_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job_idempotency_policy.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_retry_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ */
+struct BigQueryJobRetryPolicyOption {
+  using Type = std::shared_ptr<BigQueryJobRetryPolicy>;
+};
+
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ */
+struct BigQueryJobBackoffPolicyOption {
+  using Type = std::shared_ptr<BackoffPolicy>;
+};
+
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ */
+struct BigQueryJobIdempotencyPolicyOption {
+  using Type = std::shared_ptr<BigQueryJobIdempotencyPolicy>;
+};
+
+/**
+ *  The options applicable to BigQueryJob.
+ */
+using BigQueryJobPolicyOptionList =
+    OptionList<BigQueryJobRetryPolicyOption, BigQueryJobBackoffPolicyOption,
+               BigQueryJobIdempotencyPolicyOption>;
+
+/**
+ * Default options for
+ */
+Options BigQueryJobDefaultOptions(Options options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
