@@ -88,6 +88,7 @@ inline std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
 }
 
 inline std::vector<std::uint8_t> MD5Hash(char const* payload) {
+  if (payload == nullptr) return MD5Hash(absl::Span<char const>{});
   return MD5Hash(absl::string_view(payload));
 }
 
