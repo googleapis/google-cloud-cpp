@@ -50,12 +50,10 @@ struct MD5HashValue
  */
 std::string ComputeMD5Hash(absl::string_view payload);
 
-/// @overload ComputeMD5Hash(absl::string_view)
-inline std::string ComputeMD5Hash(std::string const& payload) {
-  return ComputeMD5Hash(absl::string_view(payload));
-}
+/// @copydoc ComputeMD5Hash(absl::string_view)
+std::string ComputeMD5Hash(std::string const& payload);
 
-/// @overload ComputeMD5Hash(absl::string_view)
+/// @copydoc ComputeMD5Hash(absl::string_view)
 inline std::string ComputeMD5Hash(char const* payload) {
   return ComputeMD5Hash(absl::string_view(payload));
 }
@@ -114,12 +112,10 @@ struct Crc32cChecksumValue
  */
 std::string ComputeCrc32cChecksum(absl::string_view payload);
 
-/// @overload ComputeCrc32cChecksum(absl::string_view payload)
-inline std::string ComputeCrc32cChecksum(std::string const& payload) {
-  return ComputeCrc32cChecksum(absl::string_view(payload));
-}
+/// @copydoc ComputeCrc32cChecksum(absl::string_view payload)
+std::string ComputeCrc32cChecksum(std::string const& payload);
 
-/// @overload ComputeCrc32cChecksum(absl::string_view payload)
+/// @copydoc ComputeCrc32cChecksum(absl::string_view payload)
 inline std::string ComputeCrc32cChecksum(char const* payload) {
   return ComputeCrc32cChecksum(absl::string_view(payload));
 }
