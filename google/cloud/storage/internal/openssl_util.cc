@@ -170,7 +170,7 @@ StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(
   return Base64Decode(b64str);
 }
 
-std::vector<std::uint8_t> MD5Hash(absl::Span<char const> payload) {
+std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
   std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
 
   unsigned int size = 0;

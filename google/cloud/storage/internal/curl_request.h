@@ -55,9 +55,8 @@ class CurlRequest {
 
   /// @overload MakeRequest(absl::string_view)
   StatusOr<HttpResponse> MakeRequest(char const* payload) && {
-    auto p =
-        payload == nullptr ? absl::string_view{} : absl::string_view{payload};
-    return std::move(*this).MakeRequest(std::move(p));
+    return std::move(*this).MakeRequest(
+        payload == nullptr ? absl::string_view{} : absl::string_view{payload});
   }
 
   /// @copydoc MakeRequest(absl::string_view)

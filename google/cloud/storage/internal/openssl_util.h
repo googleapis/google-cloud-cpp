@@ -81,15 +81,11 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
 StatusOr<std::vector<std::uint8_t>> UrlsafeBase64Decode(std::string const& str);
 
 /// Compute the MD5 hash of @p payload
-std::vector<std::uint8_t> MD5Hash(absl::Span<char const> payload);
-
-inline std::vector<std::uint8_t> MD5Hash(absl::string_view payload) {
-  return MD5Hash(absl::Span<char const>(payload.data(), payload.size()));
-}
+std::vector<std::uint8_t> MD5Hash(absl::string_view payload);
 
 inline std::vector<std::uint8_t> MD5Hash(char const* payload) {
-  if (payload == nullptr) return MD5Hash(absl::Span<char const>{});
-  return MD5Hash(absl::string_view(payload));
+  return MD5Hash(payload == nullptr ? absl::string_view{}
+                                    : absl::string_view(payload));
 }
 
 }  // namespace internal

@@ -115,7 +115,7 @@ class InsertObjectMediaRequest
                                     std::string object_name,
                                     absl::string_view payload)
       : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
-        payload_(std::move(payload)) {}
+        payload_(payload) {}
 
   absl::string_view payload() const { return payload_; }
   void set_payload(absl::string_view payload);

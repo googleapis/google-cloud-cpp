@@ -71,7 +71,7 @@ CurlRequest::~CurlRequest() {
 StatusOr<HttpResponse> CurlRequest::MakeRequest(absl::string_view payload) && {
   handle_.SetOption(CURLOPT_UPLOAD, 0L);
   if (!payload.empty()) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.length());
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload.size());
     handle_.SetOption(CURLOPT_POSTFIELDS, payload.data());
   }
   return MakeRequestImpl();
