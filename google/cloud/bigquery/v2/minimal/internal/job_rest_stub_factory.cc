@@ -36,7 +36,7 @@ std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
     local_opts.set<EndpointOption>("https://bigquery.googleapis.com/");
   }
 
-  auto curl_rest_client = rest_internal::MakePooledRestClient(
+  auto curl_rest_client = rest_internal::MakeDefaultRestClient(
       opts.get<EndpointOption>(), local_opts);
 
   std::shared_ptr<BigQueryJobRestStub> stub =
