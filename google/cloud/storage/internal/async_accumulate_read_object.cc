@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
+#include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
-#include <crc32c/crc32c.h>
 #include <iterator>
 #include <numeric>
 #include <sstream>
@@ -333,7 +333,7 @@ storage_experimental::AsyncReadObjectRangeResponse ToResponse(
   for (auto& r : accumulated.payload) {
     if (!r.has_checksummed_data()) continue;
     auto& data = *r.mutable_checksummed_data();
-    if (data.has_crc32c() && crc32c::Crc32c(data.content()) != data.crc32c()) {
+    if (data.has_crc32c() && Crc32c(data.content()) != data.crc32c()) {
       response.status = Status(StatusCode::kDataLoss,
                                "Mismatched CRC32C checksum in downloaded data");
       return response;

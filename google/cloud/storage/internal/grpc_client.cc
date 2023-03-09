@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_bucket_name.h"
@@ -37,7 +38,6 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
-#include <crc32c/crc32c.h>
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <cinttypes>
@@ -108,41 +108,6 @@ StatusOr<storage::ObjectAccessControl> FindDefaultObjectAccessControl(
   return Status(
       StatusCode::kNotFound,
       "cannot find entity <" + entity + "> in bucket " + response->bucket_id());
-}
-
-// If this is the last `Write()` call of the last `InsertObjectMedia()` set the
-// flags to finalize the request
-void MaybeFinalize(
-    google::storage::v2::WriteObjectRequest& write_request,
-    grpc::WriteOptions& options,
-    storage::internal::InsertObjectMediaRequest const& /*request*/,
-    bool chunk_has_more) {
-  if (!chunk_has_more) options.set_last_message();
-  write_request.set_finish_write(!chunk_has_more);
-}
-
-// If this is the last `Write()` call of the last `UploadChunk()` set the flags
-// to finalize the request
-void MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
-                   grpc::WriteOptions& options,
-                   storage::internal::UploadChunkRequest const& request,
-                   bool chunk_has_more) {
-  if (!chunk_has_more) options.set_last_message();
-  if (!request.last_chunk() || chunk_has_more) return;
-  write_request.set_finish_write(true);
-  auto const& hashes = request.full_object_hashes();
-  if (!hashes.md5.empty()) {
-    auto md5 = MD5ToProto(hashes.md5);
-    if (md5) {
-      write_request.mutable_object_checksums()->set_md5_hash(*std::move(md5));
-    }
-  }
-  if (!hashes.crc32c.empty()) {
-    auto crc32c = Crc32cToProto(hashes.crc32c);
-    if (crc32c) {
-      write_request.mutable_object_checksums()->set_crc32c(*std::move(crc32c));
-    }
-  }
 }
 
 std::chrono::milliseconds ScaleStallTimeout(std::chrono::milliseconds timeout,
@@ -458,11 +423,13 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
     data.set_content(splitter.Next());
-    data.set_crc32c(crc32c::Crc32c(data.content()));
+    data.set_crc32c(Crc32c(data.content()));
+    request.hash_function().Update(offset, data.content(), data.crc32c());
     offset += data.content().size();
 
     auto options = grpc::WriteOptions{};
     MaybeFinalize(proto_request, options, request, !splitter.Done());
+
     auto watchdog = create_watchdog().then([&stream](auto f) {
       if (!f.get()) return false;
       stream->Cancel();
@@ -705,7 +672,8 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
     data.set_content(splitter.Next());
-    data.set_crc32c(crc32c::Crc32c(data.content()));
+    data.set_crc32c(Crc32c(data.content()));
+    request.hash_function().Update(offset, data.content(), data.crc32c());
     offset += data.content().size();
 
     auto options = grpc::WriteOptions();

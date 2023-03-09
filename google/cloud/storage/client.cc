@@ -252,6 +252,8 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
   bool reach_upload_limit = false;
   internal::ConstBufferSequence buffers(1);
   std::vector<char> buffer(chunk_size);
+  std::shared_ptr<internal::HashFunction> hash_function =
+      internal::CreateHashFunction(request);
   while (!source.eof() && !reach_upload_limit) {
     // Read a chunk of data from the source file.
     if (upload_limit - committed_size <= chunk_size) {
@@ -266,9 +268,11 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     auto upload_request = [&] {
       bool final_chunk = (gcount < buffer.size()) || reach_upload_limit;
       if (!final_chunk) {
-        return internal::UploadChunkRequest(upload_id, committed_size, buffers);
+        return internal::UploadChunkRequest(upload_id, committed_size, buffers,
+                                            hash_function);
       }
       return internal::UploadChunkRequest(upload_id, committed_size, buffers,
+                                          hash_function,
                                           internal::HashValues{});
     }();
     request.ForEachOption(internal::CopyCommonOptions(upload_request));
