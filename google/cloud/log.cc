@@ -17,7 +17,6 @@
 #include "google/cloud/internal/log_impl.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
-#include "absl/types/optional.h"
 #include <array>
 #include <thread>
 
@@ -55,15 +54,6 @@ std::array<char const*, kSeverityCount> constexpr kSeverityNames{
     "ERROR", "CRITICAL", "ALERT", "FATAL",
 };
 
-absl::optional<Severity> ParseSeverity(std::string const& name) {
-  int i = 0;
-  for (auto const* n : kSeverityNames) {
-    if (name == n) return static_cast<Severity>(i);
-    ++i;
-  }
-  return {};
-}
-
 absl::optional<std::size_t> ParseSize(std::string const& str) {
   std::size_t econv = -1;
   auto const val = std::stol(str, &econv);
@@ -73,6 +63,15 @@ absl::optional<std::size_t> ParseSize(std::string const& str) {
 }
 
 }  // namespace
+
+absl::optional<Severity> ParseSeverity(std::string const& name) {
+  int i = 0;
+  for (auto const* n : kSeverityNames) {
+    if (name == n) return static_cast<Severity>(i);
+    ++i;
+  }
+  return {};
+}
 
 std::ostream& operator<<(std::ostream& os, Severity x) {
   auto index = static_cast<int>(x);
