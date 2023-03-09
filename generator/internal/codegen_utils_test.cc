@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -402,45 +403,83 @@ TEST_P(FormatCommentBlockTest, CommentBlockFormattedCorrectly) {
 }
 
 auto constexpr kSingleWordComment = "brief";
+auto constexpr kLongSingleWordComment = "supercalifragilisticexpialidocious";
 auto constexpr kShortComment = "This is a comment.";
 auto constexpr k77CharComment =
     "The comment is not less than, not greater than, but is exactly 77 "
     "characters.";
+auto constexpr kContainsMarkdownBulletedLongUrlComment =
+    "Represents an IP Address resource. Google Compute Engine has two IP "
+    "Address resources: * [Global (external and "
+    "internal)](https://cloud.google.com/compute/docs/reference/rest/v1/"
+    "globalAddresses) * [Regional (external and "
+    "internal)](https://cloud.google.com/compute/docs/reference/rest/v1/"
+    "addresses) For more information, see Reserving a static external IP "
+    "address.";
 
 INSTANTIATE_TEST_SUITE_P(
     CommentBlockFormattedCorrectly, FormatCommentBlockTest,
-    Values(FormatCommentBlockTestParams{"", 0, "", 0, 0, R"""(
+    Values(
+        FormatCommentBlockTestParams{"", 0, "", 0, 0, R"""(
 )"""},
-           FormatCommentBlockTestParams{kShortComment, 0, "", 0, 0, R"""(
+        FormatCommentBlockTestParams{kShortComment, 0, "", 0, 0, R"""(
 )"""},
-           FormatCommentBlockTestParams{kSingleWordComment, 0, "", 0, 1, R"""(
-)"""},
-           FormatCommentBlockTestParams{kShortComment, 0, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{kSingleWordComment, 0, "", 0, 1, R"""(
+brief)"""},
+        FormatCommentBlockTestParams{kSingleWordComment, 0, "", 0, 80, R"""(
+brief)"""},
+        FormatCommentBlockTestParams{kLongSingleWordComment, 0, "//", 2, 40,
+                                     R"""(
+// supercalifragilisticexpialidocious)"""},
+        FormatCommentBlockTestParams{
+            absl::StrCat(kLongSingleWordComment, " w", kLongSingleWordComment),
+            0, "//", 2, 30, R"""(
+// supercalifragilisticexpialidocious
+// wsupercalifragilisticexpialidocious)"""},
+        FormatCommentBlockTestParams{kSingleWordComment, 0, "//", 2, 80, R"""(
+// brief)"""},
+        FormatCommentBlockTestParams{kShortComment, 0, "//", 2, 80, R"""(
 // This is a comment.)"""},
-           FormatCommentBlockTestParams{kShortComment, 1, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{kShortComment, 1, "//", 2, 80, R"""(
   // This is a comment.)"""},
-           FormatCommentBlockTestParams{kShortComment, 2, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{kShortComment, 2, "//", 2, 80, R"""(
     // This is a comment.)"""},
-           FormatCommentBlockTestParams{k77CharComment, 0, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 0, "//", 2, 80, R"""(
 // The comment is not less than, not greater than, but is exactly 77 characters.)"""},
-           FormatCommentBlockTestParams{k77CharComment, 1, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 1, "//", 2, 80, R"""(
   // The comment is not less than, not greater than, but is exactly 77
   // characters.)"""},
-           FormatCommentBlockTestParams{k77CharComment, 2, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 2, "//", 2, 80, R"""(
     // The comment is not less than, not greater than, but is exactly 77
     // characters.)"""},
-           FormatCommentBlockTestParams{k77CharComment, 0, "#", 4, 40, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 0, "#", 4, 40, R"""(
 # The comment is not less than, not
 # greater than, but is exactly 77
 # characters.)"""},
-           FormatCommentBlockTestParams{k77CharComment, 1, "#", 4, 40, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 1, "#", 4, 40, R"""(
     # The comment is not less than, not
     # greater than, but is exactly 77
     # characters.)"""},
-           FormatCommentBlockTestParams{k77CharComment, 2, "#", 4, 40, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 2, "#", 4, 40, R"""(
         # The comment is not less than,
         # not greater than, but is
-        # exactly 77 characters.)"""}));
+        # exactly 77 characters.)"""},
+        FormatCommentBlockTestParams{"line1 uhoh", 0, "", 0, 5, R"""(
+line1
+uhoh)"""},
+        FormatCommentBlockTestParams{"foo wordthatiswaytoolong", 0, "", 0, 5,
+                                     R"""(
+foo
+wordthatiswaytoolong)"""},
+        // TODO(#11019): Improve formatting of comments containing markdown.
+        FormatCommentBlockTestParams{kContainsMarkdownBulletedLongUrlComment, 0,
+                                     "//", 2, 80, R"""(
+// Represents an IP Address resource. Google Compute Engine has two IP Address
+// resources: * [Global (external and
+// internal)](https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses)
+// * [Regional (external and
+// internal)](https://cloud.google.com/compute/docs/reference/rest/v1/addresses)
+// For more information, see Reserving a static external IP address.)"""}));
 
 struct FormatCommentKeyValueListTestParams {
   std::vector<std::pair<std::string, std::string>> comment;
