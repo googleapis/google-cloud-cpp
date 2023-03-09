@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <string>
 #include <thread>
 
 namespace google {
@@ -30,10 +31,28 @@ using ::testing::HasSubstr;
 auto constexpr kLogConfig = "GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG";
 auto constexpr kEnableClog = "GOOGLE_CLOUD_CPP_ENABLE_CLOG";
 
-TEST(LogSeverityTest, Streaming) {
-  std::ostringstream os;
-  os << Severity::GCP_LS_TRACE;
-  EXPECT_EQ("TRACE", os.str());
+TEST(LogSeverityTest, StreamingParsing) {
+  struct {
+    Severity severity;
+    std::string rep;
+  } cases[] = {
+      {Severity::GCP_LS_TRACE, "TRACE"},
+      {Severity::GCP_LS_DEBUG, "DEBUG"},
+      {Severity::GCP_LS_INFO, "INFO"},
+      {Severity::GCP_LS_NOTICE, "NOTICE"},
+      {Severity::GCP_LS_WARNING, "WARNING"},
+      {Severity::GCP_LS_ERROR, "ERROR"},
+      {Severity::GCP_LS_CRITICAL, "CRITICAL"},
+      {Severity::GCP_LS_ALERT, "ALERT"},
+      {Severity::GCP_LS_FATAL, "FATAL"},
+  };
+
+  for (auto const& test : cases) {
+    std::ostringstream os;
+    os << test.severity;
+    EXPECT_EQ(test.rep, os.str());
+    EXPECT_EQ(test.severity, ParseSeverity(test.rep));
+  }
 }
 
 TEST(LogRecordTest, Streaming) {
