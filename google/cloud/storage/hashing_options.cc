@@ -22,15 +22,23 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string ComputeMD5Hash(std::string const& payload) {
+std::string ComputeMD5Hash(absl::string_view payload) {
   return internal::Base64Encode(internal::MD5Hash(payload));
 }
 
-std::string ComputeCrc32cChecksum(std::string const& payload) {
+std::string ComputeMD5Hash(std::string const& payload) {
+  return ComputeMD5Hash(absl::string_view(payload));
+}
+
+std::string ComputeCrc32cChecksum(absl::string_view payload) {
   auto checksum = crc32c::Extend(
       0, reinterpret_cast<std::uint8_t const*>(payload.data()), payload.size());
   std::string const hash = google::cloud::internal::EncodeBigEndian(checksum);
   return internal::Base64Encode(hash);
+}
+
+std::string ComputeCrc32cChecksum(std::string const& payload) {
+  return ComputeCrc32cChecksum(absl::string_view(payload));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

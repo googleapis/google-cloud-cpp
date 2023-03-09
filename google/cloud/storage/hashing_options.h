@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/version.h"
+#include "absl/strings/string_view.h"
 #include <string>
 
 namespace google {
@@ -45,9 +46,18 @@ struct MD5HashValue
 };
 
 /**
- * Compute the MD5 Hash of a string in the format preferred by GCS.
+ * Compute the MD5 Hash of a buffer in the format preferred by GCS.
  */
+std::string ComputeMD5Hash(absl::string_view payload);
+
+/// @copydoc ComputeMD5Hash(absl::string_view)
 std::string ComputeMD5Hash(std::string const& payload);
+
+/// @copydoc ComputeMD5Hash(absl::string_view)
+inline std::string ComputeMD5Hash(char const* payload) {
+  return ComputeMD5Hash(payload == nullptr ? absl::string_view{}
+                                           : absl::string_view{payload});
+}
 
 /**
  * Disable or enable MD5 Hashing computations.
@@ -99,9 +109,18 @@ struct Crc32cChecksumValue
 };
 
 /**
- * Compute the CRC32C checksum of a string in the format preferred by GCS.
+ * Compute the CRC32C checksum of a buffer in the format preferred by GCS.
  */
+std::string ComputeCrc32cChecksum(absl::string_view payload);
+
+/// @copydoc ComputeCrc32cChecksum(absl::string_view payload)
 std::string ComputeCrc32cChecksum(std::string const& payload);
+
+/// @copydoc ComputeCrc32cChecksum(absl::string_view payload)
+inline std::string ComputeCrc32cChecksum(char const* payload) {
+  return ComputeCrc32cChecksum(payload == nullptr ? absl::string_view{}
+                                                  : absl::string_view{payload});
+}
 
 /**
  * Disable CRC32C checksum computations.

@@ -26,6 +26,7 @@
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "absl/strings/string_view.h"
 #include "absl/types/optional.h"
 #include "absl/types/span.h"
 #include <map>
@@ -112,18 +113,32 @@ class InsertObjectMediaRequest
 
   explicit InsertObjectMediaRequest(std::string bucket_name,
                                     std::string object_name,
-                                    std::string contents)
+                                    absl::string_view payload)
       : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
-        contents_(std::move(contents)) {}
+        payload_(payload) {}
 
-  std::string const& contents() const { return contents_; }
-  InsertObjectMediaRequest& set_contents(std::string&& v) {
-    contents_ = std::move(v);
-    return *this;
-  }
+  absl::string_view payload() const { return payload_; }
+  void set_payload(absl::string_view payload);
+
+  ///@{
+  /**
+   * @name Backwards compatibility.
+   *
+   * While this class is in the internal namespace, the storage library
+   * requires applications to use parts of the internal namespace in mocks.
+   *
+   * These functions are only provided for backwards compatibility. The library
+   * no longer uses them, and mocks (if any) should migrate to payload() and
+   * set_payload().
+   */
+  [[deprecated("use payload() instead")]] std::string const& contents() const;
+  [[deprecated("use set_payload() instead")]] void set_contents(std::string v);
+  ///@}
 
  private:
-  std::string contents_;
+  absl::string_view payload_;
+  mutable std::string contents_;
+  mutable bool dirty_ = true;
 };
 
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);

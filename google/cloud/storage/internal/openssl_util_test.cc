@@ -81,13 +81,23 @@ TEST(OpensslUtilTest, Base64DecodePadding) {
 }
 
 TEST(OpensslUtilTest, MD5HashEmpty) {
-  auto const actual = MD5Hash("");
   // I used this command to get the expected value:
   // /bin/echo -n "" | openssl md5
   auto const expected =
       std::vector<std::uint8_t>{0xd4, 0x1d, 0x8c, 0xd9, 0x8f, 0x00, 0xb2, 0x04,
                                 0xe9, 0x80, 0x09, 0x98, 0xec, 0xf8, 0x42, 0x7e};
-  EXPECT_THAT(actual, ElementsAreArray(expected));
+
+  // There are many ways to represent the "empty" string:
+  std::vector<std::vector<std::uint8_t>> const values{
+      MD5Hash({}),
+      MD5Hash(nullptr),
+      MD5Hash(""),
+      MD5Hash(absl::string_view{}),
+  };
+
+  for (auto const& actual : values) {
+    EXPECT_THAT(actual, ElementsAreArray(expected));
+  }
 }
 
 TEST(OpensslUtilTest, MD5HashSimple) {

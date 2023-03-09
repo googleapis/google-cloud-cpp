@@ -176,10 +176,24 @@ TEST(ObjectRequestsTest, InsertObjectMedia) {
 
 TEST(ObjectRequestsTest, InsertObjectMediaUpdateContents) {
   InsertObjectMediaRequest request("my-bucket", "my-object", "object contents");
-  EXPECT_EQ("object contents", request.contents());
-  request.set_contents("new contents");
-  EXPECT_EQ("new contents", request.contents());
+  EXPECT_EQ("object contents", request.payload());
+  request.set_payload("new contents");
+  EXPECT_EQ("new contents", request.payload());
 }
+
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+TEST(ObjectRequestsTest, InsertObjectBackwardsCompat) {
+  auto const payload =
+      std::string("The quick brown fox jumps over the lazy dog");
+  auto const zebras = std::string("How quickly daft jumping zebras vex");
+  InsertObjectMediaRequest request("my-bucket", "my-object", payload);
+  EXPECT_EQ(payload, request.payload());
+  EXPECT_EQ(payload, request.contents());
+  request.set_contents(zebras);
+  EXPECT_EQ(zebras, request.payload());
+  EXPECT_EQ(zebras, request.contents());
+}
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 TEST(ObjectRequestsTest, Copy) {
   CopyObjectRequest request("source-bucket", "source-object", "my-bucket",

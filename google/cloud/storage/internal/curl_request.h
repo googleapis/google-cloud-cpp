@@ -20,6 +20,7 @@
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
+#include "absl/strings/string_view.h"
 #include <string>
 
 namespace google {
@@ -43,13 +44,22 @@ class CurlRequest {
   /**
    * Makes the prepared request.
    *
-   * This function can be called multiple times on the same request.
-   *
    * @return The response HTTP error code, the headers and an empty payload.
    */
-  StatusOr<HttpResponse> MakeRequest(std::string const& payload) &&;
+  StatusOr<HttpResponse> MakeRequest(absl::string_view payload) &&;
 
-  /// @copydoc MakeRequest(std::string const&)
+  /// @overload MakeRequest(absl::string_view)
+  StatusOr<HttpResponse> MakeRequest(std::string const& payload) && {
+    return std::move(*this).MakeRequest(absl::string_view(payload));
+  }
+
+  /// @overload MakeRequest(absl::string_view)
+  StatusOr<HttpResponse> MakeRequest(char const* payload) && {
+    return std::move(*this).MakeRequest(
+        payload == nullptr ? absl::string_view{} : absl::string_view{payload});
+  }
+
+  /// @copydoc MakeRequest(absl::string_view)
   StatusOr<HttpResponse> MakeUploadRequest(ConstBufferSequence payload) &&;
 
  private:
