@@ -31,6 +31,8 @@
 #include <future>
 #include <iostream>
 
+ABSL_FLAG(std::string, log_level, "NOTICE",
+          "Set to \"INFO\", \"DEBUG\", or \"TRACE\" for additional logging.");
 ABSL_FLAG(std::string, config_file, "",
           "Text proto configuration file specifying the code to be generated.");
 ABSL_FLAG(std::string, protobuf_proto_path, "",
@@ -332,8 +334,22 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
 int main(int argc, char** argv) {
   int rc = 0;
   absl::ParseCommandLine(argc, argv);
-  google::cloud::LogSink::EnableStdClog(
-      google::cloud::Severity::GCP_LS_WARNING);
+  auto log_level = google::cloud::ParseSeverity(absl::GetFlag(FLAGS_log_level));
+  if (!log_level || *log_level > google::cloud::Severity::GCP_LS_NOTICE) {
+    log_level = google::cloud::Severity::GCP_LS_NOTICE;
+  }
+  // A default backend is already in place, so we must remove it first.
+  google::cloud::LogSink::DisableStdClog();
+  google::cloud::LogSink::EnableStdClog(*log_level);
+  if (*log_level <
+      google::cloud::Severity::GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED) {
+    GCP_LOG(WARNING)
+        << "Log level " << *log_level
+        << " is less than the minimum enabled level of "
+        << google::cloud::Severity::
+               GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED
+        << "; you'll need to recompile everything for that to work";
+  }
 
   CommandLineArgs const args{absl::GetFlag(FLAGS_config_file),
                              absl::GetFlag(FLAGS_protobuf_proto_path),
