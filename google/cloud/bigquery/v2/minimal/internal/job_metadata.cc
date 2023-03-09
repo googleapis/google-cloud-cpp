@@ -36,8 +36,8 @@ BigQueryJobMetadata::BigQueryJobMetadata(
 StatusOr<GetJobResponse> BigQueryJobMetadata::GetJob(
     rest_internal::RestContext& context, GetJobRequest const& request) {
   SetMetadata(context, {"GetJob[project_id=" + request.project_id() +
-                        "job_id=" + request.job_id() +
-                        "location=" + request.location() + "]"});
+                        ",job_id=" + request.job_id() +
+                        ",location=" + request.location() + "]"});
   return child_->GetJob(context, request);
 }
 
