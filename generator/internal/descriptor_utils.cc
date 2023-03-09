@@ -469,38 +469,42 @@ std::string EscapePrinterDelimiter(std::string const& text) {
   return absl::StrReplaceAll(text, {{"$", "$$"}});
 }
 
+// Apply substitutions to the comments snarfed from the proto file for
+// method_signature parameters. This is mostly for the benefit of Doxygen,
+// but is also to fix mismatched quotes, etc.
+struct ParameterCommentSubtitution {
+  absl::string_view before;
+  absl::string_view after;
+  std::size_t uses = 0;
+};
+
 auto constexpr kDialogflowCXEnvironmentIdProto1 = R"""(
  list all environments for. Format: `projects/<Project
  ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment
- ID>`.
-)""";
+ ID>`.)""";
 
 auto constexpr kDialogflowCXEnvironmentIdCpp1 = R"""(
  list all environments for. Format:
 
  @code
  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
- @endcode
-)""";
+ @endcode)""";
 
 auto constexpr kDialogflowCXEnvironmentIdProto2 = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
- ID>/environments/<Environment ID>`.
-)""";
+ ID>/environments/<Environment ID>`.)""";
 
 auto constexpr kDialogflowCXEnvironmentIdCpp2 = R"""(
  Format:
 
  @code
  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
- @endcode
-)""";
+ @endcode)""";
 
 auto constexpr kDialogflowCXSessionIdProto = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
  ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location
- ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
-)""";
+ ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.)""";
 
 auto constexpr kDialogflowCXSessionIdCpp = R"""(
  Format:
@@ -513,22 +517,19 @@ auto constexpr kDialogflowCXSessionIdCpp = R"""(
 
  @code
  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>
- @endcode
-)""";
+ @endcode)""";
 
 auto constexpr kDialogflowCXTransitionRouteGroupIdProto = R"""(
  to delete. Format: `projects/<Project ID>/locations/<Location
  ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition
- Route Group ID>`.
-)""";
+ Route Group ID>`.)""";
 
 auto constexpr kDialogflowCXTransitionRouteGroupIdCpp = R"""(
  to delete. Format:
 
  @code
  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>
- @endcode
-)""";
+ @endcode)""";
 
 auto constexpr kDialogflowCXEntityTypeIdProto = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
@@ -536,8 +537,7 @@ auto constexpr kDialogflowCXEntityTypeIdProto = R"""(
  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
  ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity
  Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
- environment.
-)""";
+ environment.)""";
 
 auto constexpr kDialogflowCXEntityTypeIdCpp = R"""(
  Format:
@@ -553,8 +553,7 @@ auto constexpr kDialogflowCXEntityTypeIdCpp = R"""(
  @endcode
 
  If `Environment ID` is not specified, we assume the default 'draft'
- environment.
-)""";
+ environment.)""";
 
 auto constexpr kDialogflowESSessionIdProto =
     R"""( `projects/<Project ID>/agent/sessions/<Session ID>` or `projects/<Project
@@ -570,8 +569,7 @@ auto constexpr kDialogflowESSessionIdCpp = R"""(
 
  @code
  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>
- @endcode
-)""";
+ @endcode)""";
 
 auto constexpr kDialogflowESContextIdProto =
     R"""( `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context ID>`
@@ -587,8 +585,7 @@ auto constexpr kDialogflowESContextIdCpp = R"""(
 
  @code
  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/contexts/<Context ID>`
- @endcode
-)""";
+ @endcode)""";
 
 auto constexpr kDialogflowESSessionEntityTypeDisplayNameProto =
     R"""( `projects/<Project ID>/agent/sessions/<Session ID>/entityTypes/<Entity Type
@@ -605,16 +602,48 @@ auto constexpr kDialogflowESSessionEntityTypeDisplayNameCpp = R"""(
 
  @code
  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
- @endcode
-)""";
+ @endcode)""";
 
-// A missing closing quote confuses the parser in Doxygen.
-auto constexpr kArtifactRegistryRepositoryNameProto =
-    R"""("projects/p1/locations/us-central1/repositories/repo1
-)""";
-auto constexpr kArtifactRegistryRepositoryNameCpp =
-    R"""("projects/p1/locations/us-central1/repositories/repo1"
-)""";
+ParameterCommentSubtitution substitutions[] = {
+    // From dialogflow/cx/v3.
+    {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
+    {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
+    {kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
+    {kDialogflowCXTransitionRouteGroupIdProto,
+     kDialogflowCXTransitionRouteGroupIdCpp},
+    {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
+
+    // From dialogflow/v2.
+    {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
+    {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},
+    {kDialogflowESSessionEntityTypeDisplayNameProto,
+     kDialogflowESSessionEntityTypeDisplayNameCpp},
+
+    // From artifactregistry/v1, where a missing closing quote confuses
+    // the Doxygen parser.
+    {R"""("projects/p1/locations/us-central1/repositories/repo1)""",
+     R"""("projects/p1/locations/us-central1/repositories/repo1")"""},
+
+    // Doxygen cannot process this tag in dataproc/v1.
+    {"<tbody>", "<!--<tbody>-->"},
+    {"</tbody>", "<!--</tbody>-->"},
+
+    // Unescaped elements in spanner/admin/instance/v1.
+    {" <parent>/instanceConfigs/us-east1,",
+     " `<parent>/instanceConfigs/us-east1`,"},
+    {" <parent>/instanceConfigs/nam3.", " `<parent>/instanceConfigs/nam3`."},
+
+    // Extra quotes in asset/v1.
+    {R"""( as "projects/my-project-id")")""",
+     R"""( as "projects/my-project-id"))"""},
+    {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},
+
+    // This triggers a bug (I think it is a bug) in Doxygen:
+    //    https://github.com/doxygen/doxygen/issues/8788
+    // From resourcemanager/v3.
+    {R"""(`displayName=\\"Test String\\"`)""",
+     R"""(`displayName="Test String"`))"""},
+};
 
 std::string FormatApiMethodSignatureParameters(
     google::protobuf::MethodDescriptor const& method,
@@ -629,53 +658,16 @@ std::string FormatApiMethodSignatureParameters(
         input_type->FindFieldByName(parameter);
     google::protobuf::SourceLocation loc;
     parameter_descriptor->GetSourceLocation(&loc);
-    auto comment = absl::StrReplaceAll(
-        loc.leading_comments,
-        {
-            {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
-            {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
-            {kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
-            {kDialogflowCXTransitionRouteGroupIdProto,
-             kDialogflowCXTransitionRouteGroupIdCpp},
-            {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
-            {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
-            {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},
-            {kDialogflowESSessionEntityTypeDisplayNameProto,
-             kDialogflowESSessionEntityTypeDisplayNameCpp},
-            {kArtifactRegistryRepositoryNameProto,
-             kArtifactRegistryRepositoryNameCpp},
-        });
-    comment = absl::StrReplaceAll(
-        EscapePrinterDelimiter(ChompByValue(comment)),
+    auto comment = EscapePrinterDelimiter(ChompByValue(loc.leading_comments));
+    for (auto& sub : substitutions) {
+      sub.uses += absl::StrReplaceAll({{sub.before, sub.after}}, &comment);
+    }
+    absl::StrReplaceAll(
         {
             {"\n\n", "\n  /// "},
             {"\n", "\n  /// "},
-            // Doxygen cannot process this tag. One proto uses it in a comment.
-            {"<tbody>", "<!--<tbody>-->"},
-            {"</tbody>", "<!--</tbody>-->"},
-            // Unescaped elements in spanner_instance_admin.proto.
-            {" <parent>/instanceConfigs/us-east1,",
-             " `<parent>/instanceConfigs/us-east1`,"},
-            {" <parent>/instanceConfigs/nam3.",
-             " `<parent>/instanceConfigs/nam3`."},
-            // Runaway escaping and just duplication in gkemulticloud proto
-            // file.
-            {" formatted as `resource name formatted as", " formatted as"},
-            // Missing escaping in pubsub/v1/schema.proto
-            {"Example: projects/123/schemas/my-schema@c7cfa2a8",
-             "Example: `projects/123/schemas/my-schema@c7cfa2a8`"},
-            // Extra quote in google/cloud/asset/v1/asset_service.proto
-            {R"""( as "projects/my-project-id")")""",
-             R"""( as "projects/my-project-id"))"""},
-            {R"""( "folders/12345")", or a )""",
-             R"""( "folders/12345"), or a )"""},
-            // This triggers a bug (I think it is a bug) in Doxygen:
-            //    https://github.com/doxygen/doxygen/issues/8788
-            // from google/cloud/resourcemanager/v3/folders.proto
-            {R"""(`displayName=\\"Test String\\"`)""",
-             R"""(`displayName="Test String"`))"""},
-
-        });
+        },
+        &comment);
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
   }
@@ -845,6 +837,18 @@ std::string FormatMethodCommentsProtobufRequest(
   auto parameter_comment = absl::StrFormat("  /// @param %s %s\n", "request",
                                            FormatDoxygenLink(*input_type));
   return FormatMethodComments(method, std::move(parameter_comment));
+}
+
+bool CheckParameterCommentSubtitutions() {
+  bool all_substitutions_used = true;
+  for (auto& sub : substitutions) {
+    if (sub.uses == 0) {
+      GCP_LOG(ERROR) << "Parameter comment substitution went unused ("
+                     << sub.before << ")";
+      all_substitutions_used = false;
+    }
+  }
+  return all_substitutions_used;
 }
 
 VarsDictionary CreateServiceVars(

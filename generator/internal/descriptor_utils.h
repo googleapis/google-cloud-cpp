@@ -94,6 +94,12 @@ std::string FormatMethodCommentsMethodSignature(
 std::string FormatMethodCommentsProtobufRequest(
     google::protobuf::MethodDescriptor const& method);
 
+/**
+ * If there were any parameter comment substitutions that went unused, log
+ * errors about them and return false. Otherwise do nothing and return true.
+ */
+bool CheckParameterCommentSubtitutions();
+
 struct HttpSimpleInfo {
   std::string http_verb;
   std::string url_path;

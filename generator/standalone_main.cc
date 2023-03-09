@@ -15,6 +15,7 @@
 #include "generator/generator.h"
 #include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/descriptor_utils.h"
 #include "generator/internal/discovery_to_proto.h"
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -50,6 +51,8 @@ ABSL_FLAG(std::string, scaffold, "",
 ABSL_FLAG(bool, experimental_scaffold, false,
           "Generate experimental library support files.");
 ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
+ABSL_FLAG(bool, check_parameter_comment_substitutions, false,
+          "Check that the built-in parameter comment substitutions applied.");
 
 namespace {
 
@@ -400,6 +403,16 @@ int main(int argc, char** argv) {
       GCP_LOG(ERROR) << result;
       rc = 1;
     }
+  }
+
+  // If we were asked to check the parameter comment substitutions, and some
+  // went unused, emit a fatal error so that we might remove/fix them. The
+  // substitutions should probably be part of the config file (rather than
+  // being built in) so that the check could be unconditional (instead of
+  // flag-based).
+  if (absl::GetFlag(FLAGS_check_parameter_comment_substitutions) &&
+      !google::cloud::generator_internal::CheckParameterCommentSubtitutions()) {
+    GCP_LOG(FATAL) << "Remove unused parameter comment substitution(s)";
   }
 
   return rc;
