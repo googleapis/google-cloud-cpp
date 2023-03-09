@@ -22,7 +22,6 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/log.h"
-#include <crc32c/crc32c.h>
 
 namespace google {
 namespace cloud {
@@ -473,36 +472,6 @@ StatusOr<google::storage::v2::WriteObjectRequest> ToProto(
   resource.set_bucket(GrpcBucketIdToName(request.bucket_name()));
   resource.set_name(request.object_name());
   r.set_write_offset(0);
-
-  auto& checksums = *r.mutable_object_checksums();
-  if (request.HasOption<storage::Crc32cChecksumValue>()) {
-    // The client library accepts CRC32C checksums in the format required by the
-    // REST APIs (base64-encoded big-endian, 32-bit integers). We need to
-    // convert this to the format expected by proto, which is just a 32-bit
-    // integer. But the value received by the application might be incorrect, so
-    // we need to validate it.
-    auto as_proto = storage_internal::Crc32cToProto(
-        request.GetOption<storage::Crc32cChecksumValue>().value());
-    if (!as_proto.ok()) return std::move(as_proto).status();
-    checksums.set_crc32c(*as_proto);
-  } else if (request.GetOption<storage::DisableCrc32cChecksum>().value_or(
-                 false)) {
-    // Nothing to do, the option is disabled (mostly useful in tests).
-  } else {
-    checksums.set_crc32c(
-        crc32c::Crc32c(request.payload().data(), request.payload().size()));
-  }
-
-  if (request.HasOption<storage::MD5HashValue>()) {
-    auto as_proto = storage_internal::MD5ToProto(
-        request.GetOption<storage::MD5HashValue>().value());
-    if (!as_proto.ok()) return std::move(as_proto).status();
-    checksums.set_md5_hash(*std::move(as_proto));
-  } else if (request.GetOption<storage::DisableMD5Hash>().value_or(false)) {
-    // Nothing to do, the option is disabled.
-  } else {
-    checksums.set_md5_hash(storage_internal::ComputeMD5Hash(request.payload()));
-  }
 
   return r;
 }

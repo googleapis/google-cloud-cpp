@@ -546,7 +546,7 @@ TEST(ObjectRequestsTest, UploadChunk) {
       "myBucket/o?uploadType=resumable"
       "&upload_id=xa298sd_sdlkj2";
   auto const payload = std::string(2048, 'A');
-  UploadChunkRequest request(url, 0, {{payload}}, HashValues{});
+  UploadChunkRequest request(url, 0, {{payload}}, CreateNullHashFunction(), HashValues{});
   EXPECT_EQ(url, request.upload_session_url());
   EXPECT_EQ(0, request.offset());
   EXPECT_EQ(2048, request.upload_size().value_or(0));
@@ -564,7 +564,7 @@ TEST(ObjectRequestsTest, UploadChunkRemainingChunk) {
   auto const p1 = std::string(256, '1');
   auto const p2 = std::string(1024, '2');
   auto const base_offset = 123456;
-  auto request = UploadChunkRequest("unused", base_offset, {{p0, p1, p2}});
+  auto request = UploadChunkRequest("unused", base_offset, {{p0, p1, p2}}, CreateNullHashFunction());
   EXPECT_EQ(request.offset(), base_offset);
   EXPECT_THAT(request.payload(), ElementsAre(p0, p1, p2));
   auto remaining = request.RemainingChunk(base_offset + 42);
@@ -577,33 +577,33 @@ TEST(ObjectRequestsTest, UploadChunkRemainingChunk) {
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeNotLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, {ConstBuffer{"1234", 4}});
+  UploadChunkRequest request(url, 1024, {ConstBuffer{"1234", 4}}, CreateNullHashFunction());
   EXPECT_EQ("Content-Range: bytes 1024-1027/*", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 2045, {ConstBuffer{"1234", 4}}, HashValues{});
+  UploadChunkRequest request(url, 2045, {ConstBuffer{"1234", 4}}, CreateNullHashFunction(), HashValues{});
   EXPECT_EQ("Content-Range: bytes 2045-2048/2049", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadNotLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, {});
+  UploadChunkRequest request(url, 1024, {}, CreateNullHashFunction());
   EXPECT_EQ("Content-Range: bytes */*", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 2047, {}, HashValues{});
+  UploadChunkRequest request(url, 2047, {}, CreateNullHashFunction(), HashValues{});
   EXPECT_EQ("Content-Range: bytes */2047", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadEmpty) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest r0(url, 1024, {}, HashValues{});
+  UploadChunkRequest r0(url, 1024, {}, CreateNullHashFunction(), HashValues{});
   EXPECT_EQ("Content-Range: bytes */1024", r0.RangeHeader());
-  UploadChunkRequest r1(url, 1024, {{}, {}, {}}, HashValues{});
+  UploadChunkRequest r1(url, 1024, {{}, {}, {}}, CreateNullHashFunction(), HashValues{});
   EXPECT_EQ("Content-Range: bytes */1024", r1.RangeHeader());
 }
 

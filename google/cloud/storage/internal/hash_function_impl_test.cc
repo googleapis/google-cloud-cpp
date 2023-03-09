@@ -36,8 +36,8 @@ auto constexpr kEmptyStringMD5Hash = "1B2M2Y8AsgTpgAmY7PhCfg==";
 auto constexpr kQuickFoxCrc32cChecksum = "ImIEBA==";
 auto constexpr kQuickFoxMD5Hash = "nhB9nTcrtoJr2B01QqQZ1g==";
 
-void Update(HashFunction& hash, std::string const& buffer) {
-  hash.Update(buffer.data(), buffer.size());
+void Update(HashFunction& hash, absl::string_view buffer) {
+  hash.Update(buffer);
 }
 
 TEST(HasFunctionImplTest, EmptyNull) {

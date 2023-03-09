@@ -81,6 +81,8 @@ add_library(
     internal/compute_engine_util.h
     internal/const_buffer.cc
     internal/const_buffer.h
+    internal/crc32c.cc
+    internal/crc32c.h
     internal/curl_client.cc
     internal/curl_client.h
     internal/curl_download_request.cc
@@ -469,6 +471,7 @@ if (BUILD_TESTING)
         internal/complex_option_test.cc
         internal/compute_engine_util_test.cc
         internal/const_buffer_test.cc
+        internal/crc32c_test.cc
         internal/curl_client_test.cc
         internal/curl_download_request_test.cc
         internal/curl_handle_test.cc

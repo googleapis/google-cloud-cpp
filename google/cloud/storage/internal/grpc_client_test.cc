@@ -36,6 +36,7 @@ using ::google::cloud::storage::BucketMetadata;
 using ::google::cloud::storage::Fields;
 using ::google::cloud::storage::ObjectMetadata;
 using ::google::cloud::storage::QuotaUser;
+using ::google::cloud::storage::internal::CreateNullHashFunction;
 using ::google::cloud::storage::testing::MockInsertStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::ScopedEnvironment;
@@ -185,7 +186,8 @@ TEST_F(GrpcClientTest, UploadChunk) {
   auto client = CreateTestClient(mock);
   auto response = client->UploadChunk(
       storage::internal::UploadChunkRequest(
-          "projects/_/buckets/test-bucket/test-upload-id", 0, {})
+          "projects/_/buckets/test-bucket/test-upload-id", 0, {},
+          CreateNullHashFunction())
           .set_multiple_options(Fields("field1,field2"),
                                 QuotaUser("test-quota-user")));
   EXPECT_EQ(response.status(), PermanentError());

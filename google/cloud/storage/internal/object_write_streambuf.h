@@ -116,7 +116,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::vector<char> current_ios_buffer_;
   std::size_t max_buffer_size_;
 
-  std::unique_ptr<HashFunction> hash_function_;
+  std::shared_ptr<HashFunction> hash_function_;
   HashValues hash_values_;
   HashValues known_hashes_;
   std::unique_ptr<HashValidator> hash_validator_;

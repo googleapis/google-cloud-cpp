@@ -64,6 +64,13 @@ std::unique_ptr<HashFunction> CreateHashFunction(
           !request.GetOption<MD5HashValue>().value_or("").empty());
 }
 
+std::unique_ptr<HashFunction> CreateHashFunction(
+    InsertObjectMediaRequest const& request) {
+  return CreateHashFunction(
+      request.GetOption<DisableCrc32cChecksum>().value_or(false),
+      request.GetOption<DisableMD5Hash>().value_or(false));
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

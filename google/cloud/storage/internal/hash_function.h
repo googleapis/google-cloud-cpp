@@ -17,6 +17,9 @@
 
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status.h"
+#include "absl/strings/cord.h"
+#include "absl/strings/string_view.h"
 #include <memory>
 #include <string>
 
@@ -25,6 +28,11 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+class ReadObjectRangeRequest;
+class ResumableUploadRequest;
+class InsertObjectMediaRequest;
+
 /**
  * Defines the interface to compute hash values during uploads and downloads.
  *
@@ -64,30 +72,33 @@ class HashFunction {
   virtual std::string Name() const = 0;
 
   /// Update the computed hash value with some portion of the data.
-  virtual void Update(char const* buf, std::size_t n) = 0;
+  virtual void Update(absl::string_view buffer) = 0;
+  virtual Status Update(std::int64_t offset, absl::string_view buffer) = 0;
+  virtual Status Update(std::int64_t offset, absl::string_view buffer,
+                      std::uint32_t buffer_crc) = 0;
+  virtual Status Update(std::int64_t offset, absl::Cord const& buffer,
+                      std::uint32_t buffer_crc) = 0;
 
   /**
    * Compute the final hash values.
-   *
-   * We use a `&&` overload as some hash functions (notably MD5) cannot accept
-   * more data once the hash is finalized.
    */
-  virtual HashValues Finish() && = 0;
+  virtual HashValues Finish() = 0;
 };
 
 /// Create a no-op hash function
 std::unique_ptr<HashFunction> CreateNullHashFunction();
 
-class ReadObjectRangeRequest;
-class ResumableUploadRequest;
-
-/// Create a hash validator configured by @p request.
+/// Create a hash function configured by @p request.
 std::unique_ptr<HashFunction> CreateHashFunction(
     ReadObjectRangeRequest const& request);
 
-/// Create a hash validator configured by @p request.
+/// Create a hash function configured by @p request.
 std::unique_ptr<HashFunction> CreateHashFunction(
     ResumableUploadRequest const& request);
+
+/// Create a hash function configured by @p request.
+std::unique_ptr<HashFunction> CreateHashFunction(
+    InsertObjectMediaRequest const& request);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

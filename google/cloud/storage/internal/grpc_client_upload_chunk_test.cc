@@ -30,6 +30,7 @@ namespace {
 
 using ::google::cloud::storage::TransferStallTimeoutOption;
 using ::google::cloud::storage::internal::ConstBuffer;
+using ::google::cloud::storage::internal::CreateNullHashFunction;
 using ::google::cloud::storage::internal::UploadChunkRequest;
 using ::google::cloud::storage::testing::MockInsertStream;
 using ::google::cloud::storage::testing::MockStorageStub;
@@ -73,8 +74,9 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWrite) {
   google::cloud::internal::OptionsSpan const span(
       Options{}.set<TransferStallTimeoutOption>(expected));
   auto const payload = std::string(UploadChunkRequest::kChunkSizeQuantum, 'A');
-  auto response = client->UploadChunk(UploadChunkRequest(
-      "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
+  auto response = client->UploadChunk(
+      UploadChunkRequest("test-only-upload-id", /*offset=*/0,
+                         {ConstBuffer{payload}}, CreateNullHashFunction()));
   EXPECT_THAT(response,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Write()")));
 }
@@ -111,8 +113,9 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutWritesDone) {
       Options{}.set<TransferStallTimeoutOption>(expected));
   auto const payload = std::string(
       kExpectedWriteSize + UploadChunkRequest::kChunkSizeQuantum, 'A');
-  auto response = client->UploadChunk(UploadChunkRequest(
-      "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
+  auto response = client->UploadChunk(
+      UploadChunkRequest("test-only-upload-id", /*offset=*/0,
+                         {ConstBuffer{payload}}, CreateNullHashFunction()));
   EXPECT_THAT(response,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Write()")));
 }
@@ -152,8 +155,9 @@ TEST(GrpcClientUploadChunkTest, StallTimeoutClose) {
       Options{}.set<TransferStallTimeoutOption>(expected));
   auto const payload = std::string(
       kExpectedWriteSize + UploadChunkRequest::kChunkSizeQuantum, 'A');
-  auto response = client->UploadChunk(UploadChunkRequest(
-      "test-only-upload-id", /*offset=*/0, {ConstBuffer{payload}}));
+  auto response = client->UploadChunk(
+      UploadChunkRequest("test-only-upload-id", /*offset=*/0,
+                         {ConstBuffer{payload}}, CreateNullHashFunction()));
   EXPECT_THAT(response,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Close()")));
 }

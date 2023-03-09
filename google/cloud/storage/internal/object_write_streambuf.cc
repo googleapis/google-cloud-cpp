@@ -142,25 +142,26 @@ void ObjectWriteStreambuf::FlushFinal() {
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();
-  hash_function_->Update(pbase(), actual_size);
 
   // After this point the session will be closed, and no more calls to the hash
   // function are possible.
-  auto function = std::move(hash_function_);
-  hash_values_ = std::move(*function).Finish();
   auto upload_request = UploadChunkRequest(upload_id_, committed_size_,
                                            {ConstBuffer(pbase(), actual_size)},
-                                           Merge(known_hashes_, hash_values_));
+                                           hash_function_, known_hashes_);
   request_.ForEachOption(internal::CopyCommonOptions(upload_request));
   OptionsSpan const span(span_options_);
   auto response = client_->UploadChunk(upload_request);
   if (!response) {
     last_status_ = std::move(response).status();
-  } else {
-    committed_size_ = response->committed_size.value_or(0);
-    metadata_ = std::move(response->payload);
-    headers_ = std::move(response->request_metadata);
+    return;
   }
+
+  auto function = std::move(hash_function_);
+  hash_values_ = std::move(*function).Finish();
+
+  committed_size_ = response->committed_size.value_or(0);
+  metadata_ = std::move(response->payload);
+  headers_ = std::move(response->request_metadata);
 
   // Reset the iostream put area with valid pointers, but empty.
   current_ios_buffer_.resize(1);
@@ -193,16 +194,12 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
     if (payload.back().empty()) payload.pop_back();
   }
 
-  for (auto const& b : payload) {
-    hash_function_->Update(b.data(), b.size());
-  }
-
   // GCS upload returns an updated range header that sets the next expected
   // byte. Check to make sure it remains consistent with the bytes stored in the
   // buffer.
   auto const expected_committed_size = committed_size_ + actual_size;
   auto upload_request =
-      UploadChunkRequest(upload_id_, committed_size_, payload);
+      UploadChunkRequest(upload_id_, committed_size_, payload, hash_function_);
   request_.ForEachOption(internal::CopyCommonOptions(upload_request));
   OptionsSpan const span(span_options_);
   auto response = client_->UploadChunk(upload_request);
@@ -212,34 +209,35 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
     // next.  Replace it with a SessionError so next_expected_byte and
     // resumable_session_id can still be retrieved.
     last_status_ = std::move(response).status();
-  } else {
-    // Reset the internal buffer and copy any trailing bytes from `buffers` to
-    // it.
-    auto* pbeg = current_ios_buffer_.data();
-    setp(pbeg, pbeg + current_ios_buffer_.size());
-    PopFrontBytes(buffers, rounded_size);
-    for (auto const& b : buffers) {
-      std::copy(b.begin(), b.end(), pptr());
-      pbump(static_cast<int>(b.size()));
-    }
+    return;
+  }
 
-    metadata_ = std::move(response->payload);
-    committed_size_ = response->committed_size.value_or(0);
+  // Reset the internal buffer and copy any trailing bytes from `buffers` to
+  // it.
+  auto* pbeg = current_ios_buffer_.data();
+  setp(pbeg, pbeg + current_ios_buffer_.size());
+  PopFrontBytes(buffers, rounded_size);
+  for (auto const& b : buffers) {
+    std::copy(b.begin(), b.end(), pptr());
+    pbump(static_cast<int>(b.size()));
+  }
 
-    // If the upload completed, the stream was implicitly "closed". There is
-    // no need to verify anything else.
-    if (metadata_.has_value()) {
-      committed_size_ = expected_committed_size;
-      return;
-    }
+  metadata_ = std::move(response->payload);
+  committed_size_ = response->committed_size.value_or(0);
 
-    if (committed_size_ != expected_committed_size) {
-      std::ostringstream error_message;
-      error_message << "Could not continue upload stream. GCS reports "
-                    << committed_size_ << " as committed, but we expected "
-                    << expected_committed_size;
-      last_status_ = Status(StatusCode::kAborted, error_message.str());
-    }
+  // If the upload completed, the stream was implicitly "closed". There is
+  // no need to verify anything else.
+  if (metadata_.has_value()) {
+    committed_size_ = expected_committed_size;
+    return;
+  }
+
+  if (committed_size_ != expected_committed_size) {
+    std::ostringstream error_message;
+    error_message << "Could not continue upload stream. GCS reports "
+                  << committed_size_ << " as committed, but we expected "
+                  << expected_committed_size;
+    last_status_ = Status(StatusCode::kAborted, error_message.str());
   }
 }
 

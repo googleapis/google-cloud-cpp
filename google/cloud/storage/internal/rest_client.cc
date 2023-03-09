@@ -715,6 +715,11 @@ StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
   // default (at least in this case), and that wastes bandwidth as the content
   // length is known.
   builder.AddHeader("Transfer-Encoding", {});
+  auto offset = request.offset();
+  for (auto const& b : request.payload()) {
+    request.hash_function().Update(offset, absl::string_view{b.data(), b.size()});
+    offset += b.size();
+  }
 
   auto failure_predicate = [](rest::HttpStatusCode code) {
     return (code != rest::HttpStatusCode::kResumeIncomplete &&

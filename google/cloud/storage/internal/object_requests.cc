@@ -161,6 +161,17 @@ std::ostream& operator<<(std::ostream& os, GetObjectMetadataRequest const& r) {
   return os << "}";
 }
 
+InsertObjectMediaRequest::InsertObjectMediaRequest(std::string bucket_name,
+                                                   std::string object_name,
+                                                   absl::string_view payload)
+    : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
+      payload_(payload),
+      hash_function_(CreateNullHashFunction()) {}
+
+void InsertObjectMediaRequest::reset_hash_function() {
+  hash_function_ = CreateHashFunction(*this);
+}
+
 void InsertObjectMediaRequest::set_payload(absl::string_view payload) {
   payload_ = payload;
   dirty_ = true;
@@ -426,6 +437,25 @@ std::ostream& operator<<(std::ostream& os,
             << "}";
 }
 
+UploadChunkRequest::UploadChunkRequest(
+    std::string upload_session_url, std::uint64_t offset,
+    ConstBufferSequence payload, std::shared_ptr<HashFunction> hash_function)
+    : upload_session_url_(std::move(upload_session_url)),
+      offset_(offset),
+      payload_(std::move(payload)),
+      hash_function_(std::move(hash_function)) {}
+
+UploadChunkRequest::UploadChunkRequest(
+    std::string upload_session_url, std::uint64_t offset,
+    ConstBufferSequence payload, std::shared_ptr<HashFunction> hash_function,
+    HashValues known_hashes)
+    : upload_session_url_(std::move(upload_session_url)),
+      offset_(offset),
+      upload_size_(offset + TotalBytes(payload)),
+      payload_(std::move(payload)),
+      hash_function_(std::move(hash_function)),
+      known_object_hashes_(std::move(known_hashes)) {}
+
 std::string UploadChunkRequest::RangeHeaderValue() const {
   std::ostringstream os;
   os << "bytes ";
@@ -471,7 +501,7 @@ UploadChunkRequest UploadChunkRequest::RemainingChunk(
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
   os << "UploadChunkRequest={upload_session_url=" << r.upload_session_url()
      << ", range=<" << r.RangeHeader() << ">"
-     << ", full_object_hashes={" << Format(r.full_object_hashes()) << "}";
+     << ", known_object_hashes={" << Format(r.known_object_hashes()) << "}";
   r.DumpOptions(os, ", ");
   os << ", payload={";
   auto constexpr kMaxOutputBytes = 128;
