@@ -338,13 +338,14 @@ int main(int argc, char** argv) {
   if (!log_level || *log_level > google::cloud::Severity::GCP_LS_NOTICE) {
     log_level = google::cloud::Severity::GCP_LS_NOTICE;
   }
+  // A default backend is already in place, so we must remove it first.
   google::cloud::LogSink::DisableStdClog();
   google::cloud::LogSink::EnableStdClog(*log_level);
   if (*log_level <
       google::cloud::Severity::GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED) {
     GCP_LOG(WARNING)
         << "Log level " << *log_level
-        << " is less that the minimum enabled level of "
+        << " is less than the minimum enabled level of "
         << google::cloud::Severity::
                GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED
         << "; you'll need to recompile everything for that to work";
