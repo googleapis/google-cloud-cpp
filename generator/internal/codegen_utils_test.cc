@@ -417,12 +417,16 @@ auto constexpr kContainsMarkdownBulletedLongUrlComment =
     "addresses) For more information, see Reserving a static external IP "
     "address.";
 
+using FormatCommentBlockDeathTest = FormatCommentBlockTest;
+
+TEST_F(FormatCommentBlockDeathTest, LineLengthSmallerThanCommentIntro) {
+  EXPECT_DEATH(FormatCommentBlock(kShortComment, 0, "", 0, 0), "");
+}
+
 INSTANTIATE_TEST_SUITE_P(
     CommentBlockFormattedCorrectly, FormatCommentBlockTest,
     Values(
         FormatCommentBlockTestParams{"", 0, "", 0, 0, R"""(
-)"""},
-        FormatCommentBlockTestParams{kShortComment, 0, "", 0, 0, R"""(
 )"""},
         FormatCommentBlockTestParams{kSingleWordComment, 0, "", 0, 1, R"""(
 brief)"""},

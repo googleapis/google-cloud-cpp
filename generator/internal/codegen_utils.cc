@@ -320,7 +320,7 @@ std::string FormatCommentBlock(std::string const& comment,
   if (comment.empty()) return {};
   auto offset = indent_level * indent_width + comment_introducer.length() +
                 (comment_introducer.empty() ? 0 : 1);
-  if (offset >= line_length) return {};
+  if (offset >= line_length) GCP_LOG(FATAL) << "line_length is too small";
   auto comment_width = line_length - offset;
 
   std::vector<std::string> lines;
