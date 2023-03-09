@@ -411,7 +411,8 @@ int main(int argc, char** argv) {
   // being built in) so that the check could be unconditional (instead of
   // flag-based).
   if (absl::GetFlag(FLAGS_check_parameter_comment_substitutions) &&
-      !google::cloud::generator_internal::CheckParameterCommentSubtitutions()) {
+      !google::cloud::generator_internal::
+          CheckParameterCommentSubstitutions()) {
     GCP_LOG(FATAL) << "Remove unused parameter comment substitution(s)";
   }
 

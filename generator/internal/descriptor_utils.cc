@@ -472,7 +472,7 @@ std::string EscapePrinterDelimiter(std::string const& text) {
 // Apply substitutions to the comments snarfed from the proto file for
 // method_signature parameters. This is mostly for the benefit of Doxygen,
 // but is also to fix mismatched quotes, etc.
-struct ParameterCommentSubtitution {
+struct ParameterCommentSubstitution {
   absl::string_view before;
   absl::string_view after;
   std::size_t uses = 0;
@@ -604,7 +604,7 @@ auto constexpr kDialogflowESSessionEntityTypeDisplayNameCpp = R"""(
  projects/<Project ID>/agent/environments/<Environment ID>/users/<User ID>/sessions/<Session ID>/entityTypes/<Entity Type Display Name>
  @endcode)""";
 
-ParameterCommentSubtitution substitutions[] = {
+ParameterCommentSubstitution substitutions[] = {
     // From dialogflow/cx/v3.
     {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
     {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
@@ -839,7 +839,7 @@ std::string FormatMethodCommentsProtobufRequest(
   return FormatMethodComments(method, std::move(parameter_comment));
 }
 
-bool CheckParameterCommentSubtitutions() {
+bool CheckParameterCommentSubstitutions() {
   bool all_substitutions_used = true;
   for (auto& sub : substitutions) {
     if (sub.uses == 0) {

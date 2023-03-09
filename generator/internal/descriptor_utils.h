@@ -98,7 +98,7 @@ std::string FormatMethodCommentsProtobufRequest(
  * If there were any parameter comment substitutions that went unused, log
  * errors about them and return false. Otherwise do nothing and return true.
  */
-bool CheckParameterCommentSubtitutions();
+bool CheckParameterCommentSubstitutions();
 
 struct HttpSimpleInfo {
   std::string http_verb;
