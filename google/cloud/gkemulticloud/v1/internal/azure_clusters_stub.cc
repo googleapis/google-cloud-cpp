@@ -35,7 +35,10 @@ DefaultAzureClustersStub::AsyncCreateAzureClient(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
                  request,
@@ -75,7 +78,10 @@ DefaultAzureClustersStub::AsyncDeleteAzureClient(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
                  request,
@@ -91,7 +97,10 @@ DefaultAzureClustersStub::AsyncCreateAzureCluster(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
                  request,
@@ -107,7 +116,10 @@ DefaultAzureClustersStub::AsyncUpdateAzureCluster(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
                  request,
@@ -149,7 +161,10 @@ DefaultAzureClustersStub::AsyncDeleteAzureCluster(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
                  request,
@@ -179,7 +194,10 @@ DefaultAzureClustersStub::AsyncCreateAzureNodePool(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
                  request,
@@ -195,7 +213,10 @@ DefaultAzureClustersStub::AsyncUpdateAzureNodePool(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
                  request,
@@ -238,7 +259,10 @@ DefaultAzureClustersStub::AsyncDeleteAzureNodePool(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
                  request,
@@ -267,7 +291,9 @@ DefaultAzureClustersStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -280,14 +306,15 @@ future<Status> DefaultAzureClustersStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq
-      .MakeUnaryRpc(
-          [this](grpc::ClientContext* context,
-                 google::longrunning::CancelOperationRequest const& request,
-                 grpc::CompletionQueue* cq) {
-            return operations_->AsyncCancelOperation(context, request, cq);
-          },
-          request, std::move(context))
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

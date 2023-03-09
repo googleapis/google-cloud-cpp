@@ -58,7 +58,9 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gsai::v1::CreateInstanceRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<gsai::v1::CreateInstanceRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                gsai::v1::CreateInstanceRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -70,7 +72,9 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       gsai::v1::UpdateInstanceRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<gsai::v1::UpdateInstanceRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                gsai::v1::UpdateInstanceRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -163,7 +167,9 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override {
-    return cq.MakeUnaryRpc(
+    return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                      google::longrunning::Operation>(
+        cq,
         [this](grpc::ClientContext* context,
                google::longrunning::GetOperationRequest const& request,
                grpc::CompletionQueue* cq) {
@@ -175,14 +181,17 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
   future<Status> AsyncCancelOperation(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override {
-    return cq
-        .MakeUnaryRpc(
-            [this](grpc::ClientContext* context,
+    return internal::MakeUnaryRpcImpl<
+               google::longrunning::CancelOperationRequest,
+               google::protobuf::Empty>(
+               cq,
+               [this](
+                   grpc::ClientContext* context,
                    google::longrunning::CancelOperationRequest const& request,
                    grpc::CompletionQueue* cq) {
-              return operations_->AsyncCancelOperation(context, request, cq);
-            },
-            request, std::move(context))
+                 return operations_->AsyncCancelOperation(context, request, cq);
+               },
+               request, std::move(context))
         .then([](future<StatusOr<google::protobuf::Empty>> f) {
           return f.get().status();
         });

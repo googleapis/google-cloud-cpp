@@ -148,14 +148,17 @@ future<Status> DefaultMetricServiceStub::AsyncCreateTimeSeries(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  return cq
-      .MakeUnaryRpc(
-          [this](grpc::ClientContext* context,
+  return internal::MakeUnaryRpcImpl<
+             google::monitoring::v3::CreateTimeSeriesRequest,
+             google::protobuf::Empty>(
+             cq,
+             [this](
+                 grpc::ClientContext* context,
                  google::monitoring::v3::CreateTimeSeriesRequest const& request,
                  grpc::CompletionQueue* cq) {
-            return grpc_stub_->AsyncCreateTimeSeries(context, request, cq);
-          },
-          request, std::move(context))
+               return grpc_stub_->AsyncCreateTimeSeries(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

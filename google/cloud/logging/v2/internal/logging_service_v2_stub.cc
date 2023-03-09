@@ -112,7 +112,10 @@ DefaultLoggingServiceV2Stub::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::logging::v2::WriteLogEntriesRequest,
+      google::logging::v2::WriteLogEntriesResponse>(
+      cq,
       [this](grpc::ClientContext* context,
              google::logging::v2::WriteLogEntriesRequest const& request,
              grpc::CompletionQueue* cq) {

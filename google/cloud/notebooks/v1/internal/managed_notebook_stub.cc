@@ -59,7 +59,10 @@ DefaultManagedNotebookServiceStub::AsyncCreateRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::CreateRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::CreateRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -73,7 +76,10 @@ DefaultManagedNotebookServiceStub::AsyncUpdateRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::UpdateRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::UpdateRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -87,7 +93,10 @@ DefaultManagedNotebookServiceStub::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::DeleteRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::DeleteRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -101,7 +110,10 @@ DefaultManagedNotebookServiceStub::AsyncStartRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::StartRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::StartRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -115,7 +127,10 @@ DefaultManagedNotebookServiceStub::AsyncStopRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::StopRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::StopRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -129,7 +144,10 @@ DefaultManagedNotebookServiceStub::AsyncSwitchRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::SwitchRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::SwitchRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -143,7 +161,10 @@ DefaultManagedNotebookServiceStub::AsyncResetRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::ResetRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::ResetRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -157,7 +178,10 @@ DefaultManagedNotebookServiceStub::AsyncUpgradeRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -171,7 +195,10 @@ DefaultManagedNotebookServiceStub::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::ReportRuntimeEventRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
                  request,
@@ -200,7 +227,10 @@ DefaultManagedNotebookServiceStub::AsyncDiagnoseRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](
           grpc::ClientContext* context,
           google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request,
@@ -215,7 +245,9 @@ DefaultManagedNotebookServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -228,14 +260,15 @@ future<Status> DefaultManagedNotebookServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq
-      .MakeUnaryRpc(
-          [this](grpc::ClientContext* context,
-                 google::longrunning::CancelOperationRequest const& request,
-                 grpc::CompletionQueue* cq) {
-            return operations_->AsyncCancelOperation(context, request, cq);
-          },
-          request, std::move(context))
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });

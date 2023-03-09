@@ -61,7 +61,10 @@ DefaultVmwareEngineStub::AsyncCreatePrivateCloud(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::CreatePrivateCloudRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&
                  request,
@@ -76,7 +79,10 @@ DefaultVmwareEngineStub::AsyncUpdatePrivateCloud(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
                  request,
@@ -91,7 +97,10 @@ DefaultVmwareEngineStub::AsyncDeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::DeletePrivateCloudRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&
                  request,
@@ -107,7 +116,10 @@ DefaultVmwareEngineStub::AsyncUndeletePrivateCloud(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
                  request,
@@ -146,7 +158,10 @@ DefaultVmwareEngineStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::CreateClusterRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](
           grpc::ClientContext* context,
           google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
@@ -161,7 +176,10 @@ DefaultVmwareEngineStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::UpdateClusterRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](
           grpc::ClientContext* context,
           google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
@@ -176,7 +194,10 @@ DefaultVmwareEngineStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::DeleteClusterRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](
           grpc::ClientContext* context,
           google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
@@ -255,7 +276,10 @@ DefaultVmwareEngineStub::AsyncResetNsxCredentials(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
                  request,
@@ -271,7 +295,10 @@ DefaultVmwareEngineStub::AsyncResetVcenterCredentials(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](
           grpc::ClientContext* context,
           google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
@@ -288,7 +315,10 @@ DefaultVmwareEngineStub::AsyncCreateHcxActivationKey(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](
           grpc::ClientContext* context,
           google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
@@ -360,7 +390,10 @@ DefaultVmwareEngineStub::AsyncCreateNetworkPolicy(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
                  request,
@@ -376,7 +409,10 @@ DefaultVmwareEngineStub::AsyncUpdateNetworkPolicy(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
                  request,
@@ -392,7 +428,10 @@ DefaultVmwareEngineStub::AsyncDeleteNetworkPolicy(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
                  request,
@@ -408,7 +447,10 @@ DefaultVmwareEngineStub::AsyncCreateVmwareEngineNetwork(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::
                  CreateVmwareEngineNetworkRequest const& request,
@@ -424,7 +466,10 @@ DefaultVmwareEngineStub::AsyncUpdateVmwareEngineNetwork(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::
                  UpdateVmwareEngineNetworkRequest const& request,
@@ -440,7 +485,10 @@ DefaultVmwareEngineStub::AsyncDeleteVmwareEngineNetwork(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest,
+      google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::cloud::vmwareengine::v1::
                  DeleteVmwareEngineNetworkRequest const& request,
@@ -483,7 +531,9 @@ DefaultVmwareEngineStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return cq.MakeUnaryRpc(
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
       [this](grpc::ClientContext* context,
              google::longrunning::GetOperationRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -496,14 +546,15 @@ future<Status> DefaultVmwareEngineStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return cq
-      .MakeUnaryRpc(
-          [this](grpc::ClientContext* context,
-                 google::longrunning::CancelOperationRequest const& request,
-                 grpc::CompletionQueue* cq) {
-            return operations_->AsyncCancelOperation(context, request, cq);
-          },
-          request, std::move(context))
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
       .then([](future<StatusOr<google::protobuf::Empty>> f) {
         return f.get().status();
       });
