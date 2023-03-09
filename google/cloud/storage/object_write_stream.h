@@ -35,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * - This API is designed for applications that need to stream the object
  *   payload. If you have the payload as one large buffer consider using
- *   `Client::InsertObject()`, it is simpler and faster in most cases.
+ *   `Client::InsertObject()`; it is simpler and faster in most cases.
  * - This API can be used to perform unformatted I/O, as well as formatted I/O
  *   using the familiar `operator<<` APIs.
  * - Note that formatted I/O typically implies some form of buffering and data
@@ -50,7 +50,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   - Understanding how this buffer is used is important to get the best
  *     possible performance.
  *   - When using unformatted I/O, try to size your data in multiples of the
- *     upload quantum, this often results in better performance.
+ *     upload quantum, as this often results in better performance.
  *
  * The maximum size of this internal buffer is configured using
  * `UploadBufferSizeOption`. As with all options, this can be set when the
@@ -58,16 +58,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * default value can change. If the size of this buffer is important for your
  * application please set the value explicitly. You can also provide an override
  * when calling `Client::WriteObject()`. Note that this setting is expressed in
- * bytes, but it is always rounded (up) to an upload quantum.
+ * bytes, but it is always rounded (up) to a multiple of the upload quantum.
  *
  * #### Unformatted I/O
  *
- * On a `.write()` call this class attempts to send the data immediately,
- * that is, without copying it to the internal buffer. If any previously
- * buffered data and the data provided in the `.write()` call are larger than
- * the maximum size of the internal buffer then the largest amount of data
- * that is a multiple of the upload quantum is flushed. Any data in excess of a
- * multiple of the upload quantum are buffered for the next upload.
+ * On a `.write()` call this class attempts to send the data immediately. That
+ * is, without copying it to the internal buffer. If any previously buffered
+ * data and the data provided in the `.write()` call are larger than the maximum
+ * size of the internal buffer then the largest amount of data that is a
+ * multiple of the upload quantum is flushed. Any data in excess of a multiple
+ * of the upload quantum are buffered for the next upload.
  *
  * These examples may clarify how this works:
  *   -# Consider a fresh `ObjectWriteStream`, configured to buffer at most
