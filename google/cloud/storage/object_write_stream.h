@@ -33,63 +33,91 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * This class is used to upload objects to GCS. It can handle objects of any
  * size, but keep the following considerations in mind:
  *
- * * This API is designed for applications that need to stream the object
+ * - This API is designed for applications that need to stream the object
  *   payload. If you have the payload as one large buffer consider using
- *   `storage::Client::InsertObject()`, it is simpler and faster in most cases.
- * * This API can be used to perform unformatted I/O, as well as formatted I/O
- *   using the familiar `operator<<` APIs. Note that formatted I/O typically
- *   implies some form of buffering and data copying. For best performance,
- *   consider using the [.write()][cpp-reference-write] member function.
- * * GCS expects to receive data in multiples of the *upload quantum* (256KiB).
+ *   `Client::InsertObject()`; it is simpler and faster in most cases.
+ * - This API can be used to perform unformatted I/O, as well as formatted I/O
+ *   using the familiar `operator<<` APIs.
+ * - Note that formatted I/O typically implies some form of buffering and data
+ *   copying.
+ *   - For best performance, consider using the [.write()][cpp-reference-write]
+ *     member function.
+ * - GCS expects to receive data in multiples of the *upload quantum* (256KiB).
  *   Sending a buffer that is not a multiple of this quantum terminates the
- *   upload. This constraints the implementation of buffered and unbuffered I/O
- *   as described below.
+ *   upload.
+ *   - Consequently, this class must maintain an internal buffer before sending
+ *     the data to the service.
+ *   - Understanding how this buffer is used is important to get the best
+ *     possible performance.
+ *   - When using unformatted I/O, try to size your data in multiples of the
+ *     upload quantum, as this often results in better performance.
  *
- * @par Unformatted I/O
- * On a `.write()` call this class attempts to send the data immediately, this
- * this the unbuffered API after all. If any previously buffered data and the
- * data provided in the `.write()` call are larger than an upload quantum the
- * class sends data immediately. Any data in excess of a multiple of the upload
- * quantum are buffered for the next upload.
+ * The maximum size of this internal buffer is configured using
+ * `UploadBufferSizeOption`. As with all options, this can be set when the
+ * @ref Client object is created. The current default value is 8 MiB, but this
+ * default value can change. If the size of this buffer is important for your
+ * application please set the value explicitly. You can also provide an override
+ * when calling `Client::WriteObject()`. Note that this setting is expressed in
+ * bytes, but it is always rounded (up) to a multiple of the upload quantum.
+ *
+ * #### Unformatted I/O
+ *
+ * On a `.write()` call this class attempts to send the data immediately. That
+ * is, without copying it to the internal buffer. If any previously buffered
+ * data and the data provided in the `.write()` call are larger than the maximum
+ * size of the internal buffer then the largest amount of data that is a
+ * multiple of the upload quantum is flushed. Any data in excess of a multiple
+ * of the upload quantum are buffered for the next upload.
  *
  * These examples may clarify how this works:
- *   -# Consider a fresh `ObjectWriteStream` that receives a `.write()` call
- *      with 257 KiB of data. The first 256 KiB are immediately sent and the
- *      remaining 1 KiB is buffered for a future upload.
- *   -# If the same stream receives another `.write()` call with 256 KiB then it
- *      will send the buffered 1 KiB of data and the first 255 KiB from the new
- *      buffer. The last 1 KiB is buffered for a future upload.
- *   -# Consider a fresh `ObjectWriteStream` that receives a `.write()` call
- *      with 4 MiB of data. This data is sent immediately, and no data is
- *      buffered.
- *   -# Consider a stream with a 256 KiB buffer from previous buffered I/O (see
- *      below to understand how this might happen). If this stream receives a
- *      `.write()` call with 1024 KiB then both the 256 KiB and the 1024 KiB of
- *      data are uploaded immediately.
+ *   -# Consider a fresh `ObjectWriteStream`, configured to buffer at most
+ *      256KiB. Assume this stream receives a `.write()` call with 257 KiB of
+ *      data. The first 256 KiB are immediately sent and the remaining 1 KiB is
+ *      buffered for a future upload.
+ *      - If the same stream receives another `.write()` call with 256 KiB then
+ *        it will send the buffered 1 KiB of data and the first 255 KiB from the
+ *        new buffer. The last 1 KiB is buffered for a future upload.
+ *   -# Consider a fresh `ObjectWriteStream`, configured to buffer at most
+ *      256KiB. If this stream receives a `.write()` call with 4 MiB of data the
+ *      data is sent immediately. No data is buffered, as the data size is a
+ *      multiple of the upload quantum.
+ *   -# Consider a stream configured to buffer 512 KiB before flushing.
+ *      Assume this stream has 256 KiB of data in its buffer from previous
+ *      buffered I/O. If this stream receives a `.write()` call with 1024 KiB
+ *      then both the 256 KiB and the 1024 KiB of data are flushed.
  *
- * @par Formatted I/O
+ * #### Formatted I/O
+ *
  * When performing formatted I/O, typically used via `operator<<`, this class
- * will buffer data based on the`ClientOptions::upload_buffer_size()` setting.
- * Note that this setting is expressed in bytes, but it is always rounded (up)
- * to an upload quantum.
+ * will buffer data based on the @ref UploadBufferSizeOption setting.
  *
- * @par Recommendations
+ * #### Recommendations
+ *
  * For best performance uploading data we recommend using *exclusively* the
  * unbuffered I/O API. Furthermore, we recommend that applications use data in
  * multiples of the upload quantum in all calls to `.write()`. Larger buffers
- * result in better performance. Note that our
- * [empirical results][github-issue-2657] show that these improvements tapper
- * off around 32MiB or so.
+ * result in better performance. Our [empirical results][github-issue-2657] show
+ * that these improvements tapper off around 32MiB or so.
  *
- * @par Suspending Uploads
- * Note that, as it is customary in C++, the destructor of this class finalizes
- * the upload. If you want to prevent the class from finalizing an upload, use
- * the `Suspend()` function.
+ * If you are planning to use unbuffered I/O, and you are already planning to
+ * provide large buffers in the `.write()` calls, then there is no need to
+ * configure a large value for `UploadBufferSizeOption`. As described above,
+ * calling `.write()` with more data than the `UploadBufferSizeOption`
+ * immediately flushes the data and only leaves any non-multiple of 256 KiB in
+ * the internal buffer.
  *
- * @par Example: starting a resumable upload.
+ * #### Suspending Uploads
+ *
+ * As it is customary in C++, the destructor of this class finalizes the upload.
+ * If you want to prevent the class from finalizing an upload, use the
+ * `Suspend()` function.
+ *
+ * #### Examples
+ *
+ * @par Starting a resumable upload.
  * @snippet storage_object_resumable_write_samples.cc start resumable upload
  *
- * @par Example: resuming a resumable upload.
+ * @par Resuming a resumable upload.
  * @snippet storage_object_resumable_write_samples.cc resume resumable upload
  *
  * [cpp-reference-put]: https://en.cppreference.com/w/cpp/io/basic_ostream/put
