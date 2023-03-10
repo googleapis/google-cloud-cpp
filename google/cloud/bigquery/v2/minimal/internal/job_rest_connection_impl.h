@@ -20,7 +20,6 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_options.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_retry_policy.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -36,9 +35,8 @@ class BigQueryJobRestConnectionImpl : public BigQueryJobConnection {
  public:
   ~BigQueryJobRestConnectionImpl() override = default;
 
-  BigQueryJobRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<BigQueryJobRestStub> stub, Options options);
+  BigQueryJobRestConnectionImpl(std::shared_ptr<BigQueryJobRestStub> stub,
+                                Options options);
 
   Options options() override { return options_; }
 
@@ -69,7 +67,6 @@ class BigQueryJobRestConnectionImpl : public BigQueryJobConnection {
     return options_.get<BigQueryJobIdempotencyPolicyOption>()->clone();
   }
 
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<BigQueryJobRestStub> stub_;
   Options options_;
 };

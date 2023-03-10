@@ -23,10 +23,8 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 BigQueryJobRestConnectionImpl::BigQueryJobRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<BigQueryJobRestStub> stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
+    : stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
                                       BigQueryJobConnection::options())) {}
 

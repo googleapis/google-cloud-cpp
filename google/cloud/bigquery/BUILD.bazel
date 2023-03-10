@@ -111,7 +111,6 @@ cc_library(
         "//:common",
         "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
-        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
     ],
 )
 
