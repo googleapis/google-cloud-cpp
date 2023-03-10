@@ -318,8 +318,7 @@ std::string FormatCommentBlock(std::string const& comment,
                                std::size_t indent_width,
                                std::size_t line_length) {
   if (comment.empty()) return {};
-  auto offset = indent_level * indent_width + comment_introducer.length() +
-                (comment_introducer.empty() ? 0 : 1);
+  auto offset = indent_level * indent_width + comment_introducer.length();
   if (offset >= line_length) GCP_LOG(FATAL) << "line_length is too small";
   auto comment_width = line_length - offset;
 
@@ -354,11 +353,8 @@ std::string FormatCommentBlock(std::string const& comment,
   }
 
   std::string indent(indent_level * indent_width, ' ');
-  std::string joiner = absl::StrCat("\n", indent, comment_introducer,
-                                    (comment_introducer.empty() ? "" : " "));
-  return absl::StrCat(indent, comment_introducer,
-                      (comment_introducer.empty() ? "" : " "),
-                      absl::StrJoin(lines, joiner));
+  std::string joiner = absl::StrCat("\n", indent, comment_introducer);
+  return absl::StrCat(indent, comment_introducer, absl::StrJoin(lines, joiner));
 }
 
 std::string FormatCommentKeyValueList(

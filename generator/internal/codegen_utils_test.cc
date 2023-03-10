@@ -432,39 +432,39 @@ INSTANTIATE_TEST_SUITE_P(
 brief)"""},
         FormatCommentBlockTestParams{kSingleWordComment, 0, "", 0, 80, R"""(
 brief)"""},
-        FormatCommentBlockTestParams{kLongSingleWordComment, 0, "//", 2, 40,
+        FormatCommentBlockTestParams{kLongSingleWordComment, 0, "// ", 2, 40,
                                      R"""(
 // supercalifragilisticexpialidocious)"""},
         FormatCommentBlockTestParams{
             absl::StrCat(kLongSingleWordComment, " w", kLongSingleWordComment),
-            0, "//", 2, 30, R"""(
+            0, "// ", 2, 30, R"""(
 // supercalifragilisticexpialidocious
 // wsupercalifragilisticexpialidocious)"""},
-        FormatCommentBlockTestParams{kSingleWordComment, 0, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{kSingleWordComment, 0, "// ", 2, 80, R"""(
 // brief)"""},
-        FormatCommentBlockTestParams{kShortComment, 0, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{kShortComment, 0, "// ", 2, 80, R"""(
 // This is a comment.)"""},
-        FormatCommentBlockTestParams{kShortComment, 1, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{kShortComment, 1, "// ", 2, 80, R"""(
   // This is a comment.)"""},
-        FormatCommentBlockTestParams{kShortComment, 2, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{kShortComment, 2, "// ", 2, 80, R"""(
     // This is a comment.)"""},
-        FormatCommentBlockTestParams{k77CharComment, 0, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 0, "// ", 2, 80, R"""(
 // The comment is not less than, not greater than, but is exactly 77 characters.)"""},
-        FormatCommentBlockTestParams{k77CharComment, 1, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 1, "// ", 2, 80, R"""(
   // The comment is not less than, not greater than, but is exactly 77
   // characters.)"""},
-        FormatCommentBlockTestParams{k77CharComment, 2, "//", 2, 80, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 2, "// ", 2, 80, R"""(
     // The comment is not less than, not greater than, but is exactly 77
     // characters.)"""},
-        FormatCommentBlockTestParams{k77CharComment, 0, "#", 4, 40, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 0, "# ", 4, 40, R"""(
 # The comment is not less than, not
 # greater than, but is exactly 77
 # characters.)"""},
-        FormatCommentBlockTestParams{k77CharComment, 1, "#", 4, 40, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 1, "# ", 4, 40, R"""(
     # The comment is not less than, not
     # greater than, but is exactly 77
     # characters.)"""},
-        FormatCommentBlockTestParams{k77CharComment, 2, "#", 4, 40, R"""(
+        FormatCommentBlockTestParams{k77CharComment, 2, "# ", 4, 40, R"""(
         # The comment is not less than,
         # not greater than, but is
         # exactly 77 characters.)"""},
@@ -477,7 +477,7 @@ foo
 wordthatiswaytoolong)"""},
         // TODO(#11019): Improve formatting of comments containing markdown.
         FormatCommentBlockTestParams{kContainsMarkdownBulletedLongUrlComment, 0,
-                                     "//", 2, 80, R"""(
+                                     "// ", 2, 80, R"""(
 // Represents an IP Address resource. Google Compute Engine has two IP Address
 // resources: * [Global (external and
 // internal)](https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses)
@@ -513,17 +513,17 @@ INSTANTIATE_TEST_SUITE_P(
         FormatCommentKeyValueListTestParams{{}, 0, "", "", 0, 0, R"""(
 )"""},
         FormatCommentKeyValueListTestParams{
-            {std::make_pair("key", "value")}, 0, ":", "//", 2, 80, R"""(
+            {std::make_pair("key", "value")}, 0, ":", "// ", 2, 80, R"""(
 // key: value)"""},
         FormatCommentKeyValueListTestParams{
-            {std::make_pair("key", k77CharComment)}, 1, ":", "//", 2, 80, R"""(
+            {std::make_pair("key", k77CharComment)}, 1, ":", "// ", 2, 80, R"""(
   // key: The comment is not less than, not greater than, but is exactly 77
   // characters.)"""},
         FormatCommentKeyValueListTestParams{
             {std::make_pair(k77CharComment, k77CharComment)},
             2,
             ":",
-            "//",
+            "// ",
             2,
             80,
             R"""(

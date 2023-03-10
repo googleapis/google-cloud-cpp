@@ -127,7 +127,7 @@ std::string CapitalizeFirstLetter(std::string str);
 // Creates a formatted comment block from the provided string.
 std::string FormatCommentBlock(std::string const& comment,
                                std::size_t indent_level,
-                               std::string const& comment_introducer = "//",
+                               std::string const& comment_introducer = "// ",
                                std::size_t indent_width = 2,
                                std::size_t line_length = 80);
 
@@ -135,7 +135,7 @@ std::string FormatCommentBlock(std::string const& comment,
 std::string FormatCommentKeyValueList(
     std::vector<std::pair<std::string, std::string>> const& comment,
     std::size_t indent_level, std::string const& separator = ":",
-    std::string const& comment_introducer = "//", std::size_t indent_width = 2,
+    std::string const& comment_introducer = "// ", std::size_t indent_width = 2,
     std::size_t line_length = 80);
 
 }  // namespace generator_internal
