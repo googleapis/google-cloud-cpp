@@ -63,7 +63,7 @@ AsyncConnectionImpl::AsyncReadObjectRange(
   }
 
   auto context_factory = [request = std::move(request)]() {
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_shared<grpc::ClientContext>();
     ApplyQueryParameters(*context, request);
     return context;
   };

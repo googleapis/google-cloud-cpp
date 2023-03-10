@@ -200,7 +200,7 @@ class AsyncAccumulateReadObjectFullHandle
  public:
   AsyncAccumulateReadObjectFullHandle(
       CompletionQueue cq, std::shared_ptr<StorageStub> stub,
-      std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
+      std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
       google::storage::v2::ReadObjectRequest request, Options const& options)
       : cq_(std::move(cq)),
         stub_(std::move(stub)),
@@ -294,7 +294,7 @@ class AsyncAccumulateReadObjectFullHandle
   AsyncAccumulateReadObjectResult accumulator_;
   CompletionQueue cq_;
   std::shared_ptr<StorageStub> stub_;
-  std::function<std::unique_ptr<grpc::ClientContext>()> context_factory_;
+  std::function<std::shared_ptr<grpc::ClientContext>()> context_factory_;
   google::storage::v2::ReadObjectRequest request_;
   std::chrono::milliseconds timeout_;
   std::unique_ptr<storage::RetryPolicy> retry_;
@@ -316,7 +316,7 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
 
 future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
-    std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
+    std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
     google::storage::v2::ReadObjectRequest request, Options const& options) {
   auto handle = std::make_shared<AsyncAccumulateReadObjectFullHandle>(
       std::move(cq), std::move(stub), std::move(context_factory),

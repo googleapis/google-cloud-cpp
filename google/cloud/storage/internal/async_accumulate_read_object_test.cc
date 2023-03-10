@@ -360,9 +360,9 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
         return MakeMockStreamPartial(1, r1);
       });
 
-  MockFunction<std::unique_ptr<grpc::ClientContext>()> context_factory;
+  MockFunction<std::shared_ptr<grpc::ClientContext>()> context_factory;
   EXPECT_CALL(context_factory, Call).Times(2).WillRepeatedly([] {
-    return absl::make_unique<grpc::ClientContext>();
+    return std::make_shared<grpc::ClientContext>();
   });
 
   CompletionQueue cq;
@@ -416,7 +416,7 @@ TEST(AsyncAccumulateReadObjectTest, FullTooManyTransients) {
           .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
   auto response =
       AsyncAccumulateReadObjectFull(
-          cq, mock, []() { return absl::make_unique<grpc::ClientContext>(); },
+          cq, mock, []() { return std::make_shared<grpc::ClientContext>(); },
           ReadObjectRequest{}, options)
           .get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kUnavailable));
@@ -444,7 +444,7 @@ TEST(AsyncAccumulateReadObjectTest, PermanentFailure) {
           .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
   auto response =
       AsyncAccumulateReadObjectFull(
-          cq, mock, []() { return absl::make_unique<grpc::ClientContext>(); },
+          cq, mock, []() { return std::make_shared<grpc::ClientContext>(); },
           ReadObjectRequest{}, options)
           .get();
   EXPECT_THAT(response.status, StatusIs(StatusCode::kPermissionDenied));
