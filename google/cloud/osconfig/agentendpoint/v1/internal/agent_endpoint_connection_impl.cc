@@ -56,7 +56,7 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
   auto factory = [stub](google::cloud::osconfig::agentendpoint::v1::
                             ReceiveTaskNotificationRequest const& request) {
     return stub->ReceiveTaskNotification(
-        absl::make_unique<grpc::ClientContext>(), request);
+        std::make_shared<grpc::ClientContext>(), request);
   };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::osconfig::agentendpoint::v1::
