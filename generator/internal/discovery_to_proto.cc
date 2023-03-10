@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_to_proto.h"
+#include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
@@ -99,8 +100,7 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
       schemas_all_type_object = false;
       continue;
     }
-    types.emplace(
-        id, google::cloud::generator_internal::DiscoveryTypeVertex{id, s});
+    types.emplace(id, DiscoveryTypeVertex{id, s});
   }
 
   if (!schemas_all_have_id) {
@@ -116,6 +116,17 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   return types;
 }
 
+std::map<std::string, DiscoveryResource> ExtractResourcesFromSchema(
+    nlohmann::json const& discovery_doc, std::string const& default_hostname,
+    std::string const& base_path) {
+  std::map<std::string, DiscoveryResource> resources;
+  auto const resources_json = discovery_doc.find("resources");
+  for (auto r = resources_json->begin(); r != resources_json->end(); ++r) {
+    resources.emplace(r.key(), DiscoveryResource{r.key(), default_hostname,
+                                                 base_path, r.value()});
+  }
+  return resources;
+}
 Status GenerateProtosFromDiscoveryDoc(std::string const& url,
                                       std::string const&, std::string const&,
                                       std::string const&) {
