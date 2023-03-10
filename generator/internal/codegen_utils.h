@@ -121,6 +121,23 @@ std::string CopyrightLicenseFileHeader();
  */
 std::string CurrentCopyrightYear();
 
+// Returns a copy of the input string with the first letter capitalized.
+std::string CapitalizeFirstLetter(std::string str);
+
+// Creates a formatted comment block from the provided string.
+std::string FormatCommentBlock(std::string const& comment,
+                               std::size_t indent_level,
+                               std::string const& comment_introducer = "// ",
+                               std::size_t indent_width = 2,
+                               std::size_t line_length = 80);
+
+// Creates a formatted comment block from the list of key/value pairs.
+std::string FormatCommentKeyValueList(
+    std::vector<std::pair<std::string, std::string>> const& comment,
+    std::size_t indent_level, std::string const& separator = ":",
+    std::string const& comment_introducer = "// ", std::size_t indent_width = 2,
+    std::size_t line_length = 80);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
