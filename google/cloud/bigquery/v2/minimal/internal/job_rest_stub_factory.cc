@@ -32,10 +32,12 @@ std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
   if (!local_opts.has<UnifiedCredentialsOption>()) {
     local_opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
+  // TODO(#11026): Remove this check as the endpoint will be set with defaults
+  // prior to reaching here.
   if (!local_opts.has<EndpointOption>()) {
     local_opts.set<EndpointOption>("https://bigquery.googleapis.com/");
   }
-
+  // TODO(#11027): Optimize to use a PooledRestClient.
   auto curl_rest_client = rest_internal::MakeDefaultRestClient(
       opts.get<EndpointOption>(), local_opts);
 
