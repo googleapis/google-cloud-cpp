@@ -323,33 +323,20 @@ std::string FormatCommentBlock(std::string const& comment,
   auto comment_width = line_length - offset;
 
   std::vector<std::string> lines;
-  if (comment.length() <= comment_width) {
-    lines.push_back(comment);
-  } else {
-    auto characters_remaining = comment.length();
-    std::size_t start_pos = 0;
-    std::size_t end_pos;
-    std::string line;
-    std::size_t space_before_width;
-    std::size_t space_after_width;
-    while (characters_remaining > comment_width) {
-      end_pos = start_pos + comment_width;
-      space_before_width = comment.rfind(' ', end_pos);
-      space_after_width = comment.find(' ', end_pos);
-      end_pos = space_before_width < start_pos
-                    ? space_after_width
-                    : std::min(space_before_width, space_after_width);
-      line = comment.substr(start_pos, end_pos - start_pos);
-      start_pos = end_pos + 1;
-      characters_remaining = end_pos == std::string::npos
-                                 ? 0
-                                 : characters_remaining - line.length();
-      lines.push_back(std::move(line));
+  std::size_t start_pos = 0;
+  while (start_pos != std::string::npos) {
+    std::size_t boundary = start_pos + comment_width;
+    std::size_t end_pos = boundary;
+    if (boundary < comment.length()) {
+      // Look backward from the boundary for the last word
+      end_pos = comment.rfind(' ', boundary);
+      // If there is only one word, find and use its boundary
+      if (end_pos == std::string::npos || end_pos < start_pos) {
+        end_pos = comment.find(' ', boundary);
+      }
     }
-
-    if (characters_remaining > 0) {
-      lines.push_back(comment.substr(start_pos, characters_remaining));
-    }
+    lines.push_back(comment.substr(start_pos, end_pos - start_pos));
+    start_pos = comment.find_first_not_of(' ', end_pos);
   }
 
   std::string indent(indent_level * indent_width, ' ');
