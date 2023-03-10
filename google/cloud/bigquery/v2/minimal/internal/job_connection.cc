@@ -15,10 +15,8 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_connection.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_connection_impl.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub_factory.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/rest_background_threads_impl.h"
 #include <memory>
 
 namespace google {
@@ -38,13 +36,11 @@ std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(
                                  BigQueryJobPolicyOptionList>(options,
                                                               __func__);
   options = BigQueryJobDefaultOptions(std::move(options));
-  auto background = absl::make_unique<
-      rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
 
   auto job_rest_stub = CreateDefaultBigQueryJobRestStub(options);
 
   return std::make_shared<BigQueryJobRestConnectionImpl>(
-      std::move(background), std::move(job_rest_stub), std::move(options));
+      std::move(job_rest_stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
