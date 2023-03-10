@@ -73,11 +73,11 @@ BigtableTableAdminLogging::GetTable(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncUpdateTable(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::UpdateTableRequest const& request) {
         return child_->AsyncUpdateTable(cq, std::move(context), request);
       },
@@ -98,11 +98,11 @@ Status BigtableTableAdminLogging::DeleteTable(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncUndeleteTable(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::UndeleteTableRequest const& request) {
         return child_->AsyncUndeleteTable(cq, std::move(context), request);
       },
@@ -163,11 +163,11 @@ BigtableTableAdminLogging::CheckConsistency(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::CreateBackupRequest const& request) {
         return child_->AsyncCreateBackup(cq, std::move(context), request);
       },
@@ -224,11 +224,11 @@ BigtableTableAdminLogging::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncRestoreTable(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::RestoreTableRequest const& request) {
         return child_->AsyncRestoreTable(cq, std::move(context), request);
       },
@@ -272,12 +272,12 @@ BigtableTableAdminLogging::TestIamPermissions(
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminLogging::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
         return child_->AsyncCheckConsistency(cq, std::move(context), request);
       },
@@ -287,11 +287,11 @@ BigtableTableAdminLogging::AsyncCheckConsistency(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -300,11 +300,11 @@ BigtableTableAdminLogging::AsyncGetOperation(
 
 future<Status> BigtableTableAdminLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

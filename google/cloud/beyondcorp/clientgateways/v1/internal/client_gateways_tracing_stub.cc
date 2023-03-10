@@ -63,7 +63,7 @@ ClientGatewaysServiceTracingStub::GetClientGateway(
 future<StatusOr<google::longrunning::Operation>>
 ClientGatewaysServiceTracingStub::AsyncCreateClientGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientgateways::v1::
         CreateClientGatewayRequest const& request) {
   return child_->AsyncCreateClientGateway(cq, std::move(context), request);
@@ -72,7 +72,7 @@ ClientGatewaysServiceTracingStub::AsyncCreateClientGateway(
 future<StatusOr<google::longrunning::Operation>>
 ClientGatewaysServiceTracingStub::AsyncDeleteClientGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientgateways::v1::
         DeleteClientGatewayRequest const& request) {
   return child_->AsyncDeleteClientGateway(cq, std::move(context), request);
@@ -81,14 +81,14 @@ ClientGatewaysServiceTracingStub::AsyncDeleteClientGateway(
 future<StatusOr<google::longrunning::Operation>>
 ClientGatewaysServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ClientGatewaysServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -228,7 +228,7 @@ future<Status> MetricServiceConnectionImpl::AsyncCreateTimeSeries(
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateTimeSeries(request), background_->cq(),
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::monitoring::v3::CreateTimeSeriesRequest const& request) {
         return stub->AsyncCreateTimeSeries(cq, std::move(context), request);
       },

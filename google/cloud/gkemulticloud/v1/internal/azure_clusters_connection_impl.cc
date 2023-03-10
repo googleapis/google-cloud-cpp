@@ -48,18 +48,18 @@ AzureClustersConnectionImpl::CreateAzureClient(
       google::cloud::gkemulticloud::v1::AzureClient>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
                  request) {
         return stub->AsyncCreateAzureClient(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -125,18 +125,18 @@ AzureClustersConnectionImpl::DeleteAzureClient(
       google::cloud::gkemulticloud::v1::OperationMetadata>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
                  request) {
         return stub->AsyncDeleteAzureClient(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -156,18 +156,18 @@ AzureClustersConnectionImpl::CreateAzureCluster(
       google::cloud::gkemulticloud::v1::AzureCluster>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
                  request) {
         return stub->AsyncCreateAzureCluster(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -187,18 +187,18 @@ AzureClustersConnectionImpl::UpdateAzureCluster(
       google::cloud::gkemulticloud::v1::AzureCluster>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
                  request) {
         return stub->AsyncUpdateAzureCluster(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -264,18 +264,18 @@ AzureClustersConnectionImpl::DeleteAzureCluster(
       google::cloud::gkemulticloud::v1::OperationMetadata>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
                  request) {
         return stub->AsyncDeleteAzureCluster(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -310,18 +310,18 @@ AzureClustersConnectionImpl::CreateAzureNodePool(
       google::cloud::gkemulticloud::v1::AzureNodePool>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
                  request) {
         return stub->AsyncCreateAzureNodePool(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -341,18 +341,18 @@ AzureClustersConnectionImpl::UpdateAzureNodePool(
       google::cloud::gkemulticloud::v1::AzureNodePool>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
                  request) {
         return stub->AsyncUpdateAzureNodePool(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -419,18 +419,18 @@ AzureClustersConnectionImpl::DeleteAzureNodePool(
       google::cloud::gkemulticloud::v1::OperationMetadata>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
                  request) {
         return stub->AsyncDeleteAzureNodePool(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },

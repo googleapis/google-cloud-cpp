@@ -88,17 +88,17 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::CreatePolicy(
       google::iam::v2::Policy>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::iam::v2::CreatePolicyRequest const& request) {
         return stub->AsyncCreatePolicy(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -115,17 +115,17 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
       google::iam::v2::Policy>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::iam::v2::UpdatePolicyRequest const& request) {
         return stub->AsyncUpdatePolicy(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },
@@ -142,17 +142,17 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
       google::iam::v2::Policy>(
       background_->cq(), request,
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::iam::v2::DeletePolicyRequest const& request) {
         return stub->AsyncDeletePolicy(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return stub->AsyncGetOperation(cq, std::move(context), request);
       },
       [stub](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return stub->AsyncCancelOperation(cq, std::move(context), request);
       },

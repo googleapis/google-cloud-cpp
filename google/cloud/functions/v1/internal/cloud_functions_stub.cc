@@ -57,7 +57,7 @@ DefaultCloudFunctionsServiceStub::GetFunction(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFunctionsServiceStub::AsyncCreateFunction(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::functions::v1::CreateFunctionRequest,
@@ -74,7 +74,7 @@ DefaultCloudFunctionsServiceStub::AsyncCreateFunction(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFunctionsServiceStub::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::functions::v1::UpdateFunctionRequest,
@@ -91,7 +91,7 @@ DefaultCloudFunctionsServiceStub::AsyncUpdateFunction(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFunctionsServiceStub::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::functions::v1::DeleteFunctionRequest,
@@ -183,7 +183,7 @@ DefaultCloudFunctionsServiceStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudFunctionsServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -198,7 +198,7 @@ DefaultCloudFunctionsServiceStub::AsyncGetOperation(
 
 future<Status> DefaultCloudFunctionsServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

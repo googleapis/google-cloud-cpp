@@ -37,12 +37,12 @@ ManagedIdentitiesServiceLogging::ManagedIdentitiesServiceLogging(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncCreateMicrosoftAdDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::managedidentities::v1::
                  CreateMicrosoftAdDomainRequest const& request) {
         return child_->AsyncCreateMicrosoftAdDomain(cq, std::move(context),
@@ -89,11 +89,11 @@ ManagedIdentitiesServiceLogging::GetDomain(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncUpdateDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::managedidentities::v1::UpdateDomainRequest const&
                  request) {
         return child_->AsyncUpdateDomain(cq, std::move(context), request);
@@ -104,11 +104,11 @@ ManagedIdentitiesServiceLogging::AsyncUpdateDomain(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::managedidentities::v1::DeleteDomainRequest const&
                  request) {
         return child_->AsyncDeleteDomain(cq, std::move(context), request);
@@ -119,11 +119,11 @@ ManagedIdentitiesServiceLogging::AsyncDeleteDomain(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::managedidentities::v1::AttachTrustRequest const&
                  request) {
         return child_->AsyncAttachTrust(cq, std::move(context), request);
@@ -134,13 +134,13 @@ ManagedIdentitiesServiceLogging::AsyncAttachTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncReconfigureTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
               request) {
         return child_->AsyncReconfigureTrust(cq, std::move(context), request);
@@ -151,11 +151,11 @@ ManagedIdentitiesServiceLogging::AsyncReconfigureTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::managedidentities::v1::DetachTrustRequest const&
                  request) {
         return child_->AsyncDetachTrust(cq, std::move(context), request);
@@ -166,11 +166,11 @@ ManagedIdentitiesServiceLogging::AsyncDetachTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::managedidentities::v1::ValidateTrustRequest const&
                  request) {
         return child_->AsyncValidateTrust(cq, std::move(context), request);
@@ -181,11 +181,11 @@ ManagedIdentitiesServiceLogging::AsyncValidateTrust(
 future<StatusOr<google::longrunning::Operation>>
 ManagedIdentitiesServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -194,11 +194,11 @@ ManagedIdentitiesServiceLogging::AsyncGetOperation(
 
 future<Status> ManagedIdentitiesServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

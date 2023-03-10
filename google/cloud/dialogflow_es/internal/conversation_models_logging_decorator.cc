@@ -37,13 +37,13 @@ ConversationModelsLogging::ConversationModelsLogging(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncCreateConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dialogflow::v2::CreateConversationModelRequest const&
               request) {
         return child_->AsyncCreateConversationModel(cq, std::move(context),
@@ -82,13 +82,13 @@ ConversationModelsLogging::ListConversationModels(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncDeleteConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
               request) {
         return child_->AsyncDeleteConversationModel(cq, std::move(context),
@@ -100,13 +100,13 @@ ConversationModelsLogging::AsyncDeleteConversationModel(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncDeployConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dialogflow::v2::DeployConversationModelRequest const&
               request) {
         return child_->AsyncDeployConversationModel(cq, std::move(context),
@@ -118,13 +118,13 @@ ConversationModelsLogging::AsyncDeployConversationModel(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncUndeployConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
               request) {
         return child_->AsyncUndeployConversationModel(cq, std::move(context),
@@ -165,12 +165,12 @@ ConversationModelsLogging::ListConversationModelEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncCreateConversationModelEvaluation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::dialogflow::v2::
                  CreateConversationModelEvaluationRequest const& request) {
         return child_->AsyncCreateConversationModelEvaluation(
@@ -182,11 +182,11 @@ ConversationModelsLogging::AsyncCreateConversationModelEvaluation(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -195,11 +195,11 @@ ConversationModelsLogging::AsyncGetOperation(
 
 future<Status> ConversationModelsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

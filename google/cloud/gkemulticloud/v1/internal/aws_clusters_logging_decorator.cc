@@ -37,11 +37,11 @@ AwsClustersLogging::AwsClustersLogging(std::shared_ptr<AwsClustersStub> child,
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncCreateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
                  request) {
         return child_->AsyncCreateAwsCluster(cq, std::move(context), request);
@@ -52,11 +52,11 @@ AwsClustersLogging::AsyncCreateAwsCluster(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
                  request) {
         return child_->AsyncUpdateAwsCluster(cq, std::move(context), request);
@@ -89,11 +89,11 @@ AwsClustersLogging::ListAwsClusters(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncDeleteAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
                  request) {
         return child_->AsyncDeleteAwsCluster(cq, std::move(context), request);
@@ -119,11 +119,11 @@ AwsClustersLogging::GenerateAwsAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncCreateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
                  request) {
         return child_->AsyncCreateAwsNodePool(cq, std::move(context), request);
@@ -134,11 +134,11 @@ AwsClustersLogging::AsyncCreateAwsNodePool(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
                  request) {
         return child_->AsyncUpdateAwsNodePool(cq, std::move(context), request);
@@ -173,11 +173,11 @@ AwsClustersLogging::ListAwsNodePools(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncDeleteAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
                  request) {
         return child_->AsyncDeleteAwsNodePool(cq, std::move(context), request);
@@ -202,11 +202,11 @@ AwsClustersLogging::GetAwsServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -215,11 +215,11 @@ AwsClustersLogging::AsyncGetOperation(
 
 future<Status> AwsClustersLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

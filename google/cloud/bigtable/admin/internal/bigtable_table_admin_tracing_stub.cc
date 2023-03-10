@@ -68,7 +68,7 @@ BigtableTableAdminTracingStub::GetTable(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminTracingStub::AsyncUpdateTable(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   return child_->AsyncUpdateTable(cq, std::move(context), request);
 }
@@ -87,7 +87,7 @@ Status BigtableTableAdminTracingStub::DeleteTable(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminTracingStub::AsyncUndeleteTable(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   return child_->AsyncUndeleteTable(cq, std::move(context), request);
 }
@@ -144,7 +144,7 @@ BigtableTableAdminTracingStub::CheckConsistency(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminTracingStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
@@ -198,7 +198,7 @@ BigtableTableAdminTracingStub::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminTracingStub::AsyncRestoreTable(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   return child_->AsyncRestoreTable(cq, std::move(context), request);
 }
@@ -240,7 +240,7 @@ BigtableTableAdminTracingStub::TestIamPermissions(
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminTracingStub::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   return child_->AsyncCheckConsistency(cq, std::move(context), request);
 }
@@ -248,14 +248,14 @@ BigtableTableAdminTracingStub::AsyncCheckConsistency(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> BigtableTableAdminTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

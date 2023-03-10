@@ -37,7 +37,7 @@ SecurityCenterMetadata::SecurityCenterMetadata(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterMetadata::AsyncBulkMuteFindings(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBulkMuteFindings(cq, std::move(context), request);
@@ -201,7 +201,7 @@ SecurityCenterMetadata::ListSources(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterMetadata::AsyncRunAssetDiscovery(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -342,7 +342,7 @@ SecurityCenterMetadata::ListBigQueryExports(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -350,7 +350,7 @@ SecurityCenterMetadata::AsyncGetOperation(
 
 future<Status> SecurityCenterMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

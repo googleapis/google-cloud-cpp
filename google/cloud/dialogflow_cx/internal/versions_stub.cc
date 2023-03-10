@@ -57,7 +57,7 @@ DefaultVersionsStub::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::CreateVersionRequest,
@@ -98,7 +98,7 @@ Status DefaultVersionsStub::DeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncLoadVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::LoadVersionRequest,
@@ -129,7 +129,7 @@ DefaultVersionsStub::CompareVersions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVersionsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -144,7 +144,7 @@ DefaultVersionsStub::AsyncGetOperation(
 
 future<Status> DefaultVersionsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

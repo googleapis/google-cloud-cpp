@@ -57,7 +57,7 @@ DefaultBareMetalSolutionStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -76,7 +76,7 @@ DefaultBareMetalSolutionStub::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncResetInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::baremetalsolution::v2::ResetInstanceRequest,
@@ -94,7 +94,7 @@ DefaultBareMetalSolutionStub::AsyncResetInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncStartInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::StartInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::baremetalsolution::v2::StartInstanceRequest,
@@ -112,7 +112,7 @@ DefaultBareMetalSolutionStub::AsyncStartInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncStopInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::StopInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::baremetalsolution::v2::StopInstanceRequest,
@@ -130,7 +130,7 @@ DefaultBareMetalSolutionStub::AsyncStopInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncDetachLun(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::DetachLunRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::baremetalsolution::v2::DetachLunRequest,
@@ -172,7 +172,7 @@ DefaultBareMetalSolutionStub::GetVolume(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateVolume(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest,
@@ -190,7 +190,7 @@ DefaultBareMetalSolutionStub::AsyncUpdateVolume(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncResizeVolume(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest,
@@ -246,7 +246,7 @@ DefaultBareMetalSolutionStub::GetNetwork(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateNetwork(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest,
@@ -312,7 +312,7 @@ DefaultBareMetalSolutionStub::ListNfsShares(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncUpdateNfsShare(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -331,7 +331,7 @@ DefaultBareMetalSolutionStub::AsyncUpdateNfsShare(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBareMetalSolutionStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -346,7 +346,7 @@ DefaultBareMetalSolutionStub::AsyncGetOperation(
 
 future<Status> DefaultBareMetalSolutionStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

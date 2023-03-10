@@ -87,13 +87,13 @@ LineageLogging::ListProcesses(
 future<StatusOr<google::longrunning::Operation>>
 LineageLogging::AsyncDeleteProcess(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
               request) {
         return child_->AsyncDeleteProcess(cq, std::move(context), request);
@@ -146,11 +146,11 @@ LineageLogging::ListRuns(
 
 future<StatusOr<google::longrunning::Operation>> LineageLogging::AsyncDeleteRun(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::datacatalog::lineage::v1::DeleteRunRequest const&
                  request) {
         return child_->AsyncDeleteRun(cq, std::move(context), request);
@@ -242,11 +242,11 @@ LineageLogging::BatchSearchLinkProcesses(
 future<StatusOr<google::longrunning::Operation>>
 LineageLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -255,11 +255,11 @@ LineageLogging::AsyncGetOperation(
 
 future<Status> LineageLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

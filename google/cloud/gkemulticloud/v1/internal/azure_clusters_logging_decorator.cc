@@ -37,11 +37,11 @@ AzureClustersLogging::AzureClustersLogging(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncCreateAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
                  request) {
         return child_->AsyncCreateAzureClient(cq, std::move(context), request);
@@ -76,11 +76,11 @@ AzureClustersLogging::ListAzureClients(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncDeleteAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
                  request) {
         return child_->AsyncDeleteAzureClient(cq, std::move(context), request);
@@ -91,12 +91,12 @@ AzureClustersLogging::AsyncDeleteAzureClient(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
                  request) {
         return child_->AsyncCreateAzureCluster(cq, std::move(context), request);
@@ -107,12 +107,12 @@ AzureClustersLogging::AsyncCreateAzureCluster(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncUpdateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
                  request) {
         return child_->AsyncUpdateAzureCluster(cq, std::move(context), request);
@@ -147,12 +147,12 @@ AzureClustersLogging::ListAzureClusters(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncDeleteAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
                  request) {
         return child_->AsyncDeleteAzureCluster(cq, std::move(context), request);
@@ -177,12 +177,12 @@ AzureClustersLogging::GenerateAzureAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncCreateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
                  request) {
         return child_->AsyncCreateAzureNodePool(cq, std::move(context),
@@ -194,12 +194,12 @@ AzureClustersLogging::AsyncCreateAzureNodePool(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
                  request) {
         return child_->AsyncUpdateAzureNodePool(cq, std::move(context),
@@ -238,12 +238,12 @@ AzureClustersLogging::ListAzureNodePools(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncDeleteAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
                  request) {
         return child_->AsyncDeleteAzureNodePool(cq, std::move(context),
@@ -270,11 +270,11 @@ AzureClustersLogging::GetAzureServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -283,11 +283,11 @@ AzureClustersLogging::AsyncGetOperation(
 
 future<Status> AzureClustersLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

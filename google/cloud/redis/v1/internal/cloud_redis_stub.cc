@@ -69,7 +69,7 @@ DefaultCloudRedisStub::GetInstanceAuthString(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::CreateInstanceRequest,
@@ -86,7 +86,7 @@ DefaultCloudRedisStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::UpdateInstanceRequest,
@@ -103,7 +103,7 @@ DefaultCloudRedisStub::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncUpgradeInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::UpgradeInstanceRequest,
@@ -120,7 +120,7 @@ DefaultCloudRedisStub::AsyncUpgradeInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::ImportInstanceRequest,
@@ -137,7 +137,7 @@ DefaultCloudRedisStub::AsyncImportInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncExportInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::ExportInstanceRequest,
@@ -154,7 +154,7 @@ DefaultCloudRedisStub::AsyncExportInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::FailoverInstanceRequest,
@@ -171,7 +171,7 @@ DefaultCloudRedisStub::AsyncFailoverInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::DeleteInstanceRequest,
@@ -188,7 +188,7 @@ DefaultCloudRedisStub::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::redis::v1::RescheduleMaintenanceRequest,
@@ -206,7 +206,7 @@ DefaultCloudRedisStub::AsyncRescheduleMaintenance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -221,7 +221,7 @@ DefaultCloudRedisStub::AsyncGetOperation(
 
 future<Status> DefaultCloudRedisStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

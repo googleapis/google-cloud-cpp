@@ -51,7 +51,7 @@ StatusOr<google::appengine::v1::Service> ServicesMetadata::GetService(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateServiceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncUpdateService(cq, std::move(context), request);
@@ -60,7 +60,7 @@ ServicesMetadata::AsyncUpdateService(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteServiceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteService(cq, std::move(context), request);
@@ -69,7 +69,7 @@ ServicesMetadata::AsyncDeleteService(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -77,7 +77,7 @@ ServicesMetadata::AsyncGetOperation(
 
 future<Status> ServicesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

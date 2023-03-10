@@ -68,12 +68,12 @@ ClientConnectorServicesServiceLogging::GetClientConnectorService(
 future<StatusOr<google::longrunning::Operation>>
 ClientConnectorServicesServiceLogging::AsyncCreateClientConnectorService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         CreateClientConnectorServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::beyondcorp::clientconnectorservices::v1::
                  CreateClientConnectorServiceRequest const& request) {
         return child_->AsyncCreateClientConnectorService(cq, std::move(context),
@@ -85,12 +85,12 @@ ClientConnectorServicesServiceLogging::AsyncCreateClientConnectorService(
 future<StatusOr<google::longrunning::Operation>>
 ClientConnectorServicesServiceLogging::AsyncUpdateClientConnectorService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         UpdateClientConnectorServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::beyondcorp::clientconnectorservices::v1::
                  UpdateClientConnectorServiceRequest const& request) {
         return child_->AsyncUpdateClientConnectorService(cq, std::move(context),
@@ -102,12 +102,12 @@ ClientConnectorServicesServiceLogging::AsyncUpdateClientConnectorService(
 future<StatusOr<google::longrunning::Operation>>
 ClientConnectorServicesServiceLogging::AsyncDeleteClientConnectorService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::clientconnectorservices::v1::
         DeleteClientConnectorServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::beyondcorp::clientconnectorservices::v1::
                  DeleteClientConnectorServiceRequest const& request) {
         return child_->AsyncDeleteClientConnectorService(cq, std::move(context),
@@ -119,11 +119,11 @@ ClientConnectorServicesServiceLogging::AsyncDeleteClientConnectorService(
 future<StatusOr<google::longrunning::Operation>>
 ClientConnectorServicesServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -132,11 +132,11 @@ ClientConnectorServicesServiceLogging::AsyncGetOperation(
 
 future<Status> ClientConnectorServicesServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

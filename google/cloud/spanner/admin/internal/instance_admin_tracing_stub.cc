@@ -59,7 +59,7 @@ InstanceAdminTracingStub::GetInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminTracingStub::AsyncCreateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   return child_->AsyncCreateInstanceConfig(cq, std::move(context), request);
@@ -68,7 +68,7 @@ InstanceAdminTracingStub::AsyncCreateInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminTracingStub::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   return child_->AsyncUpdateInstanceConfig(cq, std::move(context), request);
@@ -128,7 +128,7 @@ InstanceAdminTracingStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminTracingStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   return child_->AsyncCreateInstance(cq, std::move(context), request);
@@ -137,7 +137,7 @@ InstanceAdminTracingStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminTracingStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
@@ -192,14 +192,14 @@ InstanceAdminTracingStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> InstanceAdminTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

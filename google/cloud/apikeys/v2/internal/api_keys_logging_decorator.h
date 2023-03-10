@@ -41,7 +41,7 @@ class ApiKeysLogging : public ApiKeysStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKey(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
@@ -58,17 +58,17 @@ class ApiKeysLogging : public ApiKeysStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKey(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteKey(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteKey(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
@@ -77,12 +77,12 @@ class ApiKeysLogging : public ApiKeysStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

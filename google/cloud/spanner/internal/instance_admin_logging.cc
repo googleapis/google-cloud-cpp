@@ -37,10 +37,10 @@ StatusOr<gsai::v1::Instance> InstanceAdminLogging::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncCreateInstance(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsai::v1::CreateInstanceRequest const& request) {
   return LogWrapper(
-      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [this](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              gsai::v1::CreateInstanceRequest const& request) {
         return child_->AsyncCreateInstance(cq, std::move(context), request);
       },
@@ -49,10 +49,10 @@ InstanceAdminLogging::AsyncCreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncUpdateInstance(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     gsai::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [this](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              gsai::v1::UpdateInstanceRequest const& request) {
         return child_->AsyncUpdateInstance(cq, std::move(context), request);
       },
@@ -140,10 +140,10 @@ InstanceAdminLogging::TestIamPermissions(
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncGetOperation(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [this](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -151,10 +151,10 @@ InstanceAdminLogging::AsyncGetOperation(
 }
 
 future<Status> InstanceAdminLogging::AsyncCancelOperation(
-    CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [this](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

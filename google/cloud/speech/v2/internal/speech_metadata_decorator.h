@@ -37,7 +37,7 @@ class SpeechMetadata : public SpeechStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::CreateRecognizerRequest const& request)
       override;
 
@@ -52,19 +52,19 @@ class SpeechMetadata : public SpeechStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::UpdateRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::DeleteRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteRecognizer(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::UndeleteRecognizerRequest const& request)
       override;
 
@@ -77,11 +77,11 @@ class SpeechMetadata : public SpeechStub {
       google::cloud::speech::v2::StreamingRecognizeResponse>>
   AsyncStreamingRecognize(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchRecognize(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::BatchRecognizeRequest const& request) override;
 
   StatusOr<google::cloud::speech::v2::Config> GetConfig(
@@ -94,7 +94,7 @@ class SpeechMetadata : public SpeechStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::CreateCustomClassRequest const& request)
       override;
 
@@ -109,25 +109,25 @@ class SpeechMetadata : public SpeechStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::UpdateCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::DeleteCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteCustomClass(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::CreatePhraseSetRequest const& request)
       override;
 
@@ -141,30 +141,30 @@ class SpeechMetadata : public SpeechStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::DeletePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeletePhraseSet(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

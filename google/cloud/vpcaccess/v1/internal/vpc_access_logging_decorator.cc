@@ -37,12 +37,12 @@ VpcAccessServiceLogging::VpcAccessServiceLogging(
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceLogging::AsyncCreateConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
         return child_->AsyncCreateConnector(cq, std::move(context), request);
       },
@@ -77,12 +77,12 @@ VpcAccessServiceLogging::ListConnectors(
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceLogging::AsyncDeleteConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
         return child_->AsyncDeleteConnector(cq, std::move(context), request);
       },
@@ -92,11 +92,11 @@ VpcAccessServiceLogging::AsyncDeleteConnector(
 future<StatusOr<google::longrunning::Operation>>
 VpcAccessServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -105,11 +105,11 @@ VpcAccessServiceLogging::AsyncGetOperation(
 
 future<Status> VpcAccessServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

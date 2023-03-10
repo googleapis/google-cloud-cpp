@@ -34,7 +34,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationResponse>>
 AgentEndpointServiceTracingStub::ReceiveTaskNotification(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
   return child_->ReceiveTaskNotification(std::move(context), request);

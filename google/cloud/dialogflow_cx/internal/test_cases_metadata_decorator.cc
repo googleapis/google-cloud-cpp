@@ -76,7 +76,7 @@ TestCasesMetadata::UpdateTestCase(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesMetadata::AsyncRunTestCase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncRunTestCase(cq, std::move(context), request);
@@ -85,7 +85,7 @@ TestCasesMetadata::AsyncRunTestCase(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesMetadata::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -104,7 +104,7 @@ TestCasesMetadata::CalculateCoverage(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesMetadata::AsyncImportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncImportTestCases(cq, std::move(context), request);
@@ -113,7 +113,7 @@ TestCasesMetadata::AsyncImportTestCases(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesMetadata::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncExportTestCases(cq, std::move(context), request);
@@ -140,7 +140,7 @@ TestCasesMetadata::GetTestCaseResult(
 future<StatusOr<google::longrunning::Operation>>
 TestCasesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -148,7 +148,7 @@ TestCasesMetadata::AsyncGetOperation(
 
 future<Status> TestCasesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

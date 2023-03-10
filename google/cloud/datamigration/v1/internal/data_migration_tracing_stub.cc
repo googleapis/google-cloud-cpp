@@ -57,7 +57,7 @@ DataMigrationServiceTracingStub::GetMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncCreateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   return child_->AsyncCreateMigrationJob(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ DataMigrationServiceTracingStub::AsyncCreateMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncUpdateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   return child_->AsyncUpdateMigrationJob(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ DataMigrationServiceTracingStub::AsyncUpdateMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncDeleteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   return child_->AsyncDeleteMigrationJob(cq, std::move(context), request);
 }
@@ -81,7 +81,7 @@ DataMigrationServiceTracingStub::AsyncDeleteMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncStartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   return child_->AsyncStartMigrationJob(cq, std::move(context), request);
 }
@@ -89,7 +89,7 @@ DataMigrationServiceTracingStub::AsyncStartMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncStopMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   return child_->AsyncStopMigrationJob(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ DataMigrationServiceTracingStub::AsyncStopMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncResumeMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   return child_->AsyncResumeMigrationJob(cq, std::move(context), request);
 }
@@ -105,7 +105,7 @@ DataMigrationServiceTracingStub::AsyncResumeMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncPromoteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   return child_->AsyncPromoteMigrationJob(cq, std::move(context), request);
 }
@@ -113,7 +113,7 @@ DataMigrationServiceTracingStub::AsyncPromoteMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncVerifyMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   return child_->AsyncVerifyMigrationJob(cq, std::move(context), request);
 }
@@ -121,7 +121,7 @@ DataMigrationServiceTracingStub::AsyncVerifyMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   return child_->AsyncRestartMigrationJob(cq, std::move(context), request);
 }
@@ -166,7 +166,7 @@ DataMigrationServiceTracingStub::GetConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncCreateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
   return child_->AsyncCreateConnectionProfile(cq, std::move(context), request);
@@ -175,7 +175,7 @@ DataMigrationServiceTracingStub::AsyncCreateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
   return child_->AsyncUpdateConnectionProfile(cq, std::move(context), request);
@@ -184,7 +184,7 @@ DataMigrationServiceTracingStub::AsyncUpdateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
   return child_->AsyncDeleteConnectionProfile(cq, std::move(context), request);
@@ -193,14 +193,14 @@ DataMigrationServiceTracingStub::AsyncDeleteConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> DataMigrationServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -37,7 +37,7 @@ AssuredWorkloadsServiceMetadata::AssuredWorkloadsServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceMetadata::AsyncCreateWorkload(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateWorkload(cq, std::move(context), request);
@@ -111,7 +111,7 @@ AssuredWorkloadsServiceMetadata::AcknowledgeViolation(
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -119,7 +119,7 @@ AssuredWorkloadsServiceMetadata::AsyncGetOperation(
 
 future<Status> AssuredWorkloadsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

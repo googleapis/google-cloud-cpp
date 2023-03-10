@@ -33,7 +33,7 @@ AttachedClustersTracingStub::AttachedClustersTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersTracingStub::AsyncCreateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
         request) {
   return child_->AsyncCreateAttachedCluster(cq, std::move(context), request);
@@ -42,7 +42,7 @@ AttachedClustersTracingStub::AsyncCreateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersTracingStub::AsyncUpdateAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
         request) {
   return child_->AsyncUpdateAttachedCluster(cq, std::move(context), request);
@@ -51,7 +51,7 @@ AttachedClustersTracingStub::AsyncUpdateAttachedCluster(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersTracingStub::AsyncImportAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
         request) {
   return child_->AsyncImportAttachedCluster(cq, std::move(context), request);
@@ -86,7 +86,7 @@ AttachedClustersTracingStub::ListAttachedClusters(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersTracingStub::AsyncDeleteAttachedCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
         request) {
   return child_->AsyncDeleteAttachedCluster(cq, std::move(context), request);
@@ -125,14 +125,14 @@ AttachedClustersTracingStub::GenerateAttachedClusterInstallManifest(
 future<StatusOr<google::longrunning::Operation>>
 AttachedClustersTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> AttachedClustersTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

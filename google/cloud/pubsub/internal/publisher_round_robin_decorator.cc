@@ -87,7 +87,7 @@ PublisherRoundRobin::DetachSubscription(
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherRoundRobin::AsyncPublish(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::PublishRequest const& request) {
   return Child()->AsyncPublish(cq, std::move(context), request);
 }

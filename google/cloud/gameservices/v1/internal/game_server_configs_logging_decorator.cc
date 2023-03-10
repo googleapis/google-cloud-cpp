@@ -63,11 +63,11 @@ GameServerConfigsServiceLogging::GetGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceLogging::AsyncCreateGameServerConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gaming::v1::CreateGameServerConfigRequest const&
                  request) {
         return child_->AsyncCreateGameServerConfig(cq, std::move(context),
@@ -79,11 +79,11 @@ GameServerConfigsServiceLogging::AsyncCreateGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceLogging::AsyncDeleteGameServerConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gaming::v1::DeleteGameServerConfigRequest const&
                  request) {
         return child_->AsyncDeleteGameServerConfig(cq, std::move(context),
@@ -95,11 +95,11 @@ GameServerConfigsServiceLogging::AsyncDeleteGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -108,11 +108,11 @@ GameServerConfigsServiceLogging::AsyncGetOperation(
 
 future<Status> GameServerConfigsServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

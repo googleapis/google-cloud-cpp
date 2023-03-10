@@ -33,7 +33,7 @@ BatchControllerTracingStub::BatchControllerTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 BatchControllerTracingStub::AsyncCreateBatch(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   return child_->AsyncCreateBatch(cq, std::move(context), request);
 }
@@ -75,14 +75,14 @@ Status BatchControllerTracingStub::DeleteBatch(
 future<StatusOr<google::longrunning::Operation>>
 BatchControllerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> BatchControllerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

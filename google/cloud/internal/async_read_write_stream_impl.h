@@ -44,7 +44,7 @@ class AsyncStreamingReadWriteRpcImpl
  public:
   AsyncStreamingReadWriteRpcImpl(
       std::shared_ptr<CompletionQueueImpl> cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       std::unique_ptr<grpc::ClientAsyncReaderWriterInterface<Request, Response>>
           stream)
       : cq_(std::move(cq)),
@@ -146,7 +146,7 @@ class AsyncStreamingReadWriteRpcImpl
 
  private:
   std::shared_ptr<CompletionQueueImpl> cq_;
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<grpc::ClientAsyncReaderWriterInterface<Request, Response>>
       stream_;
 };
@@ -169,7 +169,7 @@ using PrepareAsyncReadWriteRpc = absl::FunctionRef<
 template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
 MakeStreamingReadWriteRpc(
-    CompletionQueue const& cq, std::unique_ptr<grpc::ClientContext> context,
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     PrepareAsyncReadWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto stream = async_call(context.get(), cq_impl->cq());

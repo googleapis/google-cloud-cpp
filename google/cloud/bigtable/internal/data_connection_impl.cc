@@ -132,7 +132,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
                            : Idempotency::kNonIdempotent,
              background_->cq(),
              [stub](CompletionQueue& cq,
-                    std::unique_ptr<grpc::ClientContext> context,
+                    std::shared_ptr<grpc::ClientContext> context,
                     google::bigtable::v2::MutateRowRequest const& request) {
                return stub->AsyncMutateRow(cq, std::move(context), request);
              },
@@ -259,7 +259,7 @@ DataConnectionImpl::AsyncCheckAndMutateRow(
   return google::cloud::internal::AsyncRetryLoop(
              retry_policy(), backoff_policy(), idempotency, background_->cq(),
              [stub](CompletionQueue& cq,
-                    std::unique_ptr<grpc::ClientContext> context,
+                    std::shared_ptr<grpc::ClientContext> context,
                     google::bigtable::v2::CheckAndMutateRowRequest const&
                         request) {
                return stub->AsyncCheckAndMutateRow(cq, std::move(context),
@@ -353,7 +353,7 @@ future<StatusOr<bigtable::Row>> DataConnectionImpl::AsyncReadModifyWriteRow(
              retry_policy(), backoff_policy(), Idempotency::kNonIdempotent,
              background_->cq(),
              [stub](CompletionQueue& cq,
-                    std::unique_ptr<grpc::ClientContext> context,
+                    std::shared_ptr<grpc::ClientContext> context,
                     google::bigtable::v2::ReadModifyWriteRowRequest const&
                         request) {
                return stub->AsyncReadModifyWriteRow(cq, std::move(context),

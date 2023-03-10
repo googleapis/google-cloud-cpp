@@ -61,7 +61,7 @@ GameServerDeploymentsServiceTracingStub::GetGameServerDeployment(
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceTracingStub::AsyncCreateGameServerDeployment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
         request) {
   return child_->AsyncCreateGameServerDeployment(cq, std::move(context),
@@ -71,7 +71,7 @@ GameServerDeploymentsServiceTracingStub::AsyncCreateGameServerDeployment(
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceTracingStub::AsyncDeleteGameServerDeployment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
         request) {
   return child_->AsyncDeleteGameServerDeployment(cq, std::move(context),
@@ -81,7 +81,7 @@ GameServerDeploymentsServiceTracingStub::AsyncDeleteGameServerDeployment(
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceTracingStub::AsyncUpdateGameServerDeployment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
         request) {
   return child_->AsyncUpdateGameServerDeployment(cq, std::move(context),
@@ -105,7 +105,7 @@ GameServerDeploymentsServiceTracingStub::GetGameServerDeploymentRollout(
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceTracingStub::AsyncUpdateGameServerDeploymentRollout(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
         request) {
   return child_->AsyncUpdateGameServerDeploymentRollout(cq, std::move(context),
@@ -143,14 +143,14 @@ GameServerDeploymentsServiceTracingStub::FetchDeploymentState(
 future<StatusOr<google::longrunning::Operation>>
 GameServerDeploymentsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> GameServerDeploymentsServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

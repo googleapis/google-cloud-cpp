@@ -38,7 +38,7 @@ ServicesMetadata::ServicesMetadata(std::shared_ptr<ServicesStub> child)
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::CreateServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -122,7 +122,7 @@ ServicesMetadata::ListServices(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -151,7 +151,7 @@ ServicesMetadata::AsyncUpdateService(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -202,7 +202,7 @@ ServicesMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -210,7 +210,7 @@ ServicesMetadata::AsyncGetOperation(
 
 future<Status> ServicesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

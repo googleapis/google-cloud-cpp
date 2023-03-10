@@ -35,12 +35,12 @@ class MockInstanceAdminStub
               (override));
   MOCK_METHOD(
       future<StatusOr<google::longrunning::Operation>>, AsyncCreateInstance,
-      (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
        google::spanner::admin::instance::v1::CreateInstanceRequest const&),
       (override));
   MOCK_METHOD(
       future<StatusOr<google::longrunning::Operation>>, AsyncUpdateInstance,
-      (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
        google::spanner::admin::instance::v1::UpdateInstanceRequest const&),
       (override));
   MOCK_METHOD(
@@ -82,11 +82,11 @@ class MockInstanceAdminStub
               (override));
   MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
               AsyncGetOperation,
-              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               (override));
   MOCK_METHOD(future<Status>, AsyncCancelOperation,
-              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::CancelOperationRequest const&),
               (override));
 };

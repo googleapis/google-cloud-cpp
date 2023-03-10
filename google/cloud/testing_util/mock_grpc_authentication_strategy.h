@@ -30,8 +30,8 @@ class MockAuthenticationStrategy
               (std::string const&, grpc::ChannelArguments const&), (override));
   MOCK_METHOD(bool, RequiresConfigureContext, (), (const, override));
   MOCK_METHOD(Status, ConfigureContext, (grpc::ClientContext&), (override));
-  MOCK_METHOD(future<StatusOr<std::unique_ptr<grpc::ClientContext>>>,
-              AsyncConfigureContext, (std::unique_ptr<grpc::ClientContext>),
+  MOCK_METHOD(future<StatusOr<std::shared_ptr<grpc::ClientContext>>>,
+              AsyncConfigureContext, (std::shared_ptr<grpc::ClientContext>),
               (override));
 };
 

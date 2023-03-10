@@ -51,11 +51,11 @@ BigQueryReadLogging::CreateReadSession(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::bigquery::storage::v1::ReadRowsResponse>>
 BigQueryReadLogging::ReadRows(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
               google::cloud::bigquery::storage::v1::ReadRowsResponse>> {

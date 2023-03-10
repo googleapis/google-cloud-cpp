@@ -45,7 +45,7 @@ FleetRoutingMetadata::OptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingMetadata::AsyncBatchOptimizeTours(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBatchOptimizeTours(cq, std::move(context), request);
@@ -54,7 +54,7 @@ FleetRoutingMetadata::AsyncBatchOptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -62,7 +62,7 @@ FleetRoutingMetadata::AsyncGetOperation(
 
 future<Status> FleetRoutingMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

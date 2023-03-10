@@ -454,7 +454,7 @@ SessionPool::AsyncBatchCreateSessions(
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::BatchCreateSessionsRequest const& request) {
         return stub->AsyncBatchCreateSessions(cq, std::move(context), request);
       },
@@ -469,7 +469,7 @@ future<Status> SessionPool::AsyncDeleteSession(
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::DeleteSessionRequest const& request) {
         return stub->AsyncDeleteSession(cq, std::move(context), request);
       },
@@ -490,7 +490,7 @@ SessionPool::AsyncRefreshSession(CompletionQueue& cq,
   return google::cloud::internal::AsyncRetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       Idempotency::kIdempotent, cq,
-      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::ExecuteSqlRequest const& request) {
         return stub->AsyncExecuteSql(cq, std::move(context), request);
       },

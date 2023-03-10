@@ -60,11 +60,11 @@ StatusOr<google::appengine::v1::Version> VersionsLogging::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::CreateVersionRequest const& request) {
         return child_->AsyncCreateVersion(cq, std::move(context), request);
       },
@@ -74,11 +74,11 @@ VersionsLogging::AsyncCreateVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::UpdateVersionRequest const& request) {
         return child_->AsyncUpdateVersion(cq, std::move(context), request);
       },
@@ -88,11 +88,11 @@ VersionsLogging::AsyncUpdateVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::DeleteVersionRequest const& request) {
         return child_->AsyncDeleteVersion(cq, std::move(context), request);
       },
@@ -102,11 +102,11 @@ VersionsLogging::AsyncDeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -115,11 +115,11 @@ VersionsLogging::AsyncGetOperation(
 
 future<Status> VersionsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

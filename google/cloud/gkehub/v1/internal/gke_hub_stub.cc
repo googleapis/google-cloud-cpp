@@ -81,7 +81,7 @@ StatusOr<google::cloud::gkehub::v1::Feature> DefaultGkeHubStub::GetFeature(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncCreateMembership(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkehub::v1::CreateMembershipRequest,
@@ -98,7 +98,7 @@ DefaultGkeHubStub::AsyncCreateMembership(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncCreateFeature(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkehub::v1::CreateFeatureRequest,
@@ -115,7 +115,7 @@ DefaultGkeHubStub::AsyncCreateFeature(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncDeleteMembership(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkehub::v1::DeleteMembershipRequest,
@@ -132,7 +132,7 @@ DefaultGkeHubStub::AsyncDeleteMembership(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncDeleteFeature(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkehub::v1::DeleteFeatureRequest,
@@ -149,7 +149,7 @@ DefaultGkeHubStub::AsyncDeleteFeature(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncUpdateMembership(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkehub::v1::UpdateMembershipRequest,
@@ -166,7 +166,7 @@ DefaultGkeHubStub::AsyncUpdateMembership(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncUpdateFeature(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkehub::v1::UpdateFeatureRequest,
@@ -196,7 +196,7 @@ DefaultGkeHubStub::GenerateConnectManifest(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGkeHubStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -211,7 +211,7 @@ DefaultGkeHubStub::AsyncGetOperation(
 
 future<Status> DefaultGkeHubStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

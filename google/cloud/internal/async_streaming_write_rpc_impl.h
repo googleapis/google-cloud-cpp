@@ -44,7 +44,7 @@ class AsyncStreamingWriteRpcImpl
  public:
   AsyncStreamingWriteRpcImpl(
       std::shared_ptr<CompletionQueueImpl> cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       std::unique_ptr<Response> response,
       std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream)
       : cq_(std::move(cq)),
@@ -135,7 +135,7 @@ class AsyncStreamingWriteRpcImpl
 
  private:
   std::shared_ptr<CompletionQueueImpl> cq_;
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<Response> response_;
   std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream_;
 };
@@ -158,7 +158,7 @@ using PrepareAsyncWriteRpc = absl::FunctionRef<
 template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingWriteRpc<Request, Response>>
 MakeStreamingWriteRpc(CompletionQueue const& cq,
-                      std::unique_ptr<grpc::ClientContext> context,
+                      std::shared_ptr<grpc::ClientContext> context,
                       PrepareAsyncWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto response = absl::make_unique<Response>();

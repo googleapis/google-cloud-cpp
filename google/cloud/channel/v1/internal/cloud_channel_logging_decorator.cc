@@ -122,11 +122,11 @@ CloudChannelServiceLogging::ImportCustomer(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncProvisionCloudIdentity(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::channel::v1::ProvisionCloudIdentityRequest const&
                  request) {
         return child_->AsyncProvisionCloudIdentity(cq, std::move(context),
@@ -189,12 +189,12 @@ CloudChannelServiceLogging::GetEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncCreateEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::channel::v1::CreateEntitlementRequest const& request) {
         return child_->AsyncCreateEntitlement(cq, std::move(context), request);
       },
@@ -204,12 +204,12 @@ CloudChannelServiceLogging::AsyncCreateEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::channel::v1::ChangeParametersRequest const& request) {
         return child_->AsyncChangeParameters(cq, std::move(context), request);
       },
@@ -219,11 +219,11 @@ CloudChannelServiceLogging::AsyncChangeParameters(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncChangeRenewalSettings(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::channel::v1::ChangeRenewalSettingsRequest const&
                  request) {
         return child_->AsyncChangeRenewalSettings(cq, std::move(context),
@@ -235,11 +235,11 @@ CloudChannelServiceLogging::AsyncChangeRenewalSettings(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::channel::v1::ChangeOfferRequest const& request) {
         return child_->AsyncChangeOffer(cq, std::move(context), request);
       },
@@ -249,12 +249,12 @@ CloudChannelServiceLogging::AsyncChangeOffer(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncStartPaidService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::channel::v1::StartPaidServiceRequest const& request) {
         return child_->AsyncStartPaidService(cq, std::move(context), request);
       },
@@ -264,11 +264,11 @@ CloudChannelServiceLogging::AsyncStartPaidService(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncSuspendEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::channel::v1::SuspendEntitlementRequest const&
                  request) {
         return child_->AsyncSuspendEntitlement(cq, std::move(context), request);
@@ -279,12 +279,12 @@ CloudChannelServiceLogging::AsyncSuspendEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncCancelEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::channel::v1::CancelEntitlementRequest const& request) {
         return child_->AsyncCancelEntitlement(cq, std::move(context), request);
       },
@@ -294,11 +294,11 @@ CloudChannelServiceLogging::AsyncCancelEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncActivateEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::channel::v1::ActivateEntitlementRequest const&
                  request) {
         return child_->AsyncActivateEntitlement(cq, std::move(context),
@@ -310,11 +310,11 @@ CloudChannelServiceLogging::AsyncActivateEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncTransferEntitlements(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::channel::v1::TransferEntitlementsRequest const&
                  request) {
         return child_->AsyncTransferEntitlements(cq, std::move(context),
@@ -326,13 +326,13 @@ CloudChannelServiceLogging::AsyncTransferEntitlements(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
               request) {
         return child_->AsyncTransferEntitlementsToGoogle(cq, std::move(context),
@@ -651,11 +651,11 @@ CloudChannelServiceLogging::ListSubscribers(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -664,11 +664,11 @@ CloudChannelServiceLogging::AsyncGetOperation(
 
 future<Status> CloudChannelServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

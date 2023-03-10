@@ -61,46 +61,46 @@ class ProductServiceLogging : public ProductServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::ImportProductsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSetInventory(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::SetInventoryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddFulfillmentPlaces(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemoveFulfillmentPlaces(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddLocalInventories(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemoveLocalInventories(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

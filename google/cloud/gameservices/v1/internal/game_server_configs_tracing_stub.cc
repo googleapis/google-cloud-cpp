@@ -58,7 +58,7 @@ GameServerConfigsServiceTracingStub::GetGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceTracingStub::AsyncCreateGameServerConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
   return child_->AsyncCreateGameServerConfig(cq, std::move(context), request);
 }
@@ -66,7 +66,7 @@ GameServerConfigsServiceTracingStub::AsyncCreateGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceTracingStub::AsyncDeleteGameServerConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
   return child_->AsyncDeleteGameServerConfig(cq, std::move(context), request);
 }
@@ -74,14 +74,14 @@ GameServerConfigsServiceTracingStub::AsyncDeleteGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> GameServerConfigsServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

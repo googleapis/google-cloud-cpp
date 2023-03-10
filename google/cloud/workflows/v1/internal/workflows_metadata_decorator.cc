@@ -51,7 +51,7 @@ StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsMetadata::GetWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsMetadata::AsyncCreateWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateWorkflow(cq, std::move(context), request);
@@ -60,7 +60,7 @@ WorkflowsMetadata::AsyncCreateWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsMetadata::AsyncDeleteWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteWorkflow(cq, std::move(context), request);
@@ -69,7 +69,7 @@ WorkflowsMetadata::AsyncDeleteWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsMetadata::AsyncUpdateWorkflow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   SetMetadata(*context, "workflow.name=" + request.workflow().name());
   return child_->AsyncUpdateWorkflow(cq, std::move(context), request);
@@ -78,7 +78,7 @@ WorkflowsMetadata::AsyncUpdateWorkflow(
 future<StatusOr<google::longrunning::Operation>>
 WorkflowsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -86,7 +86,7 @@ WorkflowsMetadata::AsyncGetOperation(
 
 future<Status> WorkflowsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

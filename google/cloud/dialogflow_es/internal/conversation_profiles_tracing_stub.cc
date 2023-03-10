@@ -102,7 +102,7 @@ Status ConversationProfilesTracingStub::DeleteConversationProfile(
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesTracingStub::AsyncSetSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
   return child_->AsyncSetSuggestionFeatureConfig(cq, std::move(context),
@@ -112,7 +112,7 @@ ConversationProfilesTracingStub::AsyncSetSuggestionFeatureConfig(
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesTracingStub::AsyncClearSuggestionFeatureConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
   return child_->AsyncClearSuggestionFeatureConfig(cq, std::move(context),
@@ -122,14 +122,14 @@ ConversationProfilesTracingStub::AsyncClearSuggestionFeatureConfig(
 future<StatusOr<google::longrunning::Operation>>
 ConversationProfilesTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ConversationProfilesTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -36,8 +36,8 @@ class GrpcServiceAccountAuthentication : public GrpcAuthenticationStrategy {
       grpc::ChannelArguments const& arguments) override;
   bool RequiresConfigureContext() const override;
   Status ConfigureContext(grpc::ClientContext&) override;
-  future<StatusOr<std::unique_ptr<grpc::ClientContext>>> AsyncConfigureContext(
-      std::unique_ptr<grpc::ClientContext> context) override;
+  future<StatusOr<std::shared_ptr<grpc::ClientContext>>> AsyncConfigureContext(
+      std::shared_ptr<grpc::ClientContext> context) override;
 
  private:
   std::shared_ptr<grpc::CallCredentials> credentials_;

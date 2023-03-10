@@ -83,7 +83,7 @@ TranslationServiceTracingStub::TranslateDocument(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncBatchTranslateText(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   return child_->AsyncBatchTranslateText(cq, std::move(context), request);
 }
@@ -91,7 +91,7 @@ TranslationServiceTracingStub::AsyncBatchTranslateText(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   return child_->AsyncBatchTranslateDocument(cq, std::move(context), request);
@@ -100,7 +100,7 @@ TranslationServiceTracingStub::AsyncBatchTranslateDocument(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   return child_->AsyncCreateGlossary(cq, std::move(context), request);
 }
@@ -132,7 +132,7 @@ TranslationServiceTracingStub::GetGlossary(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncDeleteGlossary(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   return child_->AsyncDeleteGlossary(cq, std::move(context), request);
 }
@@ -140,14 +140,14 @@ TranslationServiceTracingStub::AsyncDeleteGlossary(
 future<StatusOr<google::longrunning::Operation>>
 TranslationServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> TranslationServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

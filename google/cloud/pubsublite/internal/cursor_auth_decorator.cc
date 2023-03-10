@@ -36,13 +36,13 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
 CursorServiceAuth::AsyncStreamingCommitCursor(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>;
 
   auto& child = child_;
-  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingCommitCursor(cq, std::move(ctx));
   };
   return absl::make_unique<StreamAuth>(

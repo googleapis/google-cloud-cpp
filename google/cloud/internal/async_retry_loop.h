@@ -50,7 +50,7 @@ struct FutureValueType<future<T>> {
  * class MyStub { public:
  *   virtual future<StatusOr<ResponseProto>> AsyncRpcName(
  *      google::cloud::CompletionQueue& cq,
- *      std::unique_ptr<grpc::ClientContext> context,
+ *      std::shared_ptr<grpc::ClientContext> context,
  *      RequestProto const& request) = 0;
  * };
  * @endcode
@@ -184,7 +184,7 @@ class AsyncRetryLoopImpl
 
   using ReturnType = ::google::cloud::internal::invoke_result_t<
       Functor, google::cloud::CompletionQueue&,
-      std::unique_ptr<grpc::ClientContext>, Request const&>;
+      std::shared_ptr<grpc::ClientContext>, Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
 
   future<T> Start() {
@@ -346,7 +346,7 @@ template <typename Functor, typename Request, typename RetryPolicyType,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
                   Functor, google::cloud::CompletionQueue&,
-                  std::unique_ptr<grpc::ClientContext>, Request const&>::value,
+                  std::shared_ptr<grpc::ClientContext>, Request const&>::value,
               int>::type = 0>
 auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                     std::unique_ptr<BackoffPolicy> backoff_policy,
@@ -354,7 +354,7 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                     Functor&& functor, Request request, char const* location)
     -> google::cloud::internal::invoke_result_t<
         Functor, google::cloud::CompletionQueue&,
-        std::unique_ptr<grpc::ClientContext>, Request const&> {
+        std::shared_ptr<grpc::ClientContext>, Request const&> {
   auto loop =
       std::make_shared<AsyncRetryLoopImpl<Functor, Request, RetryPolicyType>>(
           std::move(retry_policy), std::move(backoff_policy), idempotency,

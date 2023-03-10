@@ -33,7 +33,7 @@ AssetServiceTracingStub::AssetServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceTracingStub::AsyncExportAssets(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
   return child_->AsyncExportAssets(cq, std::move(context), request);
 }
@@ -155,7 +155,7 @@ AssetServiceTracingStub::AnalyzeIamPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceTracingStub::AsyncAnalyzeIamPolicyLongrunning(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
   return child_->AsyncAnalyzeIamPolicyLongrunning(cq, std::move(context),
@@ -300,14 +300,14 @@ AssetServiceTracingStub::AnalyzeOrgPolicyGovernedAssets(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> AssetServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -60,21 +60,21 @@ class SpannerStub {
   virtual future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) = 0;
   virtual Status DeleteSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::DeleteSessionRequest const& request) = 0;
   virtual future<Status> AsyncDeleteSession(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::spanner::v1::DeleteSessionRequest const& request) = 0;
   virtual StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteSqlRequest const& request) = 0;
   virtual future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::spanner::v1::ExecuteSqlRequest const& request) = 0;
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>

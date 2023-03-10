@@ -42,7 +42,7 @@ class JobServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateJobs(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Job> GetJob(
@@ -55,7 +55,7 @@ class JobServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchUpdateJobs(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request) = 0;
 
   virtual Status DeleteJob(
@@ -64,7 +64,7 @@ class JobServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteJobs(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::ListJobsResponse> ListJobs(
@@ -82,12 +82,12 @@ class JobServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -106,7 +106,7 @@ class DefaultJobServiceStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateJobs(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request)
       override;
 
@@ -120,7 +120,7 @@ class DefaultJobServiceStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchUpdateJobs(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request)
       override;
 
@@ -130,7 +130,7 @@ class DefaultJobServiceStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteJobs(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request)
       override;
 
@@ -148,12 +148,12 @@ class DefaultJobServiceStub : public JobServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -39,7 +39,7 @@ class CursorServiceMetadata : public CursorServiceStub {
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
       grpc::ClientContext& context,

@@ -45,7 +45,7 @@ ApplicationsTracingStub::GetApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncCreateApplication(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateApplicationRequest const& request) {
   return child_->AsyncCreateApplication(cq, std::move(context), request);
 }
@@ -53,7 +53,7 @@ ApplicationsTracingStub::AsyncCreateApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncUpdateApplication(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateApplicationRequest const& request) {
   return child_->AsyncUpdateApplication(cq, std::move(context), request);
 }
@@ -61,7 +61,7 @@ ApplicationsTracingStub::AsyncUpdateApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncRepairApplication(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::RepairApplicationRequest const& request) {
   return child_->AsyncRepairApplication(cq, std::move(context), request);
 }
@@ -69,14 +69,14 @@ ApplicationsTracingStub::AsyncRepairApplication(
 future<StatusOr<google::longrunning::Operation>>
 ApplicationsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ApplicationsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

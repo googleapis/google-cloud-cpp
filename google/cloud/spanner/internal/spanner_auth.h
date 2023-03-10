@@ -84,15 +84,15 @@ class SpannerAuth : public SpannerStub {
 
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
 
   future<Status> AsyncDeleteSession(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       google::spanner::v1::DeleteSessionRequest const& request) override;
 
   future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
  private:

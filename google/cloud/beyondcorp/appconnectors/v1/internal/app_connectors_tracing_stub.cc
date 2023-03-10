@@ -61,7 +61,7 @@ AppConnectorsServiceTracingStub::GetAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncCreateAppConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         CreateAppConnectorRequest const& request) {
   return child_->AsyncCreateAppConnector(cq, std::move(context), request);
@@ -70,7 +70,7 @@ AppConnectorsServiceTracingStub::AsyncCreateAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncUpdateAppConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const& request) {
   return child_->AsyncUpdateAppConnector(cq, std::move(context), request);
@@ -79,7 +79,7 @@ AppConnectorsServiceTracingStub::AsyncUpdateAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncDeleteAppConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         DeleteAppConnectorRequest const& request) {
   return child_->AsyncDeleteAppConnector(cq, std::move(context), request);
@@ -88,7 +88,7 @@ AppConnectorsServiceTracingStub::AsyncDeleteAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request) {
   return child_->AsyncReportStatus(cq, std::move(context), request);
@@ -97,14 +97,14 @@ AppConnectorsServiceTracingStub::AsyncReportStatus(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> AppConnectorsServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

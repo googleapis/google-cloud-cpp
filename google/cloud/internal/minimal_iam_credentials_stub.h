@@ -49,7 +49,7 @@ class MinimalIamCredentialsStub {
   virtual future<
       StatusOr<::google::iam::credentials::v1::GenerateAccessTokenResponse>>
   AsyncGenerateAccessToken(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       ::google::iam::credentials::v1::GenerateAccessTokenRequest const&
           request) = 0;
 

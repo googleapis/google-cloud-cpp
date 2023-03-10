@@ -47,30 +47,30 @@ class UserEventServiceMetadata : public UserEventServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncPurgeUserEvents(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::PurgeUserEventsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportUserEvents(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::ImportUserEventsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRejoinUserEvents(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::retail::v2::RejoinUserEventsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

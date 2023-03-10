@@ -37,11 +37,11 @@ AssetServiceLogging::AssetServiceLogging(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceLogging::AsyncExportAssets(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::asset::v1::ExportAssetsRequest const& request) {
         return child_->AsyncExportAssets(cq, std::move(context), request);
       },
@@ -170,12 +170,12 @@ AssetServiceLogging::AnalyzeIamPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceLogging::AsyncAnalyzeIamPolicyLongrunning(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
                  request) {
         return child_->AsyncAnalyzeIamPolicyLongrunning(cq, std::move(context),
@@ -327,11 +327,11 @@ AssetServiceLogging::AnalyzeOrgPolicyGovernedAssets(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -340,11 +340,11 @@ AssetServiceLogging::AsyncGetOperation(
 
 future<Status> AssetServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

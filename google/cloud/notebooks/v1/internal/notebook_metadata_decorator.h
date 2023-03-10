@@ -46,44 +46,44 @@ class NotebookServiceMetadata : public NotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRegisterInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::RegisterInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSetInstanceAccelerator(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSetInstanceMachineType(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateShieldedInstanceConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSetInstanceLabels(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request)
       override;
 
@@ -95,31 +95,31 @@ class NotebookServiceMetadata : public NotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::DeleteInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::StartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::StopInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::ResetInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReportInstanceInfo(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request)
       override;
 
@@ -137,25 +137,25 @@ class NotebookServiceMetadata : public NotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::UpgradeInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRollbackInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeInstanceInternal(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
           request) override;
 
@@ -171,13 +171,13 @@ class NotebookServiceMetadata : public NotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::CreateEnvironmentRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEnvironment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request)
       override;
 
@@ -192,19 +192,19 @@ class NotebookServiceMetadata : public NotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSchedule(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::DeleteScheduleRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSchedule(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::CreateScheduleRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTriggerSchedule(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::TriggerScheduleRequest const& request)
       override;
 
@@ -220,24 +220,24 @@ class NotebookServiceMetadata : public NotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteExecution(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::DeleteExecutionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateExecution(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::CreateExecutionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

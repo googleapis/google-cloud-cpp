@@ -36,7 +36,7 @@ CloudBuildMetadata::CloudBuildMetadata(std::shared_ptr<CloudBuildStub> child)
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncCreateBuild(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncCreateBuild(cq, std::move(context), request);
@@ -68,7 +68,7 @@ CloudBuildMetadata::CancelBuild(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncRetryBuild(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncRetryBuild(cq, std::move(context), request);
@@ -77,7 +77,7 @@ CloudBuildMetadata::AsyncRetryBuild(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncApproveBuild(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncApproveBuild(cq, std::move(context), request);
@@ -128,7 +128,7 @@ CloudBuildMetadata::UpdateBuildTrigger(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncRunBuildTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncRunBuildTrigger(cq, std::move(context), request);
@@ -146,7 +146,7 @@ CloudBuildMetadata::ReceiveTriggerWebhook(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncCreateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateWorkerPool(cq, std::move(context), request);
@@ -163,7 +163,7 @@ CloudBuildMetadata::GetWorkerPool(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncDeleteWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteWorkerPool(cq, std::move(context), request);
@@ -172,7 +172,7 @@ CloudBuildMetadata::AsyncDeleteWorkerPool(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncUpdateWorkerPool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
   SetMetadata(*context, "worker_pool.name=" + request.worker_pool().name());
   return child_->AsyncUpdateWorkerPool(cq, std::move(context), request);
@@ -189,7 +189,7 @@ CloudBuildMetadata::ListWorkerPools(
 future<StatusOr<google::longrunning::Operation>>
 CloudBuildMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -197,7 +197,7 @@ CloudBuildMetadata::AsyncGetOperation(
 
 future<Status> CloudBuildMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

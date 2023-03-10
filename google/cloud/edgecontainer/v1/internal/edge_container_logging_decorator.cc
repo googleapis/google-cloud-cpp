@@ -61,11 +61,11 @@ EdgeContainerLogging::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::CreateClusterRequest const&
                  request) {
         return child_->AsyncCreateCluster(cq, std::move(context), request);
@@ -76,11 +76,11 @@ EdgeContainerLogging::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::UpdateClusterRequest const&
                  request) {
         return child_->AsyncUpdateCluster(cq, std::move(context), request);
@@ -91,11 +91,11 @@ EdgeContainerLogging::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::DeleteClusterRequest const&
                  request) {
         return child_->AsyncDeleteCluster(cq, std::move(context), request);
@@ -144,11 +144,11 @@ EdgeContainerLogging::GetNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncCreateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::CreateNodePoolRequest const&
                  request) {
         return child_->AsyncCreateNodePool(cq, std::move(context), request);
@@ -159,11 +159,11 @@ EdgeContainerLogging::AsyncCreateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::UpdateNodePoolRequest const&
                  request) {
         return child_->AsyncUpdateNodePool(cq, std::move(context), request);
@@ -174,11 +174,11 @@ EdgeContainerLogging::AsyncUpdateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::DeleteNodePoolRequest const&
                  request) {
         return child_->AsyncDeleteNodePool(cq, std::move(context), request);
@@ -240,12 +240,12 @@ EdgeContainerLogging::GetVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncCreateVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
                  request) {
         return child_->AsyncCreateVpnConnection(cq, std::move(context),
@@ -257,12 +257,12 @@ EdgeContainerLogging::AsyncCreateVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
                  request) {
         return child_->AsyncDeleteVpnConnection(cq, std::move(context),
@@ -274,11 +274,11 @@ EdgeContainerLogging::AsyncDeleteVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -287,11 +287,11 @@ EdgeContainerLogging::AsyncGetOperation(
 
 future<Status> EdgeContainerLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

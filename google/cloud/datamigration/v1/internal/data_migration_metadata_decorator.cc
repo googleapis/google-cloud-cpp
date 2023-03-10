@@ -53,7 +53,7 @@ DataMigrationServiceMetadata::GetMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncCreateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateMigrationJob(cq, std::move(context), request);
@@ -62,7 +62,7 @@ DataMigrationServiceMetadata::AsyncCreateMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncUpdateMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
   SetMetadata(*context, "migration_job.name=" + request.migration_job().name());
   return child_->AsyncUpdateMigrationJob(cq, std::move(context), request);
@@ -71,7 +71,7 @@ DataMigrationServiceMetadata::AsyncUpdateMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncDeleteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteMigrationJob(cq, std::move(context), request);
@@ -80,7 +80,7 @@ DataMigrationServiceMetadata::AsyncDeleteMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncStartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncStartMigrationJob(cq, std::move(context), request);
@@ -89,7 +89,7 @@ DataMigrationServiceMetadata::AsyncStartMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncStopMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncStopMigrationJob(cq, std::move(context), request);
@@ -98,7 +98,7 @@ DataMigrationServiceMetadata::AsyncStopMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncResumeMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncResumeMigrationJob(cq, std::move(context), request);
@@ -107,7 +107,7 @@ DataMigrationServiceMetadata::AsyncResumeMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncPromoteMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncPromoteMigrationJob(cq, std::move(context), request);
@@ -116,7 +116,7 @@ DataMigrationServiceMetadata::AsyncPromoteMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncVerifyMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncVerifyMigrationJob(cq, std::move(context), request);
@@ -125,7 +125,7 @@ DataMigrationServiceMetadata::AsyncVerifyMigrationJob(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncRestartMigrationJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncRestartMigrationJob(cq, std::move(context), request);
@@ -158,7 +158,7 @@ DataMigrationServiceMetadata::GetConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncCreateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -168,7 +168,7 @@ DataMigrationServiceMetadata::AsyncCreateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
   SetMetadata(*context,
@@ -179,7 +179,7 @@ DataMigrationServiceMetadata::AsyncUpdateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -189,7 +189,7 @@ DataMigrationServiceMetadata::AsyncDeleteConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DataMigrationServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -197,7 +197,7 @@ DataMigrationServiceMetadata::AsyncGetOperation(
 
 future<Status> DataMigrationServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

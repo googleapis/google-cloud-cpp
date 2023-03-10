@@ -35,9 +35,9 @@ class AsyncStreamingWriteRpcAuth
  public:
   using StreamFactory =
       std::function<std::unique_ptr<AsyncStreamingWriteRpc<Request, Response>>(
-          std::unique_ptr<grpc::ClientContext>)>;
+          std::shared_ptr<grpc::ClientContext>)>;
 
-  AsyncStreamingWriteRpcAuth(std::unique_ptr<grpc::ClientContext> context,
+  AsyncStreamingWriteRpcAuth(std::shared_ptr<grpc::ClientContext> context,
                              std::shared_ptr<GrpcAuthenticationStrategy> auth,
                              StreamFactory factory)
       : auth_(std::move(auth)),
@@ -47,7 +47,7 @@ class AsyncStreamingWriteRpcAuth
   void Cancel() override { state_->Cancel(); }
 
   future<bool> Start() override {
-    using Result = StatusOr<std::unique_ptr<grpc::ClientContext>>;
+    using Result = StatusOr<std::shared_ptr<grpc::ClientContext>>;
     auto weak = std::weak_ptr<SharedState>(state_);
     return auth_->AsyncConfigureContext(state_->ReleaseInitialContext())
         .then([weak](future<Result> f) mutable {
@@ -76,7 +76,7 @@ class AsyncStreamingWriteRpcAuth
  private:
   struct SharedState {
     SharedState(StreamFactory factory,
-                std::unique_ptr<grpc::ClientContext> initial_context)
+                std::shared_ptr<grpc::ClientContext> initial_context)
         : factory(std::move(factory)),
           initial_context(std::move(initial_context)),
           stream(
@@ -84,13 +84,13 @@ class AsyncStreamingWriteRpcAuth
                   Status(StatusCode::kInternal,
                          "Stream is not yet started."))) {}
 
-    std::unique_ptr<grpc::ClientContext> ReleaseInitialContext() {
+    std::shared_ptr<grpc::ClientContext> ReleaseInitialContext() {
       std::lock_guard<std::mutex> g{mu};
       return std::move(initial_context);
     }
 
     future<bool> OnStart(
-        StatusOr<std::unique_ptr<grpc::ClientContext>> context) {
+        StatusOr<std::shared_ptr<grpc::ClientContext>> context) {
       std::lock_guard<std::mutex> g{mu};
       if (cancelled) return make_ready_future(false);
       if (context) {
@@ -124,7 +124,7 @@ class AsyncStreamingWriteRpcAuth
 
     StreamFactory const factory;
     std::mutex mu;
-    std::unique_ptr<grpc::ClientContext> initial_context;
+    std::shared_ptr<grpc::ClientContext> initial_context;
     std::unique_ptr<AsyncStreamingWriteRpc<Request, Response>> stream;
     bool cancelled = false;
   };

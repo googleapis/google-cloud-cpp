@@ -58,7 +58,7 @@ DefaultConnectorsStub::GetConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::CreateConnectionRequest,
@@ -76,7 +76,7 @@ DefaultConnectorsStub::AsyncCreateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::UpdateConnectionRequest,
@@ -94,7 +94,7 @@ DefaultConnectorsStub::AsyncUpdateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::DeleteConnectionRequest,
@@ -242,7 +242,7 @@ DefaultConnectorsStub::GetRuntimeConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -257,7 +257,7 @@ DefaultConnectorsStub::AsyncGetOperation(
 
 future<Status> DefaultConnectorsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

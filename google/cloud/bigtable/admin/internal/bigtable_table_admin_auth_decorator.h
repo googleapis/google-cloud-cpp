@@ -53,7 +53,7 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTable(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::UpdateTableRequest const& request) override;
 
   Status DeleteTable(
@@ -62,7 +62,7 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteTable(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::UndeleteTableRequest const& request)
       override;
 
@@ -88,7 +88,7 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::CreateBackupRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
@@ -109,7 +109,7 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreTable(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::RestoreTableRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -127,18 +127,18 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

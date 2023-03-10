@@ -39,7 +39,7 @@ class SecurityCenterStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncBulkMuteFindings(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
           request) = 0;
 
@@ -147,7 +147,7 @@ class SecurityCenterStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRunAssetDiscovery(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) = 0;
 
@@ -235,12 +235,12 @@ class SecurityCenterStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -256,7 +256,7 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncBulkMuteFindings(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request)
       override;
 
@@ -361,7 +361,7 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunAssetDiscovery(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request) override;
 
@@ -447,12 +447,12 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

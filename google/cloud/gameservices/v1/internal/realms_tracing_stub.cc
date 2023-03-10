@@ -55,7 +55,7 @@ StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceTracingStub::GetRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceTracingStub::AsyncCreateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateRealmRequest const& request) {
   return child_->AsyncCreateRealm(cq, std::move(context), request);
 }
@@ -63,7 +63,7 @@ RealmsServiceTracingStub::AsyncCreateRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceTracingStub::AsyncDeleteRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteRealmRequest const& request) {
   return child_->AsyncDeleteRealm(cq, std::move(context), request);
 }
@@ -71,7 +71,7 @@ RealmsServiceTracingStub::AsyncDeleteRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceTracingStub::AsyncUpdateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateRealmRequest const& request) {
   return child_->AsyncUpdateRealm(cq, std::move(context), request);
 }
@@ -91,14 +91,14 @@ RealmsServiceTracingStub::PreviewRealmUpdate(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> RealmsServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -50,19 +50,19 @@ class CloudFunctionsServiceAuth : public CloudFunctionsServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFunction(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::functions::v1::CreateFunctionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFunction(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::functions::v1::UpdateFunctionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFunction(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::functions::v1::DeleteFunctionRequest const& request)
       override;
 
@@ -97,12 +97,12 @@ class CloudFunctionsServiceAuth : public CloudFunctionsServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

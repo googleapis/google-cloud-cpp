@@ -83,7 +83,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullResponse>>
 SubscriberMetadata::AsyncStreamingPull(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   SetMetadata(*context);
   return child_->AsyncStreamingPull(cq, std::move(context));
 }
@@ -140,7 +140,7 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberMetadata::Seek(
 
 future<Status> SubscriberMetadata::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
   SetMetadata(*context, "subscription=" + request.subscription());
   return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
@@ -148,7 +148,7 @@ future<Status> SubscriberMetadata::AsyncModifyAckDeadline(
 
 future<Status> SubscriberMetadata::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::AcknowledgeRequest const& request) {
   SetMetadata(*context, "subscription=" + request.subscription());
   return child_->AsyncAcknowledge(cq, std::move(context), request);

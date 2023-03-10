@@ -33,7 +33,7 @@ AssuredWorkloadsServiceStub::~AssuredWorkloadsServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssuredWorkloadsServiceStub::AsyncCreateWorkload(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest,
@@ -151,7 +151,7 @@ DefaultAssuredWorkloadsServiceStub::AcknowledgeViolation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssuredWorkloadsServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -166,7 +166,7 @@ DefaultAssuredWorkloadsServiceStub::AsyncGetOperation(
 
 future<Status> DefaultAssuredWorkloadsServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

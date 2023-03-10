@@ -38,7 +38,7 @@ BigtableMetadata::BigtableMetadata(std::shared_ptr<BigtableStub> child)
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableMetadata::ReadRows(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -71,7 +71,7 @@ BigtableMetadata::ReadRows(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::SampleRowKeysResponse>>
 BigtableMetadata::SampleRowKeys(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -135,7 +135,7 @@ StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::bigtable::v2::MutateRowsResponse>>
 BigtableMetadata::MutateRows(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::MutateRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -265,7 +265,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableMetadata::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -299,7 +299,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::SampleRowKeysResponse>>
 BigtableMetadata::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -332,7 +332,7 @@ BigtableMetadata::AsyncSampleRowKeys(
 future<StatusOr<google::bigtable::v2::MutateRowResponse>>
 BigtableMetadata::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::MutateRowRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -366,7 +366,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::MutateRowsResponse>>
 BigtableMetadata::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::MutateRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -399,7 +399,7 @@ BigtableMetadata::AsyncMutateRows(
 future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
 BigtableMetadata::AsyncCheckAndMutateRow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -432,7 +432,7 @@ BigtableMetadata::AsyncCheckAndMutateRow(
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableMetadata::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);

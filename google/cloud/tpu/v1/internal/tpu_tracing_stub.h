@@ -46,27 +46,27 @@ class TpuTracingStub : public TpuStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReimageNode(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
@@ -93,12 +93,12 @@ class TpuTracingStub : public TpuStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

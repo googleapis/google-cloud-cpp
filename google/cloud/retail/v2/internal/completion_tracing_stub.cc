@@ -45,7 +45,7 @@ CompletionServiceTracingStub::CompleteQuery(
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceTracingStub::AsyncImportCompletionData(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   return child_->AsyncImportCompletionData(cq, std::move(context), request);
 }
@@ -53,14 +53,14 @@ CompletionServiceTracingStub::AsyncImportCompletionData(
 future<StatusOr<google::longrunning::Operation>>
 CompletionServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> CompletionServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

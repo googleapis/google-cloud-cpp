@@ -52,21 +52,21 @@ class GameServerDeploymentsServiceMetadata
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateGameServerDeployment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteGameServerDeployment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateGameServerDeployment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
           request) override;
 
@@ -79,7 +79,7 @@ class GameServerDeploymentsServiceMetadata
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateGameServerDeploymentRollout(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::gaming::v1::UpdateGameServerDeploymentRolloutRequest const&
           request) override;
 
@@ -98,12 +98,12 @@ class GameServerDeploymentsServiceMetadata
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

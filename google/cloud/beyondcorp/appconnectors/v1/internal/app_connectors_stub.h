@@ -49,36 +49,36 @@ class AppConnectorsServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateAppConnector(google::cloud::CompletionQueue& cq,
-                          std::unique_ptr<grpc::ClientContext> context,
+                          std::shared_ptr<grpc::ClientContext> context,
                           google::cloud::beyondcorp::appconnectors::v1::
                               CreateAppConnectorRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateAppConnector(google::cloud::CompletionQueue& cq,
-                          std::unique_ptr<grpc::ClientContext> context,
+                          std::shared_ptr<grpc::ClientContext> context,
                           google::cloud::beyondcorp::appconnectors::v1::
                               UpdateAppConnectorRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteAppConnector(google::cloud::CompletionQueue& cq,
-                          std::unique_ptr<grpc::ClientContext> context,
+                          std::shared_ptr<grpc::ClientContext> context,
                           google::cloud::beyondcorp::appconnectors::v1::
                               DeleteAppConnectorRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncReportStatus(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -105,36 +105,36 @@ class DefaultAppConnectorsServiceStub : public AppConnectorsServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAppConnector(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::beyondcorp::appconnectors::v1::
           CreateAppConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAppConnector(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::beyondcorp::appconnectors::v1::
           UpdateAppConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAppConnector(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReportStatus(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

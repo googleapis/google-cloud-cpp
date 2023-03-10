@@ -42,7 +42,7 @@ class PublisherServiceLogging : public PublisherServiceStub {
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,
-               std::unique_ptr<grpc::ClientContext> context) override;
+               std::shared_ptr<grpc::ClientContext> context) override;
 
  private:
   std::shared_ptr<PublisherServiceStub> child_;

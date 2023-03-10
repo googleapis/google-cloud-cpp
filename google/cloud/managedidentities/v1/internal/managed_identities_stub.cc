@@ -33,7 +33,7 @@ ManagedIdentitiesServiceStub::~ManagedIdentitiesServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncCreateMicrosoftAdDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -90,7 +90,7 @@ DefaultManagedIdentitiesServiceStub::GetDomain(
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncUpdateDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::managedidentities::v1::UpdateDomainRequest,
@@ -108,7 +108,7 @@ DefaultManagedIdentitiesServiceStub::AsyncUpdateDomain(
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncDeleteDomain(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::managedidentities::v1::DeleteDomainRequest,
@@ -126,7 +126,7 @@ DefaultManagedIdentitiesServiceStub::AsyncDeleteDomain(
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncAttachTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::managedidentities::v1::AttachTrustRequest,
@@ -144,7 +144,7 @@ DefaultManagedIdentitiesServiceStub::AsyncAttachTrust(
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncReconfigureTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -164,7 +164,7 @@ DefaultManagedIdentitiesServiceStub::AsyncReconfigureTrust(
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncDetachTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::managedidentities::v1::DetachTrustRequest,
@@ -182,7 +182,7 @@ DefaultManagedIdentitiesServiceStub::AsyncDetachTrust(
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncValidateTrust(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::managedidentities::v1::ValidateTrustRequest,
@@ -200,7 +200,7 @@ DefaultManagedIdentitiesServiceStub::AsyncValidateTrust(
 future<StatusOr<google::longrunning::Operation>>
 DefaultManagedIdentitiesServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -215,7 +215,7 @@ DefaultManagedIdentitiesServiceStub::AsyncGetOperation(
 
 future<Status> DefaultManagedIdentitiesServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

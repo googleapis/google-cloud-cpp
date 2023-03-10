@@ -37,7 +37,7 @@ AssetServiceMetadata::AssetServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceMetadata::AsyncExportAssets(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncExportAssets(cq, std::move(context), request);
@@ -123,7 +123,7 @@ AssetServiceMetadata::AnalyzeIamPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceMetadata::AsyncAnalyzeIamPolicyLongrunning(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
   SetMetadata(*context,
@@ -225,7 +225,7 @@ AssetServiceMetadata::AnalyzeOrgPolicyGovernedAssets(
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -233,7 +233,7 @@ AssetServiceMetadata::AsyncGetOperation(
 
 future<Status> AssetServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

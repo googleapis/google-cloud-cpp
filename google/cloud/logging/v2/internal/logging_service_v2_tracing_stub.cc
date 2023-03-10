@@ -94,14 +94,14 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2TracingStub::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->AsyncTailLogEntries(cq, std::move(context));
 }
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2TracingStub::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   return child_->AsyncWriteLogEntries(cq, std::move(context), request);
 }

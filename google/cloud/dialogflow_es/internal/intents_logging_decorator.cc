@@ -96,11 +96,11 @@ Status IntentsLogging::DeleteIntent(
 future<StatusOr<google::longrunning::Operation>>
 IntentsLogging::AsyncBatchUpdateIntents(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&
                  request) {
         return child_->AsyncBatchUpdateIntents(cq, std::move(context), request);
@@ -111,11 +111,11 @@ IntentsLogging::AsyncBatchUpdateIntents(
 future<StatusOr<google::longrunning::Operation>>
 IntentsLogging::AsyncBatchDeleteIntents(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&
                  request) {
         return child_->AsyncBatchDeleteIntents(cq, std::move(context), request);
@@ -126,11 +126,11 @@ IntentsLogging::AsyncBatchDeleteIntents(
 future<StatusOr<google::longrunning::Operation>>
 IntentsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -139,11 +139,11 @@ IntentsLogging::AsyncGetOperation(
 
 future<Status> IntentsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

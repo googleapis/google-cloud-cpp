@@ -36,7 +36,7 @@ AwsClustersMetadata::AwsClustersMetadata(std::shared_ptr<AwsClustersStub> child)
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncCreateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateAwsCluster(cq, std::move(context), request);
@@ -45,7 +45,7 @@ AwsClustersMetadata::AsyncCreateAwsCluster(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   SetMetadata(*context, "aws_cluster.name=" + request.aws_cluster().name());
   return child_->AsyncUpdateAwsCluster(cq, std::move(context), request);
@@ -70,7 +70,7 @@ AwsClustersMetadata::ListAwsClusters(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncDeleteAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteAwsCluster(cq, std::move(context), request);
@@ -88,7 +88,7 @@ AwsClustersMetadata::GenerateAwsAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncCreateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateAwsNodePool(cq, std::move(context), request);
@@ -97,7 +97,7 @@ AwsClustersMetadata::AsyncCreateAwsNodePool(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   SetMetadata(*context, "aws_node_pool.name=" + request.aws_node_pool().name());
   return child_->AsyncUpdateAwsNodePool(cq, std::move(context), request);
@@ -122,7 +122,7 @@ AwsClustersMetadata::ListAwsNodePools(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncDeleteAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteAwsNodePool(cq, std::move(context), request);
@@ -140,7 +140,7 @@ AwsClustersMetadata::GetAwsServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 AwsClustersMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -148,7 +148,7 @@ AwsClustersMetadata::AsyncGetOperation(
 
 future<Status> AwsClustersMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

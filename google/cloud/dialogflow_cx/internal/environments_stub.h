@@ -51,14 +51,14 @@ class EnvironmentsStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateEnvironment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateEnvironment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request) = 0;
 
@@ -77,7 +77,7 @@ class EnvironmentsStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncRunContinuousTest(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request) = 0;
 
@@ -90,17 +90,17 @@ class EnvironmentsStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeployFlow(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -127,13 +127,13 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEnvironment(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request) override;
 
@@ -150,7 +150,7 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunContinuousTest(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request) override;
 
@@ -162,18 +162,18 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployFlow(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

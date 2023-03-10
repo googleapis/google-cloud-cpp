@@ -53,7 +53,7 @@ EnvironmentsMetadata::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -63,7 +63,7 @@ EnvironmentsMetadata::AsyncCreateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
   SetMetadata(*context, "environment.name=" + request.environment().name());
@@ -90,7 +90,7 @@ EnvironmentsMetadata::LookupEnvironmentHistory(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncRunContinuousTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   SetMetadata(*context, "environment=" + request.environment());
@@ -109,7 +109,7 @@ EnvironmentsMetadata::ListContinuousTestResults(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncDeployFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   SetMetadata(*context, "environment=" + request.environment());
   return child_->AsyncDeployFlow(cq, std::move(context), request);
@@ -118,7 +118,7 @@ EnvironmentsMetadata::AsyncDeployFlow(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -126,7 +126,7 @@ EnvironmentsMetadata::AsyncGetOperation(
 
 future<Status> EnvironmentsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

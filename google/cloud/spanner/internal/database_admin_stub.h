@@ -37,7 +37,7 @@ class DatabaseAdminStub {
 
   /// Start the long-running operation to create a new Cloud Spanner database.
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
-      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&) = 0;
 
   /// Fetch the metadata for a particular database.
@@ -53,7 +53,7 @@ class DatabaseAdminStub {
 
   /// Start a database update, using a sequence of DDL statements.
   virtual future<StatusOr<google::longrunning::Operation>>
-  AsyncUpdateDatabaseDdl(CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+  AsyncUpdateDatabaseDdl(CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                          google::spanner::admin::database::v1::
                              UpdateDatabaseDdlRequest const&) = 0;
 
@@ -72,7 +72,7 @@ class DatabaseAdminStub {
   /// Start the long-running operation to restore a database from a given
   /// backup.
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
-      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&) = 0;
 
   /// Fetch the IAM policy for a particular database.
@@ -90,7 +90,7 @@ class DatabaseAdminStub {
 
   /// Start the long-running operation to create a new Cloud Spanner backup.
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
-      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
       google::spanner::admin::database::v1::CreateBackupRequest const&) = 0;
 
   /// Get metadata on a pending or completed Backup.
@@ -133,12 +133,12 @@ class DatabaseAdminStub {
 
   /// Poll a long-running operation.
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
       google::longrunning::GetOperationRequest const&) = 0;
 
   /// Cancel a long-running operation.
   virtual future<Status> AsyncCancelOperation(
-      CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
       google::longrunning::CancelOperationRequest const&) = 0;
 };
 

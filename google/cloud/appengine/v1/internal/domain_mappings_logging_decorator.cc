@@ -61,11 +61,11 @@ DomainMappingsLogging::GetDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsLogging::AsyncCreateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::CreateDomainMappingRequest const& request) {
         return child_->AsyncCreateDomainMapping(cq, std::move(context),
                                                 request);
@@ -76,11 +76,11 @@ DomainMappingsLogging::AsyncCreateDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsLogging::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::UpdateDomainMappingRequest const& request) {
         return child_->AsyncUpdateDomainMapping(cq, std::move(context),
                                                 request);
@@ -91,11 +91,11 @@ DomainMappingsLogging::AsyncUpdateDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsLogging::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::appengine::v1::DeleteDomainMappingRequest const& request) {
         return child_->AsyncDeleteDomainMapping(cq, std::move(context),
                                                 request);
@@ -106,11 +106,11 @@ DomainMappingsLogging::AsyncDeleteDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DomainMappingsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -119,11 +119,11 @@ DomainMappingsLogging::AsyncGetOperation(
 
 future<Status> DomainMappingsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

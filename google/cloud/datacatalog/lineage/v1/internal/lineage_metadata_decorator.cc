@@ -71,7 +71,7 @@ LineageMetadata::ListProcesses(
 future<StatusOr<google::longrunning::Operation>>
 LineageMetadata::AsyncDeleteProcess(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -112,7 +112,7 @@ LineageMetadata::ListRuns(
 future<StatusOr<google::longrunning::Operation>>
 LineageMetadata::AsyncDeleteRun(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteRun(cq, std::move(context), request);
@@ -175,7 +175,7 @@ LineageMetadata::BatchSearchLinkProcesses(
 future<StatusOr<google::longrunning::Operation>>
 LineageMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -183,7 +183,7 @@ LineageMetadata::AsyncGetOperation(
 
 future<Status> LineageMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

@@ -36,11 +36,11 @@ ApiKeysLogging::ApiKeysLogging(std::shared_ptr<ApiKeysStub> child,
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::api::apikeys::v2::CreateKeyRequest const& request) {
         return child_->AsyncCreateKey(cq, std::move(context), request);
       },
@@ -83,11 +83,11 @@ ApiKeysLogging::GetKeyString(
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::api::apikeys::v2::UpdateKeyRequest const& request) {
         return child_->AsyncUpdateKey(cq, std::move(context), request);
       },
@@ -96,11 +96,11 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncUpdateKey(
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::api::apikeys::v2::DeleteKeyRequest const& request) {
         return child_->AsyncDeleteKey(cq, std::move(context), request);
       },
@@ -110,11 +110,11 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncDeleteKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysLogging::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::api::apikeys::v2::UndeleteKeyRequest const& request) {
         return child_->AsyncUndeleteKey(cq, std::move(context), request);
       },
@@ -135,11 +135,11 @@ StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysLogging::LookupKey(
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -148,11 +148,11 @@ ApiKeysLogging::AsyncGetOperation(
 
 future<Status> ApiKeysLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

@@ -37,12 +37,12 @@ BigtableInstanceAdminLogging::BigtableInstanceAdminLogging(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::bigtable::admin::v2::CreateInstanceRequest const& request) {
         return child_->AsyncCreateInstance(cq, std::move(context), request);
       },
@@ -88,11 +88,11 @@ BigtableInstanceAdminLogging::UpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncPartialUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
                  request) {
         return child_->AsyncPartialUpdateInstance(cq, std::move(context),
@@ -116,11 +116,11 @@ Status BigtableInstanceAdminLogging::DeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::CreateClusterRequest const& request) {
         return child_->AsyncCreateCluster(cq, std::move(context), request);
       },
@@ -154,11 +154,11 @@ BigtableInstanceAdminLogging::ListClusters(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::Cluster const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::Cluster const& request) {
         return child_->AsyncUpdateCluster(cq, std::move(context), request);
       },
@@ -168,11 +168,11 @@ BigtableInstanceAdminLogging::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::bigtable::admin::v2::PartialUpdateClusterRequest const&
                  request) {
         return child_->AsyncPartialUpdateCluster(cq, std::move(context),
@@ -233,12 +233,12 @@ BigtableInstanceAdminLogging::ListAppProfiles(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncUpdateAppProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
         return child_->AsyncUpdateAppProfile(cq, std::move(context), request);
       },
@@ -307,11 +307,11 @@ BigtableInstanceAdminLogging::ListHotTablets(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -320,11 +320,11 @@ BigtableInstanceAdminLogging::AsyncGetOperation(
 
 future<Status> BigtableInstanceAdminLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

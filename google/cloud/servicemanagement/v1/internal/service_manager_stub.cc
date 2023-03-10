@@ -57,7 +57,7 @@ DefaultServiceManagerStub::GetService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::api::servicemanagement::v1::CreateServiceRequest,
@@ -75,7 +75,7 @@ DefaultServiceManagerStub::AsyncCreateService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::api::servicemanagement::v1::DeleteServiceRequest,
@@ -93,7 +93,7 @@ DefaultServiceManagerStub::AsyncDeleteService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::api::servicemanagement::v1::UndeleteServiceRequest,
@@ -151,7 +151,7 @@ StatusOr<google::api::Service> DefaultServiceManagerStub::CreateServiceConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncSubmitConfigSource(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -199,7 +199,7 @@ DefaultServiceManagerStub::GetServiceRollout(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncCreateServiceRollout(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -233,7 +233,7 @@ DefaultServiceManagerStub::GenerateConfigReport(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -248,7 +248,7 @@ DefaultServiceManagerStub::AsyncGetOperation(
 
 future<Status> DefaultServiceManagerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

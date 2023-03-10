@@ -45,7 +45,7 @@ DefaultPredictionServiceStub::Predict(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPredictionServiceStub::AsyncBatchPredict(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::BatchPredictRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::automl::v1::BatchPredictRequest,
@@ -62,7 +62,7 @@ DefaultPredictionServiceStub::AsyncBatchPredict(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPredictionServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -77,7 +77,7 @@ DefaultPredictionServiceStub::AsyncGetOperation(
 
 future<Status> DefaultPredictionServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -30,7 +30,7 @@ class MockMinimalIamCredentialsStub
       future<
           StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>>,
       AsyncGenerateAccessToken,
-      (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+      (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
        google::iam::credentials::v1::GenerateAccessTokenRequest const&),
       (override));
   MOCK_METHOD(StatusOr<google::iam::credentials::v1::SignBlobResponse>,

@@ -37,7 +37,7 @@ ConversationModelsMetadata::ConversationModelsMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncCreateConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -64,7 +64,7 @@ ConversationModelsMetadata::ListConversationModels(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncDeleteConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -74,7 +74,7 @@ ConversationModelsMetadata::AsyncDeleteConversationModel(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncDeployConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -84,7 +84,7 @@ ConversationModelsMetadata::AsyncDeployConversationModel(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncUndeployConversationModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -114,7 +114,7 @@ ConversationModelsMetadata::ListConversationModelEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncCreateConversationModelEvaluation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -125,7 +125,7 @@ ConversationModelsMetadata::AsyncCreateConversationModelEvaluation(
 future<StatusOr<google::longrunning::Operation>>
 ConversationModelsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -133,7 +133,7 @@ ConversationModelsMetadata::AsyncGetOperation(
 
 future<Status> ConversationModelsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

@@ -53,7 +53,7 @@ ServiceManagerMetadata::GetService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncCreateService(cq, std::move(context), request);
@@ -62,7 +62,7 @@ ServiceManagerMetadata::AsyncCreateService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncDeleteService(cq, std::move(context), request);
@@ -71,7 +71,7 @@ ServiceManagerMetadata::AsyncDeleteService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   SetMetadata(*context);
   return child_->AsyncUndeleteService(cq, std::move(context), request);
@@ -105,7 +105,7 @@ StatusOr<google::api::Service> ServiceManagerMetadata::CreateServiceConfig(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncSubmitConfigSource(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   SetMetadata(*context);
@@ -133,7 +133,7 @@ ServiceManagerMetadata::GetServiceRollout(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncCreateServiceRollout(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   SetMetadata(*context);
@@ -152,7 +152,7 @@ ServiceManagerMetadata::GenerateConfigReport(
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -160,7 +160,7 @@ ServiceManagerMetadata::AsyncGetOperation(
 
 future<Status> ServiceManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

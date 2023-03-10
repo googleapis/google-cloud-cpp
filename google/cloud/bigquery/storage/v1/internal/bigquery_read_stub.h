@@ -43,7 +43,7 @@ class BigQueryReadStub {
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>>
   ReadRows(
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) = 0;
 
   virtual StatusOr<
@@ -69,7 +69,7 @@ class DefaultBigQueryReadStub : public BigQueryReadStub {
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>>
-  ReadRows(std::unique_ptr<grpc::ClientContext> client_context,
+  ReadRows(std::shared_ptr<grpc::ClientContext> client_context,
            google::cloud::bigquery::storage::v1::ReadRowsRequest const& request)
       override;
 

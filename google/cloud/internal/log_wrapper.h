@@ -105,10 +105,10 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
 
 template <typename Functor, typename Request,
           typename Result = google::cloud::internal::invoke_result_t<
-              Functor, std::unique_ptr<grpc::ClientContext>, Request const&>,
+              Functor, std::shared_ptr<grpc::ClientContext>, Request const&>,
           typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
 Result LogWrapper(Functor&& functor,
-                  std::unique_ptr<grpc::ClientContext> context,
+                  std::shared_ptr<grpc::ClientContext> context,
                   Request const& request, char const* where,
                   TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
@@ -167,10 +167,10 @@ template <
     typename Functor, typename Request,
     typename Result = google::cloud::internal::invoke_result_t<
         Functor, google::cloud::CompletionQueue&,
-        std::unique_ptr<grpc::ClientContext>, Request const&>,
+        std::shared_ptr<grpc::ClientContext>, Request const&>,
     typename std::enable_if<IsFutureStatusOr<Result>::value, int>::type = 0>
 Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
-                  std::unique_ptr<grpc::ClientContext> context,
+                  std::shared_ptr<grpc::ClientContext> context,
                   Request const& request, char const* where,
                   TracingOptions const& options) {
   // Because this is an asynchronous request we need a unique identifier so
@@ -200,10 +200,10 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
 template <typename Functor, typename Request,
           typename Result = google::cloud::internal::invoke_result_t<
               Functor, google::cloud::CompletionQueue&,
-              std::unique_ptr<grpc::ClientContext>, Request const&>,
+              std::shared_ptr<grpc::ClientContext>, Request const&>,
           typename std::enable_if<IsFutureStatus<Result>::value, int>::type = 0>
 Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
-                  std::unique_ptr<grpc::ClientContext> context,
+                  std::shared_ptr<grpc::ClientContext> context,
                   Request const& request, char const* where,
                   TracingOptions const& options) {
   // Because this is an asynchronous request we need a unique identifier so

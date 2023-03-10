@@ -42,7 +42,7 @@ class ConversationDatasetsAuth : public ConversationDatasetsStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateConversationDataset(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request) override;
 
@@ -61,24 +61,24 @@ class ConversationDatasetsAuth : public ConversationDatasetsStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteConversationDataset(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportConversationData(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

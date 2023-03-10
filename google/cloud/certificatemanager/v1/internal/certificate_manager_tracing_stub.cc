@@ -61,7 +61,7 @@ CertificateManagerTracingStub::GetCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncCreateCertificate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&
         request) {
   return child_->AsyncCreateCertificate(cq, std::move(context), request);
@@ -70,7 +70,7 @@ CertificateManagerTracingStub::AsyncCreateCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncUpdateCertificate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
         request) {
   return child_->AsyncUpdateCertificate(cq, std::move(context), request);
@@ -79,7 +79,7 @@ CertificateManagerTracingStub::AsyncUpdateCertificate(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncDeleteCertificate(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
         request) {
   return child_->AsyncDeleteCertificate(cq, std::move(context), request);
@@ -116,7 +116,7 @@ CertificateManagerTracingStub::GetCertificateMap(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncCreateCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
         request) {
   return child_->AsyncCreateCertificateMap(cq, std::move(context), request);
@@ -125,7 +125,7 @@ CertificateManagerTracingStub::AsyncCreateCertificateMap(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncUpdateCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
         request) {
   return child_->AsyncUpdateCertificateMap(cq, std::move(context), request);
@@ -134,7 +134,7 @@ CertificateManagerTracingStub::AsyncUpdateCertificateMap(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncDeleteCertificateMap(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
         request) {
   return child_->AsyncDeleteCertificateMap(cq, std::move(context), request);
@@ -172,7 +172,7 @@ CertificateManagerTracingStub::GetCertificateMapEntry(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncCreateCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         CreateCertificateMapEntryRequest const& request) {
   return child_->AsyncCreateCertificateMapEntry(cq, std::move(context),
@@ -182,7 +182,7 @@ CertificateManagerTracingStub::AsyncCreateCertificateMapEntry(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncUpdateCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         UpdateCertificateMapEntryRequest const& request) {
   return child_->AsyncUpdateCertificateMapEntry(cq, std::move(context),
@@ -192,7 +192,7 @@ CertificateManagerTracingStub::AsyncUpdateCertificateMapEntry(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncDeleteCertificateMapEntry(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         DeleteCertificateMapEntryRequest const& request) {
   return child_->AsyncDeleteCertificateMapEntry(cq, std::move(context),
@@ -230,7 +230,7 @@ CertificateManagerTracingStub::GetDnsAuthorization(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncCreateDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
         request) {
   return child_->AsyncCreateDnsAuthorization(cq, std::move(context), request);
@@ -239,7 +239,7 @@ CertificateManagerTracingStub::AsyncCreateDnsAuthorization(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncUpdateDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
         request) {
   return child_->AsyncUpdateDnsAuthorization(cq, std::move(context), request);
@@ -248,7 +248,7 @@ CertificateManagerTracingStub::AsyncUpdateDnsAuthorization(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncDeleteDnsAuthorization(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
         request) {
   return child_->AsyncDeleteDnsAuthorization(cq, std::move(context), request);
@@ -286,7 +286,7 @@ CertificateManagerTracingStub::GetCertificateIssuanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncCreateCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         CreateCertificateIssuanceConfigRequest const& request) {
   return child_->AsyncCreateCertificateIssuanceConfig(cq, std::move(context),
@@ -296,7 +296,7 @@ CertificateManagerTracingStub::AsyncCreateCertificateIssuanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncDeleteCertificateIssuanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const& request) {
   return child_->AsyncDeleteCertificateIssuanceConfig(cq, std::move(context),
@@ -306,14 +306,14 @@ CertificateManagerTracingStub::AsyncDeleteCertificateIssuanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 CertificateManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> CertificateManagerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

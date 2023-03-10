@@ -62,12 +62,12 @@ CloudFunctionsServiceLogging::GetFunction(
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncCreateFunction(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::functions::v1::CreateFunctionRequest const& request) {
         return child_->AsyncCreateFunction(cq, std::move(context), request);
       },
@@ -77,12 +77,12 @@ CloudFunctionsServiceLogging::AsyncCreateFunction(
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::functions::v1::UpdateFunctionRequest const& request) {
         return child_->AsyncUpdateFunction(cq, std::move(context), request);
       },
@@ -92,12 +92,12 @@ CloudFunctionsServiceLogging::AsyncUpdateFunction(
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::functions::v1::DeleteFunctionRequest const& request) {
         return child_->AsyncDeleteFunction(cq, std::move(context), request);
       },
@@ -179,11 +179,11 @@ CloudFunctionsServiceLogging::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 CloudFunctionsServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -192,11 +192,11 @@ CloudFunctionsServiceLogging::AsyncGetOperation(
 
 future<Status> CloudFunctionsServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

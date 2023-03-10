@@ -48,7 +48,7 @@ MetadataSpannerStub::BatchCreateSessions(
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 MetadataSpannerStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   SetMetadata(*context, "database=" + request.database());
   return child_->AsyncBatchCreateSessions(cq, std::move(context), request);
@@ -63,7 +63,7 @@ Status MetadataSpannerStub::DeleteSession(
 
 future<Status> MetadataSpannerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::v1::DeleteSessionRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteSession(cq, std::move(context), request);
@@ -79,7 +79,7 @@ StatusOr<google::spanner::v1::ResultSet> MetadataSpannerStub::ExecuteSql(
 future<StatusOr<google::spanner::v1::ResultSet>>
 MetadataSpannerStub::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   SetMetadata(*context, "session=" + request.session());
   return child_->AsyncExecuteSql(cq, std::move(context), request);

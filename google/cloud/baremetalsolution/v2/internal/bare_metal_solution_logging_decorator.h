@@ -52,31 +52,31 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResetInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::StartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopInstance(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDetachLun(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request)
       override;
 
@@ -92,13 +92,13 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateVolume(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResizeVolume(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request)
       override;
 
@@ -120,7 +120,7 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNetwork(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request)
       override;
 
@@ -147,18 +147,18 @@ class BareMetalSolutionLogging : public BareMetalSolutionStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateNfsShare(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

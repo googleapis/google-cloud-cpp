@@ -48,11 +48,11 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceLogging::CreateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceLogging::AsyncBatchCreateJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
         return child_->AsyncBatchCreateJobs(cq, std::move(context), request);
       },
@@ -84,11 +84,11 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceLogging::UpdateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceLogging::AsyncBatchUpdateJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
         return child_->AsyncBatchUpdateJobs(cq, std::move(context), request);
       },
@@ -109,11 +109,11 @@ Status JobServiceLogging::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceLogging::AsyncBatchDeleteJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
         return child_->AsyncBatchDeleteJobs(cq, std::move(context), request);
       },
@@ -159,11 +159,11 @@ JobServiceLogging::SearchJobsForAlert(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -172,11 +172,11 @@ JobServiceLogging::AsyncGetOperation(
 
 future<Status> JobServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

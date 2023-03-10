@@ -247,12 +247,12 @@ ProductSearchLogging::ListProductsInProductSet(
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchLogging::AsyncImportProductSets(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::vision::v1::ImportProductSetsRequest const& request) {
         return child_->AsyncImportProductSets(cq, std::move(context), request);
       },
@@ -262,11 +262,11 @@ ProductSearchLogging::AsyncImportProductSets(
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchLogging::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::vision::v1::PurgeProductsRequest const& request) {
         return child_->AsyncPurgeProducts(cq, std::move(context), request);
       },
@@ -276,11 +276,11 @@ ProductSearchLogging::AsyncPurgeProducts(
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -289,11 +289,11 @@ ProductSearchLogging::AsyncGetOperation(
 
 future<Status> ProductSearchLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

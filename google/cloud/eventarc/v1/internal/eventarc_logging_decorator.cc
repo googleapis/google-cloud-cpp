@@ -60,11 +60,11 @@ EventarcLogging::ListTriggers(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
         return child_->AsyncCreateTrigger(cq, std::move(context), request);
       },
@@ -74,11 +74,11 @@ EventarcLogging::AsyncCreateTrigger(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
         return child_->AsyncUpdateTrigger(cq, std::move(context), request);
       },
@@ -88,11 +88,11 @@ EventarcLogging::AsyncUpdateTrigger(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
         return child_->AsyncDeleteTrigger(cq, std::move(context), request);
       },
@@ -125,11 +125,11 @@ EventarcLogging::ListChannels(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::CreateChannelRequest const& request) {
         return child_->AsyncCreateChannel(cq, std::move(context), request);
       },
@@ -139,11 +139,11 @@ EventarcLogging::AsyncCreateChannel(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
         return child_->AsyncUpdateChannel(cq, std::move(context), request);
       },
@@ -153,11 +153,11 @@ EventarcLogging::AsyncUpdateChannel(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
         return child_->AsyncDeleteChannel(cq, std::move(context), request);
       },
@@ -216,12 +216,12 @@ EventarcLogging::ListChannelConnections(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncCreateChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
                  request) {
         return child_->AsyncCreateChannelConnection(cq, std::move(context),
@@ -233,12 +233,12 @@ EventarcLogging::AsyncCreateChannelConnection(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
                  request) {
         return child_->AsyncDeleteChannelConnection(cq, std::move(context),
@@ -278,11 +278,11 @@ EventarcLogging::UpdateGoogleChannelConfig(
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -291,11 +291,11 @@ EventarcLogging::AsyncGetOperation(
 
 future<Status> EventarcLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

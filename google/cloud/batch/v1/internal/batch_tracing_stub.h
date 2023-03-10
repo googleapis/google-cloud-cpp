@@ -46,7 +46,7 @@ class BatchServiceTracingStub : public BatchServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::batch::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::batch::v1::ListJobsResponse> ListJobs(
@@ -63,12 +63,12 @@ class BatchServiceTracingStub : public BatchServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

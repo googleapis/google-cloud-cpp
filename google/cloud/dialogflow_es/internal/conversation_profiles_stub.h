@@ -69,25 +69,25 @@ class ConversationProfilesStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncSetSuggestionFeatureConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncClearSuggestionFeatureConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -133,25 +133,25 @@ class DefaultConversationProfilesStub : public ConversationProfilesStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncSetSuggestionFeatureConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncClearSuggestionFeatureConfig(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

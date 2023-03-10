@@ -55,7 +55,7 @@ EventarcTracingStub::ListTriggers(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncCreateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   return child_->AsyncCreateTrigger(cq, std::move(context), request);
 }
@@ -63,7 +63,7 @@ EventarcTracingStub::AsyncCreateTrigger(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   return child_->AsyncUpdateTrigger(cq, std::move(context), request);
 }
@@ -71,7 +71,7 @@ EventarcTracingStub::AsyncUpdateTrigger(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   return child_->AsyncDeleteTrigger(cq, std::move(context), request);
 }
@@ -102,7 +102,7 @@ EventarcTracingStub::ListChannels(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   return child_->AsyncCreateChannel(cq, std::move(context), request);
 }
@@ -110,7 +110,7 @@ EventarcTracingStub::AsyncCreateChannel(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   return child_->AsyncUpdateChannel(cq, std::move(context), request);
 }
@@ -118,7 +118,7 @@ EventarcTracingStub::AsyncUpdateChannel(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   return child_->AsyncDeleteChannel(cq, std::move(context), request);
 }
@@ -174,7 +174,7 @@ EventarcTracingStub::ListChannelConnections(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncCreateChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
   return child_->AsyncCreateChannelConnection(cq, std::move(context), request);
@@ -183,7 +183,7 @@ EventarcTracingStub::AsyncCreateChannelConnection(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
   return child_->AsyncDeleteChannelConnection(cq, std::move(context), request);
@@ -217,14 +217,14 @@ EventarcTracingStub::UpdateGoogleChannelConfig(
 future<StatusOr<google::longrunning::Operation>>
 EventarcTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> EventarcTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

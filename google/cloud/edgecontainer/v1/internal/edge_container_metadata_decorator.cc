@@ -53,7 +53,7 @@ EdgeContainerMetadata::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateCluster(cq, std::move(context), request);
@@ -62,7 +62,7 @@ EdgeContainerMetadata::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   SetMetadata(*context, "cluster.name=" + request.cluster().name());
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
@@ -71,7 +71,7 @@ EdgeContainerMetadata::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
@@ -105,7 +105,7 @@ EdgeContainerMetadata::GetNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncCreateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateNodePool(cq, std::move(context), request);
@@ -114,7 +114,7 @@ EdgeContainerMetadata::AsyncCreateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   SetMetadata(*context, "node_pool.name=" + request.node_pool().name());
   return child_->AsyncUpdateNodePool(cq, std::move(context), request);
@@ -123,7 +123,7 @@ EdgeContainerMetadata::AsyncUpdateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteNodePool(cq, std::move(context), request);
@@ -165,7 +165,7 @@ EdgeContainerMetadata::GetVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncCreateVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -175,7 +175,7 @@ EdgeContainerMetadata::AsyncCreateVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -185,7 +185,7 @@ EdgeContainerMetadata::AsyncDeleteVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -193,7 +193,7 @@ EdgeContainerMetadata::AsyncGetOperation(
 
 future<Status> EdgeContainerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

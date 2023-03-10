@@ -57,7 +57,7 @@ ImageAnnotatorTracingStub::BatchAnnotateFiles(
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateImages(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   return child_->AsyncAsyncBatchAnnotateImages(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateImages(
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context), request);
 }
@@ -73,14 +73,14 @@ ImageAnnotatorTracingStub::AsyncAsyncBatchAnnotateFiles(
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ImageAnnotatorTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

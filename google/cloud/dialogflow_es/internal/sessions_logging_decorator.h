@@ -48,7 +48,7 @@ class SessionsLogging : public SessionsStub {
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
  private:
   std::shared_ptr<SessionsStub> child_;

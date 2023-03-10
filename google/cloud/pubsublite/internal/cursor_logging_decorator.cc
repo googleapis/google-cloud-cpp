@@ -40,7 +40,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
 CursorServiceLogging::AsyncStreamingCommitCursor(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
           google::cloud::pubsublite::v1::StreamingCommitCursorRequest,

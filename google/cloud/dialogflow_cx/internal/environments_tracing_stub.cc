@@ -57,7 +57,7 @@ EnvironmentsTracingStub::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
   return child_->AsyncCreateEnvironment(cq, std::move(context), request);
@@ -66,7 +66,7 @@ EnvironmentsTracingStub::AsyncCreateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
   return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
@@ -100,7 +100,7 @@ EnvironmentsTracingStub::LookupEnvironmentHistory(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncRunContinuousTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   return child_->AsyncRunContinuousTest(cq, std::move(context), request);
@@ -123,7 +123,7 @@ EnvironmentsTracingStub::ListContinuousTestResults(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncDeployFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   return child_->AsyncDeployFlow(cq, std::move(context), request);
 }
@@ -131,14 +131,14 @@ EnvironmentsTracingStub::AsyncDeployFlow(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -43,7 +43,7 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceTracingStub::CreateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceTracingStub::AsyncBatchCreateJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   return child_->AsyncBatchCreateJobs(cq, std::move(context), request);
 }
@@ -71,7 +71,7 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceTracingStub::UpdateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceTracingStub::AsyncBatchUpdateJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   return child_->AsyncBatchUpdateJobs(cq, std::move(context), request);
 }
@@ -89,7 +89,7 @@ Status JobServiceTracingStub::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceTracingStub::AsyncBatchDeleteJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   return child_->AsyncBatchDeleteJobs(cq, std::move(context), request);
 }
@@ -132,14 +132,14 @@ JobServiceTracingStub::SearchJobsForAlert(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> JobServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

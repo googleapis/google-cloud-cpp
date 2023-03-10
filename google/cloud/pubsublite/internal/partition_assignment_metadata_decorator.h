@@ -40,7 +40,7 @@ class PartitionAssignmentServiceMetadata
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>
   AsyncAssignPartitions(google::cloud::CompletionQueue const& cq,
-                        std::unique_ptr<grpc::ClientContext> context) override;
+                        std::shared_ptr<grpc::ClientContext> context) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context,

@@ -102,7 +102,7 @@ Status GoldenKitchenSinkTracingStub::Deprecated2(
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::StreamingRead(
-   std::unique_ptr<grpc::ClientContext> context,
+   std::shared_ptr<grpc::ClientContext> context,
    google::test::admin::database::v1::Request const& request) {
   return child_->StreamingRead(std::move(context), request);
 }
@@ -111,7 +111,7 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::test::admin::database::v1::Request,
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::StreamingWrite(
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->StreamingWrite(std::move(context));
 }
 
@@ -120,7 +120,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::AsyncStreamingReadWrite(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->AsyncStreamingReadWrite(cq, std::move(context));
 }
 
@@ -148,7 +148,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::AsyncStreamingRead(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::test::admin::database::v1::Request const& request) {
   return child_->AsyncStreamingRead(cq, std::move(context), request);
 }
@@ -157,7 +157,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::AsyncStreamingWrite(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->AsyncStreamingWrite(cq, std::move(context));
 }
 

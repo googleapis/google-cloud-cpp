@@ -61,7 +61,7 @@ DefaultInstanceAdminStub::GetInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncCreateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -80,7 +80,7 @@ DefaultInstanceAdminStub::AsyncCreateInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -152,7 +152,7 @@ DefaultInstanceAdminStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -171,7 +171,7 @@ DefaultInstanceAdminStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -237,7 +237,7 @@ DefaultInstanceAdminStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -252,7 +252,7 @@ DefaultInstanceAdminStub::AsyncGetOperation(
 
 future<Status> DefaultInstanceAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

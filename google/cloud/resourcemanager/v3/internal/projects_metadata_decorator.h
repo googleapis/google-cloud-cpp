@@ -53,31 +53,31 @@ class ProjectsMetadata : public ProjectsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateProject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateProject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncMoveProject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteProject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeleteProject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request)
       override;
 
@@ -95,12 +95,12 @@ class ProjectsMetadata : public ProjectsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

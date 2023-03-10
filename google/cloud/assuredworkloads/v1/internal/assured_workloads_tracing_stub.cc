@@ -33,7 +33,7 @@ AssuredWorkloadsServiceTracingStub::AssuredWorkloadsServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceTracingStub::AsyncCreateWorkload(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   return child_->AsyncCreateWorkload(cq, std::move(context), request);
 }
@@ -146,14 +146,14 @@ AssuredWorkloadsServiceTracingStub::AcknowledgeViolation(
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> AssuredWorkloadsServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

@@ -57,7 +57,7 @@ ApiGatewayServiceTracingStub::GetGateway(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncCreateGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   return child_->AsyncCreateGateway(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ ApiGatewayServiceTracingStub::AsyncCreateGateway(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   return child_->AsyncUpdateGateway(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ ApiGatewayServiceTracingStub::AsyncUpdateGateway(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   return child_->AsyncDeleteGateway(cq, std::move(context), request);
 }
@@ -103,7 +103,7 @@ ApiGatewayServiceTracingStub::GetApi(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncCreateApi(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
   return child_->AsyncCreateApi(cq, std::move(context), request);
 }
@@ -111,7 +111,7 @@ ApiGatewayServiceTracingStub::AsyncCreateApi(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncUpdateApi(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   return child_->AsyncUpdateApi(cq, std::move(context), request);
 }
@@ -119,7 +119,7 @@ ApiGatewayServiceTracingStub::AsyncUpdateApi(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   return child_->AsyncDeleteApi(cq, std::move(context), request);
 }
@@ -151,7 +151,7 @@ ApiGatewayServiceTracingStub::GetApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncCreateApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   return child_->AsyncCreateApiConfig(cq, std::move(context), request);
 }
@@ -159,7 +159,7 @@ ApiGatewayServiceTracingStub::AsyncCreateApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   return child_->AsyncUpdateApiConfig(cq, std::move(context), request);
 }
@@ -167,7 +167,7 @@ ApiGatewayServiceTracingStub::AsyncUpdateApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   return child_->AsyncDeleteApiConfig(cq, std::move(context), request);
 }
@@ -175,14 +175,14 @@ ApiGatewayServiceTracingStub::AsyncDeleteApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ApiGatewayServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

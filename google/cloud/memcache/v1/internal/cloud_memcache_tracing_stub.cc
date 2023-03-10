@@ -57,7 +57,7 @@ CloudMemcacheTracingStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ CloudMemcacheTracingStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
   return child_->AsyncUpdateInstance(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ CloudMemcacheTracingStub::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncUpdateParameters(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
   return child_->AsyncUpdateParameters(cq, std::move(context), request);
 }
@@ -81,7 +81,7 @@ CloudMemcacheTracingStub::AsyncUpdateParameters(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
@@ -89,7 +89,7 @@ CloudMemcacheTracingStub::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncApplyParameters(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
   return child_->AsyncApplyParameters(cq, std::move(context), request);
 }
@@ -97,7 +97,7 @@ CloudMemcacheTracingStub::AsyncApplyParameters(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
   return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
 }
@@ -105,14 +105,14 @@ CloudMemcacheTracingStub::AsyncRescheduleMaintenance(
 future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> CloudMemcacheTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

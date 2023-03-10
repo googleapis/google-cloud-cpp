@@ -76,7 +76,7 @@ class PublisherTracingStub : public PublisherStub {
 
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::pubsub::v1::PublishRequest const& request) override;
 
  private:

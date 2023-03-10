@@ -33,7 +33,7 @@ BigtableInstanceAdminTracingStub::BigtableInstanceAdminTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
   return child_->AsyncCreateInstance(cq, std::move(context), request);
 }
@@ -77,7 +77,7 @@ BigtableInstanceAdminTracingStub::UpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncPartialUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
   return child_->AsyncPartialUpdateInstance(cq, std::move(context), request);
 }
@@ -96,7 +96,7 @@ Status BigtableInstanceAdminTracingStub::DeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
@@ -128,7 +128,7 @@ BigtableInstanceAdminTracingStub::ListClusters(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::Cluster const& request) {
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
@@ -136,7 +136,7 @@ BigtableInstanceAdminTracingStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncPartialUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
   return child_->AsyncPartialUpdateCluster(cq, std::move(context), request);
 }
@@ -191,7 +191,7 @@ BigtableInstanceAdminTracingStub::ListAppProfiles(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncUpdateAppProfile(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
   return child_->AsyncUpdateAppProfile(cq, std::move(context), request);
 }
@@ -258,14 +258,14 @@ BigtableInstanceAdminTracingStub::ListHotTablets(
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> BigtableInstanceAdminTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

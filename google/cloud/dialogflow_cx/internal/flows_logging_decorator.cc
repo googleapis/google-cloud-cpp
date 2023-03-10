@@ -96,12 +96,12 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> FlowsLogging::UpdateFlow(
 
 future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncTrainFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
         return child_->AsyncTrainFlow(cq, std::move(context), request);
       },
@@ -135,12 +135,12 @@ FlowsLogging::GetFlowValidationResult(
 
 future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncImportFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
         return child_->AsyncImportFlow(cq, std::move(context), request);
       },
@@ -149,12 +149,12 @@ future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncImportFlow(
 
 future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
         return child_->AsyncExportFlow(cq, std::move(context), request);
       },
@@ -164,11 +164,11 @@ future<StatusOr<google::longrunning::Operation>> FlowsLogging::AsyncExportFlow(
 future<StatusOr<google::longrunning::Operation>>
 FlowsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -177,11 +177,11 @@ FlowsLogging::AsyncGetOperation(
 
 future<Status> FlowsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

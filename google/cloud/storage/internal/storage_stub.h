@@ -114,7 +114,7 @@ class StorageStub {
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
-  ReadObject(std::unique_ptr<grpc::ClientContext> context,
+  ReadObject(std::shared_ptr<grpc::ClientContext> context,
              google::storage::v2::ReadObjectRequest const& request) = 0;
 
   virtual StatusOr<google::storage::v2::Object> UpdateObject(
@@ -124,7 +124,7 @@ class StorageStub {
   virtual std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
-  WriteObject(std::unique_ptr<grpc::ClientContext> context) = 0;
+  WriteObject(std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
       grpc::ClientContext& context,
@@ -170,31 +170,31 @@ class StorageStub {
 
   virtual future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storage::v2::DeleteObjectRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
   AsyncReadObject(google::cloud::CompletionQueue const& cq,
-                  std::unique_ptr<grpc::ClientContext> context,
+                  std::shared_ptr<grpc::ClientContext> context,
                   google::storage::v2::ReadObjectRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
   AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                   std::unique_ptr<grpc::ClientContext> context) = 0;
+                   std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
   AsyncStartResumableWrite(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storage::v2::StartResumableWriteRequest const& request) = 0;
 
   virtual future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
   AsyncQueryWriteStatus(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storage::v2::QueryWriteStatusRequest const& request) = 0;
 };
 
@@ -281,7 +281,7 @@ class DefaultStorageStub : public StorageStub {
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
-  ReadObject(std::unique_ptr<grpc::ClientContext> client_context,
+  ReadObject(std::shared_ptr<grpc::ClientContext> client_context,
              google::storage::v2::ReadObjectRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> UpdateObject(
@@ -291,7 +291,7 @@ class DefaultStorageStub : public StorageStub {
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
-  WriteObject(std::unique_ptr<grpc::ClientContext> context) override;
+  WriteObject(std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
       grpc::ClientContext& client_context,
@@ -336,32 +336,32 @@ class DefaultStorageStub : public StorageStub {
 
   future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storage::v2::DeleteObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::storage::v2::ReadObjectResponse>>
   AsyncReadObject(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storage::v2::ReadObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
   AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                   std::unique_ptr<grpc::ClientContext> context) override;
+                   std::shared_ptr<grpc::ClientContext> context) override;
 
   future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
   AsyncStartResumableWrite(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storage::v2::StartResumableWriteRequest const& request) override;
 
   future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
   AsyncQueryWriteStatus(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storage::v2::QueryWriteStatusRequest const& request) override;
 
  private:

@@ -58,11 +58,11 @@ StatusOr<google::cloud::networkconnectivity::v1::Hub> HubServiceLogging::GetHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncCreateHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkconnectivity::v1::CreateHubRequest const&
                  request) {
         return child_->AsyncCreateHub(cq, std::move(context), request);
@@ -73,11 +73,11 @@ HubServiceLogging::AsyncCreateHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncUpdateHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkconnectivity::v1::UpdateHubRequest const&
                  request) {
         return child_->AsyncUpdateHub(cq, std::move(context), request);
@@ -88,11 +88,11 @@ HubServiceLogging::AsyncUpdateHub(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncDeleteHub(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkconnectivity::v1::DeleteHubRequest const&
                  request) {
         return child_->AsyncDeleteHub(cq, std::move(context), request);
@@ -125,11 +125,11 @@ HubServiceLogging::GetSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncCreateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
                  request) {
         return child_->AsyncCreateSpoke(cq, std::move(context), request);
@@ -140,11 +140,11 @@ HubServiceLogging::AsyncCreateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncUpdateSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
                  request) {
         return child_->AsyncUpdateSpoke(cq, std::move(context), request);
@@ -155,11 +155,11 @@ HubServiceLogging::AsyncUpdateSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncDeleteSpoke(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
                  request) {
         return child_->AsyncDeleteSpoke(cq, std::move(context), request);
@@ -170,11 +170,11 @@ HubServiceLogging::AsyncDeleteSpoke(
 future<StatusOr<google::longrunning::Operation>>
 HubServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -183,11 +183,11 @@ HubServiceLogging::AsyncGetOperation(
 
 future<Status> HubServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

@@ -37,7 +37,7 @@ LivestreamServiceMetadata::LivestreamServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateChannel(cq, std::move(context), request);
@@ -62,7 +62,7 @@ LivestreamServiceMetadata::GetChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteChannel(cq, std::move(context), request);
@@ -71,7 +71,7 @@ LivestreamServiceMetadata::AsyncDeleteChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   SetMetadata(*context, "channel.name=" + request.channel().name());
   return child_->AsyncUpdateChannel(cq, std::move(context), request);
@@ -80,7 +80,7 @@ LivestreamServiceMetadata::AsyncUpdateChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncStartChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncStartChannel(cq, std::move(context), request);
@@ -89,7 +89,7 @@ LivestreamServiceMetadata::AsyncStartChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncStopChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncStopChannel(cq, std::move(context), request);
@@ -98,7 +98,7 @@ LivestreamServiceMetadata::AsyncStopChannel(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncCreateInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateInput(cq, std::move(context), request);
@@ -123,7 +123,7 @@ LivestreamServiceMetadata::GetInput(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncDeleteInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteInput(cq, std::move(context), request);
@@ -132,7 +132,7 @@ LivestreamServiceMetadata::AsyncDeleteInput(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncUpdateInput(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   SetMetadata(*context, "input.name=" + request.input().name());
   return child_->AsyncUpdateInput(cq, std::move(context), request);
@@ -172,7 +172,7 @@ Status LivestreamServiceMetadata::DeleteEvent(
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -180,7 +180,7 @@ LivestreamServiceMetadata::AsyncGetOperation(
 
 future<Status> LivestreamServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

@@ -61,19 +61,19 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchTranslateText(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::translation::v3::BatchTranslateTextRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchTranslateDocument(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGlossary(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::translation::v3::CreateGlossaryRequest const& request)
       override;
 
@@ -89,18 +89,18 @@ class TranslationServiceTracingStub : public TranslationServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGlossary(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::translation::v3::DeleteGlossaryRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

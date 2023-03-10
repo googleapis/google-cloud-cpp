@@ -45,7 +45,7 @@ FleetRoutingTracingStub::OptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingTracingStub::AsyncBatchOptimizeTours(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
   return child_->AsyncBatchOptimizeTours(cq, std::move(context), request);
 }
@@ -53,14 +53,14 @@ FleetRoutingTracingStub::AsyncBatchOptimizeTours(
 future<StatusOr<google::longrunning::Operation>>
 FleetRoutingTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> FleetRoutingTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

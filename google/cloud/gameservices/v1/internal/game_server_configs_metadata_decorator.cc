@@ -53,7 +53,7 @@ GameServerConfigsServiceMetadata::GetGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceMetadata::AsyncCreateGameServerConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateGameServerConfig(cq, std::move(context), request);
@@ -62,7 +62,7 @@ GameServerConfigsServiceMetadata::AsyncCreateGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceMetadata::AsyncDeleteGameServerConfig(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteGameServerConfig(cq, std::move(context), request);
@@ -71,7 +71,7 @@ GameServerConfigsServiceMetadata::AsyncDeleteGameServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 GameServerConfigsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -79,7 +79,7 @@ GameServerConfigsServiceMetadata::AsyncGetOperation(
 
 future<Status> GameServerConfigsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

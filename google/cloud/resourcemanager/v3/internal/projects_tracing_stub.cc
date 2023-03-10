@@ -68,7 +68,7 @@ ProjectsTracingStub::SearchProjects(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncCreateProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   return child_->AsyncCreateProject(cq, std::move(context), request);
 }
@@ -76,7 +76,7 @@ ProjectsTracingStub::AsyncCreateProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   return child_->AsyncUpdateProject(cq, std::move(context), request);
 }
@@ -84,7 +84,7 @@ ProjectsTracingStub::AsyncUpdateProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncMoveProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   return child_->AsyncMoveProject(cq, std::move(context), request);
 }
@@ -92,7 +92,7 @@ ProjectsTracingStub::AsyncMoveProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   return child_->AsyncDeleteProject(cq, std::move(context), request);
 }
@@ -100,7 +100,7 @@ ProjectsTracingStub::AsyncDeleteProject(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   return child_->AsyncUndeleteProject(cq, std::move(context), request);
 }
@@ -142,14 +142,14 @@ ProjectsTracingStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 ProjectsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ProjectsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

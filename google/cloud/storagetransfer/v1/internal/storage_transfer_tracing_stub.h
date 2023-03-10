@@ -75,7 +75,7 @@ class StorageTransferServiceTracingStub : public StorageTransferServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunTransferJob(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::storagetransfer::v1::RunTransferJobRequest const& request)
       override;
 
@@ -110,12 +110,12 @@ class StorageTransferServiceTracingStub : public StorageTransferServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

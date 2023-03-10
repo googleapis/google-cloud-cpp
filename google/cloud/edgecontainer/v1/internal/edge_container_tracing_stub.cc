@@ -57,7 +57,7 @@ EdgeContainerTracingStub::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   return child_->AsyncCreateCluster(cq, std::move(context), request);
 }
@@ -65,7 +65,7 @@ EdgeContainerTracingStub::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   return child_->AsyncUpdateCluster(cq, std::move(context), request);
 }
@@ -73,7 +73,7 @@ EdgeContainerTracingStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   return child_->AsyncDeleteCluster(cq, std::move(context), request);
 }
@@ -118,7 +118,7 @@ EdgeContainerTracingStub::GetNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncCreateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   return child_->AsyncCreateNodePool(cq, std::move(context), request);
 }
@@ -126,7 +126,7 @@ EdgeContainerTracingStub::AsyncCreateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   return child_->AsyncUpdateNodePool(cq, std::move(context), request);
 }
@@ -134,7 +134,7 @@ EdgeContainerTracingStub::AsyncUpdateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   return child_->AsyncDeleteNodePool(cq, std::move(context), request);
 }
@@ -191,7 +191,7 @@ EdgeContainerTracingStub::GetVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncCreateVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
   return child_->AsyncCreateVpnConnection(cq, std::move(context), request);
@@ -200,7 +200,7 @@ EdgeContainerTracingStub::AsyncCreateVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
   return child_->AsyncDeleteVpnConnection(cq, std::move(context), request);
@@ -209,14 +209,14 @@ EdgeContainerTracingStub::AsyncDeleteVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 EdgeContainerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> EdgeContainerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

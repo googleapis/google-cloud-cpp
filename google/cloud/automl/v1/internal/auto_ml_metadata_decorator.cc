@@ -36,7 +36,7 @@ AutoMlMetadata::AutoMlMetadata(std::shared_ptr<AutoMlStub> child)
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateDataset(cq, std::move(context), request);
@@ -67,7 +67,7 @@ StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::UpdateDataset(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteDataset(cq, std::move(context), request);
@@ -76,7 +76,7 @@ AutoMlMetadata::AsyncDeleteDataset(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncImportData(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ImportDataRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncImportData(cq, std::move(context), request);
@@ -85,7 +85,7 @@ AutoMlMetadata::AsyncImportData(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncExportData(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ExportDataRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncExportData(cq, std::move(context), request);
@@ -102,7 +102,7 @@ AutoMlMetadata::GetAnnotationSpec(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::CreateModelRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateModel(cq, std::move(context), request);
@@ -126,7 +126,7 @@ AutoMlMetadata::ListModels(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeleteModelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteModel(cq, std::move(context), request);
@@ -142,7 +142,7 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::UpdateModel(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::DeployModelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeployModel(cq, std::move(context), request);
@@ -151,7 +151,7 @@ AutoMlMetadata::AsyncDeployModel(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::UndeployModelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncUndeployModel(cq, std::move(context), request);
@@ -160,7 +160,7 @@ AutoMlMetadata::AsyncUndeployModel(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::automl::v1::ExportModelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncExportModel(cq, std::move(context), request);
@@ -185,7 +185,7 @@ AutoMlMetadata::ListModelEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 AutoMlMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -193,7 +193,7 @@ AutoMlMetadata::AsyncGetOperation(
 
 future<Status> AutoMlMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

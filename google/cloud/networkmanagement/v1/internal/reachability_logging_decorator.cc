@@ -65,12 +65,12 @@ ReachabilityServiceLogging::GetConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncCreateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkmanagement::v1::
                  CreateConnectivityTestRequest const& request) {
         return child_->AsyncCreateConnectivityTest(cq, std::move(context),
@@ -82,12 +82,12 @@ ReachabilityServiceLogging::AsyncCreateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkmanagement::v1::
                  UpdateConnectivityTestRequest const& request) {
         return child_->AsyncUpdateConnectivityTest(cq, std::move(context),
@@ -99,12 +99,12 @@ ReachabilityServiceLogging::AsyncUpdateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncRerunConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkmanagement::v1::
                  RerunConnectivityTestRequest const& request) {
         return child_->AsyncRerunConnectivityTest(cq, std::move(context),
@@ -116,12 +116,12 @@ ReachabilityServiceLogging::AsyncRerunConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::networkmanagement::v1::
                  DeleteConnectivityTestRequest const& request) {
         return child_->AsyncDeleteConnectivityTest(cq, std::move(context),
@@ -133,11 +133,11 @@ ReachabilityServiceLogging::AsyncDeleteConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 ReachabilityServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -146,11 +146,11 @@ ReachabilityServiceLogging::AsyncGetOperation(
 
 future<Status> ReachabilityServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

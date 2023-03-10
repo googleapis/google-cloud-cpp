@@ -59,7 +59,7 @@ DefaultGameServerClustersServiceStub::GetGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerClustersServiceStub::AsyncCreateGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gaming::v1::CreateGameServerClusterRequest,
@@ -91,7 +91,7 @@ DefaultGameServerClustersServiceStub::PreviewCreateGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerClustersServiceStub::AsyncDeleteGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gaming::v1::DeleteGameServerClusterRequest,
@@ -123,7 +123,7 @@ DefaultGameServerClustersServiceStub::PreviewDeleteGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerClustersServiceStub::AsyncUpdateGameServerCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gaming::v1::UpdateGameServerClusterRequest,
@@ -155,7 +155,7 @@ DefaultGameServerClustersServiceStub::PreviewUpdateGameServerCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultGameServerClustersServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -170,7 +170,7 @@ DefaultGameServerClustersServiceStub::AsyncGetOperation(
 
 future<Status> DefaultGameServerClustersServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

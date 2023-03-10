@@ -43,7 +43,7 @@ class JobControllerStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncSubmitJobAsOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Job> GetJob(
@@ -68,12 +68,12 @@ class JobControllerStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -92,7 +92,7 @@ class DefaultJobControllerStub : public JobControllerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubmitJobAsOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dataproc::v1::SubmitJobRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
@@ -117,12 +117,12 @@ class DefaultJobControllerStub : public JobControllerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

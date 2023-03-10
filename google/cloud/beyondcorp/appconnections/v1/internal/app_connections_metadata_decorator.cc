@@ -57,7 +57,7 @@ AppConnectionsServiceMetadata::GetAppConnection(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceMetadata::AsyncCreateAppConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnections::v1::
         CreateAppConnectionRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -67,7 +67,7 @@ AppConnectionsServiceMetadata::AsyncCreateAppConnection(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceMetadata::AsyncUpdateAppConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnections::v1::
         UpdateAppConnectionRequest const& request) {
   SetMetadata(*context,
@@ -78,7 +78,7 @@ AppConnectionsServiceMetadata::AsyncUpdateAppConnection(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceMetadata::AsyncDeleteAppConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnections::v1::
         DeleteAppConnectionRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -98,7 +98,7 @@ AppConnectionsServiceMetadata::ResolveAppConnections(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectionsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -106,7 +106,7 @@ AppConnectionsServiceMetadata::AsyncGetOperation(
 
 future<Status> AppConnectionsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

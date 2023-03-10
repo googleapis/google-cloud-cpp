@@ -33,7 +33,7 @@ VideoIntelligenceServiceTracingStub::VideoIntelligenceServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceTracingStub::AsyncAnnotateVideo(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   return child_->AsyncAnnotateVideo(cq, std::move(context), request);
 }
@@ -41,14 +41,14 @@ VideoIntelligenceServiceTracingStub::AsyncAnnotateVideo(
 future<StatusOr<google::longrunning::Operation>>
 VideoIntelligenceServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> VideoIntelligenceServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

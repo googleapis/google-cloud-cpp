@@ -37,7 +37,7 @@ AzureClustersMetadata::AzureClustersMetadata(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncCreateAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateAzureClient(cq, std::move(context), request);
@@ -62,7 +62,7 @@ AzureClustersMetadata::ListAzureClients(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncDeleteAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteAzureClient(cq, std::move(context), request);
@@ -71,7 +71,7 @@ AzureClustersMetadata::AsyncDeleteAzureClient(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -81,7 +81,7 @@ AzureClustersMetadata::AsyncCreateAzureCluster(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncUpdateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
   SetMetadata(*context, "azure_cluster.name=" + request.azure_cluster().name());
@@ -107,7 +107,7 @@ AzureClustersMetadata::ListAzureClusters(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncDeleteAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -126,7 +126,7 @@ AzureClustersMetadata::GenerateAzureAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncCreateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -136,7 +136,7 @@ AzureClustersMetadata::AsyncCreateAzureNodePool(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
   SetMetadata(*context,
@@ -164,7 +164,7 @@ AzureClustersMetadata::ListAzureNodePools(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncDeleteAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -183,7 +183,7 @@ AzureClustersMetadata::GetAzureServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -191,7 +191,7 @@ AzureClustersMetadata::AsyncGetOperation(
 
 future<Status> AzureClustersMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

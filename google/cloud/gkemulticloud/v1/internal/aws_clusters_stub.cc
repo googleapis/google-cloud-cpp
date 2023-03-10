@@ -33,7 +33,7 @@ AwsClustersStub::~AwsClustersStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncCreateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest,
@@ -51,7 +51,7 @@ DefaultAwsClustersStub::AsyncCreateAwsCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncUpdateAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest,
@@ -94,7 +94,7 @@ DefaultAwsClustersStub::ListAwsClusters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncDeleteAwsCluster(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest,
@@ -126,7 +126,7 @@ DefaultAwsClustersStub::GenerateAwsAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncCreateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest,
@@ -144,7 +144,7 @@ DefaultAwsClustersStub::AsyncCreateAwsNodePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncUpdateAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest,
@@ -187,7 +187,7 @@ DefaultAwsClustersStub::ListAwsNodePools(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncDeleteAwsNodePool(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest,
@@ -219,7 +219,7 @@ DefaultAwsClustersStub::GetAwsServerConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAwsClustersStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -234,7 +234,7 @@ DefaultAwsClustersStub::AsyncGetOperation(
 
 future<Status> DefaultAwsClustersStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

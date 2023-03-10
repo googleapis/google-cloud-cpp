@@ -39,11 +39,11 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationResponse>>
 AgentEndpointServiceLogging::ReceiveTaskNotification(
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](std::unique_ptr<grpc::ClientContext> context,
+      [this](std::shared_ptr<grpc::ClientContext> context,
              google::cloud::osconfig::agentendpoint::v1::
                  ReceiveTaskNotificationRequest const& request)
           -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<

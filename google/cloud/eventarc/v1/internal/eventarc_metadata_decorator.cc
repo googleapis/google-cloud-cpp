@@ -51,7 +51,7 @@ EventarcMetadata::ListTriggers(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncCreateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateTrigger(cq, std::move(context), request);
@@ -60,7 +60,7 @@ EventarcMetadata::AsyncCreateTrigger(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   SetMetadata(*context, "trigger.name=" + request.trigger().name());
   return child_->AsyncUpdateTrigger(cq, std::move(context), request);
@@ -69,7 +69,7 @@ EventarcMetadata::AsyncUpdateTrigger(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteTrigger(cq, std::move(context), request);
@@ -93,7 +93,7 @@ EventarcMetadata::ListChannels(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateChannel(cq, std::move(context), request);
@@ -102,7 +102,7 @@ EventarcMetadata::AsyncCreateChannel(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   SetMetadata(*context, "channel.name=" + request.channel().name());
   return child_->AsyncUpdateChannel(cq, std::move(context), request);
@@ -111,7 +111,7 @@ EventarcMetadata::AsyncUpdateChannel(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncDeleteChannel(cq, std::move(context), request);
@@ -151,7 +151,7 @@ EventarcMetadata::ListChannelConnections(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncCreateChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -161,7 +161,7 @@ EventarcMetadata::AsyncCreateChannelConnection(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncDeleteChannelConnection(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
   SetMetadata(*context, "name=" + request.name());
@@ -189,7 +189,7 @@ EventarcMetadata::UpdateGoogleChannelConfig(
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -197,7 +197,7 @@ EventarcMetadata::AsyncGetOperation(
 
 future<Status> EventarcMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

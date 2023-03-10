@@ -48,12 +48,12 @@ struct StringOption {
 class MockStub {
  public:
   MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
-              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               ());
 
   MOCK_METHOD(future<Status>, AsyncCancelOperation,
-              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+              (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::CancelOperationRequest const&),
               ());
 };

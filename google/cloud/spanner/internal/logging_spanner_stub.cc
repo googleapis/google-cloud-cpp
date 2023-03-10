@@ -49,10 +49,10 @@ LoggingSpannerStub::BatchCreateSessions(
 future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 LoggingSpannerStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   return LogWrapper(
-      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [this](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::BatchCreateSessionsRequest const& request) {
         return child_->AsyncBatchCreateSessions(cq, std::move(context),
                                                 request);
@@ -73,10 +73,10 @@ Status LoggingSpannerStub::DeleteSession(
 
 future<Status> LoggingSpannerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::v1::DeleteSessionRequest const& request) {
   return LogWrapper(
-      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [this](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::DeleteSessionRequest const& request) {
         return child_->AsyncDeleteSession(cq, std::move(context), request);
       },
@@ -97,10 +97,10 @@ StatusOr<google::spanner::v1::ResultSet> LoggingSpannerStub::ExecuteSql(
 future<StatusOr<google::spanner::v1::ResultSet>>
 LoggingSpannerStub::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   return LogWrapper(
-      [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      [this](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::ExecuteSqlRequest const& request) {
         return child_->AsyncExecuteSql(cq, std::move(context), request);
       },

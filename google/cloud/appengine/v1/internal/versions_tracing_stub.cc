@@ -55,7 +55,7 @@ StatusOr<google::appengine::v1::Version> VersionsTracingStub::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateVersionRequest const& request) {
   return child_->AsyncCreateVersion(cq, std::move(context), request);
 }
@@ -63,7 +63,7 @@ VersionsTracingStub::AsyncCreateVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncUpdateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateVersionRequest const& request) {
   return child_->AsyncUpdateVersion(cq, std::move(context), request);
 }
@@ -71,7 +71,7 @@ VersionsTracingStub::AsyncUpdateVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteVersionRequest const& request) {
   return child_->AsyncDeleteVersion(cq, std::move(context), request);
 }
@@ -79,14 +79,14 @@ VersionsTracingStub::AsyncDeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> VersionsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

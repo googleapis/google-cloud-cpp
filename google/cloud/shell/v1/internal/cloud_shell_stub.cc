@@ -45,7 +45,7 @@ DefaultCloudShellServiceStub::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncStartEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::StartEnvironmentRequest,
@@ -62,7 +62,7 @@ DefaultCloudShellServiceStub::AsyncStartEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::AuthorizeEnvironmentRequest,
@@ -80,7 +80,7 @@ DefaultCloudShellServiceStub::AsyncAuthorizeEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncAddPublicKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::AddPublicKeyRequest,
@@ -97,7 +97,7 @@ DefaultCloudShellServiceStub::AsyncAddPublicKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::shell::v1::RemovePublicKeyRequest,
@@ -114,7 +114,7 @@ DefaultCloudShellServiceStub::AsyncRemovePublicKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudShellServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -129,7 +129,7 @@ DefaultCloudShellServiceStub::AsyncGetOperation(
 
 future<Status> DefaultCloudShellServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

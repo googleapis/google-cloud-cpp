@@ -48,54 +48,54 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::StartRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::StopRuntimeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSwitchRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::SwitchRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncResetRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReportRuntimeEvent(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
       override;
 
@@ -107,18 +107,18 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseRuntime(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

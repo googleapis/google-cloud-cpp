@@ -44,7 +44,7 @@ class SessionsStub {
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(google::cloud::CompletionQueue const& cq,
-                             std::unique_ptr<grpc::ClientContext> context) = 0;
+                             std::shared_ptr<grpc::ClientContext> context) = 0;
 };
 
 class DefaultSessionsStub : public SessionsStub {
@@ -64,7 +64,7 @@ class DefaultSessionsStub : public SessionsStub {
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(
       google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context) override;
 
  private:
   std::unique_ptr<google::cloud::dialogflow::v2::Sessions::StubInterface>

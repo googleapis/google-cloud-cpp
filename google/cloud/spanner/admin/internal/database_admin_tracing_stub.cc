@@ -45,7 +45,7 @@ DatabaseAdminTracingStub::ListDatabases(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   return child_->AsyncCreateDatabase(cq, std::move(context), request);
@@ -66,7 +66,7 @@ DatabaseAdminTracingStub::GetDatabase(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   return child_->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
@@ -133,7 +133,7 @@ DatabaseAdminTracingStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   return child_->AsyncCreateBackup(cq, std::move(context), request);
 }
@@ -141,7 +141,7 @@ DatabaseAdminTracingStub::AsyncCreateBackup(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   return child_->AsyncCopyBackup(cq, std::move(context), request);
 }
@@ -195,7 +195,7 @@ DatabaseAdminTracingStub::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   return child_->AsyncRestoreDatabase(cq, std::move(context), request);
@@ -244,14 +244,14 @@ DatabaseAdminTracingStub::ListDatabaseRoles(
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> DatabaseAdminTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

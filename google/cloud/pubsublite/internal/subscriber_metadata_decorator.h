@@ -39,7 +39,7 @@ class SubscriberServiceMetadata : public SubscriberServiceStub {
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>
   AsyncSubscribe(google::cloud::CompletionQueue const& cq,
-                 std::unique_ptr<grpc::ClientContext> context) override;
+                 std::shared_ptr<grpc::ClientContext> context) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context,

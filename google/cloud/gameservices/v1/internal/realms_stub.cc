@@ -56,7 +56,7 @@ StatusOr<google::cloud::gaming::v1::Realm> DefaultRealmsServiceStub::GetRealm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRealmsServiceStub::AsyncCreateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateRealmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gaming::v1::CreateRealmRequest,
@@ -73,7 +73,7 @@ DefaultRealmsServiceStub::AsyncCreateRealm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRealmsServiceStub::AsyncDeleteRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteRealmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gaming::v1::DeleteRealmRequest,
@@ -90,7 +90,7 @@ DefaultRealmsServiceStub::AsyncDeleteRealm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRealmsServiceStub::AsyncUpdateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateRealmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::gaming::v1::UpdateRealmRequest,
@@ -120,7 +120,7 @@ DefaultRealmsServiceStub::PreviewRealmUpdate(
 future<StatusOr<google::longrunning::Operation>>
 DefaultRealmsServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -135,7 +135,7 @@ DefaultRealmsServiceStub::AsyncGetOperation(
 
 future<Status> DefaultRealmsServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

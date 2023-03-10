@@ -46,7 +46,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
 SessionsTracingStub::AsyncStreamingDetectIntent(
     google::cloud::CompletionQueue const& cq,
-    std::unique_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context) {
   return child_->AsyncStreamingDetectIntent(cq, std::move(context));
 }
 

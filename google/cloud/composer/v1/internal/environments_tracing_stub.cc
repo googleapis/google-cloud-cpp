@@ -33,7 +33,7 @@ EnvironmentsTracingStub::EnvironmentsTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   return child_->AsyncCreateEnvironment(cq, std::move(context), request);
@@ -71,7 +71,7 @@ EnvironmentsTracingStub::ListEnvironments(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   return child_->AsyncUpdateEnvironment(cq, std::move(context), request);
@@ -80,7 +80,7 @@ EnvironmentsTracingStub::AsyncUpdateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   return child_->AsyncDeleteEnvironment(cq, std::move(context), request);
@@ -89,7 +89,7 @@ EnvironmentsTracingStub::AsyncDeleteEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   return child_->AsyncSaveSnapshot(cq, std::move(context), request);
@@ -98,7 +98,7 @@ EnvironmentsTracingStub::AsyncSaveSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   return child_->AsyncLoadSnapshot(cq, std::move(context), request);
@@ -107,14 +107,14 @@ EnvironmentsTracingStub::AsyncLoadSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> EnvironmentsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

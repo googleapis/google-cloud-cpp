@@ -43,7 +43,7 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::CreateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncBatchCreateJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBatchCreateJobs(cq, std::move(context), request);
@@ -66,7 +66,7 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::UpdateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncBatchUpdateJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBatchUpdateJobs(cq, std::move(context), request);
@@ -82,7 +82,7 @@ Status JobServiceMetadata::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncBatchDeleteJobs(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncBatchDeleteJobs(cq, std::move(context), request);
@@ -115,7 +115,7 @@ JobServiceMetadata::SearchJobsForAlert(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -123,7 +123,7 @@ JobServiceMetadata::AsyncGetOperation(
 
 future<Status> JobServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

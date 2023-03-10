@@ -55,7 +55,7 @@ StatusOr<google::appengine::v1::Service> ServicesTracingStub::GetService(
 future<StatusOr<google::longrunning::Operation>>
 ServicesTracingStub::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateServiceRequest const& request) {
   return child_->AsyncUpdateService(cq, std::move(context), request);
 }
@@ -63,7 +63,7 @@ ServicesTracingStub::AsyncUpdateService(
 future<StatusOr<google::longrunning::Operation>>
 ServicesTracingStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteServiceRequest const& request) {
   return child_->AsyncDeleteService(cq, std::move(context), request);
 }
@@ -71,14 +71,14 @@ ServicesTracingStub::AsyncDeleteService(
 future<StatusOr<google::longrunning::Operation>>
 ServicesTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> ServicesTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

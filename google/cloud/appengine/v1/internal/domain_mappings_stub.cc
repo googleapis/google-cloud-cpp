@@ -59,7 +59,7 @@ DefaultDomainMappingsStub::GetDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainMappingsStub::AsyncCreateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::appengine::v1::CreateDomainMappingRequest,
@@ -76,7 +76,7 @@ DefaultDomainMappingsStub::AsyncCreateDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainMappingsStub::AsyncUpdateDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::appengine::v1::UpdateDomainMappingRequest,
@@ -93,7 +93,7 @@ DefaultDomainMappingsStub::AsyncUpdateDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainMappingsStub::AsyncDeleteDomainMapping(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::appengine::v1::DeleteDomainMappingRequest,
@@ -110,7 +110,7 @@ DefaultDomainMappingsStub::AsyncDeleteDomainMapping(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainMappingsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -125,7 +125,7 @@ DefaultDomainMappingsStub::AsyncGetOperation(
 
 future<Status> DefaultDomainMappingsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

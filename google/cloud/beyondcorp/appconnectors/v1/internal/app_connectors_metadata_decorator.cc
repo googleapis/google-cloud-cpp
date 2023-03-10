@@ -55,7 +55,7 @@ AppConnectorsServiceMetadata::GetAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncCreateAppConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         CreateAppConnectorRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
@@ -65,7 +65,7 @@ AppConnectorsServiceMetadata::AsyncCreateAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncUpdateAppConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const& request) {
   SetMetadata(*context, "app_connector.name=" + request.app_connector().name());
@@ -75,7 +75,7 @@ AppConnectorsServiceMetadata::AsyncUpdateAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncDeleteAppConnector(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         DeleteAppConnectorRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
@@ -85,7 +85,7 @@ AppConnectorsServiceMetadata::AsyncDeleteAppConnector(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncReportStatus(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request) {
   SetMetadata(*context, "app_connector=" + request.app_connector());
@@ -95,7 +95,7 @@ AppConnectorsServiceMetadata::AsyncReportStatus(
 future<StatusOr<google::longrunning::Operation>>
 AppConnectorsServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -103,7 +103,7 @@ AppConnectorsServiceMetadata::AsyncGetOperation(
 
 future<Status> AppConnectorsServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

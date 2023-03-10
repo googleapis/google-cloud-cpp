@@ -51,14 +51,14 @@ class WorkflowTemplateServiceTracingStub : public WorkflowTemplateServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncInstantiateWorkflowTemplate(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncInstantiateInlineWorkflowTemplate(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request) override;
 
@@ -81,12 +81,12 @@ class WorkflowTemplateServiceTracingStub : public WorkflowTemplateServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

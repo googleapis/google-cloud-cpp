@@ -42,7 +42,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   ~DefaultDatabaseAdminStub() override = default;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       gsad::v1::CreateDatabaseRequest const& request) override {
     return internal::MakeUnaryRpcImpl<gsad::v1::CreateDatabaseRequest,
                                       google::longrunning::Operation>(
@@ -80,7 +80,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       gsad::v1::UpdateDatabaseDdlRequest const& request) override {
     return internal::MakeUnaryRpcImpl<gsad::v1::UpdateDatabaseDdlRequest,
                                       google::longrunning::Operation>(
@@ -117,7 +117,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       gsad::v1::RestoreDatabaseRequest const& request) override {
     return internal::MakeUnaryRpcImpl<gsad::v1::RestoreDatabaseRequest,
                                       google::longrunning::Operation>(
@@ -167,7 +167,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       gsad::v1::CreateBackupRequest const& request) override {
     return internal::MakeUnaryRpcImpl<gsad::v1::CreateBackupRequest,
                                       google::longrunning::Operation>(
@@ -254,7 +254,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override {
     return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                       google::longrunning::Operation>(
@@ -268,7 +268,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
   future<Status> AsyncCancelOperation(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+      CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override {
     return internal::MakeUnaryRpcImpl<
                google::longrunning::CancelOperationRequest,

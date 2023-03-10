@@ -60,11 +60,11 @@ StatusOr<google::cloud::gaming::v1::Realm> RealmsServiceLogging::GetRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceLogging::AsyncCreateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::CreateRealmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gaming::v1::CreateRealmRequest const& request) {
         return child_->AsyncCreateRealm(cq, std::move(context), request);
       },
@@ -74,11 +74,11 @@ RealmsServiceLogging::AsyncCreateRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceLogging::AsyncDeleteRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::DeleteRealmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gaming::v1::DeleteRealmRequest const& request) {
         return child_->AsyncDeleteRealm(cq, std::move(context), request);
       },
@@ -88,11 +88,11 @@ RealmsServiceLogging::AsyncDeleteRealm(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceLogging::AsyncUpdateRealm(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::gaming::v1::UpdateRealmRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::cloud::gaming::v1::UpdateRealmRequest const& request) {
         return child_->AsyncUpdateRealm(cq, std::move(context), request);
       },
@@ -115,11 +115,11 @@ RealmsServiceLogging::PreviewRealmUpdate(
 future<StatusOr<google::longrunning::Operation>>
 RealmsServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -128,11 +128,11 @@ RealmsServiceLogging::AsyncGetOperation(
 
 future<Status> RealmsServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

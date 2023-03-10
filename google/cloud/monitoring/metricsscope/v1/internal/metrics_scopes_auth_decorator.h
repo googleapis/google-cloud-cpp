@@ -53,24 +53,24 @@ class MetricsScopesAuth : public MetricsScopesStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMonitoredProject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMonitoredProject(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

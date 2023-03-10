@@ -120,7 +120,7 @@ Status StorageTransferServiceTracingStub::ResumeTransferOperation(
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceTracingStub::AsyncRunTransferJob(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   return child_->AsyncRunTransferJob(cq, std::move(context), request);
 }
@@ -198,14 +198,14 @@ Status StorageTransferServiceTracingStub::DeleteAgentPool(
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return child_->AsyncGetOperation(cq, std::move(context), request);
 }
 
 future<Status> StorageTransferServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return child_->AsyncCancelOperation(cq, std::move(context), request);
 }

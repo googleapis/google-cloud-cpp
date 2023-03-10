@@ -37,12 +37,12 @@ ServiceUsageLogging::ServiceUsageLogging(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncEnableService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::api::serviceusage::v1::EnableServiceRequest const& request) {
         return child_->AsyncEnableService(cq, std::move(context), request);
       },
@@ -52,12 +52,12 @@ ServiceUsageLogging::AsyncEnableService(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::unique_ptr<grpc::ClientContext> context,
+          std::shared_ptr<grpc::ClientContext> context,
           google::api::serviceusage::v1::DisableServiceRequest const& request) {
         return child_->AsyncDisableService(cq, std::move(context), request);
       },
@@ -92,11 +92,11 @@ ServiceUsageLogging::ListServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncBatchEnableServices(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::api::serviceusage::v1::BatchEnableServicesRequest const&
                  request) {
         return child_->AsyncBatchEnableServices(cq, std::move(context),
@@ -121,11 +121,11 @@ ServiceUsageLogging::BatchGetServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->AsyncGetOperation(cq, std::move(context), request);
       },
@@ -134,11 +134,11 @@ ServiceUsageLogging::AsyncGetOperation(
 
 future<Status> ServiceUsageLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::shared_ptr<grpc::ClientContext> context,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->AsyncCancelOperation(cq, std::move(context), request);
       },

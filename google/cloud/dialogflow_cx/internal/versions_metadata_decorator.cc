@@ -52,7 +52,7 @@ VersionsMetadata::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncCreateVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   SetMetadata(*context, "parent=" + request.parent());
   return child_->AsyncCreateVersion(cq, std::move(context), request);
@@ -76,7 +76,7 @@ Status VersionsMetadata::DeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncLoadVersion(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncLoadVersion(cq, std::move(context), request);
@@ -93,7 +93,7 @@ VersionsMetadata::CompareVersions(
 future<StatusOr<google::longrunning::Operation>>
 VersionsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncGetOperation(cq, std::move(context), request);
@@ -101,7 +101,7 @@ VersionsMetadata::AsyncGetOperation(
 
 future<Status> VersionsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
+    std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncCancelOperation(cq, std::move(context), request);

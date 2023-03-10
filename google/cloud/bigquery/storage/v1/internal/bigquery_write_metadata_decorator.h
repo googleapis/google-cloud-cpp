@@ -43,7 +43,7 @@ class BigQueryWriteMetadata : public BigQueryWriteStub {
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
   AsyncAppendRows(google::cloud::CompletionQueue const& cq,
-                  std::unique_ptr<grpc::ClientContext> context) override;
+                  std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
       grpc::ClientContext& context,
