@@ -39,6 +39,7 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
     --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
     --output_path="${PROJECT_ROOT}" \
+    --check_parameter_comment_substitutions=true \
     --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"
 else
   io::log_red "Skipping update of generated libraries."
