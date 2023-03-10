@@ -122,10 +122,11 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 We have stopped testing with MSVC 2017. Microsoft stopped mainstream support for
 MSVC 2017 in [2022-04](https://learn.microsoft.com/en-us/lifecycle/products/visual-studio-2017).
-We continue to test with MSVC 2022 and MSVC 2019, we recommend that you update
+We continue to test with MSVC 2022 and MSVC 2019. We recommend that you update
 to one of these versions to use more recent versions of the `google-cloud-cpp`
-libraries.  Note that, in accordance with the  other Google libraries have stopped (or shortly will stop)
-testing with MSVC,
+libraries. Note that, in accordance with Google's
+[Foundational C++ support policy][oss-cxx-support], the other Google libraries
+have stopped (or shortly will stop) testing with MSVC 2017.
 
 ## v2.8.0 - 2023-03
 
@@ -3471,6 +3472,7 @@ releases.  The relevant notes are:
 [issue-2567]: https://github.com/googleapis/google-cloud-cpp/issues/2567
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
+[oss-cxx-support]: https://opensource.google/documentation/policies/cplusplus-support
 [pub/sub lite]: /google/cloud/pubsublite/README.md
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
