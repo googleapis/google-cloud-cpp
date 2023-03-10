@@ -118,6 +118,15 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ## v2.9.0 - TBD
 
+### Testing
+
+We have stopped testing with MSVC 2017. Microsoft stopped mainstream support for
+MSVC 2017 in [2022-04](https://learn.microsoft.com/en-us/lifecycle/products/visual-studio-2017).
+We continue to test with MSVC 2022 and MSVC 2019, we recommend that you update
+to one of these versions to use more recent versions of the `google-cloud-cpp`
+libraries.  Note that, in accordance with the  other Google libraries have stopped (or shortly will stop)
+testing with MSVC,
+
 ## v2.8.0 - 2023-03
 
 ### New Libraries

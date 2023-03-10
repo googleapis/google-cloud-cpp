@@ -246,14 +246,14 @@ You can use the CI driver scripts to compile the code. You need to load the
 MSVC environment variables:
 
 ```console
-> set MSVC_VERSION=2019
+> set MSVC_VERSION=2022
 > call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars64.bat"
 ```
 
 Or to setup for 32-bit builds:
 
 ```console
-> set MSVC_VERSION=2019
+> set MSVC_VERSION=2022
 > call "c:\Program Files (x86)\Microsoft Visual Studio\%MSVC_VERSION%\Community\VC\Auxiliary\Build\vcvars32.bat"
 ```
 
