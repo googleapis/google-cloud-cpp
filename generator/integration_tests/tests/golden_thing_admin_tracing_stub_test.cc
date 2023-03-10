@@ -93,7 +93,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
   google::test::admin::database::v1::CreateDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncCreateDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
@@ -135,7 +135,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncUpdateDatabaseDdl(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
@@ -297,7 +297,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
   google::test::admin::database::v1::CreateBackupRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncCreateBackup(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
@@ -428,7 +428,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncRestoreDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
@@ -503,7 +503,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncGetDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
@@ -517,7 +517,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
   google::test::admin::database::v1::DropDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncDropDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
@@ -529,7 +529,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
   google::longrunning::GetOperationRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncGetOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 
@@ -543,7 +543,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
   google::longrunning::CancelOperationRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncCancelOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 }
 

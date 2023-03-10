@@ -60,7 +60,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
 
   CompletionQueue cq;
   auto response =
-      stub.AsyncCreateDatabase(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncCreateDatabase(cq, std::make_shared<grpc::ClientContext>(),
                                gsad::v1::CreateDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
@@ -110,7 +110,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
 
   CompletionQueue cq;
   auto response =
-      stub.AsyncUpdateDatabaseDdl(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncUpdateDatabaseDdl(cq, std::make_shared<grpc::ClientContext>(),
                                   gsad::v1::UpdateDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
@@ -159,7 +159,7 @@ TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
 
   CompletionQueue cq;
   auto response =
-      stub.AsyncRestoreDatabase(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncRestoreDatabase(cq, std::make_shared<grpc::ClientContext>(),
                                 gsad::v1::RestoreDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
@@ -225,7 +225,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
 
   CompletionQueue cq;
   auto response =
-      stub.AsyncCreateBackup(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncCreateBackup(cq, std::make_shared<grpc::ClientContext>(),
                              gsad::v1::CreateBackupRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
@@ -333,7 +333,7 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
 
   CompletionQueue cq;
   auto response =
-      stub.AsyncGetOperation(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncGetOperation(cq, std::make_shared<grpc::ClientContext>(),
                              google::longrunning::GetOperationRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
@@ -353,7 +353,7 @@ TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
 
   CompletionQueue cq;
   auto status =
-      stub.AsyncCancelOperation(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncCancelOperation(cq, std::make_shared<grpc::ClientContext>(),
                                 google::longrunning::CancelOperationRequest{});
   EXPECT_EQ(TransientError(), status.get());
 

@@ -108,7 +108,7 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
         std::move(request), __func__);
   }
   lk.unlock();
-  return stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
+  return stub_->AsyncAcknowledge(cq_, std::make_shared<grpc::ClientContext>(),
                                  request);
 }
 
@@ -134,7 +134,7 @@ future<Status> StreamingSubscriptionBatchSource::NackMessage(
   }
   lk.unlock();
   return stub_->AsyncModifyAckDeadline(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+      cq_, std::make_shared<grpc::ClientContext>(), request);
 }
 
 future<Status> StreamingSubscriptionBatchSource::BulkNack(
@@ -150,14 +150,14 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
       SplitModifyAckDeadline(std::move(request), kMaxAckIdsPerMessage);
   if (requests.size() == 1) {
     return stub_->AsyncModifyAckDeadline(
-        cq_, absl::make_unique<grpc::ClientContext>(), requests.front());
+        cq_, std::make_shared<grpc::ClientContext>(), requests.front());
   }
 
   std::vector<future<Status>> pending(requests.size());
   std::transform(requests.begin(), requests.end(), pending.begin(),
                  [this](auto const& request) {
                    return stub_->AsyncModifyAckDeadline(
-                       cq_, absl::make_unique<grpc::ClientContext>(), request);
+                       cq_, std::make_shared<grpc::ClientContext>(), request);
                  });
   return Reduce(std::move(pending));
 }
@@ -181,7 +181,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   lk.unlock();
   for (auto& r : split) {
     (void)stub_->AsyncModifyAckDeadline(
-        cq_, absl::make_unique<grpc::ClientContext>(), r);
+        cq_, std::make_shared<grpc::ClientContext>(), r);
   }
 }
 
@@ -203,7 +203,7 @@ void StreamingSubscriptionBatchSource::StartStream(
   // these steps in an asynchronous retry loop.
 
   auto request = InitialRequest();
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   context->AddMetadata("x-goog-request-params",
                        "subscription=" + request.subscription());
   auto stream = stub_->AsyncStreamingPull(cq_, std::move(context));

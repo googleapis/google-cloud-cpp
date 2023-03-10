@@ -228,7 +228,7 @@ class AsyncRetryLoopImpl
     }
     auto state = StartOperation();
     if (state.cancelled) return;
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_shared<grpc::ClientContext>();
     ConfigureContext(*context, options_);
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(

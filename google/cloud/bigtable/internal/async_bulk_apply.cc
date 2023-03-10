@@ -56,7 +56,7 @@ AsyncBulkApplier::AsyncBulkApplier(
 
 void AsyncBulkApplier::StartIteration() {
   internal::OptionsSpan span(options_);
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 
   auto self = this->shared_from_this();

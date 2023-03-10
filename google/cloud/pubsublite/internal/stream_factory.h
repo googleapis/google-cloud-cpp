@@ -37,9 +37,9 @@ using StreamFactory = std::function<
 
 using ClientMetadata = std::unordered_map<std::string, std::string>;
 
-inline std::unique_ptr<grpc::ClientContext> MakeGrpcClientContext(
+inline std::shared_ptr<grpc::ClientContext> MakeGrpcClientContext(
     ClientMetadata const& metadata) {
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   for (auto const& kv : metadata) {
     context->AddMetadata(kv.first, kv.second);
   }

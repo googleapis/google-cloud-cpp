@@ -43,7 +43,7 @@ AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
 
   return [stub, request](CompletionQueue& cq) {
     return stub
-        ->AsyncGenerateAccessToken(cq, absl::make_unique<grpc::ClientContext>(),
+        ->AsyncGenerateAccessToken(cq, std::make_shared<grpc::ClientContext>(),
                                    request)
         .then([](future<StatusOr<GenerateAccessTokenResponse>> f)
                   -> StatusOr<AccessToken> {

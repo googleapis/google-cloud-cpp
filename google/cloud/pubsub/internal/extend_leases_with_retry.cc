@@ -78,7 +78,7 @@ google::pubsub::v1::ModifyAckDeadlineRequest UpdateRequest(
  *   Status last_status;
  *   for (int attempts = 0; attempts != 3; ++i) {
  *     last_status = co_await stub->AsyncModifyAckDeadline(
- *         cq, absl::make_unique<grpc::ClientContext>(), request);
+ *         cq, std::make_shared<grpc::ClientContext>(), request);
  *     if (status.ok()) co_return last_status;
  *     request = UpdateRequest(std::move(request), status);
  *     if (request.ack_ids().empty()) co_return last_status;
@@ -107,7 +107,7 @@ class ExtendLeasesWithRetryHandle
  private:
   void MakeAttempt() {
     ++attempts_;
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_shared<grpc::ClientContext>();
     stub_->AsyncModifyAckDeadline(cq_, std::move(context), request_)
         .then(
             [self = shared_from_this()](auto f) { self->OnAttempt(f.get()); });

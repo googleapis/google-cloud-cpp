@@ -70,7 +70,7 @@ TEST(AsyncStreamReadWriteAuth, Start) {
     return make_ready_future(make_status_or(std::move(context)));
   });
   auto uut = absl::make_unique<AuthStream>(
-      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+      std::make_shared<grpc::ClientContext>(), strategy, factory);
   EXPECT_TRUE(uut->Start().get());
   auto response = uut->Read().get();
   ASSERT_TRUE(response.has_value());
@@ -93,7 +93,7 @@ TEST(AsyncStreamReadWriteAuth, AuthFails) {
         Status(StatusCode::kPermissionDenied, "uh-oh")));
   });
   auto uut = absl::make_unique<AuthStream>(
-      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+      std::make_shared<grpc::ClientContext>(), strategy, factory);
   EXPECT_FALSE(uut->Start().get());
   EXPECT_THAT(uut->Finish().get(), StatusIs(StatusCode::kPermissionDenied));
 }
@@ -112,7 +112,7 @@ TEST(AsyncStreamReadWriteAuth, CancelDuringAuth) {
   });
 
   auto uut = absl::make_unique<AuthStream>(
-      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+      std::make_shared<grpc::ClientContext>(), strategy, factory);
   auto start = uut->Start();
   uut->Cancel();
   start_promise.set_value();
@@ -142,7 +142,7 @@ TEST(AsyncStreamReadWriteAuth, CancelAfterStart) {
     return make_ready_future(make_status_or(std::move(context)));
   });
   auto uut = absl::make_unique<AuthStream>(
-      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+      std::make_shared<grpc::ClientContext>(), strategy, factory);
   EXPECT_TRUE(uut->Start().get());
   auto response = uut->Read().get();
   ASSERT_TRUE(response.has_value());

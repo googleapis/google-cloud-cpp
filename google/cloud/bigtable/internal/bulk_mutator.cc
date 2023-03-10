@@ -209,7 +209,7 @@ Status BulkMutator::MakeOneRequest(bigtable_internal::BigtableStub& stub) {
 
   // Configure the context
   auto const& options = google::cloud::internal::CurrentOptions();
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   google::cloud::internal::ConfigureContext(*context, options);
 
   struct UnpackVariant {

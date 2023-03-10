@@ -76,7 +76,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenLogging) {
   request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
   CompletionQueue cq;
   auto response = stub->AsyncGenerateAccessToken(
-                          cq, absl::make_unique<grpc::ClientContext>(), request)
+                          cq, std::make_shared<grpc::ClientContext>(), request)
                       .get();
   ASSERT_THAT(response, IsOk());
   auto const lines = log_.ExtractLines();
@@ -99,7 +99,7 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenNoLogging) {
   request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
   CompletionQueue cq;
   auto response = stub->AsyncGenerateAccessToken(
-                          cq, absl::make_unique<grpc::ClientContext>(), request)
+                          cq, std::make_shared<grpc::ClientContext>(), request)
                       .get();
   ASSERT_THAT(response, IsOk());
   auto const lines = log_.ExtractLines();
@@ -152,7 +152,7 @@ TEST_F(MinimalIamCredentialsStubTest, Invalid) {
   AutomaticallyCreatedBackgroundThreads background;
   auto cq = background.cq();
   auto response = stub->AsyncGenerateAccessToken(
-                          cq, absl::make_unique<grpc::ClientContext>(), request)
+                          cq, std::make_shared<grpc::ClientContext>(), request)
                       .get();
   EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
@@ -179,7 +179,7 @@ TEST_F(MinimalIamCredentialsStubTest,
   request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
   CompletionQueue cq;
   auto response = stub->AsyncGenerateAccessToken(
-                          cq, absl::make_unique<grpc::ClientContext>(), request)
+                          cq, std::make_shared<grpc::ClientContext>(), request)
                       .get();
   ASSERT_THAT(response, IsOk());
   auto const lines = log_.ExtractLines();

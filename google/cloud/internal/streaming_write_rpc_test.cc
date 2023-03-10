@@ -60,7 +60,7 @@ TEST(StreamingWriteRpcImpl, SuccessfulStream) {
   });
 
   StreamingWriteRpcImpl<FakeRequest, FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(response),
+      std::make_shared<grpc::ClientContext>(), std::move(response),
       std::move(mock));
   for (std::string key : {"w0", "w1", "w2"}) {
     EXPECT_TRUE(impl.Write(FakeRequest{key}, grpc::WriteOptions{}));
@@ -83,7 +83,7 @@ TEST(StreamingWriteRpcImpl, ErrorInWrite) {
   });
 
   StreamingWriteRpcImpl<FakeRequest, FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(response),
+      std::make_shared<grpc::ClientContext>(), std::move(response),
       std::move(mock));
   for (std::string key : {"w0", "w1"}) {
     EXPECT_TRUE(impl.Write(FakeRequest{key}, grpc::WriteOptions{}));
@@ -102,7 +102,7 @@ TEST(StreamingWriteRpcImpl, ErrorInWritesDone) {
   });
 
   StreamingWriteRpcImpl<FakeRequest, FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(response),
+      std::make_shared<grpc::ClientContext>(), std::move(response),
       std::move(mock));
   for (std::string key : {"w0", "w1"}) {
     EXPECT_TRUE(impl.Write(FakeRequest{key}, grpc::WriteOptions{}));
@@ -117,7 +117,7 @@ TEST(StreamingWriteRpcImpl, NoWritesDoneWithLastMessage) {
   EXPECT_CALL(*mock, Finish).WillOnce(Return(grpc::Status::OK));
 
   StreamingWriteRpcImpl<FakeRequest, FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(response),
+      std::make_shared<grpc::ClientContext>(), std::move(response),
       std::move(mock));
   EXPECT_TRUE(impl.Write(FakeRequest{"w0"}, grpc::WriteOptions{}));
   EXPECT_TRUE(
