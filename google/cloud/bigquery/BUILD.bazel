@@ -109,7 +109,6 @@ cc_library(
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
-        "//:grpc_utils",
         "//google/cloud:google_cloud_cpp_rest_internal",
     ],
 )
