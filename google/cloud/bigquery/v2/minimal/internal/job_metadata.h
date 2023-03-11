@@ -17,12 +17,30 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_METADATA_H
 
+#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+class BigQueryJobMetadata : public BigQueryJobRestStub {
+ public:
+  ~BigQueryJobMetadata() override = default;
+  explicit BigQueryJobMetadata(std::shared_ptr<BigQueryJobRestStub> child);
+
+  StatusOr<GetJobResponse> GetJob(rest_internal::RestContext& context,
+                                  GetJobRequest const& request) override;
+
+ private:
+  void SetMetadata(rest_internal::RestContext& context,
+                   std::vector<std::string> const& params = {});
+
+  std::shared_ptr<BigQueryJobRestStub> child_;
+  std::string api_client_header_;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

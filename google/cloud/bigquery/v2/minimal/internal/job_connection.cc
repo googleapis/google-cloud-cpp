@@ -12,31 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigquery/v2/minimal/internal/job_connection.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_connection_impl.h"
-#include "google/cloud/bigquery/v2/minimal/internal/job_options.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/rest_retry_loop.h"
+#include "google/cloud/credentials.h"
 #include <memory>
+
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-BigQueryJobRestConnectionImpl::BigQueryJobRestConnectionImpl(
-    std::shared_ptr<BigQueryJobRestStub> stub, Options options)
-    : stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      BigQueryJobConnection::options())) {}
+BigQueryJobConnection::~BigQueryJobConnection() = default;
 
-StatusOr<GetJobResponse> BigQueryJobRestConnectionImpl::GetJob(
-    GetJobRequest const& request) {
-  return rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
-      [this](rest_internal::RestContext& rest_context,
-             GetJobRequest const& request) {
-        return stub_->GetJob(rest_context, request);
-      },
-      request, __func__);
+StatusOr<GetJobResponse> BigQueryJobConnection::GetJob(GetJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(
+    Options options) {
+  internal::CheckExpectedOptions<CommonOptionList, UnifiedCredentialsOptionList,
+                                 BigQueryJobPolicyOptionList>(options,
+                                                              __func__);
+  options = BigQueryJobDefaultOptions(std::move(options));
+
+  auto job_rest_stub = CreateDefaultBigQueryJobRestStub(options);
+
+  return std::make_shared<BigQueryJobRestConnectionImpl>(
+      std::move(job_rest_stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
