@@ -270,11 +270,11 @@ TEST(SpannerAuthTest, AsyncBatchCreateSessions) {
   google::spanner::v1::BatchCreateSessionsRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncBatchCreateSessions(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncBatchCreateSessions(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -291,11 +291,11 @@ TEST(SpannerAuthTest, AsyncDeleteSession) {
   google::spanner::v1::DeleteSessionRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncDeleteSession(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncDeleteSession(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -312,11 +312,11 @@ TEST(SpannerAuthTest, AsyncExecuteSql) {
   google::spanner::v1::ExecuteSqlRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncExecuteSql(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncExecuteSql(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 

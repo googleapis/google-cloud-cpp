@@ -116,7 +116,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
 
   OptionsSpan span(user_project("create"));
   auto stream = MakeStreamingWriteRpc<FakeRequest, FakeResponse>(
-      cq, absl::make_unique<grpc::ClientContext>(),
+      cq, std::make_shared<grpc::ClientContext>(),
       [&mock](grpc::ClientContext* context, FakeResponse* response,
               grpc::CompletionQueue* cq) {
         return mock.FakeRpc(context, response, cq);

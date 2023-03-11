@@ -134,7 +134,7 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
   request.set_parent(google::cloud::Project("test-project-id").FullName());
   request.set_instance_id("test-instance-id");
   auto response = stub.AsyncCreateInstance(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -158,7 +158,7 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
           google::cloud::Project("test-project-id"), "test-instance-id")
           .FullName());
   auto response = stub.AsyncUpdateInstance(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 

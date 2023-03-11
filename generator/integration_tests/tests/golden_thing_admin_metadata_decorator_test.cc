@@ -119,7 +119,7 @@ TEST_F(MetadataDecoratorTest, CreateDatabase) {
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncCreateDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -143,7 +143,7 @@ TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
   auto status = stub.AsyncUpdateDatabaseDdl(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -270,7 +270,7 @@ TEST_F(MetadataDecoratorTest, CreateBackup) {
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncCreateBackup(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -377,7 +377,7 @@ TEST_F(MetadataDecoratorTest, RestoreDatabase) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncRestoreDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -442,7 +442,7 @@ TEST_F(MetadataDecoratorTest, AsyncGetDatabase) {
   request.set_name(
       "projects/my_project/instances/my_instance/databases/my_database");
   auto status = stub.AsyncGetDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -465,7 +465,7 @@ TEST_F(MetadataDecoratorTest, AsyncDropDatabase) {
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
   auto status = stub.AsyncDropDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get());
 }
 
@@ -488,7 +488,7 @@ TEST_F(MetadataDecoratorTest, LongRunningWithoutRouting) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncLongRunningWithoutRouting(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -507,7 +507,7 @@ TEST_F(MetadataDecoratorTest, GetOperation) {
   google::longrunning::GetOperationRequest request;
   request.set_name("operations/my_operation");
   auto status = stub.AsyncGetOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -527,7 +527,7 @@ TEST_F(MetadataDecoratorTest, CancelOperation) {
   google::longrunning::CancelOperationRequest request;
   request.set_name("operations/my_operation");
   auto status = stub.AsyncCancelOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get());
 }
 

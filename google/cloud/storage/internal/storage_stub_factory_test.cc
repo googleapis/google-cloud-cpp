@@ -117,7 +117,7 @@ TEST_F(StorageStubFactory, ReadObject) {
   ScopedLog log;
   CompletionQueue cq;
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto stream = stub->ReadObject(absl::make_unique<grpc::ClientContext>(),
+  auto stream = stub->ReadObject(std::make_shared<grpc::ClientContext>(),
                                  google::storage::v2::ReadObjectRequest{});
   auto response = stream->Read();
   ASSERT_TRUE(absl::holds_alternative<Status>(response));
@@ -162,7 +162,7 @@ TEST_F(StorageStubFactory, WriteObject) {
   CompletionQueue cq;
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
   auto stream =
-      stub->AsyncWriteObject(cq, absl::make_unique<grpc::ClientContext>());
+      stub->AsyncWriteObject(cq, std::make_shared<grpc::ClientContext>());
   EXPECT_TRUE(stream->Start().get());
   auto close = stream->Finish().get();
   EXPECT_THAT(close, StatusIs(StatusCode::kUnavailable));

@@ -195,7 +195,7 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcNoRpcStreams) {
       .WillOnce(Return(ByMove(std::move(mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   auto response =
-      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), Request{});
+      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();
@@ -211,7 +211,7 @@ TEST_F(LoggingDecoratorTest, StreamingReadRpcWithRpcStreams) {
       .WillOnce(Return(ByMove(std::move(mock_response))));
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
   auto response =
-      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), Request{});
+      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
   EXPECT_THAT(absl::get<Status>(response->Read()), IsOk());
 
   auto const log_lines = log_.ExtractLines();
@@ -230,7 +230,7 @@ TEST_F(LoggingDecoratorTest, StreamingWrite) {
     return stream;
   });
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
-  auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
+  auto stream = stub.StreamingWrite(std::make_shared<grpc::ClientContext>());
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
@@ -255,7 +255,7 @@ TEST_F(LoggingDecoratorTest, StreamingWriteFullTracing) {
     return stream;
   });
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
-  auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
+  auto stream = stub.StreamingWrite(std::make_shared<grpc::ClientContext>());
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
@@ -280,7 +280,7 @@ TEST_F(LoggingDecoratorTest, AsyncStreamingRead) {
 
   google::cloud::CompletionQueue cq;
   auto stream = stub.AsyncStreamingRead(
-      cq, absl::make_unique<grpc::ClientContext>(), Request{});
+      cq, std::make_shared<grpc::ClientContext>(), Request{});
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
@@ -304,7 +304,7 @@ TEST_F(LoggingDecoratorTest, AsyncStreamingWrite) {
 
   google::cloud::CompletionQueue cq;
   auto stream =
-      stub.AsyncStreamingWrite(cq, absl::make_unique<grpc::ClientContext>());
+      stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);

@@ -32,7 +32,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
 BigQueryWriteConnectionImpl::AsyncAppendRows() {
   return stub_->AsyncAppendRows(background_->cq(),
-                                absl::make_unique<grpc::ClientContext>());
+                                std::make_shared<grpc::ClientContext>());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

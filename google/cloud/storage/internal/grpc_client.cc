@@ -437,7 +437,7 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
         [](auto f) { return f.get().ok(); });
   };
 
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   // The REST response is just the object metadata (aka the "resource"). In the
   // gRPC response the object metadata is in a "resource" field. Passing an
   // extra prefix to ApplyQueryParameters sends the right
@@ -529,7 +529,7 @@ GrpcClient::ReadObject(
         StatusCode::kOutOfRange,
         "ReadLast(0) is invalid in REST and produces incorrect output in gRPC");
   }
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   ApplyQueryParameters(*context, request);
   auto proto_request = ToProto(request);
   if (!proto_request) return std::move(proto_request).status();
@@ -684,7 +684,7 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
         [](auto f) { return f.get().ok(); });
   };
 
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   // The REST response is just the object metadata (aka the "resource"). In the
   // gRPC response the object metadata is in a "resource" field. Passing an
   // extra prefix to ApplyQueryParameters sends the right

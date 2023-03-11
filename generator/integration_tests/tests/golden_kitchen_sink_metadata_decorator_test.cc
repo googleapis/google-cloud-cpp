@@ -227,7 +227,7 @@ TEST_F(MetadataDecoratorTest, StreamingRead) {
       });
   GoldenKitchenSinkMetadata stub(mock_);
   auto response =
-      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), Request{});
+      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), Request{});
   EXPECT_THAT(absl::get<Status>(response->Read()), Not(IsOk()));
 }
 
@@ -247,7 +247,7 @@ TEST_F(MetadataDecoratorTest, StreamingWrite) {
   });
 
   GoldenKitchenSinkMetadata stub(mock_);
-  auto stream = stub.StreamingWrite(absl::make_unique<grpc::ClientContext>());
+  auto stream = stub.StreamingWrite(std::make_shared<grpc::ClientContext>());
   EXPECT_TRUE(stream->Write(Request{}, grpc::WriteOptions()));
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
@@ -272,7 +272,7 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingRead) {
 
   google::cloud::CompletionQueue cq;
   auto stream = stub.AsyncStreamingRead(
-      cq, absl::make_unique<grpc::ClientContext>(), Request{});
+      cq, std::make_shared<grpc::ClientContext>(), Request{});
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
@@ -297,7 +297,7 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingWrite) {
 
   google::cloud::CompletionQueue cq;
   auto stream =
-      stub.AsyncStreamingWrite(cq, absl::make_unique<grpc::ClientContext>());
+      stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);

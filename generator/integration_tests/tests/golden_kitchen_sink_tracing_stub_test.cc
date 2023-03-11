@@ -183,7 +183,7 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.StreamingRead(
-      absl::make_unique<grpc::ClientContext>(), Request{});
+      std::make_shared<grpc::ClientContext>(), Request{});
   auto v = stream->Read();
   EXPECT_THAT(v, VariantWith<Status>(StatusIs(StatusCode::kAborted)));
 }
@@ -260,7 +260,7 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream =
-      under_test.StreamingWrite(absl::make_unique<grpc::ClientContext>());
+      under_test.StreamingWrite(std::make_shared<grpc::ClientContext>());
   EXPECT_FALSE(stream->Write(Request{}, grpc::WriteOptions()));
   auto response = stream->Close();
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted));
@@ -277,7 +277,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.AsyncStreamingRead(
-      cq, absl::make_unique<grpc::ClientContext>(), Request{});
+      cq, std::make_shared<grpc::ClientContext>(), Request{});
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
   auto finish = stream->Finish().get();
@@ -296,7 +296,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
   auto under_test = GoldenKitchenSinkTracingStub(mock);
 
   auto stream = under_test.AsyncStreamingWrite(
-      cq, absl::make_unique<grpc::ClientContext>());
+      cq, std::make_shared<grpc::ClientContext>());
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
   auto finish = stream->Finish().get();
@@ -316,7 +316,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
   auto under_test = GoldenKitchenSinkTracingStub(mock);
 
   auto stream = under_test.AsyncStreamingReadWrite(
-      cq, absl::make_unique<grpc::ClientContext>());
+      cq, std::make_shared<grpc::ClientContext>());
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
   auto finish = stream->Finish().get();

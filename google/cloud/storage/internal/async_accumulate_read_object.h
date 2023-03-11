@@ -104,7 +104,7 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
  * future<AsyncAccumulateReadObject::Result> AsyncAccumulateReadObjectFull(
  *     CompletionQueue cq,
  *     std::shared_ptr<StorageStub> stub,
- *     std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
+ *     std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
  *     google::storage::v2::ReadObjectRequest request,
  *     std::chrono::milliseconds timeout,
  *     Options const& options) {
@@ -167,7 +167,7 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
  */
 future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
-    std::function<std::unique_ptr<grpc::ClientContext>()> context_factory,
+    std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
     google::storage::v2::ReadObjectRequest request, Options const& options);
 
 /// Convert the proto into a representation more familiar to our customers.

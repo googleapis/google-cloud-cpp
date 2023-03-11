@@ -76,7 +76,7 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
           google::cloud::Project("test-project-id"), "test-instance-id")
           .FullName());
   auto response = stub.AsyncCreateDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -102,7 +102,7 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
           "test-database")
           .FullName());
   auto response = stub.AsyncUpdateDatabaseDdl(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -172,7 +172,7 @@ TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
           google::cloud::Project("test-project-id"), "test-instance-id")
           .FullName());
   auto response = stub.AsyncRestoreDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -275,7 +275,7 @@ TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
           google::cloud::Project("test-project-id"), "test-instance-id")
           .FullName());
   auto response = stub.AsyncCreateBackup(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -433,7 +433,7 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   google::longrunning::GetOperationRequest request;
   request.set_name("operations/fake-operation-name");
   auto response = stub.AsyncGetOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), response.get().status());
 }
 
@@ -453,7 +453,7 @@ TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
   google::longrunning::CancelOperationRequest request;
   request.set_name("operations/fake-operation-name");
   auto status = stub.AsyncCancelOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_EQ(TransientError(), status.get());
 }
 

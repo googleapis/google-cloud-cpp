@@ -459,11 +459,11 @@ TEST_F(GoldenKitchenSinkStubTest, StreamingRead) {
       .WillOnce(Return(failure_response.release()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
   auto success_stream =
-      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), request);
+      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), request);
   auto success_status = absl::get<Status>(success_stream->Read());
   EXPECT_THAT(success_status, IsOk());
   auto failure_stream =
-      stub.StreamingRead(absl::make_unique<grpc::ClientContext>(), request);
+      stub.StreamingRead(std::make_shared<grpc::ClientContext>(), request);
   auto failure_status = absl::get<Status>(failure_stream->Read());
   EXPECT_THAT(failure_status, StatusIs(StatusCode::kUnavailable));
 }
@@ -478,7 +478,7 @@ class MockWriteObjectResponse
 };
 
 TEST_F(GoldenKitchenSinkStubTest, StreamingWrite) {
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   Request request;
   EXPECT_CALL(*grpc_stub_, StreamingWriteRaw(context.get(), _))
       .WillOnce([](::grpc::ClientContext*, Response*) {
@@ -544,8 +544,8 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWriteRead) {
 
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
 
-  auto stream = stub.AsyncStreamingReadWrite(
-      cq, absl::make_unique<grpc::ClientContext>());
+  auto stream =
+      stub.AsyncStreamingReadWrite(cq, std::make_shared<grpc::ClientContext>());
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());
@@ -617,7 +617,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingRead) {
 
   Request request;
   auto stream = stub.AsyncStreamingRead(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());
@@ -687,7 +687,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWrite) {
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
 
   auto stream =
-      stub.AsyncStreamingWrite(cq, absl::make_unique<grpc::ClientContext>());
+      stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());

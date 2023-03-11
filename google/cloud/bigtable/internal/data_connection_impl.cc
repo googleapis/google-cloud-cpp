@@ -288,7 +288,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> DataConnectionImpl::SampleRows(
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   while (true) {
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
     auto stream = stub_->SampleRowKeys(std::move(context), request);
 

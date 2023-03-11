@@ -78,7 +78,7 @@ TEST(AsyncStreamReadWriteAuth, Start) {
     return make_ready_future(make_status_or(std::move(context)));
   });
   auto uut = absl::make_unique<AuthStream>(
-      absl::make_unique<grpc::ClientContext>(), strategy, factory);
+      std::make_shared<grpc::ClientContext>(), strategy, factory);
   EXPECT_TRUE(uut->Start().get());
   EXPECT_TRUE(uut->Write(FakeRequest{"k"}, grpc::WriteOptions()).get());
   auto response = uut->Read().get();

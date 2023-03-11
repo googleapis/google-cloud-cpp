@@ -114,7 +114,7 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
 
   google::cloud::CompletionQueue cq(mock_cq);
   auto stream = MakeStreamingReadWriteRpc<FakeRequest, FakeResponse>(
-      cq, absl::make_unique<grpc::ClientContext>(),
+      cq, std::make_shared<grpc::ClientContext>(),
       [&mock](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return mock.FakeRpc(context, cq);
       });

@@ -181,8 +181,7 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
   request.set_stream_ack_deadline_seconds(600);
 
   auto stream = [&stub](CompletionQueue const& cq) {
-    auto context = absl::make_unique<grpc::ClientContext>();
-
+    auto context = std::make_shared<grpc::ClientContext>();
     return stub->AsyncStreamingPull(cq, std::move(context));
   }(background.cq());
 

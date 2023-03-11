@@ -255,7 +255,7 @@ TEST_F(GrpcImpersonateServiceAccountIntegrationTest, AsyncCallWithToken) {
   auto async_get_table =
       [&](google::cloud::CompletionQueue& cq,
           GetTableRequest const& request) -> future<StatusOr<Table>> {
-    return stub->AsyncGetTable(cq, absl::make_unique<grpc::ClientContext>(),
+    return stub->AsyncGetTable(cq, std::make_shared<grpc::ClientContext>(),
                                request);
   };
 

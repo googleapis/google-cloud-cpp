@@ -316,7 +316,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
   auto factory = [stub]($request_type$ const& request) {
-    return stub->$method_name$(absl::make_unique<grpc::ClientContext>(), request);
+    return stub->$method_name$(std::make_shared<grpc::ClientContext>(), request);
   };
   auto resumable =
       internal::MakeResumableStreamingReadRpc<$response_type$, $request_type$>(

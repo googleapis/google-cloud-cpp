@@ -55,7 +55,7 @@ void AsyncRowSampler::StartIteration() {
   request.set_table_name(table_name_);
 
   internal::OptionsSpan span(options_);
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_shared<grpc::ClientContext>();
   internal::ConfigureContext(*context, internal::CurrentOptions());
 
   auto self = this->shared_from_this();

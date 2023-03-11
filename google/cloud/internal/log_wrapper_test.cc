@@ -134,7 +134,7 @@ TEST(LogWrapper, FutureStatusOrValueWithContextAndCQ) {
   testing_util::ScopedLog log;
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context;
+  std::shared_ptr<grpc::ClientContext> context;
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   auto const log_lines = log.ExtractLines();
@@ -158,7 +158,7 @@ TEST(LogWrapper, FutureStatusOrErrorWithContextAndCQ) {
   testing_util::ScopedLog log;
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context;
+  std::shared_ptr<grpc::ClientContext> context;
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   auto const log_lines = log.ExtractLines();
@@ -184,7 +184,7 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
   testing_util::ScopedLog log;
 
   CompletionQueue cq;
-  std::unique_ptr<grpc::ClientContext> context;
+  std::shared_ptr<grpc::ClientContext> context;
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   std::ostringstream os;

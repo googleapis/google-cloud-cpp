@@ -70,11 +70,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateDatabase) {
   google::test::admin::database::v1::CreateDatabaseRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncCreateDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncCreateDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -103,11 +103,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncUpdateDatabaseDdl) {
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncUpdateDatabaseDdl(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncUpdateDatabaseDdl(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -204,11 +204,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCreateBackup) {
   google::test::admin::database::v1::CreateBackupRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncCreateBackup(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncCreateBackup(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -288,11 +288,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncRestoreDatabase) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncRestoreDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncRestoreDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -342,11 +342,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetDatabase) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncGetDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncGetDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -360,11 +360,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncDropDatabase) {
   google::test::admin::database::v1::DropDatabaseRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncDropDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncDropDatabase(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -376,11 +376,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetOperation) {
   google::longrunning::GetOperationRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncGetOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncGetOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -394,11 +394,11 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncCancelOperation) {
   google::longrunning::CancelOperationRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncCancelOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncCancelOperation(
-      cq, absl::make_unique<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 

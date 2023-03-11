@@ -67,7 +67,7 @@ TEST(StreamingReadRpcImpl, SuccessfulStream) {
   EXPECT_CALL(*mock, Finish).WillOnce(Return(grpc::Status::OK));
 
   StreamingReadRpcImpl<FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(mock));
+      std::make_shared<grpc::ClientContext>(), std::move(mock));
   std::vector<std::string> values;
   for (;;) {
     auto v = impl.Read();
@@ -87,7 +87,7 @@ TEST(StreamingReadRpcImpl, EmptyStream) {
   EXPECT_CALL(*mock, Finish).WillOnce(Return(grpc::Status::OK));
 
   StreamingReadRpcImpl<FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(mock));
+      std::make_shared<grpc::ClientContext>(), std::move(mock));
   auto v = impl.Read();
   ASSERT_FALSE(absl::holds_alternative<FakeResponse>(v));
   EXPECT_THAT(absl::get<Status>(std::move(v)), IsOk());
@@ -101,7 +101,7 @@ TEST(StreamingReadRpcImpl, EmptyWithError) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
 
   StreamingReadRpcImpl<FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(mock));
+      std::make_shared<grpc::ClientContext>(), std::move(mock));
   auto v = impl.Read();
   ASSERT_FALSE(absl::holds_alternative<FakeResponse>(v));
   EXPECT_THAT(absl::get<Status>(std::move(v)),
@@ -121,7 +121,7 @@ TEST(StreamingReadRpcImpl, ErrorAfterData) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
 
   StreamingReadRpcImpl<FakeResponse> impl(
-      absl::make_unique<grpc::ClientContext>(), std::move(mock));
+      std::make_shared<grpc::ClientContext>(), std::move(mock));
   std::vector<std::string> values;
   for (;;) {
     auto v = impl.Read();
@@ -155,7 +155,7 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
 
   {
     StreamingReadRpcImpl<FakeResponse> impl(
-        absl::make_unique<grpc::ClientContext>(), std::move(mock));
+        std::make_shared<grpc::ClientContext>(), std::move(mock));
     std::vector<std::string> values;
     values.push_back(absl::get<FakeResponse>(impl.Read()).value);
     values.push_back(absl::get<FakeResponse>(impl.Read()).value);
@@ -183,7 +183,7 @@ TEST(StreamingReadRpcImpl, HandleUnfinishedExpected) {
     testing_util::ScopedLog log;
     {
       StreamingReadRpcImpl<FakeResponse> impl(
-          absl::make_unique<grpc::ClientContext>(), std::move(mock));
+          std::make_shared<grpc::ClientContext>(), std::move(mock));
       std::vector<std::string> values;
       values.push_back(absl::get<FakeResponse>(impl.Read()).value);
       values.push_back(absl::get<FakeResponse>(impl.Read()).value);

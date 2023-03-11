@@ -66,8 +66,7 @@ BigQueryReadConnectionImpl::ReadRows(
   auto factory =
       [stub](google::cloud::bigquery::storage::v1::ReadRowsRequest const&
                  request) {
-        return stub->ReadRows(absl::make_unique<grpc::ClientContext>(),
-                              request);
+        return stub->ReadRows(std::make_shared<grpc::ClientContext>(), request);
       };
   auto resumable = internal::MakeResumableStreamingReadRpc<
       google::cloud::bigquery::storage::v1::ReadRowsResponse,

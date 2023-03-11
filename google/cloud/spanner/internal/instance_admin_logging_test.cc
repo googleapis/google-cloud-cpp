@@ -74,7 +74,7 @@ TEST_F(InstanceAdminLoggingTest, CreateInstance) {
 
   CompletionQueue cq;
   auto response =
-      stub.AsyncCreateInstance(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncCreateInstance(cq, std::make_shared<grpc::ClientContext>(),
                                gsai::v1::CreateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
@@ -95,7 +95,7 @@ TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
 
   CompletionQueue cq;
   auto response =
-      stub.AsyncUpdateInstance(cq, absl::make_unique<grpc::ClientContext>(),
+      stub.AsyncUpdateInstance(cq, std::make_shared<grpc::ClientContext>(),
                                gsai::v1::UpdateInstanceRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 

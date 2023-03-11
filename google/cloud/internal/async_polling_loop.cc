@@ -74,7 +74,7 @@ class AsyncPollingLoopImpl
     }
     // Cancels are best effort, so we use weak pointers.
     auto w = WeakFromThis();
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_shared<grpc::ClientContext>();
     ConfigurePollContext(*context, CurrentOptions());
     cancel_(cq_, std::move(context), request).then([w](future<Status> f) {
       if (auto self = w.lock()) self->OnCancel(f.get());
@@ -118,7 +118,7 @@ class AsyncPollingLoopImpl
       request.set_name(op_name_);
     }
     auto self = shared_from_this();
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_shared<grpc::ClientContext>();
     ConfigurePollContext(*context, CurrentOptions());
     poll_(cq_, std::move(context), request)
         .then([self](future<StatusOr<Operation>> g) {

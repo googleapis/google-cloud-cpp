@@ -446,7 +446,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
   auto factory = [stub, request, tracing_enabled,
                   tracing_options](std::string const& resume_token) mutable {
     if (!resume_token.empty()) request->set_resume_token(resume_token);
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_shared<grpc::ClientContext>();
     internal::ConfigureContext(*context, internal::CurrentOptions());
     auto grpc_reader = stub->StreamingRead(*context, *request);
     std::unique_ptr<PartialResultSetReader> reader =
@@ -675,7 +675,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
     auto factory = [stub, request, tracing_enabled,
                     tracing_options](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
-      auto context = absl::make_unique<grpc::ClientContext>();
+      auto context = std::make_shared<grpc::ClientContext>();
       internal::ConfigureContext(*context, internal::CurrentOptions());
       auto grpc_reader = stub->ExecuteStreamingSql(*context, request);
       std::unique_ptr<PartialResultSetReader> reader =

@@ -121,7 +121,7 @@ TEST_F(BigtableStubFactory, ReadRows) {
   req.set_table_name(
       "projects/the-project/instances/the-instance/tables/the-table");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
-  auto stream = stub->ReadRows(absl::make_unique<grpc::ClientContext>(), req);
+  auto stream = stub->ReadRows(std::make_shared<grpc::ClientContext>(), req);
   auto read = stream->Read();
   ASSERT_TRUE(absl::holds_alternative<Status>(read));
   EXPECT_THAT(absl::get<Status>(read), StatusIs(StatusCode::kUnavailable));
@@ -204,7 +204,7 @@ TEST_F(BigtableStubFactory, AsyncReadRows) {
       "projects/the-project/instances/the-instance/tables/the-table");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
   auto stream =
-      stub->AsyncReadRows(cq, absl::make_unique<grpc::ClientContext>(), req);
+      stub->AsyncReadRows(cq, std::make_shared<grpc::ClientContext>(), req);
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
   auto finish = stream->Finish().get();
@@ -247,7 +247,7 @@ TEST_F(BigtableStubFactory, AsyncMutateRow) {
       "projects/the-project/instances/the-instance/tables/the-table");
   auto stub = CreateTestStub(cq, factory.AsStdFunction());
   auto response =
-      stub->AsyncMutateRow(cq, absl::make_unique<grpc::ClientContext>(), req);
+      stub->AsyncMutateRow(cq, std::make_shared<grpc::ClientContext>(), req);
   EXPECT_THAT(response.get(), StatusIs(StatusCode::kUnavailable));
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("AsyncMutateRow")));
 }
