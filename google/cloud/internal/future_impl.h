@@ -24,6 +24,7 @@
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/version.h"
 #include "absl/memory/memory.h"
+#include <atomic>
 #include <chrono>
 #include <condition_variable>
 #include <exception>
