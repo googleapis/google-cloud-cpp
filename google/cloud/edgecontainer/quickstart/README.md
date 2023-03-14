@@ -10,9 +10,8 @@ some experience as a C++ developer and that you have a working C++ toolchain
   [packaging guide](/doc/packaging.md).
 
 - Developers who prefer using a package manager such as
-  [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
-  or [Conan](https://conan.io) should follow the instructions for their package
-  manager.
+  [vcpkg](https://vcpkg.io), or [Conda](https://conda.io), should follow the
+  instructions for their package manager.
 
 - Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the current document. Note that there are similar
