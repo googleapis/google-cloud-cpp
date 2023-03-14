@@ -19,6 +19,7 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -191,7 +192,7 @@ class AsyncRetryLoopImpl
     auto weak = std::weak_ptr<AsyncRetryLoopImpl>(this->shared_from_this());
     result_ = promise<T>([weak]() mutable {
       if (auto self = weak.lock()) {
-        OptionsSpan span(self->options_);
+        ScopedCallContext scope(self->call_context_);
         self->Cancel();
       }
     });
@@ -229,7 +230,7 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     auto context = std::make_shared<grpc::ClientContext>();
-    ConfigureContext(*context, options_);
+    ConfigureContext(*context, call_context_.options);
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(
         state.operation,
@@ -325,7 +326,7 @@ class AsyncRetryLoopImpl
   absl::decay_t<Functor> functor_;
   Request request_;
   char const* location_ = "unknown";
-  Options options_ = CurrentOptions();
+  CallContext call_context_;
   Status last_status_ = Status(StatusCode::kUnknown, "Retry policy exhausted");
   promise<T> result_;
 

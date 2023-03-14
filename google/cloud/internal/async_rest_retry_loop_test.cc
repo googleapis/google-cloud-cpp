@@ -13,11 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_rest_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <deque>
@@ -544,6 +548,61 @@ TEST_F(AsyncRestRetryLoopCancelTest, ShutdownDuringTimer) {
                               AllOf(HasSubstr("Timer failure in"),
                                     HasSubstr("test-location"))));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(AsyncRestRetryLoopTest, CallSpanActiveThroughout) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  AsyncSequencer<StatusOr<int>> sequencer;
+  auto span = internal::MakeSpan("span");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::OptionsSpan o(
+      Options{}.set<internal::OpenTelemetryTracingOption>(true));
+
+  AutomaticallyCreatedRestBackgroundThreads background;
+  future<StatusOr<int>> actual = AsyncRestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(),
+      [&](auto, auto, auto) {
+        using testing_util::IsActive;
+        EXPECT_THAT(span, IsActive());
+        return sequencer.PushBack();
+      },
+      42, "error message");
+
+  sequencer.PopFront().set_value(internal::UnavailableError("try again"));
+  sequencer.PopFront().set_value(0);
+  auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
+  (void)actual.get();
+}
+
+TEST(AsyncRestRetryLoopTest, CallSpanActiveDuringCancel) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = internal::MakeSpan("span");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::OptionsSpan o(
+      Options{}.set<internal::OpenTelemetryTracingOption>(true));
+
+  promise<StatusOr<int>> p([&] {
+    using testing_util::IsActive;
+    EXPECT_THAT(span, IsActive());
+  });
+
+  AutomaticallyCreatedRestBackgroundThreads background;
+  future<StatusOr<int>> actual = AsyncRestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(), [&](auto, auto, auto) { return p.get_future(); }, 42,
+      "error message");
+
+  auto overlay = opentelemetry::trace::Scope(internal::MakeSpan("overlay"));
+  actual.cancel();
+  p.set_value(0);
+  (void)actual.get();
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
