@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/default_completion_queue_impl.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/options.h"
 #include "absl/memory/memory.h"
 #include <grpcpp/alarm.h>
 #include <sstream>
@@ -47,7 +47,7 @@ namespace {
  * Note that this class is an implementation detail, hidden from the
  * application developers.
  */
-class AsyncTimerFuture : public internal::AsyncGrpcOperation {
+class AsyncTimerFuture : public AsyncGrpcOperation {
  public:
   using ValueType = StatusOr<std::chrono::system_clock::time_point>;
 
@@ -70,7 +70,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
   void Cancel() override {
-    OptionsSpan span(options_);
+    ScopedCallContext scope(call_context_);
     alarm_.Cancel();
   }
 
@@ -78,7 +78,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   explicit AsyncTimerFuture() : promise_(null_promise_t{}) {}
 
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    ScopedCallContext scope(call_context_);
     promise_.set_value(ok ? ValueType(deadline_) : Canceled());
     return true;
   }
@@ -90,7 +90,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   promise<ValueType> promise_;
   std::chrono::system_clock::time_point deadline_;
   grpc::Alarm alarm_;
-  Options options_ = CurrentOptions();
+  CallContext call_context_;
 };
 
 }  // namespace
@@ -98,7 +98,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
 // A helper class to wake up the asynchronous thread and drain the RunAsync()
 // queue in a loop.
 class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
-    : public internal::AsyncGrpcOperation {
+    : public AsyncGrpcOperation {
  public:
   explicit WakeUpRunAsyncLoop(std::weak_ptr<DefaultCompletionQueueImpl> w)
       : weak_(std::move(w)) {}
@@ -111,7 +111,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
 
  private:
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    ScopedCallContext scope(call_context_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncLoop();
     return true;
@@ -119,13 +119,13 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncLoop
 
   std::weak_ptr<DefaultCompletionQueueImpl> weak_;
   grpc::Alarm alarm_;
-  Options options_ = CurrentOptions();
+  CallContext call_context_;
 };
 
 // A helper class to wake up the asynchronous thread and drain the RunAsync()
 // one element at a time.
 class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
-    : public internal::AsyncGrpcOperation {
+    : public AsyncGrpcOperation {
  public:
   explicit WakeUpRunAsyncOnIdle(std::weak_ptr<DefaultCompletionQueueImpl> w)
       : weak_(std::move(w)) {}
@@ -138,7 +138,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
 
  private:
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    ScopedCallContext scope(call_context_);
     if (!ok) return true;  // do not run async operations on shutdown CQs
     if (auto self = weak_.lock()) self->DrainRunAsyncOnIdle();
     return true;
@@ -146,7 +146,7 @@ class DefaultCompletionQueueImpl::WakeUpRunAsyncOnIdle
 
   std::weak_ptr<DefaultCompletionQueueImpl> weak_;
   grpc::Alarm alarm_;
-  Options options_ = CurrentOptions();
+  CallContext call_context_;
 };
 
 DefaultCompletionQueueImpl::DefaultCompletionQueueImpl()

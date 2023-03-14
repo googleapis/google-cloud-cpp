@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/rest_completion_queue_impl.h"
 #include "google/cloud/log.h"
 #include <algorithm>
@@ -31,12 +32,13 @@ AutomaticallyCreatedRestBackgroundThreads::
   std::generate_n(pool_.begin(), pool_.size(), [this] {
     promise<void> started;
     auto thread = std::thread(
-        [](CompletionQueue cq, promise<void>& started, Options opts) {
-          internal::OptionsSpan span(std::move(opts));
+        [](CompletionQueue cq, promise<void>& started,
+           internal::CallContext c) {
+          internal::ScopedCallContext scope(std::move(c));
           started.set_value();
           cq.Run();
         },
-        cq_, std::ref(started), internal::CurrentOptions());
+        cq_, std::ref(started), internal::CallContext{});
     started.get_future().wait();
     return thread;
   });

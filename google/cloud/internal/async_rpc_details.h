@@ -18,7 +18,7 @@
 #include "google/cloud/async_operation.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/options.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
@@ -69,7 +69,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   void Cancel() override {}
 
   bool Notify(bool ok) override {
-    OptionsSpan span(options_);
+    ScopedCallContext scope(call_context_);
     if (!ok) {
       // `Finish()` always returns `true` for unary RPCs, so the only time we
       // get `!ok` is after `Shutdown()` was called; treat that as "cancelled".
@@ -97,7 +97,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   Response response_;
 
   promise<StatusOr<Response>> promise_;
-  Options options_ = CurrentOptions();
+  CallContext call_context_;
 };
 
 /// Verify that @p Functor meets the requirements for an AsyncUnaryRpc callback.

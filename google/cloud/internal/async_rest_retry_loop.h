@@ -19,11 +19,11 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/idempotency.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/meta/type_traits.h"
@@ -199,7 +199,7 @@ class AsyncRestRetryLoopImpl
     auto weak = std::weak_ptr<AsyncRestRetryLoopImpl>(this->shared_from_this());
     result_ = promise<T>([weak]() mutable {
       if (auto self = weak.lock()) {
-        internal::OptionsSpan span(self->options_);
+        internal::ScopedCallContext scope(self->call_context_);
         self->Cancel();
       }
     });
@@ -328,7 +328,7 @@ class AsyncRestRetryLoopImpl
   absl::decay_t<Functor> functor_;
   Request request_;
   char const* location_ = "unknown";
-  Options options_ = internal::CurrentOptions();
+  internal::CallContext call_context_;
   Status last_status_ = Status(StatusCode::kUnknown, "Retry policy exhausted");
   promise<T> result_;
 
