@@ -113,6 +113,20 @@ cc_library(
     ],
 )
 
+load(":google_cloud_cpp_bigquery_rest_mocks.bzl", "google_cloud_cpp_bigquery_rest_mocks_hdrs", "google_cloud_cpp_bigquery_rest_mocks_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_bigquery_rest_mocks",
+    testonly = True,
+    srcs = google_cloud_cpp_bigquery_rest_mocks_srcs,
+    hdrs = google_cloud_cpp_bigquery_rest_mocks_hdrs,
+    visibility = ["//:__pkg__"],
+    deps = [
+        ":google_cloud_cpp_bigquery_rest",
+        "@com_google_googletest//:gtest",
+    ],
+)
+
 load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
 
 [cc_test(
@@ -120,6 +134,7 @@ load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
     srcs = [test],
     deps = [
         ":google_cloud_cpp_bigquery_rest",
+        ":google_cloud_cpp_bigquery_rest_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googletest//:gtest",
