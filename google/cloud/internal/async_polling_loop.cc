@@ -45,14 +45,12 @@ class AsyncPollingLoopImpl
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
     auto w = WeakFromThis();
-    CallContext call_context;
-    promise_ = promise<StatusOr<Operation>>(
-        [w, c = std::move(call_context)]() mutable {
-          if (auto self = w.lock()) {
-            ScopedCallContext scope(c);
-            self->DoCancel();
-          }
-        });
+    promise_ = promise<StatusOr<Operation>>([w, c = CallContext{}]() mutable {
+      if (auto self = w.lock()) {
+        ScopedCallContext scope(std::move(c));
+        self->DoCancel();
+      }
+    });
     op.then([self](future<StatusOr<Operation>> f) { self->OnStart(f.get()); });
     return promise_.get_future();
   }

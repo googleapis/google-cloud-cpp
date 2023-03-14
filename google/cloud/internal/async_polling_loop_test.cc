@@ -38,7 +38,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::longrunning::Operation;
 using ::testing::AtLeast;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -51,7 +50,8 @@ struct StringOption {
 
 class MockStub {
  public:
-  MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
+  MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
+              AsyncGetOperation,
               (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               ());
@@ -124,8 +124,9 @@ TEST(AsyncPollingLoopTest, ImmediateCancel) {
       .WillOnce([](CompletionQueue&, auto,
                    google::longrunning::GetOperationRequest const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(), "ImmediateCancel");
-        return make_ready_future(StatusOr<Operation>(Status{
-            StatusCode::kCancelled, "test-function: operation cancelled"}));
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(Status{
+                StatusCode::kCancelled, "test-function: operation cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([](CompletionQueue&, auto,
@@ -257,8 +258,8 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
                    google::longrunning::GetOperationRequest const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "PollThenEventualSuccess");
-        return make_ready_future(
-            StatusOr<Operation>(Status(StatusCode::kUnavailable, "try-again")));
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kUnavailable, "try-again")));
       })
       .WillOnce([&](CompletionQueue&, auto,
                     google::longrunning::GetOperationRequest const&) {
@@ -358,8 +359,8 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
                           google::longrunning::GetOperationRequest const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "PollThenExhaustedPollingPolicyWithFailure");
-        return make_ready_future(
-            StatusOr<Operation>(Status{StatusCode::kUnavailable, "try-again"}));
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status{StatusCode::kUnavailable, "try-again"}));
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
@@ -398,7 +399,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
           [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
   CompletionQueue cq(mock_cq);
 
-  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(4)
@@ -443,7 +444,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
           [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
   CompletionQueue cq(mock_cq);
 
-  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
@@ -506,7 +507,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
           [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
   CompletionQueue cq(mock_cq);
 
-  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
@@ -578,8 +579,9 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
         // Ensure that our options have taken affect on the ClientContext before
         // we start using it.
         EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context->compression_algorithm());
-        return make_ready_future(StatusOr<Operation>(Status{
-            StatusCode::kCancelled, "test-function: operation cancelled"}));
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(Status{
+                StatusCode::kCancelled, "test-function: operation cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([](CompletionQueue&, auto context,
@@ -643,7 +645,7 @@ TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
       });
   CompletionQueue cq(mock_cq);
 
-  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))

@@ -46,9 +46,8 @@ class AsyncRestPollingLoopImpl
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
     auto w = WeakFromThis();
-    internal::CallContext call_context;
     promise_ = promise<StatusOr<Operation>>(
-        [w, c = std::move(call_context)]() mutable {
+        [w, c = internal::CallContext{}]() mutable {
           if (auto self = w.lock()) {
             internal::ScopedCallContext scope(std::move(c));
             self->DoCancel();
