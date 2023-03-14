@@ -29,6 +29,7 @@ TEST(JobRequestTest, SuccessWithLocation) {
   GetJobRequest request("1", "2");
   request.set_location("useast");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   auto actual = BuildRestRequest(request, opts);
   ASSERT_STATUS_OK(actual);
 
@@ -42,6 +43,7 @@ TEST(JobRequestTest, SuccessWithLocation) {
 TEST(JobRequestTest, SuccessWithoutLocation) {
   GetJobRequest request("1", "2");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   auto actual = BuildRestRequest(request, opts);
   ASSERT_STATUS_OK(actual);
 
@@ -79,17 +81,27 @@ TEST(JobRequestTest, SuccessWithEndpoint) {
   }
 }
 
-TEST(JobRequestTest, EmptyProjectId) {
-  GetJobRequest request("", "job_id");
+TEST(JobRequestTest, NoEndpoint) {
+  GetJobRequest request("test-project-id", "test-job-id");
   Options opts;
+  auto rest_request = BuildRestRequest(request, opts);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("No default endpoint set")));
+}
+
+TEST(JobRequestTest, EmptyProjectId) {
+  GetJobRequest request("", "test-job-id");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   auto rest_request = BuildRestRequest(request, opts);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Project Id is empty")));
 }
 
 TEST(GetJobRequest, EmptyJobId) {
-  GetJobRequest request("project_id", "");
+  GetJobRequest request("test-project-id", "");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   auto rest_request = BuildRestRequest(request, opts);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Job Id is empty")));
