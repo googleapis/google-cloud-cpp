@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_CONNECTION_READY_H
 
 #include "google/cloud/future.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <grpcpp/channel.h>
@@ -74,7 +74,7 @@ class NotifyOnStateChange
 
  private:
   promise<bool> promise_;
-  google::cloud::Options options_ = CurrentOptions();
+  CallContext call_context_;
 };
 
 }  // namespace internal

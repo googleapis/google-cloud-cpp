@@ -14,6 +14,8 @@
 
 #include "google/cloud/internal/async_connection_ready.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <grpcpp/generic/async_generic_service.h>
@@ -97,6 +99,45 @@ TEST(CompletionQueueTest, SuccessfulWaitingForConnection) {
   cli_cq.Shutdown();
   cli_thread.join();
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(CompletionQueueTest, PropagateCallContext) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  struct TestOption {
+    using Type = int;
+  };
+
+  auto channel = grpc::CreateChannel("some_nonexistent.address",
+                                     grpc::InsecureChannelCredentials());
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  // The connection doesn't try to connect to the endpoint unless there's a
+  // method call or `GetState(true)` is called, so we can safely expect IDLE
+  // state here.
+  EXPECT_EQ(GRPC_CHANNEL_IDLE, channel->GetState(false));
+
+  auto span = MakeSpan("span");
+  [&]() {
+    auto scope = opentelemetry::trace::Scope(span);
+    OptionsSpan o(Options{}.set<TestOption>(5));
+    return cq.AsyncWaitConnectionReady(
+        channel, std::chrono::system_clock::now() + std::chrono::seconds(1));
+  }()
+      .then([&](auto) {
+        using testing_util::IsActive;
+        EXPECT_THAT(span, IsActive());
+        EXPECT_THAT(5, CurrentOptions().get<TestOption>());
+      })
+      .get();
+
+  cq.Shutdown();
+  t.join();
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal
