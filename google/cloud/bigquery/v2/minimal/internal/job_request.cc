@@ -35,11 +35,13 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
     return internal::InvalidArgumentError(
         "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
-  // Fix the endpoints prefix and suffixes.
-  std::string endpoint = "https://bigquery.googleapis.com/";
-  if (opts.has<EndpointOption>()) {
-    endpoint = opts.get<EndpointOption>();
+  if (!opts.has<EndpointOption>()) {
+    return internal::InvalidArgumentError(
+        "Invalid GetJobRequest: No default endpoint set", GCP_ERROR_INFO());
   }
+  // Builds GetJob request path based on endpoint provided.
+  std::string endpoint = opts.get<EndpointOption>();
+
   if (!absl::StartsWith(endpoint, "https://") &&
       !absl::StartsWith(endpoint, "http://")) {
     endpoint = absl::StrCat("https://", endpoint);

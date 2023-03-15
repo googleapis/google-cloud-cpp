@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/http_payload.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_response.h"
@@ -69,6 +70,7 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
 
   GetJobRequest job_request("p123", "j123");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
 
@@ -84,6 +86,7 @@ TEST(BigQueryJobStubTest, ProjectIdEmpty) {
   auto mock_rest_client = absl::make_unique<MockRestClient>();
   GetJobRequest job_request("", "j123");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto result = rest_stub.GetJob(context, std::move(job_request));
@@ -97,6 +100,7 @@ TEST(BigQueryJobStubTest, JobIdEmpty) {
   auto mock_rest_client = absl::make_unique<MockRestClient>();
   GetJobRequest job_request("p123", "");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto result = rest_stub.GetJob(context, std::move(job_request));
@@ -114,6 +118,7 @@ TEST(BigQueryJobStubTest, RestClientError) {
 
   GetJobRequest job_request("p123", "j123");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto result = rest_stub.GetJob(context, std::move(job_request));
@@ -138,6 +143,7 @@ TEST(BigQueryJobStubTest, BuildRestResponseError) {
 
   GetJobRequest job_request("p123", "j123");
   Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto result = rest_stub.GetJob(context, std::move(job_request));
