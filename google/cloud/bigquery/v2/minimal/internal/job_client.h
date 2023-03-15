@@ -27,11 +27,11 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// BigQuery Job Client.
-//
-// The Job client uses the BigQuery Job API to read Job information from
-// BigQuery.
-//
+/// BigQuery Job Client.
+///
+/// The Job client uses the BigQuery Job API to read Job information from
+/// BigQuery.
+///
 class JobClient {
  public:
   explicit JobClient(std::shared_ptr<BigQueryJobConnection> connection,
@@ -50,9 +50,8 @@ class JobClient {
     return !(a == b);
   }
 
-  // Gets Job information from Bigquery.
-  // For more details on BigQuery jobs, please refer to:
-  // https://cloud.google.com/bigquery/docs/jobs-overview
+  /// Gets Job information from Bigquery. For more details on BigQuery jobs,
+  /// please refer to: https://cloud.google.com/bigquery/docs/jobs-overview
   StatusOr<GetJobResponse> GetJob(GetJobRequest const& request,
                                   Options opts = {});
 

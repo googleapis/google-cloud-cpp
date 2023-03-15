@@ -77,7 +77,7 @@ target_link_libraries(
               GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_bigquery_rest_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery_rest_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-bigquery_rest_mocks)
 target_include_directories(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -85,7 +85,7 @@ target_include_directories(
               $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_bigquery_rest_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-add_library(google-cloud-cpp::bigquery_rest_mocks ALIAS
+add_library(google-cloud-cpp::experimental-bigquery_rest_mocks ALIAS
             google_cloud_cpp_bigquery_rest_mocks)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
@@ -106,7 +106,7 @@ function (bigquery_rest_define_tests)
         # cmake-format: sort
         v2/minimal/internal/bigquery_http_response_test.cc
         v2/minimal/internal/common_v2_resources_test.cc
-        v2/minimal/internal/job_connection_test.cc
+        v2/minimal/internal/job_client_test.cc
         v2/minimal/internal/job_idempotency_policy_test.cc
         v2/minimal/internal/job_options_test.cc
         v2/minimal/internal/job_request_test.cc
@@ -128,7 +128,7 @@ function (bigquery_rest_define_tests)
             ${target}
             PRIVATE google_cloud_cpp_testing
                     google-cloud-cpp::experimental-bigquery_rest
-                    google-cloud-cpp::bigquery_rest_mocks
+                    google-cloud-cpp::experimental-bigquery_rest_mocks
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest)

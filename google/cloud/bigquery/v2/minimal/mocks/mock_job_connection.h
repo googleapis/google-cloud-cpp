@@ -20,10 +20,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_v2_minimal_mocks {
+namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-// Class to mock `BigQueryJobConnection`.
+/*
+ * A class to mock `BigQueryJobConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `AccessApprovalClient`. To do so,
+ * construct an object of type `AccessApprovalClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ */
+// TODO(#11039): Move to "bigquery_v2_minimal_mocks" namespace when api is ready
+// to go public.
 class MockBigQueryJobConnection
     : public bigquery_v2_minimal_internal::BigQueryJobConnection {
  public:
@@ -35,7 +45,7 @@ class MockBigQueryJobConnection
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigquery_v2_minimal_mocks
+}  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
 }  // namespace google
 
