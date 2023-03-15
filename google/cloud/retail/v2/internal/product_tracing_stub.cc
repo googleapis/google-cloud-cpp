@@ -94,7 +94,14 @@ ProductServiceTracingStub::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::ImportProductsRequest const& request) {
-  return child_->AsyncImportProducts(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "ImportProducts");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncImportProducts(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -102,7 +109,14 @@ ProductServiceTracingStub::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::SetInventoryRequest const& request) {
-  return child_->AsyncSetInventory(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "SetInventory");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncSetInventory(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,7 +124,14 @@ ProductServiceTracingStub::AsyncAddFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
-  return child_->AsyncAddFulfillmentPlaces(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "AddFulfillmentPlaces");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncAddFulfillmentPlaces(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -118,7 +139,14 @@ ProductServiceTracingStub::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
-  return child_->AsyncRemoveFulfillmentPlaces(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "RemoveFulfillmentPlaces");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncRemoveFulfillmentPlaces(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -126,7 +154,14 @@ ProductServiceTracingStub::AsyncAddLocalInventories(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
-  return child_->AsyncAddLocalInventories(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "AddLocalInventories");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncAddLocalInventories(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -134,7 +169,14 @@ ProductServiceTracingStub::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
-  return child_->AsyncRemoveLocalInventories(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
+                                     "RemoveLocalInventories");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncRemoveLocalInventories(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -142,14 +184,28 @@ ProductServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncGetOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ProductServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCancelOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
