@@ -1060,7 +1060,6 @@ service {
     "SignJwt(std::string const&, std::string const&)"
   ]
   idempotency_overrides: [
-    {rpc_name: "IAM.TestIamPermissions", idempotency: IDEMPOTENT},
     {rpc_name: "IAM.QueryGrantableRoles", idempotency: IDEMPOTENT},
     {rpc_name: "IAM.QueryTestablePermissions", idempotency: IDEMPOTENT},
     {rpc_name: "IAM.QueryAuditableServices", idempotency: IDEMPOTENT},
