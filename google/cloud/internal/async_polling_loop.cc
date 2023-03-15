@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_polling_loop.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <mutex>
@@ -44,10 +45,9 @@ class AsyncPollingLoopImpl
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
     auto w = WeakFromThis();
-    auto const& options = CurrentOptions();
-    promise_ = promise<StatusOr<Operation>>([w, options]() mutable {
+    promise_ = promise<StatusOr<Operation>>([w, c = CallContext{}]() mutable {
       if (auto self = w.lock()) {
-        OptionsSpan span(std::move(options));
+        ScopedCallContext scope(std::move(c));
         self->DoCancel();
       }
     });

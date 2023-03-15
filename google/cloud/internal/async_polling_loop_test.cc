@@ -14,9 +14,13 @@
 
 #include "google/cloud/internal/async_polling_loop.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
@@ -34,7 +38,6 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::longrunning::Operation;
 using ::testing::AtLeast;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -47,7 +50,8 @@ struct StringOption {
 
 class MockStub {
  public:
-  MOCK_METHOD(future<StatusOr<Operation>>, AsyncGetOperation,
+  MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
+              AsyncGetOperation,
               (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
                google::longrunning::GetOperationRequest const&),
               ());
@@ -120,8 +124,9 @@ TEST(AsyncPollingLoopTest, ImmediateCancel) {
       .WillOnce([](CompletionQueue&, auto,
                    google::longrunning::GetOperationRequest const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(), "ImmediateCancel");
-        return make_ready_future(StatusOr<Operation>(Status{
-            StatusCode::kCancelled, "test-function: operation cancelled"}));
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(Status{
+                StatusCode::kCancelled, "test-function: operation cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([](CompletionQueue&, auto,
@@ -253,8 +258,8 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
                    google::longrunning::GetOperationRequest const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "PollThenEventualSuccess");
-        return make_ready_future(
-            StatusOr<Operation>(Status(StatusCode::kUnavailable, "try-again")));
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kUnavailable, "try-again")));
       })
       .WillOnce([&](CompletionQueue&, auto,
                     google::longrunning::GetOperationRequest const&) {
@@ -354,8 +359,8 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
                           google::longrunning::GetOperationRequest const&) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(),
                   "PollThenExhaustedPollingPolicyWithFailure");
-        return make_ready_future(
-            StatusOr<Operation>(Status{StatusCode::kUnavailable, "try-again"}));
+        return make_ready_future(StatusOr<google::longrunning::Operation>(
+            Status{StatusCode::kUnavailable, "try-again"}));
       });
   auto policy = absl::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
@@ -394,7 +399,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
           [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
   CompletionQueue cq(mock_cq);
 
-  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(4)
@@ -439,7 +444,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
           [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
   CompletionQueue cq(mock_cq);
 
-  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
@@ -502,7 +507,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
           [&](std::chrono::nanoseconds) { return timer_sequencer.PushBack(); });
   CompletionQueue cq(mock_cq);
 
-  AsyncSequencer<StatusOr<Operation>> get_sequencer;
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
@@ -574,8 +579,9 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
         // Ensure that our options have taken affect on the ClientContext before
         // we start using it.
         EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context->compression_algorithm());
-        return make_ready_future(StatusOr<Operation>(Status{
-            StatusCode::kCancelled, "test-function: operation cancelled"}));
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(Status{
+                StatusCode::kCancelled, "test-function: operation cancelled"}));
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
       .WillOnce([](CompletionQueue&, auto context,
@@ -617,6 +623,74 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
                                AllOf(HasSubstr("test-function"),
                                      HasSubstr("operation cancelled"))));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
+  using testing_util::IsActive;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+
+  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
+  AsyncSequencer<TimerType> timer_sequencer;
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](std::chrono::nanoseconds) {
+        EXPECT_THAT(span, IsActive());
+        return timer_sequencer.PushBack();
+      });
+  CompletionQueue cq(mock_cq);
+
+  AsyncSequencer<StatusOr<google::longrunning::Operation>> get_sequencer;
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation)
+      .Times(AtLeast(1))
+      .WillRepeatedly([&](CompletionQueue&, auto,
+                          google::longrunning::GetOperationRequest const&) {
+        EXPECT_THAT(span, IsActive());
+        return get_sequencer.PushBack();
+      });
+  EXPECT_CALL(*mock, AsyncCancelOperation)
+      .WillOnce([&](CompletionQueue&, auto,
+                    google::longrunning::CancelOperationRequest const&) {
+        EXPECT_THAT(span, IsActive());
+        return make_ready_future(Status{});
+      });
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure)
+      .Times(2)
+      .WillRepeatedly([](Status const& status) {
+        return status.code() != StatusCode::kCancelled;
+      });
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+
+  auto scope = opentelemetry::trace::Scope(span);
+  OptionsSpan o(Options{}.set<internal::OpenTelemetryTracingOption>(true));
+  auto pending = AsyncPollingLoop(
+      cq, make_ready_future(make_status_or(starting_op)), MakePoll(mock),
+      MakeCancel(mock), std::move(policy), "test-function");
+
+  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  get_sequencer.PopFront().set_value(starting_op);
+  timer_sequencer.PopFront().set_value(std::chrono::system_clock::now());
+  auto g = get_sequencer.PopFront();
+  {
+    auto overlay = opentelemetry::trace::Scope(MakeSpan("overlay"));
+    pending.cancel();
+  }
+  g.set_value(CancelledError("cancelled"));
+
+  auto overlay = opentelemetry::trace::Scope(MakeSpan("overlay"));
+  (void)pending.get();
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal

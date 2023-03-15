@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_rest_polling_loop.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "absl/memory/memory.h"
@@ -45,13 +46,13 @@ class AsyncRestPollingLoopImpl
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
     auto w = WeakFromThis();
-    auto const& options = internal::CurrentOptions();
-    promise_ = promise<StatusOr<Operation>>([w, options]() mutable {
-      if (auto self = w.lock()) {
-        internal::OptionsSpan span(std::move(options));
-        self->DoCancel();
-      }
-    });
+    promise_ = promise<StatusOr<Operation>>(
+        [w, c = internal::CallContext{}]() mutable {
+          if (auto self = w.lock()) {
+            internal::ScopedCallContext scope(std::move(c));
+            self->DoCancel();
+          }
+        });
     op.then([self](future<StatusOr<Operation>> f) { self->OnStart(f.get()); });
     return promise_.get_future();
   }
