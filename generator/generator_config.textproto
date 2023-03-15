@@ -1039,6 +1039,12 @@ service {
   initial_copyright_year: "2020"
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  idempotency_overrides: [
+    {rpc_name: "IAMCredentials.GenerateAccessToken", idempotency: IDEMPOTENT},
+    {rpc_name: "IAMCredentials.GenerateIdToken", idempotency: IDEMPOTENT},
+    {rpc_name: "IAMCredentials.SignBlob", idempotency: IDEMPOTENT},
+    {rpc_name: "IAMCredentials.SignJwt", idempotency: IDEMPOTENT}
+  ]
 }
 
 service {
@@ -1053,6 +1059,14 @@ service {
     "SignBlob(std::string const&, std::string const&)",
     "SignJwt(std::string const&, std::string const&)"
   ]
+  idempotency_overrides: [
+    {rpc_name: "IAM.TestIamPermissions", idempotency: IDEMPOTENT},
+    {rpc_name: "IAM.QueryGrantableRoles", idempotency: IDEMPOTENT},
+    {rpc_name: "IAM.QueryTestablePermissions", idempotency: IDEMPOTENT},
+    {rpc_name: "IAM.QueryAuditableServices", idempotency: IDEMPOTENT},
+    {rpc_name: "IAM.LintPolicy", idempotency: IDEMPOTENT}
+  ]
+
 }
 
 service {

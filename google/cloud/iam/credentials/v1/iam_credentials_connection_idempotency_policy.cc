@@ -37,22 +37,22 @@ IAMCredentialsConnectionIdempotencyPolicy::clone() const {
 
 Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateAccessToken(
     google::iam::credentials::v1::GenerateAccessTokenRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateIdToken(
     google::iam::credentials::v1::GenerateIdTokenRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignBlob(
     google::iam::credentials::v1::SignBlobRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignJwt(
     google::iam::credentials::v1::SignJwtRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>

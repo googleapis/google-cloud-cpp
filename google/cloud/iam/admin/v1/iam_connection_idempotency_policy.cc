@@ -127,7 +127,7 @@ Idempotency IAMConnectionIdempotencyPolicy::TestIamPermissions(
 
 Idempotency IAMConnectionIdempotencyPolicy::QueryGrantableRoles(
     google::iam::admin::v1::QueryGrantableRolesRequest) {  // NOLINT
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::ListRoles(
@@ -162,17 +162,17 @@ Idempotency IAMConnectionIdempotencyPolicy::UndeleteRole(
 
 Idempotency IAMConnectionIdempotencyPolicy::QueryTestablePermissions(
     google::iam::admin::v1::QueryTestablePermissionsRequest) {  // NOLINT
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::QueryAuditableServices(
     google::iam::admin::v1::QueryAuditableServicesRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency IAMConnectionIdempotencyPolicy::LintPolicy(
     google::iam::admin::v1::LintPolicyRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<IAMConnectionIdempotencyPolicy>
