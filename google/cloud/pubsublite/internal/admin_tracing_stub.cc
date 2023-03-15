@@ -257,7 +257,14 @@ AdminServiceTracingStub::AsyncGetTopicPartitions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  return child_->AsyncGetTopicPartitions(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
+                                     "GetTopicPartitions");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncGetTopicPartitions(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>

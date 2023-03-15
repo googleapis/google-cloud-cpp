@@ -187,14 +187,28 @@ future<Status> SubscriberTracingStub::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
+                                     "ModifyAckDeadline");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncModifyAckDeadline(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> SubscriberTracingStub::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::pubsub::v1::AcknowledgeRequest const& request) {
-  return child_->AsyncAcknowledge(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "Acknowledge");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncAcknowledge(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
