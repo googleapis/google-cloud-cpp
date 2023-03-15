@@ -32,8 +32,7 @@ std::shared_ptr<BigQueryJobRestStub> CreateDefaultBigQueryJobRestStub(
   if (!local_opts.has<UnifiedCredentialsOption>()) {
     local_opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
-  // TODO(#11027): Optimize to use a PooledRestClient.
-  auto curl_rest_client = rest_internal::MakeDefaultRestClient(
+  auto curl_rest_client = rest_internal::MakePooledRestClient(
       opts.get<EndpointOption>(), local_opts);
 
   std::shared_ptr<BigQueryJobRestStub> stub =
