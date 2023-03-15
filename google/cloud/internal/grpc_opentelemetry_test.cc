@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -29,6 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::testing::ByMove;
+using ::testing::Return;
+
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
@@ -38,9 +44,11 @@ using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::IsEmpty;
 using ::testing::Pair;
 
 TEST(OpenTelemetry, MakeSpanGrpc) {
@@ -120,6 +128,62 @@ TEST(OpenTelemetry, EndSpanFuture) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
           SpanHasAttributes(SpanAttribute<std::string>("grpc.peer", _)))));
+}
+
+TEST(OpenTelemetry, TracedAsyncBackoffEnabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto const duration = std::chrono::nanoseconds(100);
+  auto mock_cq = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(duration))
+      .WillOnce(Return(ByMove(make_ready_future(
+          make_status_or(std::chrono::system_clock::now())))));
+  CompletionQueue cq(mock_cq);
+
+  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(true));
+  auto f = TracedAsyncBackoff(cq, duration);
+  EXPECT_STATUS_OK(f.get());
+
+  // Verify that a span was made.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, ElementsAre(
+                 AllOf(SpanNamed("Async Backoff"),
+                       SpanWithStatus(opentelemetry::trace::StatusCode::kOk))));
+}
+
+TEST(OpenTelemetry, TracedAsyncBackoffDisabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto const duration = std::chrono::nanoseconds(100);
+  auto mock_cq = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(duration))
+      .WillOnce(Return(ByMove(
+          make_ready_future<StatusOr<std::chrono::system_clock::time_point>>(
+              CancelledError("cancelled")))));
+  CompletionQueue cq(mock_cq);
+
+  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(false));
+  auto f = TracedAsyncBackoff(cq, duration);
+  EXPECT_THAT(f.get(), StatusIs(StatusCode::kCancelled, "cancelled"));
+
+  // Verify that no spans were made.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+#else
+
+TEST(NoOpenTelemetry, TracedAsyncBackoff) {
+  auto const duration = std::chrono::nanoseconds(100);
+  auto mock_cq = std::make_shared<testing_util::MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(duration))
+      .WillOnce(Return(ByMove(make_ready_future(
+          make_status_or(std::chrono::system_clock::now())))));
+  CompletionQueue cq(mock_cq);
+
+  auto f = TracedAsyncBackoff(cq, duration);
+  EXPECT_STATUS_OK(f.get());
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
