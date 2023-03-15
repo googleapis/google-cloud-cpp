@@ -50,7 +50,7 @@ TEST(JobOptionstTest, DefaultOptions) {
   EXPECT_TRUE(actual.has<BigQueryJobBackoffPolicyOption>());
 
   EXPECT_TRUE(actual.has<BigQueryJobConnectionPoolSizeOption>());
-  EXPECT_TRUE(actual.get<BigQueryJobConnectionPoolSizeOption>() > 0);
+  EXPECT_GT(actual.get<BigQueryJobConnectionPoolSizeOption>(), 0);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

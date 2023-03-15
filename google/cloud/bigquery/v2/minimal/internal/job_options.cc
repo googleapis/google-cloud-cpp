@@ -27,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
-std::size_t constexpr kJobDefaultConnectionPoolSize = 4;
-std::size_t constexpr kJobDefaultConnectionPoolSizeMax = 64;
-}  // namespace
+std::size_t constexpr kConnectionPoolSize = 4;
+std::size_t constexpr kConnectionPoolSizeMax = 64;
 
 std::size_t DefaultConnectionPoolSize() {
   // For better resource utilization and greater throughput, it is recommended
@@ -40,10 +39,10 @@ std::size_t DefaultConnectionPoolSize() {
   // can be opened for each CPU to increase throughput. The pool size is also
   // capped so that servers with many cores do not create too many channels.
   int cpu_count = std::thread::hardware_concurrency();
-  if (cpu_count == 0) return kJobDefaultConnectionPoolSize;
-  return (std::min)(kJobDefaultConnectionPoolSizeMax,
-                    cpu_count * kJobDefaultConnectionPoolSize);
+  if (cpu_count == 0) return kConnectionPoolSize;
+  return (std::min)(kConnectionPoolSizeMax, cpu_count * kConnectionPoolSize);
 }
+}  // namespace
 
 Options BigQueryJobDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
