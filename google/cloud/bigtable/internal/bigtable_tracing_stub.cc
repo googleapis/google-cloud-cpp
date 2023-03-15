@@ -123,7 +123,14 @@ BigtableTracingStub::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::MutateRowRequest const& request) {
-  return child_->AsyncMutateRow(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncMutateRow(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -140,7 +147,14 @@ BigtableTracingStub::AsyncCheckAndMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-  return child_->AsyncCheckAndMutateRow(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "CheckAndMutateRow");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCheckAndMutateRow(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
@@ -148,7 +162,14 @@ BigtableTracingStub::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
-  return child_->AsyncReadModifyWriteRow(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
+                                     "ReadModifyWriteRow");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncReadModifyWriteRow(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

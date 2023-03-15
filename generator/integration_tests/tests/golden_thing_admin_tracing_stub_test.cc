@@ -493,6 +493,10 @@ TEST(GoldenThingAdminTracingStubTest, ListBackupOperations) {
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock_propagator = InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .WillOnce(Return(ByMove(make_ready_future(
@@ -505,9 +509,25 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetDatabase) {
   auto result = under_test.AsyncGetDatabase(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "google.test.admin.database.v1.GoldenThingAdmin/GetDatabase"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>("grpc.peer", _),
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock_propagator = InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncDropDatabase)
       .WillOnce(
@@ -519,6 +539,18 @@ TEST(GoldenThingAdminTracingStubTest, AsyncDropDatabase) {
   auto result = under_test.AsyncDropDatabase(
       cq, std::make_shared<grpc::ClientContext>(), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "google.test.admin.database.v1.GoldenThingAdmin/DropDatabase"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>("grpc.peer", _),
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {

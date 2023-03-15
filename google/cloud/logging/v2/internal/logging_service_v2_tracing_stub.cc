@@ -103,7 +103,14 @@ LoggingServiceV2TracingStub::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  return child_->AsyncWriteLogEntries(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
+                                     "WriteLogEntries");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncWriteLogEntries(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

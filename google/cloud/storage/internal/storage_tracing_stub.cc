@@ -366,7 +366,14 @@ future<Status> StorageTracingStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::DeleteObjectRequest const& request) {
-  return child_->AsyncDeleteObject(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteObject");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteObject(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -392,7 +399,14 @@ StorageTracingStub::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::StartResumableWriteRequest const& request) {
-  return child_->AsyncStartResumableWrite(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
+                                     "StartResumableWrite");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncStartResumableWrite(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
@@ -400,7 +414,14 @@ StorageTracingStub::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::QueryWriteStatusRequest const& request) {
-  return child_->AsyncQueryWriteStatus(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.storage.v2.Storage", "QueryWriteStatus");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncQueryWriteStatus(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

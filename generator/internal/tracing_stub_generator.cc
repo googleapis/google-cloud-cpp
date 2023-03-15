@@ -220,7 +220,13 @@ future<StatusOr<$response_type$>> $tracing_stub_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       $request_type$ const& request) {
-  return child_->Async$method_name$(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->Async$method_name$(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 )"""}},
                        And(IsNonStreaming, Not(IsLongrunningOperation)))},

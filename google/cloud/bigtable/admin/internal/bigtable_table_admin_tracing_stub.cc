@@ -242,7 +242,14 @@ BigtableTableAdminTracingStub::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  return child_->AsyncCheckConsistency(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CheckConsistency");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCheckConsistency(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
