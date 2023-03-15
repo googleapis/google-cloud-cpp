@@ -12,21 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/v2/minimal/internal/job_connection.h"
-#include "google/cloud/testing_util/status_matchers.h"
-#include <gmock/gmock.h>
+#include "google/cloud/bigquery/v2/minimal/internal/job_client.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TEST(JobConnectionTest, GetJobSuccess) {
-  // Not Implemented Yet.
-}
+JobClient::JobClient(std::shared_ptr<BigQueryJobConnection> connection,
+                     Options opts)
+    : connection_(std::move(connection)),
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
+JobClient::~JobClient() = default;
 
-TEST(JobConnectionTest, GetJobFailure) {
-  // Not Implemented Yet.
+StatusOr<GetJobResponse> JobClient::GetJob(GetJobRequest const& request,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetJob(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
