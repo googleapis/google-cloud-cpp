@@ -17,5 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_mocks_hdrs = [
+    "mocks/current_options.h",
     "mocks/mock_stream_range.h",
 ]

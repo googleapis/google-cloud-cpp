@@ -262,8 +262,9 @@ install(
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file).
 add_library(google_cloud_cpp_mocks INTERFACE)
-set(google_cloud_cpp_mocks_hdrs # cmake-format: sort
-                                mocks/mock_stream_range.h)
+set(google_cloud_cpp_mocks_hdrs
+    # cmake-format: sort
+    mocks/current_options.h mocks/mock_stream_range.h)
 export_list_to_bazel("google_cloud_cpp_mocks.bzl" "google_cloud_cpp_mocks_hdrs"
                      YEAR "2022")
 target_link_libraries(
@@ -367,6 +368,7 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
+        mocks/current_options_test.cc
         mocks/mock_stream_range_test.cc
         options_test.cc
         polling_policy_test.cc
