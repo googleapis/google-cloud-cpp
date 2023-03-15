@@ -1,6 +1,6 @@
 // Copyright 2023 Google LLC
 //
-// Licensed under the Apache License, Version 2.0 (the "License";
+// Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -65,16 +65,16 @@ TEST(JobClientTest, GetJobSuccess) {
 
   ASSERT_STATUS_OK(result);
   EXPECT_FALSE(result->http_response.payload.empty());
-  EXPECT_THAT(result->job.kind, "jkind");
-  EXPECT_THAT(result->job.etag, "jtag");
-  EXPECT_THAT(result->job.id, "j123");
-  EXPECT_THAT(result->job.self_link, "jselfLink");
-  EXPECT_THAT(result->job.user_email, "juserEmail");
-  EXPECT_THAT(result->job.status.state, "DONE");
-  EXPECT_THAT(result->job.reference.project_id, "p123");
-  EXPECT_THAT(result->job.reference.job_id, "j123");
-  EXPECT_THAT(result->job.configuration.job_type, "QUERY");
-  EXPECT_THAT(result->job.configuration.query_config.query, "select 1;");
+  EXPECT_EQ(result->job.kind, "jkind");
+  EXPECT_EQ(result->job.etag, "jtag");
+  EXPECT_EQ(result->job.id, "j123");
+  EXPECT_EQ(result->job.self_link, "jselfLink");
+  EXPECT_EQ(result->job.user_email, "juserEmail");
+  EXPECT_EQ(result->job.status.state, "DONE");
+  EXPECT_EQ(result->job.reference.project_id, "p123");
+  EXPECT_EQ(result->job.reference.job_id, "j123");
+  EXPECT_EQ(result->job.configuration.job_type, "QUERY");
+  EXPECT_EQ(result->job.configuration.query_config.query, "select 1;");
 }
 
 TEST(JobClientTest, GetJobFailure) {
@@ -89,7 +89,6 @@ TEST(JobClientTest, GetJobFailure) {
   GetJobRequest request;
 
   auto result = job_client.GetJob(request);
-  EXPECT_FALSE(result.ok());
   EXPECT_THAT(result, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("bad-request-error")));
 }
