@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -480,6 +481,35 @@ DataCatalogConnectionImpl::ListTags(
       });
 }
 
+future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+DataCatalogConnectionImpl::ReconcileTags(
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::datacatalog::v1::ReconcileTagsResponse>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+        return stub->AsyncReconcileTags(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ReconcileTagsResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ReconcileTags(request), polling_policy(), __func__);
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogConnectionImpl::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
@@ -542,6 +572,35 @@ DataCatalogConnectionImpl::TestIamPermissions(
         return stub_->TestIamPermissions(context, request);
       },
       request, __func__);
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+DataCatalogConnectionImpl::ImportEntries(
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::datacatalog::v1::ImportEntriesResponse>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+        return stub->AsyncImportEntries(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::datacatalog::v1::ImportEntriesResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ImportEntries(request), polling_policy(), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

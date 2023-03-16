@@ -63,7 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.kms.v1.EkmConnection]:
-/// @googleapis_link_reference{google/cloud/kms/v1/ekm_service.proto#L239}
+/// @googleapis_link_reference{google/cloud/kms/v1/ekm_service.proto#L282}
 ///
 class EkmServiceClient {
  public:
@@ -99,12 +99,12 @@ class EkmServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   /// [google.cloud.kms.v1.ListEkmConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L90}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L109}
   ///
   StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
       std::string const& parent, Options opts = {});
@@ -113,16 +113,16 @@ class EkmServiceClient {
   /// Lists [EkmConnections][google.cloud.kms.v1.EkmConnection].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::kms::v1::ListEkmConnectionsRequest,google/cloud/kms/v1/ekm_service.proto#L90}
+  /// @googleapis_link{google::cloud::kms::v1::ListEkmConnectionsRequest,google/cloud/kms/v1/ekm_service.proto#L109}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   /// [google.cloud.kms.v1.ListEkmConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L90}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L109}
   ///
   StreamRange<google::cloud::kms::v1::EkmConnection> ListEkmConnections(
       google::cloud::kms::v1::ListEkmConnectionsRequest request,
@@ -138,12 +138,12 @@ class EkmServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   /// [google.cloud.kms.v1.GetEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L145}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L164}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
       std::string const& name, Options opts = {});
@@ -153,16 +153,16 @@ class EkmServiceClient {
   /// [EkmConnection][google.cloud.kms.v1.EkmConnection].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::kms::v1::GetEkmConnectionRequest,google/cloud/kms/v1/ekm_service.proto#L145}
+  /// @googleapis_link{google::cloud::kms::v1::GetEkmConnectionRequest,google/cloud/kms/v1/ekm_service.proto#L164}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   /// [google.cloud.kms.v1.GetEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L145}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L164}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
       google::cloud::kms::v1::GetEkmConnectionRequest const& request,
@@ -185,12 +185,12 @@ class EkmServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.CreateEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L158}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L177}
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
       std::string const& parent, std::string const& ekm_connection_id,
@@ -202,16 +202,16 @@ class EkmServiceClient {
   /// given Project and Location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::kms::v1::CreateEkmConnectionRequest,google/cloud/kms/v1/ekm_service.proto#L158}
+  /// @googleapis_link{google::cloud::kms::v1::CreateEkmConnectionRequest,google/cloud/kms/v1/ekm_service.proto#L177}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.CreateEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L158}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L177}
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
       google::cloud::kms::v1::CreateEkmConnectionRequest const& request,
@@ -228,12 +228,12 @@ class EkmServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L199}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
       google::cloud::kms::v1::EkmConnection const& ekm_connection,
@@ -243,19 +243,101 @@ class EkmServiceClient {
   /// Updates an [EkmConnection][google.cloud.kms.v1.EkmConnection]'s metadata.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::kms::v1::UpdateEkmConnectionRequest,google/cloud/kms/v1/ekm_service.proto#L180}
+  /// @googleapis_link{google::cloud::kms::v1::UpdateEkmConnectionRequest,google/cloud/kms/v1/ekm_service.proto#L199}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_link{google::cloud::kms::v1::EkmConnection,google/cloud/kms/v1/ekm_service.proto#L282}
   ///
   /// [google.cloud.kms.v1.EkmConnection]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L282}
   /// [google.cloud.kms.v1.UpdateEkmConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L180}
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L199}
   ///
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Returns the [EkmConfig][google.cloud.kms.v1.EkmConfig] singleton resource
+  /// for a given project and location.
+  ///
+  /// @param name  Required. The [name][google.cloud.kms.v1.EkmConfig.name] of
+  /// the
+  ///  [EkmConfig][google.cloud.kms.v1.EkmConfig] to get.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::kms::v1::EkmConfig,google/cloud/kms/v1/ekm_service.proto#L401}
+  ///
+  /// [google.cloud.kms.v1.EkmConfig]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L401}
+  /// [google.cloud.kms.v1.GetEkmConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L211}
+  ///
+  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Returns the [EkmConfig][google.cloud.kms.v1.EkmConfig] singleton resource
+  /// for a given project and location.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::kms::v1::GetEkmConfigRequest,google/cloud/kms/v1/ekm_service.proto#L211}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::kms::v1::EkmConfig,google/cloud/kms/v1/ekm_service.proto#L401}
+  ///
+  /// [google.cloud.kms.v1.EkmConfig]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L401}
+  /// [google.cloud.kms.v1.GetEkmConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L211}
+  ///
+  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      google::cloud::kms::v1::GetEkmConfigRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Updates the [EkmConfig][google.cloud.kms.v1.EkmConfig] singleton resource
+  /// for a given project and location.
+  ///
+  /// @param ekm_config  Required. [EkmConfig][google.cloud.kms.v1.EkmConfig]
+  /// with updated values.
+  /// @param update_mask  Required. List of fields to be updated in this
+  /// request.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::kms::v1::EkmConfig,google/cloud/kms/v1/ekm_service.proto#L401}
+  ///
+  /// [google.cloud.kms.v1.EkmConfig]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L401}
+  /// [google.cloud.kms.v1.UpdateEkmConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L224}
+  ///
+  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      google::cloud::kms::v1::EkmConfig const& ekm_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// Updates the [EkmConfig][google.cloud.kms.v1.EkmConfig] singleton resource
+  /// for a given project and location.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::kms::v1::UpdateEkmConfigRequest,google/cloud/kms/v1/ekm_service.proto#L224}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::kms::v1::EkmConfig,google/cloud/kms/v1/ekm_service.proto#L401}
+  ///
+  /// [google.cloud.kms.v1.EkmConfig]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L401}
+  /// [google.cloud.kms.v1.UpdateEkmConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/kms/v1/ekm_service.proto#L224}
+  ///
+  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request,
       Options opts = {});
 
  private:

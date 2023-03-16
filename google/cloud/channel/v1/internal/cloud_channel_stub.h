@@ -289,6 +289,12 @@ class CloudChannelServiceStub {
       grpc::ClientContext& context,
       google::cloud::channel::v1::ListSubscribersRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+  ListEntitlementChanges(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListEntitlementChangesRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -557,6 +563,12 @@ class DefaultCloudChannelServiceStub : public CloudChannelServiceStub {
   StatusOr<google::cloud::channel::v1::ListSubscribersResponse> ListSubscribers(
       grpc::ClientContext& client_context,
       google::cloud::channel::v1::ListSubscribersRequest const& request)
+      override;
+
+  StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+  ListEntitlementChanges(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::ListEntitlementChangesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

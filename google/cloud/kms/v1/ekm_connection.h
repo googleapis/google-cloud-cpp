@@ -74,6 +74,12 @@ class EkmServiceConnection {
 
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      google::cloud::kms::v1::GetEkmConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request);
 };
 
 /**

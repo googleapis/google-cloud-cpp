@@ -185,6 +185,9 @@ class CloudChannelServiceConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListSubscribers(
       google::cloud::channel::v1::ListSubscribersRequest request);
+
+  virtual google::cloud::Idempotency ListEntitlementChanges(
+      google::cloud::channel::v1::ListEntitlementChangesRequest request);
 };
 
 std::unique_ptr<CloudChannelServiceConnectionIdempotencyPolicy>

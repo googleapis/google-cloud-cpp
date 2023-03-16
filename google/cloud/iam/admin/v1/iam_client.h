@@ -748,14 +748,14 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
   ///
   /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
@@ -778,14 +778,14 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
   ///
   /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.GetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -824,12 +824,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
   ///
   /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   /// [google.iam.v1.SetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
@@ -889,12 +889,12 @@ class IAMClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L98}
   ///
   /// [google.iam.admin.v1.ServiceAccount]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L493}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   /// [google.iam.v1.SetIamPolicyRequest]:
   /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   ///
@@ -1104,7 +1104,7 @@ class IAMClient {
   /// [google.iam.admin.v1.Role]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1070}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L98}
   ///
   StatusOr<google::iam::admin::v1::Role> DeleteRole(
       google::iam::admin::v1::DeleteRoleRequest const& request,
@@ -1194,7 +1194,7 @@ class IAMClient {
   /// [google.iam.admin.v1.LintPolicyResponse]:
   /// @googleapis_reference_link{google/iam/admin/v1/iam.proto#L1620}
   /// [google.iam.v1.Binding.condition]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L217}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L220}
   ///
   StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
       google::iam::admin::v1::LintPolicyRequest const& request,

@@ -305,6 +305,12 @@ class MockCloudChannelServiceConnection
   MOCK_METHOD(StreamRange<std::string>, ListSubscribers,
               (google::cloud::channel::v1::ListSubscribersRequest request),
               (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::channel::v1::EntitlementChange>,
+      ListEntitlementChanges,
+      (google::cloud::channel::v1::ListEntitlementChangesRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

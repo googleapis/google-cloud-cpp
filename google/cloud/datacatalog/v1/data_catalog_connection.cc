@@ -199,6 +199,14 @@ DataCatalogConnection::ListTags(
       StreamRange<google::cloud::datacatalog::v1::Tag>>();
 }
 
+future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+DataCatalogConnection::ReconcileTags(
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogConnection::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const&) {
@@ -225,6 +233,14 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataCatalogConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+DataCatalogConnection::ImportEntries(
+    google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(

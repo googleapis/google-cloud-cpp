@@ -81,6 +81,30 @@ DefaultEkmServiceStub::UpdateEkmConnection(
   return response;
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig> DefaultEkmServiceStub::GetEkmConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+  google::cloud::kms::v1::EkmConfig response;
+  auto status = grpc_stub_->GetEkmConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig>
+DefaultEkmServiceStub::UpdateEkmConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+  google::cloud::kms::v1::EkmConfig response;
+  auto status =
+      grpc_stub_->UpdateEkmConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

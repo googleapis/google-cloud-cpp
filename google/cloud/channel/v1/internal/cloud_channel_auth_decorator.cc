@@ -561,6 +561,15 @@ CloudChannelServiceAuth::ListSubscribers(
   return child_->ListSubscribers(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+CloudChannelServiceAuth::ListEntitlementChanges(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListEntitlementChanges(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

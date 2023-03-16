@@ -57,6 +57,14 @@ class EkmServiceAuth : public EkmServiceStub {
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
       override;
 
+  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<EkmServiceStub> child_;

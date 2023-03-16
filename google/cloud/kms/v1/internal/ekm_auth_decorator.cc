@@ -66,6 +66,22 @@ EkmServiceAuth::UpdateEkmConnection(
   return child_->UpdateEkmConnection(context, request);
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::GetEkmConfig(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEkmConfig(context, request);
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::UpdateEkmConfig(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEkmConfig(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

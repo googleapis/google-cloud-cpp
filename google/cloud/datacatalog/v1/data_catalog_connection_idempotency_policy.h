@@ -125,6 +125,9 @@ class DataCatalogConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request);
 
+  virtual google::cloud::Idempotency ReconcileTags(
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
+
   virtual google::cloud::Idempotency StarEntry(
       google::cloud::datacatalog::v1::StarEntryRequest const& request);
 
@@ -139,6 +142,9 @@ class DataCatalogConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency ImportEntries(
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
 };
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>

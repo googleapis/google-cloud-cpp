@@ -49,6 +49,14 @@ class EkmServiceStub {
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
       grpc::ClientContext& context,
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::GetEkmConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request) = 0;
 };
 
 class DefaultEkmServiceStub : public EkmServiceStub {
@@ -76,6 +84,14 @@ class DefaultEkmServiceStub : public EkmServiceStub {
       grpc::ClientContext& client_context,
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
       override;
+
+  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::kms::v1::EkmService::StubInterface> grpc_stub_;

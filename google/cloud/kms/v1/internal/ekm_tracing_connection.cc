@@ -70,6 +70,23 @@ EkmServiceTracingConnection::UpdateEkmConnection(
   return internal::EndSpan(*span, child_->UpdateEkmConnection(request));
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig>
+EkmServiceTracingConnection::GetEkmConfig(
+    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+  auto span = internal::MakeSpan("kms_v1::EkmServiceConnection::GetEkmConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEkmConfig(request));
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig>
+EkmServiceTracingConnection::UpdateEkmConfig(
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+  auto span =
+      internal::MakeSpan("kms_v1::EkmServiceConnection::UpdateEkmConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEkmConfig(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<kms_v1::EkmServiceConnection> MakeEkmServiceTracingConnection(

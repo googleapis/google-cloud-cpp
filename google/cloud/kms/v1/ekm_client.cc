@@ -101,6 +101,37 @@ EkmServiceClient::UpdateEkmConnection(
   return connection_->UpdateEkmConnection(request);
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::GetEkmConfig(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::GetEkmConfigRequest request;
+  request.set_name(name);
+  return connection_->GetEkmConfig(request);
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::GetEkmConfig(
+    google::cloud::kms::v1::GetEkmConfigRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEkmConfig(request);
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::UpdateEkmConfig(
+    google::cloud::kms::v1::EkmConfig const& ekm_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::kms::v1::UpdateEkmConfigRequest request;
+  *request.mutable_ekm_config() = ekm_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateEkmConfig(request);
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceClient::UpdateEkmConfig(
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEkmConfig(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1
 }  // namespace cloud

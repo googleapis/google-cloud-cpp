@@ -135,6 +135,21 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesClient::SetSuggestionFeatureConfig(
+    std::string const& conversation_profile,
+    google::cloud::dialogflow::v2::Participant::Role participant_role,
+    google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
+        SuggestionFeatureConfig const& suggestion_feature_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest request;
+  request.set_conversation_profile(conversation_profile);
+  request.set_participant_role(participant_role);
+  *request.mutable_suggestion_feature_config() = suggestion_feature_config;
+  return connection_->SetSuggestionFeatureConfig(request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+ConversationProfilesClient::SetSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request,
     Options opts) {
@@ -148,6 +163,21 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
+  return connection_->ClearSuggestionFeatureConfig(request);
+}
+
+future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+ConversationProfilesClient::ClearSuggestionFeatureConfig(
+    std::string const& conversation_profile,
+    google::cloud::dialogflow::v2::Participant::Role participant_role,
+    google::cloud::dialogflow::v2::SuggestionFeature::Type
+        suggestion_feature_type,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest request;
+  request.set_conversation_profile(conversation_profile);
+  request.set_participant_role(participant_role);
+  request.set_suggestion_feature_type(suggestion_feature_type);
   return connection_->ClearSuggestionFeatureConfig(request);
 }
 

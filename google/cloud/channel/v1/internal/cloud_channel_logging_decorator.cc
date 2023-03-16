@@ -648,6 +648,19 @@ CloudChannelServiceLogging::ListSubscribers(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+CloudChannelServiceLogging::ListEntitlementChanges(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::channel::v1::ListEntitlementChangesRequest const&
+                 request) {
+        return child_->ListEntitlementChanges(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

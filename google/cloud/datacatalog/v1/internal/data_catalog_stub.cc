@@ -20,6 +20,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/datacatalog/v1/datacatalog.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -365,6 +366,24 @@ DefaultDataCatalogStub::ListTags(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataCatalogStub::AsyncReconcileTags(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::datacatalog::v1::ReconcileTagsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncReconcileTags(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DefaultDataCatalogStub::StarEntry(
     grpc::ClientContext& client_context,
@@ -422,6 +441,58 @@ DefaultDataCatalogStub::TestIamPermissions(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataCatalogStub::AsyncImportEntries(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::datacatalog::v1::ImportEntriesRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncImportEntries(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultDataCatalogStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_->AsyncGetOperation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<Status> DefaultDataCatalogStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

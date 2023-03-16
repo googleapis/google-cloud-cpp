@@ -1116,6 +1116,41 @@ StreamRange<std::string> CloudChannelServiceConnectionImpl::ListSubscribers(
       });
 }
 
+StreamRange<google::cloud::channel::v1::EntitlementChange>
+CloudChannelServiceConnectionImpl::ListEntitlementChanges(
+    google::cloud::channel::v1::ListEntitlementChangesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<channel_v1::CloudChannelServiceRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListEntitlementChanges(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::channel::v1::EntitlementChange>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::channel::v1::ListEntitlementChangesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::channel::v1::ListEntitlementChangesRequest const&
+                    request) {
+              return stub->ListEntitlementChanges(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::channel::v1::ListEntitlementChangesResponse r) {
+        std::vector<google::cloud::channel::v1::EntitlementChange> result(
+            r.entitlement_changes().size());
+        auto& messages = *r.mutable_entitlement_changes();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_v1_internal
 }  // namespace cloud

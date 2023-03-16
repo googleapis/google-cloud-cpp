@@ -22,6 +22,7 @@
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -171,6 +172,12 @@ class DataCatalogLogging : public DataCatalogStub {
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncReconcileTags(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
+
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
@@ -191,6 +198,22 @@ class DataCatalogLogging : public DataCatalogStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<DataCatalogStub> child_;

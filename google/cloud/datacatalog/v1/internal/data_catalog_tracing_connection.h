@@ -144,6 +144,10 @@ class DataCatalogTracingConnection
   StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request) override;
 
+  future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const&
+                    request) override;
+
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
 
@@ -159,6 +163,10 @@ class DataCatalogTracingConnection
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const&
+                    request) override;
 
  private:
   std::shared_ptr<datacatalog_v1::DataCatalogConnection> child_;

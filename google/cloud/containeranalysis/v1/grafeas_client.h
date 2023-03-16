@@ -104,12 +104,12 @@ class GrafeasClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.GetOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L321}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L324}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(std::string const& name,
                                                   Options opts = {});
@@ -118,16 +118,16 @@ class GrafeasClient {
   /// Gets the specified occurrence.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::GetOccurrenceRequest,grafeas/v1/grafeas.proto#L321}
+  /// @googleapis_link{grafeas::v1::GetOccurrenceRequest,grafeas/v1/grafeas.proto#L324}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.GetOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L321}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L324}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StatusOr<grafeas::v1::Occurrence> GetOccurrence(
       grafeas::v1::GetOccurrenceRequest const& request, Options opts = {});
@@ -142,12 +142,12 @@ class GrafeasClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.ListOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L331}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L334}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StreamRange<grafeas::v1::Occurrence> ListOccurrences(
       std::string const& parent, std::string const& filter, Options opts = {});
@@ -156,16 +156,16 @@ class GrafeasClient {
   /// Lists occurrences for the specified project.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::ListOccurrencesRequest,grafeas/v1/grafeas.proto#L331}
+  /// @googleapis_link{grafeas::v1::ListOccurrencesRequest,grafeas/v1/grafeas.proto#L334}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.ListOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L331}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L334}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StreamRange<grafeas::v1::Occurrence> ListOccurrences(
       grafeas::v1::ListOccurrencesRequest request, Options opts = {});
@@ -181,7 +181,7 @@ class GrafeasClient {
   ///     backoff policies.
   ///
   /// [grafeas.v1.DeleteOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L361}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L364}
   ///
   Status DeleteOccurrence(std::string const& name, Options opts = {});
 
@@ -191,12 +191,12 @@ class GrafeasClient {
   /// resource.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::DeleteOccurrenceRequest,grafeas/v1/grafeas.proto#L361}
+  /// @googleapis_link{grafeas::v1::DeleteOccurrenceRequest,grafeas/v1/grafeas.proto#L364}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [grafeas.v1.DeleteOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L361}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L364}
   ///
   Status DeleteOccurrence(grafeas::v1::DeleteOccurrenceRequest const& request,
                           Options opts = {});
@@ -211,12 +211,12 @@ class GrafeasClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.CreateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L371}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L374}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
       std::string const& parent, grafeas::v1::Occurrence const& occurrence,
@@ -226,16 +226,16 @@ class GrafeasClient {
   /// Creates a new occurrence.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::CreateOccurrenceRequest,grafeas/v1/grafeas.proto#L371}
+  /// @googleapis_link{grafeas::v1::CreateOccurrenceRequest,grafeas/v1/grafeas.proto#L374}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.CreateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L371}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L374}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StatusOr<grafeas::v1::Occurrence> CreateOccurrence(
       grafeas::v1::CreateOccurrenceRequest const& request, Options opts = {});
@@ -250,12 +250,12 @@ class GrafeasClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesResponse,grafeas/v1/grafeas.proto#L541}
+  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesResponse,grafeas/v1/grafeas.proto#L544}
   ///
   /// [grafeas.v1.BatchCreateOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L528}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L531}
   /// [grafeas.v1.BatchCreateOccurrencesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L541}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L544}
   ///
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
       std::string const& parent,
@@ -266,16 +266,16 @@ class GrafeasClient {
   /// Creates new occurrences in batch.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesRequest,grafeas/v1/grafeas.proto#L528}
+  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesRequest,grafeas/v1/grafeas.proto#L531}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesResponse,grafeas/v1/grafeas.proto#L541}
+  /// @googleapis_link{grafeas::v1::BatchCreateOccurrencesResponse,grafeas/v1/grafeas.proto#L544}
   ///
   /// [grafeas.v1.BatchCreateOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L528}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L531}
   /// [grafeas.v1.BatchCreateOccurrencesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L541}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L544}
   ///
   StatusOr<grafeas::v1::BatchCreateOccurrencesResponse> BatchCreateOccurrences(
       grafeas::v1::BatchCreateOccurrencesRequest const& request,
@@ -291,12 +291,12 @@ class GrafeasClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   /// [grafeas.v1.UpdateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L383}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L386}
   ///
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
       std::string const& name, grafeas::v1::Occurrence const& occurrence,
@@ -306,16 +306,16 @@ class GrafeasClient {
   /// Updates the specified occurrence.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::UpdateOccurrenceRequest,grafeas/v1/grafeas.proto#L383}
+  /// @googleapis_link{grafeas::v1::UpdateOccurrenceRequest,grafeas/v1/grafeas.proto#L386}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   /// [grafeas.v1.UpdateOccurrenceRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L383}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L386}
   ///
   StatusOr<grafeas::v1::Occurrence> UpdateOccurrence(
       grafeas::v1::UpdateOccurrenceRequest const& request, Options opts = {});
@@ -328,12 +328,12 @@ class GrafeasClient {
   ///  `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.GetOccurrenceNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L407}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L410}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StatusOr<grafeas::v1::Note> GetOccurrenceNote(std::string const& name,
                                                 Options opts = {});
@@ -343,15 +343,15 @@ class GrafeasClient {
   /// use this method to get a note that belongs to a provider project.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::GetOccurrenceNoteRequest,grafeas/v1/grafeas.proto#L407}
+  /// @googleapis_link{grafeas::v1::GetOccurrenceNoteRequest,grafeas/v1/grafeas.proto#L410}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.GetOccurrenceNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L407}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L410}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StatusOr<grafeas::v1::Note> GetOccurrenceNote(
       grafeas::v1::GetOccurrenceNoteRequest const& request, Options opts = {});
@@ -363,12 +363,12 @@ class GrafeasClient {
   ///  `projects/[PROVIDER_ID]/notes/[NOTE_ID]`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.GetNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L397}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L400}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StatusOr<grafeas::v1::Note> GetNote(std::string const& name,
                                       Options opts = {});
@@ -377,15 +377,15 @@ class GrafeasClient {
   /// Gets the specified note.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::GetNoteRequest,grafeas/v1/grafeas.proto#L397}
+  /// @googleapis_link{grafeas::v1::GetNoteRequest,grafeas/v1/grafeas.proto#L400}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.GetNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L397}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L400}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StatusOr<grafeas::v1::Note> GetNote(
       grafeas::v1::GetNoteRequest const& request, Options opts = {});
@@ -398,12 +398,12 @@ class GrafeasClient {
   /// @param filter  The filter expression.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.ListNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L417}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L420}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StreamRange<grafeas::v1::Note> ListNotes(std::string const& parent,
                                            std::string const& filter,
@@ -413,15 +413,15 @@ class GrafeasClient {
   /// Lists notes for the specified project.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::ListNotesRequest,grafeas/v1/grafeas.proto#L417}
+  /// @googleapis_link{grafeas::v1::ListNotesRequest,grafeas/v1/grafeas.proto#L420}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.ListNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L417}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L420}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StreamRange<grafeas::v1::Note> ListNotes(
       grafeas::v1::ListNotesRequest request, Options opts = {});
@@ -435,7 +435,7 @@ class GrafeasClient {
   ///     backoff policies.
   ///
   /// [grafeas.v1.DeleteNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L447}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L450}
   ///
   Status DeleteNote(std::string const& name, Options opts = {});
 
@@ -443,12 +443,12 @@ class GrafeasClient {
   /// Deletes the specified note.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::DeleteNoteRequest,grafeas/v1/grafeas.proto#L447}
+  /// @googleapis_link{grafeas::v1::DeleteNoteRequest,grafeas/v1/grafeas.proto#L450}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [grafeas.v1.DeleteNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L447}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L450}
   ///
   Status DeleteNote(grafeas::v1::DeleteNoteRequest const& request,
                     Options opts = {});
@@ -463,12 +463,12 @@ class GrafeasClient {
   /// @param note  The note to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.CreateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L457}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L460}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StatusOr<grafeas::v1::Note> CreateNote(std::string const& parent,
                                          std::string const& note_id,
@@ -479,15 +479,15 @@ class GrafeasClient {
   /// Creates a new note.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::CreateNoteRequest,grafeas/v1/grafeas.proto#L457}
+  /// @googleapis_link{grafeas::v1::CreateNoteRequest,grafeas/v1/grafeas.proto#L460}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.CreateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L457}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L460}
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   ///
   StatusOr<grafeas::v1::Note> CreateNote(
       grafeas::v1::CreateNoteRequest const& request, Options opts = {});
@@ -502,12 +502,12 @@ class GrafeasClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateNotesResponse,grafeas/v1/grafeas.proto#L522}
+  /// @googleapis_link{grafeas::v1::BatchCreateNotesResponse,grafeas/v1/grafeas.proto#L525}
   ///
   /// [grafeas.v1.BatchCreateNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L509}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L512}
   /// [grafeas.v1.BatchCreateNotesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L522}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L525}
   ///
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
       std::string const& parent,
@@ -517,16 +517,16 @@ class GrafeasClient {
   /// Creates new notes in batch.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::BatchCreateNotesRequest,grafeas/v1/grafeas.proto#L509}
+  /// @googleapis_link{grafeas::v1::BatchCreateNotesRequest,grafeas/v1/grafeas.proto#L512}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::BatchCreateNotesResponse,grafeas/v1/grafeas.proto#L522}
+  /// @googleapis_link{grafeas::v1::BatchCreateNotesResponse,grafeas/v1/grafeas.proto#L525}
   ///
   /// [grafeas.v1.BatchCreateNotesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L509}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L512}
   /// [grafeas.v1.BatchCreateNotesResponse]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L522}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L525}
   ///
   StatusOr<grafeas::v1::BatchCreateNotesResponse> BatchCreateNotes(
       grafeas::v1::BatchCreateNotesRequest const& request, Options opts = {});
@@ -540,12 +540,12 @@ class GrafeasClient {
   /// @param update_mask  The fields to update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   /// [grafeas.v1.UpdateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L471}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
   ///
   StatusOr<grafeas::v1::Note> UpdateNote(
       std::string const& name, grafeas::v1::Note const& note,
@@ -555,15 +555,15 @@ class GrafeasClient {
   /// Updates the specified note.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::UpdateNoteRequest,grafeas/v1/grafeas.proto#L471}
+  /// @googleapis_link{grafeas::v1::UpdateNoteRequest,grafeas/v1/grafeas.proto#L474}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
-  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L258}
+  /// @return @googleapis_link{grafeas::v1::Note,grafeas/v1/grafeas.proto#L259}
   ///
   /// [grafeas.v1.Note]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L258}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L259}
   /// [grafeas.v1.UpdateNoteRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L471}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L474}
   ///
   StatusOr<grafeas::v1::Note> UpdateNote(
       grafeas::v1::UpdateNoteRequest const& request, Options opts = {});
@@ -579,12 +579,12 @@ class GrafeasClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.ListNoteOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L485}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L488}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
       std::string const& name, std::string const& filter, Options opts = {});
@@ -595,16 +595,16 @@ class GrafeasClient {
   /// referencing the specified note.
   ///
   /// @param request
-  /// @googleapis_link{grafeas::v1::ListNoteOccurrencesRequest,grafeas/v1/grafeas.proto#L485}
+  /// @googleapis_link{grafeas::v1::ListNoteOccurrencesRequest,grafeas/v1/grafeas.proto#L488}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_link{grafeas::v1::Occurrence,grafeas/v1/grafeas.proto#L195}
   ///
   /// [grafeas.v1.ListNoteOccurrencesRequest]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L485}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L488}
   /// [grafeas.v1.Occurrence]:
-  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L194}
+  /// @googleapis_reference_link{grafeas/v1/grafeas.proto#L195}
   ///
   StreamRange<grafeas::v1::Occurrence> ListNoteOccurrences(
       grafeas::v1::ListNoteOccurrencesRequest request, Options opts = {});

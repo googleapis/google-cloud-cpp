@@ -227,6 +227,11 @@ class CloudChannelServiceTracingConnection
   StreamRange<std::string> ListSubscribers(
       google::cloud::channel::v1::ListSubscribersRequest request) override;
 
+  StreamRange<google::cloud::channel::v1::EntitlementChange>
+  ListEntitlementChanges(
+      google::cloud::channel::v1::ListEntitlementChangesRequest request)
+      override;
+
  private:
   std::shared_ptr<channel_v1::CloudChannelServiceConnection> child_;
 };

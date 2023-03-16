@@ -55,6 +55,16 @@ Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConnection(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EkmServiceConnectionIdempotencyPolicy::GetEkmConfig(
+    google::cloud::kms::v1::GetEkmConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConfig(
+    google::cloud::kms::v1::UpdateEkmConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
 MakeDefaultEkmServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<EkmServiceConnectionIdempotencyPolicy>();

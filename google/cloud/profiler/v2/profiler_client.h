@@ -105,17 +105,18 @@ class ProfilerServiceClient {
   /// binary-serialized proto in the trailing metadata item named
   /// "google.rpc.retryinfo-bin".
   ///
+  ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::CreateProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L91}
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::CreateProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L97}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L125}
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
   /// [google.devtools.cloudprofiler.v2.CreateProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L91}
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L97}
   /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L125}
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
       google::devtools::cloudprofiler::v2::CreateProfileRequest const& request,
@@ -126,17 +127,39 @@ class ProfilerServiceClient {
   /// The client provides the profile to create along with the profile bytes,
   /// the server records it.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L104}
+  /// @param parent  Parent project to create the profile in.
+  /// @param profile  Contents of the profile to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L125}
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
   /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L104}
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
   /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L125}
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  ///
+  StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
+      std::string const& parent,
+      google::devtools::cloudprofiler::v2::Profile const& profile,
+      Options opts = {});
+
+  ///
+  /// CreateOfflineProfile creates a new profile resource in the offline mode.
+  /// The client provides the profile to create along with the profile bytes,
+  /// the server records it.
+  ///
+  /// @param request
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L112}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  ///
+  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L112}
+  /// [google.devtools.cloudprofiler.v2.Profile]:
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
       google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
@@ -149,17 +172,43 @@ class ProfilerServiceClient {
   /// offline mode is currently not supported: the profile content must be
   /// provided at the time of the profile creation.
   ///
-  /// @param request
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::UpdateProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L113}
+  /// @param profile  Profile to update.
+  /// @param update_mask  Field mask used to specify the fields to be
+  /// overwritten. Currently only
+  ///  profile_bytes and labels fields are supported by UpdateProfile, so only
+  ///  those fields can be specified in the mask. When no mask is provided, all
+  ///  fields are overwritten.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L125}
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
   ///
   /// [google.devtools.cloudprofiler.v2.Profile]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L125}
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
   /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L113}
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
+  ///
+  StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
+      google::devtools::cloudprofiler::v2::Profile const& profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  ///
+  /// UpdateProfile updates the profile bytes and labels on the profile resource
+  /// created in the online mode. Updating the bytes for profiles created in the
+  /// offline mode is currently not supported: the profile content must be
+  /// provided at the time of the profile creation.
+  ///
+  /// @param request
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::UpdateProfileRequest,google/devtools/cloudprofiler/v2/profiler.proto#L123}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::devtools::cloudprofiler::v2::Profile,google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  ///
+  /// [google.devtools.cloudprofiler.v2.Profile]:
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L135}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]:
+  /// @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L123}
   ///
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request,

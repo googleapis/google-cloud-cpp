@@ -288,6 +288,12 @@ class CloudChannelServiceLogging : public CloudChannelServiceStub {
       google::cloud::channel::v1::ListSubscribersRequest const& request)
       override;
 
+  StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+  ListEntitlementChanges(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListEntitlementChangesRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

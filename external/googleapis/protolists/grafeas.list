@@ -16,4 +16,5 @@
 @com_google_googleapis//grafeas/v1:slsa_provenance.proto
 @com_google_googleapis//grafeas/v1:slsa_provenance_zero_two.proto
 @com_google_googleapis//grafeas/v1:upgrade.proto
+@com_google_googleapis//grafeas/v1:vex.proto
 @com_google_googleapis//grafeas/v1:vulnerability.proto

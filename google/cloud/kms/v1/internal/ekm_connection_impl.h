@@ -61,6 +61,12 @@ class EkmServiceConnectionImpl : public kms_v1::EkmServiceConnection {
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
       override;
 
+  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
+
  private:
   std::unique_ptr<kms_v1::EkmServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

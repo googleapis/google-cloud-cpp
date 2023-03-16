@@ -19,9 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_INTERNAL_DATA_CATALOG_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_INTERNAL_DATA_CATALOG_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/datacatalog/v1/datacatalog.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -165,6 +168,11 @@ class DataCatalogStub {
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncReconcileTags(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       grpc::ClientContext& context,
       google::cloud::datacatalog::v1::StarEntryRequest const& request) = 0;
@@ -186,15 +194,32 @@ class DataCatalogStub {
   TestIamPermissions(
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncImportEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 class DefaultDataCatalogStub : public DataCatalogStub {
  public:
-  explicit DefaultDataCatalogStub(
+  DefaultDataCatalogStub(
       std::unique_ptr<
           google::cloud::datacatalog::v1::DataCatalog::StubInterface>
-          grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
+          grpc_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations)
+      : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse> SearchCatalog(
       grpc::ClientContext& client_context,
@@ -329,6 +354,12 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       grpc::ClientContext& client_context,
       google::cloud::datacatalog::v1::ListTagsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncReconcileTags(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request)
+      override;
+
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       grpc::ClientContext& client_context,
       google::cloud::datacatalog::v1::StarEntryRequest const& request) override;
@@ -350,9 +381,26 @@ class DefaultDataCatalogStub : public DataCatalogStub {
       grpc::ClientContext& client_context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncImportEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::unique_ptr<google::cloud::datacatalog::v1::DataCatalog::StubInterface>
       grpc_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

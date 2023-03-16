@@ -66,6 +66,20 @@ EkmServiceMetadata::UpdateEkmConnection(
   return child_->UpdateEkmConnection(context, request);
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::GetEkmConfig(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetEkmConfig(context, request);
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceMetadata::UpdateEkmConfig(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+  SetMetadata(context, "ekm_config.name=" + request.ekm_config().name());
+  return child_->UpdateEkmConfig(context, request);
+}
+
 void EkmServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                      std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

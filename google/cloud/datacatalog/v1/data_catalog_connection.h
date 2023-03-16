@@ -23,10 +23,13 @@
 #include "google/cloud/datacatalog/v1/internal/data_catalog_retry_traits.h"
 #include "google/cloud/datacatalog/v1/internal/data_catalog_stub.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -160,6 +163,11 @@ class DataCatalogConnection {
   virtual StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request);
 
+  virtual future<
+      StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags(
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request);
+
   virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       google::cloud::datacatalog::v1::StarEntryRequest const& request);
 
@@ -175,6 +183,11 @@ class DataCatalogConnection {
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request);
 };
 
 /**

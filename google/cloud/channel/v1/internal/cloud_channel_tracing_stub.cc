@@ -633,6 +633,18 @@ CloudChannelServiceTracingStub::ListSubscribers(
                            child_->ListSubscribers(context, request));
 }
 
+StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+CloudChannelServiceTracingStub::ListEntitlementChanges(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.channel.v1.CloudChannelService", "ListEntitlementChanges");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListEntitlementChanges(context, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
