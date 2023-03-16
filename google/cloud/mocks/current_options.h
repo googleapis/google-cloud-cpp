@@ -37,7 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *         EXPECT_THAT(options, ...);
  *       });
  *   auto client = Client(mock);
- *   DoThing(client);
+ *   MyFunctionThatCallsFoo(client);
  * }
  * @endcode
  */
