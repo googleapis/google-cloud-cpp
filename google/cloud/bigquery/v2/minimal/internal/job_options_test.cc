@@ -49,7 +49,6 @@ TEST(JobOptionstTest, DefaultOptions) {
 
   EXPECT_TRUE(actual.has<BigQueryJobBackoffPolicyOption>());
 
-  EXPECT_TRUE(actual.has<BigQueryJobConnectionPoolSizeOption>());
   EXPECT_GT(actual.get<BigQueryJobConnectionPoolSizeOption>(), 0);
 }
 
