@@ -43,6 +43,7 @@ using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
+using TimerType = StatusOr<std::chrono::system_clock::time_point>;
 
 struct StringOption {
   using Type = std::string;
@@ -390,7 +391,6 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
   expected.set_done(true);
   expected.mutable_metadata()->PackFrom(instance);
 
-  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
   AsyncSequencer<TimerType> timer_sequencer;
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -435,7 +435,6 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
 
-  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
   AsyncSequencer<TimerType> timer_sequencer;
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -498,7 +497,6 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
 
-  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
   AsyncSequencer<TimerType> timer_sequencer;
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)
@@ -626,15 +624,59 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+using ::google::cloud::testing_util::IsActive;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::AllOf;
+using ::testing::Each;
+using ::testing::SizeIs;
+
+TEST(AsyncPollingLoopTest, TracedAsyncBackoff) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  google::longrunning::Operation starting_op;
+  starting_op.set_name("test-op-name");
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([](auto) {
+    return make_ready_future<TimerType>(std::chrono::system_clock::now());
+  });
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockStub>();
+  EXPECT_CALL(*mock, AsyncGetOperation).WillRepeatedly([](auto, auto, auto) {
+    return make_ready_future<StatusOr<google::longrunning::Operation>>(
+        UnavailableError("try again"));
+  });
+
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  EXPECT_CALL(*policy, clone()).Times(0);
+  EXPECT_CALL(*policy, OnFailure)
+      .WillOnce(Return(true))
+      .WillOnce(Return(true))
+      .WillOnce(Return(true))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*policy, WaitPeriod)
+      .WillRepeatedly(Return(std::chrono::milliseconds(1)));
+
+  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
+  (void)AsyncPollingLoop(cq, make_ready_future(make_status_or(starting_op)),
+                         MakePoll(mock), MakeCancel(mock), std::move(policy),
+                         "test-function")
+      .get();
+
+  // The polling loop waits once initially, and once for each of the three retry
+  // attempts. So we expect a total of 4 backoffs.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, AllOf(SizeIs(4), Each(SpanNamed("Async Backoff"))));
+}
+
 TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
-  using testing_util::IsActive;
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto span = MakeSpan("span");
   google::longrunning::Operation starting_op;
   starting_op.set_name("test-op-name");
 
-  using TimerType = StatusOr<std::chrono::system_clock::time_point>;
   AsyncSequencer<TimerType> timer_sequencer;
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)

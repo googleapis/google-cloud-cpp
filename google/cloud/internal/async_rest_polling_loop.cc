@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/async_rest_polling_loop.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "absl/memory/memory.h"
@@ -105,8 +106,9 @@ class AsyncRestPollingLoopImpl
     GCP_LOG(DEBUG) << location_ << "() polling loop waiting "
                    << duration.count() << "ms";
     auto self = shared_from_this();
-    cq_.MakeRelativeTimer(duration).then(
-        [self](TimerResult f) { self->OnTimer(std::move(f)); });
+    internal::TracedAsyncBackoff(cq_, duration).then([self](TimerResult f) {
+      self->OnTimer(std::move(f));
+    });
   }
 
   void OnTimer(TimerResult f) {
