@@ -61,7 +61,7 @@ TEST(Crc32c, ExtendNotPrecomputedCord) {
                                         " the", " lazy",  " dog"};
   auto crc = std::uint32_t{0};
   for (auto const& input : inputs) {
-    crc = ExtendCrc32c(crc, absl::Cord{input}, absl::nullopt);
+    crc = ExtendCrc32c(crc, absl::Cord{input});
   }
   EXPECT_EQ(expected, crc);
 }
@@ -73,7 +73,7 @@ TEST(Crc32c, ExtendNotPrecomputedConstBuffer) {
                                         " the", " lazy",  " dog"};
   auto crc = std::uint32_t{0};
   for (auto const& input : inputs) {
-    crc = ExtendCrc32c(crc, {ConstBuffer{input}}, absl::nullopt);
+    crc = ExtendCrc32c(crc, {ConstBuffer{input}});
   }
   EXPECT_EQ(expected, crc);
 }
@@ -87,7 +87,7 @@ TEST(Crc32c, ExtendNotPrecomputedConstBufferFull) {
   std::transform(inputs.begin(), inputs.end(), payload.begin(),
                  [](auto const& s) { return ConstBuffer(s); });
   auto crc = std::uint32_t{0};
-  crc = ExtendCrc32c(crc, payload, absl::nullopt);
+  crc = ExtendCrc32c(crc, payload);
   EXPECT_EQ(expected, crc);
 }
 
@@ -98,8 +98,8 @@ TEST(Crc32c, ExtendPrecomputedStringView) {
                                         " the", " lazy",  " dog"};
   auto crc = std::uint32_t{0};
   for (auto const& input : inputs) {
-    auto const crc2 = Crc32c(input);
-    crc = ExtendCrc32c(crc, absl::string_view{input}, crc2);
+    auto const input_crc = Crc32c(input);
+    crc = ExtendCrc32c(crc, absl::string_view{input}, input_crc);
   }
   EXPECT_EQ(expected, crc);
 }
@@ -111,8 +111,8 @@ TEST(Crc32c, ExtendPrecomputedConstBuffer) {
                                         " the", " lazy",  " dog"};
   auto crc = std::uint32_t{0};
   for (auto const& input : inputs) {
-    auto const crc2 = Crc32c(input);
-    crc = ExtendCrc32c(crc, {ConstBuffer{input}}, crc2);
+    auto const input_crc = Crc32c(input);
+    crc = ExtendCrc32c(crc, {ConstBuffer{input}}, input_crc);
   }
   EXPECT_EQ(expected, crc);
 }
@@ -137,8 +137,8 @@ TEST(Crc32c, ExtendPrecomputedCord) {
                                         " the", " lazy",  " dog"};
   auto crc = std::uint32_t{0};
   for (auto const& input : inputs) {
-    auto const crc2 = Crc32c(input);
-    crc = ExtendCrc32c(crc, absl::Cord{input}, crc2);
+    auto const input_crc = Crc32c(input);
+    crc = ExtendCrc32c(crc, absl::Cord{input}, input_crc);
   }
   EXPECT_EQ(expected, crc);
 }

@@ -26,24 +26,29 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data);
+std::uint32_t ExtendCrc32c(std::uint32_t crc,
+                           storage::internal::ConstBufferSequence const& data);
+std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data);
+
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
-                           absl::optional<std::uint32_t> crc2);
+                           std::uint32_t data_crc);
 std::uint32_t ExtendCrc32c(std::uint32_t crc,
                            storage::internal::ConstBufferSequence const& data,
-                           absl::optional<std::uint32_t> crc2);
+                           std::uint32_t data_crc);
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data,
-                           absl::optional<std::uint32_t> crc2);
+                           std::uint32_t data_crc);
 
 inline std::uint32_t Crc32c(absl::string_view data) {
-  return ExtendCrc32c(0, data, absl::nullopt);
+  return ExtendCrc32c(0, data);
 }
 
 inline std::uint32_t Crc32c(storage::internal::ConstBufferSequence const& data) {
-  return ExtendCrc32c(0, data, absl::nullopt);
+  return ExtendCrc32c(0, data);
 }
 
 inline std::uint32_t Crc32c(absl::Cord const& data) {
-  return ExtendCrc32c(0, data, absl::nullopt);
+  return ExtendCrc32c(0, data);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

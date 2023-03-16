@@ -178,7 +178,7 @@ void MD5HashFunction::ContextDeleter::operator()(EVP_MD_CTX* context) {
 }
 
 void Crc32cHashFunction::Update(absl::string_view buffer) {
-  current_ = ExtendCrc32c(current_, buffer, absl::nullopt);
+  current_ = ExtendCrc32c(current_, buffer);
 }
 
 Status Crc32cHashFunction::Update(std::int64_t offset, absl::string_view buffer) {

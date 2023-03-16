@@ -48,7 +48,7 @@ void BM_Crc32cDuplicate(benchmark::State& state) {
         auto c = Crc32c(w);
         benchmark::DoNotOptimize(c);
       }
-      crc = ExtendCrc32c(crc, buffer, absl::nullopt);
+      crc = ExtendCrc32c(crc, buffer);
     }
   }
   benchmark::DoNotOptimize(crc);
