@@ -113,14 +113,18 @@ class InsertObjectMediaRequest
  public:
   InsertObjectMediaRequest() = default;
 
-   InsertObjectMediaRequest(std::string bucket_name,
-                                    std::string object_name,
-                                    absl::string_view payload);
+  InsertObjectMediaRequest(std::string bucket_name, std::string object_name,
+                           absl::string_view payload);
 
   absl::string_view payload() const { return payload_; }
   void set_payload(absl::string_view payload);
 
-  void reset_hash_function();
+  template <typename... O>
+  InsertObjectMediaRequest& set_multiple_options(O&&... o) {
+    GenericObjectRequest::set_multiple_options(std::forward<O>(o)...);
+    reset_hash_function();
+    return *this;
+  }
   HashFunction& hash_function() const { return *hash_function_; }
 
   ///@{
@@ -139,11 +143,15 @@ class InsertObjectMediaRequest
   ///@}
 
  private:
+  void reset_hash_function();
+
   absl::string_view payload_;
   std::shared_ptr<HashFunction> hash_function_;
   mutable std::string contents_;
   mutable bool dirty_ = true;
 };
+
+HashValues FinishHashes(InsertObjectMediaRequest const& request);
 
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r);
 
@@ -491,6 +499,8 @@ class UploadChunkRequest
   std::shared_ptr<HashFunction> hash_function_;
   HashValues known_object_hashes_;
 };
+
+HashValues FinishHashes(UploadChunkRequest const& request);
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);
 

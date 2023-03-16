@@ -1124,17 +1124,10 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     metadata = ObjectMetadataJsonForInsert(
         request.GetOption<WithObjectMetadata>().value());
   }
-  if (request.HasOption<MD5HashValue>()) {
-    metadata["md5Hash"] = request.GetOption<MD5HashValue>().value();
-  } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
-    metadata["md5Hash"] = ComputeMD5Hash(request.payload());
-  }
-
-  if (request.HasOption<Crc32cChecksumValue>()) {
-    metadata["crc32c"] = request.GetOption<Crc32cChecksumValue>().value();
-  } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
-    metadata["crc32c"] = ComputeCrc32cChecksum(request.payload());
-  }
+  request.hash_function().Update(/*offset=*/0, request.payload());
+  auto hashes = storage::internal::FinishHashes(request);
+  if (!hashes.crc32c.empty()) metadata["crc32c"] = hashes.crc32c;
+  if (!hashes.md5.empty()) metadata["md5Hash"] = hashes.md5;
 
   std::string crlf = "\r\n";
   std::string marker = "--" + boundary;

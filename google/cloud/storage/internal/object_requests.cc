@@ -166,7 +166,7 @@ InsertObjectMediaRequest::InsertObjectMediaRequest(std::string bucket_name,
                                                    absl::string_view payload)
     : GenericObjectRequest(std::move(bucket_name), std::move(object_name)),
       payload_(payload),
-      hash_function_(CreateNullHashFunction()) {}
+      hash_function_(CreateHashFunction(*this)) {}
 
 void InsertObjectMediaRequest::reset_hash_function() {
   hash_function_ = CreateHashFunction(*this);
@@ -188,6 +188,14 @@ void InsertObjectMediaRequest::set_contents(std::string v) {
   contents_ = std::move(v);
   payload_ = contents_;
   dirty_ = false;
+}
+
+HashValues FinishHashes(InsertObjectMediaRequest const& request) {
+  auto hashes = request.hash_function().Finish();
+  hashes.crc32c =
+      request.GetOption<Crc32cChecksumValue>().value_or(std::move(hashes.crc32c));
+  hashes.md5 = request.GetOption<MD5HashValue>().value_or(std::move(hashes.md5));
+  return hashes;
 }
 
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
@@ -496,6 +504,10 @@ UploadChunkRequest UploadChunkRequest::RemainingChunk(
                 static_cast<std::size_t>(new_offset - result.offset_));
   result.offset_ = new_offset;
   return result;
+}
+
+HashValues FinishHashes(UploadChunkRequest const& request) {
+  return Merge(request.known_object_hashes(), request.hash_function().Finish());
 }
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {

@@ -66,9 +66,13 @@ std::unique_ptr<HashFunction> CreateHashFunction(
 
 std::unique_ptr<HashFunction> CreateHashFunction(
     InsertObjectMediaRequest const& request) {
+  // Compute the hash only if (1) it is not disabled, and (2) the application
+  // did not provide a hash value.
   return CreateHashFunction(
-      request.GetOption<DisableCrc32cChecksum>().value_or(false),
-      request.GetOption<DisableMD5Hash>().value_or(false));
+      request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
+          !request.GetOption<Crc32cChecksumValue>().value_or("").empty(),
+      request.GetOption<DisableMD5Hash>().value_or(false) ||
+          !request.GetOption<MD5HashValue>().value_or("").empty());
 }
 
 }  // namespace internal
