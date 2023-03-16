@@ -51,11 +51,20 @@ struct BigQueryJobIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the connection pool size for
+ * rest client.
+ */
+struct BigQueryJobConnectionPoolSizeOption {
+  using Type = std::size_t;
+};
+
+/**
  *  The options applicable to BigQueryJob.
  */
 using BigQueryJobPolicyOptionList =
     OptionList<BigQueryJobRetryPolicyOption, BigQueryJobBackoffPolicyOption,
-               BigQueryJobIdempotencyPolicyOption>;
+               BigQueryJobIdempotencyPolicyOption,
+               BigQueryJobConnectionPoolSizeOption>;
 
 /**
  * Default options for
