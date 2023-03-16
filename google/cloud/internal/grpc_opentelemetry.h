@@ -105,7 +105,7 @@ future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
   auto timer = cq.MakeRelativeTimer(duration);
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (TracingEnabled(CurrentOptions())) {
-    return EndSpan(MakeSpan("Async Backoff"), std::move(timer));
+    timer = EndSpan(MakeSpan("Async Backoff"), std::move(timer));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return timer;
