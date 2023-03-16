@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPENTELEMETRY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GRPC_OPENTELEMETRY_H
 
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
@@ -23,6 +24,8 @@
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <chrono>
+#include <functional>
 
 namespace google {
 namespace cloud {
@@ -92,6 +95,21 @@ future<T> EndSpan(
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+/**
+ * Returns a traced timer, if OpenTelemetry tracing is enabled.
+ */
+template <typename Rep, typename Period>
+future<StatusOr<std::chrono::system_clock::time_point>> TracedAsyncBackoff(
+    CompletionQueue& cq, std::chrono::duration<Rep, Period> duration) {
+  auto timer = cq.MakeRelativeTimer(duration);
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (TracingEnabled(CurrentOptions())) {
+    timer = EndSpan(MakeSpan("Async Backoff"), std::move(timer));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  return timer;
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
