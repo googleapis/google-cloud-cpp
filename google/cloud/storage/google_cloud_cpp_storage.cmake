@@ -256,7 +256,8 @@ add_library(
     well_known_parameters.h)
 target_link_libraries(
     google_cloud_cpp_storage
-    PUBLIC absl::memory
+    PUBLIC absl::cord
+           absl::memory
            absl::strings
            absl::str_format
            absl::time
