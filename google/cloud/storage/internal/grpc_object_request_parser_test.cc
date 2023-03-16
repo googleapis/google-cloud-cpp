@@ -537,12 +537,6 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
             name: "test-object-name"
           }
         }
-        object_checksums: {
-          # See top-of-file comments for details on the magic numbers
-          crc32c: 0x22620404
-          # MD5 hashes are disabled by default
-          # md5_hash: "9e107d9d372bb6826bd81d3542a419d6"
-        }
       )pb",
       &expected));
 
@@ -664,9 +658,8 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
 }
 
 TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
-  auto constexpr kTextProto =
-      R"pb(
-    write_object_spec: {
+  auto constexpr kTextProto = R"pb(
+    write_object_spec {
       resource: {
         bucket: "projects/_/buckets/test-bucket-name"
         name: "test-object-name"
@@ -683,11 +676,6 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
       if_generation_not_match: 7
       if_metageneration_match: 42
       if_metageneration_not_match: 84
-    }
-    object_checksums: {
-      # See top-of-file comments for details on the magic numbers
-      crc32c: 0x22620404
-      md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
     })pb";
   storage_proto::WriteObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
@@ -716,12 +704,7 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestAllOptions) {
 }
 
 TEST(GrpcObjectRequestParser, InsertObjectMediaRequestWithObjectMetadata) {
-  auto constexpr kTextProto = R"pb(
-    # See top-of-file comments for details on the magic numbers
-    object_checksums: { crc32c: 0x22620404 }
-  )pb";
   storage_proto::WriteObjectRequest expected;
-  EXPECT_TRUE(TextFormat::ParseFromString(kTextProto, &expected));
   auto& resource = *expected.mutable_write_object_spec()->mutable_resource();
   resource = ExpectedFullObjectMetadata();
   resource.set_bucket("projects/_/buckets/test-bucket-name");
