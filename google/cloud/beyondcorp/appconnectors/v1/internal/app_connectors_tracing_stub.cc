@@ -64,7 +64,15 @@ AppConnectorsServiceTracingStub::AsyncCreateAppConnector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         CreateAppConnectorRequest const& request) {
-  return child_->AsyncCreateAppConnector(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "CreateAppConnector");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateAppConnector(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -73,7 +81,15 @@ AppConnectorsServiceTracingStub::AsyncUpdateAppConnector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const& request) {
-  return child_->AsyncUpdateAppConnector(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "UpdateAppConnector");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncUpdateAppConnector(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -82,7 +98,15 @@ AppConnectorsServiceTracingStub::AsyncDeleteAppConnector(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::
         DeleteAppConnectorRequest const& request) {
-  return child_->AsyncDeleteAppConnector(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "DeleteAppConnector");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteAppConnector(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -91,7 +115,15 @@ AppConnectorsServiceTracingStub::AsyncReportStatus(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request) {
-  return child_->AsyncReportStatus(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.beyondcorp.appconnectors.v1.AppConnectorsService",
+      "ReportStatus");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncReportStatus(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -99,14 +131,28 @@ AppConnectorsServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncGetOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> AppConnectorsServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCancelOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

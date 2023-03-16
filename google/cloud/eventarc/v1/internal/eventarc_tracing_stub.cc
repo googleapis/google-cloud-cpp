@@ -57,7 +57,14 @@ EventarcTracingStub::AsyncCreateTrigger(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
-  return child_->AsyncCreateTrigger(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "CreateTrigger");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateTrigger(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -65,7 +72,14 @@ EventarcTracingStub::AsyncUpdateTrigger(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
-  return child_->AsyncUpdateTrigger(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "UpdateTrigger");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncUpdateTrigger(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -73,7 +87,14 @@ EventarcTracingStub::AsyncDeleteTrigger(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
-  return child_->AsyncDeleteTrigger(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "DeleteTrigger");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteTrigger(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> EventarcTracingStub::GetChannel(
@@ -104,7 +125,14 @@ EventarcTracingStub::AsyncCreateChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
-  return child_->AsyncCreateChannel(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "CreateChannel");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateChannel(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,7 +140,14 @@ EventarcTracingStub::AsyncUpdateChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
-  return child_->AsyncUpdateChannel(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "UpdateChannel");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncUpdateChannel(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,7 +155,14 @@ EventarcTracingStub::AsyncDeleteChannel(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
-  return child_->AsyncDeleteChannel(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "DeleteChannel");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteChannel(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider>
@@ -177,7 +219,14 @@ EventarcTracingStub::AsyncCreateChannelConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
-  return child_->AsyncCreateChannelConnection(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "CreateChannelConnection");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateChannelConnection(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -186,7 +235,14 @@ EventarcTracingStub::AsyncDeleteChannelConnection(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
-  return child_->AsyncDeleteChannelConnection(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.eventarc.v1.Eventarc",
+                                     "DeleteChannelConnection");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteChannelConnection(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
@@ -219,14 +275,28 @@ EventarcTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncGetOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> EventarcTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCancelOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

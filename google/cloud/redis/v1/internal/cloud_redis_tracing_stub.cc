@@ -70,7 +70,14 @@ CloudRedisTracingStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
-  return child_->AsyncCreateInstance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "CreateInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -78,7 +85,14 @@ CloudRedisTracingStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-  return child_->AsyncUpdateInstance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "UpdateInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncUpdateInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -86,7 +100,14 @@ CloudRedisTracingStub::AsyncUpgradeInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-  return child_->AsyncUpgradeInstance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "UpgradeInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncUpgradeInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -94,7 +115,14 @@ CloudRedisTracingStub::AsyncImportInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
-  return child_->AsyncImportInstance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "ImportInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncImportInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -102,7 +130,14 @@ CloudRedisTracingStub::AsyncExportInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
-  return child_->AsyncExportInstance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "ExportInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncExportInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,7 +145,14 @@ CloudRedisTracingStub::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-  return child_->AsyncFailoverInstance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "FailoverInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncFailoverInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -118,7 +160,14 @@ CloudRedisTracingStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-  return child_->AsyncDeleteInstance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "DeleteInstance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteInstance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -126,7 +175,14 @@ CloudRedisTracingStub::AsyncRescheduleMaintenance(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
-  return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
+                                     "RescheduleMaintenance");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncRescheduleMaintenance(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -134,14 +190,28 @@ CloudRedisTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
-  return child_->AsyncGetOperation(cq, std::move(context), request);
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncGetOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> CloudRedisTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  return child_->AsyncCancelOperation(cq, std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCancelOperation(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
