@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_MOCKS_MOCK_JOB_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_MOCKS_MOCK_JOB_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_MOCKS_MOCK_JOB_REST_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_MOCKS_MOCK_JOB_REST_STUB_H
 
-#include "google/cloud/bigquery/v2/minimal/internal/job_connection.h"
+#include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,21 +24,21 @@ namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /*
- * A class to mock `BigQueryJobConnection`.
+ * A class to mock `BigQueryJobRestStub`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `BigQueryJobClient`. To do so,
- * construct an object of type `BigQueryJobClient` with an instance of this
+ * including errors, from an object of type `BigQueryJobConnection`. To do so,
+ * construct an object of type `BigQueryJobConnection` with an instance of this
  * class. Then use the Google Test framework functions to program the behavior
  * of this mock.
  */
 // TODO(#11039): Move to "bigquery_v2_minimal_mocks" namespace when api is ready
 // to go public.
-class MockBigQueryJobConnection : public BigQueryJobConnection {
+class MockBigQueryJobRestStub : public BigQueryJobRestStub {
  public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<GetJobResponse>, GetJob, (GetJobRequest const& request),
+  MOCK_METHOD(StatusOr<GetJobResponse>, GetJob,
+              (rest_internal::RestContext & rest_context,
+               GetJobRequest const& request),
               (override));
 };
 
@@ -47,4 +47,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_MOCKS_MOCK_JOB_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_MOCKS_MOCK_JOB_REST_STUB_H
