@@ -20,6 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -244,7 +245,7 @@ class AsyncRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     SetPending(state.operation,
-               cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
+               TracedAsyncBackoff(cq_, backoff_policy_->OnCompletion())
                    .then([self](future<TimerArgType> f) {
                      self->OnBackoff(f.get());
                    }));

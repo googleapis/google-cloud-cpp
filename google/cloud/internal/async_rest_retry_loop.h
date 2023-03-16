@@ -20,6 +20,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
@@ -245,11 +246,11 @@ class AsyncRestRetryLoopImpl
     auto self = this->shared_from_this();
     auto state = StartOperation();
     if (state.cancelled) return;
-    SetPending(state.operation,
-               cq_.MakeRelativeTimer(backoff_policy_->OnCompletion())
-                   .then([self](future<TimerArgType> f) {
-                     self->OnBackoff(f.get());
-                   }));
+    SetPending(state.operation, internal::TracedAsyncBackoff(
+                                    cq_, backoff_policy_->OnCompletion())
+                                    .then([self](future<TimerArgType> f) {
+                                      self->OnBackoff(f.get());
+                                    }));
   }
 
   void OnAttempt(T result) {
