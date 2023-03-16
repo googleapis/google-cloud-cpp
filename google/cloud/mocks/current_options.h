@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * }
  * @endcode
  */
-Options CurrentOptions() { return internal::CurrentOptions(); }
+inline Options const& CurrentOptions() { return internal::CurrentOptions(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace mocks
