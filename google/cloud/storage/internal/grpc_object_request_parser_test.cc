@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_object_request_parser.h"
 #include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -1210,6 +1211,118 @@ TEST(GrpcObjectRequestParser, DeleteResumableUploadRequest) {
 
   auto actual = ToProto(req);
   EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(GrpcObjectRequestParser, MaybeFinalizeUploadChunkRequest) {
+  using ::google::cloud::storage::internal::CompositeFunction;
+  using ::google::cloud::storage::internal::Crc32cHashFunction;
+  using ::google::cloud::storage::internal::HashFunction;
+  using ::google::cloud::storage::internal::HashValues;
+  using ::google::cloud::storage::internal::MD5HashFunction;
+  using ::google::cloud::storage::internal::NullHashFunction;
+
+  // See top-of-file comments for details on the magic numbers
+  auto make_hasher = [](bool with_crc32c,
+                        bool with_md5) -> std::shared_ptr<HashFunction> {
+    if (with_crc32c && with_md5) {
+      return std::make_shared<CompositeFunction>(
+          absl::make_unique<Crc32cHashFunction>(),
+          absl::make_unique<MD5HashFunction>());
+    }
+    if (with_crc32c) return std::make_shared<Crc32cHashFunction>();
+    if (with_md5) return std::make_shared<MD5HashFunction>();
+    return std::make_shared<NullHashFunction>();
+  };
+
+  struct Test {
+    HashValues hashes;
+    std::function<std::shared_ptr<HashFunction>()> make_hash_function;
+    std::string expected_checksums;
+  } const cases[] = {
+      // These tests provide the "wrong" hashes. This is what would happen if
+      // one was (for example) reading a GCS file, obtained the expected hashes
+      // from GCS, and then uploaded to another GCS destination *but* the data
+      // was somehow corrupted locally (say a bad disk). In that case, we don't
+      // want to recompute the hashes in the upload.
+      {
+          HashValues{storage::ComputeCrc32cChecksum(kText),
+                     storage::ComputeMD5Hash(kText)},
+          [&]() { return make_hasher(false, false); },
+          R"pb(
+            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+            crc32c: 0x22620404)pb",
+      },
+      {
+          HashValues{storage::ComputeCrc32cChecksum(kText),
+                     storage::ComputeMD5Hash(kText)},
+          [&]() { return make_hasher(false, true); },
+          R"pb(
+            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+            crc32c: 0x22620404)pb",
+      },
+      {
+          HashValues{storage::ComputeCrc32cChecksum(kText),
+                     storage::ComputeMD5Hash(kText)},
+          [&]() { return make_hasher(true, false); },
+          R"pb(
+            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+            crc32c: 0x22620404)pb",
+      },
+      {
+          HashValues{storage::ComputeCrc32cChecksum(kText),
+                     storage::ComputeMD5Hash(kText)},
+          [&]() { return make_hasher(true, true); },
+          R"pb(
+            md5_hash: "\x9e\x10\x7d\x9d\x37\x2b\xb6\x82\x6b\xd8\x1d\x35\x42\xa4\x19\xd6"
+            crc32c: 0x22620404)pb",
+      },
+
+      // In these tests we assume no hashes are provided by the application, and
+      // the library computes none, some, or all the hashes.
+      {
+          HashValues{},
+          [&]() { return make_hasher(false, false); },
+          R"pb()pb",
+      },
+      {
+          HashValues{},
+          [&]() { return make_hasher(false, true); },
+          R"pb(
+            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21")pb",
+      },
+      {
+          HashValues{},
+          [&]() { return make_hasher(true, false); },
+          R"pb(
+            crc32c: 0x4ad67f80)pb",
+      },
+      {
+          HashValues{},
+          [&]() { return make_hasher(true, true); },
+          R"pb(
+            md5_hash: "\x4a\xd1\x2f\xa3\x65\x7f\xaa\x80\xc2\xb9\xa9\x2d\x65\x2c\x37\x21"
+            crc32c: 0x4ad67f80)pb",
+      },
+  };
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Expected outcome " + test.expected_checksums);
+    storage_proto::ObjectChecksums expected;
+    ASSERT_TRUE(
+        TextFormat::ParseFromString(test.expected_checksums, &expected));
+
+    auto request = storage::internal::UploadChunkRequest(
+        "test-upload-id", /*offset=*/0,
+        /*payload=*/{absl::string_view{kAlt}}, test.make_hash_function(),
+        test.hashes);
+    request.hash_function().Update(0, kAlt);
+    storage_proto::WriteObjectRequest write_request;
+    grpc::WriteOptions write_options;
+    auto status = MaybeFinalize(write_request, write_options, request, false);
+    ASSERT_STATUS_OK(status);
+    EXPECT_TRUE(write_request.finish_write());
+    EXPECT_TRUE(write_options.is_last_message());
+    EXPECT_THAT(write_request.object_checksums(), IsProtoEqual(expected));
+  }
 }
 
 }  // namespace
