@@ -562,6 +562,31 @@ TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
+using ::google::cloud::testing_util::IsActive;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::AllOf;
+using ::testing::Each;
+using ::testing::SizeIs;
+
+TEST(AsyncRetryLoopTest, TracedBackoff) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
+  AutomaticallyCreatedBackgroundThreads background;
+  (void)AsyncRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(),
+      [&](auto, auto, auto) {
+        return make_ready_future<StatusOr<int>>(UnavailableError("try again"));
+      },
+      42, "error message")
+      .get();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              AllOf(SizeIs(kMaxRetries), Each(SpanNamed("Async Backoff"))));
+}
+
 TEST(AsyncRetryLoopTest, CallSpanActiveThroughout) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
@@ -575,7 +600,6 @@ TEST(AsyncRetryLoopTest, CallSpanActiveThroughout) {
       TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
       background.cq(),
       [&](auto, auto, auto) {
-        using testing_util::IsActive;
         EXPECT_THAT(span, IsActive());
         return sequencer.PushBack();
       },
@@ -594,10 +618,7 @@ TEST(AsyncRetryLoopTest, CallSpanActiveDuringCancel) {
   auto scope = opentelemetry::trace::Scope(span);
   OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
 
-  promise<StatusOr<int>> p([span] {
-    using testing_util::IsActive;
-    EXPECT_THAT(span, IsActive());
-  });
+  promise<StatusOr<int>> p([span] { EXPECT_THAT(span, IsActive()); });
 
   AutomaticallyCreatedBackgroundThreads background;
   future<StatusOr<int>> actual = AsyncRetryLoop(
