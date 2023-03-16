@@ -14,8 +14,7 @@
 
 #include "google/cloud/storage/internal/crc32c.h"
 #include "absl/base/config.h"
-#if 0  // defined(ABSL_LTS_RELEASE_VERSION) && ABSL_LTS_RELEASE_VERSION >=
-       // 20230125
+#if defined(ABSL_LTS_RELEASE_VERSION) && ABSL_LTS_RELEASE_VERSION >= 20230125
 #include "absl/crc/crc32c.h"
 #define GOOGLE_CLOUD_CPP_USE_ABSL_CRC32C 1
 #else
@@ -29,8 +28,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #if GOOGLE_CLOUD_CPP_USE_ABSL_CRC32C
-
-bool SupportsEfficientExtendCrc32c() { return true; }
 
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
                            absl::optional<std::uint32_t> crc2) {
@@ -46,8 +43,9 @@ std::uint32_t ExtendCrc32c(std::uint32_t crc,
                            storage::internal::ConstBufferSequence const& data,
                            absl::optional<std::uint32_t> crc2) {
   if (crc2) {
+    auto const size = storage::internal::TotalBytes(data);
     return static_cast<std::uint32_t>(absl::ConcatCrc32c(
-        absl::crc32c_t{crc}, absl::crc32c_t{*crc2}, data.size()));
+        absl::crc32c_t{crc}, absl::crc32c_t{*crc2}, size));
   }
   auto tmp = absl::crc32c_t{crc};
   for (auto const& b : data) {
@@ -70,8 +68,6 @@ std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data,
 }
 
 #else
-
-bool SupportsEfficientExtendCrc32c() { return false; }
 
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
                            absl::optional<std::uint32_t> /*crc2*/) {

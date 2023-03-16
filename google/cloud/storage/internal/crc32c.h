@@ -26,8 +26,6 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-bool SupportsEfficientExtendCrc32c();
-
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
                            absl::optional<std::uint32_t> crc2);
 std::uint32_t ExtendCrc32c(std::uint32_t crc,
