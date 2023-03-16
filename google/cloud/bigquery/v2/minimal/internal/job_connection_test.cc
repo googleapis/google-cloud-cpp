@@ -53,7 +53,7 @@ std::shared_ptr<BigQueryJobConnection> CreateTestingConnection(
 TEST(JobConnectionTest, GetJobSuccess) {
   auto mock = std::make_shared<MockBigQueryJobRestStub>();
 
-  std::string expected_payload =
+  auto constexpr kExpectedPayload =
       R"({"kind": "jkind",
           "etag": "jtag",
           "id": "j123",
@@ -65,15 +65,15 @@ TEST(JobConnectionTest, GetJobSuccess) {
             "job_type": "QUERY",
             "query_config": {"query": "select 1;"}
           }})";
+
   EXPECT_CALL(*mock, GetJob)
-      .WillOnce([&](rest_internal::RestContext&, GetJobRequest const& request) {
+      .WillOnce([&](rest_internal::RestContext&,
+                    GetJobRequest const& request) -> StatusOr<GetJobResponse> {
         EXPECT_EQ("test-project-id", request.project_id());
         EXPECT_EQ("test-job-id", request.job_id());
         BigQueryHttpResponse http_response;
-        http_response.payload = expected_payload;
-        auto const& job_response =
-            GetJobResponse::BuildFromHttpResponse(http_response);
-        return google::cloud::StatusOr<GetJobResponse>(job_response);
+        http_response.payload = kExpectedPayload;
+        return GetJobResponse::BuildFromHttpResponse(std::move(http_response));
       });
 
   auto conn = CreateTestingConnection(std::move(mock));
