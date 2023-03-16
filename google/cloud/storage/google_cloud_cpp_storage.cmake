@@ -563,6 +563,28 @@ if (BUILD_TESTING)
     export_list_to_bazel("storage_client_unit_tests.bzl"
                          "storage_client_unit_tests" YEAR "2018")
 
+    include(FindBenchmarkWithWorkarounds)
+
+    set(storage_client_benchmarks
+        # cmake-format: sort
+        internal/crc32c_benchmark.cc)
+
+    # Export the list of benchmarks to a .bzl file so we do not need to maintain
+    # the list in two places.
+    export_list_to_bazel("storage_client_benchmarks.bzl"
+                         "storage_client_benchmarks" YEAR "2023")
+
+    # Generate a target for each benchmark.
+    foreach (fname IN LISTS storage_client_benchmarks)
+        google_cloud_cpp_add_executable(target "storage" "${fname}")
+        add_test(NAME ${target} COMMAND ${target})
+        target_link_libraries(
+            ${target}
+            PRIVATE google-cloud-cpp::storage storage_client_testing
+                    benchmark::benchmark_main)
+        google_cloud_cpp_add_common_options(${target})
+    endforeach ()
+
     add_subdirectory(tests)
     add_subdirectory(benchmarks)
 endif ()
