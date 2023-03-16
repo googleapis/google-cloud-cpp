@@ -758,9 +758,9 @@ Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
 // If this is the last `Write()` call of the last `UploadChunk()` set the flags
 // to finalize the request
 Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
-                   grpc::WriteOptions& options,
-                   storage::internal::UploadChunkRequest const& request,
-                   bool chunk_has_more) {
+                     grpc::WriteOptions& options,
+                     storage::internal::UploadChunkRequest const& request,
+                     bool chunk_has_more) {
   if (!chunk_has_more) options.set_last_message();
   if (!request.last_chunk() || chunk_has_more) return {};
   write_request.set_finish_write(true);

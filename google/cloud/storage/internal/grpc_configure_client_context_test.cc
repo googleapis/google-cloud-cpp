@@ -122,8 +122,8 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
 }
 
 TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {
-  storage::internal::InsertObjectMediaRequest req(
-      "test-bucket", "test-object", "content");
+  storage::internal::InsertObjectMediaRequest req("test-bucket", "test-object",
+                                                  "content");
 
   grpc::ClientContext context;
   ApplyRoutingHeaders(context, req);

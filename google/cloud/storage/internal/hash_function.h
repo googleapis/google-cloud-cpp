@@ -75,9 +75,9 @@ class HashFunction {
   virtual void Update(absl::string_view buffer) = 0;
   virtual Status Update(std::int64_t offset, absl::string_view buffer) = 0;
   virtual Status Update(std::int64_t offset, absl::string_view buffer,
-                      std::uint32_t buffer_crc) = 0;
+                        std::uint32_t buffer_crc) = 0;
   virtual Status Update(std::int64_t offset, absl::Cord const& buffer,
-                      std::uint32_t buffer_crc) = 0;
+                        std::uint32_t buffer_crc) = 0;
 
   /**
    * Compute the final hash values.

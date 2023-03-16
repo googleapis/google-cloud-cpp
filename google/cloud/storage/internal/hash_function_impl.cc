@@ -181,7 +181,8 @@ void Crc32cHashFunction::Update(absl::string_view buffer) {
   current_ = ExtendCrc32c(current_, buffer);
 }
 
-Status Crc32cHashFunction::Update(std::int64_t offset, absl::string_view buffer) {
+Status Crc32cHashFunction::Update(std::int64_t offset,
+                                  absl::string_view buffer) {
   if (offset == minimum_offset_) {
     Update(buffer);
     minimum_offset_ += buffer.size();

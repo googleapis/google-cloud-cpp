@@ -43,7 +43,8 @@ inline std::uint32_t Crc32c(absl::string_view data) {
   return ExtendCrc32c(0, data);
 }
 
-inline std::uint32_t Crc32c(storage::internal::ConstBufferSequence const& data) {
+inline std::uint32_t Crc32c(
+    storage::internal::ConstBufferSequence const& data) {
   return ExtendCrc32c(0, data);
 }
 

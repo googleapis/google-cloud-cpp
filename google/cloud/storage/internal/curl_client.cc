@@ -630,7 +630,8 @@ StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
   builder.AddHeader("Transfer-Encoding:");
   auto offset = request.offset();
   for (auto const& b : request.payload()) {
-    request.hash_function().Update(offset, absl::string_view{b.data(), b.size()});
+    request.hash_function().Update(offset,
+                                   absl::string_view{b.data(), b.size()});
     offset += b.size();
   }
   auto response =

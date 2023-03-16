@@ -565,9 +565,8 @@ if (BUILD_TESTING)
 
     include(FindBenchmarkWithWorkarounds)
 
-    set(storage_client_benchmarks
-        # cmake-format: sort
-        internal/crc32c_benchmark.cc)
+    set(storage_client_benchmarks # cmake-format: sort
+                                  internal/crc32c_benchmark.cc)
 
     # Export the list of benchmarks to a .bzl file so we do not need to maintain
     # the list in two places.
@@ -579,9 +578,8 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "storage" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
-            ${target}
-            PRIVATE google-cloud-cpp::storage storage_client_testing
-                    benchmark::benchmark_main)
+            ${target} PRIVATE google-cloud-cpp::storage storage_client_testing
+                              benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 
