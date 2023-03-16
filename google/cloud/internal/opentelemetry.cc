@@ -99,6 +99,16 @@ std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
   return sleeper;
 }
 
+// NOLINTNEXTLINE(misc-unused-value-param)
+void AddSpanAttribute(std::string const& key, std::string const& value) {
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+  if (TracingEnabled(CurrentOptions())) {
+    auto span = opentelemetry::trace::Tracer::GetCurrentSpan();
+    span->SetAttribute(std::move(key), std::move(value));
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
