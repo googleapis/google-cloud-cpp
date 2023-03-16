@@ -28,6 +28,9 @@ namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use datacatalog_v1::DataCatalogPollingPolicyOption directly.
+using ::google::cloud::datacatalog_v1::DataCatalogPollingPolicyOption;
+
 /// @deprecated Use datacatalog_v1::DataCatalogBackoffPolicyOption directly.
 using ::google::cloud::datacatalog_v1::DataCatalogBackoffPolicyOption;
 

@@ -419,6 +419,14 @@ CloudChannelServiceMetadata::ListSubscribers(
   return child_->ListSubscribers(context, request);
 }
 
+StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+CloudChannelServiceMetadata::ListEntitlementChanges(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListEntitlementChanges(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -185,6 +185,12 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
               (google::cloud::datacatalog::v1::ListTagsRequest request),
               (override));
 
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
+      ReconcileTags,
+      (google::cloud::datacatalog::v1::ReconcileTagsRequest const& request),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>,
               StarEntry,
               (google::cloud::datacatalog::v1::StarEntryRequest const& request),
@@ -208,6 +214,12 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
+      ImportEntries,
+      (google::cloud::datacatalog::v1::ImportEntriesRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

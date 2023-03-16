@@ -290,6 +290,12 @@ Idempotency CloudChannelServiceConnectionIdempotencyPolicy::ListSubscribers(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+CloudChannelServiceConnectionIdempotencyPolicy::ListEntitlementChanges(
+    google::cloud::channel::v1::ListEntitlementChangesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<CloudChannelServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>();

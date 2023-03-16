@@ -96,7 +96,7 @@ class TpuClient {
   /// @googleapis_link{google::cloud::tpu::v2::Node,google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   /// [google.cloud.tpu.v2.ListNodesRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L466}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L469}
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
@@ -107,14 +107,14 @@ class TpuClient {
   /// Lists nodes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::ListNodesRequest,google/cloud/tpu/v2/cloud_tpu.proto#L466}
+  /// @googleapis_link{google::cloud::tpu::v2::ListNodesRequest,google/cloud/tpu/v2/cloud_tpu.proto#L469}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::tpu::v2::Node,google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   /// [google.cloud.tpu.v2.ListNodesRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L466}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L469}
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
@@ -131,7 +131,7 @@ class TpuClient {
   /// @googleapis_link{google::cloud::tpu::v2::Node,google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   /// [google.cloud.tpu.v2.GetNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L493}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L496}
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
@@ -142,14 +142,14 @@ class TpuClient {
   /// Gets the details of a node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::GetNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L493}
+  /// @googleapis_link{google::cloud::tpu::v2::GetNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L496}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::tpu::v2::Node,google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   /// [google.cloud.tpu.v2.GetNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L493}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L496}
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
@@ -168,7 +168,7 @@ class TpuClient {
   /// @googleapis_link{google::cloud::tpu::v2::Node,google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   /// [google.cloud.tpu.v2.CreateNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L502}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L505}
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
@@ -180,14 +180,14 @@ class TpuClient {
   /// Creates a node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::CreateNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L502}
+  /// @googleapis_link{google::cloud::tpu::v2::CreateNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L505}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::tpu::v2::Node,google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   /// [google.cloud.tpu.v2.CreateNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L502}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L505}
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
@@ -202,12 +202,12 @@ class TpuClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::OperationMetadata,google/cloud/tpu/v2/cloud_tpu.proto#L707}
+  /// @googleapis_link{google::cloud::tpu::v2::OperationMetadata,google/cloud/tpu/v2/cloud_tpu.proto#L713}
   ///
   /// [google.cloud.tpu.v2.DeleteNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L519}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L522}
   /// [google.cloud.tpu.v2.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L707}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L713}
   ///
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
       std::string const& name, Options opts = {});
@@ -216,16 +216,16 @@ class TpuClient {
   /// Deletes a node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::DeleteNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L519}
+  /// @googleapis_link{google::cloud::tpu::v2::DeleteNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L522}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::OperationMetadata,google/cloud/tpu/v2/cloud_tpu.proto#L707}
+  /// @googleapis_link{google::cloud::tpu::v2::OperationMetadata,google/cloud/tpu/v2/cloud_tpu.proto#L713}
   ///
   /// [google.cloud.tpu.v2.DeleteNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L519}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L522}
   /// [google.cloud.tpu.v2.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L707}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L713}
   ///
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
       google::cloud::tpu::v2::DeleteNodeRequest const& request,
@@ -235,7 +235,7 @@ class TpuClient {
   /// Stops a node. This operation is only available with single TPU nodes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::StopNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L528}
+  /// @googleapis_link{google::cloud::tpu::v2::StopNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L531}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -244,7 +244,7 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   /// [google.cloud.tpu.v2.StopNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L528}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L531}
   ///
   future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
       google::cloud::tpu::v2::StopNodeRequest const& request,
@@ -254,7 +254,7 @@ class TpuClient {
   /// Starts a node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::StartNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L537}
+  /// @googleapis_link{google::cloud::tpu::v2::StartNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L540}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -263,7 +263,7 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   /// [google.cloud.tpu.v2.StartNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L537}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L540}
   ///
   future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
       google::cloud::tpu::v2::StartNodeRequest const& request,
@@ -286,7 +286,7 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   /// [google.cloud.tpu.v2.UpdateNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L546}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L549}
   ///
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       google::cloud::tpu::v2::Node const& node,
@@ -296,7 +296,7 @@ class TpuClient {
   /// Updates the configurations of a node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::UpdateNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L546}
+  /// @googleapis_link{google::cloud::tpu::v2::UpdateNodeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L549}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -305,7 +305,7 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]:
   /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   /// [google.cloud.tpu.v2.UpdateNodeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L546}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L549}
   ///
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       google::cloud::tpu::v2::UpdateNodeRequest const& request,
@@ -315,16 +315,16 @@ class TpuClient {
   /// Generates the Cloud TPU service identity for the project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::GenerateServiceIdentityRequest,google/cloud/tpu/v2/cloud_tpu.proto#L565}
+  /// @googleapis_link{google::cloud::tpu::v2::GenerateServiceIdentityRequest,google/cloud/tpu/v2/cloud_tpu.proto#L568}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::GenerateServiceIdentityResponse,google/cloud/tpu/v2/cloud_tpu.proto#L577}
+  /// @googleapis_link{google::cloud::tpu::v2::GenerateServiceIdentityResponse,google/cloud/tpu/v2/cloud_tpu.proto#L580}
   ///
   /// [google.cloud.tpu.v2.GenerateServiceIdentityRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L565}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L568}
   /// [google.cloud.tpu.v2.GenerateServiceIdentityResponse]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L577}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L580}
   ///
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(
@@ -338,12 +338,12 @@ class TpuClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L586}
   ///
   /// [google.cloud.tpu.v2.AcceleratorType]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L586}
   /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L609}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L615}
   ///
   StreamRange<google::cloud::tpu::v2::AcceleratorType> ListAcceleratorTypes(
       std::string const& parent, Options opts = {});
@@ -352,16 +352,16 @@ class TpuClient {
   /// Lists accelerator types supported by this API.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::ListAcceleratorTypesRequest,google/cloud/tpu/v2/cloud_tpu.proto#L609}
+  /// @googleapis_link{google::cloud::tpu::v2::ListAcceleratorTypesRequest,google/cloud/tpu/v2/cloud_tpu.proto#L615}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L586}
   ///
   /// [google.cloud.tpu.v2.AcceleratorType]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L586}
   /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L609}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L615}
   ///
   StreamRange<google::cloud::tpu::v2::AcceleratorType> ListAcceleratorTypes(
       google::cloud::tpu::v2::ListAcceleratorTypesRequest request,
@@ -374,12 +374,12 @@ class TpuClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L586}
   ///
   /// [google.cloud.tpu.v2.AcceleratorType]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L586}
   /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L597}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L603}
   ///
   StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
       std::string const& name, Options opts = {});
@@ -388,16 +388,16 @@ class TpuClient {
   /// Gets AcceleratorType.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::GetAcceleratorTypeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L597}
+  /// @googleapis_link{google::cloud::tpu::v2::GetAcceleratorTypeRequest,google/cloud/tpu/v2/cloud_tpu.proto#L603}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_link{google::cloud::tpu::v2::AcceleratorType,google/cloud/tpu/v2/cloud_tpu.proto#L586}
   ///
   /// [google.cloud.tpu.v2.AcceleratorType]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L583}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L586}
   /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L597}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L603}
   ///
   StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
       google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request,
@@ -410,12 +410,12 @@ class TpuClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   /// [google.cloud.tpu.v2.ListRuntimeVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L671}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L677}
   /// [google.cloud.tpu.v2.RuntimeVersion]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   StreamRange<google::cloud::tpu::v2::RuntimeVersion> ListRuntimeVersions(
       std::string const& parent, Options opts = {});
@@ -424,16 +424,16 @@ class TpuClient {
   /// Lists runtime versions supported by this API.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::ListRuntimeVersionsRequest,google/cloud/tpu/v2/cloud_tpu.proto#L671}
+  /// @googleapis_link{google::cloud::tpu::v2::ListRuntimeVersionsRequest,google/cloud/tpu/v2/cloud_tpu.proto#L677}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   /// [google.cloud.tpu.v2.ListRuntimeVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L671}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L677}
   /// [google.cloud.tpu.v2.RuntimeVersion]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   StreamRange<google::cloud::tpu::v2::RuntimeVersion> ListRuntimeVersions(
       google::cloud::tpu::v2::ListRuntimeVersionsRequest request,
@@ -446,12 +446,12 @@ class TpuClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   /// [google.cloud.tpu.v2.GetRuntimeVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L659}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L665}
   /// [google.cloud.tpu.v2.RuntimeVersion]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
       std::string const& name, Options opts = {});
@@ -460,16 +460,16 @@ class TpuClient {
   /// Gets a runtime version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::GetRuntimeVersionRequest,google/cloud/tpu/v2/cloud_tpu.proto#L659}
+  /// @googleapis_link{google::cloud::tpu::v2::GetRuntimeVersionRequest,google/cloud/tpu/v2/cloud_tpu.proto#L665}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_link{google::cloud::tpu::v2::RuntimeVersion,google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   /// [google.cloud.tpu.v2.GetRuntimeVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L659}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L665}
   /// [google.cloud.tpu.v2.RuntimeVersion]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L645}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L651}
   ///
   StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
       google::cloud::tpu::v2::GetRuntimeVersionRequest const& request,
@@ -479,16 +479,16 @@ class TpuClient {
   /// Retrieves the guest attributes for the node.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::tpu::v2::GetGuestAttributesRequest,google/cloud/tpu/v2/cloud_tpu.proto#L773}
+  /// @googleapis_link{google::cloud::tpu::v2::GetGuestAttributesRequest,google/cloud/tpu/v2/cloud_tpu.proto#L779}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::tpu::v2::GetGuestAttributesResponse,google/cloud/tpu/v2/cloud_tpu.proto#L790}
+  /// @googleapis_link{google::cloud::tpu::v2::GetGuestAttributesResponse,google/cloud/tpu/v2/cloud_tpu.proto#L796}
   ///
   /// [google.cloud.tpu.v2.GetGuestAttributesRequest]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L773}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L779}
   /// [google.cloud.tpu.v2.GetGuestAttributesResponse]:
-  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L790}
+  /// @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L796}
   ///
   StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
   GetGuestAttributes(

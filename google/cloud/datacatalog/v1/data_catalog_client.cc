@@ -536,6 +536,14 @@ StreamRange<google::cloud::datacatalog::v1::Tag> DataCatalogClient::ListTags(
   return connection_->ListTags(std::move(request));
 }
 
+future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+DataCatalogClient::ReconcileTags(
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReconcileTags(request);
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogClient::StarEntry(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -636,6 +644,14 @@ DataCatalogClient::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
+}
+
+future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+DataCatalogClient::ImportEntries(
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportEntries(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

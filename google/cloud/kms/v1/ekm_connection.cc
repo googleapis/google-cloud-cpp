@@ -62,6 +62,17 @@ EkmServiceConnection::UpdateEkmConnection(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceConnection::GetEkmConfig(
+    google::cloud::kms::v1::GetEkmConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig>
+EkmServiceConnection::UpdateEkmConfig(
+    google::cloud::kms::v1::UpdateEkmConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

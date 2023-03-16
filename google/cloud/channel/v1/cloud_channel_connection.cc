@@ -354,6 +354,14 @@ StreamRange<std::string> CloudChannelServiceConnection::ListSubscribers(
       StreamRange<std::string>>();
 }
 
+StreamRange<google::cloud::channel::v1::EntitlementChange>
+CloudChannelServiceConnection::ListEntitlementChanges(
+    google::cloud::channel::v1::
+        ListEntitlementChangesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::channel::v1::EntitlementChange>>();
+}
+
 std::shared_ptr<CloudChannelServiceConnection>
 MakeCloudChannelServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

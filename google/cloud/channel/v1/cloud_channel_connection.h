@@ -245,6 +245,10 @@ class CloudChannelServiceConnection {
 
   virtual StreamRange<std::string> ListSubscribers(
       google::cloud::channel::v1::ListSubscribersRequest request);
+
+  virtual StreamRange<google::cloud::channel::v1::EntitlementChange>
+  ListEntitlementChanges(
+      google::cloud::channel::v1::ListEntitlementChangesRequest request);
 };
 
 /**

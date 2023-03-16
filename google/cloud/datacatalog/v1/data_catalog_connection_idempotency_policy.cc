@@ -172,6 +172,11 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::ListTags(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DataCatalogConnectionIdempotencyPolicy::ReconcileTags(
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DataCatalogConnectionIdempotencyPolicy::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -196,6 +201,11 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::GetIamPolicy(
 Idempotency DataCatalogConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency DataCatalogConnectionIdempotencyPolicy::ImportEntries(
+    google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>

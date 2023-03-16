@@ -513,6 +513,23 @@ StreamRange<std::string> CloudChannelServiceClient::ListSubscribers(
   return connection_->ListSubscribers(std::move(request));
 }
 
+StreamRange<google::cloud::channel::v1::EntitlementChange>
+CloudChannelServiceClient::ListEntitlementChanges(std::string const& parent,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::ListEntitlementChangesRequest request;
+  request.set_parent(parent);
+  return connection_->ListEntitlementChanges(request);
+}
+
+StreamRange<google::cloud::channel::v1::EntitlementChange>
+CloudChannelServiceClient::ListEntitlementChanges(
+    google::cloud::channel::v1::ListEntitlementChangesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListEntitlementChanges(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_v1
 }  // namespace cloud

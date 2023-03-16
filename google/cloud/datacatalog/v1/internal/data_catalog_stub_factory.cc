@@ -45,7 +45,9 @@ std::shared_ptr<DataCatalogStub> CreateDefaultDataCatalogStub(
   auto service_grpc_stub =
       google::cloud::datacatalog::v1::DataCatalog::NewStub(channel);
   std::shared_ptr<DataCatalogStub> stub =
-      std::make_shared<DefaultDataCatalogStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultDataCatalogStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<DataCatalogAuth>(std::move(auth), std::move(stub));

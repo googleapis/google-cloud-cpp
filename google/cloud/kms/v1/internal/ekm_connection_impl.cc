@@ -112,6 +112,32 @@ EkmServiceConnectionImpl::UpdateEkmConnection(
       request, __func__);
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig>
+EkmServiceConnectionImpl::GetEkmConfig(
+    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetEkmConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+        return stub_->GetEkmConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig>
+EkmServiceConnectionImpl::UpdateEkmConfig(
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateEkmConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+        return stub_->UpdateEkmConfig(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

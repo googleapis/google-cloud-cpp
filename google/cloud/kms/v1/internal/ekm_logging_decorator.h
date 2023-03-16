@@ -57,6 +57,14 @@ class EkmServiceLogging : public EkmServiceStub {
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
       override;
 
+  StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
+
+  StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
+      grpc::ClientContext& context,
+      google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
+
  private:
   std::shared_ptr<EkmServiceStub> child_;
   TracingOptions tracing_options_;

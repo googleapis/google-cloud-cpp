@@ -108,16 +108,16 @@ class PolicyTagManagerSerializationClient {
   /// - Updates policy tags with valid resources names accordingly.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ReplaceTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L131}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ReplaceTaxonomyRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L135}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L206}
+  /// @googleapis_link{google::cloud::datacatalog::v1::Taxonomy,google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
   /// [google.cloud.datacatalog.v1.ReplaceTaxonomyRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L131}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L135}
   /// [google.cloud.datacatalog.v1.Taxonomy]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L206}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanager.proto#L211}
   ///
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
       google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request,
@@ -134,16 +134,16 @@ class PolicyTagManagerSerializationClient {
   /// using nested protocol buffer structures.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L146}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L151}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L185}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ImportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
   ///
   /// [google.cloud.datacatalog.v1.ImportTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L146}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L151}
   /// [google.cloud.datacatalog.v1.ImportTaxonomiesResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L185}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
   ///
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
@@ -159,16 +159,16 @@ class PolicyTagManagerSerializationClient {
   /// policy tags that can be used as input for `ImportTaxonomies` calls.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesRequest,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L199}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L219}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ExportTaxonomiesResponse,google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L227}
   ///
   /// [google.cloud.datacatalog.v1.ExportTaxonomiesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L192}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L199}
   /// [google.cloud.datacatalog.v1.ExportTaxonomiesResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L219}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/policytagmanagerserialization.proto#L227}
   ///
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(

@@ -670,6 +670,19 @@ DefaultCloudChannelServiceStub::ListSubscribers(
   return response;
 }
 
+StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
+DefaultCloudChannelServiceStub::ListEntitlementChanges(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
+  google::cloud::channel::v1::ListEntitlementChangesResponse response;
+  auto status =
+      grpc_stub_->ListEntitlementChanges(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

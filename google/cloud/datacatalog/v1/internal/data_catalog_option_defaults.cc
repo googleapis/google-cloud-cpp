@@ -50,6 +50,17 @@ Options DataCatalogDefaultOptions(Options options) {
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
+  if (!options.has<datacatalog_v1::DataCatalogPollingPolicyOption>()) {
+    options.set<datacatalog_v1::DataCatalogPollingPolicyOption>(
+        GenericPollingPolicy<
+            datacatalog_v1::DataCatalogRetryPolicyOption::Type,
+            datacatalog_v1::DataCatalogBackoffPolicyOption::Type>(
+            options.get<datacatalog_v1::DataCatalogRetryPolicyOption>()
+                ->clone(),
+            options.get<datacatalog_v1::DataCatalogBackoffPolicyOption>()
+                ->clone())
+            .clone());
+  }
   if (!options.has<
           datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>()) {
     options.set<datacatalog_v1::DataCatalogConnectionIdempotencyPolicyOption>(

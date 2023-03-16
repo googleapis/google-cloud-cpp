@@ -59,12 +59,23 @@ struct DataCatalogConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-datacatalog-options
+ */
+struct DataCatalogPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to DataCatalog.
  *
  * @ingroup google-cloud-datacatalog-options
  */
 using DataCatalogPolicyOptionList =
     OptionList<DataCatalogRetryPolicyOption, DataCatalogBackoffPolicyOption,
+               DataCatalogPollingPolicyOption,
                DataCatalogConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

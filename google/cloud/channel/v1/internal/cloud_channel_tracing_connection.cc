@@ -465,6 +465,18 @@ StreamRange<std::string> CloudChannelServiceTracingConnection::ListSubscribers(
                                                       std::move(sr));
 }
 
+StreamRange<google::cloud::channel::v1::EntitlementChange>
+CloudChannelServiceTracingConnection::ListEntitlementChanges(
+    google::cloud::channel::v1::ListEntitlementChangesRequest request) {
+  auto span = internal::MakeSpan(
+      "channel_v1::CloudChannelServiceConnection::ListEntitlementChanges");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListEntitlementChanges(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::channel::v1::EntitlementChange>(std::move(span),
+                                                     std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<channel_v1::CloudChannelServiceConnection>

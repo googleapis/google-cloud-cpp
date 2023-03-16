@@ -84,6 +84,28 @@ EkmServiceLogging::UpdateEkmConnection(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceLogging::GetEkmConfig(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::GetEkmConfigRequest const& request) {
+        return child_->GetEkmConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceLogging::UpdateEkmConfig(
+    grpc::ClientContext& context,
+    google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
+        return child_->UpdateEkmConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_v1_internal
 }  // namespace cloud

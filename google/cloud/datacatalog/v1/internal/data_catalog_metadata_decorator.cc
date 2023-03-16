@@ -246,6 +246,15 @@ DataCatalogMetadata::ListTags(
   return child_->ListTags(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DataCatalogMetadata::AsyncReconcileTags(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncReconcileTags(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogMetadata::StarEntry(
     grpc::ClientContext& context,
@@ -282,6 +291,32 @@ DataCatalogMetadata::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(context, "resource=" + request.resource());
   return child_->TestIamPermissions(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataCatalogMetadata::AsyncImportEntries(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncImportEntries(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DataCatalogMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncGetOperation(cq, std::move(context), request);
+}
+
+future<Status> DataCatalogMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCancelOperation(cq, std::move(context), request);
 }
 
 void DataCatalogMetadata::SetMetadata(grpc::ClientContext& context,
