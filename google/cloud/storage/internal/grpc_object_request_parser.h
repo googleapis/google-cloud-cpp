@@ -75,6 +75,16 @@ storage::internal::QueryResumableUploadResponse FromProto(
 google::storage::v2::CancelResumableWriteRequest ToProto(
     storage::internal::DeleteResumableUploadRequest const& request);
 
+Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
+                     grpc::WriteOptions& options,
+                     storage::internal::InsertObjectMediaRequest const& request,
+                     bool chunk_has_more);
+
+Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
+                   grpc::WriteOptions& options,
+                   storage::internal::UploadChunkRequest const& request,
+                   bool chunk_has_more);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

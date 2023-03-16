@@ -724,6 +724,68 @@ google::storage::v2::CancelResumableWriteRequest ToProto(
   return result;
 }
 
+// If this is the last `Write()` call of the last `InsertObjectMedia()` set the
+// flags to finalize the request
+Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
+                     grpc::WriteOptions& options,
+                     storage::internal::InsertObjectMediaRequest const& request,
+                     bool chunk_has_more) {
+  write_request.set_finish_write(!chunk_has_more);
+  if (chunk_has_more) return {};
+  options.set_last_message();
+
+  auto hashes = storage::internal::FinishHashes(request);
+  auto& checksums = *write_request.mutable_object_checksums();
+  // The client library accepts CRC32C checksums in the format required by the
+  // REST APIs (base64-encoded big-endian, 32-bit integers). We need to
+  // convert this to the format expected by proto, which is just a 32-bit
+  // integer. But the value received by the application might be incorrect, so
+  // we need to validate it.
+  if (!hashes.crc32c.empty()) {
+    auto as_proto = storage_internal::Crc32cToProto(hashes.crc32c);
+    if (!as_proto) return std::move(as_proto).status();
+    checksums.set_crc32c(*as_proto);
+  }
+
+  if (!hashes.md5.empty()) {
+    auto as_proto = storage_internal::MD5ToProto(hashes.md5);
+    if (!as_proto) return std::move(as_proto).status();
+    checksums.set_md5_hash(*as_proto);
+  }
+  return {};
+}
+
+// If this is the last `Write()` call of the last `UploadChunk()` set the flags
+// to finalize the request
+Status MaybeFinalize(google::storage::v2::WriteObjectRequest& write_request,
+                   grpc::WriteOptions& options,
+                   storage::internal::UploadChunkRequest const& request,
+                   bool chunk_has_more) {
+  if (!chunk_has_more) options.set_last_message();
+  if (!request.last_chunk() || chunk_has_more) return {};
+  write_request.set_finish_write(true);
+
+  auto hashes = storage::internal::FinishHashes(request);
+  auto& checksums = *write_request.mutable_object_checksums();
+  // The client library accepts CRC32C checksums in the format required by the
+  // REST APIs (base64-encoded big-endian, 32-bit integers). We need to
+  // convert this to the format expected by proto, which is just a 32-bit
+  // integer. But the value received by the application might be incorrect, so
+  // we need to validate it.
+  if (!hashes.crc32c.empty()) {
+    auto as_proto = storage_internal::Crc32cToProto(hashes.crc32c);
+    if (!as_proto) return std::move(as_proto).status();
+    checksums.set_crc32c(*as_proto);
+  }
+
+  if (!hashes.md5.empty()) {
+    auto as_proto = storage_internal::MD5ToProto(hashes.md5);
+    if (!as_proto) return std::move(as_proto).status();
+    checksums.set_md5_hash(*as_proto);
+  }
+  return {};
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud

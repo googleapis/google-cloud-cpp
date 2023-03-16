@@ -191,11 +191,14 @@ void InsertObjectMediaRequest::set_contents(std::string v) {
 }
 
 HashValues FinishHashes(InsertObjectMediaRequest const& request) {
-  auto hashes = request.hash_function().Finish();
-  hashes.crc32c =
-      request.GetOption<Crc32cChecksumValue>().value_or(std::move(hashes.crc32c));
-  hashes.md5 = request.GetOption<MD5HashValue>().value_or(std::move(hashes.md5));
-  return hashes;
+  auto hashes = HashValues{
+      /*.crc32c=*/request.GetOption<Crc32cChecksumValue>().value_or(
+          std::string{}),
+      /*.md5=*/request.GetOption<MD5HashValue>().value_or(std::string{}),
+  };
+  // Prefer the hashes provided via *Value options in the request. If those
+  // are not set, use the computed hashes from the data.
+  return Merge(std::move(hashes), request.hash_function().Finish());
 }
 
 std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
@@ -507,6 +510,8 @@ UploadChunkRequest UploadChunkRequest::RemainingChunk(
 }
 
 HashValues FinishHashes(UploadChunkRequest const& request) {
+  // Prefer the hashes provided via *Value options in the request. If those
+  // are not set, use the computed hashes from the data.
   return Merge(request.known_object_hashes(), request.hash_function().Finish());
 }
 

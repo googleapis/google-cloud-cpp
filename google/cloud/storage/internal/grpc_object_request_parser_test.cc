@@ -547,7 +547,7 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestSimple) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
-TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
+TEST(GrpcObjectRequestParser, MaybeFinalizeInsertObjectMediaRequest) {
   using storage::internal::InsertObjectMediaRequest;
   // See top-of-file comments for details on the magic numbers
   struct Test {
@@ -641,7 +641,6 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
             crc32c: 0x22620404)pb",
       },
   };
-
   for (auto const& test : cases) {
     SCOPED_TRACE("Expected outcome " + test.expected_checksums);
     storage_proto::ObjectChecksums expected;
@@ -651,9 +650,15 @@ TEST(GrpcObjectRequestParser, InsertObjectMediaRequestHashOptions) {
     storage::internal::InsertObjectMediaRequest request(
         "test-bucket-name", "test-object-name", kAlt);
     test.apply_options(request);
-    auto actual = ToProto(request);
-    ASSERT_STATUS_OK(actual) << "expected=" << test.expected_checksums;
-    EXPECT_THAT(actual->object_checksums(), IsProtoEqual(expected));
+    request.set_multiple_options();
+    request.hash_function().Update(0, kAlt);
+    storage_proto::WriteObjectRequest write_request;
+    grpc::WriteOptions write_options;
+    auto status = MaybeFinalize(write_request, write_options, request, false);
+    ASSERT_STATUS_OK(status);
+    EXPECT_TRUE(write_request.finish_write());
+    EXPECT_TRUE(write_options.is_last_message());
+    EXPECT_THAT(write_request.object_checksums(), IsProtoEqual(expected));
   }
 }
 
