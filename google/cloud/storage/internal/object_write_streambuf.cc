@@ -142,7 +142,7 @@ void ObjectWriteStreambuf::FlushFinal() {
 
   // Calculate the portion of the buffer that needs to be uploaded, if any.
   auto const actual_size = put_area_size();
-  hash_function_->Update(pbase(), actual_size);
+  hash_function_->Update(absl::string_view{pbase(), actual_size});
 
   // After this point the session will be closed, and no more calls to the hash
   // function are possible.
@@ -194,7 +194,7 @@ void ObjectWriteStreambuf::FlushRoundChunk(ConstBufferSequence buffers) {
   }
 
   for (auto const& b : payload) {
-    hash_function_->Update(b.data(), b.size());
+    hash_function_->Update(absl::string_view{b.data(), b.size()});
   }
 
   // GCS upload returns an updated range header that sets the next expected
