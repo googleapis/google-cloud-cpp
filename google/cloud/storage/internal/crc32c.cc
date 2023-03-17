@@ -18,38 +18,36 @@
 #include "absl/crc/crc32c.h"
 #define GOOGLE_CLOUD_CPP_USE_ABSL_CRC32C 1
 #else
-#include <crc32c/crc32c.h>
 #define GOOGLE_CLOUD_CPP_USE_ABSL_CRC32C 0
 #endif  // ABSL_LTS_RELEASE_VERSION
+#include <crc32c/crc32c.h>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-#if GOOGLE_CLOUD_CPP_USE_ABSL_CRC32C
-
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data) {
-  return static_cast<std::uint32_t>(
-      absl::ExtendCrc32c(absl::crc32c_t{crc}, data));
+  return crc32c::Extend(crc, reinterpret_cast<uint8_t const*>(data.data()),
+                        data.size());
 }
 
 std::uint32_t ExtendCrc32c(std::uint32_t crc,
                            storage::internal::ConstBufferSequence const& data) {
-  auto tmp = absl::crc32c_t{crc};
   for (auto const& b : data) {
-    tmp = absl::ExtendCrc32c(tmp, absl::string_view{b.data(), b.size()});
+    crc = ExtendCrc32c(crc, absl::string_view{b.data(), b.size()});
   }
-  return static_cast<std::uint32_t>(tmp);
+  return crc;
 }
 
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data) {
-  auto tmp = absl::crc32c_t{crc};
   for (auto i = data.chunk_begin(); i != data.chunk_end(); ++i) {
-    tmp = absl::ExtendCrc32c(tmp, *i);
+    crc = ExtendCrc32c(crc, *i);
   }
-  return static_cast<std::uint32_t>(tmp);
+  return crc;
 }
+
+#if GOOGLE_CLOUD_CPP_USE_ABSL_CRC32C
 
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
                            std::uint32_t data_crc) {
@@ -72,26 +70,6 @@ std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data,
 }
 
 #else
-
-std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data) {
-  return crc32c::Extend(crc, reinterpret_cast<uint8_t const*>(data.data()),
-                        data.size());
-}
-
-std::uint32_t ExtendCrc32c(std::uint32_t crc,
-                           storage::internal::ConstBufferSequence const& data) {
-  for (auto const& b : data) {
-    crc = ExtendCrc32c(crc, absl::string_view{b.data(), b.size()});
-  }
-  return crc;
-}
-
-std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::Cord const& data) {
-  for (auto i = data.chunk_begin(); i != data.chunk_end(); ++i) {
-    crc = ExtendCrc32c(crc, *i);
-  }
-  return crc;
-}
 
 std::uint32_t ExtendCrc32c(std::uint32_t crc, absl::string_view data,
                            std::uint32_t /*data_crc*/) {
