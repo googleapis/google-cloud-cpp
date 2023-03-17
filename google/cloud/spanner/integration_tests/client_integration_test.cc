@@ -70,6 +70,31 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
 
 std::unique_ptr<Client> ClientIntegrationTest::client_;
 
+class PgClientIntegrationTest
+    : public spanner_testing::PgDatabaseIntegrationTest {
+ protected:
+  static void SetUpTestSuite() {
+    spanner_testing::PgDatabaseIntegrationTest::SetUpTestSuite();
+    client_ = absl::make_unique<Client>(MakeConnection(GetDatabase()));
+  }
+
+  void SetUp() override {
+    if (UsingEmulator()) return;
+    auto commit_result = client_->Commit(
+        Mutations{MakeDeleteMutation("Singers", KeySet::All())});
+    ASSERT_STATUS_OK(commit_result);
+  }
+
+  static void TearDownTestSuite() {
+    client_ = nullptr;
+    spanner_testing::PgDatabaseIntegrationTest::TearDownTestSuite();
+  }
+
+  static std::unique_ptr<Client> client_;
+};
+
+std::unique_ptr<Client> PgClientIntegrationTest::client_;
+
 /// @test Verify the basic insert operations for transaction commits.
 TEST_F(ClientIntegrationTest, InsertAndCommit) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
@@ -894,6 +919,25 @@ TEST_F(ClientIntegrationTest, DatabaseDialect) {
     }
     if (!row) break;
     EXPECT_EQ("GOOGLE_STANDARD_SQL", std::get<0>(*row));
+  }
+}
+
+/// @test Verify database_dialect is returned in information schema.
+TEST_F(PgClientIntegrationTest, DatabaseDialect) {
+  auto rows = client_->ExecuteQuery(SqlStatement(R"""(
+        SELECT s.OPTION_VALUE
+        FROM INFORMATION_SCHEMA.DATABASE_OPTIONS s
+        WHERE s.OPTION_NAME = 'database_dialect'
+      )"""));
+  using RowType = std::tuple<std::string>;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    if (UsingEmulator()) {
+      EXPECT_THAT(row, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
+    } else {
+      EXPECT_THAT(row, IsOk());
+    }
+    if (!row) break;
+    EXPECT_EQ("POSTGRESQL", std::get<0>(*row));
   }
 }
 
