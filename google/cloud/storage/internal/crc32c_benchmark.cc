@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/crc32c.h"
-#include <crc32c/crc32c.h>
 #include <benchmark/benchmark.h>
+#include <crc32c/crc32c.h>
 
 namespace google {
 namespace cloud {
@@ -50,7 +50,9 @@ void BM_Crc32cDuplicateNonAbseil(benchmark::State& state) {
         auto c = crc32c::Crc32c(w.data(), w.size());
         benchmark::DoNotOptimize(c);
       }
-      crc = crc32c::Extend(crc, reinterpret_cast<std::uint8_t const*>(buffer.data()), buffer.size());
+      crc = crc32c::Extend(crc,
+                           reinterpret_cast<std::uint8_t const*>(buffer.data()),
+                           buffer.size());
     }
   }
   benchmark::DoNotOptimize(crc);
