@@ -25,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
-TEST(JobRequestTest, SuccessWithLocation) {
+TEST(GetJobRequestTest, SuccessWithLocation) {
   GetJobRequest request("1", "2");
   request.set_location("useast");
   Options opts;
@@ -40,7 +40,7 @@ TEST(JobRequestTest, SuccessWithLocation) {
   EXPECT_EQ(expected, *actual);
 }
 
-TEST(JobRequestTest, SuccessWithoutLocation) {
+TEST(GetJobRequestTest, SuccessWithoutLocation) {
   GetJobRequest request("1", "2");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
@@ -53,7 +53,7 @@ TEST(JobRequestTest, SuccessWithoutLocation) {
   EXPECT_EQ(expected, *actual);
 }
 
-TEST(JobRequestTest, SuccessWithEndpoint) {
+TEST(GetJobRequestTest, SuccessWithEndpoint) {
   GetJobRequest request("1", "2");
 
   struct EndpointTest {
@@ -81,15 +81,7 @@ TEST(JobRequestTest, SuccessWithEndpoint) {
   }
 }
 
-TEST(JobRequestTest, NoEndpoint) {
-  GetJobRequest request("test-project-id", "test-job-id");
-  Options opts;
-  auto rest_request = BuildRestRequest(request, opts);
-  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
-                                     HasSubstr("No default endpoint set")));
-}
-
-TEST(JobRequestTest, EmptyProjectId) {
+TEST(GetJobRequestTest, EmptyProjectId) {
   GetJobRequest request("", "test-job-id");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
@@ -105,6 +97,44 @@ TEST(GetJobRequest, EmptyJobId) {
   auto rest_request = BuildRestRequest(request, opts);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Job Id is empty")));
+}
+
+TEST(ListJobsRequestTest, Success) {
+  ListJobsRequest request("1");
+  request.set_all_users(true)
+      .set_max_results(10)
+      .set_max_creation_time(200)
+      .set_min_creation_time(1)
+      .set_parent_job_id("1")
+      .set_projection(Projection::kFull)
+      .set_state_filter(StateFilter::kRunning);
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  auto actual = BuildRestRequest(request, opts);
+  ASSERT_STATUS_OK(actual);
+
+  rest_internal::RestRequest expected;
+  expected.SetPath(
+      "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs");
+  expected.AddQueryParameter("allUsers", "true");
+  expected.AddQueryParameter("maxResults", "10");
+  expected.AddQueryParameter("minCreationTime", "1");
+  expected.AddQueryParameter("maxCreationTime", "200");
+  expected.AddQueryParameter("pageToken", "");
+  expected.AddQueryParameter("projection", "FULL");
+  expected.AddQueryParameter("stateFilter", "RUNNING");
+  expected.AddQueryParameter("parentJobId", "1");
+
+  EXPECT_EQ(expected, *actual);
+}
+
+TEST(ListJobsRequestTest, EmptyProjectId) {
+  GetJobRequest request;
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  auto rest_request = BuildRestRequest(request, opts);
+  EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
+                                     HasSubstr("Project Id is empty")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
