@@ -16,7 +16,6 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <vector>
 
