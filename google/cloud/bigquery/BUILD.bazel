@@ -127,12 +127,30 @@ cc_library(
     ],
 )
 
+load(":bigquery_rest_testing.bzl", "bigquery_rest_testing_hdrs", "bigquery_rest_testing_srcs")
+
+cc_library(
+    name = "bigquery_rest_testing",
+    testonly = True,
+    srcs = bigquery_rest_testing_srcs,
+    hdrs = bigquery_rest_testing_hdrs,
+    visibility = [":__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_bigquery_rest",
+        ":google_cloud_cpp_bigquery_rest_mocks",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
 load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
+        ":bigquery_rest_testing",
         ":google_cloud_cpp_bigquery_rest",
         ":google_cloud_cpp_bigquery_rest_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
