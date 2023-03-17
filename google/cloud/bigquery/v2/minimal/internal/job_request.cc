@@ -24,6 +24,41 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::string getJobsEndpoint(Options const& opts) {
+  std::string endpoint = opts.get<EndpointOption>();
+
+  if (!absl::StartsWith(endpoint, "https://") &&
+      !absl::StartsWith(endpoint, "http://")) {
+    endpoint = absl::StrCat("https://", endpoint);
+  }
+  if (!absl::EndsWith(endpoint, "/")) absl::StrAppend(&endpoint, "/");
+  absl::StrAppend(&endpoint, "bigquery/v2/projects/");
+
+  return endpoint;
+}
+
+std::string ToString(Projection const& projection) {
+  switch (projection) {
+    case Projection::kFull:
+      return "FULL";
+    case Projection::kMinimal:
+      return "MINIMAL";
+  }
+  return "";
+}
+
+std::string ToString(StateFilter const& filter) {
+  switch (filter) {
+    case StateFilter::kPending:
+      return "PENDING";
+    case StateFilter::kRunning:
+      return "RUNNING";
+    case StateFilter::kDone:
+      return "DONE";
+  }
+  return "";
+}
+
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
                                                       Options const& opts) {
   rest_internal::RestRequest request;
@@ -35,19 +70,8 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
     return internal::InvalidArgumentError(
         "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
-  if (!opts.has<EndpointOption>()) {
-    return internal::InvalidArgumentError(
-        "Invalid GetJobRequest: No default endpoint set", GCP_ERROR_INFO());
-  }
   // Builds GetJob request path based on endpoint provided.
-  std::string endpoint = opts.get<EndpointOption>();
-
-  if (!absl::StartsWith(endpoint, "https://") &&
-      !absl::StartsWith(endpoint, "http://")) {
-    endpoint = absl::StrCat("https://", endpoint);
-  }
-  if (!absl::EndsWith(endpoint, "/")) absl::StrAppend(&endpoint, "/");
-  absl::StrAppend(&endpoint, "bigquery/v2/projects/");
+  std::string endpoint = getJobsEndpoint(opts);
 
   std::string path =
       absl::StrCat(endpoint, r.project_id(), "/jobs/", r.job_id());
@@ -57,6 +81,36 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
   if (!r.location().empty()) {
     request.AddQueryParameter("location", r.location());
   }
+  return request;
+}
+
+StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
+                                                      Options const& opts) {
+  rest_internal::RestRequest request;
+  if (r.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid ListJobsRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+  // Builds GetJob request path based on endpoint provided.
+  std::string endpoint = getJobsEndpoint(opts);
+
+  std::string path = absl::StrCat(endpoint, r.project_id(), "/jobs");
+  request.SetPath(std::move(path));
+
+  // Add query params.
+  if (r.all_users()) {
+    request.AddQueryParameter("allUsers", "true");
+  }
+  request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
+  request.AddQueryParameter("minCreationTime",
+                            std::to_string(r.min_creation_time()));
+  request.AddQueryParameter("maxCreationTime",
+                            std::to_string(r.max_creation_time()));
+  request.AddQueryParameter("pageToken", r.page_token());
+  request.AddQueryParameter("projection", ToString(r.projection()));
+  request.AddQueryParameter("stateFilter", ToString(r.state_filter()));
+  request.AddQueryParameter("parentJobId", r.parent_job_id());
+
   return request;
 }
 
