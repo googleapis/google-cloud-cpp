@@ -70,7 +70,7 @@ add_library(google_cloud_cpp_bigquery_rest_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h
-)
+              ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_rest_stub.h)
 target_link_libraries(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE google-cloud-cpp::experimental-bigquery_rest GTest::gmock_main
@@ -107,6 +107,7 @@ function (bigquery_rest_define_tests)
         v2/minimal/internal/bigquery_http_response_test.cc
         v2/minimal/internal/common_v2_resources_test.cc
         v2/minimal/internal/job_client_test.cc
+        v2/minimal/internal/job_connection_test.cc
         v2/minimal/internal/job_idempotency_policy_test.cc
         v2/minimal/internal/job_options_test.cc
         v2/minimal/internal/job_request_test.cc
