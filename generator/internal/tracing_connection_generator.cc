@@ -284,7 +284,10 @@ future<Status>)"""
 future<StatusOr<$longrunning_deduced_response_type$>>)""",
         R"""(
 $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
-  return child_->$method_name$(request);
+  auto span = internal::MakeSpan(
+      "$product_namespace$::$connection_class_name$::$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->$method_name$(request));
 }
 )""");
   }
@@ -310,7 +313,10 @@ future<Status>)"""
 future<StatusOr<$response_type$>>)""",
                       R"""(
 $tracing_connection_class_name$::Async$method_name$($request_type$ const& request) {
-  return child_->Async$method_name$(request);
+  auto span = internal::MakeSpan(
+      "$product_namespace$::$connection_class_name$::Async$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->Async$method_name$(request));
 }
 )""");
 }
