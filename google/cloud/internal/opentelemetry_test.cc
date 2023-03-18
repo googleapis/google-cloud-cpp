@@ -317,6 +317,39 @@ TEST(OpenTelemetry, MakeTracedSleeperDisabled) {
   EXPECT_THAT(spans, IsEmpty());
 }
 
+TEST(OpenTelemetry, AddSpanAttributeEnabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  auto scope = opentelemetry::trace::Scope(span);
+  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(true));
+  AddSpanAttribute("key", "value");
+  span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              ElementsAre(AllOf(SpanNamed("span"),
+                                SpanHasAttributes(SpanAttribute<std::string>(
+                                    "key", "value")))));
+}
+
+TEST(OpenTelemetry, AddSpanAttributeDisabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  auto scope = opentelemetry::trace::Scope(span);
+  OptionsSpan o(Options{}.set<OpenTelemetryTracingOption>(false));
+  AddSpanAttribute("key", "value");
+  span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("span"),
+          Not(SpanHasAttributes(SpanAttribute<std::string>("key", "value"))))));
+}
+
 #else
 
 TEST(NoOpenTelemetry, TracingEnabled) {

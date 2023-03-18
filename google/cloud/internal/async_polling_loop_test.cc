@@ -25,6 +25,7 @@
 #include "absl/memory/memory.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -625,6 +626,8 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 using ::google::cloud::testing_util::IsActive;
+using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
 using ::testing::AllOf;
 using ::testing::Each;
@@ -730,6 +733,33 @@ TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
 
   auto overlay = opentelemetry::trace::Scope(MakeSpan("overlay"));
   (void)pending.get();
+}
+
+TEST(AsyncPollingLoopTest, TraceCapturesOperationName) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  google::longrunning::Operation op;
+  op.set_name("test-op-name");
+  op.set_done(true);
+
+  auto span = MakeSpan("span");
+  auto mock = std::make_shared<MockStub>();
+  auto policy = absl::make_unique<MockPollingPolicy>();
+  CompletionQueue cq;
+
+  auto scope = opentelemetry::trace::Scope(span);
+  OptionsSpan o(Options{}.set<internal::OpenTelemetryTracingOption>(true));
+  (void)AsyncPollingLoop(cq, make_ready_future(make_status_or(op)),
+                         MakePoll(mock), MakeCancel(mock), std::move(policy),
+                         "test-function")
+      .get();
+  span->End();
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              ElementsAre(AllOf(SpanNamed("span"),
+                                SpanHasAttributes(SpanAttribute<std::string>(
+                                    "gcloud.LRO_name", "test-op-name")))));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -137,6 +137,9 @@ bool TracingEnabled(Options const& options);
 std::function<void(std::chrono::milliseconds)> MakeTracedSleeper(
     std::function<void(std::chrono::milliseconds)> const& sleeper);
 
+/// Adds an attribute to the active span, if tracing is enabled.
+void AddSpanAttribute(std::string const& key, std::string const& value);
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
