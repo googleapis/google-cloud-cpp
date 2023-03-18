@@ -70,7 +70,7 @@ add_library(google_cloud_cpp_bigquery_rest_mocks INTERFACE)
 target_sources(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/mocks/mock_job_rest_stub.h)
+)
 target_link_libraries(
     google_cloud_cpp_bigquery_rest_mocks
     INTERFACE google-cloud-cpp::experimental-bigquery_rest GTest::gmock_main
@@ -102,6 +102,28 @@ function (bigquery_rest_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
+    add_library(bigquery_rest_testing INTERFACE)
+    target_sources(
+        bigquery_rest_testing
+        INTERFACE
+            ${CMAKE_CURRENT_SOURCE_DIR}/v2/minimal/testing/mock_job_rest_stub.h)
+    target_link_libraries(
+        bigquery_rest_testing
+        INTERFACE google_cloud_cpp_testing
+                  google-cloud-cpp::experimental-bigquery_rest_mocks
+                  google-cloud-cpp::experimental-bigquery_rest
+                  GTest::gmock_main
+                  GTest::gmock
+                  GTest::gtest)
+    target_include_directories(
+        bigquery_rest_testing
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(bigquery_rest_testing
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    create_bazel_config(bigquery_rest_testing YEAR "2023")
+
     set(bigquery_rest_unit_tests
         # cmake-format: sort
         v2/minimal/internal/bigquery_http_response_test.cc
@@ -127,7 +149,8 @@ function (bigquery_rest_define_tests)
         google_cloud_cpp_add_executable(target "bigquery" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing
+            PRIVATE bigquery_rest_testing
+                    google_cloud_cpp_testing
                     google-cloud-cpp::experimental-bigquery_rest
                     google-cloud-cpp::experimental-bigquery_rest_mocks
                     GTest::gmock_main

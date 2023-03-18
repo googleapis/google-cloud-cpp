@@ -16,7 +16,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_client.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_connection_impl.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_stub.h"
-#include "google/cloud/bigquery/v2/minimal/mocks/mock_job_rest_stub.h"
+#include "google/cloud/bigquery/v2/minimal/testing/mock_job_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_response.h"
@@ -28,6 +28,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
@@ -99,7 +100,7 @@ TEST(JobConnectionTest, GetJobSuccess) {
 }
 
 // Verify that permanent errors are reported immediately.
-TEST(GoldenThingAdminConnectionTest, GetJobPermanentError) {
+TEST(JobConnectionTest, GetJobPermanentError) {
   auto mock = std::make_shared<MockBigQueryJobRestStub>();
   EXPECT_CALL(*mock, GetJob)
       .WillOnce(
@@ -112,7 +113,7 @@ TEST(GoldenThingAdminConnectionTest, GetJobPermanentError) {
 }
 
 // Verify that too many transients errors are reported correctly.
-TEST(GoldenThingAdminConnectionTest, GetJobTooManyTransients) {
+TEST(JobConnectionTest, GetJobTooManyTransients) {
   auto mock = std::make_shared<MockBigQueryJobRestStub>();
   EXPECT_CALL(*mock, GetJob)
       .Times(AtLeast(2))
