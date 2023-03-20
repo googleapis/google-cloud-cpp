@@ -270,35 +270,27 @@ void ServiceCodeGenerator::CcSystemIncludes(
 }
 
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
-  HeaderPrint("\n");
   return OpenNamespaces(header_, ns_type, "product_path");
 }
 
 Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
     NamespaceType ns_type) {
-  HeaderPrint("\n");
   return OpenNamespaces(header_, ns_type, "forwarding_product_path");
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
-  HeaderPrint("\n");
   CloseNamespaces(header_, define_backwards_compatibility_namespace_alias_);
 }
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
-  CcPrint("\n");
   return OpenNamespaces(cc_, ns_type, "product_path");
 }
 
 Status ServiceCodeGenerator::CcOpenForwardingNamespaces(NamespaceType ns_type) {
-  CcPrint("\n");
   return OpenNamespaces(cc_, ns_type, "forwarding_product_path");
 }
 
-void ServiceCodeGenerator::CcCloseNamespaces() {
-  CcPrint("\n");
-  CloseNamespaces(cc_, false);
-}
+void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_, false); }
 
 void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
   header_.Print(service_vars_, text);
@@ -375,32 +367,32 @@ Status ServiceCodeGenerator::OpenNamespaces(
     return Status(StatusCode::kInternal,
                   product_path_var + " not found in vars");
   }
-  namespaces_ = BuildNamespaces(service_vars_[product_path_var], ns_type);
-  for (auto const& nspace : namespaces_) {
-    if (nspace == "GOOGLE_CLOUD_CPP_NS") {
-      p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN\n");
-    } else {
-      p.Print("namespace $namespace$ {\n", "namespace", nspace);
-    }
-  }
+  namespace_ = Namespace(service_vars_[product_path_var], ns_type);
+  p.Print(R"""(
+namespace google {
+namespace cloud {
+namespace $namespace$ {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+)""",
+          "namespace", namespace_);
   return {};
 }
 
 void ServiceCodeGenerator::CloseNamespaces(
     Printer& p, bool define_backwards_compatibility_namespace_alias) {
-  for (auto iter = namespaces_.rbegin(); iter != namespaces_.rend(); ++iter) {
-    if (*iter == "GOOGLE_CLOUD_CPP_NS") {
-      p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END\n");
-      // TODO(#7463) - remove backwards compatibility namespaces
-      if (define_backwards_compatibility_namespace_alias) {
-        p.Print(
-            "namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;"
-            "  // NOLINT(misc-unused-alias-decls)\n");
-      }
-    } else {
-      p.Print("}  // namespace $namespace$\n", "namespace", *iter);
-    }
+  p.Print(R"""(
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END)""");
+  // TODO(#7463) - remove backwards compatibility namespaces
+  if (define_backwards_compatibility_namespace_alias) {
+    p.Print(R"""(
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls))""");
   }
+  p.Print(R"""(
+}  // namespace $namespace$
+}  // namespace cloud
+}  // namespace google
+)""",
+          "namespace", namespace_);
 }
 
 Status ServiceCodeGenerator::Generate() {

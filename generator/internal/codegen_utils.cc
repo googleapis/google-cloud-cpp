@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -238,21 +239,19 @@ std::string ProtoNameToCppName(absl::string_view proto_name) {
   return absl::StrReplaceAll(proto_name, {{".", "::"}});
 }
 
-std::vector<std::string> BuildNamespaces(std::string const& product_path,
-                                         NamespaceType ns_type) {
-  std::vector<std::string> v =
-      absl::StrSplit(product_path, '/', absl::SkipEmpty());
-  std::string name =
-      absl::StrJoin(v.begin() + (v.size() > 2 ? 2 : 0), v.end(), "_");
+std::string Namespace(std::string const& product_path, NamespaceType ns_type) {
+  auto ns = absl::StrCat(LibraryName(product_path), "/",
+                         ServiceSubdirectory(product_path));
+  ns = std::string{absl::StripSuffix(ns, "/")};
+  ns = absl::StrReplaceAll(ns, {{"/", "_"}});
+
   if (ns_type == NamespaceType::kInternal) {
-    absl::StrAppend(&name, "_internal");
+    absl::StrAppend(&ns, "_internal");
   }
   if (ns_type == NamespaceType::kMocks) {
-    absl::StrAppend(&name, "_mocks");
+    absl::StrAppend(&ns, "_mocks");
   }
-
-  return std::vector<std::string>{"google", "cloud", name,
-                                  "GOOGLE_CLOUD_CPP_NS"};
+  return ns;
 }
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>
