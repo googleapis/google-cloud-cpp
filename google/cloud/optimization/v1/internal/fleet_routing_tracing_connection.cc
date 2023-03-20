@@ -43,7 +43,11 @@ FleetRoutingTracingConnection::OptimizeTours(
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
 FleetRoutingTracingConnection::BatchOptimizeTours(
     google::cloud::optimization::v1::BatchOptimizeToursRequest const& request) {
-  return child_->BatchOptimizeTours(request);
+  auto span = internal::MakeSpan(
+      "optimization_v1::FleetRoutingConnection::BatchOptimizeTours");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchOptimizeTours(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

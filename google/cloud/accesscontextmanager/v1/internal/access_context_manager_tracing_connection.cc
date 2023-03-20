@@ -61,14 +61,24 @@ AccessContextManagerTracingConnection::GetAccessPolicy(
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerTracingConnection::CreateAccessPolicy(
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
-  return child_->CreateAccessPolicy(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "CreateAccessPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAccessPolicy(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerTracingConnection::UpdateAccessPolicy(
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
-  return child_->UpdateAccessPolicy(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "UpdateAccessPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAccessPolicy(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -76,7 +86,12 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerTracingConnection::DeleteAccessPolicy(
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
-  return child_->DeleteAccessPolicy(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "DeleteAccessPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAccessPolicy(request));
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
@@ -108,14 +123,22 @@ future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerTracingConnection::CreateAccessLevel(
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
-  return child_->CreateAccessLevel(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "CreateAccessLevel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateAccessLevel(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerTracingConnection::UpdateAccessLevel(
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
-  return child_->UpdateAccessLevel(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "UpdateAccessLevel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateAccessLevel(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -123,7 +146,11 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerTracingConnection::DeleteAccessLevel(
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
-  return child_->DeleteAccessLevel(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "DeleteAccessLevel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAccessLevel(request));
 }
 
 future<StatusOr<
@@ -131,7 +158,12 @@ future<StatusOr<
 AccessContextManagerTracingConnection::ReplaceAccessLevels(
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
-  return child_->ReplaceAccessLevels(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "ReplaceAccessLevels");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ReplaceAccessLevels(request));
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
@@ -163,14 +195,24 @@ future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerTracingConnection::CreateServicePerimeter(
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
-  return child_->CreateServicePerimeter(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "CreateServicePerimeter");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateServicePerimeter(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerTracingConnection::UpdateServicePerimeter(
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
-  return child_->UpdateServicePerimeter(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "UpdateServicePerimeter");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateServicePerimeter(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -178,7 +220,12 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerTracingConnection::DeleteServicePerimeter(
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
-  return child_->DeleteServicePerimeter(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "DeleteServicePerimeter");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteServicePerimeter(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -186,7 +233,12 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerTracingConnection::ReplaceServicePerimeters(
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
-  return child_->ReplaceServicePerimeters(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "ReplaceServicePerimeters");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ReplaceServicePerimeters(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -194,7 +246,12 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerTracingConnection::CommitServicePerimeters(
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
-  return child_->CommitServicePerimeters(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "CommitServicePerimeters");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CommitServicePerimeters(request));
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
@@ -227,7 +284,12 @@ future<
 AccessContextManagerTracingConnection::CreateGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
-  return child_->CreateGcpUserAccessBinding(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "CreateGcpUserAccessBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGcpUserAccessBinding(request));
 }
 
 future<
@@ -235,7 +297,12 @@ future<
 AccessContextManagerTracingConnection::UpdateGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
-  return child_->UpdateGcpUserAccessBinding(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "UpdateGcpUserAccessBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateGcpUserAccessBinding(request));
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -243,7 +310,12 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerTracingConnection::DeleteGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
-  return child_->DeleteGcpUserAccessBinding(request);
+  auto span = internal::MakeSpan(
+      "accesscontextmanager_v1::AccessContextManagerConnection::"
+      "DeleteGcpUserAccessBinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGcpUserAccessBinding(request));
 }
 
 StatusOr<google::iam::v1::Policy>

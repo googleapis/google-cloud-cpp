@@ -58,14 +58,24 @@ future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesTracingConnection::CreateMonitoredProject(
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
-  return child_->CreateMonitoredProject(request);
+  auto span = internal::MakeSpan(
+      "monitoring_metricsscope_v1::MetricsScopesConnection::"
+      "CreateMonitoredProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMonitoredProject(request));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesTracingConnection::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
-  return child_->DeleteMonitoredProject(request);
+  auto span = internal::MakeSpan(
+      "monitoring_metricsscope_v1::MetricsScopesConnection::"
+      "DeleteMonitoredProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteMonitoredProject(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

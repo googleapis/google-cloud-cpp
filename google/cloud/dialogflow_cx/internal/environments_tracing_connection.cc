@@ -57,14 +57,20 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsTracingConnection::CreateEnvironment(
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
-  return child_->CreateEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::CreateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateEnvironment(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsTracingConnection::UpdateEnvironment(
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
-  return child_->UpdateEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::UpdateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateEnvironment(request));
 }
 
 Status EnvironmentsTracingConnection::DeleteEnvironment(
@@ -93,7 +99,10 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsTracingConnection::RunContinuousTest(
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
-  return child_->RunContinuousTest(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::RunContinuousTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RunContinuousTest(request));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
@@ -112,7 +121,10 @@ EnvironmentsTracingConnection::ListContinuousTestResults(
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
 EnvironmentsTracingConnection::DeployFlow(
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
-  return child_->DeployFlow(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::EnvironmentsConnection::DeployFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeployFlow(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

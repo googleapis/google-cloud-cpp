@@ -56,7 +56,10 @@ VersionsTracingConnection::GetVersion(
 future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
 VersionsTracingConnection::CreateVersion(
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
-  return child_->CreateVersion(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::VersionsConnection::CreateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateVersion(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
@@ -79,7 +82,10 @@ Status VersionsTracingConnection::DeleteVersion(
 future<StatusOr<google::protobuf::Struct>>
 VersionsTracingConnection::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
-  return child_->LoadVersion(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::VersionsConnection::LoadVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->LoadVersion(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

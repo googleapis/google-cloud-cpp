@@ -42,7 +42,10 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceTracingConnection::CreateJob(
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
 JobServiceTracingConnection::BatchCreateJobs(
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
-  return child_->BatchCreateJobs(request);
+  auto span =
+      internal::MakeSpan("talent_v4::JobServiceConnection::BatchCreateJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->BatchCreateJobs(request));
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceTracingConnection::GetJob(
@@ -62,7 +65,10 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceTracingConnection::UpdateJob(
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
 JobServiceTracingConnection::BatchUpdateJobs(
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
-  return child_->BatchUpdateJobs(request);
+  auto span =
+      internal::MakeSpan("talent_v4::JobServiceConnection::BatchUpdateJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->BatchUpdateJobs(request));
 }
 
 Status JobServiceTracingConnection::DeleteJob(
@@ -75,7 +81,10 @@ Status JobServiceTracingConnection::DeleteJob(
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
 JobServiceTracingConnection::BatchDeleteJobs(
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
-  return child_->BatchDeleteJobs(request);
+  auto span =
+      internal::MakeSpan("talent_v4::JobServiceConnection::BatchDeleteJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->BatchDeleteJobs(request));
 }
 
 StreamRange<google::cloud::talent::v4::Job>

@@ -37,7 +37,11 @@ VideoIntelligenceServiceTracingConnection::
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceTracingConnection::AnnotateVideo(
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-  return child_->AnnotateVideo(request);
+  auto span = internal::MakeSpan(
+      "videointelligence_v1::VideoIntelligenceServiceConnection::"
+      "AnnotateVideo");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->AnnotateVideo(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

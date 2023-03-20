@@ -55,19 +55,28 @@ RealmsServiceTracingConnection::GetRealm(
 future<StatusOr<google::cloud::gaming::v1::Realm>>
 RealmsServiceTracingConnection::CreateRealm(
     google::cloud::gaming::v1::CreateRealmRequest const& request) {
-  return child_->CreateRealm(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::RealmsServiceConnection::CreateRealm");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateRealm(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 RealmsServiceTracingConnection::DeleteRealm(
     google::cloud::gaming::v1::DeleteRealmRequest const& request) {
-  return child_->DeleteRealm(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::RealmsServiceConnection::DeleteRealm");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteRealm(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::Realm>>
 RealmsServiceTracingConnection::UpdateRealm(
     google::cloud::gaming::v1::UpdateRealmRequest const& request) {
-  return child_->UpdateRealm(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::RealmsServiceConnection::UpdateRealm");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateRealm(request));
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>

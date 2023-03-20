@@ -36,7 +36,11 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
 ConversationModelsTracingConnection::CreateConversationModel(
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&
         request) {
-  return child_->CreateConversationModel(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::CreateConversationModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConversationModel(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
@@ -65,7 +69,11 @@ future<StatusOr<
 ConversationModelsTracingConnection::DeleteConversationModel(
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
         request) {
-  return child_->DeleteConversationModel(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::DeleteConversationModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConversationModel(request));
 }
 
 future<StatusOr<
@@ -73,7 +81,11 @@ future<StatusOr<
 ConversationModelsTracingConnection::DeployConversationModel(
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&
         request) {
-  return child_->DeployConversationModel(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::DeployConversationModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeployConversationModel(request));
 }
 
 future<StatusOr<
@@ -81,7 +93,11 @@ future<StatusOr<
 ConversationModelsTracingConnection::UndeployConversationModel(
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
         request) {
-  return child_->UndeployConversationModel(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::UndeployConversationModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UndeployConversationModel(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -114,7 +130,12 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
 ConversationModelsTracingConnection::CreateConversationModelEvaluation(
     google::cloud::dialogflow::v2::
         CreateConversationModelEvaluationRequest const& request) {
-  return child_->CreateConversationModelEvaluation(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::"
+      "CreateConversationModelEvaluation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConversationModelEvaluation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -55,19 +55,28 @@ WorkflowsTracingConnection::GetWorkflow(
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsTracingConnection::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
-  return child_->CreateWorkflow(request);
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::CreateWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateWorkflow(request));
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsTracingConnection::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
-  return child_->DeleteWorkflow(request);
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::DeleteWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteWorkflow(request));
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsTracingConnection::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
-  return child_->UpdateWorkflow(request);
+  auto span =
+      internal::MakeSpan("workflows_v1::WorkflowsConnection::UpdateWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateWorkflow(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

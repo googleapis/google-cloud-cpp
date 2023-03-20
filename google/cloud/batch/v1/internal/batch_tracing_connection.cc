@@ -50,7 +50,9 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceTracingConnection::GetJob(
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
 BatchServiceTracingConnection::DeleteJob(
     google::cloud::batch::v1::DeleteJobRequest const& request) {
-  return child_->DeleteJob(request);
+  auto span = internal::MakeSpan("batch_v1::BatchServiceConnection::DeleteJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteJob(request));
 }
 
 StreamRange<google::cloud::batch::v1::Job>

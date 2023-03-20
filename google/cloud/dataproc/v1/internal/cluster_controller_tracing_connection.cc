@@ -35,31 +35,46 @@ ClusterControllerTracingConnection::ClusterControllerTracingConnection(
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerTracingConnection::CreateCluster(
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
-  return child_->CreateCluster(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::CreateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerTracingConnection::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
-  return child_->UpdateCluster(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::UpdateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerTracingConnection::StopCluster(
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
-  return child_->StopCluster(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::StopCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StopCluster(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerTracingConnection::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
-  return child_->StartCluster(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::StartCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StartCluster(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerTracingConnection::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
-  return child_->DeleteCluster(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::DeleteCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
@@ -85,7 +100,10 @@ ClusterControllerTracingConnection::ListClusters(
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerTracingConnection::DiagnoseCluster(
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
-  return child_->DiagnoseCluster(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::ClusterControllerConnection::DiagnoseCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DiagnoseCluster(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

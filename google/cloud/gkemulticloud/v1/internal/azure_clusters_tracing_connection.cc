@@ -35,7 +35,10 @@ AzureClustersTracingConnection::AzureClustersTracingConnection(
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
 AzureClustersTracingConnection::CreateAzureClient(
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
-  return child_->CreateAzureClient(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::CreateAzureClient");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateAzureClient(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
@@ -62,21 +65,32 @@ AzureClustersTracingConnection::ListAzureClients(
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersTracingConnection::DeleteAzureClient(
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
-  return child_->DeleteAzureClient(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::DeleteAzureClient");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAzureClient(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersTracingConnection::CreateAzureCluster(
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
-  return child_->CreateAzureCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::CreateAzureCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAzureCluster(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
 AzureClustersTracingConnection::UpdateAzureCluster(
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
-  return child_->UpdateAzureCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::UpdateAzureCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAzureCluster(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
@@ -104,7 +118,11 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersTracingConnection::DeleteAzureCluster(
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
-  return child_->DeleteAzureCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::DeleteAzureCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAzureCluster(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
@@ -121,14 +139,22 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
 AzureClustersTracingConnection::CreateAzureNodePool(
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
-  return child_->CreateAzureNodePool(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::CreateAzureNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAzureNodePool(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
 AzureClustersTracingConnection::UpdateAzureNodePool(
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
-  return child_->UpdateAzureNodePool(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::UpdateAzureNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAzureNodePool(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -156,7 +182,11 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AzureClustersTracingConnection::DeleteAzureNodePool(
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
-  return child_->DeleteAzureNodePool(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::DeleteAzureNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAzureNodePool(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>

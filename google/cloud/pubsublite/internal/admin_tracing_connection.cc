@@ -147,7 +147,10 @@ Status AdminServiceTracingConnection::DeleteSubscription(
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
 AdminServiceTracingConnection::SeekSubscription(
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
-  return child_->SeekSubscription(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::SeekSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->SeekSubscription(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
@@ -210,7 +213,11 @@ StreamRange<std::string> AdminServiceTracingConnection::ListReservationTopics(
 future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceTracingConnection::AsyncGetTopicPartitions(
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  return child_->AsyncGetTopicPartitions(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::AsyncGetTopicPartitions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncGetTopicPartitions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

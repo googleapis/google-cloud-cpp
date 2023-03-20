@@ -91,14 +91,24 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesTracingConnection::SetSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
-  return child_->SetSuggestionFeatureConfig(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "SetSuggestionFeatureConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SetSuggestionFeatureConfig(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesTracingConnection::ClearSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
-  return child_->ClearSuggestionFeatureConfig(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "ClearSuggestionFeatureConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ClearSuggestionFeatureConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

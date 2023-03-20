@@ -68,31 +68,46 @@ ProjectsTracingConnection::SearchProjects(
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::CreateProject(
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
-  return child_->CreateProject(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::ProjectsConnection::CreateProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateProject(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::UpdateProject(
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
-  return child_->UpdateProject(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::ProjectsConnection::UpdateProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateProject(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::MoveProject(
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
-  return child_->MoveProject(request);
+  auto span =
+      internal::MakeSpan("resourcemanager_v3::ProjectsConnection::MoveProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->MoveProject(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::DeleteProject(
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
-  return child_->DeleteProject(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::ProjectsConnection::DeleteProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteProject(request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsTracingConnection::UndeleteProject(
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
-  return child_->UndeleteProject(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager_v3::ProjectsConnection::UndeleteProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UndeleteProject(request));
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsTracingConnection::GetIamPolicy(

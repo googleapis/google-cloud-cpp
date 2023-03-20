@@ -64,7 +64,12 @@ future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>>
 ClientGatewaysServiceTracingConnection::CreateClientGateway(
     google::cloud::beyondcorp::clientgateways::v1::
         CreateClientGatewayRequest const& request) {
-  return child_->CreateClientGateway(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp_clientgateways_v1::ClientGatewaysServiceConnection::"
+      "CreateClientGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateClientGateway(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::
@@ -72,7 +77,12 @@ future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::
 ClientGatewaysServiceTracingConnection::DeleteClientGateway(
     google::cloud::beyondcorp::clientgateways::v1::
         DeleteClientGatewayRequest const& request) {
-  return child_->DeleteClientGateway(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp_clientgateways_v1::ClientGatewaysServiceConnection::"
+      "DeleteClientGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteClientGateway(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

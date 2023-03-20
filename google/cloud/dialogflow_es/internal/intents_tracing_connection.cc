@@ -80,13 +80,21 @@ Status IntentsTracingConnection::DeleteIntent(
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
 IntentsTracingConnection::BatchUpdateIntents(
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
-  return child_->BatchUpdateIntents(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::IntentsConnection::BatchUpdateIntents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchUpdateIntents(request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 IntentsTracingConnection::BatchDeleteIntents(
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
-  return child_->BatchDeleteIntents(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::IntentsConnection::BatchDeleteIntents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteIntents(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

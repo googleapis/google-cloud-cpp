@@ -60,7 +60,12 @@ GameServerClustersServiceTracingConnection::GetGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceTracingConnection::CreateGameServerCluster(
     google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
-  return child_->CreateGameServerCluster(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerClustersServiceConnection::"
+      "CreateGameServerCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGameServerCluster(request));
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
@@ -78,7 +83,12 @@ GameServerClustersServiceTracingConnection::PreviewCreateGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerClustersServiceTracingConnection::DeleteGameServerCluster(
     google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
-  return child_->DeleteGameServerCluster(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerClustersServiceConnection::"
+      "DeleteGameServerCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGameServerCluster(request));
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
@@ -96,7 +106,12 @@ GameServerClustersServiceTracingConnection::PreviewDeleteGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceTracingConnection::UpdateGameServerCluster(
     google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
-  return child_->UpdateGameServerCluster(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerClustersServiceConnection::"
+      "UpdateGameServerCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateGameServerCluster(request));
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>

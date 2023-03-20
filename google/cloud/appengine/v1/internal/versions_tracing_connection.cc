@@ -54,19 +54,28 @@ StatusOr<google::appengine::v1::Version> VersionsTracingConnection::GetVersion(
 future<StatusOr<google::appengine::v1::Version>>
 VersionsTracingConnection::CreateVersion(
     google::appengine::v1::CreateVersionRequest const& request) {
-  return child_->CreateVersion(request);
+  auto span =
+      internal::MakeSpan("appengine_v1::VersionsConnection::CreateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateVersion(request));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
 VersionsTracingConnection::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const& request) {
-  return child_->UpdateVersion(request);
+  auto span =
+      internal::MakeSpan("appengine_v1::VersionsConnection::UpdateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateVersion(request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 VersionsTracingConnection::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const& request) {
-  return child_->DeleteVersion(request);
+  auto span =
+      internal::MakeSpan("appengine_v1::VersionsConnection::DeleteVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteVersion(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

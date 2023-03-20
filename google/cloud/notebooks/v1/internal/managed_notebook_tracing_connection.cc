@@ -56,55 +56,83 @@ ManagedNotebookServiceTracingConnection::GetRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::CreateRuntime(
     google::cloud::notebooks::v1::CreateRuntimeRequest const& request) {
-  return child_->CreateRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::CreateRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::UpdateRuntime(
     google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
-  return child_->UpdateRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::UpdateRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceTracingConnection::DeleteRuntime(
     google::cloud::notebooks::v1::DeleteRuntimeRequest const& request) {
-  return child_->DeleteRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::DeleteRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::StartRuntime(
     google::cloud::notebooks::v1::StartRuntimeRequest const& request) {
-  return child_->StartRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::StartRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StartRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::StopRuntime(
     google::cloud::notebooks::v1::StopRuntimeRequest const& request) {
-  return child_->StopRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::StopRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StopRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::SwitchRuntime(
     google::cloud::notebooks::v1::SwitchRuntimeRequest const& request) {
-  return child_->SwitchRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::SwitchRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->SwitchRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::ResetRuntime(
     google::cloud::notebooks::v1::ResetRuntimeRequest const& request) {
-  return child_->ResetRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::ResetRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ResetRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::UpgradeRuntime(
     google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
-  return child_->UpgradeRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::UpgradeRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpgradeRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
-  return child_->ReportRuntimeEvent(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::ReportRuntimeEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ReportRuntimeEvent(request));
 }
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
@@ -121,7 +149,10 @@ ManagedNotebookServiceTracingConnection::RefreshRuntimeTokenInternal(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceTracingConnection::DiagnoseRuntime(
     google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
-  return child_->DiagnoseRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks_v1::ManagedNotebookServiceConnection::DiagnoseRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DiagnoseRuntime(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

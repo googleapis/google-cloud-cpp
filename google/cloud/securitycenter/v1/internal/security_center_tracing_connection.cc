@@ -35,7 +35,10 @@ SecurityCenterTracingConnection::SecurityCenterTracingConnection(
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterTracingConnection::BulkMuteFindings(
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
-  return child_->BulkMuteFindings(request);
+  auto span = internal::MakeSpan(
+      "securitycenter_v1::SecurityCenterConnection::BulkMuteFindings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->BulkMuteFindings(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
@@ -238,7 +241,10 @@ future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterTracingConnection::RunAssetDiscovery(
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
-  return child_->RunAssetDiscovery(request);
+  auto span = internal::MakeSpan(
+      "securitycenter_v1::SecurityCenterConnection::RunAssetDiscovery");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RunAssetDiscovery(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>

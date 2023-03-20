@@ -36,7 +36,12 @@ future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
 ConversationDatasetsTracingConnection::CreateConversationDataset(
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
-  return child_->CreateConversationDataset(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::"
+      "CreateConversationDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConversationDataset(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
@@ -67,7 +72,12 @@ future<StatusOr<
 ConversationDatasetsTracingConnection::DeleteConversationDataset(
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
-  return child_->DeleteConversationDataset(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::"
+      "DeleteConversationDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConversationDataset(request));
 }
 
 future<StatusOr<
@@ -75,7 +85,11 @@ future<StatusOr<
 ConversationDatasetsTracingConnection::ImportConversationData(
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
-  return child_->ImportConversationData(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::ImportConversationData");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportConversationData(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -35,7 +35,10 @@ VpcAccessServiceTracingConnection::VpcAccessServiceTracingConnection(
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceTracingConnection::CreateConnector(
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
-  return child_->CreateConnector(request);
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::CreateConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateConnector(request));
 }
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
@@ -61,7 +64,10 @@ VpcAccessServiceTracingConnection::ListConnectors(
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceTracingConnection::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
-  return child_->DeleteConnector(request);
+  auto span = internal::MakeSpan(
+      "vpcaccess_v1::VpcAccessServiceConnection::DeleteConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteConnector(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -35,7 +35,10 @@ BigtableInstanceAdminTracingConnection::BigtableInstanceAdminTracingConnection(
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminTracingConnection::CreateInstance(
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  return child_->CreateInstance(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
@@ -68,7 +71,11 @@ BigtableInstanceAdminTracingConnection::UpdateInstance(
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  return child_->PartialUpdateInstance(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PartialUpdateInstance(request));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteInstance(
@@ -82,7 +89,10 @@ Status BigtableInstanceAdminTracingConnection::DeleteInstance(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminTracingConnection::CreateCluster(
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  return child_->CreateCluster(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
 StatusOr<google::bigtable::admin::v2::Cluster>
@@ -106,13 +116,20 @@ BigtableInstanceAdminTracingConnection::ListClusters(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminTracingConnection::UpdateCluster(
     google::bigtable::admin::v2::Cluster const& request) {
-  return child_->UpdateCluster(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  return child_->PartialUpdateCluster(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::PartialUpdateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PartialUpdateCluster(request));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteCluster(
@@ -155,7 +172,10 @@ BigtableInstanceAdminTracingConnection::ListAppProfiles(
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminTracingConnection::UpdateAppProfile(
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  return child_->UpdateAppProfile(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateAppProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateAppProfile(request));
 }
 
 Status BigtableInstanceAdminTracingConnection::DeleteAppProfile(

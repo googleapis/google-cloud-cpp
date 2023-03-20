@@ -52,13 +52,17 @@ StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingConnection::GetEndpoint(
 future<StatusOr<google::cloud::ids::v1::Endpoint>>
 IDSTracingConnection::CreateEndpoint(
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
-  return child_->CreateEndpoint(request);
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::CreateEndpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateEndpoint(request));
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSTracingConnection::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
-  return child_->DeleteEndpoint(request);
+  auto span = internal::MakeSpan("ids_v1::IDSConnection::DeleteEndpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteEndpoint(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

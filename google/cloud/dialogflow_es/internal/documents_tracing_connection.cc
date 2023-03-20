@@ -55,37 +55,55 @@ DocumentsTracingConnection::GetDocument(
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::CreateDocument(
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
-  return child_->CreateDocument(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::DocumentsConnection::CreateDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateDocument(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
 DocumentsTracingConnection::ImportDocuments(
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
-  return child_->ImportDocuments(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::DocumentsConnection::ImportDocuments");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportDocuments(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsTracingConnection::DeleteDocument(
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
-  return child_->DeleteDocument(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::DocumentsConnection::DeleteDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteDocument(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::UpdateDocument(
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
-  return child_->UpdateDocument(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::DocumentsConnection::UpdateDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateDocument(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::ReloadDocument(
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
-  return child_->ReloadDocument(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::DocumentsConnection::ReloadDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ReloadDocument(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsTracingConnection::ExportDocument(
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
-  return child_->ExportDocument(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::DocumentsConnection::ExportDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportDocument(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

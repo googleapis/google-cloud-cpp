@@ -55,14 +55,24 @@ future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceTracingConnection::InstantiateWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request) {
-  return child_->InstantiateWorkflowTemplate(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::WorkflowTemplateServiceConnection::"
+      "InstantiateWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InstantiateWorkflowTemplate(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request) {
-  return child_->InstantiateInlineWorkflowTemplate(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::WorkflowTemplateServiceConnection::"
+      "InstantiateInlineWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->InstantiateInlineWorkflowTemplate(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

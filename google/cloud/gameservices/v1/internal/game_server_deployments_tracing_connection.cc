@@ -61,21 +61,36 @@ future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceTracingConnection::CreateGameServerDeployment(
     google::cloud::gaming::v1::CreateGameServerDeploymentRequest const&
         request) {
-  return child_->CreateGameServerDeployment(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerDeploymentsServiceConnection::"
+      "CreateGameServerDeployment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGameServerDeployment(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerDeploymentsServiceTracingConnection::DeleteGameServerDeployment(
     google::cloud::gaming::v1::DeleteGameServerDeploymentRequest const&
         request) {
-  return child_->DeleteGameServerDeployment(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerDeploymentsServiceConnection::"
+      "DeleteGameServerDeployment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGameServerDeployment(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
 GameServerDeploymentsServiceTracingConnection::UpdateGameServerDeployment(
     google::cloud::gaming::v1::UpdateGameServerDeploymentRequest const&
         request) {
-  return child_->UpdateGameServerDeployment(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerDeploymentsServiceConnection::"
+      "UpdateGameServerDeployment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateGameServerDeployment(request));
 }
 
 StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
@@ -95,7 +110,12 @@ GameServerDeploymentsServiceTracingConnection::
     UpdateGameServerDeploymentRollout(
         google::cloud::gaming::v1::
             UpdateGameServerDeploymentRolloutRequest const& request) {
-  return child_->UpdateGameServerDeploymentRollout(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerDeploymentsServiceConnection::"
+      "UpdateGameServerDeploymentRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateGameServerDeploymentRollout(request));
 }
 
 StatusOr<google::cloud::gaming::v1::PreviewGameServerDeploymentRolloutResponse>

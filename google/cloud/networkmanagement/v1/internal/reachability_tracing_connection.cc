@@ -61,28 +61,48 @@ future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::CreateConnectivityTest(
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
-  return child_->CreateConnectivityTest(request);
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "CreateConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConnectivityTest(request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::UpdateConnectivityTest(
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
-  return child_->UpdateConnectivityTest(request);
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "UpdateConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateConnectivityTest(request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::RerunConnectivityTest(
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
-  return child_->RerunConnectivityTest(request);
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "RerunConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RerunConnectivityTest(request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceTracingConnection::DeleteConnectivityTest(
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
-  return child_->DeleteConnectivityTest(request);
+  auto span = internal::MakeSpan(
+      "networkmanagement_v1::ReachabilityServiceConnection::"
+      "DeleteConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConnectivityTest(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -68,7 +68,12 @@ future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
 ClientConnectorServicesServiceTracingConnection::CreateClientConnectorService(
     google::cloud::beyondcorp::clientconnectorservices::v1::
         CreateClientConnectorServiceRequest const& request) {
-  return child_->CreateClientConnectorService(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp_clientconnectorservices_v1::"
+      "ClientConnectorServicesServiceConnection::CreateClientConnectorService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateClientConnectorService(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
@@ -76,7 +81,12 @@ future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
 ClientConnectorServicesServiceTracingConnection::UpdateClientConnectorService(
     google::cloud::beyondcorp::clientconnectorservices::v1::
         UpdateClientConnectorServiceRequest const& request) {
-  return child_->UpdateClientConnectorService(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp_clientconnectorservices_v1::"
+      "ClientConnectorServicesServiceConnection::UpdateClientConnectorService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateClientConnectorService(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
@@ -84,7 +94,12 @@ future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
 ClientConnectorServicesServiceTracingConnection::DeleteClientConnectorService(
     google::cloud::beyondcorp::clientconnectorservices::v1::
         DeleteClientConnectorServiceRequest const& request) {
-  return child_->DeleteClientConnectorService(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp_clientconnectorservices_v1::"
+      "ClientConnectorServicesServiceConnection::DeleteClientConnectorService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteClientConnectorService(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

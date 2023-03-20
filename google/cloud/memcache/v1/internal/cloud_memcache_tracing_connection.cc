@@ -55,37 +55,56 @@ CloudMemcacheTracingConnection::GetInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::CreateInstance(
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  return child_->CreateInstance(request);
+  auto span = internal::MakeSpan(
+      "memcache_v1::CloudMemcacheConnection::CreateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  return child_->UpdateInstance(request);
+  auto span = internal::MakeSpan(
+      "memcache_v1::CloudMemcacheConnection::UpdateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::UpdateParameters(
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  return child_->UpdateParameters(request);
+  auto span = internal::MakeSpan(
+      "memcache_v1::CloudMemcacheConnection::UpdateParameters");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateParameters(request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheTracingConnection::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  return child_->DeleteInstance(request);
+  auto span = internal::MakeSpan(
+      "memcache_v1::CloudMemcacheConnection::DeleteInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::ApplyParameters(
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  return child_->ApplyParameters(request);
+  auto span = internal::MakeSpan(
+      "memcache_v1::CloudMemcacheConnection::ApplyParameters");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ApplyParameters(request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::RescheduleMaintenance(
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
-  return child_->RescheduleMaintenance(request);
+  auto span = internal::MakeSpan(
+      "memcache_v1::CloudMemcacheConnection::RescheduleMaintenance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RescheduleMaintenance(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

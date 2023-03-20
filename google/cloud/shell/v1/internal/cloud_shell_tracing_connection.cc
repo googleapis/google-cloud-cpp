@@ -43,25 +43,38 @@ CloudShellServiceTracingConnection::GetEnvironment(
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceTracingConnection::StartEnvironment(
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
-  return child_->StartEnvironment(request);
+  auto span = internal::MakeSpan(
+      "shell_v1::CloudShellServiceConnection::StartEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StartEnvironment(request));
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceTracingConnection::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
-  return child_->AuthorizeEnvironment(request);
+  auto span = internal::MakeSpan(
+      "shell_v1::CloudShellServiceConnection::AuthorizeEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AuthorizeEnvironment(request));
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceTracingConnection::AddPublicKey(
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
-  return child_->AddPublicKey(request);
+  auto span =
+      internal::MakeSpan("shell_v1::CloudShellServiceConnection::AddPublicKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->AddPublicKey(request));
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceTracingConnection::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
-  return child_->RemovePublicKey(request);
+  auto span = internal::MakeSpan(
+      "shell_v1::CloudShellServiceConnection::RemovePublicKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RemovePublicKey(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

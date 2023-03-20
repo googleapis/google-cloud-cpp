@@ -60,13 +60,23 @@ GameServerConfigsServiceTracingConnection::GetGameServerConfig(
 future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
 GameServerConfigsServiceTracingConnection::CreateGameServerConfig(
     google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
-  return child_->CreateGameServerConfig(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerConfigsServiceConnection::"
+      "CreateGameServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateGameServerConfig(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerConfigsServiceTracingConnection::DeleteGameServerConfig(
     google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
-  return child_->DeleteGameServerConfig(request);
+  auto span = internal::MakeSpan(
+      "gameservices_v1::GameServerConfigsServiceConnection::"
+      "DeleteGameServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteGameServerConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

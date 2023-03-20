@@ -42,7 +42,11 @@ SpeechTracingConnection::Recognize(
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
 SpeechTracingConnection::LongRunningRecognize(
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request) {
-  return child_->LongRunningRecognize(request);
+  auto span =
+      internal::MakeSpan("speech_v1::SpeechConnection::LongRunningRecognize");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->LongRunningRecognize(request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
