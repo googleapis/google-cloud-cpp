@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
 #include "absl/strings/match.h"
@@ -24,7 +25,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string getJobsEndpoint(Options const& opts) {
+std::string GetJobsEndpoint(Options const& opts) {
   std::string endpoint = opts.get<EndpointOption>();
 
   if (!absl::StartsWith(endpoint, "https://") &&
@@ -37,26 +38,34 @@ std::string getJobsEndpoint(Options const& opts) {
   return endpoint;
 }
 
-std::string ToString(Projection const& projection) {
-  switch (projection) {
-    case Projection::kFull:
-      return "FULL";
-    case Projection::kMinimal:
-      return "MINIMAL";
-  }
-  return "";
+Projection Projection::Full() {
+  Projection projection;
+  projection.value = "FULL";
+  return projection;
 }
 
-std::string ToString(StateFilter const& filter) {
-  switch (filter) {
-    case StateFilter::kPending:
-      return "PENDING";
-    case StateFilter::kRunning:
-      return "RUNNING";
-    case StateFilter::kDone:
-      return "DONE";
-  }
-  return "";
+Projection Projection::Minimal() {
+  Projection projection;
+  projection.value = "MINIMAL";
+  return projection;
+}
+
+StateFilter StateFilter::Running() {
+  StateFilter state_filter;
+  state_filter.value = "RUNNING";
+  return state_filter;
+}
+
+StateFilter StateFilter::Pending() {
+  StateFilter state_filter;
+  state_filter.value = "PENDING";
+  return state_filter;
+}
+
+StateFilter StateFilter::Done() {
+  StateFilter state_filter;
+  state_filter.value = "DONE";
+  return state_filter;
 }
 
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
@@ -71,7 +80,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
         "Invalid GetJobRequest: Job Id is empty", GCP_ERROR_INFO());
   }
   // Builds GetJob request path based on endpoint provided.
-  std::string endpoint = getJobsEndpoint(opts);
+  std::string endpoint = GetJobsEndpoint(opts);
 
   std::string path =
       absl::StrCat(endpoint, r.project_id(), "/jobs/", r.job_id());
@@ -92,7 +101,7 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
         "Invalid ListJobsRequest: Project Id is empty", GCP_ERROR_INFO());
   }
   // Builds GetJob request path based on endpoint provided.
-  std::string endpoint = getJobsEndpoint(opts);
+  std::string endpoint = GetJobsEndpoint(opts);
 
   std::string path = absl::StrCat(endpoint, r.project_id(), "/jobs");
   request.SetPath(std::move(path));
@@ -103,12 +112,12 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
   }
   request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
   request.AddQueryParameter("minCreationTime",
-                            std::to_string(r.min_creation_time()));
+                            internal::FormatRfc3339(r.min_creation_time()));
   request.AddQueryParameter("maxCreationTime",
-                            std::to_string(r.max_creation_time()));
+                            internal::FormatRfc3339(r.max_creation_time()));
   request.AddQueryParameter("pageToken", r.page_token());
-  request.AddQueryParameter("projection", ToString(r.projection()));
-  request.AddQueryParameter("stateFilter", ToString(r.state_filter()));
+  request.AddQueryParameter("projection", r.projection().value);
+  request.AddQueryParameter("stateFilter", r.state_filter().value);
   request.AddQueryParameter("parentJobId", r.parent_job_id());
 
   return request;

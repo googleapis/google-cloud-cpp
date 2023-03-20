@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <chrono>
 #include <string>
 
 namespace google {
@@ -67,18 +68,20 @@ class GetJobRequest {
   std::string location_;
 };
 
-enum class Projection {
-  kMinimal,
-  kFull,
-};
-std::string ToString(Projection const& projection);
+struct Projection {
+  static Projection Minimal();
+  static Projection Full();
 
-enum class StateFilter {
-  kPending,
-  kRunning,
-  kDone,
+  std::string value;
 };
-std::string ToString(StateFilter const& filter);
+
+struct StateFilter {
+  static StateFilter Pending();
+  static StateFilter Running();
+  static StateFilter Done();
+
+  std::string value;
+};
 
 class ListJobsRequest {
  public:
@@ -89,8 +92,12 @@ class ListJobsRequest {
   std::string const& project_id() const { return project_id_; }
   bool const& all_users() const { return all_users_; }
   std::int32_t const& max_results() const { return max_results_; }
-  std::uint64_t const& min_creation_time() const { return min_creation_time_; }
-  std::uint64_t const& max_creation_time() const { return max_creation_time_; }
+  std::chrono::system_clock::time_point const& min_creation_time() const {
+    return min_creation_time_;
+  }
+  std::chrono::system_clock::time_point const& max_creation_time() const {
+    return max_creation_time_;
+  }
   std::string const& page_token() const { return page_token_; }
   Projection const& projection() const { return projection_; }
   StateFilter const& state_filter() const { return state_filter_; }
@@ -105,35 +112,39 @@ class ListJobsRequest {
   }
 
   ListJobsRequest& set_all_users(bool all_users) & {
-    all_users_ = std::move(all_users);
+    all_users_ = all_users;
     return *this;
   }
   ListJobsRequest&& set_all_users(bool all_users) && {
-    return std::move(set_all_users(std::move(all_users)));
+    return std::move(set_all_users(all_users));
   }
 
   ListJobsRequest& set_max_results(std::int32_t max_results) & {
-    max_results_ = std::move(max_results);
+    max_results_ = max_results;
     return *this;
   }
   ListJobsRequest&& set_max_results(std::int32_t max_results) && {
-    return std::move(set_max_results(std::move(max_results)));
+    return std::move(set_max_results(max_results));
   }
 
-  ListJobsRequest& set_min_creation_time(std::uint64_t min_creation_time) & {
-    min_creation_time_ = std::move(min_creation_time);
+  ListJobsRequest& set_min_creation_time(
+      std::chrono::system_clock::time_point min_creation_time) & {
+    min_creation_time_ = min_creation_time;
     return *this;
   }
-  ListJobsRequest&& set_min_creation_time(std::uint64_t min_creation_time) && {
-    return std::move(set_min_creation_time(std::move(min_creation_time)));
+  ListJobsRequest&& set_min_creation_time(
+      std::chrono::system_clock::time_point min_creation_time) && {
+    return std::move(set_min_creation_time(min_creation_time));
   }
 
-  ListJobsRequest& set_max_creation_time(std::uint64_t max_creation_time) & {
-    max_creation_time_ = std::move(max_creation_time);
+  ListJobsRequest& set_max_creation_time(
+      std::chrono::system_clock::time_point max_creation_time) & {
+    max_creation_time_ = max_creation_time;
     return *this;
   }
-  ListJobsRequest&& set_max_creation_time(std::uint64_t max_creation_time) && {
-    return std::move(set_max_creation_time(std::move(max_creation_time)));
+  ListJobsRequest&& set_max_creation_time(
+      std::chrono::system_clock::time_point max_creation_time) && {
+    return std::move(set_max_creation_time(max_creation_time));
   }
 
   ListJobsRequest& set_page_token(std::string page_token) & {
@@ -173,8 +184,8 @@ class ListJobsRequest {
   std::string project_id_;
   bool all_users_;
   std::int32_t max_results_;
-  std::uint64_t min_creation_time_;
-  std::uint64_t max_creation_time_;
+  std::chrono::system_clock::time_point min_creation_time_;
+  std::chrono::system_clock::time_point max_creation_time_;
   std::string page_token_;
   Projection projection_;
   StateFilter state_filter_;

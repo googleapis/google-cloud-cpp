@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -101,13 +102,14 @@ TEST(GetJobRequest, EmptyJobId) {
 
 TEST(ListJobsRequestTest, Success) {
   ListJobsRequest request("1");
+  auto const& now = std::chrono::system_clock::now();
   request.set_all_users(true)
       .set_max_results(10)
-      .set_max_creation_time(200)
-      .set_min_creation_time(1)
+      .set_max_creation_time(now)
+      .set_min_creation_time(now)
       .set_parent_job_id("1")
-      .set_projection(Projection::kFull)
-      .set_state_filter(StateFilter::kRunning);
+      .set_projection(Projection::Full())
+      .set_state_filter(StateFilter::Running());
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
   auto actual = BuildRestRequest(request, opts);
@@ -118,8 +120,8 @@ TEST(ListJobsRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs");
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
-  expected.AddQueryParameter("minCreationTime", "1");
-  expected.AddQueryParameter("maxCreationTime", "200");
+  expected.AddQueryParameter("minCreationTime", internal::FormatRfc3339(now));
+  expected.AddQueryParameter("maxCreationTime", internal::FormatRfc3339(now));
   expected.AddQueryParameter("pageToken", "");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
