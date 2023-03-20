@@ -26,26 +26,74 @@ bool valid_job(nlohmann::json const& j) {
           j.contains("configuration"));
 }
 
-StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
-    BigQueryHttpResponse const& http_response) {
-  if (http_response.payload.empty()) {
+bool valid_list_format_job(nlohmann::json const& j) {
+  return (j.contains("kind") && j.contains("state") && j.contains("id") &&
+          j.contains("reference") && j.contains("configuration"));
+}
+
+bool valid_jobs_list(nlohmann::json const& j) {
+  return (j.contains("kind") && j.contains("etag") &&
+          j.contains("next_page_token") && j.contains("jobs"));
+}
+
+StatusOr<nlohmann::json> parse_json(std::string const& payload) {
+  if (payload.empty()) {
     return internal::InternalError("Empty payload in HTTP response",
                                    GCP_ERROR_INFO());
   }
   // Build the job response object from Http response.
-  auto json_obj = nlohmann::json::parse(http_response.payload, nullptr, false);
+  auto json_obj = nlohmann::json::parse(payload, nullptr, false);
   if (!json_obj.is_object()) {
     return internal::InternalError("Error parsing Json from response payload",
                                    GCP_ERROR_INFO());
   }
-  if (!valid_job(json_obj)) {
+
+  return json_obj;
+}
+
+StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
+    BigQueryHttpResponse const& http_response) {
+  auto json = parse_json(http_response.payload);
+  if (!json) return std::move(json).status();
+
+  if (!valid_job(*json)) {
     return internal::InternalError("Not a valid Json Job object",
                                    GCP_ERROR_INFO());
   }
 
   GetJobResponse result;
-  result.job = json_obj.get<Job>();
+  result.job = json->get<Job>();
   result.http_response = http_response;
+
+  return result;
+}
+
+StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
+    BigQueryHttpResponse const& http_response) {
+  auto json = parse_json(http_response.payload);
+  if (!json) return std::move(json).status();
+
+  if (!valid_jobs_list(*json)) {
+    return internal::InternalError("Not a valid Json JobList object",
+                                   GCP_ERROR_INFO());
+  }
+
+  ListJobsResponse result;
+  result.http_response = http_response;
+
+  result.kind = json->value("kind", "");
+  result.etag = json->value("etag", "");
+  result.next_page_token = json->value("next_page_token", "");
+
+  for (auto const& kv : json->at("jobs").items()) {
+    auto const& json_list_format_job_obj = kv.value();
+    if (!valid_list_format_job(json_list_format_job_obj)) {
+      return internal::InternalError("Not a valid Json ListFormatJob object",
+                                     GCP_ERROR_INFO());
+    }
+    auto const& list_format_job = json_list_format_job_obj.get<ListFormatJob>();
+    result.jobs.push_back(list_format_job);
+  }
 
   return result;
 }
