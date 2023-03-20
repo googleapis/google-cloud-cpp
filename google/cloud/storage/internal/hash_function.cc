@@ -55,8 +55,25 @@ std::unique_ptr<HashFunction> CreateHashFunction(
     // for previous values is lost.
     return CreateNullHashFunction();
   }
-  // A non-empty Crc32cChecksumValue implies that the application provided a
-  // hash, and we should not compute our own.
+  // Compute the hash only if (1) it is not disabled, and (2) the application
+  // did not provide a hash value. If the application provides a hash value
+  // we are going to use that. Typically such values come from a more trusted
+  // source, e.g. the storage system where the data is being read from, and
+  // we want the upload to fail if the data does not match the *source*.
+  return CreateHashFunction(
+      request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
+          !request.GetOption<Crc32cChecksumValue>().value_or("").empty(),
+      request.GetOption<DisableMD5Hash>().value_or(false) ||
+          !request.GetOption<MD5HashValue>().value_or("").empty());
+}
+
+std::unique_ptr<HashFunction> CreateHashFunction(
+    InsertObjectMediaRequest const& request) {
+  // Compute the hash only if (1) it is not disabled, and (2) the application
+  // did not provide a hash value. If the application provides a hash value
+  // we are going to use that. Typically such values come from a more trusted
+  // source, e.g. the storage system where the data is being read from, and
+  // we want the upload to fail if the data does not match the *source*.
   return CreateHashFunction(
       request.GetOption<DisableCrc32cChecksum>().value_or(false) ||
           !request.GetOption<Crc32cChecksumValue>().value_or("").empty(),

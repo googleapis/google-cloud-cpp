@@ -44,8 +44,8 @@ HashValues HashEmpty(std::unique_ptr<HashFunction> function) {
 }
 
 HashValues HashQuick(std::unique_ptr<HashFunction> function) {
-  auto const text = std::string{"The quick brown fox jumps over the lazy dog"};
-  function->Update(text.data(), text.size());
+  function->Update(
+      absl::string_view{"The quick brown fox jumps over the lazy dog"});
   return std::move(*function).Finish();
 }
 

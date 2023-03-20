@@ -17,9 +17,9 @@
 
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/version.h"
+#include "absl/types/optional.h"
 #include <openssl/evp.h>
 #include <cstdint>
-#include <map>
 #include <memory>
 #include <string>
 
@@ -36,9 +36,14 @@ class NullHashFunction : public HashFunction {
  public:
   NullHashFunction() = default;
 
-  std::string Name() const override { return "null"; }
-  void Update(char const*, std::size_t) override {}
-  HashValues Finish() && override { return HashValues{}; }
+  std::string Name() const override;
+  void Update(absl::string_view) override;
+  Status Update(std::int64_t offset, absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer,
+                std::uint32_t buffer_crc) override;
+  Status Update(std::int64_t offset, absl::Cord const& buffer,
+                std::uint32_t buffer_crc) override;
+  HashValues Finish() override;
 };
 
 /**
@@ -51,8 +56,13 @@ class CompositeFunction : public HashFunction {
       : a_(std::move(a)), b_(std::move(b)) {}
 
   std::string Name() const override;
-  void Update(char const* buf, std::size_t n) override;
-  HashValues Finish() && override;
+  void Update(absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer,
+                std::uint32_t buffer_crc) override;
+  Status Update(std::int64_t offset, absl::Cord const& buffer,
+                std::uint32_t buffer_crc) override;
+  HashValues Finish() override;
 
  private:
   std::unique_ptr<HashFunction> a_;
@@ -70,8 +80,13 @@ class MD5HashFunction : public HashFunction {
   MD5HashFunction& operator=(MD5HashFunction const&) = delete;
 
   std::string Name() const override { return "md5"; }
-  void Update(char const* buf, std::size_t n) override;
-  HashValues Finish() && override;
+  void Update(absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer,
+                std::uint32_t buffer_crc) override;
+  Status Update(std::int64_t offset, absl::Cord const& buffer,
+                std::uint32_t buffer_crc) override;
+  HashValues Finish() override;
 
   struct ContextDeleter {
     void operator()(EVP_MD_CTX*);
@@ -79,6 +94,8 @@ class MD5HashFunction : public HashFunction {
 
  private:
   std::unique_ptr<EVP_MD_CTX, ContextDeleter> impl_;
+  std::int64_t minimum_offset_ = 0;
+  absl::optional<HashValues> hashes_;
 };
 
 /**
@@ -92,11 +109,17 @@ class Crc32cHashFunction : public HashFunction {
   Crc32cHashFunction& operator=(Crc32cHashFunction const&) = delete;
 
   std::string Name() const override { return "crc32c"; }
-  void Update(char const* buf, std::size_t n) override;
-  HashValues Finish() && override;
+  void Update(absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer) override;
+  Status Update(std::int64_t offset, absl::string_view buffer,
+                std::uint32_t buffer_crc) override;
+  Status Update(std::int64_t offset, absl::Cord const& buffer,
+                std::uint32_t buffer_crc) override;
+  HashValues Finish() override;
 
  private:
-  std::uint32_t current_{0};
+  std::uint32_t current_ = 0;
+  std::int64_t minimum_offset_ = 0;
 };
 
 }  // namespace internal
