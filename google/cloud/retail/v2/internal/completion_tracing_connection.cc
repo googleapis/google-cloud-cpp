@@ -43,7 +43,11 @@ CompletionServiceTracingConnection::CompleteQuery(
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceTracingConnection::ImportCompletionData(
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
-  return child_->ImportCompletionData(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::CompletionServiceConnection::ImportCompletionData");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportCompletionData(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

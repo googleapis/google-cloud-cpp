@@ -52,13 +52,21 @@ ImageAnnotatorTracingConnection::BatchAnnotateFiles(
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorTracingConnection::AsyncBatchAnnotateImages(
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-  return child_->AsyncBatchAnnotateImages(request);
+  auto span = internal::MakeSpan(
+      "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateImages");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncBatchAnnotateImages(request));
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorTracingConnection::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-  return child_->AsyncBatchAnnotateFiles(request);
+  auto span = internal::MakeSpan(
+      "vision_v1::ImageAnnotatorConnection::AsyncBatchAnnotateFiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncBatchAnnotateFiles(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

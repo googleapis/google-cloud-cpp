@@ -56,19 +56,28 @@ ServiceManagerTracingConnection::GetService(
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
 ServiceManagerTracingConnection::CreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
-  return child_->CreateService(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement_v1::ServiceManagerConnection::CreateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateService(request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
 ServiceManagerTracingConnection::DeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
-  return child_->DeleteService(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement_v1::ServiceManagerConnection::DeleteService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerTracingConnection::UndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
-  return child_->UndeleteService(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement_v1::ServiceManagerConnection::UndeleteService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UndeleteService(request));
 }
 
 StreamRange<google::api::Service>
@@ -106,7 +115,11 @@ future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerTracingConnection::SubmitConfigSource(
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
-  return child_->SubmitConfigSource(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement_v1::ServiceManagerConnection::SubmitConfigSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SubmitConfigSource(request));
 }
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
@@ -135,7 +148,11 @@ future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerTracingConnection::CreateServiceRollout(
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
-  return child_->CreateServiceRollout(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement_v1::ServiceManagerConnection::CreateServiceRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateServiceRollout(request));
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

@@ -56,55 +56,89 @@ DataMigrationServiceTracingConnection::GetMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::CreateMigrationJob(
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
-  return child_->CreateMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::CreateMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::UpdateMigrationJob(
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
-  return child_->UpdateMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::UpdateMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceTracingConnection::DeleteMigrationJob(
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
-  return child_->DeleteMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::DeleteMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::StartMigrationJob(
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
-  return child_->StartMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::StartMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StartMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::StopMigrationJob(
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
-  return child_->StopMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::StopMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StopMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::ResumeMigrationJob(
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
-  return child_->ResumeMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::ResumeMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResumeMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::PromoteMigrationJob(
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
-  return child_->PromoteMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::PromoteMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->PromoteMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::VerifyMigrationJob(
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
-  return child_->VerifyMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::VerifyMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->VerifyMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceTracingConnection::RestartMigrationJob(
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
-  return child_->RestartMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::RestartMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RestartMigrationJob(request));
 }
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
@@ -142,21 +176,36 @@ future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceTracingConnection::CreateConnectionProfile(
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
-  return child_->CreateConnectionProfile(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "CreateConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConnectionProfile(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceTracingConnection::UpdateConnectionProfile(
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
-  return child_->UpdateConnectionProfile(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "UpdateConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateConnectionProfile(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceTracingConnection::DeleteConnectionProfile(
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
-  return child_->DeleteConnectionProfile(request);
+  auto span = internal::MakeSpan(
+      "datamigration_v1::DataMigrationServiceConnection::"
+      "DeleteConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConnectionProfile(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

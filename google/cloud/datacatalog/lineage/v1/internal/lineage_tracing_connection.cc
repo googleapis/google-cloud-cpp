@@ -77,7 +77,10 @@ future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageTracingConnection::DeleteProcess(
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
-  return child_->DeleteProcess(request);
+  auto span = internal::MakeSpan(
+      "datacatalog_lineage_v1::LineageConnection::DeleteProcess");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteProcess(request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
@@ -122,7 +125,10 @@ LineageTracingConnection::ListRuns(
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageTracingConnection::DeleteRun(
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
-  return child_->DeleteRun(request);
+  auto span = internal::MakeSpan(
+      "datacatalog_lineage_v1::LineageConnection::DeleteRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteRun(request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

@@ -121,7 +121,11 @@ Status MetricServiceTracingConnection::CreateServiceTimeSeries(
 
 future<Status> MetricServiceTracingConnection::AsyncCreateTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  return child_->AsyncCreateTimeSeries(request);
+  auto span = internal::MakeSpan(
+      "monitoring_v3::MetricServiceConnection::AsyncCreateTimeSeries");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncCreateTimeSeries(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

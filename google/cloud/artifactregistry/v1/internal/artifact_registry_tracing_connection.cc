@@ -125,7 +125,11 @@ future<StatusOr<
 ArtifactRegistryTracingConnection::ImportAptArtifacts(
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
-  return child_->ImportAptArtifacts(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportAptArtifacts(request));
 }
 
 future<StatusOr<
@@ -133,7 +137,11 @@ future<StatusOr<
 ArtifactRegistryTracingConnection::ImportYumArtifacts(
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
-  return child_->ImportYumArtifacts(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportYumArtifacts(request));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
@@ -162,7 +170,10 @@ future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
 ArtifactRegistryTracingConnection::CreateRepository(
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
-  return child_->CreateRepository(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateRepository(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -179,7 +190,10 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeleteRepository(
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
-  return child_->DeleteRepository(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteRepository(request));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Package>
@@ -207,7 +221,10 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeletePackage(
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
-  return child_->DeletePackage(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeletePackage(request));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Version>
@@ -235,7 +252,10 @@ future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeleteVersion(
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
-  return child_->DeleteVersion(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteVersion(request));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::File>

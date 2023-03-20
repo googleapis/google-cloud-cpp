@@ -36,21 +36,33 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersTracingConnection::CreateAttachedCluster(
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
         request) {
-  return child_->CreateAttachedCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::CreateAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAttachedCluster(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersTracingConnection::UpdateAttachedCluster(
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
         request) {
-  return child_->UpdateAttachedCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::UpdateAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAttachedCluster(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
 AttachedClustersTracingConnection::ImportAttachedCluster(
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
         request) {
-  return child_->ImportAttachedCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::ImportAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ImportAttachedCluster(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -79,7 +91,11 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AttachedClustersTracingConnection::DeleteAttachedCluster(
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
         request) {
-  return child_->DeleteAttachedCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::DeleteAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAttachedCluster(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

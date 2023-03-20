@@ -35,7 +35,9 @@ AutoMlTracingConnection::AutoMlTracingConnection(
 future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlTracingConnection::CreateDataset(
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
-  return child_->CreateDataset(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::CreateDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateDataset(request));
 }
 
 StatusOr<google::cloud::automl::v1::Dataset>
@@ -67,19 +69,25 @@ AutoMlTracingConnection::UpdateDataset(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::DeleteDataset(
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
-  return child_->DeleteDataset(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeleteDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteDataset(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::ImportData(
     google::cloud::automl::v1::ImportDataRequest const& request) {
-  return child_->ImportData(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ImportData");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportData(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::ExportData(
     google::cloud::automl::v1::ExportDataRequest const& request) {
-  return child_->ExportData(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportData");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportData(request));
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
@@ -94,7 +102,9 @@ AutoMlTracingConnection::GetAnnotationSpec(
 future<StatusOr<google::cloud::automl::v1::Model>>
 AutoMlTracingConnection::CreateModel(
     google::cloud::automl::v1::CreateModelRequest const& request) {
-  return child_->CreateModel(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::CreateModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateModel(request));
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::GetModel(
@@ -117,7 +127,9 @@ AutoMlTracingConnection::ListModels(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::DeleteModel(
     google::cloud::automl::v1::DeleteModelRequest const& request) {
-  return child_->DeleteModel(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeleteModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteModel(request));
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::UpdateModel(
@@ -130,19 +142,25 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::UpdateModel(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::DeployModel(
     google::cloud::automl::v1::DeployModelRequest const& request) {
-  return child_->DeployModel(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::DeployModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeployModel(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::UndeployModel(
     google::cloud::automl::v1::UndeployModelRequest const& request) {
-  return child_->UndeployModel(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::UndeployModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UndeployModel(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlTracingConnection::ExportModel(
     google::cloud::automl::v1::ExportModelRequest const& request) {
-  return child_->ExportModel(request);
+  auto span = internal::MakeSpan("automl_v1::AutoMlConnection::ExportModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportModel(request));
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>

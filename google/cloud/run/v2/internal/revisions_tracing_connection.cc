@@ -53,7 +53,9 @@ RevisionsTracingConnection::ListRevisions(
 future<StatusOr<google::cloud::run::v2::Revision>>
 RevisionsTracingConnection::DeleteRevision(
     google::cloud::run::v2::DeleteRevisionRequest const& request) {
-  return child_->DeleteRevision(request);
+  auto span = internal::MakeSpan("run_v2::RevisionsConnection::DeleteRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteRevision(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

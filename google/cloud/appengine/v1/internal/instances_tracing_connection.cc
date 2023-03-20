@@ -55,13 +55,19 @@ InstancesTracingConnection::GetInstance(
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 InstancesTracingConnection::DeleteInstance(
     google::appengine::v1::DeleteInstanceRequest const& request) {
-  return child_->DeleteInstance(request);
+  auto span =
+      internal::MakeSpan("appengine_v1::InstancesConnection::DeleteInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
 InstancesTracingConnection::DebugInstance(
     google::appengine::v1::DebugInstanceRequest const& request) {
-  return child_->DebugInstance(request);
+  auto span =
+      internal::MakeSpan("appengine_v1::InstancesConnection::DebugInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DebugInstance(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

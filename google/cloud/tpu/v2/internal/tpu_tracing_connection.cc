@@ -50,28 +50,38 @@ StatusOr<google::cloud::tpu::v2::Node> TpuTracingConnection::GetNode(
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::CreateNode(
     google::cloud::tpu::v2::CreateNodeRequest const& request) {
-  return child_->CreateNode(request);
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::CreateNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
 TpuTracingConnection::DeleteNode(
     google::cloud::tpu::v2::DeleteNodeRequest const& request) {
-  return child_->DeleteNode(request);
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::DeleteNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StopNode(
     google::cloud::tpu::v2::StopNodeRequest const& request) {
-  return child_->StopNode(request);
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::StopNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StopNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::StartNode(
     google::cloud::tpu::v2::StartNodeRequest const& request) {
-  return child_->StartNode(request);
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::StartNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->StartNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuTracingConnection::UpdateNode(
     google::cloud::tpu::v2::UpdateNodeRequest const& request) {
-  return child_->UpdateNode(request);
+  auto span = internal::MakeSpan("tpu_v2::TpuConnection::UpdateNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateNode(request));
 }
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>

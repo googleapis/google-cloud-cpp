@@ -54,13 +54,19 @@ StatusOr<google::appengine::v1::Service> ServicesTracingConnection::GetService(
 future<StatusOr<google::appengine::v1::Service>>
 ServicesTracingConnection::UpdateService(
     google::appengine::v1::UpdateServiceRequest const& request) {
-  return child_->UpdateService(request);
+  auto span =
+      internal::MakeSpan("appengine_v1::ServicesConnection::UpdateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateService(request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesTracingConnection::DeleteService(
     google::appengine::v1::DeleteServiceRequest const& request) {
-  return child_->DeleteService(request);
+  auto span =
+      internal::MakeSpan("appengine_v1::ServicesConnection::DeleteService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteService(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

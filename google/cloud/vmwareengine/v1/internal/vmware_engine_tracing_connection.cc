@@ -56,26 +56,42 @@ VmwareEngineTracingConnection::GetPrivateCloud(
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::CreatePrivateCloud(
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
-  return child_->CreatePrivateCloud(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreatePrivateCloud");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePrivateCloud(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::UpdatePrivateCloud(
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
-  return child_->UpdatePrivateCloud(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateCloud");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePrivateCloud(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::DeletePrivateCloud(
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
-  return child_->DeletePrivateCloud(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeletePrivateCloud");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePrivateCloud(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::UndeletePrivateCloud(
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
-  return child_->UndeletePrivateCloud(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UndeletePrivateCloud");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UndeletePrivateCloud(request));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Cluster>
@@ -101,19 +117,28 @@ VmwareEngineTracingConnection::GetCluster(
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineTracingConnection::CreateCluster(
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
-  return child_->CreateCluster(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateCluster(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineTracingConnection::UpdateCluster(
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
-  return child_->UpdateCluster(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteCluster(
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
-  return child_->DeleteCluster(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteCluster(request));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
@@ -171,21 +196,33 @@ future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::ResetNsxCredentials(
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
-  return child_->ResetNsxCredentials(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ResetNsxCredentials");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResetNsxCredentials(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::ResetVcenterCredentials(
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
-  return child_->ResetVcenterCredentials(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ResetVcenterCredentials");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->ResetVcenterCredentials(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
 VmwareEngineTracingConnection::CreateHcxActivationKey(
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
-  return child_->CreateHcxActivationKey(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateHcxActivationKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateHcxActivationKey(request));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -235,42 +272,66 @@ future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineTracingConnection::CreateNetworkPolicy(
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
-  return child_->CreateNetworkPolicy(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateNetworkPolicy(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineTracingConnection::UpdateNetworkPolicy(
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
-  return child_->UpdateNetworkPolicy(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateNetworkPolicy(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteNetworkPolicy(
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
-  return child_->DeleteNetworkPolicy(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkPolicy(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
-  return child_->CreateVmwareEngineNetwork(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::CreateVmwareEngineNetwork");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateVmwareEngineNetwork(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
-  return child_->UpdateVmwareEngineNetwork(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::UpdateVmwareEngineNetwork");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateVmwareEngineNetwork(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
-  return child_->DeleteVmwareEngineNetwork(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::DeleteVmwareEngineNetwork");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteVmwareEngineNetwork(request));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>

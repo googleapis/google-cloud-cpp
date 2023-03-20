@@ -58,14 +58,22 @@ future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminTracingConnection::CreateInstanceConfig(
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
-  return child_->CreateInstanceConfig(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateInstanceConfig(request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminTracingConnection::UpdateInstanceConfig(
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
-  return child_->UpdateInstanceConfig(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateInstanceConfig(request));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstanceConfig(
@@ -114,14 +122,20 @@ future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminTracingConnection::CreateInstance(
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
-  return child_->CreateInstance(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminTracingConnection::UpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
-  return child_->UpdateInstance(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
 Status InstanceAdminTracingConnection::DeleteInstance(

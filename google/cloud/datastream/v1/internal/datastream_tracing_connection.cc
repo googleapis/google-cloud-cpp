@@ -57,21 +57,33 @@ future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamTracingConnection::CreateConnectionProfile(
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
         request) {
-  return child_->CreateConnectionProfile(request);
+  auto span = internal::MakeSpan(
+      "datastream_v1::DatastreamConnection::CreateConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConnectionProfile(request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamTracingConnection::UpdateConnectionProfile(
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
         request) {
-  return child_->UpdateConnectionProfile(request);
+  auto span = internal::MakeSpan(
+      "datastream_v1::DatastreamConnection::UpdateConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateConnectionProfile(request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeleteConnectionProfile(
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
         request) {
-  return child_->DeleteConnectionProfile(request);
+  auto span = internal::MakeSpan(
+      "datastream_v1::DatastreamConnection::DeleteConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConnectionProfile(request));
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -107,19 +119,28 @@ DatastreamTracingConnection::GetStream(
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamTracingConnection::CreateStream(
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
-  return child_->CreateStream(request);
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::CreateStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateStream(request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamTracingConnection::UpdateStream(
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
-  return child_->UpdateStream(request);
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::UpdateStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateStream(request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeleteStream(
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
-  return child_->DeleteStream(request);
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::DeleteStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteStream(request));
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -184,7 +205,11 @@ future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
 DatastreamTracingConnection::CreatePrivateConnection(
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
         request) {
-  return child_->CreatePrivateConnection(request);
+  auto span = internal::MakeSpan(
+      "datastream_v1::DatastreamConnection::CreatePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePrivateConnection(request));
 }
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
@@ -212,13 +237,20 @@ future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeletePrivateConnection(
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
         request) {
-  return child_->DeletePrivateConnection(request);
+  auto span = internal::MakeSpan(
+      "datastream_v1::DatastreamConnection::DeletePrivateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePrivateConnection(request));
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
 DatastreamTracingConnection::CreateRoute(
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
-  return child_->CreateRoute(request);
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::CreateRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateRoute(request));
 }
 
 StatusOr<google::cloud::datastream::v1::Route>
@@ -244,7 +276,10 @@ DatastreamTracingConnection::ListRoutes(
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamTracingConnection::DeleteRoute(
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
-  return child_->DeleteRoute(request);
+  auto span =
+      internal::MakeSpan("datastream_v1::DatastreamConnection::DeleteRoute");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteRoute(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

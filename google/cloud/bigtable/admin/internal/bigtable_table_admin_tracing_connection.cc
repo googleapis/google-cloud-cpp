@@ -64,7 +64,10 @@ BigtableTableAdminTracingConnection::GetTable(
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminTracingConnection::UpdateTable(
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
-  return child_->UpdateTable(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateTable(request));
 }
 
 Status BigtableTableAdminTracingConnection::DeleteTable(
@@ -78,7 +81,10 @@ Status BigtableTableAdminTracingConnection::DeleteTable(
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminTracingConnection::UndeleteTable(
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
-  return child_->UndeleteTable(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UndeleteTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UndeleteTable(request));
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -120,7 +126,10 @@ BigtableTableAdminTracingConnection::CheckConsistency(
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminTracingConnection::CreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
-  return child_->CreateBackup(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBackup(request));
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
@@ -163,7 +172,10 @@ BigtableTableAdminTracingConnection::ListBackups(
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminTracingConnection::RestoreTable(
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
-  return child_->RestoreTable(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::RestoreTable");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RestoreTable(request));
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -196,7 +208,11 @@ BigtableTableAdminTracingConnection::TestIamPermissions(
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminTracingConnection::AsyncCheckConsistency(
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  return child_->AsyncCheckConsistency(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::AsyncCheckConsistency");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AsyncCheckConsistency(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

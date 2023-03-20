@@ -63,49 +63,74 @@ CloudRedisTracingConnection::GetInstanceAuthString(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisTracingConnection::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
-  return child_->CreateInstance(request);
+  auto span =
+      internal::MakeSpan("redis_v1::CloudRedisConnection::CreateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateInstance(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisTracingConnection::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-  return child_->UpdateInstance(request);
+  auto span =
+      internal::MakeSpan("redis_v1::CloudRedisConnection::UpdateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisTracingConnection::UpgradeInstance(
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-  return child_->UpgradeInstance(request);
+  auto span =
+      internal::MakeSpan("redis_v1::CloudRedisConnection::UpgradeInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpgradeInstance(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisTracingConnection::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
-  return child_->ImportInstance(request);
+  auto span =
+      internal::MakeSpan("redis_v1::CloudRedisConnection::ImportInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportInstance(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisTracingConnection::ExportInstance(
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
-  return child_->ExportInstance(request);
+  auto span =
+      internal::MakeSpan("redis_v1::CloudRedisConnection::ExportInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportInstance(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisTracingConnection::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-  return child_->FailoverInstance(request);
+  auto span =
+      internal::MakeSpan("redis_v1::CloudRedisConnection::FailoverInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->FailoverInstance(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
 CloudRedisTracingConnection::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-  return child_->DeleteInstance(request);
+  auto span =
+      internal::MakeSpan("redis_v1::CloudRedisConnection::DeleteInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisTracingConnection::RescheduleMaintenance(
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
-  return child_->RescheduleMaintenance(request);
+  auto span = internal::MakeSpan(
+      "redis_v1::CloudRedisConnection::RescheduleMaintenance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RescheduleMaintenance(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

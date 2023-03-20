@@ -44,7 +44,11 @@ JobControllerTracingConnection::SubmitJob(
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerTracingConnection::SubmitJobAsOperation(
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  return child_->SubmitJobAsOperation(request);
+  auto span = internal::MakeSpan(
+      "dataproc_v1::JobControllerConnection::SubmitJobAsOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->SubmitJobAsOperation(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job>

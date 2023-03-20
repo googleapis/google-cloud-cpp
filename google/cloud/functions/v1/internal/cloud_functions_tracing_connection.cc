@@ -56,19 +56,28 @@ CloudFunctionsServiceTracingConnection::GetFunction(
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceTracingConnection::CreateFunction(
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
-  return child_->CreateFunction(request);
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::CreateFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateFunction(request));
 }
 
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceTracingConnection::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  return child_->UpdateFunction(request);
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::UpdateFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateFunction(request));
 }
 
 future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceTracingConnection::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  return child_->DeleteFunction(request);
+  auto span = internal::MakeSpan(
+      "functions_v1::CloudFunctionsServiceConnection::DeleteFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteFunction(request));
 }
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>

@@ -35,7 +35,10 @@ AssetServiceTracingConnection::AssetServiceTracingConnection(
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceTracingConnection::ExportAssets(
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
-  return child_->ExportAssets(request);
+  auto span =
+      internal::MakeSpan("asset_v1::AssetServiceConnection::ExportAssets");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportAssets(request));
 }
 
 StreamRange<google::cloud::asset::v1::Asset>
@@ -136,7 +139,11 @@ future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceTracingConnection::AnalyzeIamPolicyLongrunning(
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
-  return child_->AnalyzeIamPolicyLongrunning(request);
+  auto span = internal::MakeSpan(
+      "asset_v1::AssetServiceConnection::AnalyzeIamPolicyLongrunning");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AnalyzeIamPolicyLongrunning(request));
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

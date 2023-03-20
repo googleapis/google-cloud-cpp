@@ -35,7 +35,10 @@ CloudBuildTracingConnection::CloudBuildTracingConnection(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildTracingConnection::CreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
-  return child_->CreateBuild(request);
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::CreateBuild");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBuild(request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build>
@@ -70,13 +73,19 @@ CloudBuildTracingConnection::CancelBuild(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildTracingConnection::RetryBuild(
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
-  return child_->RetryBuild(request);
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::RetryBuild");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RetryBuild(request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildTracingConnection::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
-  return child_->ApproveBuild(request);
+  auto span =
+      internal::MakeSpan("cloudbuild_v1::CloudBuildConnection::ApproveBuild");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ApproveBuild(request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -132,7 +141,10 @@ CloudBuildTracingConnection::UpdateBuildTrigger(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildTracingConnection::RunBuildTrigger(
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
-  return child_->RunBuildTrigger(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::RunBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RunBuildTrigger(request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
@@ -148,7 +160,10 @@ CloudBuildTracingConnection::ReceiveTriggerWebhook(
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildTracingConnection::CreateWorkerPool(
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
-  return child_->CreateWorkerPool(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::CreateWorkerPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateWorkerPool(request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
@@ -164,13 +179,19 @@ future<StatusOr<
     google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
 CloudBuildTracingConnection::DeleteWorkerPool(
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
-  return child_->DeleteWorkerPool(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::DeleteWorkerPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteWorkerPool(request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildTracingConnection::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
-  return child_->UpdateWorkerPool(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild_v1::CloudBuildConnection::UpdateWorkerPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateWorkerPool(request));
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>

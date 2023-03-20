@@ -83,14 +83,20 @@ TestCasesTracingConnection::UpdateTestCase(
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
 TestCasesTracingConnection::RunTestCase(
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
-  return child_->RunTestCase(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::TestCasesConnection::RunTestCase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RunTestCase(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
 TestCasesTracingConnection::BatchRunTestCases(
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
-  return child_->BatchRunTestCases(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TestCasesConnection::BatchRunTestCases");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->BatchRunTestCases(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -106,13 +112,19 @@ TestCasesTracingConnection::CalculateCoverage(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
 TestCasesTracingConnection::ImportTestCases(
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
-  return child_->ImportTestCases(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::TestCasesConnection::ImportTestCases");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportTestCases(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesTracingConnection::ExportTestCases(
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
-  return child_->ExportTestCases(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::TestCasesConnection::ExportTestCases");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportTestCases(request));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>

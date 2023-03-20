@@ -193,13 +193,19 @@ ProductSearchTracingConnection::ListProductsInProductSet(
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchTracingConnection::ImportProductSets(
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
-  return child_->ImportProductSets(request);
+  auto span = internal::MakeSpan(
+      "vision_v1::ProductSearchConnection::ImportProductSets");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportProductSets(request));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchTracingConnection::PurgeProducts(
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
-  return child_->PurgeProducts(request);
+  auto span =
+      internal::MakeSpan("vision_v1::ProductSearchConnection::PurgeProducts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->PurgeProducts(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

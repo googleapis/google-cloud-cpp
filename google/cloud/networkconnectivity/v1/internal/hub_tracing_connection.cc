@@ -56,19 +56,28 @@ HubServiceTracingConnection::GetHub(
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceTracingConnection::CreateHub(
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
-  return child_->CreateHub(request);
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::CreateHub");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateHub(request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceTracingConnection::UpdateHub(
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
-  return child_->UpdateHub(request);
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::UpdateHub");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateHub(request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceTracingConnection::DeleteHub(
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
-  return child_->DeleteHub(request);
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::DeleteHub");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteHub(request));
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
@@ -95,19 +104,28 @@ HubServiceTracingConnection::GetSpoke(
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceTracingConnection::CreateSpoke(
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
-  return child_->CreateSpoke(request);
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::CreateSpoke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateSpoke(request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceTracingConnection::UpdateSpoke(
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
-  return child_->UpdateSpoke(request);
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::UpdateSpoke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateSpoke(request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceTracingConnection::DeleteSpoke(
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
-  return child_->DeleteSpoke(request);
+  auto span = internal::MakeSpan(
+      "networkconnectivity_v1::HubServiceConnection::DeleteSpoke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSpoke(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -43,19 +43,28 @@ ApplicationsTracingConnection::GetApplication(
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsTracingConnection::CreateApplication(
     google::appengine::v1::CreateApplicationRequest const& request) {
-  return child_->CreateApplication(request);
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::CreateApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateApplication(request));
 }
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsTracingConnection::UpdateApplication(
     google::appengine::v1::UpdateApplicationRequest const& request) {
-  return child_->UpdateApplication(request);
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::UpdateApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateApplication(request));
 }
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsTracingConnection::RepairApplication(
     google::appengine::v1::RepairApplicationRequest const& request) {
-  return child_->RepairApplication(request);
+  auto span = internal::MakeSpan(
+      "appengine_v1::ApplicationsConnection::RepairApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RepairApplication(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

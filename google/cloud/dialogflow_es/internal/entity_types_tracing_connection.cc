@@ -83,32 +83,52 @@ future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
 EntityTypesTracingConnection::BatchUpdateEntityTypes(
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
-  return child_->BatchUpdateEntityTypes(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchUpdateEntityTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchUpdateEntityTypes(request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchDeleteEntityTypes(
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
-  return child_->BatchDeleteEntityTypes(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntityTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteEntityTypes(request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchCreateEntities(
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
-  return child_->BatchCreateEntities(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchCreateEntities");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchCreateEntities(request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
-  return child_->BatchUpdateEntities(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchUpdateEntities");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchUpdateEntities(request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesTracingConnection::BatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
-  return child_->BatchDeleteEntities(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::BatchDeleteEntities");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteEntities(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

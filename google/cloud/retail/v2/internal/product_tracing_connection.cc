@@ -81,37 +81,59 @@ Status ProductServiceTracingConnection::DeleteProduct(
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceTracingConnection::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {
-  return child_->ImportProducts(request);
+  auto span =
+      internal::MakeSpan("retail_v2::ProductServiceConnection::ImportProducts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportProducts(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceTracingConnection::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request) {
-  return child_->SetInventory(request);
+  auto span =
+      internal::MakeSpan("retail_v2::ProductServiceConnection::SetInventory");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->SetInventory(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceTracingConnection::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
-  return child_->AddFulfillmentPlaces(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::ProductServiceConnection::AddFulfillmentPlaces");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddFulfillmentPlaces(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceTracingConnection::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
-  return child_->RemoveFulfillmentPlaces(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::ProductServiceConnection::RemoveFulfillmentPlaces");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveFulfillmentPlaces(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceTracingConnection::AddLocalInventories(
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
-  return child_->AddLocalInventories(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::ProductServiceConnection::AddLocalInventories");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->AddLocalInventories(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceTracingConnection::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
-  return child_->RemoveLocalInventories(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::ProductServiceConnection::RemoveLocalInventories");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveLocalInventories(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

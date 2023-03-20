@@ -61,7 +61,11 @@ future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceTracingConnection::CreateAppGateway(
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request) {
-  return child_->CreateAppGateway(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "CreateAppGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateAppGateway(request));
 }
 
 future<StatusOr<
@@ -69,7 +73,11 @@ future<StatusOr<
 AppGatewaysServiceTracingConnection::DeleteAppGateway(
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request) {
-  return child_->DeleteAppGateway(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
+      "DeleteAppGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteAppGateway(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

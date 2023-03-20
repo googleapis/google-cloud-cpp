@@ -107,7 +107,10 @@ Status StorageTransferServiceTracingConnection::ResumeTransferOperation(
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceTracingConnection::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
-  return child_->RunTransferJob(request);
+  auto span = internal::MakeSpan(
+      "storagetransfer_v1::StorageTransferServiceConnection::RunTransferJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RunTransferJob(request));
 }
 
 Status StorageTransferServiceTracingConnection::DeleteTransferJob(

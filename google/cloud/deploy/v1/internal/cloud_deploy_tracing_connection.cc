@@ -56,19 +56,31 @@ CloudDeployTracingConnection::GetDeliveryPipeline(
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployTracingConnection::CreateDeliveryPipeline(
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
-  return child_->CreateDeliveryPipeline(request);
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::CreateDeliveryPipeline");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDeliveryPipeline(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployTracingConnection::UpdateDeliveryPipeline(
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
-  return child_->UpdateDeliveryPipeline(request);
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::UpdateDeliveryPipeline");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDeliveryPipeline(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployTracingConnection::DeleteDeliveryPipeline(
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
-  return child_->DeleteDeliveryPipeline(request);
+  auto span = internal::MakeSpan(
+      "deploy_v1::CloudDeployConnection::DeleteDeliveryPipeline");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDeliveryPipeline(request));
 }
 
 StreamRange<google::cloud::deploy::v1::Target>
@@ -93,19 +105,28 @@ CloudDeployTracingConnection::GetTarget(
 future<StatusOr<google::cloud::deploy::v1::Target>>
 CloudDeployTracingConnection::CreateTarget(
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
-  return child_->CreateTarget(request);
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::CreateTarget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateTarget(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Target>>
 CloudDeployTracingConnection::UpdateTarget(
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
-  return child_->UpdateTarget(request);
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::UpdateTarget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateTarget(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployTracingConnection::DeleteTarget(
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
-  return child_->DeleteTarget(request);
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::DeleteTarget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteTarget(request));
 }
 
 StreamRange<google::cloud::deploy::v1::Release>
@@ -131,7 +152,10 @@ CloudDeployTracingConnection::GetRelease(
 future<StatusOr<google::cloud::deploy::v1::Release>>
 CloudDeployTracingConnection::CreateRelease(
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
-  return child_->CreateRelease(request);
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::CreateRelease");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateRelease(request));
 }
 
 StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
@@ -175,7 +199,10 @@ CloudDeployTracingConnection::GetRollout(
 future<StatusOr<google::cloud::deploy::v1::Rollout>>
 CloudDeployTracingConnection::CreateRollout(
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
-  return child_->CreateRollout(request);
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::CreateRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateRollout(request));
 }
 
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>

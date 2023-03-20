@@ -54,19 +54,28 @@ EventarcTracingConnection::ListTriggers(
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcTracingConnection::CreateTrigger(
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
-  return child_->CreateTrigger(request);
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateTrigger(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcTracingConnection::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
-  return child_->UpdateTrigger(request);
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateTrigger(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcTracingConnection::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
-  return child_->DeleteTrigger(request);
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteTrigger(request));
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel>
@@ -91,19 +100,28 @@ EventarcTracingConnection::ListChannels(
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcTracingConnection::CreateChannel(
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
-  return child_->CreateChannel(request);
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::CreateChannel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateChannel(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcTracingConnection::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
-  return child_->UpdateChannel(request);
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::UpdateChannel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateChannel(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcTracingConnection::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
-  return child_->DeleteChannel(request);
+  auto span =
+      internal::MakeSpan("eventarc_v1::EventarcConnection::DeleteChannel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteChannel(request));
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider>
@@ -151,14 +169,22 @@ future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcTracingConnection::CreateChannelConnection(
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
-  return child_->CreateChannelConnection(request);
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::CreateChannelConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateChannelConnection(request));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcTracingConnection::DeleteChannelConnection(
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
-  return child_->DeleteChannelConnection(request);
+  auto span = internal::MakeSpan(
+      "eventarc_v1::EventarcConnection::DeleteChannelConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteChannelConnection(request));
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

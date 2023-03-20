@@ -58,21 +58,30 @@ future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerTracingConnection::CreateCertificate(
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&
         request) {
-  return child_->CreateCertificate(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::CreateCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateCertificate(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
 CertificateManagerTracingConnection::UpdateCertificate(
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
         request) {
-  return child_->UpdateCertificate(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::UpdateCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateCertificate(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificate(
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
         request) {
-  return child_->DeleteCertificate(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::DeleteCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteCertificate(request));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMap>
@@ -102,21 +111,36 @@ future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerTracingConnection::CreateCertificateMap(
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
         request) {
-  return child_->CreateCertificateMap(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "CreateCertificateMap");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateMap(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
 CertificateManagerTracingConnection::UpdateCertificateMap(
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
         request) {
-  return child_->UpdateCertificateMap(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "UpdateCertificateMap");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateMap(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificateMap(
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
         request) {
-  return child_->DeleteCertificateMap(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "DeleteCertificateMap");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateMap(request));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>
@@ -148,21 +172,36 @@ future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerTracingConnection::CreateCertificateMapEntry(
     google::cloud::certificatemanager::v1::
         CreateCertificateMapEntryRequest const& request) {
-  return child_->CreateCertificateMapEntry(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "CreateCertificateMapEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateMapEntry(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
 CertificateManagerTracingConnection::UpdateCertificateMapEntry(
     google::cloud::certificatemanager::v1::
         UpdateCertificateMapEntryRequest const& request) {
-  return child_->UpdateCertificateMapEntry(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "UpdateCertificateMapEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateMapEntry(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificateMapEntry(
     google::cloud::certificatemanager::v1::
         DeleteCertificateMapEntryRequest const& request) {
-  return child_->DeleteCertificateMapEntry(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "DeleteCertificateMapEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateMapEntry(request));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>
@@ -194,21 +233,36 @@ future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerTracingConnection::CreateDnsAuthorization(
     google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
         request) {
-  return child_->CreateDnsAuthorization(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "CreateDnsAuthorization");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateDnsAuthorization(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
 CertificateManagerTracingConnection::UpdateDnsAuthorization(
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
         request) {
-  return child_->UpdateDnsAuthorization(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "UpdateDnsAuthorization");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDnsAuthorization(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteDnsAuthorization(
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
         request) {
-  return child_->DeleteDnsAuthorization(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "DeleteDnsAuthorization");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteDnsAuthorization(request));
 }
 
 StreamRange<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
@@ -242,14 +296,24 @@ future<
 CertificateManagerTracingConnection::CreateCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
         CreateCertificateIssuanceConfigRequest const& request) {
-  return child_->CreateCertificateIssuanceConfig(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "CreateCertificateIssuanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateIssuanceConfig(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
 CertificateManagerTracingConnection::DeleteCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const& request) {
-  return child_->DeleteCertificateIssuanceConfig(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager_v1::CertificateManagerConnection::"
+      "DeleteCertificateIssuanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateIssuanceConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

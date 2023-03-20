@@ -52,19 +52,28 @@ UserEventServiceTracingConnection::CollectUserEvent(
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceTracingConnection::PurgeUserEvents(
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
-  return child_->PurgeUserEvents(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::UserEventServiceConnection::PurgeUserEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->PurgeUserEvents(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceTracingConnection::ImportUserEvents(
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
-  return child_->ImportUserEvents(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::UserEventServiceConnection::ImportUserEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportUserEvents(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceTracingConnection::RejoinUserEvents(
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
-  return child_->RejoinUserEvents(request);
+  auto span = internal::MakeSpan(
+      "retail_v2::UserEventServiceConnection::RejoinUserEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RejoinUserEvents(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

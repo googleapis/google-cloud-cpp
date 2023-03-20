@@ -79,13 +79,19 @@ Status AgentsTracingConnection::DeleteAgent(
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
 AgentsTracingConnection::ExportAgent(
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request) {
-  return child_->ExportAgent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::AgentsConnection::ExportAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportAgent(request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 AgentsTracingConnection::RestoreAgent(
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request) {
-  return child_->RestoreAgent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::AgentsConnection::RestoreAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->RestoreAgent(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

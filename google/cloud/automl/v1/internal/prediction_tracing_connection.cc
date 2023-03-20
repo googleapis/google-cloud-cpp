@@ -43,7 +43,10 @@ PredictionServiceTracingConnection::Predict(
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceTracingConnection::BatchPredict(
     google::cloud::automl::v1::BatchPredictRequest const& request) {
-  return child_->BatchPredict(request);
+  auto span = internal::MakeSpan(
+      "automl_v1::PredictionServiceConnection::BatchPredict");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->BatchPredict(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

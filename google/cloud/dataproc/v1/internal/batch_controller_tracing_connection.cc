@@ -35,7 +35,10 @@ BatchControllerTracingConnection::BatchControllerTracingConnection(
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerTracingConnection::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
-  return child_->CreateBatch(request);
+  auto span =
+      internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateBatch(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch>

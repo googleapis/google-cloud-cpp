@@ -37,7 +37,10 @@ AssuredWorkloadsServiceTracingConnection::
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceTracingConnection::CreateWorkload(
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
-  return child_->CreateWorkload(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads_v1::AssuredWorkloadsServiceConnection::CreateWorkload");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateWorkload(request));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
