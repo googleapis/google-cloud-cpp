@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include "absl/types/optional.h"
 #include <openssl/evp.h>
+#include <cstdint>
 #include <memory>
 #include <string>
 

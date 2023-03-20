@@ -77,57 +77,60 @@ TEST(HashFunctionImplTest, Crc32cQuickSimple) {
 TEST(HashFunctionImplTest, Crc32cStringView) {
   Crc32cHashFunction function;
   auto payload = absl::string_view{kQuickFox};
-  for (std::size_t npos = 0; npos < payload.size(); npos += 5) {
-    auto message = payload.substr(npos, 5);
-    EXPECT_STATUS_OK(function.Update(npos, message));
-    EXPECT_THAT(function.Update(npos, message),
+  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+    auto message = payload.substr(pos, 5);
+    EXPECT_STATUS_OK(function.Update(pos, message));
+    EXPECT_STATUS_OK(function.Update(pos, message));
+    EXPECT_THAT(function.Update(pos, payload),
                 StatusIs(StatusCode::kInvalidArgument));
   }
-  auto const actual = function.Finish();
+  auto actual = function.Finish();
   EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
   EXPECT_THAT(actual.md5, IsEmpty());
 
-  auto const a2 = function.Finish();
-  EXPECT_EQ(a2.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(a2.md5, IsEmpty());
+  actual = function.Finish();
+  EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
+  EXPECT_THAT(actual.md5, IsEmpty());
 }
 
 TEST(HashFunctionImplTest, Crc32cStringViewWithCrc) {
   Crc32cHashFunction function;
   auto payload = absl::string_view{kQuickFox};
-  for (std::size_t npos = 0; npos < payload.size(); npos += 5) {
-    auto message = payload.substr(npos, 5);
+  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+    auto message = payload.substr(pos, 5);
     auto const message_crc = storage_internal::Crc32c(message);
-    EXPECT_STATUS_OK(function.Update(npos, message, message_crc));
-    EXPECT_THAT(function.Update(npos, message, message_crc),
+    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
+    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
+    EXPECT_THAT(function.Update(pos, payload, message_crc),
                 StatusIs(StatusCode::kInvalidArgument));
   }
-  auto const actual = function.Finish();
+  auto actual = function.Finish();
   EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
   EXPECT_THAT(actual.md5, IsEmpty());
 
-  auto const a2 = function.Finish();
-  EXPECT_EQ(a2.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(a2.md5, IsEmpty());
+  actual = function.Finish();
+  EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
+  EXPECT_THAT(actual.md5, IsEmpty());
 }
 
 TEST(HashFunctionImplTest, Crc32cCord) {
   Crc32cHashFunction function;
   auto payload = absl::Cord(absl::string_view{kQuickFox});
-  for (std::size_t npos = 0; npos < payload.size(); npos += 5) {
-    auto message = payload.Subcord(npos, 5);
+  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+    auto message = payload.Subcord(pos, 5);
     auto const message_crc = storage_internal::Crc32c(message);
-    EXPECT_STATUS_OK(function.Update(npos, message, message_crc));
-    EXPECT_THAT(function.Update(npos, message, message_crc),
+    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
+    EXPECT_STATUS_OK(function.Update(pos, message, message_crc));
+    EXPECT_THAT(function.Update(pos, payload, message_crc),
                 StatusIs(StatusCode::kInvalidArgument));
   }
-  auto const actual = function.Finish();
+  auto actual = function.Finish();
   EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
   EXPECT_THAT(actual.md5, IsEmpty());
 
-  auto const a2 = function.Finish();
-  EXPECT_EQ(a2.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(a2.md5, IsEmpty());
+  actual = function.Finish();
+  EXPECT_EQ(actual.crc32c, kQuickFoxCrc32cChecksum);
+  EXPECT_THAT(actual.md5, IsEmpty());
 }
 
 TEST(HashFunctionImplTest, MD5Empty) {
@@ -150,48 +153,51 @@ TEST(HashFunctionImplTest, MD5Quick) {
 TEST(HashFunctionImplTest, MD5StringView) {
   MD5HashFunction function;
   auto payload = absl::string_view{kQuickFox};
-  for (std::size_t npos = 0; npos < payload.size(); npos += 5) {
-    auto message = payload.substr(npos, 5);
-    EXPECT_STATUS_OK(function.Update(npos, message));
-    EXPECT_THAT(function.Update(npos, message),
+  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+    auto message = payload.substr(pos, 5);
+    EXPECT_STATUS_OK(function.Update(pos, message));
+    EXPECT_STATUS_OK(function.Update(pos, message));
+    EXPECT_THAT(function.Update(pos, payload),
                 StatusIs(StatusCode::kInvalidArgument));
   }
-  auto const actual = function.Finish();
+  auto actual = function.Finish();
   EXPECT_THAT(actual.crc32c, IsEmpty());
   EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
 
-  auto const a2 = function.Finish();
-  EXPECT_THAT(a2.crc32c, IsEmpty());
-  EXPECT_THAT(a2.md5, kQuickFoxMD5Hash);
+  actual = function.Finish();
+  EXPECT_THAT(actual.crc32c, IsEmpty());
+  EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
 }
 
 TEST(HashFunctionImplTest, MD5StringViewWithCrc) {
   MD5HashFunction function;
   auto payload = absl::string_view{kQuickFox};
-  for (std::size_t npos = 0; npos < payload.size(); npos += 5) {
-    auto message = payload.substr(npos, 5);
-    auto const message_crc = storage_internal::Crc32c(message);
-    EXPECT_STATUS_OK(function.Update(npos, message, message_crc));
-    EXPECT_THAT(function.Update(npos, message, message_crc),
+  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+    auto message = payload.substr(pos, 5);
+    auto const unused = std::uint32_t{0};
+    EXPECT_STATUS_OK(function.Update(pos, message, unused));
+    EXPECT_STATUS_OK(function.Update(pos, message, unused));
+    EXPECT_THAT(function.Update(pos, payload, unused),
                 StatusIs(StatusCode::kInvalidArgument));
   }
-  auto const actual = function.Finish();
+  auto actual = function.Finish();
   EXPECT_THAT(actual.crc32c, IsEmpty());
   EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
 
-  auto const a2 = function.Finish();
-  EXPECT_THAT(a2.crc32c, IsEmpty());
-  EXPECT_THAT(a2.md5, kQuickFoxMD5Hash);
+  actual = function.Finish();
+  EXPECT_THAT(actual.crc32c, IsEmpty());
+  EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
 }
 
 TEST(HashFunctionImplTest, MD5Cord) {
   MD5HashFunction function;
   auto payload = absl::Cord(absl::string_view{kQuickFox});
-  for (std::size_t npos = 0; npos < payload.size(); npos += 5) {
-    auto message = payload.Subcord(npos, 5);
-    auto const message_crc = storage_internal::Crc32c(message);
-    EXPECT_STATUS_OK(function.Update(npos, message, message_crc));
-    EXPECT_THAT(function.Update(npos, message, message_crc),
+  for (std::size_t pos = 0; pos < payload.size(); pos += 5) {
+    auto message = payload.Subcord(pos, 5);
+    auto const unused = std::uint32_t{0};
+    EXPECT_STATUS_OK(function.Update(pos, message, unused));
+    EXPECT_STATUS_OK(function.Update(pos, message, unused));
+    EXPECT_THAT(function.Update(pos, payload, unused),
                 StatusIs(StatusCode::kInvalidArgument));
   }
   auto const actual = function.Finish();
@@ -217,9 +223,13 @@ TEST(HashFunctionImplTest, CompositeQuick) {
   function.Update("The quick");
   function.Update(" brown");
   function.Update(" fox jumps over the lazy dog");
-  auto result = std::move(function).Finish();
-  EXPECT_THAT(result.crc32c, kQuickFoxCrc32cChecksum);
-  EXPECT_THAT(result.md5, kQuickFoxMD5Hash);
+  auto actual = function.Finish();
+  EXPECT_THAT(actual.crc32c, kQuickFoxCrc32cChecksum);
+  EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
+
+  actual = function.Finish();
+  EXPECT_THAT(actual.crc32c, kQuickFoxCrc32cChecksum);
+  EXPECT_THAT(actual.md5, kQuickFoxMD5Hash);
 }
 
 TEST(HashFunctionImplTest, CreateHashFunctionRead) {
@@ -242,7 +252,7 @@ TEST(HashFunctionImplTest, CreateHashFunctionRead) {
     auto function = CreateHashFunction(
         ReadObjectRangeRequest("test-bucket", "test-object")
             .set_multiple_options(test.crc32_disabled, test.md5_disabled));
-    function->Update("The quick brown fox jumps over the lazy dog");
+    function->Update(kQuickFox);
     auto const actual = std::move(*function).Finish();
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);
     EXPECT_EQ(test.md5_expected, actual.md5);
@@ -308,7 +318,7 @@ TEST(HashFunctionImplTest, CreateHashFunctionUpload) {
         ResumableUploadRequest("test-bucket", "test-object")
             .set_multiple_options(test.crc32_disabled, test.crc32_value,
                                   test.md5_disabled, test.md5_value));
-    function->Update("The quick brown fox jumps over the lazy dog");
+    function->Update(kQuickFox);
     auto const actual = std::move(*function).Finish();
     EXPECT_EQ(test.crc32c_expected, actual.crc32c);
     EXPECT_EQ(test.md5_expected, actual.md5);
@@ -335,6 +345,11 @@ TEST(HashFunctionImplTest, CreateHashFunctionInsertObjectMedia) {
   } const cases[] = {
       {DisableCrc32cChecksum(false), DisableMD5Hash(false),
        HashValues{kQuickFoxCrc32cChecksum, kQuickFoxMD5Hash}},
+      {DisableCrc32cChecksum(false), DisableMD5Hash(true),
+       HashValues{kQuickFoxCrc32cChecksum, {}}},
+      {DisableCrc32cChecksum(true), DisableMD5Hash(false),
+       HashValues{{}, kQuickFoxMD5Hash}},
+      {DisableCrc32cChecksum(true), DisableMD5Hash(true), HashValues{{}, {}}},
   };
   for (auto const& test : cases) {
     auto function = CreateHashFunction(

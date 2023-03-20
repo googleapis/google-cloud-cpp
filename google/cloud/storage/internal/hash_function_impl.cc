@@ -55,7 +55,7 @@ template <typename Buffer>
 bool AlreadyHashed(std::int64_t offset, Buffer const& buffer,
                    std::int64_t minimum_offset) {
   auto const end = offset + buffer.size();
-  return static_cast<std::int64_t>(end) < minimum_offset;
+  return static_cast<std::int64_t>(end) <= minimum_offset;
 }
 
 }  // namespace
@@ -114,7 +114,7 @@ Status CompositeFunction::Update(std::int64_t offset, absl::Cord const& buffer,
 }
 
 HashValues CompositeFunction::Finish() {
-  return Merge(std::move(*a_).Finish(), std::move(*b_).Finish());
+  return Merge(a_->Finish(), b_->Finish());
 }
 
 MD5HashFunction::MD5HashFunction() : impl_(CreateDigestCtx()) {
@@ -137,13 +137,7 @@ Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer) {
 
 Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer,
                                std::uint32_t /*buffer_crc*/) {
-  if (offset == minimum_offset_) {
-    Update(buffer);
-    minimum_offset_ += buffer.size();
-    return {};
-  }
-  if (AlreadyHashed(offset, buffer, minimum_offset_)) return {};
-  return InvalidArgumentError("mismatched offset", GCP_ERROR_INFO());
+  return Update(offset, buffer);
 }
 
 Status MD5HashFunction::Update(std::int64_t offset, absl::Cord const& buffer,
