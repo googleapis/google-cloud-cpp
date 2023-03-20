@@ -306,25 +306,53 @@ TEST(GoldenThingAdminTracingConnectionTest, GetBackup) {
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, UpdateBackup) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, UpdateBackup)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, UpdateBackup).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::test::admin::database::v1::UpdateBackupRequest request;
   auto result = under_test.UpdateBackup(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::UpdateBackup"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, DeleteBackup) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, DeleteBackup)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, DeleteBackup).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::test::admin::database::v1::DeleteBackupRequest request;
   auto result = under_test.DeleteBackup(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::DeleteBackup"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, ListBackups) {
