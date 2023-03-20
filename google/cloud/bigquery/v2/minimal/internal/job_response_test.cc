@@ -26,7 +26,7 @@ using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 
-TEST(JobResponseTest, SuccessTopLevelFields) {
+TEST(GetJobResponseTest, SuccessTopLevelFields) {
   BigQueryHttpResponse http_response;
   http_response.payload =
       R"({"kind": "jkind",
@@ -37,7 +37,8 @@ TEST(JobResponseTest, SuccessTopLevelFields) {
           "status": {},
           "reference": {},
           "configuration": {}})";
-  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  auto const& job_response =
+      GetJobResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(job_response);
   EXPECT_FALSE(job_response->http_response.payload.empty());
   EXPECT_THAT(job_response->job.kind, Eq("jkind"));
@@ -51,7 +52,7 @@ TEST(JobResponseTest, SuccessTopLevelFields) {
   EXPECT_THAT(job_response->job.configuration.job_type, IsEmpty());
 }
 
-TEST(JobResponseTest, SuccessNestedFields) {
+TEST(GetJobResponseTest, SuccessNestedFields) {
   BigQueryHttpResponse http_response;
   http_response.payload =
       R"({"kind": "jkind",
@@ -65,7 +66,8 @@ TEST(JobResponseTest, SuccessNestedFields) {
             "job_type": "QUERY",
             "query_config": {"query": "select 1;"}
           }})";
-  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  auto const& job_response =
+      GetJobResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(job_response);
   EXPECT_FALSE(job_response->http_response.payload.empty());
   EXPECT_THAT(job_response->job.kind, Eq("jkind"));
@@ -81,24 +83,26 @@ TEST(JobResponseTest, SuccessNestedFields) {
               Eq("select 1;"));
 }
 
-TEST(JobResponseTest, EmptyPayload) {
+TEST(GetJobResponseTest, EmptyPayload) {
   BigQueryHttpResponse http_response;
-  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  auto const& job_response =
+      GetJobResponse::BuildFromHttpResponse(http_response);
   EXPECT_THAT(job_response,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Empty payload in HTTP response")));
 }
 
-TEST(JobResponseTest, InvalidJson) {
+TEST(GetJobResponseTest, InvalidJson) {
   BigQueryHttpResponse http_response;
   http_response.payload = "Help! I am not json";
-  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  auto const& job_response =
+      GetJobResponse::BuildFromHttpResponse(http_response);
   EXPECT_THAT(job_response,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Error parsing Json from response payload")));
 }
 
-TEST(JobResponseTest, InvalidJob) {
+TEST(GetJobResponseTest, InvalidJob) {
   BigQueryHttpResponse http_response;
   http_response.payload =
       R"({"kind": "jkind",
@@ -106,9 +110,96 @@ TEST(JobResponseTest, InvalidJob) {
           "id": "j123",
           "self_link": "jselfLink",
           "user_email": "juserEmail"})";
-  auto job_response = GetJobResponse::BuildFromHttpResponse(http_response);
+  auto const& job_response =
+      GetJobResponse::BuildFromHttpResponse(http_response);
   EXPECT_THAT(job_response, StatusIs(StatusCode::kInternal,
                                      HasSubstr("Not a valid Json Job object")));
+}
+
+TEST(ListJobsResponseTest, Success) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "jobs": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "reference": {"project_id": "p123", "job_id": "j123"},
+                "state": "DONE",
+                "configuration": {
+                   "job_type": "QUERY",
+                   "query_config": {"query": "select 1;"}
+                },
+                "status": {"state": "DONE"},
+                "user_email": "user-email",
+                "principal_subject": "principal-subj"
+              }
+  ]})";
+  auto const& list_jobs_response =
+      ListJobsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(list_jobs_response);
+  EXPECT_FALSE(list_jobs_response->http_response.payload.empty());
+  EXPECT_EQ(list_jobs_response->kind, "kind-1");
+  EXPECT_EQ(list_jobs_response->etag, "tag-1");
+  EXPECT_EQ(list_jobs_response->next_page_token, "npt-123");
+
+  auto const& jobs = list_jobs_response->jobs;
+  EXPECT_EQ(jobs.size(), 1);
+  EXPECT_EQ(jobs[0].id, "1");
+  EXPECT_EQ(jobs[0].kind, "kind-2");
+  EXPECT_EQ(jobs[0].status.state, "DONE");
+  EXPECT_EQ(jobs[0].state, "DONE");
+  EXPECT_EQ(jobs[0].user_email, "user-email");
+  EXPECT_EQ(jobs[0].reference.project_id, "p123");
+  EXPECT_EQ(jobs[0].reference.job_id, "j123");
+  EXPECT_EQ(jobs[0].configuration.job_type, "QUERY");
+  EXPECT_EQ(jobs[0].configuration.query_config.query, "select 1;");
+}
+
+TEST(ListJobsResponseTest, EmptyPayload) {
+  BigQueryHttpResponse http_response;
+  auto const& response = ListJobsResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
+                                 HasSubstr("Empty payload in HTTP response")));
+}
+
+TEST(ListJobsResponseTest, InvalidJson) {
+  BigQueryHttpResponse http_response;
+  http_response.payload = "Invalid";
+  auto const& response = ListJobsResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Error parsing Json from response payload")));
+}
+
+TEST(ListJobsResponseTest, InvalidJobList) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"kind": "jkind",
+          "etag": "jtag"})";
+  auto const& response = ListJobsResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response, StatusIs(StatusCode::kInternal,
+                                 HasSubstr("Not a valid Json JobList object")));
+}
+
+TEST(ListJobsResponseTest, InvalidListFormatJob) {
+  BigQueryHttpResponse http_response;
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "jobs": [
+              {
+                "id": "1",
+                "kind": "kind-2"
+              }
+  ]})";
+  auto const& response = ListJobsResponse::BuildFromHttpResponse(http_response);
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kInternal,
+                       HasSubstr("Not a valid Json ListFormatJob object")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
