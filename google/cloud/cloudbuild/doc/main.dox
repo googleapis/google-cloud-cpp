@@ -46,6 +46,10 @@ which should give you a taste of the Cloud Build API C++ client library API.
   `EndpointOption` (which defaults to "cloudbuild.googleapis.com")
   used by `MakeCloudBuildConnection()`.
 
+- `GOOGLE_CLOUD_CPP_REPOSITORY_MANAGER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "cloudbuild.googleapis.com")
+  used by `MakeRepositoryManagerConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
@@ -96,6 +100,10 @@ For example, this will override the default endpoint for `cloudbuild_v1::CloudBu
 
 @snippet cloud_build_client_samples.cc set-client-endpoint
 
+Follow these links to find examples for other \c *Client classes:
+ [cloudbuild_v1::CloudBuildClient](@ref cloudbuild_v1::CloudBuildClient-endpoint-snippet)
+ [cloudbuild_v2::RepositoryManagerClient](@ref cloudbuild_v2::RepositoryManagerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Override the authentication configuration
@@ -107,6 +115,10 @@ to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
 @snippet cloud_build_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [cloudbuild_v1::CloudBuildClient](@ref cloudbuild_v1::CloudBuildClient-service-account-snippet)
+ [cloudbuild_v2::RepositoryManagerClient](@ref cloudbuild_v2::RepositoryManagerClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -146,6 +158,18 @@ can override the default policies.
 /*! @page cloudbuild_v1::CloudBuildClient-service-account-snippet Override cloudbuild_v1::CloudBuildClient Authentication Defaults
 
 @snippet google/cloud/cloudbuild/v1/samples/cloud_build_client_samples.cc with-service-account
+
+*/
+
+/*! @page cloudbuild_v2::RepositoryManagerClient-endpoint-snippet Override cloudbuild_v2::RepositoryManagerClient Endpoint Configuration
+
+@snippet google/cloud/cloudbuild/v2/samples/repository_manager_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page cloudbuild_v2::RepositoryManagerClient-service-account-snippet Override cloudbuild_v2::RepositoryManagerClient Authentication Defaults
+
+@snippet google/cloud/cloudbuild/v2/samples/repository_manager_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
