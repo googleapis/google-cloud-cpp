@@ -45,7 +45,10 @@ Status ForwardingMockConnectionGenerator::GenerateHeader() {
       vars("forwarding_connection_header_path"),
   });
 
-  auto result = HeaderOpenForwardingNamespaces(NamespaceType::kMocks);
+  auto result = HeaderOpenForwardingNamespaces(NamespaceType::kMocks, R"""(
+/// @deprecated This namespace exists for backwards compatibility. Use the
+///     types defined in $product_namespace$_mocks instead of the aliases
+///     defined in this namespace.)""");
   if (!result.ok()) return result;
 
   HeaderPrint(

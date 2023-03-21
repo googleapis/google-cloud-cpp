@@ -24,6 +24,9 @@
 
 namespace google {
 namespace cloud {
+/// @deprecated This namespace exists for backwards compatibility. Use the
+///     types defined in datamigration_v1_mocks instead of the aliases
+///     defined in this namespace.
 namespace datamigration_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

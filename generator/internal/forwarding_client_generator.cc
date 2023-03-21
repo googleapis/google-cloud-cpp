@@ -45,7 +45,10 @@ Status ForwardingClientGenerator::GenerateHeader() {
       vars("client_header_path"),
   });
 
-  auto result = HeaderOpenForwardingNamespaces();
+  auto result = HeaderOpenForwardingNamespaces(NamespaceType::kNormal, R"""(
+/// @deprecated This namespace exists for backwards compatibility. Use the
+///     types defined in $product_namespace$ instead of the aliases defined in
+///     this namespace.)""");
   if (!result.ok()) return result;
 
   // forwards
