@@ -102,11 +102,13 @@ TEST(GetJobRequest, EmptyJobId) {
 
 TEST(ListJobsRequestTest, Success) {
   ListJobsRequest request("1");
-  auto const& now = std::chrono::system_clock::now();
+  auto const min = std::chrono::system_clock::now();
+  auto const duration = std::chrono::milliseconds(100);
+  auto const max = min + duration;
   request.set_all_users(true)
       .set_max_results(10)
-      .set_max_creation_time(now)
-      .set_min_creation_time(now)
+      .set_min_creation_time(min)
+      .set_max_creation_time(max)
       .set_parent_job_id("1")
       .set_projection(Projection::Full())
       .set_state_filter(StateFilter::Running());
@@ -120,8 +122,8 @@ TEST(ListJobsRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs");
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
-  expected.AddQueryParameter("minCreationTime", internal::FormatRfc3339(now));
-  expected.AddQueryParameter("maxCreationTime", internal::FormatRfc3339(now));
+  expected.AddQueryParameter("minCreationTime", internal::FormatRfc3339(min));
+  expected.AddQueryParameter("maxCreationTime", internal::FormatRfc3339(max));
   expected.AddQueryParameter("pageToken", "");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
