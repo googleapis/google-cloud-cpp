@@ -37,6 +37,22 @@ class GetJobResponse {
   BigQueryHttpResponse http_response;
 };
 
+// Parses the BigQueryHttpResponse and builds a ListJobsResponse.
+class ListJobsResponse {
+ public:
+  ListJobsResponse() = default;
+  // Builds ListJobsResponse from HttpResponse.
+  static StatusOr<ListJobsResponse> BuildFromHttpResponse(
+      BigQueryHttpResponse const& http_response);
+
+  std::vector<ListFormatJob> jobs;
+  std::string next_page_token;
+  std::string kind;
+  std::string etag;
+
+  BigQueryHttpResponse http_response;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

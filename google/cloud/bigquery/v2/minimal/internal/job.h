@@ -42,7 +42,6 @@ struct JobReference {
   std::string location;
 };
 
-// Custom object for V2 Job proto fields.
 struct Job {
   std::string kind;
   std::string etag;
@@ -55,6 +54,20 @@ struct Job {
   JobConfiguration configuration;
 };
 
+struct ListFormatJob {
+  std::string id;
+  std::string kind;
+  std::string user_email;
+  std::string state;
+  std::string principal_subject;
+
+  JobReference reference;
+  JobConfiguration configuration;
+  JobStatus status;
+
+  ErrorProto error_result;
+};
+
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, error_result, errors,
                                                 state);
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, project_id,
@@ -62,6 +75,11 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobReference, project_id,
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Job, kind, etag, id, self_link,
                                                 user_email, status, reference,
                                                 configuration);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(ListFormatJob, id, kind,
+                                                user_email, state,
+                                                principal_subject, reference,
+                                                configuration, status,
+                                                error_result);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
