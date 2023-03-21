@@ -42,13 +42,13 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
                                    GCP_ERROR_INFO());
   }
   // Build the job response object from Http response.
-  auto json_obj = nlohmann::json::parse(payload, nullptr, false);
-  if (!json_obj.is_object()) {
+  auto json = nlohmann::json::parse(payload, nullptr, false);
+  if (!json.is_object()) {
     return internal::InternalError("Error parsing Json from response payload",
                                    GCP_ERROR_INFO());
   }
 
-  return json_obj;
+  return json;
 }
 
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
