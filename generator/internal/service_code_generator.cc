@@ -274,8 +274,9 @@ Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
 }
 
 Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
-    NamespaceType ns_type) {
-  return OpenNamespaces(header_, ns_type, "forwarding_product_path");
+    NamespaceType ns_type, std::string const& ns_documentation) {
+  return OpenNamespaces(header_, ns_type, "forwarding_product_path",
+                        ns_documentation);
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
@@ -361,7 +362,8 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
 }
 
 Status ServiceCodeGenerator::OpenNamespaces(
-    Printer& p, NamespaceType ns_type, std::string const& product_path_var) {
+    Printer& p, NamespaceType ns_type, std::string const& product_path_var,
+    std::string const& ns_documentation) {
   auto result = service_vars_.find(product_path_var);
   if (result == service_vars_.end()) {
     return Status(StatusCode::kInternal,
@@ -370,7 +372,9 @@ Status ServiceCodeGenerator::OpenNamespaces(
   namespace_ = Namespace(service_vars_[product_path_var], ns_type);
   p.Print(R"""(
 namespace google {
-namespace cloud {
+namespace cloud {)""");
+  p.Print(service_vars_, ns_documentation);
+  p.Print(R"""(
 namespace $namespace$ {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 )""",

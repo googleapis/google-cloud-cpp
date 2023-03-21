@@ -76,7 +76,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
 
   Status HeaderOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
   Status HeaderOpenForwardingNamespaces(
-      NamespaceType ns_type = NamespaceType::kNormal);
+      NamespaceType ns_type = NamespaceType::kNormal,
+      std::string const& ns_documentation = "");
   void HeaderCloseNamespaces();
   Status CcOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
   Status CcOpenForwardingNamespaces(
@@ -204,7 +205,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
                                      std::vector<std::string> system_includes);
 
   Status OpenNamespaces(Printer& p, NamespaceType ns_type,
-                        std::string const& product_path_var);
+                        std::string const& product_path_var,
+                        std::string const& ns_documentation = "");
   void CloseNamespaces(Printer& p,
                        bool define_backwards_compatibility_namespace_alias);
 
