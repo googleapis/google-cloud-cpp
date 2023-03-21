@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <chrono>
 #include <string>
 
 namespace google {
@@ -67,8 +68,135 @@ class GetJobRequest {
   std::string location_;
 };
 
+struct Projection {
+  static Projection Minimal();
+  static Projection Full();
+
+  std::string value;
+};
+
+struct StateFilter {
+  static StateFilter Pending();
+  static StateFilter Running();
+  static StateFilter Done();
+
+  std::string value;
+};
+
+class ListJobsRequest {
+ public:
+  ListJobsRequest() = default;
+  explicit ListJobsRequest(std::string project_id)
+      : project_id_(std::move(project_id)) {}
+
+  std::string const& project_id() const { return project_id_; }
+  bool const& all_users() const { return all_users_; }
+  std::int32_t const& max_results() const { return max_results_; }
+  std::chrono::system_clock::time_point const& min_creation_time() const {
+    return min_creation_time_;
+  }
+  std::chrono::system_clock::time_point const& max_creation_time() const {
+    return max_creation_time_;
+  }
+  std::string const& page_token() const { return page_token_; }
+  Projection const& projection() const { return projection_; }
+  StateFilter const& state_filter() const { return state_filter_; }
+  std::string const& parent_job_id() const { return parent_job_id_; }
+
+  ListJobsRequest& set_project_id(std::string project_id) & {
+    project_id_ = std::move(project_id);
+    return *this;
+  }
+  ListJobsRequest&& set_project_id(std::string project_id) && {
+    return std::move(set_project_id(std::move(project_id)));
+  }
+
+  ListJobsRequest& set_all_users(bool all_users) & {
+    all_users_ = all_users;
+    return *this;
+  }
+  ListJobsRequest&& set_all_users(bool all_users) && {
+    return std::move(set_all_users(all_users));
+  }
+
+  ListJobsRequest& set_max_results(std::int32_t max_results) & {
+    max_results_ = max_results;
+    return *this;
+  }
+  ListJobsRequest&& set_max_results(std::int32_t max_results) && {
+    return std::move(set_max_results(max_results));
+  }
+
+  ListJobsRequest& set_min_creation_time(
+      std::chrono::system_clock::time_point min_creation_time) & {
+    min_creation_time_ = min_creation_time;
+    return *this;
+  }
+  ListJobsRequest&& set_min_creation_time(
+      std::chrono::system_clock::time_point min_creation_time) && {
+    return std::move(set_min_creation_time(min_creation_time));
+  }
+
+  ListJobsRequest& set_max_creation_time(
+      std::chrono::system_clock::time_point max_creation_time) & {
+    max_creation_time_ = max_creation_time;
+    return *this;
+  }
+  ListJobsRequest&& set_max_creation_time(
+      std::chrono::system_clock::time_point max_creation_time) && {
+    return std::move(set_max_creation_time(max_creation_time));
+  }
+
+  ListJobsRequest& set_page_token(std::string page_token) & {
+    page_token_ = std::move(page_token);
+    return *this;
+  }
+  ListJobsRequest&& set_page_token(std::string page_token) && {
+    return std::move(set_page_token(std::move(page_token)));
+  }
+
+  ListJobsRequest& set_projection(Projection projection) & {
+    projection_ = std::move(projection);
+    return *this;
+  }
+  ListJobsRequest&& set_projection(Projection projection) && {
+    return std::move(set_projection(std::move(projection)));
+  }
+
+  ListJobsRequest& set_state_filter(StateFilter state_filter) & {
+    state_filter_ = std::move(state_filter);
+    return *this;
+  }
+  ListJobsRequest&& set_state_filter(StateFilter state_filter) && {
+    return std::move(set_state_filter(std::move(state_filter)));
+  }
+
+  ListJobsRequest& set_parent_job_id(std::string parent_job_id) & {
+    parent_job_id_ = std::move(parent_job_id);
+    return *this;
+  }
+  ListJobsRequest&& set_parent_job_id(std::string parent_job_id) && {
+    return std::move(set_parent_job_id(std::move(parent_job_id)));
+  }
+
+  // Members
+ private:
+  std::string project_id_;
+  bool all_users_;
+  std::int32_t max_results_;
+  std::chrono::system_clock::time_point min_creation_time_;
+  std::chrono::system_clock::time_point max_creation_time_;
+  std::string page_token_;
+  Projection projection_;
+  StateFilter state_filter_;
+  std::string parent_job_id_;
+};
+
 // Builds RestRequest from GetJobRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
+                                                      Options const& opts);
+// Builds RestRequest from ListJobsRequest.
+StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
                                                       Options const& opts);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
