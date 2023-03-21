@@ -121,6 +121,10 @@ info, see [#7463] and [#5976].
 
 ## v2.9.0 - TBD
 
+### [Cloud Build](/google/cloud/cloudbuild/README.md)
+
+The library has been expanded to include the Cloud Build v2 API.
+
 ### Testing
 
 We have stopped testing with MSVC 2017. Microsoft stopped mainstream support for

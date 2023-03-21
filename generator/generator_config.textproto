@@ -381,6 +381,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/devtools/cloudbuild/v2/repositories.proto"
+  additional_proto_files: ["google/devtools/cloudbuild/v2/cloudbuild.proto"]
+  product_path: "google/cloud/cloudbuild/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Channel
 service {
   service_proto_path: "google/cloud/channel/v1/service.proto"
