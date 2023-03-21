@@ -145,11 +145,12 @@ TEST(CurlClientStandaloneFunctions, HostHeader) {
 TEST_P(CurlClientTest, UploadChunk) {
   // Use http://localhost:1 to force a libcurl failure
   OptionsSpan const span(client_->options());
-  auto actual = client_
-                    ->UploadChunk(UploadChunkRequest(
-                        "http://localhost:1/invalid-session-id", 0,
-                        {ConstBuffer{std::string{}}}))
-                    .status();
+  auto actual =
+      client_
+          ->UploadChunk(UploadChunkRequest(
+              "http://localhost:1/invalid-session-id", 0,
+              {ConstBuffer{std::string{}}}, internal::CreateNullHashFunction()))
+          .status();
   CheckStatus(actual);
 }
 

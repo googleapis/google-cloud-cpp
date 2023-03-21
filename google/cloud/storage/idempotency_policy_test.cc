@@ -618,7 +618,8 @@ TEST(StrictIdempotencyPolicyTest, ResumableUploadIfGenerationMatch) {
 TEST(StrictIdempotencyPolicyTest, UploadChunk) {
   StrictIdempotencyPolicy policy;
   internal::UploadChunkRequest request("https://test-url.example.com", 0,
-                                       {internal::ConstBuffer{"test-payload"}});
+                                       {internal::ConstBuffer{"test-payload"}},
+                                       internal::CreateNullHashFunction());
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 

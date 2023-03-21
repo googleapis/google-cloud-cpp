@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/big_endian.h"
-#include <crc32c/crc32c.h>
 
 namespace google {
 namespace cloud {
@@ -31,8 +31,7 @@ std::string ComputeMD5Hash(std::string const& payload) {
 }
 
 std::string ComputeCrc32cChecksum(absl::string_view payload) {
-  auto checksum = crc32c::Extend(
-      0, reinterpret_cast<std::uint8_t const*>(payload.data()), payload.size());
+  auto checksum = storage_internal::Crc32c(payload);
   std::string const hash = google::cloud::internal::EncodeBigEndian(checksum);
   return internal::Base64Encode(hash);
 }
