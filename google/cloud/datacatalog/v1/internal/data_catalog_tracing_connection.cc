@@ -289,7 +289,10 @@ DataCatalogTracingConnection::ListTags(
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
 DataCatalogTracingConnection::ReconcileTags(
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
-  return child_->ReconcileTags(request);
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::ReconcileTags");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ReconcileTags(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
@@ -338,7 +341,10 @@ DataCatalogTracingConnection::TestIamPermissions(
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogTracingConnection::ImportEntries(
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
-  return child_->ImportEntries(request);
+  auto span = internal::MakeSpan(
+      "datacatalog_v1::DataCatalogConnection::ImportEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportEntries(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
