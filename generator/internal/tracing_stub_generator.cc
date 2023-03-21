@@ -98,6 +98,9 @@ Status TracingStubGenerator::GenerateCc() {
   // includes
   CcPrint("\n");
   CcLocalIncludes({vars("tracing_stub_header_path"),
+                   HasStreamingReadMethod()
+                       ? "google/cloud/internal/streaming_read_rpc_tracing.h"
+                       : "",
                    "google/cloud/internal/grpc_opentelemetry.h"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -177,9 +180,14 @@ $tracing_stub_class_name$::Async$method_name$(
          MethodPattern({{R"""(
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>
 $tracing_stub_class_name$::$method_name$(
-   std::shared_ptr<grpc::ClientContext> context,
-   $request_type$ const& request) {
-  return child_->$method_name$(std::move(context), request);
+    std::shared_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) {
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->$method_name$(context, request);
+  return absl::make_unique<internal::StreamingReadRpcTracing<$response_type$>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 )"""}},
                        IsStreamingRead)},
