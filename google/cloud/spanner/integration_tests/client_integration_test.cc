@@ -1030,9 +1030,16 @@ TEST_F(ClientIntegrationTest, UnifiedCredentials) {
                   .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
                   .set<internal::UseInsecureChannelOption>(true);
   }
+
   // Reconnect to the database using the new credentials.
-  client_ = absl::make_unique<Client>(MakeConnection(GetDatabase(), options));
-  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+  auto client = Client(MakeConnection(GetDatabase(), options));
+
+  auto commit_result = client.Commit(Mutations{
+      InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+          .EmplaceRow(1, "test-fname-1", "test-lname-1")
+          .EmplaceRow(2, "test-fname-2", "test-lname-2")
+          .Build()});
+  EXPECT_STATUS_OK(commit_result);
 }
 
 /// @test Verify backwards compatibility for MakeConnection() arguments.
