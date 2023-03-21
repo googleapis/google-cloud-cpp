@@ -211,7 +211,7 @@ class ServiceCodeGenerator : public GeneratorInterface {
   google::protobuf::ServiceDescriptor const* service_descriptor_;
   VarsDictionary service_vars_;
   std::map<std::string, VarsDictionary> service_method_vars_;
-  std::vector<std::string> namespaces_;
+  std::string namespace_;
   bool define_backwards_compatibility_namespace_alias_ = false;
   MethodDescriptorList methods_;
   MethodDescriptorList async_methods_;

@@ -981,9 +981,9 @@ VarsDictionary CreateServiceVars(
   vars["options_header_path"] =
       absl::StrCat(vars["product_path"],
                    ServiceNameToFilePath(descriptor.name()), "_options.h");
-  vars["product_namespace"] = BuildNamespaces(vars["product_path"])[2];
+  vars["product_namespace"] = Namespace(vars["product_path"]);
   vars["product_internal_namespace"] =
-      BuildNamespaces(vars["product_path"], NamespaceType::kInternal)[2];
+      Namespace(vars["product_path"], NamespaceType::kInternal);
   vars["proto_file_name"] = descriptor.file()->name();
   vars["proto_grpc_header_path"] = absl::StrCat(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
