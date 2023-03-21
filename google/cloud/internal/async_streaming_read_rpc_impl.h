@@ -18,8 +18,8 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_streaming_read_rpc.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
-#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"
@@ -54,9 +54,9 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
   future<bool> Start() override {
     struct OnStart : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options);
+        ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
@@ -71,9 +71,9 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
     struct OnRead : public AsyncGrpcOperation {
       promise<absl::optional<Response>> p;
       Response response;
-      Options options = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options);
+        ScopedCallContext scope(call_context);
         if (!ok) {
           p.set_value({});
           return true;
@@ -92,10 +92,10 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
   future<Status> Finish() override {
     struct OnFinish : public AsyncGrpcOperation {
       promise<Status> p;
-      Options options = CurrentOptions();
+      CallContext call_context;
       grpc::Status status;
       bool Notify(bool /*ok*/) override {
-        OptionsSpan span(options);
+        ScopedCallContext scope(call_context);
         p.set_value(MakeStatusFromRpcError(std::move(status)));
         return true;
       }
