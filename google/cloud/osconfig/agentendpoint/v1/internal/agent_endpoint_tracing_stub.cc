@@ -18,6 +18,7 @@
 
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/streaming_read_rpc_tracing.h"
 
 namespace google {
 namespace cloud {
@@ -37,7 +38,16 @@ AgentEndpointServiceTracingStub::ReceiveTaskNotification(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
-  return child_->ReceiveTaskNotification(std::move(context), request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.osconfig.agentendpoint.v1.AgentEndpointService",
+      "ReceiveTaskNotification");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->ReceiveTaskNotification(context, request);
+  return absl::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::osconfig::agentendpoint::v1::
+          ReceiveTaskNotificationResponse>>(std::move(context),
+                                            std::move(stream), std::move(span));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>

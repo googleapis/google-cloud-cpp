@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/streaming_read_rpc_tracing.h"
 
 namespace google {
 namespace cloud {
@@ -48,7 +49,14 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigQueryReadTracingStub::ReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  return child_->ReadRows(std::move(context), request);
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.storage.v1.BigQueryRead", "ReadRows");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->ReadRows(context, request);
+  return absl::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
