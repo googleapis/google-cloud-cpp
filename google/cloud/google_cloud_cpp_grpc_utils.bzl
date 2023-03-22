@@ -69,6 +69,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/setup_context.h",
     "internal/streaming_read_rpc.h",
     "internal/streaming_read_rpc_logging.h",
+    "internal/streaming_read_rpc_tracing.h",
     "internal/streaming_write_rpc.h",
     "internal/streaming_write_rpc_impl.h",
     "internal/streaming_write_rpc_logging.h",
