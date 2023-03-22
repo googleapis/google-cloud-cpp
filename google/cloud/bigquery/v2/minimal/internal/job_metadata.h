@@ -33,6 +33,8 @@ class BigQueryJobMetadata : public BigQueryJobRestStub {
 
   StatusOr<GetJobResponse> GetJob(rest_internal::RestContext& context,
                                   GetJobRequest const& request) override;
+  StatusOr<ListJobsResponse> ListJobs(rest_internal::RestContext& context,
+                                      ListJobsRequest const& request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& context,
