@@ -41,6 +41,19 @@ StatusOr<GetJobResponse> BigQueryJobMetadata::GetJob(
   return child_->GetJob(context, request);
 }
 
+StatusOr<ListJobsResponse> BigQueryJobMetadata::ListJobs(
+    rest_internal::RestContext& context, ListJobsRequest const& request) {
+  std::string all_users = request.all_users() ? "true" : "false";
+  SetMetadata(context,
+              {"project_id=" + request.project_id(), "all_users=" + all_users,
+               "max_results=" + std::to_string(request.max_results()),
+               "page_token=" + request.page_token(),
+               "projection=" + request.projection().value,
+               "state_filter=" + request.state_filter().value,
+               "parent_job_id=" + request.parent_job_id()});
+  return child_->ListJobs(context, request);
+}
+
 void BigQueryJobMetadata::SetMetadata(rest_internal::RestContext& rest_context,
                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);

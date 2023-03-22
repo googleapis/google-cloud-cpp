@@ -62,6 +62,41 @@ StatusOr<GetJobResponse> DefaultBigQueryJobRestStub::GetJob(
   return GetJobResponse::BuildFromHttpResponse(*http_response);
 }
 
+StatusOr<ListJobsResponse> DefaultBigQueryJobRestStub::ListJobs(
+    rest_internal::RestContext& rest_context, ListJobsRequest const& request) {
+  internal::OptionsSpan span(options_);
+
+  if (request.project_id().empty()) {
+    return internal::InvalidArgumentError(
+        "Invalid ListJobsRequest: Project Id is empty", GCP_ERROR_INFO());
+  }
+
+  // Prepare the RestRequest from ListJobsRequest.
+  auto rest_request = BuildRestRequest(request, options_);
+  if (!rest_request) return std::move(rest_request).status();
+
+  // Copy over any headers if provided.
+  if (!rest_context.headers().empty()) {
+    for (auto const& h : rest_context.headers()) {
+      if (!h.second.empty()) {
+        rest_request->AddHeader(h.first, absl::StrJoin(h.second, "&"));
+      }
+    }
+  }
+
+  // Call the rest client to get job details from the server as a RestResponse.
+  auto rest_response = rest_stub_->Get(std::move(*rest_request));
+  if (!rest_response) return std::move(rest_response).status();
+
+  // Convert RestResponse to HttpResponse.
+  auto http_response =
+      BigQueryHttpResponse::BuildFromRestResponse(std::move(*rest_response));
+  if (!http_response) return std::move(http_response).status();
+
+  // Convert HttpResponse to ListJobsResponse.
+  return ListJobsResponse::BuildFromHttpResponse(*http_response);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

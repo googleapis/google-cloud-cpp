@@ -36,6 +36,8 @@ class BigQueryJobLogging : public BigQueryJobRestStub {
 
   StatusOr<GetJobResponse> GetJob(rest_internal::RestContext& rest_context,
                                   GetJobRequest const& request) override;
+  StatusOr<ListJobsResponse> ListJobs(rest_internal::RestContext& rest_context,
+                                      ListJobsRequest const& request) override;
 
  private:
   std::shared_ptr<BigQueryJobRestStub> child_;
