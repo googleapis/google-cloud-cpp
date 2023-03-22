@@ -66,7 +66,7 @@ TEST(StreamingReadRpcTracingTest, Cancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto span = MakeSpan("span");
-  auto mock = absl::make_unique<MockStreamingReadRpc<int>>();
+  auto mock = std::make_unique<MockStreamingReadRpc<int>>();
   EXPECT_CALL(*mock, Cancel).WillOnce([span] {
     // Verify that our "cancel" event is added before calling `TryCancel()` on
     // the underlying stream.
@@ -91,7 +91,7 @@ TEST(StreamingReadRpcTracingTest, Cancel) {
 TEST(StreamingReadRpcTracingTest, Read) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
-  auto mock = absl::make_unique<MockStreamingReadRpc<int>>();
+  auto mock = std::make_unique<MockStreamingReadRpc<int>>();
   EXPECT_CALL(*mock, Read)
       .WillOnce(Return(100))
       .WillOnce(Return(200))
@@ -125,7 +125,7 @@ TEST(StreamingReadRpcTracingTest, Read) {
 }
 
 TEST(StreamingReadRpcTracingTest, GetRequestMetadata) {
-  auto mock = absl::make_unique<MockStreamingReadRpc<int>>();
+  auto mock = std::make_unique<MockStreamingReadRpc<int>>();
   EXPECT_CALL(*mock, GetRequestMetadata)
       .WillOnce(Return(StreamingRpcMetadata{{"key", "value"}}));
 
@@ -140,7 +140,7 @@ TEST(StreamingReadRpcTracingTest, SpanEndsOnDestruction) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   {
-    auto mock = absl::make_unique<MockStreamingReadRpc<int>>();
+    auto mock = std::make_unique<MockStreamingReadRpc<int>>();
     auto span = MakeSpan("span");
     StreamingReadRpcTracing<int> stream(std::make_shared<grpc::ClientContext>(),
                                         std::move(mock), span);
