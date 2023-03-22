@@ -36,6 +36,10 @@ Idempotency BigQueryJobIdempotencyPolicy::GetJob(GetJobRequest const&) {
   return Idempotency::kIdempotent;
 }
 
+Idempotency BigQueryJobIdempotencyPolicy::ListJobs(ListJobsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<BigQueryJobIdempotencyPolicy>
 MakeDefaultBigQueryJobIdempotencyPolicy() {
   return absl::make_unique<BigQueryJobIdempotencyPolicy>();
