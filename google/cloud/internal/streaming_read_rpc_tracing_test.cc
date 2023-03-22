@@ -65,19 +65,27 @@ void VerifyStream(StreamingReadRpc<int>& stream,
 TEST(StreamingReadRpcTracingTest, Cancel) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
+  auto span = MakeSpan("span");
   auto mock = absl::make_unique<MockStreamingReadRpc<int>>();
-  EXPECT_CALL(*mock, Cancel).Times(1);
+  EXPECT_CALL(*mock, Cancel).WillOnce([span] {
+    // Verify that our "cancel" event is added before calling `TryCancel()` on
+    // the underlying stream.
+    span->AddEvent("test-only: underlying stream cancel");
+  });
   EXPECT_CALL(*mock, Read).WillOnce(Return(Status()));
 
-  auto span = MakeSpan("span");
   StreamingReadRpcTracing<int> stream(std::make_shared<grpc::ClientContext>(),
                                       std::move(mock), span);
   stream.Cancel();
   VerifyStream(stream, {}, Status());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, ElementsAre(AllOf(SpanNamed("span"),
-                                       SpanEventsAre(EventNamed("cancel")))));
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanNamed("span"),
+          SpanEventsAre(EventNamed("cancel"),
+                        EventNamed("test-only: underlying stream cancel")))));
 }
 
 TEST(StreamingReadRpcTracingTest, Read) {

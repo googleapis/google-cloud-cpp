@@ -43,8 +43,8 @@ class StreamingReadRpcTracing : public StreamingReadRpc<ResponseType> {
   ~StreamingReadRpcTracing() override { (void)End(Status()); }
 
   void Cancel() override {
-    impl_->Cancel();
     span_->AddEvent("cancel");
+    impl_->Cancel();
   }
 
   absl::variant<Status, ResponseType> Read() override {
