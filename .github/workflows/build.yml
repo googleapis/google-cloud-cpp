@@ -18,7 +18,6 @@ jobs:
       - name: dump machine info
         run: |
           printf "%10s %s\n" "host:" "$(date -u -R)"
-          printf "%10s %s\n" "google:" "$(google_time)"
           printf "%10s %s\n" "kernel:" "$(uname -v)"
           printf "%10s %s\n" "os:" "$(sw_vers | xargs)"
           printf "%10s %s\n" "arch:" "$(arch)"
@@ -31,6 +30,9 @@ jobs:
           printf "%10s %s\n" "branch:" "${BRANCH}"
           printf "%10s %s\n" "bazelisk:" "$(bazelisk version 2>&1 | head -1)"
           printf "%10s %s\n" "bazel:" "$(bazelisk --batch version 2>&1 | head -1)"
+      - name: run bazel fetch
+        run: |
+          bazelisk fetch //...
 
   # Compiles and runs unit tests with macOS and Bazel
   # TODO(coryan) - currently it is just testing the XL runner
@@ -42,7 +44,6 @@ jobs:
       - name: dump machine info
         run: |
           printf "%10s %s\n" "host:" "$(date -u -R)"
-          printf "%10s %s\n" "google:" "$(google_time)"
           printf "%10s %s\n" "kernel:" "$(uname -v)"
           printf "%10s %s\n" "os:" "$(sw_vers | xargs)"
           printf "%10s %s\n" "arch:" "$(arch)"
