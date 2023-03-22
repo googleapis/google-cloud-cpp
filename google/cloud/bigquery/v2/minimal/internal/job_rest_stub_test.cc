@@ -82,8 +82,8 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
   EXPECT_THAT(result->job.status.state, Eq("DONE"));
 }
 
-TEST(BigQueryJobStubTest, ProjectIdEmpty) {
-  auto mock_rest_client = std::make_unique<MockRestClient>();
+TEST(BigQueryJobStubTest, GetJobProjectIdEmpty) {
+  auto mock_rest_client = absl::make_unique<MockRestClient>();
   GetJobRequest job_request("", "j123");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
@@ -109,7 +109,7 @@ TEST(BigQueryJobStubTest, JobIdEmpty) {
                        HasSubstr("Invalid GetJobRequest: Job Id is empty")));
 }
 
-TEST(BigQueryJobStubTest, RestClientError) {
+TEST(BigQueryJobStubTest, GetJobRestClientError) {
   // Get() fails.
   auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
@@ -126,7 +126,7 @@ TEST(BigQueryJobStubTest, RestClientError) {
   EXPECT_THAT(result.status().code(), Eq(StatusCode::kUnavailable));
 }
 
-TEST(BigQueryJobStubTest, BuildRestResponseError) {
+TEST(BigQueryJobStubTest, GetJobRestResponseError) {
   // Invalid Rest response.
   auto mock_payload = std::make_unique<MockHttpPayload>();
   auto mock_response = std::make_unique<MockRestResponse>();
@@ -147,6 +147,104 @@ TEST(BigQueryJobStubTest, BuildRestResponseError) {
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto result = rest_stub.GetJob(context, std::move(job_request));
+  EXPECT_FALSE(result.ok());
+  EXPECT_THAT(result.status().code(), Eq(StatusCode::kInvalidArgument));
+}
+
+TEST(BigQueryJobStubTest, ListJobsSuccess) {
+  std::string job_response_payload = R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "jobs": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "reference": {"project_id": "p123", "job_id": "j123"},
+                "state": "DONE",
+                "configuration": {
+                   "job_type": "QUERY",
+                   "query_config": {"query": "select 1;"}
+                },
+                "status": {"state": "DONE"},
+                "user_email": "user-email",
+                "principal_subject": "principal-subj"
+              }
+  ]})";
+  auto mock_response = absl::make_unique<MockRestResponse>();
+
+  EXPECT_CALL(*mock_response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kOk));
+  EXPECT_CALL(*mock_response, Headers)
+      .WillRepeatedly(Return(std::multimap<std::string, std::string>()));
+  EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+      .WillOnce(
+          Return(ByMove(MakeMockHttpPayloadSuccess(job_response_payload))));
+
+  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
+
+  ListJobsRequest list_jobs_request("p123");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+
+  auto result = rest_stub.ListJobs(context, std::move(list_jobs_request));
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(result->http_response.http_status_code, Eq(HttpStatusCode::kOk));
+}
+
+TEST(BigQueryJobStubTest, ListJobsProjectIdEmpty) {
+  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  ListJobsRequest list_jobs_request("");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  auto result = rest_stub.ListJobs(context, std::move(list_jobs_request));
+  EXPECT_THAT(
+      result,
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("Invalid ListJobsRequest: Project Id is empty")));
+}
+
+TEST(BigQueryJobStubTest, ListJobsRestClientError) {
+  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+      .WillOnce(
+          Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
+
+  ListJobsRequest list_jobs_request("p123");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  auto result = rest_stub.ListJobs(context, std::move(list_jobs_request));
+  EXPECT_FALSE(result.ok());
+  EXPECT_THAT(result.status().code(), Eq(StatusCode::kUnavailable));
+}
+
+TEST(BigQueryJobStubTest, ListJobsRestResponseError) {
+  auto mock_payload = absl::make_unique<MockHttpPayload>();
+  auto mock_response = absl::make_unique<MockRestResponse>();
+  EXPECT_CALL(*mock_response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
+  EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+      .WillOnce(Return(std::move(mock_payload)));
+
+  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
+      .WillOnce(Return(ByMove(
+          std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
+
+  ListJobsRequest list_jobs_request("p123");
+  Options opts;
+  opts.set<EndpointOption>("bigquery.googleapis.com");
+  rest_internal::RestContext context;
+  DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
+  auto result = rest_stub.ListJobs(context, std::move(list_jobs_request));
   EXPECT_FALSE(result.ok());
   EXPECT_THAT(result.status().code(), Eq(StatusCode::kInvalidArgument));
 }

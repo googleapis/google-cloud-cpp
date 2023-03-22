@@ -57,6 +57,33 @@ StatusOr<GetJobResponse> BigQueryJobLogging::GetJob(
   return response;
 }
 
+StatusOr<ListJobsResponse> BigQueryJobLogging::ListJobs(
+    rest_internal::RestContext& rest_context, ListJobsRequest const& request) {
+  char const* context = __func__;
+  GCP_LOG(DEBUG) << context
+                 << "() << ListJobsRequest{project_id=" << request.project_id()
+                 << ", all_users=" << request.all_users()
+                 << ", max_results=" << request.max_results()
+                 << ", page_token=" << request.page_token()
+                 << ", projection=" << request.projection().value
+                 << ", state_filter=" << request.state_filter().value
+                 << ", parent_job_id=" << request.parent_job_id() << "}";
+
+  if (!rest_context.headers().empty()) {
+    GCP_LOG(DEBUG) << context << "() << RestContext{";
+    for (auto const& h : rest_context.headers()) {
+      GCP_LOG(DEBUG) << "[header_name=" << h.first << ", header_value={"
+                     << absl::StrJoin(h.second, "&") << "}],";
+    }
+    GCP_LOG(DEBUG) << "}";
+  }
+  auto response = child_->ListJobs(rest_context, request);
+  if (!response.ok()) {
+    GCP_LOG(DEBUG) << context << "() >> status={" << response.status() << "}";
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
