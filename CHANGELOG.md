@@ -114,8 +114,8 @@ name because that will tightly couple their code to a specific release, and will
 make upgrading to newer versions more difficult. Instead, users should simply
 omit the inline namespace name, for example, instead of
 ~`google::cloud::v1::Status`~ use `google::cloud::Status`. Please update your
-code to avoid naming the `v1` and `gcpcxxV1` inline namespace names before
-2022-11-01. For more info, see [#7463] and [#5976].
+code to avoid naming the `v1` and `gcpcxxV1` inline namespace names. For more
+info, see [#7463] and [#5976].
 
 </details>
 
