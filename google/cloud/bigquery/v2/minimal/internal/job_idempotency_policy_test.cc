@@ -30,6 +30,14 @@ TEST(JobIdempotencyPolicytTest, GetJob) {
   EXPECT_EQ(actual->GetJob(request), expected);
 }
 
+TEST(JobIdempotencyPolicytTest, ListJobs) {
+  auto actual = MakeDefaultBigQueryJobIdempotencyPolicy();
+  auto expected = Idempotency::kIdempotent;
+
+  ListJobsRequest request;
+  EXPECT_EQ(actual->ListJobs(request), expected);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
