@@ -31,11 +31,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * `StatusOr<T>` represents either a usable `T` value or a `Status` object
  * explaining why a `T` value is not present. Typical usage of `StatusOr<T>`
- * looks like usage of a smart pointer, or even a std::optional<T>, in that you
- * first check its validity using a conversion to bool (or by calling
+ * looks like usage of a smart pointer, or even a `std::optional<T>`, in that
+ * you first check its validity using a conversion to bool (or by calling
  * `StatusOr::ok()`), then you may dereference the object to access the
- * contained value. It is undefined behavior (UB) to dereference a
- * `StatusOr<T>` that is not "ok". For example:
+ * contained value.
+ *
+ * It is undefined behavior (UB) to dereference a `StatusOr<T>` that is not
+ * "ok". For example:
  *
  * @code
  * StatusOr<Foo> foo = FetchFoo();
@@ -47,8 +49,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * @endcode
  *
  * Alternatively, you may call the `StatusOr::value()` member function,
- * which is defined to throw an exception if there is no `T` value, or crash
- * the program if exceptions are disabled. It is never UB to call
+ * which is defined to: (1) throw an exception if there is no `T` value, or (2)
+ * crash the program if exceptions are disabled. It is never UB to call
  * `.value()`.
  *
  * @code
@@ -58,12 +60,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Functions that can fail will often return a `StatusOr<T>` instead of
  * returning an error code and taking a `T` out-param, or rather than directly
- * returning the `T` and throwing an exception on error. StatusOr is used so
- * that callers can choose whether they want to explicitly check for errors,
- * crash the program, or throw exceptions. Since constructors do not have a
- * return value, they should be designed in such a way that they cannot fail by
- * moving the object's complex initialization logic into a separate factory
- * function that itself can return a `StatusOr<T>`. For example:
+ * returning the `T` and throwing an exception on error. `StatusOr<T>` is used
+ * so that callers can choose whether they want to explicitly check for errors,
+ * crash the program, or throw exceptions.
+ *
+ * Since constructors do not have a return value, they should be designed in
+ * such a way that they cannot fail by moving the object's complex
+ * initialization logic into a separate factory function that itself can return
+ * a `StatusOr<T>`. For example:
  *
  * @code
  * class Bar {
@@ -79,15 +83,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * `StatusOr<T>` supports equality comparisons if the underlying type `T` does.
  *
- * TODO(...) - the current implementation is fairly naive with respect to `T`,
- *   it is unlikely to work correctly for reference types, types without default
- *   constructors, arrays.
- *
  * @tparam T the type of the value.
  */
 template <typename T>
 class StatusOr final {
  public:
+  static_assert(!std::is_reference<T>::value,
+                "StatusOr<T> requires T to **not** be a reference type");
+
   /**
    * A `value_type` member for use in generic programming.
    *
