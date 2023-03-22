@@ -56,3 +56,9 @@ jobs:
           printf "%10s %s\n" "branch:" "${BRANCH}"
           printf "%10s %s\n" "bazelisk:" "$(bazelisk version 2>&1 | head -1)"
           printf "%10s %s\n" "bazel:" "$(bazelisk --batch version 2>&1 | head -1)"
+      - name: run bazel fetch
+        run: |
+          bazelisk fetch //...
+      - name: run bazel build
+        run: |
+          bazelisk build //...
