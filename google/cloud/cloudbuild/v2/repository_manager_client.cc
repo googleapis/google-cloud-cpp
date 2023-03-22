@@ -25,7 +25,8 @@ namespace cloudbuild_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RepositoryManagerClient::RepositoryManagerClient(
-    std::shared_ptr<RepositoryManagerConnection> connection, Options opts)
+    ExperimentalTag, std::shared_ptr<RepositoryManagerConnection> connection,
+    Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

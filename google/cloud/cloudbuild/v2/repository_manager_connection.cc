@@ -134,7 +134,7 @@ RepositoryManagerConnection::FetchLinkableRepositories(
 }
 
 std::shared_ptr<RepositoryManagerConnection> MakeRepositoryManagerConnection(
-    Options options) {
+    ExperimentalTag, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  RepositoryManagerPolicyOptionList>(options,

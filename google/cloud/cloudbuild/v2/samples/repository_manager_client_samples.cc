@@ -19,6 +19,7 @@
 #include "google/cloud/cloudbuild/v2/repository_manager_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
@@ -39,7 +40,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client = google::cloud::cloudbuild_v2::RepositoryManagerClient(
-      google::cloud::cloudbuild_v2::MakeRepositoryManagerConnection(options));
+      google::cloud::ExperimentalTag{},
+      google::cloud::cloudbuild_v2::MakeRepositoryManagerConnection(
+          google::cloud::ExperimentalTag{}, options));
   //! [set-client-endpoint]
 }
 
@@ -56,7 +59,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::cloudbuild_v2::RepositoryManagerClient(
-        google::cloud::cloudbuild_v2::MakeRepositoryManagerConnection(options));
+        google::cloud::ExperimentalTag{},
+        google::cloud::cloudbuild_v2::MakeRepositoryManagerConnection(
+            google::cloud::ExperimentalTag{}, options));
   }
   //! [with-service-account]
   (argv.at(0));

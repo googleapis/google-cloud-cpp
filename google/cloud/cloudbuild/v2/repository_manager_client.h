@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_REPOSITORY_MANAGER_CLIENT_H
 
 #include "google/cloud/cloudbuild/v2/repository_manager_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -63,7 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RepositoryManagerClient {
  public:
   explicit RepositoryManagerClient(
-      std::shared_ptr<RepositoryManagerConnection> connection,
+      ExperimentalTag, std::shared_ptr<RepositoryManagerConnection> connection,
       Options opts = {});
   ~RepositoryManagerClient();
 
