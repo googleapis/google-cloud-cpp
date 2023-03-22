@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/notification_service.proto
 
 #include "google/cloud/monitoring/v3/notification_channel_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ NotificationChannelServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>
 NotificationChannelServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
+  return std::make_unique<
       NotificationChannelServiceConnectionIdempotencyPolicy>(*this);
 }
 
@@ -102,7 +101,7 @@ Idempotency NotificationChannelServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<NotificationChannelServiceConnectionIdempotencyPolicy>
 MakeDefaultNotificationChannelServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       NotificationChannelServiceConnectionIdempotencyPolicy>();
 }
 

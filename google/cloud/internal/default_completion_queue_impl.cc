@@ -15,7 +15,6 @@
 #include "google/cloud/internal/default_completion_queue_impl.h"
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "absl/memory/memory.h"
 #include <grpcpp/alarm.h>
 #include <sstream>
 

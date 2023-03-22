@@ -110,7 +110,7 @@ std::string TempKeyFileName() {
 }
 
 std::unique_ptr<RestResponse> MakeMockResponse(std::string contents) {
-  auto response = absl::make_unique<MockRestResponse>();
+  auto response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*response), ExtractPayload)
@@ -198,7 +198,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsAuthorizedUser) {
 
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([token_uri]() {
-    auto client = absl::make_unique<MockRestClient>();
+    auto client = std::make_unique<MockRestClient>();
     using FormDataType = std::vector<std::pair<std::string, std::string>>;
     auto expected_request = Property(&RestRequest::path, token_uri);
     auto expected_form_data = MatcherCast<FormDataType const&>(IsSupersetOf({
@@ -234,7 +234,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
   auto const now = std::chrono::system_clock::now();
 
   auto metadata_client = []() {
-    auto client = absl::make_unique<MockRestClient>();
+    auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
         Property(&RestRequest::path,
                  absl::StrCat("http://metadata.google.internal/",
@@ -248,7 +248,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
     return client;
   }();
   auto token_client = []() {
-    auto client = absl::make_unique<MockRestClient>();
+    auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
         Property(&RestRequest::path,
                  absl::StrCat("http://metadata.google.internal/",
@@ -282,7 +282,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
   auto const subject_token = std::string{"test-subject-token"};
   auto subject_token_client = [subject_url, subject_token] {
     auto expected_sts_request = Property(&RestRequest::path, subject_url);
-    auto mock = absl::make_unique<MockRestClient>();
+    auto mock = std::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Get(expected_sts_request))
         .WillOnce(Return(ByMove(MakeMockResponse(subject_token))));
     return mock;
@@ -296,7 +296,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
     // Check only one value. There are other tests for the full contents.
     auto expected_form_data = MatcherCast<FormDataType const&>(
         Contains(Pair("subject_token", subject_token)));
-    auto mock = absl::make_unique<MockRestClient>();
+    auto mock = std::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(expected_sts_request, expected_form_data))
         .WillOnce(Return(
             Status{StatusCode::kPermissionDenied, "uh-oh - STS exchange"}));
@@ -354,7 +354,7 @@ TEST(UnifiedRestCredentialsTest, ImpersonateServiceAccount) {
   // We will simply simulate a failure.
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([] {
-    auto client = absl::make_unique<MockRestClient>();
+    auto client = std::make_unique<MockRestClient>();
     auto expected_request = AllOf(
         Property(&RestRequest::path,
                  absl::StrCat("https://iamcredentials.googleapis.com/v1/",
@@ -409,7 +409,7 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
   auto const subject_token = std::string{"test-subject-token"};
   auto subject_token_client = [subject_url, subject_token] {
     auto expected_sts_request = Property(&RestRequest::path, subject_url);
-    auto mock = absl::make_unique<MockRestClient>();
+    auto mock = std::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Get(expected_sts_request))
         .WillOnce(Return(ByMove(MakeMockResponse(subject_token))));
     return mock;
@@ -423,7 +423,7 @@ TEST(UnifiedRestCredentialsTest, ExternalAccount) {
     // Check only one value, there are other test for the full contents.
     auto expected_form_data = MatcherCast<FormDataType const&>(
         Contains(Pair("subject_token", subject_token)));
-    auto mock = absl::make_unique<MockRestClient>();
+    auto mock = std::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(expected_sts_request, expected_form_data))
         .WillOnce(Return(
             Status{StatusCode::kPermissionDenied, "uh-oh - STS exchange"}));

@@ -17,7 +17,6 @@
 // source: google/cloud/eventarc/v1/eventarc.proto
 
 #include "google/cloud/eventarc/v1/eventarc_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ EventarcConnectionIdempotencyPolicy::~EventarcConnectionIdempotencyPolicy() =
 
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>
 EventarcConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<EventarcConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<EventarcConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency EventarcConnectionIdempotencyPolicy::GetTrigger(
@@ -127,7 +126,7 @@ Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleChannelConfig(
 
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>
 MakeDefaultEventarcConnectionIdempotencyPolicy() {
-  return absl::make_unique<EventarcConnectionIdempotencyPolicy>();
+  return std::make_unique<EventarcConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

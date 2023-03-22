@@ -21,7 +21,6 @@
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "absl/memory/memory.h"
 #include "absl/meta/type_traits.h"
 #include <chrono>
 
@@ -209,7 +208,7 @@ class CompletionQueue {
       absl::decay_t<Functor> fun_;
     };
     impl_->RunAsync(
-        absl::make_unique<Wrapper>(impl_, std::forward<Functor>(functor)));
+        std::make_unique<Wrapper>(impl_, std::forward<Functor>(functor)));
   }
 
   /**
@@ -232,7 +231,7 @@ class CompletionQueue {
      private:
       absl::decay_t<Functor> fun_;
     };
-    impl_->RunAsync(absl::make_unique<Wrapper>(std::forward<Functor>(functor)));
+    impl_->RunAsync(std::make_unique<Wrapper>(std::forward<Functor>(functor)));
   }
 
   /**

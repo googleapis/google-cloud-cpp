@@ -22,7 +22,6 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <fstream>
 

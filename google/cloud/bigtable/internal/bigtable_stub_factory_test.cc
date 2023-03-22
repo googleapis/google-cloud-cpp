@@ -23,7 +23,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
 
@@ -101,7 +100,7 @@ TEST_F(BigtableStubFactory, ReadRows) {
                   IsContextMDValid(*context,
                                    "google.bigtable.v2.Bigtable.ReadRows",
                                    request);
-                  auto stream = absl::make_unique<MockReadRowsStream>();
+                  auto stream = std::make_unique<MockReadRowsStream>();
                   EXPECT_CALL(*stream, Read)
                       .WillOnce(Return(
                           Status(StatusCode::kUnavailable, "nothing here")));
@@ -186,7 +185,7 @@ TEST_F(BigtableStubFactory, AsyncReadRows) {
                   using ErrorStream =
                       ::google::cloud::internal::AsyncStreamingReadRpcError<
                           google::bigtable::v2::ReadRowsResponse>;
-                  return absl::make_unique<ErrorStream>(
+                  return std::make_unique<ErrorStream>(
                       Status(StatusCode::kUnavailable, "nothing here"));
                 });
         return mock;

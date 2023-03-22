@@ -17,7 +17,6 @@
 // source: google/cloud/networkmanagement/v1/reachability.proto
 
 #include "google/cloud/networkmanagement/v1/reachability_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ReachabilityServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
 ReachabilityServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -77,7 +76,7 @@ ReachabilityServiceConnectionIdempotencyPolicy::DeleteConnectivityTest(
 
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
 MakeDefaultReachabilityServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/video/transcoder/v1/services.proto
 
 #include "google/cloud/video/transcoder/v1/transcoder_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ TranscoderServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy>
 TranscoderServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TranscoderServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TranscoderServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TranscoderServiceConnectionIdempotencyPolicy::CreateJob(
@@ -77,7 +76,7 @@ Idempotency TranscoderServiceConnectionIdempotencyPolicy::DeleteJobTemplate(
 
 std::unique_ptr<TranscoderServiceConnectionIdempotencyPolicy>
 MakeDefaultTranscoderServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<TranscoderServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<TranscoderServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

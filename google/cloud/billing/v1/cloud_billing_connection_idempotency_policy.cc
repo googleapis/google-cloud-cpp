@@ -17,7 +17,6 @@
 // source: google/cloud/billing/v1/cloud_billing.proto
 
 #include "google/cloud/billing/v1/cloud_billing_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudBillingConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
 CloudBillingConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudBillingConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudBillingConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudBillingConnectionIdempotencyPolicy::GetBillingAccount(
@@ -88,7 +87,7 @@ Idempotency CloudBillingConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<CloudBillingConnectionIdempotencyPolicy>
 MakeDefaultCloudBillingConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudBillingConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudBillingConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

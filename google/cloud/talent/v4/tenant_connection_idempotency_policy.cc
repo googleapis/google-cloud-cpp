@@ -17,7 +17,6 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/v4/tenant_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ TenantServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
 TenantServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TenantServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TenantServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TenantServiceConnectionIdempotencyPolicy::CreateTenant(
@@ -62,7 +61,7 @@ Idempotency TenantServiceConnectionIdempotencyPolicy::ListTenants(
 
 std::unique_ptr<TenantServiceConnectionIdempotencyPolicy>
 MakeDefaultTenantServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<TenantServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<TenantServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

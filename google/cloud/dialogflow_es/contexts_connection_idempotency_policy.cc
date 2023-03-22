@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/context.proto
 
 #include "google/cloud/dialogflow_es/contexts_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ContextsConnectionIdempotencyPolicy::~ContextsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<ContextsConnectionIdempotencyPolicy>
 ContextsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ContextsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ContextsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ContextsConnectionIdempotencyPolicy::ListContexts(
@@ -67,7 +66,7 @@ Idempotency ContextsConnectionIdempotencyPolicy::DeleteAllContexts(
 
 std::unique_ptr<ContextsConnectionIdempotencyPolicy>
 MakeDefaultContextsConnectionIdempotencyPolicy() {
-  return absl::make_unique<ContextsConnectionIdempotencyPolicy>();
+  return std::make_unique<ContextsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

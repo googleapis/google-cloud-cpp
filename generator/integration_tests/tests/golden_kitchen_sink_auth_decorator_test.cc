@@ -19,7 +19,6 @@
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -121,7 +120,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingRead) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce([](::testing::Unused, ::testing::Unused) {
-        return absl::make_unique<StreamingReadRpcError<Response>>(
+        return std::make_unique<StreamingReadRpcError<Response>>(
             Status(StatusCode::kPermissionDenied, "uh-oh"));
       });
 
@@ -162,7 +161,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
 TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingWrite) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto) {
-    auto stream = absl::make_unique<MockStreamingWriteRpc>();
+    auto stream = std::make_unique<MockStreamingWriteRpc>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(true)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Close)
         .WillOnce(Return(StatusOr<Response>(
@@ -189,7 +188,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingRead) {
   using ErrorStream =
       ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
   EXPECT_CALL(*mock, AsyncStreamingRead)
-      .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
+      .WillOnce(Return(ByMove(std::make_unique<ErrorStream>(
           Status(StatusCode::kAborted, "uh-oh")))));
 
   google::cloud::CompletionQueue cq;
@@ -216,7 +215,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingWrite) {
   using ErrorStream =
       ::google::cloud::internal::AsyncStreamingWriteRpcError<Request, Response>;
   EXPECT_CALL(*mock, AsyncStreamingWrite)
-      .WillOnce(Return(ByMove(absl::make_unique<ErrorStream>(
+      .WillOnce(Return(ByMove(std::make_unique<ErrorStream>(
           Status(StatusCode::kAborted, "uh-oh")))));
 
   google::cloud::CompletionQueue cq;

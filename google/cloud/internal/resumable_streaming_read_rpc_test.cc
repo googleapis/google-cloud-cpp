@@ -16,7 +16,6 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -107,7 +106,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
       .WillOnce([](FakeRequest const& request) {
         EXPECT_EQ(request.key, "test-key");
         EXPECT_THAT(request.token, IsEmpty());
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(AsReadReturn(FakeResponse{"value-0", "token-1"})))
             .WillOnce(Return(AsReadReturn(FakeResponse{"value-1", "token-2"})))
@@ -117,7 +116,7 @@ TEST(ResumableStreamingReadRpc, ResumeWithPartials) {
       .WillOnce([](FakeRequest const& request) {
         EXPECT_EQ(request.key, "test-key");
         EXPECT_THAT(request.token, "token-2");
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(AsReadReturn(FakeResponse{"value-2", "token-2"})))
             .WillOnce(Return(StreamSuccess()));
@@ -148,36 +147,36 @@ TEST(ResumableStreamingReadRpc, TooManyTransientFailures) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead)
       .WillOnce([](FakeRequest const&) {
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
         // Event though this stream ends with a failure it will be resumed
         // because its successful Read() resets the retry policy.
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(AsReadReturn(FakeResponse{"value-0", "token-1"})))
             .WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientFailure()));
         return stream;
       });
@@ -209,14 +208,14 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
       .WillOnce([](FakeRequest const&) {
         // Event though this stream ends with a failure it will be resumed
         // because its successful Read() resets the retry policy.
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(AsReadReturn(FakeResponse{"value-0", "token-1"})))
             .WillOnce(Return(PermanentFailure()));
         return stream;
       })
       .WillOnce([](FakeRequest const&) {
-        auto stream = absl::make_unique<MockStreamingReadRpc>();
+        auto stream = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentFailure()));
         return stream;
       });
@@ -245,7 +244,7 @@ TEST(ResumableStreamingReadRpc, PermanentFailure) {
 TEST(ResumableStreamingReadRpc, PermanentFailureAtStart) {
   MockStub mock;
   EXPECT_CALL(mock, StreamingRead).WillOnce([](FakeRequest const&) {
-    auto stream = absl::make_unique<MockStreamingReadRpc>();
+    auto stream = std::make_unique<MockStreamingReadRpc>();
     EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentFailure()));
     return stream;
   });

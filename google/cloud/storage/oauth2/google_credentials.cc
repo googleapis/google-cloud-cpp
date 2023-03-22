@@ -21,7 +21,6 @@
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "absl/memory/memory.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iterator>
@@ -70,7 +69,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     }
     info->subject = std::move(service_account_subject);
     info->scopes = std::move(service_account_scopes);
-    auto credentials = absl::make_unique<ServiceAccountCredentials<>>(*info);
+    auto credentials = std::make_unique<ServiceAccountCredentials<>>(*info);
     return std::unique_ptr<Credentials>(std::move(credentials));
   }
   std::string cred_type = cred_json.value("type", "no type given");
@@ -86,7 +85,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
       return info.status();
     }
     std::unique_ptr<Credentials> ptr =
-        absl::make_unique<AuthorizedUserCredentials<>>(*info);
+        std::make_unique<AuthorizedUserCredentials<>>(*info);
     return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
   if (cred_type == "service_account") {
@@ -97,7 +96,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     info->subject = std::move(service_account_subject);
     info->scopes = std::move(service_account_scopes);
     std::unique_ptr<Credentials> ptr =
-        absl::make_unique<ServiceAccountCredentials<>>(*info, options);
+        std::make_unique<ServiceAccountCredentials<>>(*info, options);
     return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
   return StatusOr<std::unique_ptr<Credentials>>(

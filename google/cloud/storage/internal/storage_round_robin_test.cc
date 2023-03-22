@@ -18,7 +18,6 @@
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -60,7 +59,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 MakeReadObjectStream(Unused, google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
-  return absl::make_unique<ErrorStream>(
+  return std::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
@@ -70,7 +69,7 @@ MakeAsyncReadObjectStream(google::cloud::CompletionQueue const&, Unused,
                           google::storage::v2::ReadObjectRequest const&) {
   using ErrorStream = ::google::cloud::internal::AsyncStreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
-  return absl::make_unique<ErrorStream>(
+  return std::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
@@ -81,7 +80,7 @@ MakeAsyncWriteObjectStream(google::cloud::CompletionQueue const&, Unused) {
   using ErrorStream = ::google::cloud::internal::AsyncStreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
-  return absl::make_unique<ErrorStream>(
+  return std::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 
@@ -92,7 +91,7 @@ MakeInsertStream(Unused) {
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
-  return absl::make_unique<ErrorStream>(
+  return std::make_unique<ErrorStream>(
       Status(StatusCode::kPermissionDenied, "uh-oh"));
 }
 

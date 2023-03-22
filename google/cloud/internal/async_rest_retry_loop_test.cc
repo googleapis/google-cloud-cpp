@@ -340,7 +340,7 @@ TEST(AsyncRestRetryLoopTest, ExhaustedDuringBackoff) {
 }
 
 TEST(AsyncRestRetryLoopTest, ExhaustedBeforeStart) {
-  auto mock = absl::make_unique<MockRetryPolicy>();
+  auto mock = std::make_unique<MockRetryPolicy>();
   EXPECT_CALL(*mock, IsExhausted)
       .WillOnce(Return(false))
       .WillRepeatedly(Return(true));
@@ -365,7 +365,7 @@ TEST(AsyncRestRetryLoopTest, ExhaustedBeforeStart) {
 }
 
 TEST(AsyncRestRetryLoopTest, SetsTimeout) {
-  auto mock = absl::make_unique<MockRetryPolicy>();
+  auto mock = std::make_unique<MockRetryPolicy>();
   EXPECT_CALL(*mock, OnFailure)
       .WillOnce(Return(true))
       .WillOnce(Return(true))

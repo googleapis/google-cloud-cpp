@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/test_case.proto
 
 #include "google/cloud/dialogflow_cx/test_cases_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ TestCasesConnectionIdempotencyPolicy::~TestCasesConnectionIdempotencyPolicy() =
 
 std::unique_ptr<TestCasesConnectionIdempotencyPolicy>
 TestCasesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TestCasesConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TestCasesConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TestCasesConnectionIdempotencyPolicy::ListTestCases(
@@ -97,7 +96,7 @@ Idempotency TestCasesConnectionIdempotencyPolicy::GetTestCaseResult(
 
 std::unique_ptr<TestCasesConnectionIdempotencyPolicy>
 MakeDefaultTestCasesConnectionIdempotencyPolicy() {
-  return absl::make_unique<TestCasesConnectionIdempotencyPolicy>();
+  return std::make_unique<TestCasesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

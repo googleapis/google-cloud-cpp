@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/document.proto
 
 #include "google/cloud/dialogflow_es/documents_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DocumentsConnectionIdempotencyPolicy::~DocumentsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
 DocumentsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DocumentsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DocumentsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DocumentsConnectionIdempotencyPolicy::ListDocuments(
@@ -77,7 +76,7 @@ Idempotency DocumentsConnectionIdempotencyPolicy::ExportDocument(
 
 std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
 MakeDefaultDocumentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DocumentsConnectionIdempotencyPolicy>();
+  return std::make_unique<DocumentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

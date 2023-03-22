@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -210,16 +209,16 @@ TEST(HashFunctionImplTest, MD5Cord) {
 }
 
 TEST(HashFunctionImplTest, CompositeEmpty) {
-  CompositeFunction function(absl::make_unique<MD5HashFunction>(),
-                             absl::make_unique<Crc32cHashFunction>());
+  CompositeFunction function(std::make_unique<MD5HashFunction>(),
+                             std::make_unique<Crc32cHashFunction>());
   auto result = std::move(function).Finish();
   EXPECT_THAT(result.crc32c, kEmptyStringCrc32cChecksum);
   EXPECT_THAT(result.md5, kEmptyStringMD5Hash);
 }
 
 TEST(HashFunctionImplTest, CompositeQuick) {
-  CompositeFunction function(absl::make_unique<MD5HashFunction>(),
-                             absl::make_unique<Crc32cHashFunction>());
+  CompositeFunction function(std::make_unique<MD5HashFunction>(),
+                             std::make_unique<Crc32cHashFunction>());
   function.Update("The quick");
   function.Update(" brown");
   function.Update(" fox jumps over the lazy dog");

@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/changelog.proto
 
 #include "google/cloud/dialogflow_cx/changelogs_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ChangelogsConnectionIdempotencyPolicy::
 
 std::unique_ptr<ChangelogsConnectionIdempotencyPolicy>
 ChangelogsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ChangelogsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ChangelogsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ChangelogsConnectionIdempotencyPolicy::ListChangelogs(
@@ -47,7 +46,7 @@ Idempotency ChangelogsConnectionIdempotencyPolicy::GetChangelog(
 
 std::unique_ptr<ChangelogsConnectionIdempotencyPolicy>
 MakeDefaultChangelogsConnectionIdempotencyPolicy() {
-  return absl::make_unique<ChangelogsConnectionIdempotencyPolicy>();
+  return std::make_unique<ChangelogsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

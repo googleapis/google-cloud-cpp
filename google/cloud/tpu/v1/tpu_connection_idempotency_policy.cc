@@ -17,7 +17,6 @@
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
 #include "google/cloud/tpu/v1/tpu_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -31,7 +30,7 @@ TpuConnectionIdempotencyPolicy::~TpuConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<TpuConnectionIdempotencyPolicy>
 TpuConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TpuConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TpuConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TpuConnectionIdempotencyPolicy::ListNodes(
@@ -91,7 +90,7 @@ Idempotency TpuConnectionIdempotencyPolicy::GetAcceleratorType(
 
 std::unique_ptr<TpuConnectionIdempotencyPolicy>
 MakeDefaultTpuConnectionIdempotencyPolicy() {
-  return absl::make_unique<TpuConnectionIdempotencyPolicy>();
+  return std::make_unique<TpuConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/talent/v4/job_service.proto
 
 #include "google/cloud/talent/v4/job_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ JobServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
 JobServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<JobServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<JobServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency JobServiceConnectionIdempotencyPolicy::CreateJob(
@@ -87,7 +86,7 @@ Idempotency JobServiceConnectionIdempotencyPolicy::SearchJobsForAlert(
 
 std::unique_ptr<JobServiceConnectionIdempotencyPolicy>
 MakeDefaultJobServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<JobServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<JobServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -44,7 +44,7 @@ class MockAsyncStreamingReadRpc
 };
 
 TEST(AsyncStreamingReadTest, FullStream) {
-  auto mock = absl::make_unique<StrictMock<MockAsyncStreamingReadRpc>>();
+  auto mock = std::make_unique<StrictMock<MockAsyncStreamingReadRpc>>();
   StrictMock<MockFunction<future<bool>(FakeResponse)>> on_read;
   StrictMock<MockFunction<void(Status)>> on_finish;
 
@@ -77,7 +77,7 @@ TEST(AsyncStreamingReadTest, FullStream) {
 }
 
 TEST(AsyncStreamingReadTest, BadStart) {
-  auto mock = absl::make_unique<StrictMock<MockAsyncStreamingReadRpc>>();
+  auto mock = std::make_unique<StrictMock<MockAsyncStreamingReadRpc>>();
   StrictMock<MockFunction<future<bool>(FakeResponse)>> on_read;
   StrictMock<MockFunction<void(Status)>> on_finish;
 
@@ -93,7 +93,7 @@ TEST(AsyncStreamingReadTest, BadStart) {
 }
 
 TEST(AsyncStreamingReadTest, CancelMidStream) {
-  auto mock = absl::make_unique<StrictMock<MockAsyncStreamingReadRpc>>();
+  auto mock = std::make_unique<StrictMock<MockAsyncStreamingReadRpc>>();
   StrictMock<MockFunction<future<bool>(FakeResponse)>> on_read;
   StrictMock<MockFunction<void(Status)>> on_finish;
 

@@ -16,7 +16,6 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -135,7 +134,7 @@ $auth_class_name$::$method_name$(
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       $request_type$, $response_type$>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->$method_name$(std::move(context));
 }
 )""");
@@ -156,7 +155,7 @@ $auth_class_name$::Async$method_name$(
   auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->Async$method_name$(cq, std::move(ctx));
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 )""");
@@ -206,7 +205,7 @@ $auth_class_name$::$method_name$(
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       $response_type$>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->$method_name$(std::move(context), request);
 }
 )"""}},
@@ -230,7 +229,7 @@ $auth_class_name$::Async$method_name$(
   auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->Async$method_name$(cq, std::move(ctx), request);
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 )""";
@@ -251,7 +250,7 @@ $auth_class_name$::Async$method_name$(
   auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->Async$method_name$(cq, std::move(ctx));
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 )""";

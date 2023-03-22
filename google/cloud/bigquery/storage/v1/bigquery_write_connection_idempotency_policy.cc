@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/bigquery_write_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BigQueryWriteConnectionIdempotencyPolicy::
 
 std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
 BigQueryWriteConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BigQueryWriteConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<BigQueryWriteConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency BigQueryWriteConnectionIdempotencyPolicy::CreateWriteStream(
@@ -63,7 +62,7 @@ Idempotency BigQueryWriteConnectionIdempotencyPolicy::FlushRows(
 
 std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
 MakeDefaultBigQueryWriteConnectionIdempotencyPolicy() {
-  return absl::make_unique<BigQueryWriteConnectionIdempotencyPolicy>();
+  return std::make_unique<BigQueryWriteConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

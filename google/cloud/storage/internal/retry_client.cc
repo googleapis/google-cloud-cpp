@@ -17,7 +17,6 @@
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/match.h"
 #include <sstream>
 #include <thread>

@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/internal/default_row_reader.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "absl/memory/memory.h"
 #include <thread>
 
 namespace google {

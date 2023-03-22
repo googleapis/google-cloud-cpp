@@ -197,7 +197,7 @@ TEST(CommonRetryPolicy, IsExhaustedBestEffort) {
   class CustomRetryPolicy : public RPCRetryPolicy {
    public:
     std::unique_ptr<RPCRetryPolicy> clone() const override {
-      return absl::make_unique<CustomRetryPolicy>();
+      return std::make_unique<CustomRetryPolicy>();
     }
     void Setup(grpc::ClientContext&) const override {}
     bool OnFailure(Status const&) override { return false; }

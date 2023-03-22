@@ -17,7 +17,6 @@
 // source: google/cloud/memcache/v1/cloud_memcache.proto
 
 #include "google/cloud/memcache/v1/cloud_memcache_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudMemcacheConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>
 CloudMemcacheConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudMemcacheConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudMemcacheConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudMemcacheConnectionIdempotencyPolicy::ListInstances(
@@ -77,7 +76,7 @@ Idempotency CloudMemcacheConnectionIdempotencyPolicy::RescheduleMaintenance(
 
 std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>
 MakeDefaultCloudMemcacheConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudMemcacheConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudMemcacheConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

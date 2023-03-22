@@ -311,7 +311,7 @@ TEST_F(AsyncBulkApplyTest, TooManyFailures) {
       .WillRepeatedly([](grpc::ClientContext*,
                          btproto::MutateRowsRequest const&,
                          grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read).Times(2);
         EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
@@ -356,7 +356,7 @@ TEST_F(AsyncBulkApplyTest, RetryPolicyUsedForOkStreamsWithFailedMutations) {
       .WillRepeatedly([](grpc::ClientContext*,
                          btproto::MutateRowsRequest const&,
                          grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read)
             .WillOnce([](btproto::MutateRowsResponse* r, void*) {
@@ -415,7 +415,7 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
       .WillOnce([grpc_error](grpc::ClientContext*,
                              btproto::MutateRowsRequest const&,
                              grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read).Times(2);
         EXPECT_CALL(*reader, Finish)
@@ -427,7 +427,7 @@ TEST_F(AsyncBulkApplyTest, UsesBackoffPolicy) {
       })
       .WillOnce([](grpc::ClientContext*, btproto::MutateRowsRequest const&,
                    grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read)
             .WillOnce([](btproto::MutateRowsResponse* r, void*) {
@@ -484,7 +484,7 @@ TEST_F(AsyncBulkApplyTest, CancelDuringBackoff) {
       .WillOnce([grpc_error](grpc::ClientContext*,
                              btproto::MutateRowsRequest const&,
                              grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>();
         EXPECT_CALL(*reader, Read).Times(2);
         EXPECT_CALL(*reader, Finish)

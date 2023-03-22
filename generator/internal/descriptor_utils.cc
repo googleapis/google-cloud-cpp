@@ -1161,72 +1161,72 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   auto method_vars = CreateMethodVars(*service, service_vars);
   auto const omit_client = service_vars.find("omit_client");
   if (omit_client == service_vars.end() || omit_client->second != "true") {
-    code_generators.push_back(absl::make_unique<ClientGenerator>(
+    code_generators.push_back(std::make_unique<ClientGenerator>(
         service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<SampleGenerator>(
+    code_generators.push_back(std::make_unique<SampleGenerator>(
         service, service_vars, method_vars, context));
   }
   auto const omit_connection = service_vars.find("omit_connection");
   if (omit_connection == service_vars.end() ||
       omit_connection->second != "true") {
-    code_generators.push_back(absl::make_unique<ConnectionGenerator>(
+    code_generators.push_back(std::make_unique<ConnectionGenerator>(
         service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<IdempotencyPolicyGenerator>(
+    code_generators.push_back(std::make_unique<IdempotencyPolicyGenerator>(
         service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<MockConnectionGenerator>(
+    code_generators.push_back(std::make_unique<MockConnectionGenerator>(
         service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<OptionDefaultsGenerator>(
+    code_generators.push_back(std::make_unique<OptionDefaultsGenerator>(
         service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<OptionsGenerator>(
+    code_generators.push_back(std::make_unique<OptionsGenerator>(
         service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<ConnectionImplGenerator>(
+    code_generators.push_back(std::make_unique<ConnectionImplGenerator>(
         service, service_vars, method_vars, context));
     if (service_vars.find("retry_status_code_expression") !=
         service_vars.end()) {
-      code_generators.push_back(absl::make_unique<RetryTraitsGenerator>(
+      code_generators.push_back(std::make_unique<RetryTraitsGenerator>(
           service, service_vars, method_vars, context));
     }
-    code_generators.push_back(absl::make_unique<TracingConnectionGenerator>(
+    code_generators.push_back(std::make_unique<TracingConnectionGenerator>(
         service, service_vars, method_vars, context));
   }
   auto const omit_stub_factory = service_vars.find("omit_stub_factory");
   if (omit_stub_factory == service_vars.end() ||
       omit_stub_factory->second != "true") {
-    code_generators.push_back(absl::make_unique<StubFactoryGenerator>(
+    code_generators.push_back(std::make_unique<StubFactoryGenerator>(
         service, service_vars, method_vars, context));
   }
   auto const forwarding_headers = service_vars.find("forwarding_product_path");
   if (forwarding_headers != service_vars.end() &&
       !forwarding_headers->second.empty()) {
-    code_generators.push_back(absl::make_unique<ForwardingClientGenerator>(
+    code_generators.push_back(std::make_unique<ForwardingClientGenerator>(
         service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<ForwardingConnectionGenerator>(
+    code_generators.push_back(std::make_unique<ForwardingConnectionGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(
-        absl::make_unique<ForwardingIdempotencyPolicyGenerator>(
+        std::make_unique<ForwardingIdempotencyPolicyGenerator>(
             service, service_vars, method_vars, context));
     code_generators.push_back(
-        absl::make_unique<ForwardingMockConnectionGenerator>(
+        std::make_unique<ForwardingMockConnectionGenerator>(
             service, service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<ForwardingOptionsGenerator>(
+    code_generators.push_back(std::make_unique<ForwardingOptionsGenerator>(
         service, service_vars, method_vars, context));
   }
-  code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(
+  code_generators.push_back(std::make_unique<AuthDecoratorGenerator>(
       service, service_vars, method_vars, context));
-  code_generators.push_back(absl::make_unique<LoggingDecoratorGenerator>(
+  code_generators.push_back(std::make_unique<LoggingDecoratorGenerator>(
       service, service_vars, method_vars, context));
-  code_generators.push_back(absl::make_unique<MetadataDecoratorGenerator>(
+  code_generators.push_back(std::make_unique<MetadataDecoratorGenerator>(
       service, service_vars, method_vars, context));
-  code_generators.push_back(absl::make_unique<TracingStubGenerator>(
+  code_generators.push_back(std::make_unique<TracingStubGenerator>(
       service, service_vars, method_vars, context));
-  code_generators.push_back(absl::make_unique<StubGenerator>(
+  code_generators.push_back(std::make_unique<StubGenerator>(
       service, service_vars, method_vars, context));
 
   auto const generate_round_robin_generator =
       service_vars.find("generate_round_robin_decorator");
   if (generate_round_robin_generator != service_vars.end() &&
       generate_round_robin_generator->second == "true") {
-    code_generators.push_back(absl::make_unique<RoundRobinDecoratorGenerator>(
+    code_generators.push_back(std::make_unique<RoundRobinDecoratorGenerator>(
         service, service_vars, method_vars, context));
   }
 
@@ -1238,17 +1238,17 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     // namespace name, so we never need to add a backwards-compatibility alias.
     auto rest_service_vars = service_vars;
     rest_service_vars.erase("backwards_compatibility_namespace_alias");
-    code_generators.push_back(absl::make_unique<ConnectionRestGenerator>(
+    code_generators.push_back(std::make_unique<ConnectionRestGenerator>(
         service, rest_service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<ConnectionImplRestGenerator>(
+    code_generators.push_back(std::make_unique<ConnectionImplRestGenerator>(
         service, rest_service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
+    code_generators.push_back(std::make_unique<LoggingDecoratorRestGenerator>(
         service, rest_service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(
+    code_generators.push_back(std::make_unique<MetadataDecoratorRestGenerator>(
         service, rest_service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<StubFactoryRestGenerator>(
+    code_generators.push_back(std::make_unique<StubFactoryRestGenerator>(
         service, rest_service_vars, method_vars, context));
-    code_generators.push_back(absl::make_unique<StubRestGenerator>(
+    code_generators.push_back(std::make_unique<StubRestGenerator>(
         service, rest_service_vars, method_vars, context));
   }
 

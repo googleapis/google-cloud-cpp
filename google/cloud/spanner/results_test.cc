@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>
@@ -40,7 +39,7 @@ using ::testing::Return;
 using ::testing::UnorderedPointwise;
 
 TEST(RowStream, IterateNoRows) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow()).WillOnce(Return(Row()));
 
   RowStream rows(std::move(mock_source));
@@ -53,7 +52,7 @@ TEST(RowStream, IterateNoRows) {
 }
 
 TEST(RowStream, IterateOverRows) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow())
       .WillOnce(Return(spanner_mocks::MakeRow(5, true, "foo")))
       .WillOnce(Return(spanner_mocks::MakeRow(10, false, "bar")))
@@ -86,7 +85,7 @@ TEST(RowStream, IterateOverRows) {
 }
 
 TEST(RowStream, IterateError) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow())
       .WillOnce(Return(spanner_mocks::MakeRow(5, true, "foo")))
       .WillOnce(Return(Status(StatusCode::kUnknown, "oops")));
@@ -117,7 +116,7 @@ TEST(RowStream, IterateError) {
 }
 
 TEST(RowStream, TimestampNoTransaction) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   google::spanner::v1::ResultSetMetadata no_transaction;
   EXPECT_CALL(*mock_source, Metadata()).WillOnce(Return(no_transaction));
 
@@ -126,7 +125,7 @@ TEST(RowStream, TimestampNoTransaction) {
 }
 
 TEST(RowStream, TimestampNotPresent) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   google::spanner::v1::ResultSetMetadata transaction_no_timestamp;
   transaction_no_timestamp.mutable_transaction()->set_id("placeholder");
   EXPECT_CALL(*mock_source, Metadata())
@@ -137,7 +136,7 @@ TEST(RowStream, TimestampNotPresent) {
 }
 
 TEST(RowStream, TimestampPresent) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   google::spanner::v1::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("placeholder2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
@@ -151,7 +150,7 @@ TEST(RowStream, TimestampPresent) {
 }
 
 TEST(RowStream, RowsModified) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_count_exact: 42
   )pb";
@@ -164,7 +163,7 @@ TEST(RowStream, RowsModified) {
 }
 
 TEST(ProfileQueryResult, TimestampPresent) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   google::spanner::v1::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("placeholder2");
   Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
@@ -178,7 +177,7 @@ TEST(ProfileQueryResult, TimestampPresent) {
 }
 
 TEST(ProfileQueryResult, ExecutionStats) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     query_stats {
       fields {
@@ -199,7 +198,7 @@ TEST(ProfileQueryResult, ExecutionStats) {
 }
 
 TEST(ProfileQueryResult, ExecutionPlan) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     query_plan { plan_nodes: { index: 42 } }
   )pb";
@@ -212,7 +211,7 @@ TEST(ProfileQueryResult, ExecutionPlan) {
 }
 
 TEST(DmlResult, RowsModified) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_count_exact: 42
   )pb";
@@ -225,7 +224,7 @@ TEST(DmlResult, RowsModified) {
 }
 
 TEST(ProfileDmlResult, RowsModified) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_count_exact: 42
   )pb";
@@ -238,7 +237,7 @@ TEST(ProfileDmlResult, RowsModified) {
 }
 
 TEST(ProfileDmlResult, ExecutionStats) {
-  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto mock_source = std::make_unique<MockResultSetSource>();
   auto constexpr kText =
       R"pb(
     query_stats {

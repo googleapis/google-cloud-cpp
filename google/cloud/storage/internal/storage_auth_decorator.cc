@@ -181,7 +181,7 @@ StorageAuth::ReadObject(std::shared_ptr<grpc::ClientContext> context,
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::storage::v2::ReadObjectResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->ReadObject(std::move(context), request);
 }
 
@@ -201,7 +201,7 @@ StorageAuth::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->WriteObject(std::move(context));
 }
 
@@ -315,7 +315,7 @@ StorageAuth::AsyncReadObject(
   auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncReadObject(cq, std::move(ctx), request);
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
@@ -332,7 +332,7 @@ StorageAuth::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
   auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncWriteObject(cq, std::move(ctx));
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 

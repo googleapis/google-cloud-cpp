@@ -17,7 +17,6 @@
 // source: google/cloud/functions/v1/functions.proto
 
 #include "google/cloud/functions/v1/cloud_functions_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudFunctionsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>
 CloudFunctionsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudFunctionsServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<CloudFunctionsServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -96,7 +95,7 @@ CloudFunctionsServiceConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudFunctionsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudFunctionsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

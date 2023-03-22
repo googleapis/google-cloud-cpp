@@ -39,7 +39,7 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnectionRest(
                                                                 __func__);
   options =
       spanner_admin_internal::DatabaseAdminDefaultOptions(std::move(options));
-  auto background = absl::make_unique<
+  auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       spanner_admin_internal::CreateDefaultDatabaseAdminRestStub(options);

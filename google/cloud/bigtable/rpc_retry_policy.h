@@ -20,7 +20,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
-#include "absl/memory/memory.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
 
@@ -184,7 +183,7 @@ class CommonRetryPolicy : public ReturnType {
   ~CommonRetryPolicy() override = default;
 
   std::unique_ptr<ReturnType> clone() const override {
-    return absl::make_unique<CommonRetryPolicy>(impl_->clone());
+    return std::make_unique<CommonRetryPolicy>(impl_->clone());
   }
   bool OnFailure(Status const& s) override {
     auto retry = impl_->OnFailure(s);
@@ -204,7 +203,7 @@ class CommonRetryPolicy : public ReturnType {
 template <typename ReturnType>
 std::unique_ptr<ReturnType> MakeCommonRetryPolicy(
     std::unique_ptr<bigtable::RPCRetryPolicy> policy) {
-  return absl::make_unique<CommonRetryPolicy<ReturnType>>(std::move(policy));
+  return std::make_unique<CommonRetryPolicy<ReturnType>>(std::move(policy));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/internal/legacy_async_row_sampler.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "absl/memory/memory.h"
 #include <grpcpp/client_context.h>
 #include <grpcpp/completion_queue.h>
 #include <chrono>
@@ -61,7 +60,7 @@ void LegacyAsyncRowSampler::StartIteration() {
   request.set_app_profile_id(app_profile_id_);
   request.set_table_name(table_name_);
 
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   rpc_retry_policy_->Setup(*context);
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);

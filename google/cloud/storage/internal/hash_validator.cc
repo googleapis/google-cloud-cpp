@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_metadata.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -28,23 +27,23 @@ namespace {
 std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
                                                    bool disable_crc32c) {
   if (disable_md5 && disable_crc32c) {
-    return absl::make_unique<NullHashValidator>();
+    return std::make_unique<NullHashValidator>();
   }
   if (disable_md5) {
-    return absl::make_unique<Crc32cHashValidator>();
+    return std::make_unique<Crc32cHashValidator>();
   }
   if (disable_crc32c) {
-    return absl::make_unique<MD5HashValidator>();
+    return std::make_unique<MD5HashValidator>();
   }
-  return absl::make_unique<CompositeValidator>(
-      absl::make_unique<Crc32cHashValidator>(),
-      absl::make_unique<MD5HashValidator>());
+  return std::make_unique<CompositeValidator>(
+      std::make_unique<Crc32cHashValidator>(),
+      std::make_unique<MD5HashValidator>());
 }
 
 }  // namespace
 
 std::unique_ptr<HashValidator> CreateNullHashValidator() {
-  return absl::make_unique<NullHashValidator>();
+  return std::make_unique<NullHashValidator>();
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(

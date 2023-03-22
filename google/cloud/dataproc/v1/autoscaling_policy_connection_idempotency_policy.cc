@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/autoscaling_policies.proto
 
 #include "google/cloud/dataproc/v1/autoscaling_policy_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AutoscalingPolicyServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
 AutoscalingPolicyServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AutoscalingPolicyServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<AutoscalingPolicyServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -68,7 +67,7 @@ AutoscalingPolicyServiceConnectionIdempotencyPolicy::DeleteAutoscalingPolicy(
 
 std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
 MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       AutoscalingPolicyServiceConnectionIdempotencyPolicy>();
 }
 

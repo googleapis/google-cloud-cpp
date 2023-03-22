@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/participant.proto
 
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ParticipantsConnectionIdempotencyPolicy::
 
 std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>
 ParticipantsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ParticipantsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ParticipantsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ParticipantsConnectionIdempotencyPolicy::CreateParticipant(
@@ -77,7 +76,7 @@ Idempotency ParticipantsConnectionIdempotencyPolicy::SuggestSmartReplies(
 
 std::unique_ptr<ParticipantsConnectionIdempotencyPolicy>
 MakeDefaultParticipantsConnectionIdempotencyPolicy() {
-  return absl::make_unique<ParticipantsConnectionIdempotencyPolicy>();
+  return std::make_unique<ParticipantsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

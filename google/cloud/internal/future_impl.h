@@ -23,7 +23,6 @@
 #include "google/cloud/internal/future_then_meta.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/version.h"
-#include "absl/memory/memory.h"
 #include <atomic>
 #include <chrono>
 #include <condition_variable>
@@ -744,7 +743,7 @@ struct unwrapping_continuation : public continuation_base {
       return r->get();
     };
     using continuation_type = internal::continuation<decltype(unwrapper), R>;
-    auto continuation = absl::make_unique<continuation_type>(
+    auto continuation = std::make_unique<continuation_type>(
         std::move(unwrapper), intermediate, output);
     // assert(intermediate->continuation_ == nullptr)
     // If intermediate has a continuation then the associated future would have
@@ -774,7 +773,7 @@ future_shared_state<T>::make_continuation(
     std::shared_ptr<future_shared_state<T>> self, F&& functor) {
   using continuation_type = internal::continuation<F, T>;
   auto continuation =
-      absl::make_unique<continuation_type>(std::forward<F>(functor), self);
+      std::make_unique<continuation_type>(std::forward<F>(functor), self);
   auto result = continuation->output;
   self->set_continuation(
       std::unique_ptr<continuation_base>(std::move(continuation)));
@@ -796,7 +795,7 @@ future_shared_state<T>::make_continuation(
   // First create a continuation that calls the functor, and stores the result
   // in a `future_shared_state<future_shared_state<R>>`
   auto continuation =
-      absl::make_unique<continuation_type>(std::forward<F>(functor), self);
+      std::make_unique<continuation_type>(std::forward<F>(functor), self);
   // Save the value of `continuation->output`, because the move will make it
   // inaccessible.
   std::shared_ptr<future_shared_state<R>> result = continuation->output;
@@ -812,7 +811,7 @@ future_shared_state<void>::make_continuation(
     std::shared_ptr<future_shared_state<void>> self, F&& functor) {
   using continuation_type = internal::continuation<F, void>;
   auto continuation =
-      absl::make_unique<continuation_type>(std::forward<F>(functor), self);
+      std::make_unique<continuation_type>(std::forward<F>(functor), self);
   // Save the value of `continuation->output`, because the move will make it
   // inaccessible.
   auto result = continuation->output;
@@ -838,7 +837,7 @@ future_shared_state<void>::make_continuation(
   // First create a continuation that calls the functor, and stores the result
   // in a `future_shared_state<future_shared_state<R>>`
   auto continuation =
-      absl::make_unique<continuation_type>(std::forward<F>(functor), self);
+      std::make_unique<continuation_type>(std::forward<F>(functor), self);
   // Save the value of `continuation->output`, because the move will make it
   // inaccessible.
   std::shared_ptr<future_shared_state<R>> result = continuation->output;

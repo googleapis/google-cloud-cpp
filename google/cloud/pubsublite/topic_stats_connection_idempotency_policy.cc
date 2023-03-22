@@ -17,7 +17,6 @@
 // source: google/cloud/pubsublite/v1/topic_stats.proto
 
 #include "google/cloud/pubsublite/topic_stats_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ TopicStatsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
 TopicStatsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeMessageStats(
@@ -52,7 +51,7 @@ Idempotency TopicStatsServiceConnectionIdempotencyPolicy::ComputeTimeCursor(
 
 std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>
 MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

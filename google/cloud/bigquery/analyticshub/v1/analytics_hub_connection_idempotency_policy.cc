@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/analyticshub/v1/analyticshub.proto
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AnalyticsHubServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
 AnalyticsHubServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -120,7 +119,7 @@ Idempotency AnalyticsHubServiceConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<AnalyticsHubServiceConnectionIdempotencyPolicy>
 MakeDefaultAnalyticsHubServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AnalyticsHubServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

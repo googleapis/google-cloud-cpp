@@ -303,9 +303,9 @@ TEST(DataConnectionTest, ApplyRetryExhausted) {
             return TransientError();
           });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
     return clone;
   });
@@ -327,9 +327,9 @@ TEST(DataConnectionTest, ApplyRetryIdempotency) {
         return TransientError();
       });
 
-  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  auto mock_i = std::make_unique<MockIdempotentMutationPolicy>();
   EXPECT_CALL(*mock_i, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    auto clone = std::make_unique<MockIdempotentMutationPolicy>();
     EXPECT_CALL(*clone, is_idempotent(An<v2::Mutation const&>()))
         .WillOnce(Return(false));
     return clone;
@@ -390,9 +390,9 @@ TEST(DataConnectionTest, AsyncApplyRetryExhausted) {
             TransientError());
       });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
     return clone;
   });
@@ -416,9 +416,9 @@ TEST(DataConnectionTest, AsyncApplyRetryIdempotency) {
             TransientError());
       });
 
-  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  auto mock_i = std::make_unique<MockIdempotentMutationPolicy>();
   EXPECT_CALL(*mock_i, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    auto clone = std::make_unique<MockIdempotentMutationPolicy>();
     EXPECT_CALL(*clone, is_idempotent(An<v2::Mutation const&>()))
         .WillOnce(Return(false));
     return clone;
@@ -449,7 +449,7 @@ TEST(DataConnectionTest, BulkApplySuccess) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.entries(), ElementsAre(Entry("r0"), Entry("r1")));
-        auto stream = absl::make_unique<MockMutateRowsStream>();
+        auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeBulkApplyResponse(
                 {{0, grpc::StatusCode::OK}, {1, grpc::StatusCode::OK}})))
@@ -478,7 +478,7 @@ TEST(DataConnectionTest, BulkApplyRetryMutationPolicy) {
                    google::bigtable::v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockMutateRowsStream>();
+        auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(
                 MakeBulkApplyResponse({{0, grpc::StatusCode::OK},
@@ -494,7 +494,7 @@ TEST(DataConnectionTest, BulkApplyRetryMutationPolicy) {
             EXPECT_EQ(kTableName, request.table_name());
             EXPECT_THAT(request.entries(),
                         ElementsAre(Entry("retries-transient-error")));
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(
                     Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
@@ -518,7 +518,7 @@ TEST(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_EQ(kAppProfile, request.app_profile_id());
             EXPECT_EQ(kTableName, request.table_name());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(
                     Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
@@ -530,7 +530,7 @@ TEST(DataConnectionTest, BulkApplyIncompleteStreamRetried) {
             EXPECT_EQ(kAppProfile, request.app_profile_id());
             EXPECT_EQ(kTableName, request.table_name());
             EXPECT_THAT(request.entries(), ElementsAre(Entry("forgotten")));
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(
                     Return(MakeBulkApplyResponse({{0, grpc::StatusCode::OK}})))
@@ -555,14 +555,14 @@ TEST(DataConnectionTest, BulkApplyStreamRetryExhausted) {
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_EQ(kAppProfile, request.app_profile_id());
             EXPECT_EQ(kTableName, request.table_name());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read).WillOnce(Return(TransientError()));
             return stream;
           });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
     return clone;
   });
@@ -584,7 +584,7 @@ TEST(DataConnectionTest, BulkApplyStreamPermanentError) {
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_EQ(kAppProfile, request.app_profile_id());
             EXPECT_EQ(kTableName, request.table_name());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
             return stream;
           });
@@ -605,7 +605,7 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_EQ(kAppProfile, request.app_profile_id());
             EXPECT_EQ(kTableName, request.table_name());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(MakeBulkApplyResponse(
                     {{0, grpc::StatusCode::OK},
@@ -614,7 +614,7 @@ TEST(DataConnectionTest, BulkApplyNoSleepIfNoPendingMutations) {
             return stream;
           });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).Times(0);
 
   auto conn = TestConnection(std::move(mock));
@@ -635,7 +635,7 @@ TEST(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_EQ(kAppProfile, request.app_profile_id());
             EXPECT_EQ(kTableName, request.table_name());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             // The overall stream succeeds, but it contains failed mutations.
             // Our retry and backoff policies should take effect.
             EXPECT_CALL(*stream, Read)
@@ -645,9 +645,9 @@ TEST(DataConnectionTest, BulkApplyRetriesOkStreamWithFailedMutations) {
             return stream;
           });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
     return clone;
   });
@@ -673,7 +673,7 @@ TEST(DataConnectionTest, AsyncBulkApply) {
         EXPECT_EQ(kTableName, request.table_name());
         using ErrorStream =
             internal::AsyncStreamingReadRpcError<v2::MutateRowsResponse>;
-        return absl::make_unique<ErrorStream>(PermanentError());
+        return std::make_unique<ErrorStream>(PermanentError());
       });
 
   auto conn = TestConnection(std::move(mock));
@@ -694,7 +694,7 @@ TEST(DataConnectionTest, ReadRows) {
         EXPECT_THAT(request, HasTestRowSet());
         EXPECT_THAT(request.filter(), IsTestFilter());
 
-        auto stream = absl::make_unique<MockReadRowsStream>();
+        auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
       });
@@ -715,7 +715,7 @@ TEST(DataConnectionTest, ReadRowEmpty) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
         EXPECT_THAT(request.filter(), IsTestFilter());
 
-        auto stream = absl::make_unique<MockReadRowsStream>();
+        auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
         return stream;
       });
@@ -737,7 +737,7 @@ TEST(DataConnectionTest, ReadRowSuccess) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
         EXPECT_THAT(request.filter(), IsTestFilter());
 
-        auto stream = absl::make_unique<MockReadRowsStream>();
+        auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce([]() {
               v2::ReadRowsResponse r;
@@ -770,7 +770,7 @@ TEST(DataConnectionTest, ReadRowFailure) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
         EXPECT_THAT(request.filter(), IsTestFilter());
 
-        auto stream = absl::make_unique<MockReadRowsStream>();
+        auto stream = std::make_unique<MockReadRowsStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
         return stream;
       });
@@ -854,9 +854,9 @@ TEST(DataConnectionTest, CheckAndMutateRowIdempotency) {
         return TransientError();
       });
 
-  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  auto mock_i = std::make_unique<MockIdempotentMutationPolicy>();
   EXPECT_CALL(*mock_i, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    auto clone = std::make_unique<MockIdempotentMutationPolicy>();
     EXPECT_CALL(*clone,
                 is_idempotent(An<v2::CheckAndMutateRowRequest const&>()))
         .WillOnce(Return(false));
@@ -921,9 +921,9 @@ TEST(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
         return TransientError();
       });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
     return clone;
   });
@@ -1015,9 +1015,9 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
             TransientError());
       });
 
-  auto mock_i = absl::make_unique<MockIdempotentMutationPolicy>();
+  auto mock_i = std::make_unique<MockIdempotentMutationPolicy>();
   EXPECT_CALL(*mock_i, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockIdempotentMutationPolicy>();
+    auto clone = std::make_unique<MockIdempotentMutationPolicy>();
     EXPECT_CALL(*clone,
                 is_idempotent(An<v2::CheckAndMutateRowRequest const&>()))
         .WillOnce(Return(false));
@@ -1084,9 +1084,9 @@ TEST(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
             TransientError());
       });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
     return clone;
   });
@@ -1108,7 +1108,7 @@ TEST(DataConnectionTest, SampleRowsSuccess) {
       .WillOnce([](auto, v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeSampleRowsResponse("test1", 11)))
             .WillOnce(Return(MakeSampleRowsResponse("test2", 22)))
@@ -1135,7 +1135,7 @@ TEST(DataConnectionTest, SampleRowsRetryResetsSamples) {
       .WillOnce([](auto, v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeSampleRowsResponse("discarded", 11)))
             .WillOnce(Return(TransientError()));
@@ -1144,7 +1144,7 @@ TEST(DataConnectionTest, SampleRowsRetryResetsSamples) {
       .WillOnce([](auto, v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeSampleRowsResponse("returned", 22)))
             .WillOnce(Return(Status{}));
@@ -1171,14 +1171,14 @@ TEST(DataConnectionTest, SampleRowsRetryExhausted) {
       .WillRepeatedly([](auto, v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(TransientError()));
         return stream;
       });
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(kNumRetries);
     return clone;
   });
@@ -1200,7 +1200,7 @@ TEST(DataConnectionTest, SampleRowsPermanentError) {
       .WillOnce([](auto, v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockSampleRowKeysStream>();
+        auto stream = std::make_unique<MockSampleRowKeysStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(PermanentError()));
         return stream;
       });
@@ -1226,7 +1226,7 @@ TEST(DataConnectionTest, AsyncSampleRows) {
         EXPECT_EQ(kTableName, request.table_name());
         using ErrorStream =
             internal::AsyncStreamingReadRpcError<v2::SampleRowKeysResponse>;
-        return absl::make_unique<ErrorStream>(PermanentError());
+        return std::make_unique<ErrorStream>(PermanentError());
       });
 
   auto conn = TestConnection(std::move(mock));
@@ -1313,9 +1313,9 @@ TEST(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
   req.set_table_name(kTableName);
   req.set_row_key("row");
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(0);
     return clone;
   });
@@ -1407,9 +1407,9 @@ TEST(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
   req.set_table_name(kTableName);
   req.set_row_key("row");
 
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).Times(0);
     return clone;
   });
@@ -1435,7 +1435,7 @@ TEST(DataConnectionTest, AsyncReadRows) {
             EXPECT_THAT(request.filter(), IsTestFilter());
             using ErrorStream =
                 internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
-            return absl::make_unique<ErrorStream>(PermanentError());
+            return std::make_unique<ErrorStream>(PermanentError());
           });
 
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
@@ -1464,7 +1464,7 @@ TEST(DataConnectionTest, AsyncReadRowEmpty) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
         EXPECT_THAT(request.filter(), IsTestFilter());
 
-        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -1495,7 +1495,7 @@ TEST(DataConnectionTest, AsyncReadRowSuccess) {
         EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
         EXPECT_THAT(request.filter(), IsTestFilter());
 
-        auto stream = absl::make_unique<MockAsyncReadRowsStream>();
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -1540,7 +1540,7 @@ TEST(DataConnectionTest, AsyncReadRowFailure) {
 
             using ErrorStream =
                 internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
-            return absl::make_unique<ErrorStream>(PermanentError());
+            return std::make_unique<ErrorStream>(PermanentError());
           });
 
   auto conn = TestConnection(std::move(mock));

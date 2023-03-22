@@ -17,7 +17,6 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/v1/os_config_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ OsConfigServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy>
 OsConfigServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<OsConfigServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<OsConfigServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency OsConfigServiceConnectionIdempotencyPolicy::ExecutePatchJob(
@@ -99,7 +98,7 @@ Idempotency OsConfigServiceConnectionIdempotencyPolicy::ResumePatchDeployment(
 
 std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy>
 MakeDefaultOsConfigServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<OsConfigServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<OsConfigServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

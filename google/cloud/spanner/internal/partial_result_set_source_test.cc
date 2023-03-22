@@ -21,7 +21,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
@@ -95,7 +94,7 @@ MATCHER_P(IsValidAndEquals, expected,
 
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(ResultMock(ReadResult()));
   EXPECT_CALL(*grpc_reader, Finish())
       .WillOnce(ResultMock(Status(StatusCode::kInvalidArgument, "invalid")));
@@ -125,7 +124,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response)))
       .WillOnce(ResultMock(ReadResult()));
@@ -147,7 +146,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
 TEST(PartialResultSetSourceTest, MissingMetadata) {
   google::spanner::v1::PartialResultSet response;
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(ResultMock(ReadResult(response)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(ResultMock(Status()));
   EXPECT_CALL(*grpc_reader, TryCancel()).WillOnce(VoidMock());
@@ -170,7 +169,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response)))
       .WillOnce(ResultMock(ReadResult()));
@@ -195,7 +194,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response)))
       .WillOnce(ResultMock(ReadResult()));
@@ -251,7 +250,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
   google::spanner::v1::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(kText, &response));
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response)))
       .WillOnce(ResultMock(ReadResult()));
@@ -376,7 +375,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
   // given `text`, yield complete rows after varying numbers of calls to
   // `ReadFromStream()`.
   for (std::size_t buffer_size : {0, 153, 161, 321, 385, 448}) {
-    auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+    auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
     EXPECT_CALL(*grpc_reader, Read(_))
         .WillOnce(ResultMock(ReadResult(response[0])))
         .WillOnce(ResultMock(ReadResult(response[1])))
@@ -443,7 +442,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
@@ -507,7 +506,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
@@ -561,7 +560,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
@@ -604,7 +603,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
@@ -649,7 +648,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
@@ -698,7 +697,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))
@@ -770,7 +769,7 @@ TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
     ASSERT_TRUE(TextFormat::ParseFromString(text[i], &response[i]));
   }
 
-  auto grpc_reader = absl::make_unique<MockPartialResultSetReader>();
+  auto grpc_reader = std::make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(ResultMock(ReadResult(response[0])))
       .WillOnce(ResultMock(ReadResult(response[1])))

@@ -64,7 +64,7 @@ SpannerAuth::ExecuteStreamingSql(
     google::spanner::v1::ExecuteSqlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) {
-    return absl::make_unique<ClientReaderInterfaceError>(std::move(status));
+    return std::make_unique<ClientReaderInterfaceError>(std::move(status));
   }
   return child_->ExecuteStreamingSql(context, request);
 }
@@ -84,7 +84,7 @@ SpannerAuth::StreamingRead(grpc::ClientContext& context,
                            google::spanner::v1::ReadRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) {
-    return absl::make_unique<ClientReaderInterfaceError>(std::move(status));
+    return std::make_unique<ClientReaderInterfaceError>(std::move(status));
   }
   return child_->StreamingRead(context, request);
 }

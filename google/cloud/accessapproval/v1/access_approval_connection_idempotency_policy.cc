@@ -17,7 +17,6 @@
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
 #include "google/cloud/accessapproval/v1/access_approval_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AccessApprovalConnectionIdempotencyPolicy::
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
 AccessApprovalConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AccessApprovalConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AccessApprovalConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AccessApprovalConnectionIdempotencyPolicy::ListApprovalRequests(
@@ -92,7 +91,7 @@ AccessApprovalConnectionIdempotencyPolicy::GetAccessApprovalServiceAccount(
 
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
 MakeDefaultAccessApprovalConnectionIdempotencyPolicy() {
-  return absl::make_unique<AccessApprovalConnectionIdempotencyPolicy>();
+  return std::make_unique<AccessApprovalConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/status_or.h"
-#include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>
 
@@ -37,7 +36,7 @@ DefaultBigtableStub::ReadRows(
     std::shared_ptr<grpc::ClientContext> client_context,
     google::bigtable::v2::ReadRowsRequest const& request) {
   auto stream = grpc_stub_->ReadRows(client_context.get(), request);
-  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::ReadRowsResponse>>(std::move(client_context),
                                                std::move(stream));
 }
@@ -48,7 +47,7 @@ DefaultBigtableStub::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> client_context,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   auto stream = grpc_stub_->SampleRowKeys(client_context.get(), request);
-  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::SampleRowKeysResponse>>(std::move(client_context),
                                                     std::move(stream));
 }
@@ -71,7 +70,7 @@ DefaultBigtableStub::MutateRows(
     std::shared_ptr<grpc::ClientContext> client_context,
     google::bigtable::v2::MutateRowsRequest const& request) {
   auto stream = grpc_stub_->MutateRows(client_context.get(), request);
-  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::MutateRowsResponse>>(std::move(client_context),
                                                  std::move(stream));
 }

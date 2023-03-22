@@ -21,7 +21,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "absl/memory/memory.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 #include <gmock/gmock.h>
 

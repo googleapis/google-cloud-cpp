@@ -17,7 +17,6 @@
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
 #include "google/cloud/videointelligence/v1/video_intelligence_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ VideoIntelligenceServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
 VideoIntelligenceServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<VideoIntelligenceServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<VideoIntelligenceServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -43,7 +42,7 @@ Idempotency VideoIntelligenceServiceConnectionIdempotencyPolicy::AnnotateVideo(
 
 std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
 MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       VideoIntelligenceServiceConnectionIdempotencyPolicy>();
 }
 

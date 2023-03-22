@@ -70,7 +70,7 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
   }
   auto received_message =
       std::move(response->mutable_received_messages()->at(0));
-  auto impl = absl::make_unique<pubsub_internal::DefaultPullAckHandler>(
+  auto impl = std::make_unique<pubsub_internal::DefaultPullAckHandler>(
       background_->cq(), stub_, current, std::move(subscription),
       std::move(*received_message.mutable_ack_id()),
       received_message.delivery_attempt());

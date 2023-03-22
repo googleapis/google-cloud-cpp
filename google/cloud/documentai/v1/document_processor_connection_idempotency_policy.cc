@@ -17,7 +17,6 @@
 // source: google/cloud/documentai/v1/document_processor_service.proto
 
 #include "google/cloud/documentai/v1/document_processor_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DocumentProcessorServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
 DocumentProcessorServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DocumentProcessorServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<DocumentProcessorServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -166,7 +165,7 @@ DocumentProcessorServiceConnectionIdempotencyPolicy::ListEvaluations(
 
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
 MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       DocumentProcessorServiceConnectionIdempotencyPolicy>();
 }
 

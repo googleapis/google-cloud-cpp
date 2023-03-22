@@ -91,7 +91,7 @@ TEST(PredicateUtilsTest, IsExperimental) {
                                                             &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillRepeatedly(Return(nullptr));
 
@@ -150,8 +150,8 @@ TEST(PredicateUtilsTest, HasLongRunningMethodNone) {
   DescriptorPool pool;
   pool.BuildFile(longrunning_file);
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -197,8 +197,8 @@ TEST(PredicateUtilsTest, HasLongRunningMethodOne) {
   DescriptorPool pool;
   pool.BuildFile(longrunning_file);
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -249,8 +249,8 @@ TEST(PredicateUtilsTest, HasLongRunningMethodMoreThanOne) {
   DescriptorPool pool;
   pool.BuildFile(longrunning_file);
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -294,8 +294,8 @@ TEST(PredicateUtilsTest, HasPaginatedMethodTrue) {
                                                             &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -325,8 +325,8 @@ TEST(PredicateUtilsTest, HasPaginatedMethodFalse) {
                                                             &service_file));
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -391,8 +391,8 @@ class HasMessageWithMapFieldTest : public testing::Test {
 TEST_F(HasMessageWithMapFieldTest, HasRequestMessageWithMapField) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -402,8 +402,8 @@ TEST_F(HasMessageWithMapFieldTest, HasRequestMessageWithMapField) {
 TEST_F(HasMessageWithMapFieldTest, HasResponseMessageWithMapField) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(2), generator_context.get());
@@ -413,8 +413,8 @@ TEST_F(HasMessageWithMapFieldTest, HasResponseMessageWithMapField) {
 TEST_F(HasMessageWithMapFieldTest, HasNoMessageWithMapField) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(1), generator_context.get());
@@ -505,8 +505,8 @@ TEST_F(MethodSignatureWellKnownProtobufTypeIncludesTest,
        HasSignatureWithDurationField) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -518,8 +518,8 @@ TEST_F(MethodSignatureWellKnownProtobufTypeIncludesTest,
        HasSignatureWithoutWellKnownTypeField) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/service.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(1), generator_context.get());
@@ -596,8 +596,8 @@ class StreamingReadTest : public testing::Test {
 TEST_F(StreamingReadTest, HasStreamingReadTrue) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/streaming.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(0), generator_context.get());
@@ -607,8 +607,8 @@ TEST_F(StreamingReadTest, HasStreamingReadTrue) {
 TEST_F(StreamingReadTest, HasStreamingReadFalse) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/foo/streaming.proto");
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .WillOnce(Return(output.release()));
   TestGenerator g(service_file_descriptor->service(1), generator_context.get());
@@ -678,7 +678,7 @@ service Service1 {
   FileDescriptor const* service_file_descriptor =
       pool.FindFileByName("google/cloud/foo/streaming.proto");
 
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .Times(2)
       .WillRepeatedly(
@@ -756,7 +756,7 @@ service Service1 {
   FileDescriptor const* service_file_descriptor =
       pool.FindFileByName("google/cloud/foo/streaming.proto");
 
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .Times(2)
       .WillRepeatedly(
@@ -861,7 +861,7 @@ service Service1 {
   FileDescriptor const* service_file_descriptor =
       pool.FindFileByName("google/cloud/foo/explicit_routing_service.proto");
 
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
   EXPECT_CALL(*generator_context, Open("header_path"))
       .Times(2)
       .WillRepeatedly(

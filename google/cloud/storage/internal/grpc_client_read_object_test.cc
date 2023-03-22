@@ -20,7 +20,6 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -54,7 +53,7 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
   EXPECT_CALL(*mock, ReadObject)
       .WillOnce([&](auto, ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
-        auto stream = absl::make_unique<MockObjectMediaStream>();
+        auto stream = std::make_unique<MockObjectMediaStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status{}));
         EXPECT_CALL(*stream, GetRequestMetadata).Times(1);
         return stream;
@@ -95,7 +94,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
   EXPECT_CALL(*mock, ReadObject)
       .WillOnce([&](auto, ReadObjectRequest const& request) {
         EXPECT_THAT(request, IsProtoEqual(expected_request));
-        auto stream = absl::make_unique<MockObjectMediaStream>();
+        auto stream = std::make_unique<MockObjectMediaStream>();
         EXPECT_CALL(*stream, Read).WillOnce(Return(Status{}));
         EXPECT_CALL(*stream, Cancel).Times(1);
         return stream;

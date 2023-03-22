@@ -17,7 +17,6 @@
 // source: google/bigtable/admin/v2/bigtable_instance_admin.proto
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BigtableInstanceAdminConnectionIdempotencyPolicy::
 
 std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>
 BigtableInstanceAdminConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BigtableInstanceAdminConnectionIdempotencyPolicy>(
+  return std::make_unique<BigtableInstanceAdminConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -147,7 +146,7 @@ Idempotency BigtableInstanceAdminConnectionIdempotencyPolicy::ListHotTablets(
 
 std::unique_ptr<BigtableInstanceAdminConnectionIdempotencyPolicy>
 MakeDefaultBigtableInstanceAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<BigtableInstanceAdminConnectionIdempotencyPolicy>();
+  return std::make_unique<BigtableInstanceAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

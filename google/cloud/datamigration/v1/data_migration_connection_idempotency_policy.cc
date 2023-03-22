@@ -17,7 +17,6 @@
 // source: google/cloud/clouddms/v1/clouddms.proto
 
 #include "google/cloud/datamigration/v1/data_migration_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DataMigrationServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
 DataMigrationServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DataMigrationServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<DataMigrationServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -130,7 +129,7 @@ DataMigrationServiceConnectionIdempotencyPolicy::DeleteConnectionProfile(
 
 std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
 MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DataMigrationServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<DataMigrationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

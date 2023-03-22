@@ -238,7 +238,7 @@ class AsyncRestRetryLoopImpl
     auto state = StartOperation();
     if (state.cancelled) return;
     SetPending(state.operation,
-               functor_(cq_, absl::make_unique<RestContext>(), request_)
+               functor_(cq_, std::make_unique<RestContext>(), request_)
                    .then([self](future<T> f) { self->OnAttempt(f.get()); }));
   }
 

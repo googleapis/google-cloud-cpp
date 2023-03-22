@@ -17,7 +17,6 @@
 // source: google/cloud/datastream/v1/datastream.proto
 
 #include "google/cloud/datastream/v1/datastream_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DatastreamConnectionIdempotencyPolicy::
 
 std::unique_ptr<DatastreamConnectionIdempotencyPolicy>
 DatastreamConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DatastreamConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DatastreamConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DatastreamConnectionIdempotencyPolicy::ListConnectionProfiles(
@@ -162,7 +161,7 @@ Idempotency DatastreamConnectionIdempotencyPolicy::DeleteRoute(
 
 std::unique_ptr<DatastreamConnectionIdempotencyPolicy>
 MakeDefaultDatastreamConnectionIdempotencyPolicy() {
-  return absl::make_unique<DatastreamConnectionIdempotencyPolicy>();
+  return std::make_unique<DatastreamConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

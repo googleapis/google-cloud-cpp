@@ -41,7 +41,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysTest) {
   namespace btproto = ::google::bigtable::v2;
 
   EXPECT_CALL(*client_, SampleRowKeys).WillOnce([](Unused, Unused) {
-    auto reader = absl::make_unique<MockSampleRowKeysReader>(
+    auto reader = std::make_unique<MockSampleRowKeysReader>(
         "google.bigtable.v2.Bigtable.SampleRowKeys");
     EXPECT_CALL(*reader, Read)
         .WillOnce([](btproto::SampleRowKeysResponse* r) {
@@ -70,7 +70,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 
   EXPECT_CALL(*client_, SampleRowKeys)
       .WillOnce([](Unused, Unused) {
-        auto reader = absl::make_unique<MockSampleRowKeysReader>(
+        auto reader = std::make_unique<MockSampleRowKeysReader>(
             "google.bigtable.v2.Bigtable.SampleRowKeys");
         EXPECT_CALL(*reader, Read)
             .WillOnce([](btproto::SampleRowKeysResponse* r) {
@@ -88,7 +88,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
         return reader;
       })
       .WillOnce([](Unused, Unused) {
-        auto reader_retry = absl::make_unique<MockSampleRowKeysReader>(
+        auto reader_retry = std::make_unique<MockSampleRowKeysReader>(
             "google.bigtable.v2.Bigtable.SampleRowKeys");
         EXPECT_CALL(*reader_retry, Read)
             .WillOnce([](btproto::SampleRowKeysResponse* r) {
@@ -140,7 +140,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
 
   // Setup the mocks to fail more than 3 times.
   auto create_cancelled_stream = [](Unused, Unused) {
-    auto stream = absl::make_unique<MockSampleRowKeysReader>(
+    auto stream = std::make_unique<MockSampleRowKeysReader>(
         "google.bigtable.v2.Bigtable.SampleRowKeys");
     EXPECT_CALL(*stream, Read).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish)
@@ -150,7 +150,7 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
 
   EXPECT_CALL(*client_, SampleRowKeys)
       .WillOnce([](Unused, Unused) {
-        auto r1 = absl::make_unique<MockSampleRowKeysReader>(
+        auto r1 = std::make_unique<MockSampleRowKeysReader>(
             "google.bigtable.v2.Bigtable.SampleRowKeys");
         EXPECT_CALL(*r1, Read)
             .WillOnce([](btproto::SampleRowKeysResponse* r) {

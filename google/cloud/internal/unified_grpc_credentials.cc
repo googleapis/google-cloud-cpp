@@ -19,7 +19,6 @@
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
-#include "absl/memory/memory.h"
 #include <grpcpp/security/credentials.h>
 #include <fstream>
 
@@ -71,15 +70,15 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
         : cq(std::move(c)), options(std::move(o)) {}
 
     void visit(InsecureCredentialsConfig&) override {
-      result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
+      result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::InsecureChannelCredentials());
     }
     void visit(GoogleDefaultCredentialsConfig&) override {
-      result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
+      result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::GoogleDefaultCredentials());
     }
     void visit(AccessTokenConfig& cfg) override {
-      result = absl::make_unique<GrpcAccessTokenAuthentication>(
+      result = std::make_unique<GrpcAccessTokenAuthentication>(
           cfg.access_token(), std::move(options));
     }
     void visit(ImpersonateServiceAccountConfig& cfg) override {
@@ -87,11 +86,11 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
                                                      std::move(options));
     }
     void visit(ServiceAccountConfig& cfg) override {
-      result = absl::make_unique<GrpcServiceAccountAuthentication>(
+      result = std::make_unique<GrpcServiceAccountAuthentication>(
           cfg.json_object(), std::move(options));
     }
     void visit(ExternalAccountConfig& cfg) override {
-      result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
+      result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::CompositeChannelCredentials(
               grpc::SslCredentials(grpc::SslCredentialsOptions()),
               GrpcExternalAccountCredentials(cfg)));

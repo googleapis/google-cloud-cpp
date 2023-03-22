@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/service_service.proto
 
 #include "google/cloud/monitoring/v3/service_monitoring_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ServiceMonitoringServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy>
 ServiceMonitoringServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ServiceMonitoringServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<ServiceMonitoringServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -93,7 +92,7 @@ Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy>
 MakeDefaultServiceMonitoringServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       ServiceMonitoringServiceConnectionIdempotencyPolicy>();
 }
 

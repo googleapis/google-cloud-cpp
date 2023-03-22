@@ -18,6 +18,7 @@
 #include "google/cloud/pubsublite/testing/mock_publisher.h"
 #include "google/cloud/pubsublite/testing/mock_routing_policy.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "absl/memory/memory.h"
 #include <limits>
 
 namespace google {
@@ -89,7 +90,7 @@ class MultipartitionPublisherNoneInitializedTest : public ::testing::Test {
           return absl::WrapUnique(&alarm_token_);
         }));
 
-    multipartition_publisher_ = absl::make_unique<MultipartitionPublisher>(
+    multipartition_publisher_ = std::make_unique<MultipartitionPublisher>(
         partition_publisher_factory_.AsStdFunction(), admin_connection_,
         alarm_registry_, absl::WrapUnique(&routing_policy_), ExampleTopic());
   }
@@ -596,7 +597,7 @@ TEST_F(InitializedMultipartitionPublisherTest, InitializesNewPartitions) {
   on_alarm_();
 
   auto partition_publisher_2 =
-      absl::make_unique<StrictMock<MockPublisher<Cursor>>>();
+      std::make_unique<StrictMock<MockPublisher<Cursor>>>();
   auto& partition_publisher_2_ref = *partition_publisher_2;
   EXPECT_CALL(partition_publisher_factory_, Call(2))
       .WillOnce(Return(ByMove(std::move(partition_publisher_2))));

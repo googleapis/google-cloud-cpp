@@ -32,7 +32,7 @@ using ::testing::Contains;
 using ::testing::Eq;
 
 TEST(RestCompletionQueueImplTest, TimerSmokeTest) {
-  auto impl = absl::make_unique<RestCompletionQueueImpl>();
+  auto impl = std::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
   std::thread t([&cq] { cq.Run(); });
 
@@ -52,7 +52,7 @@ TEST(RestCompletionQueueImplTest, TimerSmokeTest) {
 }
 
 TEST(RestCompletionQueueImplTest, RunAsync) {
-  auto impl = absl::make_unique<RestCompletionQueueImpl>();
+  auto impl = std::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
 
   std::thread runner([&cq] { cq.Run(); });
@@ -68,7 +68,7 @@ TEST(RestCompletionQueueImplTest, RunAsync) {
 }
 
 TEST(RestCompletionQueueImplTest, RunAsyncVoid) {
-  auto impl = absl::make_unique<RestCompletionQueueImpl>();
+  auto impl = std::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
 
   std::thread runner([&cq] { cq.Run(); });
@@ -93,7 +93,7 @@ TEST(RestCompletionQueueImplTest, RunAsyncMoveOnly) {
 
   promise<void> p;
   auto done = p.get_future();
-  auto impl = absl::make_unique<RestCompletionQueueImpl>();
+  auto impl = std::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
   std::thread t{[&cq] { cq.Run(); }};
   cq.RunAsync(MoveOnly{std::move(p)});
@@ -112,7 +112,7 @@ TEST(RestCompletionQueueImplTest, RunAsyncMoveOnlyVoid) {
 
   promise<void> p;
   auto done = p.get_future();
-  auto impl = absl::make_unique<RestCompletionQueueImpl>();
+  auto impl = std::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
   std::thread t{[&cq] { cq.Run(); }};
   cq.RunAsync(MoveOnly{std::move(p)});
@@ -122,7 +122,7 @@ TEST(RestCompletionQueueImplTest, RunAsyncMoveOnlyVoid) {
 }
 
 TEST(RestCompletionQueueImplTest, RunAsyncThread) {
-  auto impl = absl::make_unique<RestCompletionQueueImpl>();
+  auto impl = std::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
 
   std::set<std::thread::id> runner_ids;

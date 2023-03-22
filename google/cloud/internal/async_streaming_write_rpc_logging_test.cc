@@ -17,7 +17,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/tracing_options.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
@@ -61,7 +60,7 @@ using TestedStream = AsyncStreamingWriteRpcLogging<google::protobuf::Timestamp,
 TEST(StreamingWriteRpcLoggingTest, Cancel) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel()).Times(1);
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   stream.Cancel();
@@ -72,7 +71,7 @@ TEST(StreamingWriteRpcLoggingTest, Cancel) {
 TEST(StreamingWriteRpcLoggingTest, Start) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_TRUE(stream.Start().get());
@@ -83,7 +82,7 @@ TEST(StreamingWriteRpcLoggingTest, Start) {
 TEST(StreamingWriteRpcLoggingTest, Write) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Write).WillOnce([] { return make_ready_future(true); });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_TRUE(stream.Write(google::protobuf::Timestamp{}, {}).get());
@@ -95,7 +94,7 @@ TEST(StreamingWriteRpcLoggingTest, Write) {
 TEST(StreamingWriteRpcLoggingTest, WritesDone) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, WritesDone).WillOnce([] {
     return make_ready_future(true);
   });
@@ -108,7 +107,7 @@ TEST(StreamingWriteRpcLoggingTest, WritesDone) {
 TEST(StreamingWriteRpcLoggingTest, FinishWithError) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(StatusOr<google::protobuf::Duration>(
         Status{StatusCode::kUnavailable, "try-again"}));
@@ -124,7 +123,7 @@ TEST(StreamingWriteRpcLoggingTest, FinishWithError) {
 TEST(StreamingWriteRpcLoggingTest, FinishWithResponse) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(make_status_or(google::protobuf::Duration{}));
   });
@@ -138,7 +137,7 @@ TEST(StreamingWriteRpcLoggingTest, FinishWithResponse) {
 TEST(StreamingWriteRpcLoggingTest, GetRequestMetadata) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
     return StreamingRpcMetadata({{":test-only", "value"}});
   });

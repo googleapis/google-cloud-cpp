@@ -16,7 +16,6 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/user_agent_prefix.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -67,7 +66,7 @@ StatusOr<std::unique_ptr<CurlDownloadRequest>>
 CurlRequestBuilder::BuildDownloadRequest() && {
   ValidateBuilderState(__func__);
   auto agent = user_agent_prefix_ + UserAgentSuffix();
-  auto request = absl::make_unique<CurlDownloadRequest>(
+  auto request = std::make_unique<CurlDownloadRequest>(
       std::move(headers_), std::move(handle_), factory_->CreateMultiHandle());
   request->url_ = std::move(url_);
   request->user_agent_ = std::move(agent);

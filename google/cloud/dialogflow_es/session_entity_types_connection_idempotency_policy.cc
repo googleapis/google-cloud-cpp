@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/session_entity_type.proto
 
 #include "google/cloud/dialogflow_es/session_entity_types_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ SessionEntityTypesConnectionIdempotencyPolicy::
 
 std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>
 SessionEntityTypesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SessionEntityTypesConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<SessionEntityTypesConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency
@@ -67,7 +65,7 @@ SessionEntityTypesConnectionIdempotencyPolicy::DeleteSessionEntityType(
 
 std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>
 MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy() {
-  return absl::make_unique<SessionEntityTypesConnectionIdempotencyPolicy>();
+  return std::make_unique<SessionEntityTypesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

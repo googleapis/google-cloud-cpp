@@ -23,7 +23,6 @@
 #include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "absl/memory/memory.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iterator>
@@ -67,8 +66,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     info->scopes = {};
     info->subject = {};
     return std::unique_ptr<Credentials>(
-        absl::make_unique<ServiceAccountCredentials>(
-            *info, options, std::move(client_factory)));
+        std::make_unique<ServiceAccountCredentials>(*info, options,
+                                                    std::move(client_factory)));
   }
   auto const cred_type = cred_json.value("type", "no type given");
   // If non_service_account_ok==false and the cred_type is authorized_user,
@@ -77,23 +76,23 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     auto info = ParseAuthorizedUserCredentials(contents, path);
     if (!info) return std::move(info).status();
     return std::unique_ptr<Credentials>(
-        absl::make_unique<AuthorizedUserCredentials>(
-            *info, options, std::move(client_factory)));
+        std::make_unique<AuthorizedUserCredentials>(*info, options,
+                                                    std::move(client_factory)));
   }
   if (cred_type == "external_account") {
     auto info =
         ParseExternalAccountConfiguration(contents, internal::ErrorContext{});
     if (!info) return std::move(info).status();
     return std::unique_ptr<Credentials>(
-        absl::make_unique<ExternalAccountCredentials>(
+        std::make_unique<ExternalAccountCredentials>(
             *std::move(info), std::move(client_factory), options));
   }
   if (cred_type == "service_account") {
     auto info = ParseServiceAccountCredentials(contents, path);
     if (!info) return std::move(info).status();
     return std::unique_ptr<Credentials>(
-        absl::make_unique<ServiceAccountCredentials>(
-            *info, options, std::move(client_factory)));
+        std::make_unique<ServiceAccountCredentials>(*info, options,
+                                                    std::move(client_factory)));
   }
   return Status(
       StatusCode::kInvalidArgument,

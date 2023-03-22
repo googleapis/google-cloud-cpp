@@ -20,7 +20,6 @@
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <memory>
@@ -216,7 +215,7 @@ TEST_F(MetadataDecoratorTest, ListServiceAccountKeys) {
 TEST_F(MetadataDecoratorTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead)
       .WillOnce([this](auto context, Request const& request) {
-        auto mock_response = absl::make_unique<MockStreamingReadRpc>();
+        auto mock_response = std::make_unique<MockStreamingReadRpc>();
         EXPECT_CALL(*mock_response, Read)
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
         IsContextMDValid(
@@ -238,7 +237,7 @@ TEST_F(MetadataDecoratorTest, StreamingWrite) {
         "google.test.admin.database.v1.GoldenKitchenSink.StreamingWrite",
         Request{});
 
-    auto stream = absl::make_unique<MockStreamingWriteRpc>();
+    auto stream = std::make_unique<MockStreamingWriteRpc>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(true)).WillOnce(Return(false));
     auto response = Response{};
     response.set_response("test-only");
@@ -265,7 +264,7 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingRead) {
             request);
         using ErrorStream =
             ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
-        return absl::make_unique<ErrorStream>(
+        return std::make_unique<ErrorStream>(
             Status(StatusCode::kAborted, "uh-oh"));
       });
   GoldenKitchenSinkMetadata stub(mock_);
@@ -290,7 +289,7 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingWrite) {
         using ErrorStream =
             ::google::cloud::internal::AsyncStreamingWriteRpcError<Request,
                                                                    Response>;
-        return absl::make_unique<ErrorStream>(
+        return std::make_unique<ErrorStream>(
             Status(StatusCode::kAborted, "uh-oh"));
       });
   GoldenKitchenSinkMetadata stub(mock_);

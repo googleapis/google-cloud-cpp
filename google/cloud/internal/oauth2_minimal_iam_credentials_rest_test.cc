@@ -214,13 +214,13 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
 
   MockHttpClientFactory mock_client_factory;
   EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
-    auto client = absl::make_unique<MockRestClient>();
+    auto client = std::make_unique<MockRestClient>();
     EXPECT_CALL(*client,
                 Post(_, A<std::vector<absl::Span<char const>> const&>()))
         .WillOnce([response, service_account](
                       RestRequest const& request,
                       std::vector<absl::Span<char const>> const& payload) {
-          auto mock_response = absl::make_unique<MockRestResponse>();
+          auto mock_response = std::make_unique<MockRestResponse>();
           EXPECT_CALL(*mock_response, StatusCode)
               .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
           EXPECT_CALL(std::move(*mock_response), ExtractPayload)

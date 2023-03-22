@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/v2/product_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ProductServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>
 ProductServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ProductServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ProductServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ProductServiceConnectionIdempotencyPolicy::CreateProduct(
@@ -92,7 +91,7 @@ Idempotency ProductServiceConnectionIdempotencyPolicy::RemoveLocalInventories(
 
 std::unique_ptr<ProductServiceConnectionIdempotencyPolicy>
 MakeDefaultProductServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ProductServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ProductServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

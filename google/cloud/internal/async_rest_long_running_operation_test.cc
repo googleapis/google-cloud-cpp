@@ -141,7 +141,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessMetadata) {
                   "RequestPollThenSuccessMetadata");
         return make_ready_future(make_status_or(done_op));
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
@@ -196,7 +196,7 @@ TEST(AsyncLongRunningTest, RequestPollThenSuccessResponse) {
                   "RequestPollThenSuccessResponse");
         return make_ready_future(make_status_or(done_op));
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
@@ -262,7 +262,7 @@ TEST(AsyncLongRunningTest, RequestPollThenCancel) {
                   "RequestPollThenCancel");
         return make_ready_future(Status{});
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).WillRepeatedly([](Status const& status) {
     return status.code() != StatusCode::kCancelled;

@@ -16,7 +16,6 @@
 #include "google/cloud/bigtable/testing/mock_bigtable_stub.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -76,7 +75,7 @@ TEST(BulkMutatorTest, Simple) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(MakeResponse(
                     {{0, grpc::StatusCode::OK}, {1, grpc::StatusCode::OK}})))
@@ -107,7 +106,7 @@ TEST(BulkMutatorTest, RetryPartialFailure) {
       .WillOnce([](auto,
                    google::bigtable::v2::MutateRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
-        auto stream = absl::make_unique<MockMutateRowsStream>();
+        auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::UNAVAILABLE},
                                            {1, grpc::StatusCode::OK}})))
@@ -119,7 +118,7 @@ TEST(BulkMutatorTest, RetryPartialFailure) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
                 .WillOnce(Return(Status()));
@@ -152,7 +151,7 @@ TEST(BulkMutatorTest, PermanentFailure) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(
                     Return(MakeResponse({{0, grpc::StatusCode::UNAVAILABLE},
@@ -165,7 +164,7 @@ TEST(BulkMutatorTest, PermanentFailure) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
                 .WillOnce(Return(Status()));
@@ -201,7 +200,7 @@ TEST(BulkMutatorTest, PartialStream) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
                 .WillOnce(Return(Status()));
@@ -213,7 +212,7 @@ TEST(BulkMutatorTest, PartialStream) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
                 .WillOnce(Return(Status()));
@@ -257,7 +256,7 @@ TEST(BulkMutatorTest, RetryOnlyIdempotent) {
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
             EXPECT_EQ(2, request.entries_size());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(
                     Return(MakeResponse({{0, grpc::StatusCode::UNAVAILABLE},
@@ -272,7 +271,7 @@ TEST(BulkMutatorTest, RetryOnlyIdempotent) {
                       google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
             expect_r2(request);
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
                 .WillOnce(Return(Status()));
@@ -311,7 +310,7 @@ TEST(BulkMutatorTest, UnconfirmedAreFailed) {
                    google::bigtable::v2::MutateRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
         EXPECT_EQ(3, request.entries_size());
-        auto stream = absl::make_unique<MockMutateRowsStream>();
+        auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeResponse(
                 {{0, grpc::StatusCode::OK}, {2, grpc::StatusCode::OK}})))
@@ -343,7 +342,7 @@ TEST(BulkMutatorTest, ConfiguresContext) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read).WillOnce(Return(Status()));
             return stream;
           });
@@ -369,7 +368,7 @@ TEST(BulkMutatorTest, MutationStatusReportedOnOkStream) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(
                     Return(MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}})))
@@ -404,7 +403,7 @@ TEST(BulkMutatorTest, ReportEitherRetryableMutationFailOrStreamFail) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(
                     Return(MakeResponse({{0, grpc::StatusCode::UNAVAILABLE}})))
@@ -441,7 +440,7 @@ TEST(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
       .WillOnce([](auto,
                    google::bigtable::v2::MutateRowsRequest const& request) {
         EXPECT_THAT(request, HasCorrectResourceNames());
-        auto stream = absl::make_unique<MockMutateRowsStream>();
+        auto stream = std::make_unique<MockMutateRowsStream>();
         EXPECT_CALL(*stream, Read)
             .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::ABORTED}})))
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")));
@@ -450,7 +449,7 @@ TEST(BulkMutatorTest, ReportOnlyLatestMutationStatus) {
       .WillOnce(
           [](auto, google::bigtable::v2::MutateRowsRequest const& request) {
             EXPECT_THAT(request, HasCorrectResourceNames());
-            auto stream = absl::make_unique<MockMutateRowsStream>();
+            auto stream = std::make_unique<MockMutateRowsStream>();
             EXPECT_CALL(*stream, Read)
                 .WillOnce(Return(Status(StatusCode::kDataLoss, "fail")));
             return stream;

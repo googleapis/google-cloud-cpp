@@ -16,7 +16,6 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/expect_future_error.h"
 #include "google/cloud/testing_util/testing_types.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -247,7 +246,7 @@ TEST(FutureImplVoid, SetContinuation) {
 
   int execute_counter = 0;
   shared_state.set_continuation(
-      absl::make_unique<TestContinuation>(&execute_counter));
+      std::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(0, execute_counter);
   EXPECT_FALSE(shared_state.is_ready());
   shared_state.set_value();
@@ -263,12 +262,12 @@ TEST(FutureImplVoid, SetContinuationAlreadySet) {
 
   int execute_counter = 0;
   shared_state.set_continuation(
-      absl::make_unique<TestContinuation>(&execute_counter));
+      std::make_unique<TestContinuation>(&execute_counter));
 
   ExpectFutureError(
       [&] {
         shared_state.set_continuation(
-            absl::make_unique<TestContinuation>(&execute_counter));
+            std::make_unique<TestContinuation>(&execute_counter));
       },
       std::future_errc::future_already_retrieved);
 }
@@ -281,7 +280,7 @@ TEST(FutureImplVoid, SetContinuationAlreadySatisfied) {
   shared_state.set_value();
   EXPECT_EQ(0, execute_counter);
   shared_state.set_continuation(
-      absl::make_unique<TestContinuation>(&execute_counter));
+      std::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(1, execute_counter);
 
   shared_state.get();
@@ -411,7 +410,7 @@ TEST(FutureImplInt, SetContinuation) {
 
   int execute_counter = 0;
   shared_state.set_continuation(
-      absl::make_unique<TestContinuation>(&execute_counter));
+      std::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(0, execute_counter);
   EXPECT_FALSE(shared_state.is_ready());
   shared_state.set_value(42);
@@ -427,11 +426,11 @@ TEST(FutureImplInt, SetContinuationAlreadySet) {
 
   int execute_counter = 0;
   shared_state.set_continuation(
-      absl::make_unique<TestContinuation>(&execute_counter));
+      std::make_unique<TestContinuation>(&execute_counter));
   ExpectFutureError(
       [&] {
         shared_state.set_continuation(
-            absl::make_unique<TestContinuation>(&execute_counter));
+            std::make_unique<TestContinuation>(&execute_counter));
       },
       std::future_errc::future_already_retrieved);
 }
@@ -444,7 +443,7 @@ TEST(FutureImplInt, SetContinuationAlreadySatisfied) {
   shared_state.set_value(42);
   EXPECT_EQ(0, execute_counter);
   shared_state.set_continuation(
-      absl::make_unique<TestContinuation>(&execute_counter));
+      std::make_unique<TestContinuation>(&execute_counter));
   EXPECT_EQ(1, execute_counter);
 
   EXPECT_EQ(42, shared_state.get());

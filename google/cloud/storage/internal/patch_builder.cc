@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/storage/version.h"
-#include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <memory>
@@ -120,7 +119,7 @@ struct PatchBuilder::Impl {
   nlohmann::json patch_;
 };
 
-PatchBuilder::PatchBuilder() : pimpl_(absl::make_unique<Impl>()) {}
+PatchBuilder::PatchBuilder() : pimpl_(std::make_unique<Impl>()) {}
 PatchBuilder::~PatchBuilder() = default;
 
 PatchBuilder::PatchBuilder(PatchBuilder const& other)

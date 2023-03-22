@@ -17,7 +17,6 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ SystemPolicyV1ConnectionIdempotencyPolicy::
 
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
 SystemPolicyV1ConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::GetSystemPolicy(
@@ -42,7 +41,7 @@ Idempotency SystemPolicyV1ConnectionIdempotencyPolicy::GetSystemPolicy(
 
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>
 MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy() {
-  return absl::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>();
+  return std::make_unique<SystemPolicyV1ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

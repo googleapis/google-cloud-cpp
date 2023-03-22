@@ -17,7 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/v1/authorized_certificates_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AuthorizedCertificatesConnectionIdempotencyPolicy::
 
 std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
 AuthorizedCertificatesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AuthorizedCertificatesConnectionIdempotencyPolicy>(
+  return std::make_unique<AuthorizedCertificatesConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -68,7 +67,7 @@ AuthorizedCertificatesConnectionIdempotencyPolicy::DeleteAuthorizedCertificate(
 
 std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
 MakeDefaultAuthorizedCertificatesConnectionIdempotencyPolicy() {
-  return absl::make_unique<AuthorizedCertificatesConnectionIdempotencyPolicy>();
+  return std::make_unique<AuthorizedCertificatesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

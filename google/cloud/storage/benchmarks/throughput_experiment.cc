@@ -16,7 +16,6 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "absl/memory/memory.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <curl/curl.h>
 #include <iterator>
@@ -424,10 +423,10 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
       for (auto const& function : options.upload_functions) {
         if (function == "InsertObject") {
           result.push_back(
-              absl::make_unique<SimpleUpload>(provider(t), t, contents));
+              std::make_unique<SimpleUpload>(provider(t), t, contents));
         } else /* if (function == "WriteObject") */ {
           result.push_back(
-              absl::make_unique<ResumableUpload>(provider(t), t, contents));
+              std::make_unique<ResumableUpload>(provider(t), t, contents));
         }
       }
     }
@@ -442,17 +441,17 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
   for (auto l : options.libs) {
     if (l != ExperimentLibrary::kRaw) {
       for (auto t : options.transports) {
-        result.push_back(absl::make_unique<DownloadObject>(provider(t), t));
+        result.push_back(std::make_unique<DownloadObject>(provider(t), t));
       }
       continue;
     }
     for (auto t : options.transports) {
       if (t != ExperimentTransport::kGrpc &&
           t != ExperimentTransport::kDirectPath) {
-        result.push_back(absl::make_unique<DownloadObjectLibcurl>(options));
+        result.push_back(std::make_unique<DownloadObjectLibcurl>(options));
       } else {
         result.push_back(
-            absl::make_unique<DownloadObjectRawGrpc>(options, thread_id, t));
+            std::make_unique<DownloadObjectRawGrpc>(options, thread_id, t));
       }
     }
   }

@@ -17,7 +17,6 @@
 // source: google/devtools/artifactregistry/v1/service.proto
 
 #include "google/cloud/artifactregistry/v1/artifact_registry_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ArtifactRegistryConnectionIdempotencyPolicy::
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
 ArtifactRegistryConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListDockerImages(
@@ -218,7 +217,7 @@ Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateVPCSCConfig(
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
 MakeDefaultArtifactRegistryConnectionIdempotencyPolicy() {
-  return absl::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>();
+  return std::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

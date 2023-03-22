@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/completion_service.proto
 
 #include "google/cloud/retail/v2/completion_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CompletionServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 CompletionServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CompletionServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CompletionServiceConnectionIdempotencyPolicy::CompleteQuery(
@@ -47,7 +46,7 @@ Idempotency CompletionServiceConnectionIdempotencyPolicy::ImportCompletionData(
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>
 MakeDefaultCompletionServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<CompletionServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<CompletionServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

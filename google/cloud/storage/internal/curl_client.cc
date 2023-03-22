@@ -28,7 +28,6 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/getenv.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/match.h"
 #include <sstream>
 

@@ -17,7 +17,6 @@
 // source: google/cloud/tasks/v2/cloudtasks.proto
 
 #include "google/cloud/tasks/v2/cloud_tasks_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudTasksConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
 CloudTasksConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudTasksConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudTasksConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudTasksConnectionIdempotencyPolicy::ListQueues(
@@ -118,7 +117,7 @@ Idempotency CloudTasksConnectionIdempotencyPolicy::RunTask(
 
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
 MakeDefaultCloudTasksConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudTasksConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudTasksConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

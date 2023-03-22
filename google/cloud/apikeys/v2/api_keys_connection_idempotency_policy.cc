@@ -17,7 +17,6 @@
 // source: google/api/apikeys/v2/apikeys.proto
 
 #include "google/cloud/apikeys/v2/api_keys_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ApiKeysConnectionIdempotencyPolicy::~ApiKeysConnectionIdempotencyPolicy() =
 
 std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>
 ApiKeysConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ApiKeysConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ApiKeysConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ApiKeysConnectionIdempotencyPolicy::CreateKey(
@@ -77,7 +76,7 @@ Idempotency ApiKeysConnectionIdempotencyPolicy::LookupKey(
 
 std::unique_ptr<ApiKeysConnectionIdempotencyPolicy>
 MakeDefaultApiKeysConnectionIdempotencyPolicy() {
-  return absl::make_unique<ApiKeysConnectionIdempotencyPolicy>();
+  return std::make_unique<ApiKeysConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

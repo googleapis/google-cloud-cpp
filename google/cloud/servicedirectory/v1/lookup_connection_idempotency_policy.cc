@@ -17,7 +17,6 @@
 // source: google/cloud/servicedirectory/v1/lookup_service.proto
 
 #include "google/cloud/servicedirectory/v1/lookup_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ LookupServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
 LookupServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<LookupServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<LookupServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency LookupServiceConnectionIdempotencyPolicy::ResolveService(
@@ -42,7 +41,7 @@ Idempotency LookupServiceConnectionIdempotencyPolicy::ResolveService(
 
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
 MakeDefaultLookupServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<LookupServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<LookupServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {

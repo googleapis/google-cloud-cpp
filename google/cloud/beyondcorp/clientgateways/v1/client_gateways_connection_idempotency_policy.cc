@@ -18,7 +18,6 @@
 // google/cloud/beyondcorp/clientgateways/v1/client_gateways_service.proto
 
 #include "google/cloud/beyondcorp/clientgateways/v1/client_gateways_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -33,7 +32,7 @@ ClientGatewaysServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>
 ClientGatewaysServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ClientGatewaysServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<ClientGatewaysServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -66,7 +65,7 @@ ClientGatewaysServiceConnectionIdempotencyPolicy::DeleteClientGateway(
 
 std::unique_ptr<ClientGatewaysServiceConnectionIdempotencyPolicy>
 MakeDefaultClientGatewaysServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ClientGatewaysServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ClientGatewaysServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

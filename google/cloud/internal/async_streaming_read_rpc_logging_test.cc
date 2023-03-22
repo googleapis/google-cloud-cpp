@@ -17,7 +17,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/tracing_options.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/duration.pb.h>
 #include <gmock/gmock.h>
 
@@ -55,7 +54,7 @@ using TestedStream = AsyncStreamingReadRpcLogging<google::protobuf::Duration>;
 TEST(StreamingReadRpcLoggingTest, Cancel) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel()).Times(1);
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   stream.Cancel();
@@ -66,7 +65,7 @@ TEST(StreamingReadRpcLoggingTest, Cancel) {
 TEST(StreamingReadRpcLoggingTest, Start) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_TRUE(stream.Start().get());
@@ -77,7 +76,7 @@ TEST(StreamingReadRpcLoggingTest, Start) {
 TEST(StreamingReadRpcLoggingTest, ReadWithValue) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
     return make_ready_future(absl::make_optional(google::protobuf::Duration{}));
   });
@@ -91,7 +90,7 @@ TEST(StreamingReadRpcLoggingTest, ReadWithValue) {
 TEST(StreamingReadRpcLoggingTest, ReadWithoutValue) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
     return make_ready_future(absl::optional<google::protobuf::Duration>{});
   });
@@ -105,7 +104,7 @@ TEST(StreamingReadRpcLoggingTest, ReadWithoutValue) {
 TEST(StreamingReadRpcLoggingTest, Finish) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{StatusCode::kUnavailable, "try-again"});
   });
@@ -120,7 +119,7 @@ TEST(StreamingReadRpcLoggingTest, Finish) {
 TEST(StreamingReadRpcLoggingTest, GetRequestMetadata) {
   ScopedLog log;
 
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
     return StreamingRpcMetadata({{":test-only", "value"}});
   });

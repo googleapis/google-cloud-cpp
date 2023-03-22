@@ -23,7 +23,6 @@
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/status_or.h"
-#include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <condition_variable>
 #include <cstddef>

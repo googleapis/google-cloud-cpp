@@ -17,7 +17,6 @@
 // source: google/spanner/admin/database/v1/spanner_database_admin.proto
 
 #include "google/cloud/spanner/admin/database_admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DatabaseAdminConnectionIdempotencyPolicy::
 
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>
 DatabaseAdminConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DatabaseAdminConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DatabaseAdminConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListDatabases(
@@ -135,7 +134,7 @@ Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListDatabaseRoles(
 
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>
 MakeDefaultDatabaseAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<DatabaseAdminConnectionIdempotencyPolicy>();
+  return std::make_unique<DatabaseAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

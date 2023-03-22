@@ -17,7 +17,6 @@
 // source: google/cloud/deploy/v1/cloud_deploy.proto
 
 #include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudDeployConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>
 CloudDeployConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudDeployConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudDeployConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudDeployConnectionIdempotencyPolicy::ListDeliveryPipelines(
@@ -147,7 +146,7 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::GetConfig(
 
 std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>
 MakeDefaultCloudDeployConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudDeployConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudDeployConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

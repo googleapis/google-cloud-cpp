@@ -20,7 +20,6 @@
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -70,15 +69,15 @@ class SubscriptionSessionImpl
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriptionBatchSource> source,
       pubsub::ApplicationCallback application_callback) {
-    return Create(opts, std::move(cq), std::move(shutdown_manager),
-                  std::move(source),
-                  [cb = std::move(application_callback)](
-                      pubsub::Message m,
-                      std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> h) {
-                    auto wrapper = absl::make_unique<AckHandlerWrapper>(
-                        std::move(h), m.message_id());
-                    cb(std::move(m), pubsub::AckHandler(std::move(wrapper)));
-                  });
+    return Create(
+        opts, std::move(cq), std::move(shutdown_manager), std::move(source),
+        [cb = std::move(application_callback)](
+            pubsub::Message m,
+            std::unique_ptr<pubsub::ExactlyOnceAckHandler::Impl> h) {
+          auto wrapper =
+              std::make_unique<AckHandlerWrapper>(std::move(h), m.message_id());
+          cb(std::move(m), pubsub::AckHandler(std::move(wrapper)));
+        });
   }
 
   static future<Status> Create(

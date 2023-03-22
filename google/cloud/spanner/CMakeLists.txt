@@ -563,7 +563,6 @@ google_cloud_cpp_add_pkgconfig(
     "google_cloud_cpp_grpc_utils"
     " google_cloud_cpp_common"
     " google_cloud_cpp_spanner_protos"
-    " absl_memory"
     " absl_numeric"
     " absl_strings"
     " absl_time")

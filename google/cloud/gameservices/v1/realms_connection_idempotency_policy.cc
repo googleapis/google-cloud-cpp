@@ -17,7 +17,6 @@
 // source: google/cloud/gaming/v1/realms_service.proto
 
 #include "google/cloud/gameservices/v1/realms_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ RealmsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy>
 RealmsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<RealmsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<RealmsServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency RealmsServiceConnectionIdempotencyPolicy::ListRealms(
@@ -67,7 +66,7 @@ Idempotency RealmsServiceConnectionIdempotencyPolicy::PreviewRealmUpdate(
 
 std::unique_ptr<RealmsServiceConnectionIdempotencyPolicy>
 MakeDefaultRealmsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<RealmsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<RealmsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -23,7 +23,6 @@
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
-#include "absl/memory/memory.h"
 #include <string>
 #include <vector>
 

@@ -17,7 +17,6 @@
 // source: google/bigtable/admin/v2/bigtable_table_admin.proto
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ BigtableTableAdminConnectionIdempotencyPolicy::
 
 std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>
 BigtableTableAdminConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BigtableTableAdminConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<BigtableTableAdminConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency BigtableTableAdminConnectionIdempotencyPolicy::CreateTable(
@@ -135,7 +133,7 @@ Idempotency BigtableTableAdminConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<BigtableTableAdminConnectionIdempotencyPolicy>
 MakeDefaultBigtableTableAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<BigtableTableAdminConnectionIdempotencyPolicy>();
+  return std::make_unique<BigtableTableAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

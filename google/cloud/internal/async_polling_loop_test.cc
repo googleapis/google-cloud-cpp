@@ -22,7 +22,6 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <gmock/gmock.h>
 #include <chrono>
@@ -96,7 +95,7 @@ TEST(AsyncPollingLoopTest, ImmediateSuccess) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation).Times(0);
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod).Times(0);
@@ -137,7 +136,7 @@ TEST(AsyncPollingLoopTest, ImmediateCancel) {
         EXPECT_EQ(request.name(), "test-op-name");
         return make_ready_future(Status{});
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).WillOnce([](Status const& status) {
     EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
@@ -187,7 +186,7 @@ TEST(AsyncPollingLoopTest, PollThenSuccess) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(), "PollThenSuccess");
         return make_ready_future(make_status_or(expected));
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
@@ -217,7 +216,7 @@ TEST(AsyncPollingLoopTest, PollThenTimerError) {
 
   auto mock = std::make_shared<MockStub>();
   EXPECT_CALL(*mock, AsyncGetOperation).Times(0);
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).Times(0);
   EXPECT_CALL(*policy, WaitPeriod)
@@ -275,7 +274,7 @@ TEST(AsyncPollingLoopTest, PollThenEventualSuccess) {
                   "PollThenEventualSuccess");
         return make_ready_future(make_status_or(expected));
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
   EXPECT_CALL(*policy, WaitPeriod)
@@ -316,7 +315,7 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicy) {
                   "PollThenExhaustedPollingPolicy");
         return make_ready_future(make_status_or(starting_op));
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
       .WillOnce(Return(true))
@@ -364,7 +363,7 @@ TEST(AsyncPollingLoopTest, PollThenExhaustedPollingPolicyWithFailure) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status{StatusCode::kUnavailable, "try-again"}));
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
       .WillOnce(Return(true))
@@ -409,7 +408,7 @@ TEST(AsyncPollingLoopTest, PollLifetime) {
         EXPECT_EQ(CurrentOptions().get<StringOption>(), "PollLifetime");
         return get_sequencer.PushBack();
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).WillRepeatedly(Return(true));
   EXPECT_CALL(*policy, WaitPeriod)
@@ -461,7 +460,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringTimer) {
                   "PollThenCancelDuringTimer");
         return make_ready_future(Status{});
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
       .Times(2)
@@ -523,7 +522,7 @@ TEST(AsyncPollingLoopTest, PollThenCancelDuringPoll) {
                   "PollThenCancelDuringPoll");
         return make_ready_future(Status{});
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
       .Times(2)
@@ -592,7 +591,7 @@ TEST(AsyncPollingLoopTest, ConfigurePollContext) {
         EXPECT_EQ(request.name(), "test-op-name");
         return make_ready_future(Status{});
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure).WillOnce([](Status const& status) {
     EXPECT_THAT(status, StatusIs(StatusCode::kCancelled));
@@ -651,7 +650,7 @@ TEST(AsyncPollingLoopTest, TracedAsyncBackoff) {
         UnavailableError("try again"));
   });
 
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
       .WillOnce(Return(true))
@@ -705,7 +704,7 @@ TEST(AsyncPollingLoopTest, SpanActiveThroughout) {
         EXPECT_THAT(span, IsActive());
         return make_ready_future(Status{});
       });
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   EXPECT_CALL(*policy, clone()).Times(0);
   EXPECT_CALL(*policy, OnFailure)
       .Times(2)
@@ -744,7 +743,7 @@ TEST(AsyncPollingLoopTest, TraceCapturesOperationName) {
 
   auto span = MakeSpan("span");
   auto mock = std::make_shared<MockStub>();
-  auto policy = absl::make_unique<MockPollingPolicy>();
+  auto policy = std::make_unique<MockPollingPolicy>();
   CompletionQueue cq;
 
   auto scope = opentelemetry::trace::Scope(span);

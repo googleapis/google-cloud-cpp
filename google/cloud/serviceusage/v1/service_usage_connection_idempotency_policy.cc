@@ -17,7 +17,6 @@
 // source: google/api/serviceusage/v1/serviceusage.proto
 
 #include "google/cloud/serviceusage/v1/service_usage_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ServiceUsageConnectionIdempotencyPolicy::
 
 std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy>
 ServiceUsageConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ServiceUsageConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ServiceUsageConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ServiceUsageConnectionIdempotencyPolicy::EnableService(
@@ -67,7 +66,7 @@ Idempotency ServiceUsageConnectionIdempotencyPolicy::BatchGetServices(
 
 std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy>
 MakeDefaultServiceUsageConnectionIdempotencyPolicy() {
-  return absl::make_unique<ServiceUsageConnectionIdempotencyPolicy>();
+  return std::make_unique<ServiceUsageConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -24,7 +24,6 @@
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>
 #include <fstream>
@@ -313,7 +312,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   }
 
   auto signing_tests_destroyer =
-      absl::make_unique<std::map<std::string, SigningV4Test>>();
+      std::make_unique<std::map<std::string, SigningV4Test>>();
   google::cloud::storage::signing_tests = signing_tests_destroyer.get();
 
   // The implementation is not yet completed and these tests still fail, so skip
@@ -340,7 +339,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   }
 
   auto post_policy_tests_destroyer =
-      absl::make_unique<std::map<std::string, PostPolicyV4Test>>();
+      std::make_unique<std::map<std::string, PostPolicyV4Test>>();
   google::cloud::storage::post_policy_tests = post_policy_tests_destroyer.get();
 
   for (auto const& policy_test : tests.post_policy_v4_tests()) {

@@ -215,7 +215,7 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
   auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(mock_cq);
 
-  auto mock_reader = absl::make_unique<MockTableReader>();
+  auto mock_reader = std::make_unique<MockTableReader>();
   EXPECT_CALL(*mock_reader, Finish)
       .WillOnce([](btadmin::Table* table, grpc::Status* status, void*) {
         table->set_name("test-table-name");
@@ -246,7 +246,7 @@ TEST(CompletionQueueTest, MakeUnaryRpc) {
                            grpc::CompletionQueue* cq) {
               return mock_client.AsyncGetTable(context, request, cq);
             },
-            request, absl::make_unique<grpc::ClientContext>())
+            request, std::make_unique<grpc::ClientContext>())
           .then([](future<StatusOr<btadmin::Table>> f) {
             auto table = f.get();
             ASSERT_STATUS_OK(table);
@@ -267,7 +267,7 @@ TEST(CompletionQueueTest, MakeUnaryRpcImpl) {
   auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(mock_cq);
 
-  auto mock_reader = absl::make_unique<MockTableReader>();
+  auto mock_reader = std::make_unique<MockTableReader>();
   EXPECT_CALL(*mock_reader, Finish)
       .WillOnce([](btadmin::Table* table, grpc::Status* status, void*) {
         table->set_name("test-table-name");
@@ -318,7 +318,7 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
   auto mock_cq = std::make_shared<FakeCompletionQueueImpl>();
   CompletionQueue cq(mock_cq);
 
-  auto mock_reader = absl::make_unique<MockRowReader>();
+  auto mock_reader = std::make_unique<MockRowReader>();
   EXPECT_CALL(*mock_reader, StartCall).Times(1);
   EXPECT_CALL(*mock_reader, Read).Times(2);
   EXPECT_CALL(*mock_reader, Finish).Times(1);
@@ -347,7 +347,7 @@ TEST(CompletionQueueTest, MakeStreamingReadRpc) {
                      grpc::CompletionQueue* cq) {
         return mock_client.AsyncReadRows(context, request, cq);
       },
-      request, absl::make_unique<grpc::ClientContext>(),
+      request, std::make_unique<grpc::ClientContext>(),
       [&on_read_counter](btproto::ReadRowsResponse const&) {
         ++on_read_counter;
         return make_ready_future(true);
@@ -396,7 +396,7 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
                          grpc::CompletionQueue* cq) {
             return mock_client.AsyncGetTable(context, request, cq);
           },
-          get_table_request, absl::make_unique<grpc::ClientContext>())
+          get_table_request, std::make_unique<grpc::ClientContext>())
           .then([](future<StatusOr<btadmin::Table>> f) {
             EXPECT_EQ(StatusCode::kCancelled, f.get().status().code());
           });
@@ -409,7 +409,7 @@ TEST(CompletionQueueTest, MakeRpcsAfterShutdown) {
                      grpc::CompletionQueue* cq) {
         return mock_client.AsyncReadRows(context, request, cq);
       },
-      read_request, absl::make_unique<grpc::ClientContext>(),
+      read_request, std::make_unique<grpc::ClientContext>(),
       [](btproto::ReadRowsResponse const&) {
         ADD_FAILURE() << "OnReadHandler unexpectedly called";
         return make_ready_future(true);

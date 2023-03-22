@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/workflow_templates.proto
 
 #include "google/cloud/dataproc/v1/workflow_template_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ WorkflowTemplateServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
 WorkflowTemplateServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<WorkflowTemplateServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<WorkflowTemplateServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -81,8 +80,7 @@ WorkflowTemplateServiceConnectionIdempotencyPolicy::DeleteWorkflowTemplate(
 
 std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
 MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      WorkflowTemplateServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<WorkflowTemplateServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

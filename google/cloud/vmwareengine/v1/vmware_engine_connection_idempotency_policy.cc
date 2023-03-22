@@ -17,7 +17,6 @@
 // source: google/cloud/vmwareengine/v1/vmwareengine.proto
 
 #include "google/cloud/vmwareengine/v1/vmware_engine_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ VmwareEngineConnectionIdempotencyPolicy::
 
 std::unique_ptr<VmwareEngineConnectionIdempotencyPolicy>
 VmwareEngineConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<VmwareEngineConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<VmwareEngineConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency VmwareEngineConnectionIdempotencyPolicy::ListPrivateClouds(
@@ -193,7 +192,7 @@ Idempotency VmwareEngineConnectionIdempotencyPolicy::ListVmwareEngineNetworks(
 
 std::unique_ptr<VmwareEngineConnectionIdempotencyPolicy>
 MakeDefaultVmwareEngineConnectionIdempotencyPolicy() {
-  return absl::make_unique<VmwareEngineConnectionIdempotencyPolicy>();
+  return std::make_unique<VmwareEngineConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

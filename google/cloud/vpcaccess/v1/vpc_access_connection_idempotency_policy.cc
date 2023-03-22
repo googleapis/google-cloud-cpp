@@ -17,7 +17,6 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/v1/vpc_access_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ VpcAccessServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
 VpcAccessServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<VpcAccessServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<VpcAccessServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency VpcAccessServiceConnectionIdempotencyPolicy::CreateConnector(
@@ -57,7 +56,7 @@ Idempotency VpcAccessServiceConnectionIdempotencyPolicy::DeleteConnector(
 
 std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
 MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<VpcAccessServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<VpcAccessServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

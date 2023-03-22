@@ -17,7 +17,6 @@
 // source: google/cloud/resourcemanager/v3/folders.proto
 
 #include "google/cloud/resourcemanager/v3/folders_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ FoldersConnectionIdempotencyPolicy::~FoldersConnectionIdempotencyPolicy() =
 
 std::unique_ptr<FoldersConnectionIdempotencyPolicy>
 FoldersConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<FoldersConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<FoldersConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency FoldersConnectionIdempotencyPolicy::GetFolder(
@@ -93,7 +92,7 @@ Idempotency FoldersConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<FoldersConnectionIdempotencyPolicy>
 MakeDefaultFoldersConnectionIdempotencyPolicy() {
-  return absl::make_unique<FoldersConnectionIdempotencyPolicy>();
+  return std::make_unique<FoldersConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

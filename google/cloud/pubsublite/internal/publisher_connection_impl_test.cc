@@ -16,6 +16,7 @@
 #include "google/cloud/pubsublite/testing/mock_publisher.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -49,7 +50,7 @@ class PublisherConnectionImplTest : public ::testing::Test {
       : publisher_ref_{*new StrictMock<MockPublisher<MessageMetadata>>()} {
     EXPECT_CALL(publisher_ref_, Start)
         .WillOnce(Return(ByMove(status_promise_.get_future())));
-    conn_ = absl::make_unique<PublisherConnectionImpl>(
+    conn_ = std::make_unique<PublisherConnectionImpl>(
         absl::WrapUnique(&publisher_ref_), transformer_.AsStdFunction());
   }
 

@@ -17,7 +17,6 @@
 // source: google/cloud/gaming/v1/game_server_clusters_service.proto
 
 #include "google/cloud/gameservices/v1/game_server_clusters_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,8 @@ GameServerClustersServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
 GameServerClustersServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
-      GameServerClustersServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<GameServerClustersServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
 Idempotency
@@ -89,7 +88,7 @@ Idempotency GameServerClustersServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<GameServerClustersServiceConnectionIdempotencyPolicy>
 MakeDefaultGameServerClustersServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       GameServerClustersServiceConnectionIdempotencyPolicy>();
 }
 

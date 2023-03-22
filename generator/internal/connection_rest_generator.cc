@@ -17,7 +17,6 @@
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/descriptor.h>
 
 namespace google {
@@ -169,7 +168,7 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
   }
   CcPrint("std::move(options));");
   CcPrint(R"""(
-  auto background = absl::make_unique<
+  auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = $product_internal_namespace$::CreateDefault$stub_rest_class_name$(
     options);

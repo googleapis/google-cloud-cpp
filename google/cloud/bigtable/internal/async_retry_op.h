@@ -22,7 +22,6 @@
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {

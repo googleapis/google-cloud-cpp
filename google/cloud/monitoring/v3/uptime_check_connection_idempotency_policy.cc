@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/uptime_service.proto
 
 #include "google/cloud/monitoring/v3/uptime_check_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ UptimeCheckServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>
 UptimeCheckServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<UptimeCheckServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<UptimeCheckServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency
@@ -72,7 +70,7 @@ Idempotency UptimeCheckServiceConnectionIdempotencyPolicy::ListUptimeCheckIps(
 
 std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>
 MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<UptimeCheckServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<UptimeCheckServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

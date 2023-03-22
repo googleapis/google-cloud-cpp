@@ -15,7 +15,6 @@
 #include "google/cloud/pubsub/internal/subscription_concurrency_control.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -115,7 +114,7 @@ void SubscriptionConcurrencyControl::OnMessageAsync(
     google::pubsub::v1::ReceivedMessage m,
     std::weak_ptr<SubscriptionConcurrencyControl> w) {
   shutdown_manager_->StartOperation(__func__, "handler", [&] {
-    auto h = absl::make_unique<AckHandlerImpl>(
+    auto h = std::make_unique<AckHandlerImpl>(
         std::move(w), std::move(*m.mutable_ack_id()), m.delivery_attempt());
     callback_(FromProto(std::move(*m.mutable_message())), std::move(h));
   });

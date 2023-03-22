@@ -1034,8 +1034,8 @@ TEST_F(PrintMethodTest, NoMatchingPatterns) {
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file_);
 
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
@@ -1050,8 +1050,8 @@ TEST_F(PrintMethodTest, MoreThanOneMatchingPattern) {
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file_);
 
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
   Printer printer(generator_context.get(), "foo");
@@ -1074,8 +1074,8 @@ TEST_F(PrintMethodTest, ExactlyOnePattern) {
   DescriptorPool pool;
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file_);
 
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*output, Next);
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));

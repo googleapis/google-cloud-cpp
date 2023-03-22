@@ -98,7 +98,7 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
   std::unique_lock<std::mutex> lk(mu_);
   if (exactly_once_delivery_enabled_.value_or(false)) {
     lk.unlock();
-    auto retry = absl::make_unique<ExactlyOnceRetryPolicy>(ack_id);
+    auto retry = std::make_unique<ExactlyOnceRetryPolicy>(ack_id);
     return google::cloud::internal::AsyncRetryLoop(
         std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
         cq_,
@@ -123,7 +123,7 @@ future<Status> StreamingSubscriptionBatchSource::NackMessage(
   std::unique_lock<std::mutex> lk(mu_);
   if (exactly_once_delivery_enabled_.value_or(false)) {
     lk.unlock();
-    auto retry = absl::make_unique<ExactlyOnceRetryPolicy>(ack_id);
+    auto retry = std::make_unique<ExactlyOnceRetryPolicy>(ack_id);
     return google::cloud::internal::AsyncRetryLoop(
         std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
         cq_,

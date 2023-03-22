@@ -17,7 +17,6 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -31,7 +30,7 @@ GoldenThingAdminConnectionIdempotencyPolicy::~GoldenThingAdminConnectionIdempote
 
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
 GoldenThingAdminConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency GoldenThingAdminConnectionIdempotencyPolicy::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest) {  // NOLINT
@@ -110,7 +109,7 @@ Idempotency GoldenThingAdminConnectionIdempotencyPolicy::LongRunningWithoutRouti
 
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
     MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>();
+  return std::make_unique<GoldenThingAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

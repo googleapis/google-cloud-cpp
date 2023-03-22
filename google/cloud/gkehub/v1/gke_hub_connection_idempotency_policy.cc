@@ -17,7 +17,6 @@
 // source: google/cloud/gkehub/v1/service.proto
 
 #include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ GkeHubConnectionIdempotencyPolicy::~GkeHubConnectionIdempotencyPolicy() =
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>
 GkeHubConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<GkeHubConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<GkeHubConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency GkeHubConnectionIdempotencyPolicy::ListMemberships(
@@ -92,7 +91,7 @@ Idempotency GkeHubConnectionIdempotencyPolicy::GenerateConnectManifest(
 
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>
 MakeDefaultGkeHubConnectionIdempotencyPolicy() {
-  return absl::make_unique<GkeHubConnectionIdempotencyPolicy>();
+  return std::make_unique<GkeHubConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

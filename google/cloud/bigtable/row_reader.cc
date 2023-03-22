@@ -18,7 +18,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 #include <iterator>
 #include <thread>
 

@@ -17,7 +17,6 @@
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/printer_mocks.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -85,7 +84,7 @@ class GeneratorTest : public ::testing::Test {
 
  protected:
   void SetUp() override {
-    context_ = absl::make_unique<generator_testing::MockGeneratorContext>();
+    context_ = std::make_unique<generator_testing::MockGeneratorContext>();
   }
 
   DescriptorPool pool_;
@@ -132,7 +131,7 @@ TEST_F(GeneratorTest, GenerateServicesSuccess) {
   std::vector<std::unique_ptr<generator_testing::MockZeroCopyOutputStream>>
       mock_outputs(kNumMockOutputStreams);
   for (auto& output : mock_outputs) {
-    output = absl::make_unique<generator_testing::MockZeroCopyOutputStream>();
+    output = std::make_unique<generator_testing::MockZeroCopyOutputStream>();
   }
 
   FileDescriptor const* service_file_descriptor =

@@ -17,7 +17,6 @@
 // source: google/container/v1/cluster_service.proto
 
 #include "google/cloud/container/v1/cluster_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ClusterManagerConnectionIdempotencyPolicy::
 
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
 ClusterManagerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ClusterManagerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ClusterManagerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ClusterManagerConnectionIdempotencyPolicy::ListClusters(
@@ -202,7 +201,7 @@ Idempotency ClusterManagerConnectionIdempotencyPolicy::ListUsableSubnetworks(
 
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
 MakeDefaultClusterManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<ClusterManagerConnectionIdempotencyPolicy>();
+  return std::make_unique<ClusterManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

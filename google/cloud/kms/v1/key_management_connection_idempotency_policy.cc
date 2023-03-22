@@ -17,7 +17,6 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/v1/key_management_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ KeyManagementServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
 KeyManagementServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -177,7 +176,7 @@ KeyManagementServiceConnectionIdempotencyPolicy::GenerateRandomBytes(
 
 std::unique_ptr<KeyManagementServiceConnectionIdempotencyPolicy>
 MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

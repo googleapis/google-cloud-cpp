@@ -29,7 +29,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/base64_transforms.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/struct.pb.h>
 #include <functional>
 
@@ -157,9 +156,9 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
         publisher_service_stub, cq, MakeClientMetadata(topic, partition));
     return std::make_shared<PartitionPublisher>(
         [=](StreamInitializer<PublishRequest, PublishResponse> initializer) {
-          return absl::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
+          return std::make_unique<ResumableAsyncStreamingReadWriteRpcImpl<
               PublishRequest, PublishResponse>>(
-              [] { return absl::make_unique<StreamRetryPolicy>(); },
+              [] { return std::make_unique<StreamRetryPolicy>(); },
               backoff_policy, sleeper, stream_factory, std::move(initializer));
         },
         batching_options, std::move(request), alarm_registry);
@@ -172,12 +171,12 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
   }
 
   return std::unique_ptr<PublisherConnection>(
-      absl::make_unique<ContainingPublisherConnection>(
+      std::make_unique<ContainingPublisherConnection>(
           std::move(background_threads),
-          absl::make_unique<PublisherConnectionImpl>(
-              absl::make_unique<MultipartitionPublisher>(
+          std::make_unique<PublisherConnectionImpl>(
+              std::make_unique<MultipartitionPublisher>(
                   partition_publisher_factory, MakeAdminServiceConnection(opts),
-                  alarm_registry, absl::make_unique<DefaultRoutingPolicy>(),
+                  alarm_registry, std::make_unique<DefaultRoutingPolicy>(),
                   std::move(topic)),
               transformer)));
 }

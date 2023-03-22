@@ -97,7 +97,7 @@ GoldenKitchenSinkAuth::StreamingRead(
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::test::admin::database::v1::Response>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->StreamingRead(std::move(context), request);
 }
 
@@ -109,7 +109,7 @@ GoldenKitchenSinkAuth::StreamingWrite(
   using ErrorStream = ::google::cloud::internal::StreamingWriteRpcError<
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->StreamingWrite(std::move(context));
 }
 
@@ -126,7 +126,7 @@ GoldenKitchenSinkAuth::AsyncStreamingReadWrite(
   auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingReadWrite(cq, std::move(ctx));
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
@@ -159,7 +159,7 @@ GoldenKitchenSinkAuth::AsyncStreamingRead(
   auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingRead(cq, std::move(ctx), request);
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
@@ -175,7 +175,7 @@ GoldenKitchenSinkAuth::AsyncStreamingWrite(
   auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingWrite(cq, std::move(ctx));
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 

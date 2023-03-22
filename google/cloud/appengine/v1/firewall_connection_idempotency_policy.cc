@@ -17,7 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/v1/firewall_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ FirewallConnectionIdempotencyPolicy::~FirewallConnectionIdempotencyPolicy() =
 
 std::unique_ptr<FirewallConnectionIdempotencyPolicy>
 FirewallConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<FirewallConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<FirewallConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency FirewallConnectionIdempotencyPolicy::ListIngressRules(
@@ -67,7 +66,7 @@ Idempotency FirewallConnectionIdempotencyPolicy::DeleteIngressRule(
 
 std::unique_ptr<FirewallConnectionIdempotencyPolicy>
 MakeDefaultFirewallConnectionIdempotencyPolicy() {
-  return absl::make_unique<FirewallConnectionIdempotencyPolicy>();
+  return std::make_unique<FirewallConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -50,7 +50,6 @@ PartitionPublisher::~PartitionPublisher() {
   if (!shutdown.is_ready()) {
     GCP_LOG(WARNING) << "`Shutdown` must be called and finished before object "
                         "goes out of scope.";
-    assert(false);
   }
   shutdown.get();
 }

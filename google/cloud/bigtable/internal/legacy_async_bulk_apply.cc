@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/legacy_async_bulk_apply.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -54,7 +53,7 @@ AsyncRetryBulkApply::AsyncRetryBulkApply(
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
 
 void AsyncRetryBulkApply::StartIteration(CompletionQueue cq) {
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   rpc_retry_policy_->Setup(*context);
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);

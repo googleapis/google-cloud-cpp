@@ -17,7 +17,6 @@
 // source: google/cloud/orchestration/airflow/service/v1/image_versions.proto
 
 #include "google/cloud/composer/v1/image_versions_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ImageVersionsConnectionIdempotencyPolicy::
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
 ImageVersionsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ImageVersionsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ImageVersionsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(
@@ -43,7 +42,7 @@ Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
 MakeDefaultImageVersionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<ImageVersionsConnectionIdempotencyPolicy>();
+  return std::make_unique<ImageVersionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

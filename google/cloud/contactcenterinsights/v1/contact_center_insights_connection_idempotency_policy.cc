@@ -17,7 +17,6 @@
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ContactCenterInsightsConnectionIdempotencyPolicy::
 
 std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
 ContactCenterInsightsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>(
+  return std::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -248,7 +247,7 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteView(
 
 std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
 MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy() {
-  return absl::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>();
+  return std::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

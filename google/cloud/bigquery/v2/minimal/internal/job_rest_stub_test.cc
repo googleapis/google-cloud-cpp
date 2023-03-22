@@ -53,7 +53,7 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
             "job_type": "QUERY",
             "query_config": {"query": "select 1;"}
           }})";
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
 
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
@@ -63,7 +63,7 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
       .WillOnce(
           Return(ByMove(MakeMockHttpPayloadSuccess(job_response_payload))));
 
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
@@ -83,7 +83,7 @@ TEST(BigQueryJobStubTest, GetJobSuccess) {
 }
 
 TEST(BigQueryJobStubTest, ProjectIdEmpty) {
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   GetJobRequest job_request("", "j123");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
@@ -97,7 +97,7 @@ TEST(BigQueryJobStubTest, ProjectIdEmpty) {
 }
 
 TEST(BigQueryJobStubTest, JobIdEmpty) {
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   GetJobRequest job_request("p123", "");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
@@ -111,7 +111,7 @@ TEST(BigQueryJobStubTest, JobIdEmpty) {
 
 TEST(BigQueryJobStubTest, RestClientError) {
   // Get() fails.
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
       .WillOnce(
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
@@ -128,15 +128,15 @@ TEST(BigQueryJobStubTest, RestClientError) {
 
 TEST(BigQueryJobStubTest, BuildRestResponseError) {
   // Invalid Rest response.
-  auto mock_payload = absl::make_unique<MockHttpPayload>();
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_payload = std::make_unique<MockHttpPayload>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload)
       .WillOnce(Return(std::move(mock_payload)));
 
   // Get() is successful.
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));

@@ -19,7 +19,6 @@
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <vector>
@@ -72,7 +71,7 @@ class DataTypeIntegrationTestTmpl : public T {
  protected:
   static void SetUpTestSuite() {
     T::SetUpTestSuite();
-    client_ = absl::make_unique<Client>(MakeConnection(T::GetDatabase()));
+    client_ = std::make_unique<Client>(MakeConnection(T::GetDatabase()));
   }
 
   void SetUp() override {

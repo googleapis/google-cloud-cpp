@@ -39,7 +39,7 @@ using ::testing::Return;
 TEST(BigQueryHttpResponseTest, Success) {
   std::string job_response_payload = "My code my code my kingdom for code!";
 
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
   EXPECT_CALL(*mock_response, Headers)
@@ -56,8 +56,8 @@ TEST(BigQueryHttpResponseTest, Success) {
 }
 
 TEST(BigQueryHttpResponseTest, HttpError) {
-  auto mock_payload = absl::make_unique<MockHttpPayload>();
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_payload = std::make_unique<MockHttpPayload>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload)
@@ -69,12 +69,12 @@ TEST(BigQueryHttpResponseTest, HttpError) {
 }
 
 TEST(BigQueryHttpResponseTest, PayloadError) {
-  auto mock_payload = absl::make_unique<MockHttpPayload>();
+  auto mock_payload = std::make_unique<MockHttpPayload>();
   EXPECT_CALL(*mock_payload, Read).WillRepeatedly([](absl::Span<char> const&) {
     return internal::AbortedError("invalid payload", GCP_ERROR_INFO());
   });
 
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload)

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/match.h"
 #include <algorithm>
 
@@ -27,7 +26,7 @@ auto constexpr kInitialBackoff = std::chrono::seconds(1);
 auto constexpr kMaximumBackoff = std::chrono::minutes(1);
 
 std::unique_ptr<pubsub::BackoffPolicy> ExactlyOnceBackoffPolicy() {
-  return absl::make_unique<pubsub::ExponentialBackoffPolicy>(
+  return std::make_unique<pubsub::ExponentialBackoffPolicy>(
       kInitialBackoff, kMaximumBackoff, 2.0);
 }
 

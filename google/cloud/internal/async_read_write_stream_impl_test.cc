@@ -17,7 +17,6 @@
 #include "google/cloud/future.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <deque>
 #include <memory>
@@ -74,7 +73,7 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   MockStub mock;
   EXPECT_CALL(mock, FakeRpc)
       .WillOnce([](grpc::ClientContext*, grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockReaderWriter>();
+        auto stream = std::make_unique<MockReaderWriter>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         EXPECT_CALL(*stream, Write(FakeRequest{"key0"}, _, _)).Times(1);
         EXPECT_CALL(*stream, Read)

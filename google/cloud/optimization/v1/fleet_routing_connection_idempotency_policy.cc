@@ -17,7 +17,6 @@
 // source: google/cloud/optimization/v1/fleet_routing.proto
 
 #include "google/cloud/optimization/v1/fleet_routing_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ FleetRoutingConnectionIdempotencyPolicy::
 
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
 FleetRoutingConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<FleetRoutingConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<FleetRoutingConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency FleetRoutingConnectionIdempotencyPolicy::OptimizeTours(
@@ -47,7 +46,7 @@ Idempotency FleetRoutingConnectionIdempotencyPolicy::BatchOptimizeTours(
 
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
 MakeDefaultFleetRoutingConnectionIdempotencyPolicy() {
-  return absl::make_unique<FleetRoutingConnectionIdempotencyPolicy>();
+  return std::make_unique<FleetRoutingConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

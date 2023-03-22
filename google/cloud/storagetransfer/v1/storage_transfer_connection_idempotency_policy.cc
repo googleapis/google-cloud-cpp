@@ -17,7 +17,6 @@
 // source: google/storagetransfer/v1/transfer.proto
 
 #include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ StorageTransferServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
 StorageTransferServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -114,7 +113,7 @@ Idempotency StorageTransferServiceConnectionIdempotencyPolicy::DeleteAgentPool(
 
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
 MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

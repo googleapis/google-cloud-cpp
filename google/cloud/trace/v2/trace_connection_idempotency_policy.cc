@@ -17,7 +17,6 @@
 // source: google/devtools/cloudtrace/v2/tracing.proto
 
 #include "google/cloud/trace/v2/trace_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ TraceServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
 TraceServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TraceServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TraceServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TraceServiceConnectionIdempotencyPolicy::BatchWriteSpans(
@@ -47,7 +46,7 @@ Idempotency TraceServiceConnectionIdempotencyPolicy::CreateSpan(
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
 MakeDefaultTraceServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<TraceServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<TraceServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ WebSecurityScannerConnectionIdempotencyPolicy::
 
 std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
 WebSecurityScannerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency WebSecurityScannerConnectionIdempotencyPolicy::CreateScanConfig(
@@ -103,7 +101,7 @@ Idempotency WebSecurityScannerConnectionIdempotencyPolicy::ListFindingTypeStats(
 
 std::unique_ptr<WebSecurityScannerConnectionIdempotencyPolicy>
 MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy() {
-  return absl::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>();
+  return std::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

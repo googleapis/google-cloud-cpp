@@ -246,11 +246,11 @@ StorageLogging::ReadObject(
               google::storage::v2::ReadObjectResponse>> {
         auto stream = child_->ReadObject(std::move(context), request);
         if (components_.count("rpc-streams") > 0) {
-          stream = absl::make_unique<
-              google::cloud::internal::StreamingReadRpcLogging<
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::storage::v2::ReadObjectResponse>>(
-              std::move(stream), tracing_options_,
-              google::cloud::internal::RequestIdForLogging());
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
         }
         return stream;
       },
@@ -280,7 +280,7 @@ StorageLogging::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->WriteObject(std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -426,7 +426,7 @@ StorageLogging::AsyncReadObject(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncReadObject(cq, std::move(context), request);
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -446,7 +446,7 @@ StorageLogging::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncWriteObject(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;

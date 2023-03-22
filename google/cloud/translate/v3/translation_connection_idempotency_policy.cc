@@ -17,7 +17,6 @@
 // source: google/cloud/translate/v3/translation_service.proto
 
 #include "google/cloud/translate/v3/translation_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ TranslationServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
 TranslationServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TranslationServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<TranslationServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TranslationServiceConnectionIdempotencyPolicy::TranslateText(
@@ -90,7 +88,7 @@ Idempotency TranslationServiceConnectionIdempotencyPolicy::DeleteGlossary(
 
 std::unique_ptr<TranslationServiceConnectionIdempotencyPolicy>
 MakeDefaultTranslationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<TranslationServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<TranslationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

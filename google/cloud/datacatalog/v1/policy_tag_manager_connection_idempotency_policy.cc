@@ -17,7 +17,6 @@
 // source: google/cloud/datacatalog/v1/policytagmanager.proto
 
 #include "google/cloud/datacatalog/v1/policy_tag_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ PolicyTagManagerConnectionIdempotencyPolicy::
 
 std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy>
 PolicyTagManagerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<PolicyTagManagerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PolicyTagManagerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency PolicyTagManagerConnectionIdempotencyPolicy::CreateTaxonomy(
@@ -103,7 +102,7 @@ Idempotency PolicyTagManagerConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy>
 MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<PolicyTagManagerConnectionIdempotencyPolicy>();
+  return std::make_unique<PolicyTagManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

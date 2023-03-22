@@ -17,7 +17,6 @@
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
 #include "google/cloud/monitoring/dashboard/v1/dashboards_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DashboardsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>
 DashboardsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DashboardsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DashboardsServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DashboardsServiceConnectionIdempotencyPolicy::CreateDashboard(
@@ -62,7 +61,7 @@ Idempotency DashboardsServiceConnectionIdempotencyPolicy::UpdateDashboard(
 
 std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>
 MakeDefaultDashboardsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DashboardsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<DashboardsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

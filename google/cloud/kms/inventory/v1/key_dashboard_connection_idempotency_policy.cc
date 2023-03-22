@@ -17,7 +17,6 @@
 // source: google/cloud/kms/inventory/v1/key_dashboard_service.proto
 
 #include "google/cloud/kms/inventory/v1/key_dashboard_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ KeyDashboardServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<KeyDashboardServiceConnectionIdempotencyPolicy>
 KeyDashboardServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<KeyDashboardServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<KeyDashboardServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -43,7 +42,7 @@ Idempotency KeyDashboardServiceConnectionIdempotencyPolicy::ListCryptoKeys(
 
 std::unique_ptr<KeyDashboardServiceConnectionIdempotencyPolicy>
 MakeDefaultKeyDashboardServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<KeyDashboardServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<KeyDashboardServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

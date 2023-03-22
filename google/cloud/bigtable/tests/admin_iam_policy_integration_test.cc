@@ -43,7 +43,7 @@ class AdminIAMPolicyIntegrationTest
 
     admin_client_ =
         MakeAdminClient(testing::TableTestEnvironment::project_id());
-    table_admin_ = absl::make_unique<TableAdmin>(
+    table_admin_ = std::make_unique<TableAdmin>(
         admin_client_, bigtable::testing::TableTestEnvironment::instance_id());
   }
 };

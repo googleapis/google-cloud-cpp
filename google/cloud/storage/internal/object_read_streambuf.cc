@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/hash_mismatch_error.h"
 #include "google/cloud/storage/internal/hash_function.h"
-#include "absl/memory/memory.h"
 #include <cstring>
 
 namespace google {

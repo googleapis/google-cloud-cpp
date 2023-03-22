@@ -18,7 +18,6 @@
 // google/cloud/beyondcorp/appconnections/v1/app_connections_service.proto
 
 #include "google/cloud/beyondcorp/appconnections/v1/app_connections_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -33,7 +32,7 @@ AppConnectionsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AppConnectionsServiceConnectionIdempotencyPolicy>
 AppConnectionsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AppConnectionsServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<AppConnectionsServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -80,7 +79,7 @@ AppConnectionsServiceConnectionIdempotencyPolicy::ResolveAppConnections(
 
 std::unique_ptr<AppConnectionsServiceConnectionIdempotencyPolicy>
 MakeDefaultAppConnectionsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<AppConnectionsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AppConnectionsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

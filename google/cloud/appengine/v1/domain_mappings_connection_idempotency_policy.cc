@@ -17,7 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/v1/domain_mappings_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DomainMappingsConnectionIdempotencyPolicy::
 
 std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
 DomainMappingsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DomainMappingsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DomainMappingsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DomainMappingsConnectionIdempotencyPolicy::ListDomainMappings(
@@ -62,7 +61,7 @@ Idempotency DomainMappingsConnectionIdempotencyPolicy::DeleteDomainMapping(
 
 std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
 MakeDefaultDomainMappingsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DomainMappingsConnectionIdempotencyPolicy>();
+  return std::make_unique<DomainMappingsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

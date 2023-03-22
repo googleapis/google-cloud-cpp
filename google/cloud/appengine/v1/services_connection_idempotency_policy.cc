@@ -17,7 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/v1/services_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ServicesConnectionIdempotencyPolicy::~ServicesConnectionIdempotencyPolicy() =
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
 ServicesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ServicesConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ServicesConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ServicesConnectionIdempotencyPolicy::ListServices(
@@ -57,7 +56,7 @@ Idempotency ServicesConnectionIdempotencyPolicy::DeleteService(
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
 MakeDefaultServicesConnectionIdempotencyPolicy() {
-  return absl::make_unique<ServicesConnectionIdempotencyPolicy>();
+  return std::make_unique<ServicesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

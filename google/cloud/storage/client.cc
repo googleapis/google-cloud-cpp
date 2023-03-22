@@ -22,7 +22,6 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 #include <fstream>
 #include <thread>
 
@@ -69,13 +68,13 @@ ObjectReadStream Client::ReadObjectImpl(
   auto source = raw_client_->ReadObject(request);
   if (!source) {
     ObjectReadStream error_stream(
-        absl::make_unique<internal::ObjectReadStreambuf>(
+        std::make_unique<internal::ObjectReadStreambuf>(
             request, std::move(source).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
   auto stream =
-      ObjectReadStream(absl::make_unique<internal::ObjectReadStreambuf>(
+      ObjectReadStream(std::make_unique<internal::ObjectReadStreambuf>(
           request, *std::move(source),
           request.GetOption<ReadFromOffset>().value_or(0)));
   (void)stream.peek();
@@ -94,7 +93,7 @@ ObjectWriteStream Client::WriteObjectImpl(
   auto response = internal::CreateOrResume(*raw_client_, request);
   if (!response) {
     ObjectWriteStream error_stream(
-        absl::make_unique<internal::ObjectWriteStreambuf>(
+        std::make_unique<internal::ObjectWriteStreambuf>(
             std::move(response).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
@@ -102,7 +101,7 @@ ObjectWriteStream Client::WriteObjectImpl(
   }
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
       raw_client_->client_options().upload_buffer_size());
-  return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
+  return ObjectWriteStream(std::make_unique<internal::ObjectWriteStreambuf>(
       raw_client_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,
       internal::CreateHashFunction(request),

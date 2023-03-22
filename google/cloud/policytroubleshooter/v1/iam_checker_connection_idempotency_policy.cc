@@ -17,7 +17,6 @@
 // source: google/cloud/policytroubleshooter/v1/checker.proto
 
 #include "google/cloud/policytroubleshooter/v1/iam_checker_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ IamCheckerConnectionIdempotencyPolicy::
 
 std::unique_ptr<IamCheckerConnectionIdempotencyPolicy>
 IamCheckerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<IamCheckerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<IamCheckerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency IamCheckerConnectionIdempotencyPolicy::TroubleshootIamPolicy(
@@ -43,7 +42,7 @@ Idempotency IamCheckerConnectionIdempotencyPolicy::TroubleshootIamPolicy(
 
 std::unique_ptr<IamCheckerConnectionIdempotencyPolicy>
 MakeDefaultIamCheckerConnectionIdempotencyPolicy() {
-  return absl::make_unique<IamCheckerConnectionIdempotencyPolicy>();
+  return std::make_unique<IamCheckerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

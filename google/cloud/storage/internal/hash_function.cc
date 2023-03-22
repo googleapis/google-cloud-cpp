@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -26,18 +25,18 @@ namespace {
 std::unique_ptr<HashFunction> CreateHashFunction(bool disable_crc32c,
                                                  bool disable_md5) {
   if (disable_md5 && disable_crc32c) {
-    return absl::make_unique<NullHashFunction>();
+    return std::make_unique<NullHashFunction>();
   }
-  if (disable_md5) return absl::make_unique<Crc32cHashFunction>();
-  if (disable_crc32c) return absl::make_unique<MD5HashFunction>();
-  return absl::make_unique<CompositeFunction>(
-      absl::make_unique<Crc32cHashFunction>(),
-      absl::make_unique<MD5HashFunction>());
+  if (disable_md5) return std::make_unique<Crc32cHashFunction>();
+  if (disable_crc32c) return std::make_unique<MD5HashFunction>();
+  return std::make_unique<CompositeFunction>(
+      std::make_unique<Crc32cHashFunction>(),
+      std::make_unique<MD5HashFunction>());
 }
 }  // namespace
 
 std::unique_ptr<HashFunction> CreateNullHashFunction() {
-  return absl::make_unique<NullHashFunction>();
+  return std::make_unique<NullHashFunction>();
 }
 
 std::unique_ptr<HashFunction> CreateHashFunction(

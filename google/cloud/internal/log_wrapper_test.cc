@@ -213,7 +213,7 @@ TEST(LogWrapper, FutureStatusOrValueWithTestContextAndCQ) {
 
   testing_util::ScopedLog log;
   CompletionQueue cq;
-  auto context = absl::make_unique<TestContext>();
+  auto context = std::make_unique<TestContext>();
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   auto const log_lines = log.ExtractLines();
@@ -236,7 +236,7 @@ TEST(LogWrapper, FutureStatusOrErrorWithTestContextAndCQ) {
 
   testing_util::ScopedLog log;
   CompletionQueue cq;
-  auto context = absl::make_unique<TestContext>();
+  auto context = std::make_unique<TestContext>();
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   auto const log_lines = log.ExtractLines();
@@ -261,7 +261,7 @@ TEST(LogWrapper, FutureStatusWithTestContextAndCQ) {
 
   testing_util::ScopedLog log;
   CompletionQueue cq;
-  auto context = absl::make_unique<TestContext>();
+  auto context = std::make_unique<TestContext>();
   LogWrapper(mock, cq, std::move(context), MakeMutation(), "in-test", {});
 
   std::ostringstream os;

@@ -17,7 +17,6 @@
 // source: google/api/servicecontrol/v1/quota_controller.proto
 
 #include "google/cloud/servicecontrol/v1/quota_controller_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ QuotaControllerConnectionIdempotencyPolicy::
 
 std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
 QuotaControllerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<QuotaControllerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<QuotaControllerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency QuotaControllerConnectionIdempotencyPolicy::AllocateQuota(
@@ -42,7 +41,7 @@ Idempotency QuotaControllerConnectionIdempotencyPolicy::AllocateQuota(
 
 std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
 MakeDefaultQuotaControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<QuotaControllerConnectionIdempotencyPolicy>();
+  return std::make_unique<QuotaControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

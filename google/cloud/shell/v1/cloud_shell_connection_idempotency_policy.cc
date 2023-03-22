@@ -17,7 +17,6 @@
 // source: google/cloud/shell/v1/cloudshell.proto
 
 #include "google/cloud/shell/v1/cloud_shell_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudShellServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy>
 CloudShellServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudShellServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudShellServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudShellServiceConnectionIdempotencyPolicy::GetEnvironment(
@@ -62,7 +61,7 @@ Idempotency CloudShellServiceConnectionIdempotencyPolicy::RemovePublicKey(
 
 std::unique_ptr<CloudShellServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudShellServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudShellServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudShellServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

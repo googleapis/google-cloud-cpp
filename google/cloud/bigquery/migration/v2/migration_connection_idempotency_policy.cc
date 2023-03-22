@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/migration/v2/migration_service.proto
 
 #include "google/cloud/bigquery/migration/v2/migration_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ MigrationServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
 MigrationServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<MigrationServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency
@@ -80,7 +79,7 @@ Idempotency MigrationServiceConnectionIdempotencyPolicy::ListMigrationSubtasks(
 
 std::unique_ptr<MigrationServiceConnectionIdempotencyPolicy>
 MakeDefaultMigrationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<MigrationServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<MigrationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/query_service.proto
 
 #include "google/cloud/monitoring/v3/query_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ QueryServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<QueryServiceConnectionIdempotencyPolicy>
 QueryServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<QueryServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<QueryServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency QueryServiceConnectionIdempotencyPolicy::QueryTimeSeries(
@@ -42,7 +41,7 @@ Idempotency QueryServiceConnectionIdempotencyPolicy::QueryTimeSeries(
 
 std::unique_ptr<QueryServiceConnectionIdempotencyPolicy>
 MakeDefaultQueryServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<QueryServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<QueryServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

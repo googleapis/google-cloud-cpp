@@ -52,12 +52,12 @@ AgentEndpointServiceLogging::ReceiveTaskNotification(
         auto stream =
             child_->ReceiveTaskNotification(std::move(context), request);
         if (components_.count("rpc-streams") > 0) {
-          stream = absl::make_unique<
-              google::cloud::internal::StreamingReadRpcLogging<
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::cloud::osconfig::agentendpoint::v1::
                       ReceiveTaskNotificationResponse>>(
-              std::move(stream), tracing_options_,
-              google::cloud::internal::RequestIdForLogging());
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
         }
         return stream;
       },

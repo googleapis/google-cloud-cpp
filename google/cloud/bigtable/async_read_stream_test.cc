@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <gmock/gmock.h>
 #include <future>
@@ -173,7 +172,7 @@ TEST_F(AsyncReadStreamTest, CannotConnect) {
       google::bigtable::v2::Bigtable::NewStub(channel);
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
       [&stub](grpc::ClientContext* context,
@@ -199,7 +198,7 @@ TEST_F(AsyncReadStreamTest, CannotConnect) {
 /// @test Verify that the AsyncReadStream handles an empty stream.
 TEST_F(AsyncReadStreamTest, Empty) {
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
@@ -231,7 +230,7 @@ TEST_F(AsyncReadStreamTest, FailImmediately) {
       });
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
@@ -266,7 +265,7 @@ TEST_F(AsyncReadStreamTest, Return3) {
       });
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
@@ -318,7 +317,7 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
       });
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
@@ -362,7 +361,7 @@ TEST_F(AsyncReadStreamTest, Return3NoLast) {
       });
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
@@ -420,7 +419,7 @@ TEST_F(AsyncReadStreamTest, Return3LastIsBlocked) {
   };
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
@@ -471,7 +470,7 @@ TEST_F(AsyncReadStreamTest, CancelWhileBlocked) {
   };
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
@@ -534,7 +533,7 @@ TEST_F(AsyncReadStreamTest, DoubleCancel) {
   };
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   auto op = cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
@@ -590,7 +589,7 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
 
   HandlerResult result;
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   auto op = cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
@@ -637,7 +636,7 @@ TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
       });
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   SimpleBarrier on_finish_stop_before_cancel;
   SimpleBarrier on_finish_continue_after_cancel;
@@ -689,7 +688,7 @@ TEST_F(AsyncReadStreamTest, DiscardAfterReturningFalse) {
       });
 
   btproto::MutateRowsRequest request;
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   HandlerResult result;
   auto op = cq_.MakeStreamingReadRpc(
       [this](grpc::ClientContext* context,

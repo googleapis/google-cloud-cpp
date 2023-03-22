@@ -24,7 +24,6 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -66,7 +65,7 @@ class InstanceAdminIntegrationTest
 
     auto instance_admin_client = bigtable::MakeInstanceAdminClient(project_id_);
     instance_admin_ =
-        absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+        std::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
 
   std::string project_id_;
@@ -376,7 +375,7 @@ TEST_F(InstanceAdminIntegrationTest,
   auto instance_admin_client = bigtable::MakeInstanceAdminClient(
       project_id_, Options{}.set<TracingComponentsOption>({"rpc"}));
   auto instance_admin =
-      absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+      std::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
 
   // Create instance
   auto config = IntegrationTestConfig(instance_id, zone_a_);
@@ -434,7 +433,7 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
   auto instance_admin_client = bigtable::MakeInstanceAdminClient(
       project_id_, Options{}.set<GrpcCompletionQueueOption>(cq));
   instance_admin_ =
-      absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+      std::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
 
   // CompletionQueue `cq` is not being `Run()`, so this should never finish.
   auto const instance_id = RandomInstanceId(generator_);

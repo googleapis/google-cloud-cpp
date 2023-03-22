@@ -17,7 +17,6 @@
 // source: google/cloud/vmmigration/v1/vmmigration.proto
 
 #include "google/cloud/vmmigration/v1/vm_migration_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ VmMigrationConnectionIdempotencyPolicy::
 
 std::unique_ptr<VmMigrationConnectionIdempotencyPolicy>
 VmMigrationConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<VmMigrationConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<VmMigrationConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency VmMigrationConnectionIdempotencyPolicy::ListSources(
@@ -268,7 +267,7 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::GetReplicationCycle(
 
 std::unique_ptr<VmMigrationConnectionIdempotencyPolicy>
 MakeDefaultVmMigrationConnectionIdempotencyPolicy() {
-  return absl::make_unique<VmMigrationConnectionIdempotencyPolicy>();
+  return std::make_unique<VmMigrationConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

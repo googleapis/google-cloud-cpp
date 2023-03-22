@@ -15,7 +15,6 @@
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/version.h"
-#include "absl/memory/memory.h"
 #include <utility>
 
 namespace google {
@@ -71,7 +70,7 @@ std::unique_ptr<AlarmRegistry::CancelToken> AlarmRegistryImpl::RegisterAlarm(
     std::chrono::milliseconds period, std::function<void()> on_alarm) {
   auto state = std::make_shared<AlarmState>(cq_, period, std::move(on_alarm));
   ScheduleAlarm(state);
-  return absl::make_unique<CancelTokenImpl>(state);
+  return std::make_unique<CancelTokenImpl>(state);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

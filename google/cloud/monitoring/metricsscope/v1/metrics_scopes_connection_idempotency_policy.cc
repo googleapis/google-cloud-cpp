@@ -17,7 +17,6 @@
 // source: google/monitoring/metricsscope/v1/metrics_scopes.proto
 
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ MetricsScopesConnectionIdempotencyPolicy::
 
 std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
 MetricsScopesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<MetricsScopesConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<MetricsScopesConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency MetricsScopesConnectionIdempotencyPolicy::GetMetricsScope(
@@ -61,7 +60,7 @@ Idempotency MetricsScopesConnectionIdempotencyPolicy::DeleteMonitoredProject(
 
 std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
 MakeDefaultMetricsScopesConnectionIdempotencyPolicy() {
-  return absl::make_unique<MetricsScopesConnectionIdempotencyPolicy>();
+  return std::make_unique<MetricsScopesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

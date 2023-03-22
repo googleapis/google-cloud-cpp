@@ -21,7 +21,6 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
-#include "absl/memory/memory.h"
 #include <grpcpp/grpcpp.h>
 #include <algorithm>
 #include <chrono>
@@ -511,7 +510,7 @@ Status SessionPool::HandleBatchCreateSessionsDone(
   total_sessions_ += sessions_created;
   sessions_.reserve(sessions_.size() + sessions_created);
   for (auto& session : *response->mutable_session()) {
-    sessions_.push_back(absl::make_unique<Session>(
+    sessions_.push_back(std::make_unique<Session>(
         std::move(*session.mutable_name()), channel, clock_));
   }
   // Shuffle the pool so we distribute returned sessions across channels.

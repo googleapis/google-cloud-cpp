@@ -17,7 +17,6 @@
 // source: google/cloud/advisorynotifications/v1/service.proto
 
 #include "google/cloud/advisorynotifications/v1/advisory_notifications_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AdvisoryNotificationsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
 AdvisoryNotificationsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
+  return std::make_unique<
       AdvisoryNotificationsServiceConnectionIdempotencyPolicy>(*this);
 }
 
@@ -51,7 +50,7 @@ AdvisoryNotificationsServiceConnectionIdempotencyPolicy::GetNotification(
 
 std::unique_ptr<AdvisoryNotificationsServiceConnectionIdempotencyPolicy>
 MakeDefaultAdvisoryNotificationsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       AdvisoryNotificationsServiceConnectionIdempotencyPolicy>();
 }
 

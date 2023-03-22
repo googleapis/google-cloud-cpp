@@ -74,7 +74,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, StreamingRead) {
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
       EXPECT_CALL(*m, StreamingRead).WillOnce([](auto, auto) {
-        return absl::make_unique<MockStreamingReadRpc>();
+        return std::make_unique<MockStreamingReadRpc>();
       });
     }
   }
@@ -93,7 +93,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, StreamingWrite) {
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
       EXPECT_CALL(*m, StreamingWrite).WillOnce([](auto) {
-        return absl::make_unique<MockStreamingWriteRpc>();
+        return std::make_unique<MockStreamingWriteRpc>();
       });
     }
   }
@@ -111,7 +111,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingReadWrite) {
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
       EXPECT_CALL(*m, AsyncStreamingReadWrite).WillOnce([](auto&, auto) {
-        return absl::make_unique<MockAsyncStreamingReadWriteRpc>();
+        return std::make_unique<MockAsyncStreamingReadWriteRpc>();
       });
     }
   }
@@ -131,7 +131,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingRead) {
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
       EXPECT_CALL(*m, AsyncStreamingRead).WillOnce([](auto&, auto, auto) {
-        return absl::make_unique<MockAsyncStreamingReadRpc>();
+        return std::make_unique<MockAsyncStreamingReadRpc>();
       });
     }
   }
@@ -151,7 +151,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingWrite) {
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
       EXPECT_CALL(*m, AsyncStreamingWrite).WillOnce([](auto&, auto) {
-        return absl::make_unique<MockAsyncStreamingWriteRpc>();
+        return std::make_unique<MockAsyncStreamingWriteRpc>();
       });
     }
   }

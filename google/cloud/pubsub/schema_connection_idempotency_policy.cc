@@ -17,7 +17,6 @@
 // source: google/pubsub/v1/schema.proto
 
 #include "google/cloud/pubsub/schema_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ SchemaServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy>
 SchemaServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SchemaServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SchemaServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency SchemaServiceConnectionIdempotencyPolicy::CreateSchema(
@@ -87,7 +86,7 @@ Idempotency SchemaServiceConnectionIdempotencyPolicy::ValidateMessage(
 
 std::unique_ptr<SchemaServiceConnectionIdempotencyPolicy>
 MakeDefaultSchemaServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<SchemaServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<SchemaServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

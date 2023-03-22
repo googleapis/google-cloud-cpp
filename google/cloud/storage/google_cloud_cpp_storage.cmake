@@ -357,7 +357,6 @@ string(
            " google_cloud_cpp_rest_internal"
            " libcurl openssl"
            " absl_cord"
-           " absl_memory"
            " absl_strings"
            " absl_str_format"
            " absl_time"

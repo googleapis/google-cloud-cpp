@@ -17,7 +17,6 @@
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/object_metadata_parser.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -64,7 +63,7 @@ TEST(MD5HashValidator, Empty) {
   validator.ProcessHashValues(
       HashValues{/*.crc32c=*/{}, /*.md5=*/kEmptyStringMD5Hash});
   auto result = std::move(validator).Finish(
-      HashEmpty(absl::make_unique<MD5HashFunction>()));
+      HashEmpty(std::make_unique<MD5HashFunction>()));
   EXPECT_THAT(result.received.crc32c, IsEmpty());
   EXPECT_THAT(result.received.md5, kEmptyStringMD5Hash);
   EXPECT_EQ(result.computed.crc32c, result.received.crc32c);
@@ -77,7 +76,7 @@ TEST(MD5HashValidator, Simple) {
   validator.ProcessHashValues(
       HashValues{/*.crc32c=*/{}, /*.md5=*/"<invalid-value-for-test>"});
   auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<MD5HashFunction>()));
+      HashQuick(std::make_unique<MD5HashFunction>()));
   EXPECT_THAT(result.received.crc32c, IsEmpty());
   EXPECT_THAT(result.received.md5, "<invalid-value-for-test>");
   EXPECT_TRUE(result.is_mismatch);
@@ -88,7 +87,7 @@ TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
   validator.ProcessHashValues(HashValues{/*.crc32c=*/"<should-be-ignored>",
                                          /*.md5=*/"<invalid-value-for-test>"});
   auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<MD5HashFunction>()));
+      HashQuick(std::make_unique<MD5HashFunction>()));
   EXPECT_THAT(result.received.crc32c, IsEmpty());
   EXPECT_THAT(result.received.md5, "<invalid-value-for-test>");
   EXPECT_TRUE(result.is_mismatch);
@@ -102,7 +101,7 @@ TEST(Crc32cHashValidator, Empty) {
       HashValues{/*.crc32c=*/{},
                  /*.md5=*/"<invalid-should-be-ignored>"});
   auto result = std::move(validator).Finish(
-      HashEmpty(absl::make_unique<Crc32cHashFunction>()));
+      HashEmpty(std::make_unique<Crc32cHashFunction>()));
   EXPECT_THAT(result.received.crc32c, kEmptyStringCrc32cChecksum);
   EXPECT_THAT(result.received.md5, IsEmpty());
   EXPECT_FALSE(result.is_mismatch);
@@ -113,7 +112,7 @@ TEST(Crc32cHashValidator, Simple) {
   validator.ProcessHashValues(HashValues{/*.crc32c=*/"<invalid-value-for-test>",
                                          /*.md5=*/{}});
   auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<Crc32cHashFunction>()));
+      HashQuick(std::make_unique<Crc32cHashFunction>()));
   EXPECT_THAT(result.received.crc32c, "<invalid-value-for-test>");
   EXPECT_THAT(result.received.md5, IsEmpty());
   EXPECT_TRUE(result.is_mismatch);
@@ -124,48 +123,48 @@ TEST(Crc32cHashValidator, MultipleHashes) {
   validator.ProcessHashValues(HashValues{/*.crc32c=*/"<invalid-value-for-test>",
                                          /*.md5=*/"<ignored>"});
   auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<Crc32cHashFunction>()));
+      HashQuick(std::make_unique<Crc32cHashFunction>()));
   EXPECT_THAT(result.received.crc32c, "<invalid-value-for-test>");
   EXPECT_THAT(result.received.md5, IsEmpty());
   EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Empty) {
-  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
-                               absl::make_unique<MD5HashValidator>());
+  CompositeValidator validator(std::make_unique<Crc32cHashValidator>(),
+                               std::make_unique<MD5HashValidator>());
   validator.ProcessHashValues(HashValues{/*.crc32c=*/kEmptyStringCrc32cChecksum,
                                          /*.md5=*/{}});
   validator.ProcessHashValues(HashValues{/*.crc32c=*/{},
                                          /*.md5=*/kEmptyStringMD5Hash});
-  auto result = std::move(validator).Finish(
-      HashEmpty(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
+  auto result =
+      std::move(validator).Finish(HashEmpty(std::make_unique<CompositeFunction>(
+          std::make_unique<Crc32cHashFunction>(),
+          std::make_unique<MD5HashFunction>())));
   EXPECT_THAT(result.received.crc32c, kEmptyStringCrc32cChecksum);
   EXPECT_THAT(result.received.md5, kEmptyStringMD5Hash);
   EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Simple) {
-  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
-                               absl::make_unique<MD5HashValidator>());
+  CompositeValidator validator(std::make_unique<Crc32cHashValidator>(),
+                               std::make_unique<MD5HashValidator>());
   validator.ProcessHashValues(
       HashValues{/*.crc32c=*/"<invalid-crc32c-for-test>",
                  /*.md5=*/{}});
   validator.ProcessHashValues(HashValues{/*.crc32c=*/{},
                                          /*.md5=*/"<invalid-md5-for-test>"});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
+  auto result =
+      std::move(validator).Finish(HashQuick(std::make_unique<CompositeFunction>(
+          std::make_unique<Crc32cHashFunction>(),
+          std::make_unique<MD5HashFunction>())));
   EXPECT_THAT(result.received.crc32c, "<invalid-crc32c-for-test>");
   EXPECT_THAT(result.received.md5, "<invalid-md5-for-test>");
   EXPECT_TRUE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, ProcessMetadata) {
-  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
-                               absl::make_unique<MD5HashValidator>());
+  CompositeValidator validator(std::make_unique<Crc32cHashValidator>(),
+                               std::make_unique<MD5HashValidator>());
   auto object_metadata = internal::ObjectMetadataParser::FromJson(
                              nlohmann::json{
                                  {"crc32c", kQuickFoxCrc32cChecksum},
@@ -173,24 +172,24 @@ TEST(CompositeHashValidator, ProcessMetadata) {
                              })
                              .value();
   validator.ProcessMetadata(object_metadata);
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
+  auto result =
+      std::move(validator).Finish(HashQuick(std::make_unique<CompositeFunction>(
+          std::make_unique<Crc32cHashFunction>(),
+          std::make_unique<MD5HashFunction>())));
   EXPECT_THAT(result.received.crc32c, kQuickFoxCrc32cChecksum);
   EXPECT_THAT(result.received.md5, kQuickFoxMD5Hash);
   EXPECT_FALSE(result.is_mismatch);
 }
 
 TEST(CompositeHashValidator, Missing) {
-  CompositeValidator validator(absl::make_unique<Crc32cHashValidator>(),
-                               absl::make_unique<MD5HashValidator>());
+  CompositeValidator validator(std::make_unique<Crc32cHashValidator>(),
+                               std::make_unique<MD5HashValidator>());
   validator.ProcessHashValues(HashValues{/*.crc32c=*/kQuickFoxCrc32cChecksum,
                                          /*.md5=*/{}});
-  auto result = std::move(validator).Finish(
-      HashQuick(absl::make_unique<CompositeFunction>(
-          absl::make_unique<Crc32cHashFunction>(),
-          absl::make_unique<MD5HashFunction>())));
+  auto result =
+      std::move(validator).Finish(HashQuick(std::make_unique<CompositeFunction>(
+          std::make_unique<Crc32cHashFunction>(),
+          std::make_unique<MD5HashFunction>())));
   EXPECT_THAT(result.received.crc32c, kQuickFoxCrc32cChecksum);
   EXPECT_THAT(result.received.md5, IsEmpty());
   EXPECT_FALSE(result.is_mismatch);

@@ -23,7 +23,6 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/match.h"
 #include <chrono>
 #include <iostream>
@@ -238,7 +237,7 @@ int main(int argc, char* argv[]) {
   std::vector<future<google::cloud::Status>> sessions;
   for (auto i = 0; i != config->session_count; ++i) {
     auto const& subscription = subscriptions[i % subscriptions.size()];
-    auto subscriber = absl::make_unique<pubsub::Subscriber>(
+    auto subscriber = std::make_unique<pubsub::Subscriber>(
         pubsub::MakeSubscriberConnection(subscription));
     sessions.push_back(subscriber->Subscribe(handler));
     subscribers.push_back(std::move(subscriber));

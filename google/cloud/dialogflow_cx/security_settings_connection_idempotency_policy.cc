@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/security_settings.proto
 
 #include "google/cloud/dialogflow_cx/security_settings_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ SecuritySettingsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
 SecuritySettingsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -68,8 +67,7 @@ SecuritySettingsServiceConnectionIdempotencyPolicy::DeleteSecuritySettings(
 
 std::unique_ptr<SecuritySettingsServiceConnectionIdempotencyPolicy>
 MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      SecuritySettingsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<SecuritySettingsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

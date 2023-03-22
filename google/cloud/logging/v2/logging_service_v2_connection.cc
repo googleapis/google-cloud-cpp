@@ -74,7 +74,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Connection::AsyncTailLogEntries() {
-  return absl::make_unique<
+  return std::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::logging::v2::TailLogEntriesRequest,
           google::logging::v2::TailLogEntriesResponse>>(

@@ -17,7 +17,6 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_connection_impl.h"
-#include "absl/memory/memory.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"

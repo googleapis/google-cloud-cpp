@@ -295,6 +295,7 @@ function (google_cloud_cpp_pubsublite_client_define_tests)
                     google_cloud_cpp_testing_grpc
                     google_cloud_cpp_pubsublite
                     google_cloud_cpp_pubsublite_mocks
+                    absl::memory
                     absl::str_format
                     GTest::gmock_main
                     GTest::gmock

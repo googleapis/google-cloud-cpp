@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/agent.proto
 
 #include "google/cloud/dialogflow_cx/agents_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AgentsConnectionIdempotencyPolicy::~AgentsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>
 AgentsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AgentsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AgentsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AgentsConnectionIdempotencyPolicy::ListAgents(
@@ -82,7 +81,7 @@ Idempotency AgentsConnectionIdempotencyPolicy::GetAgentValidationResult(
 
 std::unique_ptr<AgentsConnectionIdempotencyPolicy>
 MakeDefaultAgentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<AgentsConnectionIdempotencyPolicy>();
+  return std::make_unique<AgentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

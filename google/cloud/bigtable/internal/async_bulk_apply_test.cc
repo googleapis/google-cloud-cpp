@@ -106,7 +106,7 @@ TEST(AsyncBulkApplyTest, NoMutations) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -129,7 +129,7 @@ TEST(AsyncBulkApplyTest, Success) {
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.entries(),
                     ElementsAre(MatchEntry("r0"), MatchEntry("r1")));
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -156,7 +156,7 @@ TEST(AsyncBulkApplyTest, Success) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -184,7 +184,7 @@ TEST(AsyncBulkApplyTest, PartialStreamIsRetried) {
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.entries(),
                     ElementsAre(MatchEntry("r0"), MatchEntry("r1")));
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -208,7 +208,7 @@ TEST(AsyncBulkApplyTest, PartialStreamIsRetried) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.entries(), ElementsAre(MatchEntry("r1")));
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -234,7 +234,7 @@ TEST(AsyncBulkApplyTest, PartialStreamIsRetried) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(1);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -265,7 +265,7 @@ TEST(AsyncBulkApplyTest, IdempotentMutationPolicy) {
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -292,7 +292,7 @@ TEST(AsyncBulkApplyTest, IdempotentMutationPolicy) {
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.entries(),
                     ElementsAre(MatchEntry("retry-transient-error")));
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -318,7 +318,7 @@ TEST(AsyncBulkApplyTest, IdempotentMutationPolicy) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(1);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -346,7 +346,7 @@ TEST(AsyncBulkApplyTest, TooManyStreamFailures) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.entries(), ElementsAre(MatchEntry("r0")));
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(false);
         });
@@ -366,7 +366,7 @@ TEST(AsyncBulkApplyTest, TooManyStreamFailures) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -392,7 +392,7 @@ TEST(AsyncBulkApplyTest, TimerError) {
                    v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(false);
         });
@@ -411,7 +411,7 @@ TEST(AsyncBulkApplyTest, TimerError) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(1);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -437,7 +437,7 @@ TEST(AsyncBulkApplyTest, CancelAfterSuccess) {
                      v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -459,7 +459,7 @@ TEST(AsyncBulkApplyTest, CancelAfterSuccess) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -493,7 +493,7 @@ TEST(AsyncBulkApplyTest, CancelMidStream) {
                      v2::MutateRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         ::testing::InSequence s;
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
@@ -522,7 +522,7 @@ TEST(AsyncBulkApplyTest, CancelMidStream) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -558,7 +558,7 @@ TEST(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
       .WillRepeatedly(
           [](CompletionQueue const&, auto, v2::MutateRowsRequest const&) {
             EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
-            auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+            auto stream = std::make_unique<MockAsyncMutateRowsStream>();
             EXPECT_CALL(*stream, Start).WillOnce([] {
               return make_ready_future(false);
             });
@@ -577,7 +577,7 @@ TEST(AsyncBulkApplyTest, CurrentOptionsContinuedOnRetries) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(1).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(1);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 
@@ -611,7 +611,7 @@ TEST(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_THAT(request.entries(), ElementsAre(MatchEntry("r1")));
-        auto stream = absl::make_unique<MockAsyncMutateRowsStream>();
+        auto stream = std::make_unique<MockAsyncMutateRowsStream>();
         EXPECT_CALL(*stream, Start).WillOnce([] {
           return make_ready_future(true);
         });
@@ -642,7 +642,7 @@ TEST(AsyncBulkApplyTest, RetriesOkStreamWithFailedMutations) {
   CompletionQueue cq(mock_cq);
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(kNumRetries);
   auto idempotency = bigtable::DefaultIdempotentMutationPolicy();
 

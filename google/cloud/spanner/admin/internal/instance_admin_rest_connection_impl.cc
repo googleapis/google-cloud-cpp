@@ -25,7 +25,6 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "google/cloud/rest_options.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {

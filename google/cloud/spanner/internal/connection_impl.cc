@@ -27,7 +27,6 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/options.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
 
@@ -280,7 +279,7 @@ class StatusOnlyResultSetSource : public ResultSourceInterface {
 template <typename ResultType>
 ResultType MakeStatusOnlyResult(Status status) {
   return ResultType(
-      absl::make_unique<StatusOnlyResultSetSource>(std::move(status)));
+      std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
 }
 
 class DmlResultSetSource : public ResultSourceInterface {
@@ -450,16 +449,16 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     internal::ConfigureContext(*context, internal::CurrentOptions());
     auto grpc_reader = stub->StreamingRead(*context, *request);
     std::unique_ptr<PartialResultSetReader> reader =
-        absl::make_unique<DefaultPartialResultSetReader>(
-            std::move(context), std::move(grpc_reader));
+        std::make_unique<DefaultPartialResultSetReader>(std::move(context),
+                                                        std::move(grpc_reader));
     if (tracing_enabled) {
-      reader = absl::make_unique<LoggingResultSetReader>(std::move(reader),
-                                                         tracing_options);
+      reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
+                                                        tracing_options);
     }
     return reader;
   };
   for (;;) {
-    auto rpc = absl::make_unique<PartialResultSetResume>(
+    auto rpc = std::make_unique<PartialResultSetResume>(
         factory, Idempotency::kIdempotent, RetryPolicyPrototype()->clone(),
         BackoffPolicyPrototype()->clone());
     auto reader = PartialResultSetSource::Create(std::move(rpc));
@@ -679,15 +678,15 @@ ResultType ConnectionImpl::CommonQueryImpl(
       internal::ConfigureContext(*context, internal::CurrentOptions());
       auto grpc_reader = stub->ExecuteStreamingSql(*context, request);
       std::unique_ptr<PartialResultSetReader> reader =
-          absl::make_unique<DefaultPartialResultSetReader>(
+          std::make_unique<DefaultPartialResultSetReader>(
               std::move(context), std::move(grpc_reader));
       if (tracing_enabled) {
-        reader = absl::make_unique<LoggingResultSetReader>(std::move(reader),
-                                                           tracing_options);
+        reader = std::make_unique<LoggingResultSetReader>(std::move(reader),
+                                                          tracing_options);
       }
       return reader;
     };
-    auto rpc = absl::make_unique<PartialResultSetResume>(
+    auto rpc = std::make_unique<PartialResultSetResume>(
         std::move(factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 

@@ -17,7 +17,6 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/v1/binauthz_management_service_v1_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BinauthzManagementServiceV1ConnectionIdempotencyPolicy::
 
 std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
 BinauthzManagementServiceV1ConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
+  return std::make_unique<
       BinauthzManagementServiceV1ConnectionIdempotencyPolicy>(*this);
 }
 
@@ -78,7 +77,7 @@ BinauthzManagementServiceV1ConnectionIdempotencyPolicy::DeleteAttestor(
 
 std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
 MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       BinauthzManagementServiceV1ConnectionIdempotencyPolicy>();
 }
 

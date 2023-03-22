@@ -17,7 +17,6 @@
 // source: google/cloud/automl/v1/prediction_service.proto
 
 #include "google/cloud/automl/v1/prediction_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ PredictionServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 PredictionServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<PredictionServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(
@@ -47,7 +46,7 @@ Idempotency PredictionServiceConnectionIdempotencyPolicy::BatchPredict(
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -38,7 +38,7 @@ BigtableAuth::ReadRows(std::shared_ptr<grpc::ClientContext> context,
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::bigtable::v2::ReadRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->ReadRows(std::move(context), request);
 }
 
@@ -50,7 +50,7 @@ BigtableAuth::SampleRowKeys(
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::bigtable::v2::SampleRowKeysResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->SampleRowKeys(std::move(context), request);
 }
 
@@ -70,7 +70,7 @@ BigtableAuth::MutateRows(
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::bigtable::v2::MutateRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->MutateRows(std::move(context), request);
 }
 
@@ -113,7 +113,7 @@ BigtableAuth::AsyncReadRows(
   auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncReadRows(cq, std::move(ctx), request);
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
@@ -130,7 +130,7 @@ BigtableAuth::AsyncSampleRowKeys(
   auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncSampleRowKeys(cq, std::move(ctx), request);
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
@@ -166,7 +166,7 @@ BigtableAuth::AsyncMutateRows(
   auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncMutateRows(cq, std::move(ctx), request);
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 

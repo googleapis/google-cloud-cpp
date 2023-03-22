@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/mocks/row.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 //! [required-includes]
@@ -34,7 +33,7 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
   // Create a mock object to stream the results of a ExecuteQuery.
   //! [create-streaming-source]
   auto source =
-      absl::make_unique<google::cloud::spanner_mocks::MockResultSetSource>();
+      std::make_unique<google::cloud::spanner_mocks::MockResultSetSource>();
   //! [create-streaming-source]
 
   // Setup the return type of the ExecuteQuery results:

@@ -19,7 +19,6 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <deque>
@@ -92,7 +91,7 @@ std::function<future<void>(std::chrono::milliseconds)> ZeroSleep() {
 }
 
 std::function<std::unique_ptr<MockRetryPolicy>()> ReturnUnusedRetryPolicy() {
-  return []() { return absl::make_unique<StrictMock<MockRetryPolicy>>(); };
+  return []() { return std::make_unique<StrictMock<MockRetryPolicy>>(); };
 }
 
 class ResumableAsyncReadWriteStreamingRpcTest : public ::testing::Test {
@@ -122,15 +121,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, NoStartDestructorGood) {}
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -152,7 +151,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, SingleStartFailureThenGood) {
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
 
-  auto stream2 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream2 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream2_ref = *stream2;
   EXPECT_CALL(stream_factory_, Call)
       .WillOnce(Return(ByMove(std::move(stream2))));
@@ -180,15 +179,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        SingleStartFailurePermanentError) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
@@ -218,15 +217,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        SingleStartFailurePermanentErrorWithAsyncLoop) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
@@ -269,15 +268,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        SingleStartFailureExhaustedPermanentError) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
@@ -305,15 +304,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        SingleStartInitializerFailurePermanentError) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
 
@@ -343,15 +342,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -373,7 +372,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest, InitializerFailureThenGood) {
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
 
-  auto stream2 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream2 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream2_ref = *stream2;
   EXPECT_CALL(stream_factory_, Call)
       .WillOnce(Return(ByMove(std::move(stream2))));
@@ -402,15 +401,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        TooManyStartFailuresPermanentError) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -432,7 +431,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
 
-  auto stream2 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream2 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream2_ref = *stream2;
   EXPECT_CALL(stream_factory_, Call)
       .WillOnce(Return(ByMove(std::move(stream2))));
@@ -451,7 +450,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
 
-  auto stream3 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream3 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream3_ref = *stream3;
   EXPECT_CALL(stream_factory_, Call)
       .WillOnce(Return(ByMove(std::move(stream3))));
@@ -477,15 +476,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryAfterStart) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -507,7 +506,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
 
-  auto stream2 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream2 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream2_ref = *stream2;
   EXPECT_CALL(stream_factory_, Call)
       .WillOnce(Return(ByMove(std::move(stream2))));
@@ -536,15 +535,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryDuringSleep) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -586,15 +585,15 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
        FinishInMiddleOfRetryDuringInitializer) {
   InSequence seq;
 
-  auto stream1 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream1 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream1_ref = *stream1;
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -616,7 +615,7 @@ TEST_F(ResumableAsyncReadWriteStreamingRpcTest,
       .WillOnce(Return(std::chrono::milliseconds(7)));
   EXPECT_CALL(sleeper_, Call).WillOnce(ZeroSleep());
 
-  auto stream2 = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  auto stream2 = std::make_unique<StrictMock<AsyncReaderWriter>>();
   auto& stream2_ref = *stream2;
   EXPECT_CALL(stream_factory_, Call)
       .WillOnce(Return(ByMove(std::move(stream2))));
@@ -646,14 +645,14 @@ class InitializedResumableAsyncReadWriteStreamingRpcTest
     : public ResumableAsyncReadWriteStreamingRpcTest {
  protected:
   InitializedResumableAsyncReadWriteStreamingRpcTest()
-      : first_stream_{absl::make_unique<StrictMock<AsyncReaderWriter>>()},
+      : first_stream_{std::make_unique<StrictMock<AsyncReaderWriter>>()},
         first_stream_ref_(*first_stream_) {
     InSequence seq;
     EXPECT_CALL(retry_policy_factory_, Call)
         .WillOnce(ReturnUnusedRetryPolicy());
     EXPECT_CALL(*backoff_policy_, clone)
         .WillOnce(
-            Return(ByMove(absl::make_unique<StrictMock<MockBackoffPolicy>>())));
+            Return(ByMove(std::make_unique<StrictMock<MockBackoffPolicy>>())));
     EXPECT_CALL(stream_factory_, Call)
         .WillOnce(Return(ByMove(std::move(first_stream_))));
     EXPECT_CALL(first_stream_ref_, Start)
@@ -776,7 +775,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(retry_policy_factory_, Call).WillOnce(ReturnUnusedRetryPolicy());
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(
-          Return(ByMove(absl::make_unique<StrictMock<MockBackoffPolicy>>())));
+          Return(ByMove(std::make_unique<StrictMock<MockBackoffPolicy>>())));
   write_promise.set_value(false);
 
   auto shutdown = stream_->Shutdown();
@@ -810,14 +809,14 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& mock_retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(
-          Return(ByMove(absl::make_unique<StrictMock<MockBackoffPolicy>>())));
+          Return(ByMove(std::make_unique<StrictMock<MockBackoffPolicy>>())));
 
   EXPECT_CALL(mock_retry_policy_ref, IsExhausted).WillOnce(Return(true));
 
@@ -861,7 +860,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
        SingleReadFailureThenGood) {
   std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{
-      absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+      std::make_unique<StrictMock<AsyncReaderWriter>>()};
   StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
 
   InSequence seq;
@@ -880,12 +879,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -933,7 +932,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
        WriteFailWhileReadInFlight) {
   std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{
-      absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+      std::make_unique<StrictMock<AsyncReaderWriter>>()};
   StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
 
   InSequence seq;
@@ -956,12 +955,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -1004,7 +1003,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
        ReadFailWhileWriteInFlight) {
   std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{
-      absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+      std::make_unique<StrictMock<AsyncReaderWriter>>()};
   StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
 
   InSequence seq;
@@ -1028,12 +1027,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -1077,7 +1076,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
        StartFailsDuringRetryPermanentError) {
   std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{
-      absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+      std::make_unique<StrictMock<AsyncReaderWriter>>()};
   StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
 
   InSequence seq;
@@ -1091,12 +1090,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& mock_retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -1129,7 +1128,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
        ReadInMiddleOfRetryAfterStart) {
   std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{
-      absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+      std::make_unique<StrictMock<AsyncReaderWriter>>()};
   StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
 
   InSequence seq;
@@ -1144,12 +1143,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));
@@ -1188,7 +1187,7 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
 TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
        WriteInMiddleOfRetryAfterStart) {
   std::unique_ptr<StrictMock<AsyncReaderWriter>> second_stream{
-      absl::make_unique<StrictMock<AsyncReaderWriter>>()};
+      std::make_unique<StrictMock<AsyncReaderWriter>>()};
   StrictMock<AsyncReaderWriter>& second_stream_ref{*second_stream};
 
   InSequence seq;
@@ -1203,12 +1202,12 @@ TEST_F(InitializedResumableAsyncReadWriteStreamingRpcTest,
   EXPECT_CALL(first_stream_ref_, Finish)
       .WillOnce(Return(ByMove(make_ready_future(kFailStatus))));
 
-  auto mock_retry_policy = absl::make_unique<StrictMock<MockRetryPolicy>>();
+  auto mock_retry_policy = std::make_unique<StrictMock<MockRetryPolicy>>();
   auto& retry_policy_ref = *mock_retry_policy;
   EXPECT_CALL(retry_policy_factory_, Call)
       .WillOnce(Return(ByMove(std::move(mock_retry_policy))));
 
-  auto backoff_policy = absl::make_unique<StrictMock<MockBackoffPolicy>>();
+  auto backoff_policy = std::make_unique<StrictMock<MockBackoffPolicy>>();
   auto& backoff_policy_ref = *backoff_policy;
   EXPECT_CALL(*backoff_policy_, clone)
       .WillOnce(Return(ByMove(std::move(backoff_policy))));

@@ -25,7 +25,6 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -84,7 +83,7 @@ TEST(ClientTest, ReadSuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -129,7 +128,7 @@ TEST(ClientTest, ReadFailure) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -171,7 +170,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -216,7 +215,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -308,7 +307,7 @@ TEST(ClientTest, ExecuteBatchDmlError) {
 }
 
 TEST(ClientTest, ExecutePartitionedDmlSuccess) {
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   google::spanner::v1::ResultSetMetadata metadata;
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow()).WillRepeatedly(Return(Row()));
@@ -389,7 +388,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}, {}};
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -437,7 +436,7 @@ TEST(ClientTest, CommitMutatorRollback) {
   Transaction txn = MakeReadWriteTransaction();  // placeholder
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -479,7 +478,7 @@ TEST(ClientTest, CommitMutatorRollbackError) {
   Transaction txn = MakeReadWriteTransaction();  // placeholder
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -521,7 +520,7 @@ TEST(ClientTest, CommitMutatorRollbackError) {
 TEST(ClientTest, CommitMutatorException) {
   auto conn = std::make_shared<MockConnection>();
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText = R"pb(
     row_type: {
       fields: {
@@ -774,7 +773,7 @@ TEST(ClientTest, CommitMutatorWithTags) {
       .WillOnce([&](Connection::SqlParams const& params) {
         EXPECT_EQ(params.query_options.request_tag(), "action=ExecuteQuery");
         EXPECT_THAT(params.transaction, HasTag(transaction_tag));
-        return RowStream(absl::make_unique<MockResultSetSource>());
+        return RowStream(std::make_unique<MockResultSetSource>());
       });
   EXPECT_CALL(*conn, ExecuteBatchDml)
       .WillOnce([&](Connection::ExecuteBatchDmlParams const& params) {
@@ -786,7 +785,7 @@ TEST(ClientTest, CommitMutatorWithTags) {
   EXPECT_CALL(*conn, Read).WillOnce([&](Connection::ReadParams const& params) {
     EXPECT_EQ(params.read_options.request_tag, "action=Read");
     EXPECT_THAT(params.transaction, HasTag(transaction_tag));
-    return RowStream(absl::make_unique<MockResultSetSource>());
+    return RowStream(std::make_unique<MockResultSetSource>());
   });
   EXPECT_CALL(*conn, Commit)
       .WillOnce([&](Connection::CommitParams const& params) {
@@ -946,7 +945,7 @@ TEST(ClientTest, ProfileQuerySuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText0 = R"pb(
     row_type: {
       fields: {
@@ -1010,7 +1009,7 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
   auto conn = std::make_shared<MockConnection>();
   Client client(conn);
 
-  auto source = absl::make_unique<MockResultSetSource>();
+  auto source = std::make_unique<MockResultSetSource>();
   auto constexpr kText0 = R"pb(
     row_type: {
       fields: {

@@ -17,7 +17,6 @@
 // source: google/spanner/admin/instance/v1/spanner_instance_admin.proto
 
 #include "google/cloud/spanner/admin/instance_admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ InstanceAdminConnectionIdempotencyPolicy::
 
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
 InstanceAdminConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<InstanceAdminConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<InstanceAdminConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency InstanceAdminConnectionIdempotencyPolicy::ListInstanceConfigs(
@@ -111,7 +110,7 @@ Idempotency InstanceAdminConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
 MakeDefaultInstanceAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<InstanceAdminConnectionIdempotencyPolicy>();
+  return std::make_unique<InstanceAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

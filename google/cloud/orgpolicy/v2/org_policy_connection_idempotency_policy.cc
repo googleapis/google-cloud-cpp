@@ -17,7 +17,6 @@
 // source: google/cloud/orgpolicy/v2/orgpolicy.proto
 
 #include "google/cloud/orgpolicy/v2/org_policy_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ OrgPolicyConnectionIdempotencyPolicy::~OrgPolicyConnectionIdempotencyPolicy() =
 
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
 OrgPolicyConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<OrgPolicyConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<OrgPolicyConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency OrgPolicyConnectionIdempotencyPolicy::ListConstraints(
@@ -72,7 +71,7 @@ Idempotency OrgPolicyConnectionIdempotencyPolicy::DeletePolicy(
 
 std::unique_ptr<OrgPolicyConnectionIdempotencyPolicy>
 MakeDefaultOrgPolicyConnectionIdempotencyPolicy() {
-  return absl::make_unique<OrgPolicyConnectionIdempotencyPolicy>();
+  return std::make_unique<OrgPolicyConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

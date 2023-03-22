@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -22,7 +21,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 std::unique_ptr<internal::ObjectReadStreambuf> MakeErrorStreambuf() {
-  return absl::make_unique<internal::ObjectReadStreambuf>(
+  return std::make_unique<internal::ObjectReadStreambuf>(
       internal::ReadObjectRangeRequest("", ""),
       Status(StatusCode::kUnimplemented, "null stream"));
 }

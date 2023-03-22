@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
 
 #include "google/cloud/internal/port_platform.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/str_format.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
@@ -40,7 +39,7 @@ class Printer {
   Printer(google::protobuf::compiler::GeneratorContext* generator_context,
           std::string const& file_name)
       : output_(generator_context->Open(file_name)),
-        printer_(absl::make_unique<google::protobuf::io::Printer>(
+        printer_(std::make_unique<google::protobuf::io::Printer>(
             output_.get(), '$', nullptr)) {}
 
   Printer(Printer const&) = delete;

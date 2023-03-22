@@ -179,7 +179,7 @@ TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
       ::google::cloud::internal::StreamingReadRpcError<Response>;
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(Return(ByMove(
-          absl::make_unique<ErrorStream>(internal::AbortedError("fail")))));
+          std::make_unique<ErrorStream>(internal::AbortedError("fail")))));
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.StreamingRead(
@@ -251,7 +251,7 @@ TEST(GoldenKitchenSinkTracingStubTest, DoNothing) {
 TEST(GoldenKitchenSinkTracingStubTest, StreamingWrite) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, StreamingWrite).WillOnce([](auto) {
-    auto stream = absl::make_unique<MockStreamingWriteRpc>();
+    auto stream = std::make_unique<MockStreamingWriteRpc>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
     EXPECT_CALL(*stream, Close)
         .WillOnce(Return(StatusOr<Response>(internal::AbortedError("fail"))));
@@ -272,7 +272,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
       ::google::cloud::internal::AsyncStreamingReadRpcError<Response>;
   EXPECT_CALL(*mock, AsyncStreamingRead)
       .WillOnce(Return(ByMove(
-          absl::make_unique<ErrorStream>(internal::AbortedError("fail")))));
+          std::make_unique<ErrorStream>(internal::AbortedError("fail")))));
 
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);
@@ -290,7 +290,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
       ::google::cloud::internal::AsyncStreamingWriteRpcError<Request, Response>;
   EXPECT_CALL(*mock, AsyncStreamingWrite)
       .WillOnce(Return(ByMove(
-          absl::make_unique<ErrorStream>(internal::AbortedError("fail")))));
+          std::make_unique<ErrorStream>(internal::AbortedError("fail")))));
 
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);
@@ -310,7 +310,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
                                                                  Response>;
   EXPECT_CALL(*mock, AsyncStreamingReadWrite)
       .WillOnce(Return(ByMove(
-          absl::make_unique<ErrorStream>(internal::AbortedError("fail")))));
+          std::make_unique<ErrorStream>(internal::AbortedError("fail")))));
 
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);

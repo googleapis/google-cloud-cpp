@@ -41,7 +41,7 @@ AgentEndpointServiceAuth::ReceiveTaskNotification(
       google::cloud::osconfig::agentendpoint::v1::
           ReceiveTaskNotificationResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->ReceiveTaskNotification(std::move(context), request);
 }
 

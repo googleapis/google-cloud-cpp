@@ -104,7 +104,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
       .WillRepeatedly([&](google::cloud::CompletionQueue const&, auto) {
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce([&] {
           return cq.MakeRelativeTimer(us(10)).then(
               [](TimerFuture) { return true; });
@@ -223,7 +223,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
       .WillRepeatedly([&](google::cloud::CompletionQueue const&, auto) {
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce([&] {
           return cq.MakeRelativeTimer(us(10)).then([](auto) { return true; });
         });
@@ -837,7 +837,7 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
           [](future<Status> f) { return f.get(); });
     };
 
-    auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+    auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
     EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);

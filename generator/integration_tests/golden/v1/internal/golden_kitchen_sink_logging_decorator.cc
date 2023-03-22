@@ -134,7 +134,7 @@ GoldenKitchenSinkLogging::StreamingRead(
           google::test::admin::database::v1::Response>> {
         auto stream = child_->StreamingRead(std::move(context), request);
         if (components_.count("rpc-streams") > 0) {
-          stream = absl::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+          stream = std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
              google::test::admin::database::v1::Response>>(
                std::move(stream), tracing_options_,
                google::cloud::internal::RequestIdForLogging());
@@ -156,7 +156,7 @@ GoldenKitchenSinkLogging::StreamingWrite(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->StreamingWrite(std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -175,7 +175,7 @@ GoldenKitchenSinkLogging::AsyncStreamingReadWrite(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingReadWrite(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -218,7 +218,7 @@ GoldenKitchenSinkLogging::AsyncStreamingRead(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingRead(cq, std::move(context), request);
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -236,7 +236,7 @@ GoldenKitchenSinkLogging::AsyncStreamingWrite(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncStreamingWrite(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
