@@ -17,7 +17,6 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/v1/identity_aware_proxy_admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
 IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
+  return std::make_unique<
       IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>(*this);
 }
 
@@ -99,7 +98,7 @@ Idempotency IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>
 MakeDefaultIdentityAwareProxyAdminServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       IdentityAwareProxyAdminServiceConnectionIdempotencyPolicy>();
 }
 

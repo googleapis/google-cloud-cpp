@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/intent.proto
 
 #include "google/cloud/dialogflow_cx/intents_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ IntentsConnectionIdempotencyPolicy::~IntentsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>
 IntentsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<IntentsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<IntentsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency IntentsConnectionIdempotencyPolicy::ListIntents(
@@ -62,7 +61,7 @@ Idempotency IntentsConnectionIdempotencyPolicy::DeleteIntent(
 
 std::unique_ptr<IntentsConnectionIdempotencyPolicy>
 MakeDefaultIntentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<IntentsConnectionIdempotencyPolicy>();
+  return std::make_unique<IntentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -15,7 +15,6 @@
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -49,8 +48,8 @@ class MockWriter : public grpc::ClientWriterInterface<FakeRequest> {
 };
 
 TEST(StreamingWriteRpcImpl, SuccessfulStream) {
-  auto mock = absl::make_unique<MockWriter>();
-  auto response = absl::make_unique<FakeResponse>();
+  auto mock = std::make_unique<MockWriter>();
+  auto response = std::make_unique<FakeResponse>();
   auto* response_ptr = response.get();
   EXPECT_CALL(*mock, Write).Times(3).WillRepeatedly(Return(true));
   EXPECT_CALL(*mock, WritesDone).WillOnce(Return(true));
@@ -71,8 +70,8 @@ TEST(StreamingWriteRpcImpl, SuccessfulStream) {
 }
 
 TEST(StreamingWriteRpcImpl, ErrorInWrite) {
-  auto mock = absl::make_unique<MockWriter>();
-  auto response = absl::make_unique<FakeResponse>();
+  auto mock = std::make_unique<MockWriter>();
+  auto response = std::make_unique<FakeResponse>();
   EXPECT_CALL(*mock, Write)
       .WillOnce(Return(true))
       .WillOnce(Return(true))
@@ -93,8 +92,8 @@ TEST(StreamingWriteRpcImpl, ErrorInWrite) {
 }
 
 TEST(StreamingWriteRpcImpl, ErrorInWritesDone) {
-  auto mock = absl::make_unique<MockWriter>();
-  auto response = absl::make_unique<FakeResponse>();
+  auto mock = std::make_unique<MockWriter>();
+  auto response = std::make_unique<FakeResponse>();
   EXPECT_CALL(*mock, Write).WillOnce(Return(true)).WillOnce(Return(true));
   EXPECT_CALL(*mock, WritesDone).WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish).WillOnce([] {
@@ -111,8 +110,8 @@ TEST(StreamingWriteRpcImpl, ErrorInWritesDone) {
 }
 
 TEST(StreamingWriteRpcImpl, NoWritesDoneWithLastMessage) {
-  auto mock = absl::make_unique<MockWriter>();
-  auto response = absl::make_unique<FakeResponse>();
+  auto mock = std::make_unique<MockWriter>();
+  auto response = std::make_unique<FakeResponse>();
   EXPECT_CALL(*mock, Write).WillOnce(Return(true)).WillOnce(Return(true));
   EXPECT_CALL(*mock, Finish).WillOnce(Return(grpc::Status::OK));
 

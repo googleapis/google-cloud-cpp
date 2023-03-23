@@ -16,7 +16,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <utility>
@@ -162,7 +161,7 @@ TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryOption) {
   bool invoked = false;
   auto factory = [&invoked] {
     invoked = true;
-    return absl::make_unique<Fake>();
+    return std::make_unique<Fake>();
   };
   auto opts = Options{}.set<GrpcBackgroundThreadsFactoryOption>(factory);
   EXPECT_FALSE(invoked);
@@ -209,7 +208,7 @@ TEST(GrpcOptionList, GrpcCompletionQueueOption) {
 // Verify that the `GrpcCompletionQueueOption` takes precedence over the
 // `GrpcBackgroundThreadsFactoryOption` when both are set.
 TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryIgnored) {
-  auto f = [] { return absl::make_unique<ThreadPool>(); };
+  auto f = [] { return std::make_unique<ThreadPool>(); };
   auto threads = internal::MakeBackgroundThreadsFactory(
       Options{}
           .set<GrpcCompletionQueueOption>(CompletionQueue{})
@@ -231,7 +230,7 @@ TEST(GrpcOptionList, GrpcBackgroundThreadsFactoryIgnored) {
 TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeIgnored) {
   auto constexpr kThreadPoolSize = 4;
   auto f = [kThreadPoolSize] {
-    return absl::make_unique<ThreadPool>(kThreadPoolSize);
+    return std::make_unique<ThreadPool>(kThreadPoolSize);
   };
   auto threads = internal::MakeBackgroundThreadsFactory(
       Options{}

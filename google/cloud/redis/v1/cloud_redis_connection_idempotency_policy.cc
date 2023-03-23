@@ -17,7 +17,6 @@
 // source: google/cloud/redis/v1/cloud_redis.proto
 
 #include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudRedisConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
 CloudRedisConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudRedisConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudRedisConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudRedisConnectionIdempotencyPolicy::ListInstances(
@@ -92,7 +91,7 @@ Idempotency CloudRedisConnectionIdempotencyPolicy::RescheduleMaintenance(
 
 std::unique_ptr<CloudRedisConnectionIdempotencyPolicy>
 MakeDefaultCloudRedisConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudRedisConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudRedisConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

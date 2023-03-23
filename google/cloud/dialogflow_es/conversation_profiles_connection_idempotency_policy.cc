@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/conversation_profile.proto
 
 #include "google/cloud/dialogflow_es/conversation_profiles_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ConversationProfilesConnectionIdempotencyPolicy::
 
 std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
 ConversationProfilesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ConversationProfilesConnectionIdempotencyPolicy>(
+  return std::make_unique<ConversationProfilesConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -80,7 +79,7 @@ ConversationProfilesConnectionIdempotencyPolicy::ClearSuggestionFeatureConfig(
 
 std::unique_ptr<ConversationProfilesConnectionIdempotencyPolicy>
 MakeDefaultConversationProfilesConnectionIdempotencyPolicy() {
-  return absl::make_unique<ConversationProfilesConnectionIdempotencyPolicy>();
+  return std::make_unique<ConversationProfilesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/video/stitcher/v1/video_stitcher_service.proto
 
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ VideoStitcherServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
 VideoStitcherServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -143,7 +142,7 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveSession(
 
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
 MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/securitycenter/v1/securitycenter_service.proto
 
 #include "google/cloud/securitycenter/v1/security_center_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ SecurityCenterConnectionIdempotencyPolicy::
 
 std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy>
 SecurityCenterConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SecurityCenterConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SecurityCenterConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::BulkMuteFindings(
@@ -221,7 +220,7 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::ListBigQueryExports(
 
 std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy>
 MakeDefaultSecurityCenterConnectionIdempotencyPolicy() {
-  return absl::make_unique<SecurityCenterConnectionIdempotencyPolicy>();
+  return std::make_unique<SecurityCenterConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

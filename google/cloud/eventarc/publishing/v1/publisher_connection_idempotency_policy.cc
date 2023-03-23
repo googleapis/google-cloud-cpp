@@ -17,7 +17,6 @@
 // source: google/cloud/eventarc/publishing/v1/publisher.proto
 
 #include "google/cloud/eventarc/publishing/v1/publisher_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ PublisherConnectionIdempotencyPolicy::~PublisherConnectionIdempotencyPolicy() =
 
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>
 PublisherConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<PublisherConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PublisherConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency
@@ -49,7 +48,7 @@ Idempotency PublisherConnectionIdempotencyPolicy::PublishEvents(
 
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>
 MakeDefaultPublisherConnectionIdempotencyPolicy() {
-  return absl::make_unique<PublisherConnectionIdempotencyPolicy>();
+  return std::make_unique<PublisherConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

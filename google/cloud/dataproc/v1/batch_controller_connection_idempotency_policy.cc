@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/batches.proto
 
 #include "google/cloud/dataproc/v1/batch_controller_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BatchControllerConnectionIdempotencyPolicy::
 
 std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
 BatchControllerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BatchControllerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<BatchControllerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency BatchControllerConnectionIdempotencyPolicy::CreateBatch(
@@ -57,7 +56,7 @@ Idempotency BatchControllerConnectionIdempotencyPolicy::DeleteBatch(
 
 std::unique_ptr<BatchControllerConnectionIdempotencyPolicy>
 MakeDefaultBatchControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<BatchControllerConnectionIdempotencyPolicy>();
+  return std::make_unique<BatchControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

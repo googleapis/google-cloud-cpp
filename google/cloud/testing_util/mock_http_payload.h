@@ -37,7 +37,7 @@ class MockHttpPayload : public rest_internal::HttpPayload {
 template <typename Collection>
 std::unique_ptr<rest_internal::HttpPayload> MakeMockHttpPayloadSuccess(
     Collection contents) {
-  auto mock = absl::make_unique<MockHttpPayload>();
+  auto mock = std::make_unique<MockHttpPayload>();
   // This is shared by the next two mocking functions.
   auto c = std::make_shared<Collection>(std::forward<Collection>(contents));
   EXPECT_CALL(*mock, HasUnreadData).WillRepeatedly([c] { return !c->empty(); });

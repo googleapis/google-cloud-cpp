@@ -318,7 +318,7 @@ TEST(GoldenKitchenSinkClientTest, AsyncStreamingReadWrite) {
     EXPECT_THAT(current.get<UserAgentProductsOption>(),
                 Contains("test-only/1.0"));
 
-    auto stream = absl::make_unique<MockAsyncStreamingReadWriteRpc>();
+    auto stream = std::make_unique<MockAsyncStreamingReadWriteRpc>();
     EXPECT_CALL(*stream, Start).WillOnce([] {
       return make_ready_future(true);
     });

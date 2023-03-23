@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/parallel_upload.h"
-#include "absl/memory/memory.h"
 #include <nlohmann/json.hpp>
 #include <algorithm>
 #include <sstream>
@@ -94,7 +93,7 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
       StreamInfo{request.object_name(), create->upload_id, {}, false});
   assert(idx < streams_.size());
   lk.unlock();
-  return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
+  return ObjectWriteStream(std::make_unique<ParallelObjectWriteStreambuf>(
       shared_from_this(), idx, std::move(raw_client), request,
       std::move(create->upload_id), create->committed_size,
       std::move(create->metadata),

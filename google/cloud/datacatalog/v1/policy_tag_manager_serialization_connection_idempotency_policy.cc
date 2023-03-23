@@ -17,7 +17,6 @@
 // source: google/cloud/datacatalog/v1/policytagmanagerserialization.proto
 
 #include "google/cloud/datacatalog/v1/policy_tag_manager_serialization_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ PolicyTagManagerSerializationConnectionIdempotencyPolicy::
 
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
 PolicyTagManagerSerializationConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
+  return std::make_unique<
       PolicyTagManagerSerializationConnectionIdempotencyPolicy>(*this);
 }
 
@@ -56,7 +55,7 @@ PolicyTagManagerSerializationConnectionIdempotencyPolicy::ExportTaxonomies(
 
 std::unique_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>
 MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       PolicyTagManagerSerializationConnectionIdempotencyPolicy>();
 }
 

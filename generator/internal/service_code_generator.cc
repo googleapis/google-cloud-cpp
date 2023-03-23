@@ -19,7 +19,6 @@
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include <google/api/client.pb.h>

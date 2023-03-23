@@ -17,7 +17,6 @@
 // source: google/devtools/cloudprofiler/v2/profiler.proto
 
 #include "google/cloud/profiler/v2/profiler_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ProfilerServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy>
 ProfilerServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ProfilerServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ProfilerServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ProfilerServiceConnectionIdempotencyPolicy::CreateProfile(
@@ -52,7 +51,7 @@ Idempotency ProfilerServiceConnectionIdempotencyPolicy::UpdateProfile(
 
 std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy>
 MakeDefaultProfilerServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ProfilerServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ProfilerServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

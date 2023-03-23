@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -51,7 +50,7 @@ TEST_F(TableBulkApplyTest, Empty) {
 
 /// @test Verify that Table::BulkApply() works in the easy case.
 TEST_F(TableBulkApplyTest, Simple) {
-  auto reader = absl::make_unique<MockMutateRowsReader>(
+  auto reader = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*reader, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -82,7 +81,7 @@ TEST_F(TableBulkApplyTest, Simple) {
 
 /// @test Verify that Table::BulkApply() retries partial failures.
 TEST_F(TableBulkApplyTest, RetryPartialFailure) {
-  auto r1 = absl::make_unique<MockMutateRowsReader>(
+  auto r1 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -98,7 +97,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto r2 = absl::make_unique<MockMutateRowsReader>(
+  auto r2 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r2, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -125,7 +124,7 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
 
 /// @test Verify that Table::BulkApply() handles permanent failures.
 TEST_F(TableBulkApplyTest, PermanentFailure) {
-  auto r1 = absl::make_unique<MockMutateRowsReader>(
+  auto r1 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -158,7 +157,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   // the BulkApply() operation to retry the request, because the mutation is in
   // an undetermined state.  Well, it should retry assuming it is idempotent,
   // which happens to be the case in this test.
-  auto r1 = absl::make_unique<MockMutateRowsReader>(
+  auto r1 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -173,7 +172,7 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
   // Create a second stream returned by the mocks when the client retries.
-  auto r2 = absl::make_unique<MockMutateRowsReader>(
+  auto r2 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r2, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -211,7 +210,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
       ExponentialBackoffPolicy(10_us, 40_us));
 
   // Setup the mocks to fail more than 3 times.
-  auto r1 = absl::make_unique<MockMutateRowsReader>(
+  auto r1 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r1, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -228,7 +227,7 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
 
   auto create_cancelled_stream = [&](grpc::ClientContext*,
                                      btproto::MutateRowsRequest const&) {
-    auto stream = absl::make_unique<MockMutateRowsReader>(
+    auto stream = std::make_unique<MockMutateRowsReader>(
         "google.bigtable.v2.Bigtable.MutateRows");
     EXPECT_CALL(*stream, Read).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
@@ -262,7 +261,7 @@ TEST_F(TableBulkApplyTest, RetryPolicyUsedForOkStreamWithFailedMutations) {
 
   auto create_stream = [&](grpc::ClientContext*,
                            btproto::MutateRowsRequest const&) {
-    auto stream = absl::make_unique<MockMutateRowsReader>(
+    auto stream = std::make_unique<MockMutateRowsReader>(
         "google.bigtable.v2.Bigtable.MutateRows");
     EXPECT_CALL(*stream, Read)
         .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -289,12 +288,12 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   // We will send both idempotent and non-idempotent mutations.  We prepare the
   // mocks to return an empty stream in the first RPC request.  That will force
   // the client to only retry the idempotent mutations.
-  auto r1 = absl::make_unique<MockMutateRowsReader>(
+  auto r1 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r1, Read).WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
 
-  auto r2 = absl::make_unique<MockMutateRowsReader>(
+  auto r2 = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*r2, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -323,7 +322,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
 
 /// @test Verify that Table::BulkApply() works when the RPC fails.
 TEST_F(TableBulkApplyTest, FailedRPC) {
-  auto reader = absl::make_unique<MockMutateRowsReader>(
+  auto reader = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*reader, Read).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish())
@@ -344,7 +343,7 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
 }
 
 TEST_F(TableBulkApplyTest, NoSleepIfNoPendingMutations) {
-  auto reader = absl::make_unique<MockMutateRowsReader>(
+  auto reader = std::make_unique<MockMutateRowsReader>(
       "google.bigtable.v2.Bigtable.MutateRows");
   EXPECT_CALL(*reader, Read)
       .WillOnce([](btproto::MutateRowsResponse* r) {
@@ -368,11 +367,11 @@ TEST_F(TableBulkApplyTest, NoSleepIfNoPendingMutations) {
 
   // The backoff policy is cloned once in the Table constructor, and once before
   // the start of the `BulkApply` call. We set expectations on the second clone.
-  auto b1 = absl::make_unique<MockBackoffPolicy>();
+  auto b1 = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*b1, clone).WillOnce([]() {
-    auto b2 = absl::make_unique<MockBackoffPolicy>();
+    auto b2 = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*b2, clone).WillOnce([]() {
-      auto mock = absl::make_unique<MockBackoffPolicy>();
+      auto mock = std::make_unique<MockBackoffPolicy>();
       EXPECT_CALL(*mock, Setup).Times(1);
       EXPECT_CALL(*mock, OnCompletion(An<grpc::Status const&>())).Times(0);
       return mock;

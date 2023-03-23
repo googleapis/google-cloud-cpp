@@ -17,7 +17,6 @@
 // source: google/cloud/billing/v1/cloud_catalog.proto
 
 #include "google/cloud/billing/v1/cloud_catalog_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudCatalogConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
 CloudCatalogConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudCatalogConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudCatalogConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudCatalogConnectionIdempotencyPolicy::ListServices(
@@ -47,7 +46,7 @@ Idempotency CloudCatalogConnectionIdempotencyPolicy::ListSkus(
 
 std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
 MakeDefaultCloudCatalogConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudCatalogConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudCatalogConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/storage/v1/storage.proto
 
 #include "google/cloud/bigquery/storage/v1/bigquery_read_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BigQueryReadConnectionIdempotencyPolicy::
 
 std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
 BigQueryReadConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BigQueryReadConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<BigQueryReadConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency BigQueryReadConnectionIdempotencyPolicy::CreateReadSession(
@@ -47,7 +46,7 @@ Idempotency BigQueryReadConnectionIdempotencyPolicy::SplitReadStream(
 
 std::unique_ptr<BigQueryReadConnectionIdempotencyPolicy>
 MakeDefaultBigQueryReadConnectionIdempotencyPolicy() {
-  return absl::make_unique<BigQueryReadConnectionIdempotencyPolicy>();
+  return std::make_unique<BigQueryReadConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

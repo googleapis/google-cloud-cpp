@@ -17,7 +17,6 @@
 // source: google/cloud/networkconnectivity/v1/hub.proto
 
 #include "google/cloud/networkconnectivity/v1/hub_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ HubServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>
 HubServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<HubServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<HubServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency HubServiceConnectionIdempotencyPolicy::ListHubs(
@@ -87,7 +86,7 @@ Idempotency HubServiceConnectionIdempotencyPolicy::DeleteSpoke(
 
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>
 MakeDefaultHubServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<HubServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<HubServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

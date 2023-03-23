@@ -47,7 +47,7 @@ auto constexpr kMalformedJsonRolePayload = R"(
 )";
 
 TEST(RestStubHelpers, RestResponseToProtoErrorInfo) {
-  auto mock_200_response = absl::make_unique<MockRestResponse>();
+  auto mock_200_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_200_response, StatusCode()).WillOnce([]() {
     return HttpStatusCode::kOk;
   });
@@ -79,7 +79,7 @@ auto constexpr kJsonRolePayloadWithUnknownField = R"(
 )";
 
 TEST(RestStubHelpers, RestResponseToProtoContainsUnknownField) {
-  auto mock_200_response = absl::make_unique<MockRestResponse>();
+  auto mock_200_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_200_response, StatusCode()).WillOnce([]() {
     return HttpStatusCode::kOk;
   });
@@ -134,7 +134,7 @@ TEST(RestStubHelpers, DeleteWithEmptyResponse) {
     return MakeMockHttpPayloadSuccess(json_error);
   });
 
-  auto mock_client = absl::make_unique<MockRestClient>();
+  auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Delete)
       .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/delete/"));
@@ -184,7 +184,7 @@ TEST(RestStubHelpers, DeleteWithNonEmptyResponse) {
     return MakeMockHttpPayloadSuccess(json_response);
   });
 
-  auto mock_client = absl::make_unique<MockRestClient>();
+  auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Delete)
       .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/delete/"));
@@ -221,7 +221,7 @@ TEST(RestStubHelpers, Get) {
   google::iam::admin::v1::GetRoleRequest proto_request;
   proto_request.set_name("role_name");
 
-  auto mock_client = absl::make_unique<MockRestClient>();
+  auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Get)
       .WillOnce([&](RestRequest const& request) {
         EXPECT_THAT(request.path(), Eq("/v1/"));
@@ -297,7 +297,7 @@ TEST(RestStubHelpers, Patch) {
   update_role.set_description("update_role_description");
   *proto_request.mutable_role() = update_role;
 
-  auto mock_client = absl::make_unique<MockRestClient>();
+  auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Patch)
       .WillOnce([&](RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {
@@ -347,7 +347,7 @@ TEST(RestStubHelpers, PostWithNonEmptyResponse) {
   update_role.set_description("update_role_description");
   *proto_request.mutable_role() = update_role;
 
-  auto mock_client = absl::make_unique<MockRestClient>();
+  auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client,
               Post(_, A<std::vector<absl::Span<char const>> const&>()))
       .WillOnce([&](RestRequest const& request,
@@ -404,7 +404,7 @@ TEST(RestStubHelpers, PostWithEmptyResponse) {
   update_role.set_description("update_role_description");
   *proto_request.mutable_role() = update_role;
 
-  auto mock_client = absl::make_unique<MockRestClient>();
+  auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client,
               Post(_, A<std::vector<absl::Span<char const>> const&>()))
       .WillOnce([&](RestRequest const& request,
@@ -456,7 +456,7 @@ TEST(RestStubHelpers, Put) {
   update_role.set_description("update_role_description");
   *proto_request.mutable_role() = update_role;
 
-  auto mock_client = absl::make_unique<MockRestClient>();
+  auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client, Put)
       .WillOnce([&](RestRequest const& request,
                     std::vector<absl::Span<char const>> const&) {

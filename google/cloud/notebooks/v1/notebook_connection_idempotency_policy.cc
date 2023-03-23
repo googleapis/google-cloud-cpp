@@ -17,7 +17,6 @@
 // source: google/cloud/notebooks/v1/service.proto
 
 #include "google/cloud/notebooks/v1/notebook_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ NotebookServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy>
 NotebookServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<NotebookServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<NotebookServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency NotebookServiceConnectionIdempotencyPolicy::ListInstances(
@@ -209,7 +208,7 @@ Idempotency NotebookServiceConnectionIdempotencyPolicy::CreateExecution(
 
 std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy>
 MakeDefaultNotebookServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<NotebookServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<NotebookServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

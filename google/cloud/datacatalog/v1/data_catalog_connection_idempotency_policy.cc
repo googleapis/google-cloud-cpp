@@ -17,7 +17,6 @@
 // source: google/cloud/datacatalog/v1/datacatalog.proto
 
 #include "google/cloud/datacatalog/v1/data_catalog_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DataCatalogConnectionIdempotencyPolicy::
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
 DataCatalogConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DataCatalogConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DataCatalogConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DataCatalogConnectionIdempotencyPolicy::SearchCatalog(
@@ -210,7 +209,7 @@ Idempotency DataCatalogConnectionIdempotencyPolicy::ImportEntries(
 
 std::unique_ptr<DataCatalogConnectionIdempotencyPolicy>
 MakeDefaultDataCatalogConnectionIdempotencyPolicy() {
-  return absl::make_unique<DataCatalogConnectionIdempotencyPolicy>();
+  return std::make_unique<DataCatalogConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

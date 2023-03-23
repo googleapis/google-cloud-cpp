@@ -17,7 +17,6 @@
 // source: google/cloud/alloydb/v1/service.proto
 
 #include "google/cloud/alloydb/v1/alloy_db_admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AlloyDBAdminConnectionIdempotencyPolicy::
 
 std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy>
 AlloyDBAdminConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AlloyDBAdminConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AlloyDBAdminConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListClusters(
@@ -137,7 +136,7 @@ Idempotency AlloyDBAdminConnectionIdempotencyPolicy::ListSupportedDatabaseFlags(
 
 std::unique_ptr<AlloyDBAdminConnectionIdempotencyPolicy>
 MakeDefaultAlloyDBAdminConnectionIdempotencyPolicy() {
-  return absl::make_unique<AlloyDBAdminConnectionIdempotencyPolicy>();
+  return std::make_unique<AlloyDBAdminConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

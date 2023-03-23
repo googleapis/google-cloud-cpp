@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/version.proto
 
 #include "google/cloud/dialogflow_es/versions_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ VersionsConnectionIdempotencyPolicy::~VersionsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
 VersionsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<VersionsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<VersionsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency VersionsConnectionIdempotencyPolicy::ListVersions(
@@ -62,7 +61,7 @@ Idempotency VersionsConnectionIdempotencyPolicy::DeleteVersion(
 
 std::unique_ptr<VersionsConnectionIdempotencyPolicy>
 MakeDefaultVersionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<VersionsConnectionIdempotencyPolicy>();
+  return std::make_unique<VersionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

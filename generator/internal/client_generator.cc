@@ -19,7 +19,6 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "absl/memory/memory.h"
 #include <google/api/client.pb.h>
 #include <google/protobuf/descriptor.h>
 

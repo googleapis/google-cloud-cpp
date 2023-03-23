@@ -17,7 +17,6 @@
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
 #include "google/cloud/cloudbuild/v1/cloud_build_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudBuildConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
 CloudBuildConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudBuildConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudBuildConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudBuildConnectionIdempotencyPolicy::CreateBuild(
@@ -127,7 +126,7 @@ Idempotency CloudBuildConnectionIdempotencyPolicy::ListWorkerPools(
 
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
 MakeDefaultCloudBuildConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudBuildConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudBuildConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

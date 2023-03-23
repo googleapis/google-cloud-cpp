@@ -17,7 +17,6 @@
 // source: google/cloud/batch/v1/batch.proto
 
 #include "google/cloud/batch/v1/batch_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BatchServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<BatchServiceConnectionIdempotencyPolicy>
 BatchServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BatchServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<BatchServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency BatchServiceConnectionIdempotencyPolicy::CreateJob(
@@ -67,7 +66,7 @@ Idempotency BatchServiceConnectionIdempotencyPolicy::ListTasks(
 
 std::unique_ptr<BatchServiceConnectionIdempotencyPolicy>
 MakeDefaultBatchServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<BatchServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<BatchServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/kms/v1/ekm_service.proto
 
 #include "google/cloud/kms/v1/ekm_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ EkmServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
 EkmServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<EkmServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<EkmServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency EkmServiceConnectionIdempotencyPolicy::ListEkmConnections(
@@ -67,7 +66,7 @@ Idempotency EkmServiceConnectionIdempotencyPolicy::UpdateEkmConfig(
 
 std::unique_ptr<EkmServiceConnectionIdempotencyPolicy>
 MakeDefaultEkmServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<EkmServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<EkmServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/baremetalsolution/v2/baremetalsolution.proto
 
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BareMetalSolutionConnectionIdempotencyPolicy::
 
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>
 BareMetalSolutionConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency BareMetalSolutionConnectionIdempotencyPolicy::ListInstances(
@@ -137,7 +136,7 @@ Idempotency BareMetalSolutionConnectionIdempotencyPolicy::UpdateNfsShare(
 
 std::unique_ptr<BareMetalSolutionConnectionIdempotencyPolicy>
 MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy() {
-  return absl::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>();
+  return std::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

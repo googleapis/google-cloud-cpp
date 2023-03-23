@@ -17,7 +17,6 @@
 // source: google/cloud/video/livestream/v1/service.proto
 
 #include "google/cloud/video/livestream/v1/livestream_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ LivestreamServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>
 LivestreamServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<LivestreamServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<LivestreamServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateChannel(
@@ -117,7 +116,7 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteEvent(
 
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>
 MakeDefaultLivestreamServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<LivestreamServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<LivestreamServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

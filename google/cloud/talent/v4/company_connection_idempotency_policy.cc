@@ -17,7 +17,6 @@
 // source: google/cloud/talent/v4/company_service.proto
 
 #include "google/cloud/talent/v4/company_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CompanyServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
 CompanyServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CompanyServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CompanyServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CompanyServiceConnectionIdempotencyPolicy::CreateCompany(
@@ -62,7 +61,7 @@ Idempotency CompanyServiceConnectionIdempotencyPolicy::ListCompanies(
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
 MakeDefaultCompanyServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<CompanyServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<CompanyServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

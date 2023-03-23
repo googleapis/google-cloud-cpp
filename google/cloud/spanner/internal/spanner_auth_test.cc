@@ -17,7 +17,6 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -111,7 +110,7 @@ TEST(SpannerAuthTest, ExecuteStreamingSql) {
   EXPECT_CALL(*mock, ExecuteStreamingSql)
       .WillOnce([](grpc::ClientContext&,
                    google::spanner::v1::ExecuteSqlRequest const&) {
-        return absl::make_unique<ClientReaderInterfaceError>(
+        return std::make_unique<ClientReaderInterfaceError>(
             Status(StatusCode::kPermissionDenied, "uh-oh"));
       });
 
@@ -152,7 +151,7 @@ TEST(SpannerAuthTest, StreamingRead) {
   EXPECT_CALL(*mock, StreamingRead)
       .WillOnce(
           [](grpc::ClientContext&, google::spanner::v1::ReadRequest const&) {
-            return absl::make_unique<ClientReaderInterfaceError>(
+            return std::make_unique<ClientReaderInterfaceError>(
                 Status(StatusCode::kPermissionDenied, "uh-oh"));
           });
 

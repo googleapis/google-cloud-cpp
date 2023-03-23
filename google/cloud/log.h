@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOG_H
 
 #include "google/cloud/version.h"
-#include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <atomic>
 #include <chrono>
@@ -351,7 +350,7 @@ class Logger {
 
   /// Return the iostream that captures the log message.
   std::ostream& Stream() {
-    if (!stream_) stream_ = absl::make_unique<std::ostringstream>();
+    if (!stream_) stream_ = std::make_unique<std::ostringstream>();
     return *stream_;
   }
 

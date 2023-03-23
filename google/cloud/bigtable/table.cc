@@ -234,7 +234,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
       client_, app_profile_id(), table_name_, std::move(row_set), rows_limit,
       std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_,
-      absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+      std::make_unique<bigtable::internal::ReadRowsParserFactory>());
   return bigtable_internal::MakeRowReader(std::move(impl));
 }
 

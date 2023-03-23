@@ -90,7 +90,7 @@ class FakeStream {
           [s](future<bool>) mutable { return std::move(s); });
     };
 
-    auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+    auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
     EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
@@ -231,7 +231,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartTooManyTransientFailures) {
               [transient](F) { return transient; });
         };
 
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce(start_response);
         EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
         EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
@@ -292,7 +292,7 @@ TEST(StreamingSubscriptionBatchSourceTest, StartPermanentFailure) {
               [transient](F) { return transient; });
         };
 
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce(start_response);
         EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
         EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
@@ -442,7 +442,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
         });
       };
 
-      auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+      auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
       EXPECT_CALL(*stream, Start).WillOnce(start_response);
       EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
       EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
@@ -605,7 +605,7 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeExactlyOnceStream(
         [=](future<bool>) { return finish_status; });
   };
 
-  auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+  auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
   EXPECT_CALL(*stream, Start).WillOnce(start_response);
   EXPECT_CALL(*stream, Write).WillOnce(write_response);
   EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
@@ -793,7 +793,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ShutdownWithPendingReadCancel) {
           [](future<bool>) { return Status{}; });
     };
 
-    auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+    auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
     EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);
@@ -897,7 +897,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExactlyOnceDeadlineStateChange) {
           return aseq.PushBack("Write");
         };
 
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Cancel).Times(AtMost(1));
 
         ::testing::InSequence sequence;
@@ -1160,7 +1160,7 @@ std::unique_ptr<pubsub_testing::MockAsyncPullStream> MakeUnusedStream(
   };
   auto finish_response = []() { return make_ready_future(Status{}); };
 
-  auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+  auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
   EXPECT_CALL(*stream, Start).WillOnce(start_response);
   EXPECT_CALL(*stream, Write).WillRepeatedly(write_response);
   EXPECT_CALL(*stream, Read).WillRepeatedly(read_response);

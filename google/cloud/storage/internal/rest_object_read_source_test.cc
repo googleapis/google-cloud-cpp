@@ -16,7 +16,6 @@
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <array>
 #include <memory>
@@ -39,12 +38,12 @@ using ::testing::IsEmpty;
 using ::testing::Return;
 
 TEST(RestObjectReadSourceTest, IsOpen) {
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode).WillOnce(Return(HttpStatusCode::kOk));
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
+    auto mock_payload = std::make_unique<MockHttpPayload>();
     EXPECT_CALL(*mock_payload, HasUnreadData).WillOnce([]() { return true; });
     return mock_payload;
   });
@@ -56,12 +55,12 @@ TEST(RestObjectReadSourceTest, IsOpen) {
 }
 
 TEST(RestObjectReadSourceTest, Close) {
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode).WillOnce(Return(HttpStatusCode::kOk));
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    return absl::make_unique<MockHttpPayload>();
+    return std::make_unique<MockHttpPayload>();
   });
 
   RestObjectReadSource read_source(std::move(mock_response));
@@ -75,12 +74,12 @@ TEST(RestObjectReadSourceTest, Close) {
 }
 
 TEST(RestObjectReadSourceTest, ReadAfterClose) {
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode).WillOnce(Return(HttpStatusCode::kOk));
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    return absl::make_unique<MockHttpPayload>();
+    return std::make_unique<MockHttpPayload>();
   });
 
   RestObjectReadSource read_source(std::move(mock_response));
@@ -95,13 +94,13 @@ TEST(RestObjectReadSourceTest, ReadAfterClose) {
 }
 
 TEST(RestObjectReadSourceTest, ReadNotFound) {
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode)
       .WillOnce(Return(HttpStatusCode::kNotFound));
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    return absl::make_unique<MockHttpPayload>();
+    return std::make_unique<MockHttpPayload>();
   });
 
   RestObjectReadSource read_source(std::move(mock_response));
@@ -114,13 +113,13 @@ TEST(RestObjectReadSourceTest, ReadNotFound) {
 
 TEST(RestObjectReadSourceTest, ReadAllDataDecompressiveTranscoding) {
   std::string const payload("A man, a plan, Panama!");
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode).WillOnce(Return(HttpStatusCode::kOk));
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>(
           {{"x-guploader-response-body-transformations", "gunzipped"}})));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
+    auto mock_payload = std::make_unique<MockHttpPayload>();
     {
       testing::InSequence s;
       EXPECT_CALL(*mock_payload, Read).WillOnce([&](absl::Span<char> buffer) {
@@ -145,12 +144,12 @@ TEST(RestObjectReadSourceTest, ReadAllDataDecompressiveTranscoding) {
 
 TEST(RestObjectReadSourceTest, ReadSomeData) {
   std::string const payload("A man, a plan, Panama!");
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode).WillOnce(Return(HttpStatusCode::kOk));
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
+    auto mock_payload = std::make_unique<MockHttpPayload>();
     {
       testing::InSequence s;
       EXPECT_CALL(*mock_payload, Read).WillOnce([&](absl::Span<char> buffer) {
@@ -184,13 +183,13 @@ class RestObjectReadSourceHeadersTest
 
 TEST_P(RestObjectReadSourceHeadersTest, ReadResultHeaders) {
   std::string const payload("A man, a plan, Panama!");
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode).WillOnce(Return(HttpStatusCode::kOk));
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(
           Return(std::multimap<std::string, std::string>(GetParam().headers)));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
+    auto mock_payload = std::make_unique<MockHttpPayload>();
     {
       testing::InSequence s;
       EXPECT_CALL(*mock_payload, Read).WillOnce([&](absl::Span<char> buffer) {

@@ -14,7 +14,6 @@
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {

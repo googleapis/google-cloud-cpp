@@ -40,7 +40,6 @@ class ServiceComposite : public Service {
       GCP_LOG(WARNING)
           << "`Shutdown` must be called and finished before object "
              "goes out of scope if `Start` was called.";
-      assert(false);
     }
     shutdown.get();
   }
@@ -96,7 +95,6 @@ class ServiceComposite : public Service {
    * @note Can be safely called more than once.
    */
   void Abort(Status s) {
-    assert(!s.ok());
     promise<Status> start_promise{null_promise_t{}};
     {
       std::lock_guard<std::mutex> g{mu_};

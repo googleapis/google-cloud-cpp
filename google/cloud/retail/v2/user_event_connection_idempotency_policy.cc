@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/user_event_service.proto
 
 #include "google/cloud/retail/v2/user_event_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ UserEventServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
 UserEventServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<UserEventServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<UserEventServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency UserEventServiceConnectionIdempotencyPolicy::WriteUserEvent(
@@ -62,7 +61,7 @@ Idempotency UserEventServiceConnectionIdempotencyPolicy::RejoinUserEvents(
 
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
 MakeDefaultUserEventServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<UserEventServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<UserEventServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

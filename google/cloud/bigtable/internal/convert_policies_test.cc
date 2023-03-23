@@ -80,23 +80,23 @@ TEST(ConvertPolicies, GrpcSetupOption) {
 
   EXPECT_CALL(*mock_r, clone)
       .WillOnce([]() {
-        auto clone = absl::make_unique<MockRetryPolicy>();
+        auto clone = std::make_unique<MockRetryPolicy>();
         EXPECT_CALL(*clone, Setup).Times(1);
         return clone;
       })
       .WillOnce([]() {
-        auto clone = absl::make_unique<MockRetryPolicy>();
+        auto clone = std::make_unique<MockRetryPolicy>();
         EXPECT_CALL(*clone, Setup).Times(1);
         return clone;
       });
   EXPECT_CALL(*mock_b, clone)
       .WillOnce([]() {
-        auto clone = absl::make_unique<MockBackoffPolicy>();
+        auto clone = std::make_unique<MockBackoffPolicy>();
         EXPECT_CALL(*clone, Setup).Times(1);
         return clone;
       })
       .WillOnce([]() {
-        auto clone = absl::make_unique<MockBackoffPolicy>();
+        auto clone = std::make_unique<MockBackoffPolicy>();
         EXPECT_CALL(*clone, Setup).Times(1);
         return clone;
       });
@@ -134,12 +134,12 @@ TEST(ConvertPolicies, GrpcSetupPollOption) {
   EXPECT_CALL(*mock_b, clone).Times(0);
   EXPECT_CALL(*mock_p, clone)
       .WillOnce([]() {
-        auto clone = absl::make_unique<MockPollingPolicy>();
+        auto clone = std::make_unique<MockPollingPolicy>();
         EXPECT_CALL(*clone, Setup).Times(1);
         return clone;
       })
       .WillOnce([]() {
-        auto clone = absl::make_unique<MockPollingPolicy>();
+        auto clone = std::make_unique<MockPollingPolicy>();
         EXPECT_CALL(*clone, Setup).Times(1);
         return clone;
       });

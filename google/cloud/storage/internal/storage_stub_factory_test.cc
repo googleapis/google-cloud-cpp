@@ -21,7 +21,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -100,7 +99,7 @@ TEST_F(StorageStubFactory, ReadObject) {
                   IsContextMDValid(*context,
                                    "google.storage.v2.Storage.ReadObject",
                                    request);
-                  auto stream = absl::make_unique<MockObjectMediaStream>();
+                  auto stream = std::make_unique<MockObjectMediaStream>();
                   EXPECT_CALL(*stream, Read)
                       .WillOnce(Return(
                           Status(StatusCode::kUnavailable, "nothing here")));
@@ -141,7 +140,7 @@ TEST_F(StorageStubFactory, WriteObject) {
               IsContextMDValid(*context,
                                "google.storage.v2.Storage.WriteObject",
                                google::storage::v2::WriteObjectRequest{});
-              auto stream = absl::make_unique<MockAsyncInsertStream>();
+              auto stream = std::make_unique<MockAsyncInsertStream>();
               EXPECT_CALL(*stream, Start)
                   .WillOnce(Return(ByMove(make_ready_future(true))));
               EXPECT_CALL(*stream, Finish)

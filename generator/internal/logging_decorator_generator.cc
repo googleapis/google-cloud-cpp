@@ -18,7 +18,6 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -148,7 +147,7 @@ $logging_class_name$::$method_name$(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->$method_name$(std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -172,7 +171,7 @@ $logging_class_name$::Async$method_name$(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -234,7 +233,7 @@ $logging_class_name$::Async$method_name$(
                "child_->$method_name$(std::move(context), request);\n"
                "        if (components_.count(\"rpc-streams\") > 0) {\n"
                "          stream = "
-               "absl::make_unique<google::cloud::internal::"
+               "std::make_unique<google::cloud::internal::"
                "StreamingReadRpcLogging<\n"
                "             $response_type$>>(\n"
                "               std::move(stream), tracing_options_,\n"
@@ -267,7 +266,7 @@ $logging_class_name$::Async$method_name$(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context), request);
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -290,7 +289,7 @@ $logging_class_name$::Async$method_name$(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->Async$method_name$(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;

@@ -179,7 +179,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
         .WillRepeatedly(::testing::ReturnRef(kProjectId));
     EXPECT_CALL(*client_, instance_id())
         .WillRepeatedly(::testing::ReturnRef(kInstanceId));
-    table_ = absl::make_unique<Table>(client_, kTableId);
+    table_ = std::make_unique<Table>(client_, kTableId);
   }
 
  protected:

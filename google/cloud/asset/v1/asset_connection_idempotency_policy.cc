@@ -17,7 +17,6 @@
 // source: google/cloud/asset/v1/asset_service.proto
 
 #include "google/cloud/asset/v1/asset_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AssetServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>
 AssetServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AssetServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AssetServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AssetServiceConnectionIdempotencyPolicy::ExportAssets(
@@ -158,7 +157,7 @@ AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedAssets(
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>
 MakeDefaultAssetServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<AssetServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AssetServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

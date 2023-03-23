@@ -17,7 +17,6 @@
 // source: google/cloud/security/privateca/v1/service.proto
 
 #include "google/cloud/privateca/v1/certificate_authority_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CertificateAuthorityServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
 CertificateAuthorityServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
+  return std::make_unique<
       CertificateAuthorityServiceConnectionIdempotencyPolicy>(*this);
 }
 
@@ -220,7 +219,7 @@ Idempotency CertificateAuthorityServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>
 MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       CertificateAuthorityServiceConnectionIdempotencyPolicy>();
 }
 

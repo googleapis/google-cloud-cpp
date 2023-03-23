@@ -51,7 +51,6 @@ MultipartitionPublisher::~MultipartitionPublisher() {
   if (!shutdown.is_ready()) {
     GCP_LOG(WARNING) << "`Shutdown` must be called and finished before object "
                         "goes out of scope.";
-    assert(false);
   }
   shutdown.get();
 }
@@ -85,7 +84,6 @@ void MultipartitionPublisher::HandleNumPartitions(
     current_num_partitions =
         static_cast<std::uint32_t>(partition_publishers_.size());
   }
-  assert(num_partitions >= current_num_partitions);  // should be no race
   if (num_partitions == current_num_partitions) return;
   std::vector<std::shared_ptr<Publisher<Cursor>>> new_partition_publishers;
   for (std::uint32_t partition = current_num_partitions;
@@ -129,7 +127,6 @@ void MultipartitionPublisher::TriggerPublisherCreation() {
         absl::optional<promise<void>> p;
         {
           std::lock_guard<std::mutex> g{mu_};
-          assert(outstanding_num_partitions_req_);
           p.swap(outstanding_num_partitions_req_);
         }
         // only set value after done touching member variables

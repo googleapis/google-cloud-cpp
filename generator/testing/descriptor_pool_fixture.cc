@@ -14,7 +14,6 @@
 
 #include "generator/testing/descriptor_pool_fixture.h"
 #include "generator/testing/error_collectors.h"
-#include "absl/memory/memory.h"
 #include <google/api/annotations.pb.h>
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
@@ -46,9 +45,9 @@ message Metadata {}
 
 DescriptorPoolFixture::DescriptorPoolFixture()
     : descriptor_error_collector_(
-          absl::make_unique<generator_testing::ErrorCollector>()),
+          std::make_unique<generator_testing::ErrorCollector>()),
       multifile_error_collector_(
-          absl::make_unique<generator_testing::MultiFileErrorCollector>()),
+          std::make_unique<generator_testing::MultiFileErrorCollector>()),
       source_tree_db_(&source_tree_),
       merged_db_(&simple_db_, &source_tree_db_),
       pool_(&merged_db_, descriptor_error_collector_.get()) {

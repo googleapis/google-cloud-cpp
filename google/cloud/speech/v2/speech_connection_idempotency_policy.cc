@@ -17,7 +17,6 @@
 // source: google/cloud/speech/v2/cloud_speech.proto
 
 #include "google/cloud/speech/v2/speech_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ SpeechConnectionIdempotencyPolicy::~SpeechConnectionIdempotencyPolicy() =
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
 SpeechConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SpeechConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SpeechConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency SpeechConnectionIdempotencyPolicy::CreateRecognizer(
@@ -147,7 +146,7 @@ Idempotency SpeechConnectionIdempotencyPolicy::UndeletePhraseSet(
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
 MakeDefaultSpeechConnectionIdempotencyPolicy() {
-  return absl::make_unique<SpeechConnectionIdempotencyPolicy>();
+  return std::make_unique<SpeechConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,7 +28,7 @@ using ::google::cloud::testing_util::MockHttpPayload;
 using ::testing::Eq;
 
 TEST(HttpPayloadTest, ReadAllEmpty) {
-  auto payload = absl::make_unique<MockHttpPayload>();
+  auto payload = std::make_unique<MockHttpPayload>();
   EXPECT_CALL(*payload, Read).WillOnce([](absl::Span<char> const&) {
     return 0;
   });
@@ -49,7 +49,7 @@ TEST(HttpPayloadTest, ReadAllOneReadCall) {
 TEST(HttpPayloadTest, ReadAllMultipleReadCalls) {
   std::string response = "Hello World!";
   std::size_t read_size = 5;
-  auto payload = absl::make_unique<MockHttpPayload>();
+  auto payload = std::make_unique<MockHttpPayload>();
   EXPECT_CALL(*payload, Read)
       .WillOnce([&](absl::Span<char> buffer) {
         std::copy(response.begin(), response.begin() + read_size,
@@ -74,7 +74,7 @@ TEST(HttpPayloadTest, ReadAllMultipleReadCalls) {
 }
 
 TEST(HttpPayloadTest, ReadAllReadError) {
-  auto payload = absl::make_unique<MockHttpPayload>();
+  auto payload = std::make_unique<MockHttpPayload>();
   EXPECT_CALL(*payload, Read).WillOnce([](absl::Span<char> const&) {
     return Status{StatusCode::kAborted, "error", {}};
   });

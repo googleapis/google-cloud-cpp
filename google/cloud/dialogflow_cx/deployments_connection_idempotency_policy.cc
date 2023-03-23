@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/deployment.proto
 
 #include "google/cloud/dialogflow_cx/deployments_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DeploymentsConnectionIdempotencyPolicy::
 
 std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>
 DeploymentsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DeploymentsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DeploymentsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DeploymentsConnectionIdempotencyPolicy::ListDeployments(
@@ -47,7 +46,7 @@ Idempotency DeploymentsConnectionIdempotencyPolicy::GetDeployment(
 
 std::unique_ptr<DeploymentsConnectionIdempotencyPolicy>
 MakeDefaultDeploymentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DeploymentsConnectionIdempotencyPolicy>();
+  return std::make_unique<DeploymentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

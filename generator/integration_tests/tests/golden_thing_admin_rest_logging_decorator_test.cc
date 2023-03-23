@@ -98,7 +98,7 @@ TEST(LoggingDecoratorRestTest, AsyncCreateDatabase) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncCreateDatabase(
       cq, std::move(context),
       google::test::admin::database::v1::CreateDatabaseRequest());
@@ -117,7 +117,7 @@ TEST(LoggingDecoratorRestTest, AsyncUpdateDatabaseDdl) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncUpdateDatabaseDdl(
       cq, std::move(context),
       google::test::admin::database::v1::UpdateDatabaseDdlRequest());
@@ -216,7 +216,7 @@ TEST(LoggingDecoratorRestTest, AsyncCreateBackup) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncCreateBackup(
       cq, std::move(context),
       google::test::admin::database::v1::CreateBackupRequest());
@@ -299,7 +299,7 @@ TEST(LoggingDecoratorRestTest, AsyncRestoreDatabase) {
 
   GoldenThingAdminRestLogging stub(mock, TracingOptions{}, {});
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncRestoreDatabase(
       cq, std::move(context),
       google::test::admin::database::v1::RestoreDatabaseRequest());

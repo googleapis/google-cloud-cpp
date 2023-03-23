@@ -95,7 +95,7 @@ BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts) {
   if (opts.has<GrpcCompletionQueueOption>()) {
     auto const& cq = opts.get<GrpcCompletionQueueOption>();
     return [cq] {
-      return absl::make_unique<CustomerSuppliedBackgroundThreads>(cq);
+      return std::make_unique<CustomerSuppliedBackgroundThreads>(cq);
     };
   }
   if (opts.has<GrpcBackgroundThreadsFactoryOption>()) {
@@ -103,7 +103,7 @@ BackgroundThreadsFactory MakeBackgroundThreadsFactory(Options const& opts) {
   }
   auto const s = opts.get<GrpcBackgroundThreadPoolSizeOption>();
   return [s] {
-    return absl::make_unique<AutomaticallyCreatedBackgroundThreads>(s);
+    return std::make_unique<AutomaticallyCreatedBackgroundThreads>(s);
   };
 }
 

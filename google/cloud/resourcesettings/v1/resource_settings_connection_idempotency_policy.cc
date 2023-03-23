@@ -17,7 +17,6 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ResourceSettingsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
 ResourceSettingsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ResourceSettingsServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<ResourceSettingsServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -53,8 +52,7 @@ Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::UpdateSetting(
 
 std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
 MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      ResourceSettingsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ResourceSettingsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

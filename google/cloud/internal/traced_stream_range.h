@@ -18,7 +18,6 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/stream_range.h"
-#include "absl/memory/memory.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/scope.h>
 #include <opentelemetry/trace/span.h>

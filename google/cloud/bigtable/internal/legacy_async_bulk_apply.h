@@ -22,7 +22,6 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
-#include "absl/memory/memory.h"
 #include <string>
 #include <vector>
 

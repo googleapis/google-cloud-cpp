@@ -38,7 +38,7 @@ void LegacyAsyncRowReader::MakeRequest() {
   }
   parser_ = parser_factory_->Create();
 
-  auto context = absl::make_unique<grpc::ClientContext>();
+  auto context = std::make_unique<grpc::ClientContext>();
   rpc_retry_policy_->Setup(*context);
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);

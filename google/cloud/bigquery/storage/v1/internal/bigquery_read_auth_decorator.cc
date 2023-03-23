@@ -48,7 +48,7 @@ BigQueryReadAuth::ReadRows(
   using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>;
   auto status = auth_->ConfigureContext(*context);
-  if (!status.ok()) return absl::make_unique<ErrorStream>(std::move(status));
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
   return child_->ReadRows(std::move(context), request);
 }
 

@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/group_service.proto
 
 #include "google/cloud/monitoring/v3/group_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ GroupServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>
 GroupServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<GroupServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<GroupServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroups(
@@ -67,7 +66,7 @@ Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroupMembers(
 
 std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>
 MakeDefaultGroupServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<GroupServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<GroupServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

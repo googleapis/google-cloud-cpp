@@ -18,7 +18,6 @@
 // google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_service.proto
 
 #include "google/cloud/beyondcorp/clientconnectorservices/v1/client_connector_services_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -33,7 +32,7 @@ ClientConnectorServicesServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ClientConnectorServicesServiceConnectionIdempotencyPolicy>
 ClientConnectorServicesServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<
+  return std::make_unique<
       ClientConnectorServicesServiceConnectionIdempotencyPolicy>(*this);
 }
 
@@ -74,7 +73,7 @@ Idempotency ClientConnectorServicesServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ClientConnectorServicesServiceConnectionIdempotencyPolicy>
 MakeDefaultClientConnectorServicesServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       ClientConnectorServicesServiceConnectionIdempotencyPolicy>();
 }
 

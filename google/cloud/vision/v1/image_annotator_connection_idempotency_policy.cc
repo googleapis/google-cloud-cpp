@@ -17,7 +17,6 @@
 // source: google/cloud/vision/v1/image_annotator.proto
 
 #include "google/cloud/vision/v1/image_annotator_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ImageAnnotatorConnectionIdempotencyPolicy::
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
 ImageAnnotatorConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ImageAnnotatorConnectionIdempotencyPolicy::BatchAnnotateImages(
@@ -57,7 +56,7 @@ Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateFiles(
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
 MakeDefaultImageAnnotatorConnectionIdempotencyPolicy() {
-  return absl::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>();
+  return std::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

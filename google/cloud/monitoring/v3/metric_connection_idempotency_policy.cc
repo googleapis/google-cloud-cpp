@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/metric_service.proto
 
 #include "google/cloud/monitoring/v3/metric_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ MetricServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<MetricServiceConnectionIdempotencyPolicy>
 MetricServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<MetricServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<MetricServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency
@@ -85,7 +84,7 @@ Idempotency MetricServiceConnectionIdempotencyPolicy::CreateServiceTimeSeries(
 
 std::unique_ptr<MetricServiceConnectionIdempotencyPolicy>
 MakeDefaultMetricServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<MetricServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<MetricServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

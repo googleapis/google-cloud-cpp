@@ -114,7 +114,7 @@ TEST(RestResponse, IsHttpSuccessVsError) {
 }
 
 TEST(AsStatus, RestResponseIsOk) {
-  auto response = absl::make_unique<testing_util::MockRestResponse>();
+  auto response = std::make_unique<testing_util::MockRestResponse>();
   EXPECT_CALL(*response, StatusCode).WillOnce(Return(HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*response), ExtractPayload)
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(std::string{}))));
@@ -124,7 +124,7 @@ TEST(AsStatus, RestResponseIsOk) {
 }
 
 TEST(AsStatus, RestResponseIsNotOkNoPayload) {
-  auto response = absl::make_unique<testing_util::MockRestResponse>();
+  auto response = std::make_unique<testing_util::MockRestResponse>();
   EXPECT_CALL(*response, StatusCode)
       .WillOnce(Return(HttpStatusCode::kNotFound));
 
@@ -157,7 +157,7 @@ TEST(AsStatus, RestResponseIsNotOkPayload) {
     }
   })""";
 
-  auto response = absl::make_unique<testing_util::MockRestResponse>();
+  auto response = std::make_unique<testing_util::MockRestResponse>();
   EXPECT_CALL(*response, StatusCode)
       .WillOnce(Return(HttpStatusCode::kNotFound));
 

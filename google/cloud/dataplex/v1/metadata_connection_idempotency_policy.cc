@@ -17,7 +17,6 @@
 // source: google/cloud/dataplex/v1/metadata.proto
 
 #include "google/cloud/dataplex/v1/metadata_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ MetadataServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
 MetadataServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<MetadataServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<MetadataServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency MetadataServiceConnectionIdempotencyPolicy::CreateEntity(
@@ -82,7 +81,7 @@ Idempotency MetadataServiceConnectionIdempotencyPolicy::ListPartitions(
 
 std::unique_ptr<MetadataServiceConnectionIdempotencyPolicy>
 MakeDefaultMetadataServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<MetadataServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<MetadataServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/search_service.proto
 
 #include "google/cloud/retail/v2/search_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ SearchServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
 SearchServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SearchServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<SearchServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency SearchServiceConnectionIdempotencyPolicy::Search(
@@ -42,7 +41,7 @@ Idempotency SearchServiceConnectionIdempotencyPolicy::Search(
 
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
 MakeDefaultSearchServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<SearchServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<SearchServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

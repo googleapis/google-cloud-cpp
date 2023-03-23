@@ -14,7 +14,6 @@
 
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/getenv.h"
-#include "absl/memory/memory.h"
 #include <vector>
 
 namespace google {
@@ -24,7 +23,7 @@ namespace internal {
 
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads(
     std::size_t thread_pool_size) {
-  return absl::make_unique<AutomaticallyCreatedBackgroundThreads>(
+  return std::make_unique<AutomaticallyCreatedBackgroundThreads>(
       thread_pool_size);
 }
 

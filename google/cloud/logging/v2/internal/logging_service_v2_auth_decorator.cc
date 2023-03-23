@@ -89,7 +89,7 @@ LoggingServiceV2Auth::AsyncTailLogEntries(
   auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncTailLogEntries(cq, std::move(ctx));
   };
-  return absl::make_unique<StreamAuth>(
+  return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 

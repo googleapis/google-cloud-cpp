@@ -17,7 +17,6 @@
 // source: google/cloud/recommender/v1/recommender_service.proto
 
 #include "google/cloud/recommender/v1/recommender_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ RecommenderConnectionIdempotencyPolicy::
 
 std::unique_ptr<RecommenderConnectionIdempotencyPolicy>
 RecommenderConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<RecommenderConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<RecommenderConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency RecommenderConnectionIdempotencyPolicy::ListInsights(
@@ -97,7 +96,7 @@ Idempotency RecommenderConnectionIdempotencyPolicy::UpdateInsightTypeConfig(
 
 std::unique_ptr<RecommenderConnectionIdempotencyPolicy>
 MakeDefaultRecommenderConnectionIdempotencyPolicy() {
-  return absl::make_unique<RecommenderConnectionIdempotencyPolicy>();
+  return std::make_unique<RecommenderConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

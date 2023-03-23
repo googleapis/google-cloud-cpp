@@ -39,7 +39,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnectionRest(
                                                                 __func__);
   options =
       spanner_admin_internal::InstanceAdminDefaultOptions(std::move(options));
-  auto background = absl::make_unique<
+  auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       spanner_admin_internal::CreateDefaultInstanceAdminRestStub(options);

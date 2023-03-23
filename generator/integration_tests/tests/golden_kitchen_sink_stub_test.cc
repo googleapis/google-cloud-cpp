@@ -15,7 +15,6 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <grpcpp/impl/codegen/status_code_enum.h>
 #include <deque>
@@ -352,7 +351,7 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
 class GoldenKitchenSinkStubTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    grpc_stub_ = absl::make_unique<MockGrpcGoldenKitchenSinkStub>();
+    grpc_stub_ = std::make_unique<MockGrpcGoldenKitchenSinkStub>();
   }
 
   static grpc::Status GrpcTransientError() {
@@ -446,8 +445,8 @@ class MockStreamingReadResponse
 
 TEST_F(GoldenKitchenSinkStubTest, StreamingRead) {
   grpc::Status status;
-  auto success_response = absl::make_unique<MockStreamingReadResponse>();
-  auto failure_response = absl::make_unique<MockStreamingReadResponse>();
+  auto success_response = std::make_unique<MockStreamingReadResponse>();
+  auto failure_response = std::make_unique<MockStreamingReadResponse>();
   EXPECT_CALL(*success_response, Read).WillOnce(Return(false));
   EXPECT_CALL(*success_response, Finish()).WillOnce(Return(status));
   EXPECT_CALL(*failure_response, Read).WillOnce(Return(false));
@@ -482,7 +481,7 @@ TEST_F(GoldenKitchenSinkStubTest, StreamingWrite) {
   Request request;
   EXPECT_CALL(*grpc_stub_, StreamingWriteRaw(context.get(), _))
       .WillOnce([](::grpc::ClientContext*, Response*) {
-        auto stream = absl::make_unique<MockWriteObjectResponse>();
+        auto stream = std::make_unique<MockWriteObjectResponse>();
         EXPECT_CALL(*stream, Write).WillOnce(Return(true));
         EXPECT_CALL(*stream, WritesDone).WillOnce(Return(true));
         EXPECT_CALL(*stream, Finish).WillOnce(Return(grpc::Status::OK));
@@ -511,7 +510,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWriteRead) {
   grpc::Status status;
   EXPECT_CALL(*grpc_stub_, PrepareAsyncStreamingReadWriteRaw)
       .WillOnce([](grpc::ClientContext*, grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockAsyncStreamingReadWriteResponse>();
+        auto stream = std::make_unique<MockAsyncStreamingReadWriteResponse>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         using ::testing::_;
         EXPECT_CALL(*stream, Write(_, _, _)).Times(1);
@@ -585,7 +584,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingRead) {
   EXPECT_CALL(*grpc_stub_, PrepareAsyncStreamingReadRaw)
       .WillOnce([](grpc::ClientContext*, Request const&,
                    grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockAsyncStreamingReadResponse>();
+        auto stream = std::make_unique<MockAsyncStreamingReadResponse>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         EXPECT_CALL(*stream, Read).Times(2);
         EXPECT_CALL(*stream, Finish).WillOnce([](grpc::Status* status, void*) {
@@ -652,7 +651,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWrite) {
   EXPECT_CALL(*grpc_stub_, PrepareAsyncStreamingWriteRaw)
       .WillOnce(
           [](grpc::ClientContext*, Response* response, grpc::CompletionQueue*) {
-            auto stream = absl::make_unique<MockAsyncStreamingWriteResponse>();
+            auto stream = std::make_unique<MockAsyncStreamingWriteResponse>();
             EXPECT_CALL(*stream, StartCall).Times(1);
             using ::testing::_;
             EXPECT_CALL(*stream, Write(_, _, _)).Times(1);

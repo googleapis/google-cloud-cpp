@@ -17,7 +17,6 @@
 // source: google/cloud/talent/v4/completion_service.proto
 
 #include "google/cloud/talent/v4/completion_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CompletionConnectionIdempotencyPolicy::
 
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>
 CompletionConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CompletionConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CompletionConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CompletionConnectionIdempotencyPolicy::CompleteQuery(
@@ -42,7 +41,7 @@ Idempotency CompletionConnectionIdempotencyPolicy::CompleteQuery(
 
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>
 MakeDefaultCompletionConnectionIdempotencyPolicy() {
-  return absl::make_unique<CompletionConnectionIdempotencyPolicy>();
+  return std::make_unique<CompletionConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

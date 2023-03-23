@@ -50,7 +50,7 @@ TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
                           .set<GoldenThingAdminBackoffPolicyOption>(call_b);
 
   EXPECT_CALL(*call_r, clone).WillOnce([] {
-    auto clone = absl::make_unique<MockRetryPolicy>();
+    auto clone = std::make_unique<MockRetryPolicy>();
     // We will just say the policy is never exhausted, and use a permanent error
     // to break out of the loop.
     EXPECT_CALL(*clone, IsExhausted)
@@ -61,7 +61,7 @@ TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
   });
 
   EXPECT_CALL(*call_b, clone).WillOnce([] {
-    auto clone = absl::make_unique<MockBackoffPolicy>();
+    auto clone = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone, OnCompletion).WillOnce(Return(ms(0)));
     return clone;
   });
@@ -94,7 +94,7 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
       Options{}.set<GoldenThingAdminPollingPolicyOption>(call_p);
 
   EXPECT_CALL(*call_p, clone).WillOnce([] {
-    auto clone = absl::make_unique<MockPollingPolicy>();
+    auto clone = std::make_unique<MockPollingPolicy>();
     EXPECT_CALL(*clone, WaitPeriod).WillOnce(Return(ms(0)));
     return clone;
   });

@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/transaction_impl.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/duration.pb.h>
 
 namespace google {

@@ -15,7 +15,6 @@
 #include "google/cloud/internal/streaming_read_rpc.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -49,7 +48,7 @@ class MockReader : public grpc::ClientReaderInterface<FakeResponse> {
 };
 
 TEST(StreamingReadRpcImpl, SuccessfulStream) {
-  auto mock = absl::make_unique<MockReader>();
+  auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read)
       .WillOnce([](FakeResponse* r) {
         r->value = "value-0";
@@ -82,7 +81,7 @@ TEST(StreamingReadRpcImpl, SuccessfulStream) {
 }
 
 TEST(StreamingReadRpcImpl, EmptyStream) {
-  auto mock = absl::make_unique<MockReader>();
+  auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read).WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish).WillOnce(Return(grpc::Status::OK));
 
@@ -94,7 +93,7 @@ TEST(StreamingReadRpcImpl, EmptyStream) {
 }
 
 TEST(StreamingReadRpcImpl, EmptyWithError) {
-  auto mock = absl::make_unique<MockReader>();
+  auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read).WillOnce(Return(false));
   EXPECT_CALL(*mock, Finish)
       .WillOnce(
@@ -109,7 +108,7 @@ TEST(StreamingReadRpcImpl, EmptyWithError) {
 }
 
 TEST(StreamingReadRpcImpl, ErrorAfterData) {
-  auto mock = absl::make_unique<MockReader>();
+  auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read)
       .WillOnce([](FakeResponse* r) {
         r->value = "test-value-0";
@@ -137,7 +136,7 @@ TEST(StreamingReadRpcImpl, ErrorAfterData) {
 }
 
 TEST(StreamingReadRpcImpl, HandleUnfinished) {
-  auto mock = absl::make_unique<MockReader>();
+  auto mock = std::make_unique<MockReader>();
   EXPECT_CALL(*mock, Read)
       .WillOnce([](FakeResponse* r) {
         r->value = "value-0";
@@ -168,7 +167,7 @@ TEST(StreamingReadRpcImpl, HandleUnfinished) {
 
 TEST(StreamingReadRpcImpl, HandleUnfinishedExpected) {
   for (auto const& status : {grpc::Status::OK, grpc::Status::CANCELLED}) {
-    auto mock = absl::make_unique<MockReader>();
+    auto mock = std::make_unique<MockReader>();
     EXPECT_CALL(*mock, Read)
         .WillOnce([](FakeResponse* r) {
           r->value = "value-0";

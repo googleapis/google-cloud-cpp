@@ -17,7 +17,6 @@
 // source: google/cloud/datacatalog/lineage/v1/lineage.proto
 
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ LineageConnectionIdempotencyPolicy::~LineageConnectionIdempotencyPolicy() =
 
 std::unique_ptr<LineageConnectionIdempotencyPolicy>
 LineageConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<LineageConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<LineageConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency LineageConnectionIdempotencyPolicy::CreateProcess(
@@ -119,7 +118,7 @@ Idempotency LineageConnectionIdempotencyPolicy::BatchSearchLinkProcesses(
 
 std::unique_ptr<LineageConnectionIdempotencyPolicy>
 MakeDefaultLineageConnectionIdempotencyPolicy() {
-  return absl::make_unique<LineageConnectionIdempotencyPolicy>();
+  return std::make_unique<LineageConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

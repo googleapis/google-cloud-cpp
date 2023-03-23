@@ -45,7 +45,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
 SessionsConnection::AsyncStreamingDetectIntent() {
-  return absl::make_unique<
+  return std::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
           google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>(

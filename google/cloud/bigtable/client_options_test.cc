@@ -127,7 +127,7 @@ TEST(ClientOptionsTest, CustomBackgroundThreadsOption) {
   bool invoked = false;
   auto factory = [&invoked] {
     invoked = true;
-    return absl::make_unique<Fake>();
+    return std::make_unique<Fake>();
   };
 
   auto options =

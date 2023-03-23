@@ -15,7 +15,6 @@
 #include "generator/internal/printer.h"
 #include "generator/testing/printer_mocks.h"
 #include "google/cloud/internal/port_platform.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,8 +27,8 @@ using ::google::cloud::generator_testing::MockZeroCopyOutputStream;
 using ::testing::Return;
 
 TEST(PrinterTest, PrintWithMap) {
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*output, Next);
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));
@@ -39,8 +38,8 @@ TEST(PrinterTest, PrintWithMap) {
 }
 
 TEST(PrinterTest, PrintWithVariableArgs) {
-  auto generator_context = absl::make_unique<MockGeneratorContext>();
-  auto output = absl::make_unique<MockZeroCopyOutputStream>();
+  auto generator_context = std::make_unique<MockGeneratorContext>();
+  auto output = std::make_unique<MockZeroCopyOutputStream>();
   EXPECT_CALL(*output, Next);
   EXPECT_CALL(*generator_context, Open("foo"))
       .WillOnce(Return(output.release()));

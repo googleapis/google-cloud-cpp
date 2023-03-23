@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/polling_policy.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -39,7 +38,7 @@ std::unique_ptr<PollingPolicy> MakeCommonPollingPolicy(
     ~CommonPollingPolicy() override = default;
 
     std::unique_ptr<PollingPolicy> clone() const override {
-      return absl::make_unique<CommonPollingPolicy>(impl_->clone());
+      return std::make_unique<CommonPollingPolicy>(impl_->clone());
     }
     bool OnFailure(google::cloud::Status const& status) override {
       return impl_->OnFailure(status);
@@ -52,7 +51,7 @@ std::unique_ptr<PollingPolicy> MakeCommonPollingPolicy(
     std::unique_ptr<bigtable::PollingPolicy> impl_;
   };
 
-  return absl::make_unique<CommonPollingPolicy>(std::move(policy));
+  return std::make_unique<CommonPollingPolicy>(std::move(policy));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

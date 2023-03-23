@@ -17,7 +17,6 @@
 // source: google/privacy/dlp/v2/dlp.proto
 
 #include "google/cloud/dlp/v2/dlp_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DlpServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>
 DlpServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DlpServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DlpServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DlpServiceConnectionIdempotencyPolicy::InspectContent(
@@ -207,7 +206,7 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::FinishDlpJob(
 
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>
 MakeDefaultDlpServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DlpServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<DlpServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

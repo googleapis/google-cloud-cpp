@@ -17,7 +17,6 @@
 // source: google/cloud/kms/inventory/v1/key_tracking_service.proto
 
 #include "google/cloud/kms/inventory/v1/key_tracking_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ KeyTrackingServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<KeyTrackingServiceConnectionIdempotencyPolicy>
 KeyTrackingServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<KeyTrackingServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<KeyTrackingServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency
@@ -52,7 +50,7 @@ KeyTrackingServiceConnectionIdempotencyPolicy::SearchProtectedResources(
 
 std::unique_ptr<KeyTrackingServiceConnectionIdempotencyPolicy>
 MakeDefaultKeyTrackingServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<KeyTrackingServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<KeyTrackingServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

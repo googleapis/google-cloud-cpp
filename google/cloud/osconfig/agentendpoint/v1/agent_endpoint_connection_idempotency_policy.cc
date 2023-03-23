@@ -17,7 +17,6 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AgentEndpointServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
 AgentEndpointServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -65,7 +64,7 @@ Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportInventory(
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
 MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

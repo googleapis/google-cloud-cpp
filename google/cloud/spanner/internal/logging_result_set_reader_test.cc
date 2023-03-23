@@ -18,7 +18,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -37,7 +36,7 @@ class LoggingResultSetReaderTest : public ::testing::Test {
 };
 
 TEST_F(LoggingResultSetReaderTest, TryCancel) {
-  auto mock = absl::make_unique<spanner_testing::MockPartialResultSetReader>();
+  auto mock = std::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, TryCancel()).Times(1);
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   reader.TryCancel();
@@ -46,7 +45,7 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
 }
 
 TEST_F(LoggingResultSetReaderTest, Read) {
-  auto mock = absl::make_unique<spanner_testing::MockPartialResultSetReader>();
+  auto mock = std::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, Read(_))
       .WillOnce([] {
         google::spanner::v1::PartialResultSet result;
@@ -72,7 +71,7 @@ TEST_F(LoggingResultSetReaderTest, Read) {
 
 TEST_F(LoggingResultSetReaderTest, Finish) {
   Status const expected_status = Status(StatusCode::kOutOfRange, "weird");
-  auto mock = absl::make_unique<spanner_testing::MockPartialResultSetReader>();
+  auto mock = std::make_unique<spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, Finish()).WillOnce([expected_status] {
     return expected_status;  // NOLINT(performance-no-automatic-move)
   });

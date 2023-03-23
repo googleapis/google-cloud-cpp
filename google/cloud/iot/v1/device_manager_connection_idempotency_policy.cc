@@ -17,7 +17,6 @@
 // source: google/cloud/iot/v1/device_manager.proto
 
 #include "google/cloud/iot/v1/device_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DeviceManagerConnectionIdempotencyPolicy::
 
 std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy>
 DeviceManagerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DeviceManagerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DeviceManagerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DeviceManagerConnectionIdempotencyPolicy::CreateDeviceRegistry(
@@ -133,7 +132,7 @@ Idempotency DeviceManagerConnectionIdempotencyPolicy::UnbindDeviceFromGateway(
 
 std::unique_ptr<DeviceManagerConnectionIdempotencyPolicy>
 MakeDefaultDeviceManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<DeviceManagerConnectionIdempotencyPolicy>();
+  return std::make_unique<DeviceManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

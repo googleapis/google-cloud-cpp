@@ -178,7 +178,7 @@ TEST_F(GrpcClientTest, UploadChunk) {
                     Pair("x-goog-request-params",
                          "bucket=projects/_/buckets/test-bucket")));
     ::testing::InSequence sequence;
-    auto stream = absl::make_unique<MockInsertStream>();
+    auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
     EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
     return stream;
@@ -441,7 +441,7 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
                     Pair("x-goog-request-params",
                          "bucket=projects/_/buckets/test-bucket")));
     ::testing::InSequence sequence;
-    auto stream = absl::make_unique<MockInsertStream>();
+    auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
     EXPECT_CALL(*stream, Close).WillOnce(Return(PermanentError()));
     return stream;
@@ -547,7 +547,7 @@ TEST_F(GrpcClientTest, ReadObject) {
                                   Pair("x-goog-fieldmask", "field1,field2")));
         EXPECT_THAT(request.bucket(), "projects/_/buckets/test-bucket");
         EXPECT_THAT(request.object(), "test-object");
-        return absl::make_unique<storage::testing::MockObjectMediaStream>();
+        return std::make_unique<storage::testing::MockObjectMediaStream>();
       });
   auto client = CreateTestClient(mock);
   auto stream = client->ReadObject(

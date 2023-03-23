@@ -122,7 +122,7 @@ ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                           std::chrono::system_clock>::
     ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
                               ChannelOptions const& options)
-    : impl_(absl::make_unique<oauth2_internal::ServiceAccountCredentials>(
+    : impl_(std::make_unique<oauth2_internal::ServiceAccountCredentials>(
           internal::MapServiceAccountCredentialsInfo(std::move(info)),
           Options{}.set<CARootsFilePathOption>(options.ssl_root_path()),
           [](Options const& o) {

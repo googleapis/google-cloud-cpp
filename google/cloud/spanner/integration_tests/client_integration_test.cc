@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -38,7 +37,7 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
  protected:
   static void SetUpTestSuite() {
     spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
-    client_ = absl::make_unique<Client>(MakeConnection(GetDatabase()));
+    client_ = std::make_unique<Client>(MakeConnection(GetDatabase()));
   }
 
   void SetUp() override {
@@ -75,7 +74,7 @@ class PgClientIntegrationTest
  protected:
   static void SetUpTestSuite() {
     spanner_testing::PgDatabaseIntegrationTest::SetUpTestSuite();
-    client_ = absl::make_unique<Client>(MakeConnection(GetDatabase()));
+    client_ = std::make_unique<Client>(MakeConnection(GetDatabase()));
   }
 
   void SetUp() override {

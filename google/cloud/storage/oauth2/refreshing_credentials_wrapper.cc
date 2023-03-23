@@ -15,7 +15,6 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 
 namespace google {
@@ -25,8 +24,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
 RefreshingCredentialsWrapper::RefreshingCredentialsWrapper()
-    : impl_(
-          absl::make_unique<oauth2_internal::RefreshingCredentialsWrapper>()) {}
+    : impl_(std::make_unique<oauth2_internal::RefreshingCredentialsWrapper>()) {
+}
 
 std::pair<std::string, std::string> RefreshingCredentialsWrapper::SplitToken(
     std::string const& token) {

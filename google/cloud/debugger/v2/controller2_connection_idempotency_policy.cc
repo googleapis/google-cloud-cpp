@@ -17,7 +17,6 @@
 // source: google/devtools/clouddebugger/v2/controller.proto
 
 #include "google/cloud/debugger/v2/controller2_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ Controller2ConnectionIdempotencyPolicy::
 
 std::unique_ptr<Controller2ConnectionIdempotencyPolicy>
 Controller2ConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<Controller2ConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<Controller2ConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency Controller2ConnectionIdempotencyPolicy::RegisterDebuggee(
@@ -52,7 +51,7 @@ Idempotency Controller2ConnectionIdempotencyPolicy::UpdateActiveBreakpoint(
 
 std::unique_ptr<Controller2ConnectionIdempotencyPolicy>
 MakeDefaultController2ConnectionIdempotencyPolicy() {
-  return absl::make_unique<Controller2ConnectionIdempotencyPolicy>();
+  return std::make_unique<Controller2ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

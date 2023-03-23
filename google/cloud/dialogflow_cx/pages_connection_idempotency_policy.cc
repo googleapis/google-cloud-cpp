@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/page.proto
 
 #include "google/cloud/dialogflow_cx/pages_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -31,7 +30,7 @@ PagesConnectionIdempotencyPolicy::~PagesConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<PagesConnectionIdempotencyPolicy>
 PagesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<PagesConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<PagesConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency PagesConnectionIdempotencyPolicy::ListPages(
@@ -61,7 +60,7 @@ Idempotency PagesConnectionIdempotencyPolicy::DeletePage(
 
 std::unique_ptr<PagesConnectionIdempotencyPolicy>
 MakeDefaultPagesConnectionIdempotencyPolicy() {
-  return absl::make_unique<PagesConnectionIdempotencyPolicy>();
+  return std::make_unique<PagesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

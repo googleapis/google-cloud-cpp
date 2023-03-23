@@ -69,7 +69,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
   EXPECT_CALL(mock, FakeRpc)
       .WillOnce([](grpc::ClientContext*, FakeResponse* response,
                    grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockWriter>();
+        auto stream = std::make_unique<MockWriter>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         // Need to specify that it takes 3 parameters to disambiguate which
         // Write() call to expect.

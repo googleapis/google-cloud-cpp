@@ -18,7 +18,7 @@
 #include "google/cloud/internal/type_list.h"
 #include "google/cloud/version.h"
 #include "absl/base/attributes.h"
-#include "absl/memory/memory.h"
+#include <memory>
 #include <set>
 #include <typeindex>
 #include <typeinfo>
@@ -123,7 +123,7 @@ class Options {
    */
   template <typename T>
   Options& set(ValueTypeT<T> v) {
-    m_[typeid(T)] = absl::make_unique<Data<T>>(std::move(v));
+    m_[typeid(T)] = std::make_unique<Data<T>>(std::move(v));
     return *this;
   }
 
@@ -202,7 +202,7 @@ class Options {
   ValueTypeT<T>& lookup(ValueTypeT<T> value = {}) {
     auto p = m_.find(typeid(T));
     if (p == m_.end()) {
-      p = m_.emplace(typeid(T), absl::make_unique<Data<T>>(std::move(value)))
+      p = m_.emplace(typeid(T), std::make_unique<Data<T>>(std::move(value)))
               .first;
     }
     auto* v = p->second->data_address();
@@ -234,7 +234,7 @@ class Options {
     void const* data_address() const override { return &value_; }
     void* data_address() override { return &value_; }
     std::unique_ptr<DataHolder> clone() const override {
-      return absl::make_unique<Data<T>>(*this);
+      return std::make_unique<Data<T>>(*this);
     }
 
    private:

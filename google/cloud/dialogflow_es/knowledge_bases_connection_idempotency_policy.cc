@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/v2/knowledge_base.proto
 
 #include "google/cloud/dialogflow_es/knowledge_bases_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ KnowledgeBasesConnectionIdempotencyPolicy::
 
 std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy>
 KnowledgeBasesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency KnowledgeBasesConnectionIdempotencyPolicy::ListKnowledgeBases(
@@ -62,7 +61,7 @@ Idempotency KnowledgeBasesConnectionIdempotencyPolicy::UpdateKnowledgeBase(
 
 std::unique_ptr<KnowledgeBasesConnectionIdempotencyPolicy>
 MakeDefaultKnowledgeBasesConnectionIdempotencyPolicy() {
-  return absl::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>();
+  return std::make_unique<KnowledgeBasesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

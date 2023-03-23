@@ -17,7 +17,6 @@
 // source: google/cloud/beyondcorp/appgateways/v1/app_gateways_service.proto
 
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ AppGatewaysServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
 AppGatewaysServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::ListAppGateways(
@@ -61,7 +59,7 @@ Idempotency AppGatewaysServiceConnectionIdempotencyPolicy::DeleteAppGateway(
 
 std::unique_ptr<AppGatewaysServiceConnectionIdempotencyPolicy>
 MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

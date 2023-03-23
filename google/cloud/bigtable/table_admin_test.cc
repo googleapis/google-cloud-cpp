@@ -235,9 +235,9 @@ TEST_F(TableAdminTest, LegacyConstructorWithPolicies) {
   auto mock_p = std::make_shared<MockPollingPolicy>();
 
   EXPECT_CALL(*mock_r, clone).WillOnce([] {
-    auto clone_1 = absl::make_unique<MockRetryPolicy>();
+    auto clone_1 = std::make_unique<MockRetryPolicy>();
     EXPECT_CALL(*clone_1, clone).WillOnce([] {
-      auto clone_2 = absl::make_unique<MockRetryPolicy>();
+      auto clone_2 = std::make_unique<MockRetryPolicy>();
       EXPECT_CALL(*clone_2, OnFailure(An<Status const&>()));
       return clone_2;
     });
@@ -245,9 +245,9 @@ TEST_F(TableAdminTest, LegacyConstructorWithPolicies) {
   });
 
   EXPECT_CALL(*mock_b, clone).WillOnce([] {
-    auto clone_1 = absl::make_unique<MockBackoffPolicy>();
+    auto clone_1 = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone_1, clone).WillOnce([] {
-      auto clone_2 = absl::make_unique<MockBackoffPolicy>();
+      auto clone_2 = std::make_unique<MockBackoffPolicy>();
       EXPECT_CALL(*clone_2, OnCompletion(An<Status const&>()));
       return clone_2;
     });
@@ -255,9 +255,9 @@ TEST_F(TableAdminTest, LegacyConstructorWithPolicies) {
   });
 
   EXPECT_CALL(*mock_p, clone).WillOnce([] {
-    auto clone_1 = absl::make_unique<MockPollingPolicy>();
+    auto clone_1 = std::make_unique<MockPollingPolicy>();
     EXPECT_CALL(*clone_1, clone).WillOnce([] {
-      auto clone_2 = absl::make_unique<MockPollingPolicy>();
+      auto clone_2 = std::make_unique<MockPollingPolicy>();
       EXPECT_CALL(*clone_2, WaitPeriod);
       return clone_2;
     });

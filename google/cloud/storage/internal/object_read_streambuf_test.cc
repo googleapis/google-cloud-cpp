@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/testing/mock_client.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -34,7 +33,7 @@ TEST(ObjectReadStreambufTest, FailedTellg) {
 }
 
 TEST(ObjectReadStreambufTest, Success) {
-  auto read_source = absl::make_unique<testing::MockObjectReadSource>();
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
   EXPECT_CALL(*read_source, Read)
       .WillOnce(Return(ReadSourceResult{10, {}}))
@@ -66,7 +65,7 @@ TEST(ObjectReadStreambufTest, Success) {
 }
 
 TEST(ObjectReadStreambufTest, WrongSeek) {
-  auto read_source = absl::make_unique<testing::MockObjectReadSource>();
+  auto read_source = std::make_unique<testing::MockObjectReadSource>();
   EXPECT_CALL(*read_source, IsOpen()).WillRepeatedly(Return(true));
   EXPECT_CALL(*read_source, Read).WillOnce(Return(ReadSourceResult{10, {}}));
   ObjectReadStreambuf buf(ReadObjectRangeRequest{}, std::move(read_source), 0);

@@ -19,7 +19,6 @@
 #include "google/cloud/storage/testing/retry_tests.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -88,7 +87,7 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
@@ -141,7 +140,7 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
       .WillOnce([](ReadObjectRangeRequest const&) {
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
@@ -194,24 +193,24 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
       .WillOnce([](ReadObjectRangeRequest const&) {
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
       .WillOnce([](ReadObjectRangeRequest const&) {
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read)
             .WillOnce(Return(ReadSourceResult{}))
             .WillOnce(Return(TransientError()));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
       .WillOnce([](ReadObjectRangeRequest const&) {
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
@@ -252,7 +251,7 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read)
             .WillOnce(Return(ReadSourceResult{}))
             .WillOnce(Return(TransientError()));
@@ -283,7 +282,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(1029, req.GetOption<ReadLast>().value());
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read)
             .WillOnce(Return(ReadSourceResult{static_cast<std::size_t>(1024),
                                               HttpResponse{100, "", {}}}))
@@ -292,7 +291,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
       })
       .WillOnce([](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(5, req.GetOption<ReadLast>().value());
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
@@ -317,7 +316,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
       .WillOnce([](ReadObjectRangeRequest const& req) {
         EXPECT_FALSE(req.HasOption<ReadRange>());
         EXPECT_FALSE(req.HasOption<Generation>());
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         auto result = ReadSourceResult{static_cast<std::size_t>(1024),
                                        HttpResponse{200, "", {}}};
         result.generation = 23456;
@@ -329,7 +328,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
       .WillOnce([](ReadObjectRangeRequest const& req) {
         EXPECT_EQ(1024, req.GetOption<ReadFromOffset>().value_or(0));
         EXPECT_EQ(23456, req.GetOption<Generation>().value_or(0));
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(ReadSourceResult{}));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
@@ -355,7 +354,7 @@ TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
         // Simulate an initial download that reveals the object is subject to
         // decompressive transcoding. It returns the requested amount of data
         // (512 * 1024 bytes), and then fails with a transient error.
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         auto r0 = ReadSourceResult{
             static_cast<std::size_t>(512 * 1024),
             HttpResponse{100, "", {{"x-test-only", "download 1 r0"}}}};
@@ -382,7 +381,7 @@ TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
             static_cast<std::size_t>(128 * 1024),
             HttpResponse{200, "", {{"x-test-only", "download 2 r1"}}}};
 
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read).WillOnce(Return(r0)).WillOnce(Return(r1));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
@@ -411,7 +410,7 @@ TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
         r1.generation = 23456;
         r1.transformation = "gunzipped";
 
-        auto source = absl::make_unique<MockObjectReadSource>();
+        auto source = std::make_unique<MockObjectReadSource>();
         // We expect 4 reads to reach the desired offset, and then return the
         // real data.
         ::testing::InSequence sequence;

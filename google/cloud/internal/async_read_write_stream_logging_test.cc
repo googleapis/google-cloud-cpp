@@ -18,7 +18,6 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/tracing_options.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
@@ -60,7 +59,7 @@ using TestedStream =
                                       google::protobuf::Duration>;
 
 TEST_F(StreamingReadRpcLoggingTest, Cancel) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel()).Times(1);
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   stream.Cancel();
@@ -69,7 +68,7 @@ TEST_F(StreamingReadRpcLoggingTest, Cancel) {
 }
 
 TEST_F(StreamingReadRpcLoggingTest, Start) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
   TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
   EXPECT_TRUE(stream.Start().get());
@@ -78,7 +77,7 @@ TEST_F(StreamingReadRpcLoggingTest, Start) {
 }
 
 TEST_F(StreamingReadRpcLoggingTest, ReadWithValue) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
     return make_ready_future(absl::make_optional(google::protobuf::Duration{}));
   });
@@ -90,7 +89,7 @@ TEST_F(StreamingReadRpcLoggingTest, ReadWithValue) {
 }
 
 TEST_F(StreamingReadRpcLoggingTest, ReadWithout) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Read).WillOnce([] {
     return make_ready_future(absl::optional<google::protobuf::Duration>{});
   });
@@ -102,7 +101,7 @@ TEST_F(StreamingReadRpcLoggingTest, ReadWithout) {
 }
 
 TEST_F(StreamingReadRpcLoggingTest, Write) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Write)
       .WillOnce([](google::protobuf::Timestamp const&, grpc::WriteOptions) {
         return make_ready_future(true);
@@ -115,7 +114,7 @@ TEST_F(StreamingReadRpcLoggingTest, Write) {
 }
 
 TEST_F(StreamingReadRpcLoggingTest, WritesDone) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, WritesDone).WillOnce([] {
     return make_ready_future(true);
   });
@@ -126,7 +125,7 @@ TEST_F(StreamingReadRpcLoggingTest, WritesDone) {
 }
 
 TEST_F(StreamingReadRpcLoggingTest, Finish) {
-  auto mock = absl::make_unique<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Finish).WillOnce([] {
     return make_ready_future(Status{StatusCode::kUnavailable, "try-again"});
   });

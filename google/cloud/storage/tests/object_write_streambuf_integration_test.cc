@@ -18,7 +18,6 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -54,7 +53,7 @@ class ObjectWriteStreambufIntegrationTest
     ASSERT_STATUS_OK(create);
 
     auto constexpr kTestUploadBufferSize = 16 * 1024 * 1024L;
-    ObjectWriteStream writer(absl::make_unique<ObjectWriteStreambuf>(
+    ObjectWriteStream writer(std::make_unique<ObjectWriteStreambuf>(
         raw_client, request, std::move(create->upload_id), /*committed_size=*/0,
         /*metadata=*/absl::nullopt, kTestUploadBufferSize,
         CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),

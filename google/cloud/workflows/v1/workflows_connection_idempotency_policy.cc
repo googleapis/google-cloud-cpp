@@ -17,7 +17,6 @@
 // source: google/cloud/workflows/v1/workflows.proto
 
 #include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ WorkflowsConnectionIdempotencyPolicy::~WorkflowsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
 WorkflowsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<WorkflowsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<WorkflowsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency WorkflowsConnectionIdempotencyPolicy::ListWorkflows(
@@ -62,7 +61,7 @@ Idempotency WorkflowsConnectionIdempotencyPolicy::UpdateWorkflow(
 
 std::unique_ptr<WorkflowsConnectionIdempotencyPolicy>
 MakeDefaultWorkflowsConnectionIdempotencyPolicy() {
-  return absl::make_unique<WorkflowsConnectionIdempotencyPolicy>();
+  return std::make_unique<WorkflowsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

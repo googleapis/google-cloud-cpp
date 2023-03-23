@@ -80,7 +80,7 @@ class AsyncStreamingWriteRpcAuth
         : factory(std::move(factory)),
           initial_context(std::move(initial_context)),
           stream(
-              absl::make_unique<AsyncStreamingWriteRpcError<Request, Response>>(
+              std::make_unique<AsyncStreamingWriteRpcError<Request, Response>>(
                   Status(StatusCode::kInternal,
                          "Stream is not yet started."))) {}
 
@@ -97,7 +97,7 @@ class AsyncStreamingWriteRpcAuth
         stream = factory(*std::move(context));
       } else {
         stream =
-            absl::make_unique<AsyncStreamingWriteRpcError<Request, Response>>(
+            std::make_unique<AsyncStreamingWriteRpcError<Request, Response>>(
                 std::move(context).status());
       }
       return stream->Start();

@@ -15,7 +15,6 @@
 #include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_pull_ack_handler.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -30,14 +29,14 @@ using ::testing::ByMove;
 using ::testing::Return;
 
 TEST(AckHandlerTest, AutoNack) {
-  auto mock = absl::make_unique<MockPullAckHandler>();
+  auto mock = std::make_unique<MockPullAckHandler>();
   EXPECT_CALL(*mock, nack())
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   { PullAckHandler handler(std::move(mock)); }
 }
 
 TEST(AckHandlerTest, AutoNackMove) {
-  auto mock = absl::make_unique<MockPullAckHandler>();
+  auto mock = std::make_unique<MockPullAckHandler>();
   EXPECT_CALL(*mock, ack())
       .WillOnce(Return(ByMove(
           make_ready_future(Status{StatusCode::kPermissionDenied, "uh-oh"}))));
@@ -50,7 +49,7 @@ TEST(AckHandlerTest, AutoNackMove) {
 }
 
 TEST(AckHandlerTest, DeliveryAttempts) {
-  auto mock = absl::make_unique<MockPullAckHandler>();
+  auto mock = std::make_unique<MockPullAckHandler>();
   EXPECT_CALL(*mock, delivery_attempt()).WillOnce(Return(42));
   EXPECT_CALL(*mock, nack())
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
@@ -59,7 +58,7 @@ TEST(AckHandlerTest, DeliveryAttempts) {
 }
 
 TEST(AckHandlerTest, Ack) {
-  auto mock = absl::make_unique<MockPullAckHandler>();
+  auto mock = std::make_unique<MockPullAckHandler>();
   EXPECT_CALL(*mock, ack())
       .WillOnce(Return(ByMove(
           make_ready_future(Status{StatusCode::kPermissionDenied, "uh-oh"}))));
@@ -69,7 +68,7 @@ TEST(AckHandlerTest, Ack) {
 }
 
 TEST(AckHandlerTest, Nack) {
-  auto mock = absl::make_unique<MockPullAckHandler>();
+  auto mock = std::make_unique<MockPullAckHandler>();
   EXPECT_CALL(*mock, nack())
       .WillOnce(Return(ByMove(
           make_ready_future(Status{StatusCode::kPermissionDenied, "uh-oh"}))));

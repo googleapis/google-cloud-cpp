@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_ack_handler.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -26,13 +25,13 @@ namespace {
 using ::testing::Return;
 
 TEST(AckHandlerTest, AutoNack) {
-  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  auto mock = std::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, nack()).Times(1);
   { AckHandler handler(std::move(mock)); }
 }
 
 TEST(AckHandlerTest, AutoNackMove) {
-  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  auto mock = std::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, ack()).Times(1);
   {
     AckHandler handler(std::move(mock));
@@ -42,7 +41,7 @@ TEST(AckHandlerTest, AutoNackMove) {
 }
 
 TEST(AckHandlerTest, DeliveryAttempts) {
-  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  auto mock = std::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, delivery_attempt()).WillOnce(Return(42));
   EXPECT_CALL(*mock, nack()).Times(1);
   AckHandler handler(std::move(mock));
@@ -50,14 +49,14 @@ TEST(AckHandlerTest, DeliveryAttempts) {
 }
 
 TEST(AckHandlerTest, Ack) {
-  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  auto mock = std::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, ack()).Times(1);
   AckHandler handler(std::move(mock));
   ASSERT_NO_FATAL_FAILURE(std::move(handler).ack());
 }
 
 TEST(AckHandlerTest, Nack) {
-  auto mock = absl::make_unique<pubsub_mocks::MockAckHandler>();
+  auto mock = std::make_unique<pubsub_mocks::MockAckHandler>();
   EXPECT_CALL(*mock, nack()).Times(1);
   AckHandler handler(std::move(mock));
   ASSERT_NO_FATAL_FAILURE(std::move(handler).nack());

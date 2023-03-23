@@ -17,7 +17,6 @@
 // source: google/cloud/dialogflow/cx/v3/webhook.proto
 
 #include "google/cloud/dialogflow_cx/webhooks_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ WebhooksConnectionIdempotencyPolicy::~WebhooksConnectionIdempotencyPolicy() =
 
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
 WebhooksConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<WebhooksConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<WebhooksConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency WebhooksConnectionIdempotencyPolicy::ListWebhooks(
@@ -62,7 +61,7 @@ Idempotency WebhooksConnectionIdempotencyPolicy::DeleteWebhook(
 
 std::unique_ptr<WebhooksConnectionIdempotencyPolicy>
 MakeDefaultWebhooksConnectionIdempotencyPolicy() {
-  return absl::make_unique<WebhooksConnectionIdempotencyPolicy>();
+  return std::make_unique<WebhooksConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

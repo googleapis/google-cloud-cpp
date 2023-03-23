@@ -17,7 +17,6 @@
 // source: google/cloud/pubsublite/v1/admin.proto
 
 #include "google/cloud/pubsublite/admin_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AdminServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AdminServiceConnectionIdempotencyPolicy>
 AdminServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AdminServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AdminServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AdminServiceConnectionIdempotencyPolicy::CreateTopic(
@@ -132,7 +131,7 @@ Idempotency AdminServiceConnectionIdempotencyPolicy::ListReservationTopics(
 
 std::unique_ptr<AdminServiceConnectionIdempotencyPolicy>
 MakeDefaultAdminServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<AdminServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AdminServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -15,7 +15,6 @@
 #include "google/cloud/storage/object_write_stream.h"
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/internal/hash_validator.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {
@@ -23,7 +22,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 std::unique_ptr<internal::ObjectWriteStreambuf> MakeErrorStreambuf() {
-  return absl::make_unique<internal::ObjectWriteStreambuf>(
+  return std::make_unique<internal::ObjectWriteStreambuf>(
       Status(StatusCode::kUnimplemented, "null stream"));
 }
 }  // namespace

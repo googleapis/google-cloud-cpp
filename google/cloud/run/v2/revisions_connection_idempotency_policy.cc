@@ -17,7 +17,6 @@
 // source: google/cloud/run/v2/revision.proto
 
 #include "google/cloud/run/v2/revisions_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ RevisionsConnectionIdempotencyPolicy::~RevisionsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
 RevisionsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<RevisionsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<RevisionsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency RevisionsConnectionIdempotencyPolicy::GetRevision(
@@ -52,7 +51,7 @@ Idempotency RevisionsConnectionIdempotencyPolicy::DeleteRevision(
 
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
 MakeDefaultRevisionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<RevisionsConnectionIdempotencyPolicy>();
+  return std::make_unique<RevisionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

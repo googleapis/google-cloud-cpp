@@ -71,7 +71,7 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
       .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
                    grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read)
@@ -120,7 +120,7 @@ TEST_F(AsyncSampleRowKeysTest, Retry) {
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
       .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
                    grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read)
@@ -139,7 +139,7 @@ TEST_F(AsyncSampleRowKeysTest, Retry) {
       })
       .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
                    grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read)
@@ -201,7 +201,7 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
       .WillRepeatedly([](grpc::ClientContext*,
                          btproto::SampleRowKeysRequest const&,
                          grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
@@ -256,7 +256,7 @@ TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
       .WillOnce([grpc_error](grpc::ClientContext*,
                              btproto::SampleRowKeysRequest const&,
                              grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
@@ -268,7 +268,7 @@ TEST_F(AsyncSampleRowKeysTest, UsesBackoff) {
       })
       .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
                    grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
@@ -319,7 +319,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelDuringBackoff) {
       .WillOnce([grpc_error](grpc::ClientContext*,
                              btproto::SampleRowKeysRequest const&,
                              grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read).Times(2);
@@ -361,7 +361,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
       .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
                    grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read)
@@ -407,7 +407,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
   EXPECT_CALL(*client_, PrepareAsyncSampleRowKeys)
       .WillOnce([](grpc::ClientContext*, btproto::SampleRowKeysRequest const&,
                    grpc::CompletionQueue*) {
-        auto reader = absl::make_unique<
+        auto reader = std::make_unique<
             MockClientAsyncReaderInterface<btproto::SampleRowKeysResponse>>();
         EXPECT_CALL(*reader, StartCall);
         EXPECT_CALL(*reader, Read)

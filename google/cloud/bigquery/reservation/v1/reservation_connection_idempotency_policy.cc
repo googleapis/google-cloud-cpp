@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/reservation/v1/reservation.proto
 
 #include "google/cloud/bigquery/reservation/v1/reservation_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ ReservationServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>
 ReservationServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ReservationServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<ReservationServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ReservationServiceConnectionIdempotencyPolicy::CreateReservation(
@@ -162,7 +160,7 @@ Idempotency ReservationServiceConnectionIdempotencyPolicy::UpdateBiReservation(
 
 std::unique_ptr<ReservationServiceConnectionIdempotencyPolicy>
 MakeDefaultReservationServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ReservationServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ReservationServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

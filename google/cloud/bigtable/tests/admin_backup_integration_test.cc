@@ -21,7 +21,6 @@
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/contains_once.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <string>
@@ -52,12 +51,12 @@ class AdminBackupIntegrationTest
     std::shared_ptr<bigtable::AdminClient> admin_client =
         bigtable::MakeAdminClient(
             bigtable::testing::TableTestEnvironment::project_id());
-    table_admin_ = absl::make_unique<bigtable::TableAdmin>(
+    table_admin_ = std::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
     auto instance_admin_client = bigtable::MakeInstanceAdminClient(
         bigtable::testing::TableTestEnvironment::project_id());
     instance_admin_ =
-        absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
+        std::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
   }
 };
 

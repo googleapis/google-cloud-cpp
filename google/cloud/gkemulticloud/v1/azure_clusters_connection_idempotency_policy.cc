@@ -17,7 +17,6 @@
 // source: google/cloud/gkemulticloud/v1/azure_service.proto
 
 #include "google/cloud/gkemulticloud/v1/azure_clusters_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AzureClustersConnectionIdempotencyPolicy::
 
 std::unique_ptr<AzureClustersConnectionIdempotencyPolicy>
 AzureClustersConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AzureClustersConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AzureClustersConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AzureClustersConnectionIdempotencyPolicy::CreateAzureClient(
@@ -117,7 +116,7 @@ Idempotency AzureClustersConnectionIdempotencyPolicy::GetAzureServerConfig(
 
 std::unique_ptr<AzureClustersConnectionIdempotencyPolicy>
 MakeDefaultAzureClustersConnectionIdempotencyPolicy() {
-  return absl::make_unique<AzureClustersConnectionIdempotencyPolicy>();
+  return std::make_unique<AzureClustersConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

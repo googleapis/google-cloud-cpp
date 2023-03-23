@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/alert_service.proto
 
 #include "google/cloud/monitoring/v3/alert_policy_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ AlertPolicyServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
 AlertPolicyServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::ListAlertPolicies(
@@ -63,7 +61,7 @@ Idempotency AlertPolicyServiceConnectionIdempotencyPolicy::UpdateAlertPolicy(
 
 std::unique_ptr<AlertPolicyServiceConnectionIdempotencyPolicy>
 MakeDefaultAlertPolicyServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AlertPolicyServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

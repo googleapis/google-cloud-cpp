@@ -17,7 +17,6 @@
 // source: google/cloud/channel/v1/service.proto
 
 #include "google/cloud/channel/v1/cloud_channel_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudChannelServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudChannelServiceConnectionIdempotencyPolicy>
 CloudChannelServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -298,7 +297,7 @@ CloudChannelServiceConnectionIdempotencyPolicy::ListEntitlementChanges(
 
 std::unique_ptr<CloudChannelServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

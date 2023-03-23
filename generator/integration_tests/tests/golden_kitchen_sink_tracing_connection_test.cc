@@ -268,7 +268,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, AsyncStreamingReadWrite) {
                                                                  Response>;
   EXPECT_CALL(*mock, AsyncStreamingReadWrite)
       .WillOnce(Return(ByMove(
-          absl::make_unique<ErrorStream>(internal::AbortedError("fail")))));
+          std::make_unique<ErrorStream>(internal::AbortedError("fail")))));
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   auto stream = under_test.AsyncStreamingReadWrite();

@@ -292,7 +292,7 @@ TEST(GoldenKitchenSinkConnectionTest, ListServiceAccountKeysPermanentError) {
 }
 
 std::unique_ptr<MockStreamingReadRpc> MakeFailingReader(Status status) {
-  auto reader = absl::make_unique<MockStreamingReadRpc>();
+  auto reader = std::make_unique<MockStreamingReadRpc>();
   EXPECT_CALL(*reader, Read).WillOnce(Return(std::move(status)));
   return reader;
 }
@@ -315,7 +315,7 @@ TEST(GoldenKitchenSinkConnectionTest, StreamingReadWriteError) {
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<Request,
                                                                  Response>;
   EXPECT_CALL(*mock, AsyncStreamingReadWrite).WillOnce([] {
-    return absl::make_unique<ErrorStream>(
+    return std::make_unique<ErrorStream>(
         Status{StatusCode::kUnavailable, "try-again"});
   });
   auto conn = CreateTestingConnection(std::move(mock));

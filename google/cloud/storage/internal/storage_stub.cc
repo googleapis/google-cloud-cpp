@@ -22,7 +22,6 @@
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include "google/cloud/status_or.h"
-#include "absl/memory/memory.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <memory>
 
@@ -240,7 +239,7 @@ DefaultStorageStub::ReadObject(
     std::shared_ptr<grpc::ClientContext> client_context,
     google::storage::v2::ReadObjectRequest const& request) {
   auto stream = grpc_stub_->ReadObject(client_context.get(), request);
-  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::storage::v2::ReadObjectResponse>>(std::move(client_context),
                                                 std::move(stream));
 }
@@ -260,9 +259,9 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
 DefaultStorageStub::WriteObject(std::shared_ptr<grpc::ClientContext> context) {
-  auto response = absl::make_unique<google::storage::v2::WriteObjectResponse>();
+  auto response = std::make_unique<google::storage::v2::WriteObjectResponse>();
   auto stream = grpc_stub_->WriteObject(context.get(), response.get());
-  return absl::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
+  return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>(
       std::move(context), std::move(response), std::move(stream));

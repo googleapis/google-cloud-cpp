@@ -252,11 +252,11 @@ TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
 
 TEST_F(ClientTest, DeprecatedRetryPolicies) {
   auto constexpr kNumRetries = 2;
-  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([=] {
-    auto clone_1 = absl::make_unique<MockBackoffPolicy>();
+    auto clone_1 = std::make_unique<MockBackoffPolicy>();
     EXPECT_CALL(*clone_1, clone).WillOnce([=] {
-      auto clone_2 = absl::make_unique<MockBackoffPolicy>();
+      auto clone_2 = std::make_unique<MockBackoffPolicy>();
       EXPECT_CALL(*clone_2, OnCompletion)
           .Times(kNumRetries)
           .WillRepeatedly(Return(std::chrono::milliseconds(0)));

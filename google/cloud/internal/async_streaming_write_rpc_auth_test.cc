@@ -58,7 +58,7 @@ class MockStream : public BaseStream {
 
 TEST(AsyncStreamingWriteRpcAuth, Start) {
   auto factory = AuthStream::StreamFactory([](auto) {
-    auto mock = absl::make_unique<StrictMock<MockStream>>();
+    auto mock = std::make_unique<StrictMock<MockStream>>();
     EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
     EXPECT_CALL(*mock, Write).WillOnce([] { return make_ready_future(true); });
     EXPECT_CALL(*mock, WritesDone).WillOnce([] {
@@ -76,7 +76,7 @@ TEST(AsyncStreamingWriteRpcAuth, Start) {
   EXPECT_CALL(*strategy, AsyncConfigureContext).WillOnce([](auto context) {
     return make_ready_future(make_status_or(std::move(context)));
   });
-  auto uut = absl::make_unique<AuthStream>(
+  auto uut = std::make_unique<AuthStream>(
       std::make_shared<grpc::ClientContext>(), strategy, factory);
   EXPECT_TRUE(uut->Start().get());
   ASSERT_TRUE(uut->Write(FakeRequest{}, grpc::WriteOptions()).get());
@@ -91,7 +91,7 @@ TEST(AsyncStreamingWriteRpcAuth, Start) {
 
 TEST(AsyncStreamingWriteRpcAuth, AuthFails) {
   auto factory = AuthStream::StreamFactory([](auto) {
-    auto mock = absl::make_unique<StrictMock<MockStream>>();
+    auto mock = std::make_unique<StrictMock<MockStream>>();
     EXPECT_CALL(*mock, Start).Times(0);
     EXPECT_CALL(*mock, Finish).Times(0);
     return std::unique_ptr<BaseStream>(std::move(mock));
@@ -101,7 +101,7 @@ TEST(AsyncStreamingWriteRpcAuth, AuthFails) {
     return make_ready_future(StatusOr<std::shared_ptr<grpc::ClientContext>>(
         Status(StatusCode::kPermissionDenied, "uh-oh")));
   });
-  auto uut = absl::make_unique<AuthStream>(
+  auto uut = std::make_unique<AuthStream>(
       std::make_shared<grpc::ClientContext>(), strategy, factory);
   EXPECT_FALSE(uut->Start().get());
   EXPECT_THAT(uut->Finish().get(), StatusIs(StatusCode::kPermissionDenied));
@@ -109,7 +109,7 @@ TEST(AsyncStreamingWriteRpcAuth, AuthFails) {
 
 TEST(AsyncStreamingWriteRpcAuth, CancelDuringAuth) {
   auto factory = [](auto) {
-    return std::unique_ptr<BaseStream>(absl::make_unique<MockStream>());
+    return std::unique_ptr<BaseStream>(std::make_unique<MockStream>());
   };
   auto strategy = std::make_shared<StrictMock<MockAuthenticationStrategy>>();
   auto start_promise = promise<void>();
@@ -120,7 +120,7 @@ TEST(AsyncStreamingWriteRpcAuth, CancelDuringAuth) {
         });
   });
 
-  auto uut = absl::make_unique<AuthStream>(
+  auto uut = std::make_unique<AuthStream>(
       std::make_shared<grpc::ClientContext>(), strategy, factory);
   auto start = uut->Start();
   uut->Cancel();
@@ -131,7 +131,7 @@ TEST(AsyncStreamingWriteRpcAuth, CancelDuringAuth) {
 
 TEST(AsyncStreamingWriteRpcAuth, CancelAfterStart) {
   auto factory = AuthStream::StreamFactory([](auto) {
-    auto mock = absl::make_unique<StrictMock<MockStream>>();
+    auto mock = std::make_unique<StrictMock<MockStream>>();
     ::testing::InSequence sequence;
     EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
     EXPECT_CALL(*mock, Write).WillOnce([] { return make_ready_future(true); });
@@ -146,7 +146,7 @@ TEST(AsyncStreamingWriteRpcAuth, CancelAfterStart) {
   EXPECT_CALL(*strategy, AsyncConfigureContext).WillOnce([](auto context) {
     return make_ready_future(make_status_or(std::move(context)));
   });
-  auto uut = absl::make_unique<AuthStream>(
+  auto uut = std::make_unique<AuthStream>(
       std::make_shared<grpc::ClientContext>(), strategy, factory);
   EXPECT_TRUE(uut->Start().get());
   EXPECT_TRUE(uut->Write(FakeRequest{}, grpc::WriteOptions()).get());

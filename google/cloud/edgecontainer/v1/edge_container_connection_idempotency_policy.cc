@@ -17,7 +17,6 @@
 // source: google/cloud/edgecontainer/v1/service.proto
 
 #include "google/cloud/edgecontainer/v1/edge_container_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ EdgeContainerConnectionIdempotencyPolicy::
 
 std::unique_ptr<EdgeContainerConnectionIdempotencyPolicy>
 EdgeContainerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<EdgeContainerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<EdgeContainerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency EdgeContainerConnectionIdempotencyPolicy::ListClusters(
@@ -122,7 +121,7 @@ Idempotency EdgeContainerConnectionIdempotencyPolicy::DeleteVpnConnection(
 
 std::unique_ptr<EdgeContainerConnectionIdempotencyPolicy>
 MakeDefaultEdgeContainerConnectionIdempotencyPolicy() {
-  return absl::make_unique<EdgeContainerConnectionIdempotencyPolicy>();
+  return std::make_unique<EdgeContainerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

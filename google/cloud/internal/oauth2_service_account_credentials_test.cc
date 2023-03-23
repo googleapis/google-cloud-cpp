@@ -137,14 +137,14 @@ void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
 
   auto token_client = [=] {
     using FormDataType = std::vector<std::pair<std::string, std::string>>;
-    auto mock = absl::make_unique<MockRestClient>();
+    auto mock = std::make_unique<MockRestClient>();
     auto expected_request = Property(&RestRequest::path, info.token_uri);
     auto expected_form_data = MatcherCast<FormDataType const&>(
         AllOf(Contains(Pair("assertion", assertion)),
               Contains(Pair("grant_type", kGrantParamUnescaped))));
     EXPECT_CALL(*mock, Post(expected_request, expected_form_data))
         .WillOnce([assertion, post_response]() {
-          auto response = absl::make_unique<MockRestResponse>();
+          auto response = std::make_unique<MockRestResponse>();
           EXPECT_CALL(*response, StatusCode)
               .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
           EXPECT_CALL(std::move(*response), ExtractPayload)
@@ -673,13 +673,13 @@ TEST(ServiceAccountCredentialsTest,
     "expires_in": 1000
 })""";
 
-  auto mock_response1 = absl::make_unique<MockRestResponse>();
+  auto mock_response1 = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload)
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r1))));
 
-  auto mock_response2 = absl::make_unique<MockRestResponse>();
+  auto mock_response2 = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response2), ExtractPayload)
@@ -709,7 +709,7 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
     "expires_in": 1000
 })""";
 
-  auto mock_response1 = absl::make_unique<MockRestResponse>();
+  auto mock_response1 = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload)

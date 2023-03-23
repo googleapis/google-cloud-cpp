@@ -325,7 +325,7 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillRepeatedly([](Options const& o) {
     EXPECT_EQ(o.get<UserProjectOption>(), "test-only");
-    auto mock = absl::make_unique<MockRestClient>();
+    auto mock = std::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Get).WillOnce([] {
       return Status{StatusCode::kUnavailable, "bad hostname"};
     });

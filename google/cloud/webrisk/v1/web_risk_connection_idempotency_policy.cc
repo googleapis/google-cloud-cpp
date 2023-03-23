@@ -17,7 +17,6 @@
 // source: google/cloud/webrisk/v1/webrisk.proto
 
 #include "google/cloud/webrisk/v1/web_risk_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ WebRiskServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
 WebRiskServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<WebRiskServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<WebRiskServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency WebRiskServiceConnectionIdempotencyPolicy::ComputeThreatListDiff(
@@ -57,7 +56,7 @@ Idempotency WebRiskServiceConnectionIdempotencyPolicy::CreateSubmission(
 
 std::unique_ptr<WebRiskServiceConnectionIdempotencyPolicy>
 MakeDefaultWebRiskServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<WebRiskServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<WebRiskServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

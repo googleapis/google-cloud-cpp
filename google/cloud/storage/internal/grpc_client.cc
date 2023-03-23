@@ -519,8 +519,8 @@ GrpcClient::ReadObject(
   }
 
   return std::unique_ptr<storage::internal::ObjectReadSource>(
-      absl::make_unique<GrpcObjectReadSource>(std::move(timer_source),
-                                              std::move(stream)));
+      std::make_unique<GrpcObjectReadSource>(std::move(timer_source),
+                                             std::move(stream)));
 }
 
 StatusOr<storage::internal::ListObjectsResponse> GrpcClient::ListObjects(

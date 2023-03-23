@@ -16,7 +16,6 @@
 #include "google/cloud/pubsub/mocks/mock_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_subscriber_connection.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -47,14 +46,14 @@ TEST(SubscriberTest, SubscribeSimple) {
   EXPECT_CALL(*mock, Subscribe)
       .WillOnce([&](SubscriberConnection::SubscribeParams const& p) {
         {
-          auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
+          auto ack = std::make_unique<pubsub_mocks::MockAckHandler>();
           EXPECT_CALL(*ack, ack()).Times(1);
           p.callback(pubsub::MessageBuilder{}.SetData("do-ack").Build(),
                      AckHandler(std::move(ack)));
         }
 
         {
-          auto ack = absl::make_unique<pubsub_mocks::MockAckHandler>();
+          auto ack = std::make_unique<pubsub_mocks::MockAckHandler>();
           EXPECT_CALL(*ack, nack()).Times(1);
           p.callback(pubsub::MessageBuilder{}.SetData("do-nack").Build(),
                      AckHandler(std::move(ack)));

@@ -25,7 +25,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -295,7 +294,7 @@ class MockGrpcReader : public ::grpc::ClientReaderInterface<
 std::unique_ptr<MockGrpcReader> MakeReader(
     std::vector<google::spanner::v1::PartialResultSet> responses,
     grpc::Status status = grpc::Status()) {
-  auto reader = absl::make_unique<MockGrpcReader>();
+  auto reader = std::make_unique<MockGrpcReader>();
   Sequence s;
   for (auto& response : responses) {
     EXPECT_CALL(*reader, Read)
@@ -1144,7 +1143,7 @@ TEST(ConnectionImplTest, QueryOptions) {
     // it's called in this test (aside from needing to return a transaction in
     // the first call), and we want to minimize gMock's "uninteresting mock
     // function call" warnings.
-    auto grpc_reader = absl::make_unique<NiceMock<MockGrpcReader>>();
+    auto grpc_reader = std::make_unique<NiceMock<MockGrpcReader>>();
     auto constexpr kResponseText = R"pb(
       metadata: { transaction: { id: "2468ACE" } }
     )pb";
@@ -1215,7 +1214,7 @@ TEST(ConnectionImplTest, QueryOptions) {
       // ProfileQuery().
       EXPECT_CALL(*mock, ExecuteStreamingSql(_, execute_sql_request_matcher))
           .WillOnce(
-              Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())))
+              Return(ByMove(std::make_unique<NiceMock<MockGrpcReader>>())))
           .RetiresOnSaturation();
 
       // ExecutePartitionedDml().
@@ -1228,7 +1227,7 @@ TEST(ConnectionImplTest, QueryOptions) {
       EXPECT_CALL(*mock,
                   ExecuteStreamingSql(_, untagged_execute_sql_request_matcher))
           .WillOnce(
-              Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())))
+              Return(ByMove(std::make_unique<NiceMock<MockGrpcReader>>())))
           .RetiresOnSaturation();
 
       // ExecuteDml(), ProfileDml(), AnalyzeSql().
@@ -1244,7 +1243,7 @@ TEST(ConnectionImplTest, QueryOptions) {
       // Read().
       EXPECT_CALL(*mock, StreamingRead(_, read_request_matcher))
           .WillOnce(
-              Return(ByMove(absl::make_unique<NiceMock<MockGrpcReader>>())))
+              Return(ByMove(std::make_unique<NiceMock<MockGrpcReader>>())))
           .RetiresOnSaturation();
 
       // Commit().

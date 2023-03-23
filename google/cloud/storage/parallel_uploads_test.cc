@@ -353,7 +353,7 @@ auto create_state_read_expectation = [](std::string const& state_object,
     EXPECT_TRUE(req.HasOption<IfGenerationMatch>());
     auto if_gen_match = req.GetOption<IfGenerationMatch>();
     EXPECT_EQ(generation, if_gen_match.value());
-    auto res = absl::make_unique<testing::MockObjectReadSource>();
+    auto res = std::make_unique<testing::MockObjectReadSource>();
     EXPECT_CALL(*res, Read)
         .WillOnce([state](char* buf, std::size_t n) {
           auto state_str = state.dump();

@@ -17,7 +17,6 @@
 // source: google/cloud/run/v2/service.proto
 
 #include "google/cloud/run/v2/services_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ServicesConnectionIdempotencyPolicy::~ServicesConnectionIdempotencyPolicy() =
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
 ServicesConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ServicesConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ServicesConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ServicesConnectionIdempotencyPolicy::CreateService(
@@ -78,7 +77,7 @@ Idempotency ServicesConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<ServicesConnectionIdempotencyPolicy>
 MakeDefaultServicesConnectionIdempotencyPolicy() {
-  return absl::make_unique<ServicesConnectionIdempotencyPolicy>();
+  return std::make_unique<ServicesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/v1/authorized_domains_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AuthorizedDomainsConnectionIdempotencyPolicy::
 
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
 AuthorizedDomainsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AuthorizedDomainsConnectionIdempotencyPolicy::ListAuthorizedDomains(
@@ -42,7 +41,7 @@ Idempotency AuthorizedDomainsConnectionIdempotencyPolicy::ListAuthorizedDomains(
 
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
 MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy() {
-  return absl::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>();
+  return std::make_unique<AuthorizedDomainsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

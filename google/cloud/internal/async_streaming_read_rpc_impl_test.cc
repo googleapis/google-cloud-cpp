@@ -69,7 +69,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
   EXPECT_CALL(mock, FakeRpc)
       .WillOnce([](grpc::ClientContext*, FakeRequest const&,
                    grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockReader>();
+        auto stream = std::make_unique<MockReader>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         EXPECT_CALL(*stream, Read)
             .WillOnce([](FakeResponse* response, void*) {
@@ -182,7 +182,7 @@ TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
   EXPECT_CALL(mock, FakeRpc)
       .WillOnce([](grpc::ClientContext*, FakeRequest const&,
                    grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockReader>();
+        auto stream = std::make_unique<MockReader>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         EXPECT_CALL(*stream, Read).Times(1);
         EXPECT_CALL(*stream, Finish).WillOnce([](grpc::Status* status, void*) {

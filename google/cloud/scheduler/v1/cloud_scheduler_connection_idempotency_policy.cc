@@ -17,7 +17,6 @@
 // source: google/cloud/scheduler/v1/cloudscheduler.proto
 
 #include "google/cloud/scheduler/v1/cloud_scheduler_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ CloudSchedulerConnectionIdempotencyPolicy::
 
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
 CloudSchedulerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CloudSchedulerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<CloudSchedulerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CloudSchedulerConnectionIdempotencyPolicy::ListJobs(
@@ -77,7 +76,7 @@ Idempotency CloudSchedulerConnectionIdempotencyPolicy::RunJob(
 
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
 MakeDefaultCloudSchedulerConnectionIdempotencyPolicy() {
-  return absl::make_unique<CloudSchedulerConnectionIdempotencyPolicy>();
+  return std::make_unique<CloudSchedulerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

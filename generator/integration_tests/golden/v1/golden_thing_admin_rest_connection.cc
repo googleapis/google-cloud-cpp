@@ -38,7 +38,7 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnectionRest(
       GoldenThingAdminPolicyOptionList>(options, __func__);
   options = golden_v1_internal::GoldenThingAdminDefaultOptions(
       std::move(options));
-  auto background = absl::make_unique<
+  auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub = golden_v1_internal::CreateDefaultGoldenThingAdminRestStub(
     options);

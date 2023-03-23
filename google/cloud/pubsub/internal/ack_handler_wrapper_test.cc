@@ -15,7 +15,6 @@
 #include "google/cloud/pubsub/internal/ack_handler_wrapper.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/scoped_log.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -41,7 +40,7 @@ class MockExactlyOnceAckHandlerImpl
 };
 
 TEST(AckHandlerWrapper, Ack) {
-  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, ack)
       .WillOnce(
           Return(ByMove(make_ready_future(PermissionDeniedError("uh-oh")))));
@@ -54,7 +53,7 @@ TEST(AckHandlerWrapper, Ack) {
 }
 
 TEST(AckHandlerWrapper, AckSuccess) {
-  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, ack).WillOnce(Return(ByMove(make_ready_future(Status{}))));
   ScopedLog log;
   AckHandlerWrapper tested(std::move(mock), "test-id");
@@ -63,7 +62,7 @@ TEST(AckHandlerWrapper, AckSuccess) {
 }
 
 TEST(AckHandlerWrapper, AckEmpty) {
-  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, ack)
       .WillOnce(
           Return(ByMove(make_ready_future(PermissionDeniedError("uh-oh")))));
@@ -74,7 +73,7 @@ TEST(AckHandlerWrapper, AckEmpty) {
 }
 
 TEST(AckHandlerWrapper, Nack) {
-  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, nack)
       .WillOnce(
           Return(ByMove(make_ready_future(PermissionDeniedError("uh-oh")))));
@@ -87,7 +86,7 @@ TEST(AckHandlerWrapper, Nack) {
 }
 
 TEST(AckHandlerWrapper, NackSuccess) {
-  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, nack)
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   ScopedLog log;
@@ -97,7 +96,7 @@ TEST(AckHandlerWrapper, NackSuccess) {
 }
 
 TEST(AckHandlerWrapper, NackEmpty) {
-  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, nack)
       .WillOnce(
           Return(ByMove(make_ready_future(PermissionDeniedError("uh-oh")))));
@@ -108,7 +107,7 @@ TEST(AckHandlerWrapper, NackEmpty) {
 }
 
 TEST(AckHandlerWrapper, DeliveryAttempt) {
-  auto mock = absl::make_unique<MockExactlyOnceAckHandlerImpl>();
+  auto mock = std::make_unique<MockExactlyOnceAckHandlerImpl>();
   EXPECT_CALL(*mock, delivery_attempt).WillOnce(Return(42));
   AckHandlerWrapper tested(std::move(mock), "test-id");
   EXPECT_EQ(tested.delivery_attempt(), 42);

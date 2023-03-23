@@ -17,7 +17,6 @@
 // source: google/cloud/language/v1/language_service.proto
 
 #include "google/cloud/language/v1/language_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ LanguageServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
 LanguageServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<LanguageServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<LanguageServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency LanguageServiceConnectionIdempotencyPolicy::AnalyzeSentiment(
@@ -67,7 +66,7 @@ Idempotency LanguageServiceConnectionIdempotencyPolicy::AnnotateText(
 
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
 MakeDefaultLanguageServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<LanguageServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<LanguageServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

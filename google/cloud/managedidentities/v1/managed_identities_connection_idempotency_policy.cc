@@ -17,7 +17,6 @@
 // source: google/cloud/managedidentities/v1/managed_identities_service.proto
 
 #include "google/cloud/managedidentities/v1/managed_identities_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ManagedIdentitiesServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
 ManagedIdentitiesServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ManagedIdentitiesServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<ManagedIdentitiesServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -92,7 +91,7 @@ Idempotency ManagedIdentitiesServiceConnectionIdempotencyPolicy::ValidateTrust(
 
 std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
 MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
+  return std::make_unique<
       ManagedIdentitiesServiceConnectionIdempotencyPolicy>();
 }
 

@@ -17,7 +17,6 @@
 #include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
-#include "absl/memory/memory.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {
@@ -47,7 +46,7 @@ future<Status> DefaultPullAckHandler::ack() {
     request.set_subscription(subscription_.FullName());
     request.add_ack_ids(ack_id_);
     return internal::AsyncRetryLoop(
-        absl::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
+        std::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
         ExactlyOnceBackoffPolicy(), google::cloud::Idempotency::kIdempotent,
         cq_,
         [stub = std::move(s)](auto cq, auto context, auto const& request) {
@@ -66,7 +65,7 @@ future<Status> DefaultPullAckHandler::nack() {
     request.set_ack_deadline_seconds(0);
     request.add_ack_ids(ack_id_);
     return internal::AsyncRetryLoop(
-        absl::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
+        std::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
         ExactlyOnceBackoffPolicy(), google::cloud::Idempotency::kIdempotent,
         cq_,
         [stub = std::move(s)](auto cq, auto context, auto const& request) {

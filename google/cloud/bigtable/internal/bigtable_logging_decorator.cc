@@ -48,11 +48,11 @@ BigtableLogging::ReadRows(
               google::bigtable::v2::ReadRowsResponse>> {
         auto stream = child_->ReadRows(std::move(context), request);
         if (components_.count("rpc-streams") > 0) {
-          stream = absl::make_unique<
-              google::cloud::internal::StreamingReadRpcLogging<
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::bigtable::v2::ReadRowsResponse>>(
-              std::move(stream), tracing_options_,
-              google::cloud::internal::RequestIdForLogging());
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
         }
         return stream;
       },
@@ -71,11 +71,11 @@ BigtableLogging::SampleRowKeys(
               google::bigtable::v2::SampleRowKeysResponse>> {
         auto stream = child_->SampleRowKeys(std::move(context), request);
         if (components_.count("rpc-streams") > 0) {
-          stream = absl::make_unique<
-              google::cloud::internal::StreamingReadRpcLogging<
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::bigtable::v2::SampleRowKeysResponse>>(
-              std::move(stream), tracing_options_,
-              google::cloud::internal::RequestIdForLogging());
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
         }
         return stream;
       },
@@ -105,11 +105,11 @@ BigtableLogging::MutateRows(
               google::bigtable::v2::MutateRowsResponse>> {
         auto stream = child_->MutateRows(std::move(context), request);
         if (components_.count("rpc-streams") > 0) {
-          stream = absl::make_unique<
-              google::cloud::internal::StreamingReadRpcLogging<
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
                   google::bigtable::v2::MutateRowsResponse>>(
-              std::move(stream), tracing_options_,
-              google::cloud::internal::RequestIdForLogging());
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
         }
         return stream;
       },
@@ -165,7 +165,7 @@ BigtableLogging::AsyncReadRows(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncReadRows(cq, std::move(context), request);
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -184,7 +184,7 @@ BigtableLogging::AsyncSampleRowKeys(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncSampleRowKeys(cq, std::move(context), request);
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;
@@ -217,7 +217,7 @@ BigtableLogging::AsyncMutateRows(
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
   auto stream = child_->AsyncMutateRows(cq, std::move(context), request);
   if (components_.count("rpc-streams") > 0) {
-    stream = absl::make_unique<LoggingStream>(
+    stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
   }
   return stream;

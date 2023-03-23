@@ -17,7 +17,6 @@
 // source: google/cloud/ids/v1/ids.proto
 
 #include "google/cloud/ids/v1/ids_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -31,7 +30,7 @@ IDSConnectionIdempotencyPolicy::~IDSConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<IDSConnectionIdempotencyPolicy>
 IDSConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<IDSConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<IDSConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency IDSConnectionIdempotencyPolicy::ListEndpoints(
@@ -56,7 +55,7 @@ Idempotency IDSConnectionIdempotencyPolicy::DeleteEndpoint(
 
 std::unique_ptr<IDSConnectionIdempotencyPolicy>
 MakeDefaultIDSConnectionIdempotencyPolicy() {
-  return absl::make_unique<IDSConnectionIdempotencyPolicy>();
+  return std::make_unique<IDSConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

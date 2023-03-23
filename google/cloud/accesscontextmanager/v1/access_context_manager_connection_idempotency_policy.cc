@@ -17,7 +17,6 @@
 // source: google/identity/accesscontextmanager/v1/access_context_manager.proto
 
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AccessContextManagerConnectionIdempotencyPolicy::
 
 std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>
 AccessContextManagerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AccessContextManagerConnectionIdempotencyPolicy>(
+  return std::make_unique<AccessContextManagerConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -202,7 +201,7 @@ Idempotency AccessContextManagerConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>
 MakeDefaultAccessContextManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<AccessContextManagerConnectionIdempotencyPolicy>();
+  return std::make_unique<AccessContextManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

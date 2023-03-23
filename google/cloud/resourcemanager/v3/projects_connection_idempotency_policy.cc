@@ -17,7 +17,6 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/v3/projects_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() =
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
 ProjectsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ProjectsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ProjectsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ProjectsConnectionIdempotencyPolicy::GetProject(
@@ -93,7 +92,7 @@ Idempotency ProjectsConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
 MakeDefaultProjectsConnectionIdempotencyPolicy() {
-  return absl::make_unique<ProjectsConnectionIdempotencyPolicy>();
+  return std::make_unique<ProjectsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

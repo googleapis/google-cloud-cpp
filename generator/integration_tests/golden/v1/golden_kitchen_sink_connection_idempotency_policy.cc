@@ -17,7 +17,6 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -31,7 +30,7 @@ GoldenKitchenSinkConnectionIdempotencyPolicy::~GoldenKitchenSinkConnectionIdempo
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
 GoldenKitchenSinkConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const&) {
@@ -72,7 +71,7 @@ Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ExplicitRouting2(googl
 
 std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
     MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy() {
-  return absl::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>();
+  return std::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

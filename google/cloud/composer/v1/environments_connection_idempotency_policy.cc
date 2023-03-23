@@ -17,7 +17,6 @@
 // source: google/cloud/orchestration/airflow/service/v1/environments.proto
 
 #include "google/cloud/composer/v1/environments_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ EnvironmentsConnectionIdempotencyPolicy::
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
 EnvironmentsConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<EnvironmentsConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<EnvironmentsConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency EnvironmentsConnectionIdempotencyPolicy::CreateEnvironment(
@@ -79,7 +78,7 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::LoadSnapshot(
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
 MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
-  return absl::make_unique<EnvironmentsConnectionIdempotencyPolicy>();
+  return std::make_unique<EnvironmentsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

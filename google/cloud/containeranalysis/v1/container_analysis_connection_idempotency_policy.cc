@@ -17,7 +17,6 @@
 // source: google/devtools/containeranalysis/v1/containeranalysis.proto
 
 #include "google/cloud/containeranalysis/v1/container_analysis_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ContainerAnalysisConnectionIdempotencyPolicy::
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
 ContainerAnalysisConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ContainerAnalysisConnectionIdempotencyPolicy::SetIamPolicy(
@@ -60,7 +59,7 @@ Idempotency ContainerAnalysisConnectionIdempotencyPolicy::
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
 MakeDefaultContainerAnalysisConnectionIdempotencyPolicy() {
-  return absl::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>();
+  return std::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

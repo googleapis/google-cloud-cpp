@@ -17,7 +17,6 @@
 // source: google/cloud/texttospeech/v1/cloud_tts.proto
 
 #include "google/cloud/texttospeech/v1/text_to_speech_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ TextToSpeechConnectionIdempotencyPolicy::
 
 std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>
 TextToSpeechConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<TextToSpeechConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<TextToSpeechConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency TextToSpeechConnectionIdempotencyPolicy::ListVoices(
@@ -47,7 +46,7 @@ Idempotency TextToSpeechConnectionIdempotencyPolicy::SynthesizeSpeech(
 
 std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>
 MakeDefaultTextToSpeechConnectionIdempotencyPolicy() {
-  return absl::make_unique<TextToSpeechConnectionIdempotencyPolicy>();
+  return std::make_unique<TextToSpeechConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

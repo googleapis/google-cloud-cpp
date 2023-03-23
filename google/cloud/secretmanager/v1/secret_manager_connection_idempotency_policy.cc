@@ -17,7 +17,6 @@
 // source: google/cloud/secretmanager/v1/service.proto
 
 #include "google/cloud/secretmanager/v1/secret_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ SecretManagerServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
 SecretManagerServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<SecretManagerServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<SecretManagerServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -118,7 +117,7 @@ Idempotency SecretManagerServiceConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
 MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<SecretManagerServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<SecretManagerServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

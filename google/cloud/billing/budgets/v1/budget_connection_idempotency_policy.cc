@@ -17,7 +17,6 @@
 // source: google/cloud/billing/budgets/v1/budget_service.proto
 
 #include "google/cloud/billing/budgets/v1/budget_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ BudgetServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
 BudgetServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<BudgetServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<BudgetServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency BudgetServiceConnectionIdempotencyPolicy::CreateBudget(
@@ -62,7 +61,7 @@ Idempotency BudgetServiceConnectionIdempotencyPolicy::DeleteBudget(
 
 std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
 MakeDefaultBudgetServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<BudgetServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<BudgetServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

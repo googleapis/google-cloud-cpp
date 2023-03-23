@@ -72,7 +72,7 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
                 std::shared_ptr<grpc::ClientContext> initial_context)
         : factory(std::move(factory)),
           initial_context(std::move(initial_context)),
-          stream(absl::make_unique<AsyncStreamingReadRpcError<Response>>(
+          stream(std::make_unique<AsyncStreamingReadRpcError<Response>>(
               Status(StatusCode::kInternal, "Stream is not yet started."))) {}
 
     std::shared_ptr<grpc::ClientContext> ReleaseInitialContext() {
@@ -87,7 +87,7 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
       if (context) {
         stream = factory(*std::move(context));
       } else {
-        stream = absl::make_unique<AsyncStreamingReadRpcError<Response>>(
+        stream = std::make_unique<AsyncStreamingReadRpcError<Response>>(
             std::move(context).status());
       }
       return stream->Start();

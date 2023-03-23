@@ -173,7 +173,7 @@ MakeStreamingReadWriteRpc(
     PrepareAsyncReadWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto stream = async_call(context.get(), cq_impl->cq());
-  return absl::make_unique<AsyncStreamingReadWriteRpcImpl<Request, Response>>(
+  return std::make_unique<AsyncStreamingReadWriteRpcImpl<Request, Response>>(
       std::move(cq_impl), std::move(context), std::move(stream));
 }
 

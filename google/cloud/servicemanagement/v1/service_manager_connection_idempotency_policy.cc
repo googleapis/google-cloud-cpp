@@ -17,7 +17,6 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/v1/service_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ServiceManagerConnectionIdempotencyPolicy::
 
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>
 ServiceManagerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ServiceManagerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ServiceManagerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ServiceManagerConnectionIdempotencyPolicy::ListServices(
@@ -102,7 +101,7 @@ Idempotency ServiceManagerConnectionIdempotencyPolicy::GenerateConfigReport(
 
 std::unique_ptr<ServiceManagerConnectionIdempotencyPolicy>
 MakeDefaultServiceManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<ServiceManagerConnectionIdempotencyPolicy>();
+  return std::make_unique<ServiceManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

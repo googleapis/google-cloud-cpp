@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/clusters.proto
 
 #include "google/cloud/dataproc/v1/cluster_controller_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ClusterControllerConnectionIdempotencyPolicy::
 
 std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy>
 ClusterControllerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ClusterControllerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ClusterControllerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ClusterControllerConnectionIdempotencyPolicy::CreateCluster(
@@ -77,7 +76,7 @@ Idempotency ClusterControllerConnectionIdempotencyPolicy::DiagnoseCluster(
 
 std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy>
 MakeDefaultClusterControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<ClusterControllerConnectionIdempotencyPolicy>();
+  return std::make_unique<ClusterControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

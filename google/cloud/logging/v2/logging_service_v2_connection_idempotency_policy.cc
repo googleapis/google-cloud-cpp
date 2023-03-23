@@ -17,7 +17,6 @@
 // source: google/logging/v2/logging.proto
 
 #include "google/cloud/logging/v2/logging_service_v2_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ LoggingServiceV2ConnectionIdempotencyPolicy::
 
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
 LoggingServiceV2ConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<LoggingServiceV2ConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<LoggingServiceV2ConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::DeleteLog(
@@ -63,7 +62,7 @@ Idempotency LoggingServiceV2ConnectionIdempotencyPolicy::ListLogs(
 
 std::unique_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>
 MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy() {
-  return absl::make_unique<LoggingServiceV2ConnectionIdempotencyPolicy>();
+  return std::make_unique<LoggingServiceV2ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

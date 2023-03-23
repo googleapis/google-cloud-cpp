@@ -17,7 +17,6 @@
 // source: google/cloud/apigeeconnect/v1/connection.proto
 
 #include "google/cloud/apigeeconnect/v1/connection_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ConnectionServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
 ConnectionServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ConnectionServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ConnectionServiceConnectionIdempotencyPolicy::ListConnections(
@@ -42,7 +41,7 @@ Idempotency ConnectionServiceConnectionIdempotencyPolicy::ListConnections(
 
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
 MakeDefaultConnectionServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ConnectionServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ConnectionServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

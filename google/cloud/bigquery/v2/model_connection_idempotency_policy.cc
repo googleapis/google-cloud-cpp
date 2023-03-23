@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/v2/model.proto
 
 #include "google/cloud/bigquery/v2/model_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ModelServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
 ModelServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ModelServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ModelServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(
@@ -57,7 +56,7 @@ Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
 MakeDefaultModelServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ModelServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ModelServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,7 +17,6 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/v1/os_login_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ OsLoginServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy>
 OsLoginServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<OsLoginServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<OsLoginServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency OsLoginServiceConnectionIdempotencyPolicy::CreateSshPublicKey(
@@ -72,7 +71,7 @@ Idempotency OsLoginServiceConnectionIdempotencyPolicy::UpdateSshPublicKey(
 
 std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy>
 MakeDefaultOsLoginServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<OsLoginServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<OsLoginServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

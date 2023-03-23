@@ -161,9 +161,9 @@ MakeStreamingWriteRpc(CompletionQueue const& cq,
                       std::shared_ptr<grpc::ClientContext> context,
                       PrepareAsyncWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
-  auto response = absl::make_unique<Response>();
+  auto response = std::make_unique<Response>();
   auto stream = async_call(context.get(), response.get(), cq_impl->cq());
-  return absl::make_unique<AsyncStreamingWriteRpcImpl<Request, Response>>(
+  return std::make_unique<AsyncStreamingWriteRpcImpl<Request, Response>>(
       std::move(cq_impl), std::move(context), std::move(response),
       std::move(stream));
 }

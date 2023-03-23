@@ -21,7 +21,6 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
-#include "absl/memory/memory.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <deque>
 #include <functional>

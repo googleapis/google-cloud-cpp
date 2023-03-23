@@ -18,7 +18,6 @@
 #include "google/cloud/pubsub/mocks/mock_exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/mocks/mock_subscriber_connection.h"
 #include "google/cloud/pubsub/subscriber.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <future>
 //! [required-includes]
@@ -47,7 +46,7 @@ TEST(MockSubscribeExample, Subscribe) {
          pubsub::SubscriberConnection::SubscribeParams const& params) {
         for (int i = 0; i != 3; ++i) {
           //! [setup-mock-handler]
-          auto mock_handler = absl::make_unique<MockAckHandler>();
+          auto mock_handler = std::make_unique<MockAckHandler>();
           EXPECT_CALL(*mock_handler, ack_id)
               .WillRepeatedly(Return("ack-id-" + std::to_string(i)));
           EXPECT_CALL(*mock_handler, ack).Times(1);
@@ -118,7 +117,7 @@ TEST(MockSubscribeExample, ExactlyOnceSubscribe) {
          pubsub::SubscriberConnection::ExactlyOnceSubscribeParams const&
              params) {
         for (int i = 0; i != 3; ++i) {
-          auto mock_handler = absl::make_unique<MockExactlyOnceAckHandler>();
+          auto mock_handler = std::make_unique<MockExactlyOnceAckHandler>();
           EXPECT_CALL(*mock_handler, ack_id)
               .WillRepeatedly(Return("ack-id-" + std::to_string(i)));
           EXPECT_CALL(*mock_handler, ack)

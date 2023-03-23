@@ -17,7 +17,6 @@
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
 #include "google/cloud/assuredworkloads/v1/assured_workloads_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AssuredWorkloadsServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
 AssuredWorkloadsServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -86,8 +85,7 @@ AssuredWorkloadsServiceConnectionIdempotencyPolicy::AcknowledgeViolation(
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
 MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      AssuredWorkloadsServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<AssuredWorkloadsServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

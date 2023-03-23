@@ -80,7 +80,7 @@ MakeInstanceAdminConnectionRestEmulator() {
     options.set<EndpointOption>(
         internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
   }
-  auto background = absl::make_unique<
+  auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       spanner_admin_internal::CreateDefaultInstanceAdminRestStub(options);
@@ -98,7 +98,7 @@ MakeDatabaseAdminConnectionRestEmulator() {
     options.set<EndpointOption>(
         internal::GetEnv("SPANNER_EMULATOR_REST_HOST").value());
   }
-  auto background = absl::make_unique<
+  auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
   auto stub =
       spanner_admin_internal::CreateDefaultDatabaseAdminRestStub(options);

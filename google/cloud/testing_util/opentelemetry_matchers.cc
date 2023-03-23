@@ -14,7 +14,6 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
-#include "absl/memory/memory.h"
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/tracer.h>
@@ -61,11 +60,11 @@ bool ThereIsAnActiveSpan() {
 
 std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
 InstallSpanCatcher() {
-  auto exporter = absl::make_unique<
-      opentelemetry::exporter::memory::InMemorySpanExporter>();
+  auto exporter =
+      std::make_unique<opentelemetry::exporter::memory::InMemorySpanExporter>();
   auto span_data = exporter->GetData();
   auto processor =
-      absl::make_unique<opentelemetry::sdk::trace::SimpleSpanProcessor>(
+      std::make_unique<opentelemetry::sdk::trace::SimpleSpanProcessor>(
           std::move(exporter));
   std::shared_ptr<opentelemetry::trace::TracerProvider> provider =
       opentelemetry::sdk::trace::TracerProviderFactory::Create(

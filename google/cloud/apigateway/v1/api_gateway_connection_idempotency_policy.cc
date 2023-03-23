@@ -17,7 +17,6 @@
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
 #include "google/cloud/apigateway/v1/api_gateway_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ ApiGatewayServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>
 ApiGatewayServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::ListGateways(
@@ -112,7 +111,7 @@ Idempotency ApiGatewayServiceConnectionIdempotencyPolicy::DeleteApiConfig(
 
 std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>
 MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

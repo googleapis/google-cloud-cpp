@@ -18,7 +18,6 @@
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -374,7 +373,6 @@ Status StubGenerator::GenerateCc() {
   CcPrint("\n");
   CcLocalIncludes(
       {vars("stub_header_path"),
-       HasStreamingReadMethod() ? "absl/memory/memory.h" : "",
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_impl.h"
            : "",
@@ -411,9 +409,9 @@ std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
     $response_type$>>
 Default$stub_class_name$::$method_name$(
     std::shared_ptr<grpc::ClientContext> context) {
-  auto response = absl::make_unique<$response_type$>();
+  auto response = std::make_unique<$response_type$>();
   auto stream = grpc_stub_->$method_name$(context.get(), response.get());
-  return absl::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
+  return std::make_unique<::google::cloud::internal::StreamingWriteRpcImpl<
       $request_type$, $response_type$>>(
     std::move(context), std::move(response), std::move(stream));
 }
@@ -486,7 +484,7 @@ Default$stub_class_name$::Async$method_name$(
     "    std::shared_ptr<grpc::ClientContext> client_context,\n"
     "    $request_type$ const& request) {\n"
     "  auto stream = grpc_stub_->$method_name$(client_context.get(), request);\n"
-    "  return absl::make_unique<google::cloud::internal::StreamingReadRpcImpl<\n"
+    "  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<\n"
     "      $response_type$>>(\n"
     "      std::move(client_context), std::move(stream));\n"
     "}\n"}},

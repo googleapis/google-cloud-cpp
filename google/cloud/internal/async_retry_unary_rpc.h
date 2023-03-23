@@ -20,7 +20,6 @@
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/setup_context.h"
 #include "google/cloud/version.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/empty.pb.h>
 #include <chrono>
 #include <string>
@@ -147,7 +146,7 @@ class RetryAsyncUnaryRpc {
   /// The callback to start another iteration of the retry loop.
   static void StartIteration(std::shared_ptr<RetryAsyncUnaryRpc> self,
                              CompletionQueue cq) {
-    auto context = absl::make_unique<grpc::ClientContext>();
+    auto context = std::make_unique<grpc::ClientContext>();
     SetupContext<RPCRetryPolicy>::Setup(*self->rpc_retry_policy_, *context);
     cq.MakeUnaryRpc(self->async_call_, self->request_, std::move(context))
         .then([self, cq](future<StatusOr<Response>> fut) {

@@ -18,7 +18,6 @@
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_status.h"
-#include "absl/memory/memory.h"
 
 namespace google {
 namespace cloud {

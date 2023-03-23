@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/jobs.proto
 
 #include "google/cloud/dataproc/v1/job_controller_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ JobControllerConnectionIdempotencyPolicy::
 
 std::unique_ptr<JobControllerConnectionIdempotencyPolicy>
 JobControllerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<JobControllerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<JobControllerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency JobControllerConnectionIdempotencyPolicy::SubmitJob(
@@ -72,7 +71,7 @@ Idempotency JobControllerConnectionIdempotencyPolicy::DeleteJob(
 
 std::unique_ptr<JobControllerConnectionIdempotencyPolicy>
 MakeDefaultJobControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<JobControllerConnectionIdempotencyPolicy>();
+  return std::make_unique<JobControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

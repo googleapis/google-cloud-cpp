@@ -53,7 +53,7 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>
 SpeechConnection::AsyncStreamingRecognize() {
-  return absl::make_unique<
+  return std::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::cloud::speech::v1::StreamingRecognizeRequest,
           google::cloud::speech::v1::StreamingRecognizeResponse>>(

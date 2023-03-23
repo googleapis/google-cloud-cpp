@@ -546,8 +546,8 @@ class MockLongrunningOperationsStub
 class GoldenStubTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    grpc_stub_ = absl::make_unique<MockGrpcGoldenThingAdminStub>();
-    longrunning_stub_ = absl::make_unique<MockLongrunningOperationsStub>();
+    grpc_stub_ = std::make_unique<MockGrpcGoldenThingAdminStub>();
+    longrunning_stub_ = std::make_unique<MockLongrunningOperationsStub>();
   }
 
   static grpc::Status GrpcTransientError() {
@@ -560,7 +560,7 @@ class GoldenStubTest : public ::testing::Test {
 
   template <typename Response>
   std::unique_ptr<MockAsyncResponseReader<Response>> AsyncTransientError() {
-    auto reader = absl::make_unique<MockAsyncResponseReader<Response>>();
+    auto reader = std::make_unique<MockAsyncResponseReader<Response>>();
     EXPECT_CALL(*reader, Finish)
         .WillOnce([](Response*, grpc::Status* status, void*) {
           *status = GrpcTransientError();

@@ -108,7 +108,7 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestRequest const& request) {
   auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl =
-      absl::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
+      std::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
   if (credentials_) {
     auto auth_header = oauth2_internal::AuthorizationHeader(*credentials_);
     if (!auth_header.ok()) return std::move(auth_header).status();

@@ -17,7 +17,6 @@
 // source: grafeas/v1/grafeas.proto
 
 #include "google/cloud/containeranalysis/v1/grafeas_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ GrafeasConnectionIdempotencyPolicy::~GrafeasConnectionIdempotencyPolicy() =
 
 std::unique_ptr<GrafeasConnectionIdempotencyPolicy>
 GrafeasConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<GrafeasConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<GrafeasConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency GrafeasConnectionIdempotencyPolicy::GetOccurrence(
@@ -107,7 +106,7 @@ Idempotency GrafeasConnectionIdempotencyPolicy::ListNoteOccurrences(
 
 std::unique_ptr<GrafeasConnectionIdempotencyPolicy>
 MakeDefaultGrafeasConnectionIdempotencyPolicy() {
-  return absl::make_unique<GrafeasConnectionIdempotencyPolicy>();
+  return std::make_unique<GrafeasConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

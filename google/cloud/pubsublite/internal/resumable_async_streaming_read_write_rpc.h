@@ -173,7 +173,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       GCP_LOG(WARNING)
           << "`Shutdown` must be called and finished before object "
              "goes out of scope if `Start` was called.";
-      assert(false);
     }
     shutdown.get();
   }
@@ -204,7 +203,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       std::lock_guard<std::mutex> g{mu_};
       stream_state_ = State::kRetrying;
       status_future = status_promise_.get_future();
-      assert(!retry_promise_.has_value());
       retry_promise_.emplace();
     }
     auto retry_policy = retry_factory_();
@@ -222,13 +220,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         case State::kShutdown:
           return make_ready_future(absl::optional<ResponseType>());
         case State::kRetrying:
-          assert(!read_reinit_done_.has_value());
           read_reinit_done_.emplace();
           return read_reinit_done_->get_future().then(
               [](future<void>) { return absl::optional<ResponseType>(); });
         case State::kInitialized:
           read_future = stream_->Read();
-          assert(!in_progress_read_.has_value());
           in_progress_read_.emplace();
       }
     }
@@ -248,13 +244,11 @@ class ResumableAsyncStreamingReadWriteRpcImpl
         case State::kShutdown:
           return make_ready_future(false);
         case State::kRetrying:
-          assert(!write_reinit_done_.has_value());
           write_reinit_done_.emplace();
           return write_reinit_done_->get_future().then(
               [](future<void>) { return false; });
         case State::kInitialized:
           write_future = stream_->Write(r, grpc::WriteOptions());
-          assert(!in_progress_write_.has_value());
           in_progress_write_.emplace();
       }
     }
@@ -298,12 +292,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     {
       std::lock_guard<std::mutex> g{mu_};
-      assert(in_progress_read_.has_value());
       in_progress_read = std::move(*in_progress_read_);
       in_progress_read_.reset();
       shutdown = stream_state_ == State::kShutdown;
       if (!optional_response.has_value() && !shutdown) {
-        assert(!read_reinit_done_.has_value());
         read_reinit_done_.emplace();
         read_reinit_done = read_reinit_done_->get_future();
       }
@@ -332,12 +324,10 @@ class ResumableAsyncStreamingReadWriteRpcImpl
 
     {
       std::lock_guard<std::mutex> g{mu_};
-      assert(in_progress_write_.has_value());
       in_progress_write = std::move(*in_progress_write_);
       in_progress_write_.reset();
       shutdown = stream_state_ == State::kShutdown;
       if (!write_response && !shutdown) {
-        assert(!write_reinit_done_.has_value());
         write_reinit_done_.emplace();
         write_reinit_done = write_reinit_done_->get_future();
       }
@@ -360,7 +350,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
     if (stream_state_ != State::kInitialized) return;
 
     stream_state_ = State::kRetrying;
-    assert(!retry_promise_.has_value());
     retry_promise_.emplace();
 
     // Assuming that a `Read` fails:
@@ -462,7 +451,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
   }
 
   void FinishRetryPromise(std::unique_lock<std::mutex>& lk) {
-    assert(retry_promise_.has_value());
     promise<void> retry_promise = std::move(retry_promise_.value());
     retry_promise_.reset();
     lk.unlock();
@@ -478,7 +466,6 @@ class ResumableAsyncStreamingReadWriteRpcImpl
       if (stream_state_ == State::kShutdown) {
         return FinishRetryPromise(lk);
       }
-      assert(stream_state_ == State::kRetrying);
     }
 
     if (!retry_policy->IsExhausted() && retry_policy->OnFailure(status)) {
@@ -593,7 +580,7 @@ MakeResumableAsyncStreamingReadWriteRpcImpl(
     std::shared_ptr<BackoffPolicy const> backoff_policy, AsyncSleeper sleeper,
     AsyncStreamFactory<RequestType, ResponseType> stream_factory,
     StreamInitializer<RequestType, ResponseType> initializer) {
-  return absl::make_unique<
+  return std::make_unique<
       ResumableAsyncStreamingReadWriteRpcImpl<RequestType, ResponseType>>(
       std::move(retry_factory), std::move(backoff_policy), std::move(sleeper),
       std::move(stream_factory), std::move(initializer));

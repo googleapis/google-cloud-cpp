@@ -17,7 +17,6 @@
 // source: google/cloud/gkemulticloud/v1/attached_service.proto
 
 #include "google/cloud/gkemulticloud/v1/attached_clusters_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ AttachedClustersConnectionIdempotencyPolicy::
 
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>
 AttachedClustersConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<AttachedClustersConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<AttachedClustersConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency AttachedClustersConnectionIdempotencyPolicy::CreateAttachedCluster(
@@ -80,7 +79,7 @@ Idempotency AttachedClustersConnectionIdempotencyPolicy::
 
 std::unique_ptr<AttachedClustersConnectionIdempotencyPolicy>
 MakeDefaultAttachedClustersConnectionIdempotencyPolicy() {
-  return absl::make_unique<AttachedClustersConnectionIdempotencyPolicy>();
+  return std::make_unique<AttachedClustersConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

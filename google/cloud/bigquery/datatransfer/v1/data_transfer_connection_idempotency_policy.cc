@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DataTransferServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
 DataTransferServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DataTransferServiceConnectionIdempotencyPolicy>(
+  return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>(
       *this);
 }
 
@@ -130,7 +129,7 @@ Idempotency DataTransferServiceConnectionIdempotencyPolicy::EnrollDataSources(
 
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
 MakeDefaultDataTransferServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DataTransferServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

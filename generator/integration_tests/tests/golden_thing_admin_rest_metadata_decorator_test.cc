@@ -17,7 +17,6 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <gmock/gmock.h>
 #include <memory>
 
@@ -167,7 +166,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
   internal::OptionsSpan span(Options{}.set<QuotaUserOption>("test-quota-user"));
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncCreateDatabase(cq, std::move(context), request);
@@ -193,7 +192,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
 
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
@@ -373,7 +372,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
 
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncCreateBackup(cq, std::move(context), request);
@@ -497,7 +496,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
 
   GoldenThingAdminRestMetadata stub(mock);
   CompletionQueue cq;
-  auto context = absl::make_unique<rest_internal::RestContext>();
+  auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncRestoreDatabase(cq, std::move(context), request);

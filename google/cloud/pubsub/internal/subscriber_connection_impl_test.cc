@@ -120,7 +120,7 @@ StreamingPullMock MakeAsyncStreamingPullMock(
       return cq.MakeRelativeTimer(us(10)).then([](auto) { return Status{}; });
     };
 
-    auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+    auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
     EXPECT_CALL(*stream, Start).WillOnce(start_response);
     EXPECT_CALL(
         *stream,
@@ -347,7 +347,7 @@ TEST(SubscriberConnectionTest, StreamingPullFailure) {
           });
         };
 
-        auto stream = absl::make_unique<pubsub_testing::MockAsyncPullStream>();
+        auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce(start_response);
         EXPECT_CALL(*stream, Finish).WillOnce(finish_response);
         return stream;

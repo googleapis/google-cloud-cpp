@@ -17,7 +17,6 @@
 // source: google/cloud/certificatemanager/v1/certificate_manager.proto
 
 #include "google/cloud/certificatemanager/v1/certificate_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,8 +31,7 @@ CertificateManagerConnectionIdempotencyPolicy::
 
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>
 CertificateManagerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<CertificateManagerConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<CertificateManagerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency CertificateManagerConnectionIdempotencyPolicy::ListCertificates(
@@ -185,7 +183,7 @@ CertificateManagerConnectionIdempotencyPolicy::DeleteCertificateIssuanceConfig(
 
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>
 MakeDefaultCertificateManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<CertificateManagerConnectionIdempotencyPolicy>();
+  return std::make_unique<CertificateManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

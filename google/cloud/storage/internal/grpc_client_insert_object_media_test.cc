@@ -19,7 +19,6 @@
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -75,7 +74,7 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
     ::testing::InSequence sequence;
-    auto stream = absl::make_unique<MockInsertStream>();
+    auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write(IsProtoEqual(write_request), _))
         .WillOnce(Return(true));
     EXPECT_CALL(*stream, Close).WillOnce(Return(response));
@@ -97,7 +96,7 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutWrite) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
     ::testing::InSequence sequence;
-    auto stream = absl::make_unique<MockInsertStream>();
+    auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
     EXPECT_CALL(*stream, Close)
@@ -130,7 +129,7 @@ TEST(GrpcClientInsertObjectMediaTest, StallTimeoutClose) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject).WillOnce([&](auto) {
     ::testing::InSequence sequence;
-    auto stream = absl::make_unique<MockInsertStream>();
+    auto stream = std::make_unique<MockInsertStream>();
     EXPECT_CALL(*stream, Write).WillOnce(Return(false));
     EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Close)

@@ -965,7 +965,7 @@ class Table {
         std::move(on_row_fn), std::move(on_finish_fn), std::move(row_set),
         rows_limit, std::move(filter), clone_rpc_retry_policy(),
         clone_rpc_backoff_policy(), metadata_update_policy_,
-        absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
+        std::make_unique<bigtable::internal::ReadRowsParserFactory>());
   }
 
   /**

@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/datapolicies/v1/datapolicy.proto
 
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ DataPolicyServiceConnectionIdempotencyPolicy::
 
 std::unique_ptr<DataPolicyServiceConnectionIdempotencyPolicy>
 DataPolicyServiceConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<DataPolicyServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<DataPolicyServiceConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency DataPolicyServiceConnectionIdempotencyPolicy::CreateDataPolicy(
@@ -84,7 +83,7 @@ Idempotency DataPolicyServiceConnectionIdempotencyPolicy::TestIamPermissions(
 
 std::unique_ptr<DataPolicyServiceConnectionIdempotencyPolicy>
 MakeDefaultDataPolicyServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DataPolicyServiceConnectionIdempotencyPolicy>();
+  return std::make_unique<DataPolicyServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
