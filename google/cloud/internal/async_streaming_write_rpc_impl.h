@@ -18,8 +18,8 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/async_streaming_write_rpc.h"
+#include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
-#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"
@@ -57,9 +57,9 @@ class AsyncStreamingWriteRpcImpl
   future<bool> Start() override {
     struct OnStart : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options);
+        ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
@@ -74,9 +74,9 @@ class AsyncStreamingWriteRpcImpl
                      grpc::WriteOptions write_options) override {
     struct OnWrite : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options);
+        ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
@@ -92,9 +92,9 @@ class AsyncStreamingWriteRpcImpl
   future<bool> WritesDone() override {
     struct OnWritesDone : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options);
+        ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
@@ -109,10 +109,10 @@ class AsyncStreamingWriteRpcImpl
     struct OnFinish : public AsyncGrpcOperation {
       std::unique_ptr<Response> response;
       promise<StatusOr<Response>> p;
-      Options options = CurrentOptions();
+      CallContext call_context;
       grpc::Status status;
       bool Notify(bool /*ok*/) override {
-        OptionsSpan span(options);
+        ScopedCallContext scope(call_context);
         if (status.ok()) {
           p.set_value(std::move(*response));
           return true;
