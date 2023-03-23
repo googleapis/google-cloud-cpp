@@ -23,7 +23,7 @@ namespace {
 
 std::string Usage(std::string const& cmd) {
   std::ostringstream os;
-  os << "Usage: " << cmd << " <infile> <library>";
+  os << "Usage: " << cmd << " <infile> <library> <version>";
   return std::move(os).str();
 }
 
@@ -35,8 +35,11 @@ Config ParseArguments(std::vector<std::string> const& args) {
     std::cout << Usage(args[0]) << "\n";
     std::exit(0);
   }
-  if (args.size() != 3) throw std::runtime_error(Usage(args[0]));
-  return Config{args[1], args[2]};
+  if (args.size() != 4) throw std::runtime_error(Usage(args[0]));
+  // It is tempting to use google::cloud::version_string(), but sometimes the
+  // tool may be used to generate documentation for older versions of the
+  // library.
+  return Config{args[1], args[2], args[3]};
 }
 
 }  // namespace docfx

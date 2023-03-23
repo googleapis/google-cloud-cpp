@@ -12,19 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
-#define GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
-
-#include <string>
+#include "docfx/generate_metadata.h"
+#include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
 namespace docfx {
+namespace {
 
-struct Config {
-  std::string input_filename;
-  std::string library;
-  std::string version;
-};
+TEST(GenerateMetadata, Basic) {
+  auto const config = Config{"test-only-input-filename", "test-only-library",
+                             "test-only-version"};
+  auto const generated = GenerateMetadata(config);
+  auto const actual = nlohmann::json::parse(generated);
+  auto const expected = nlohmann::json{
+      {"language", "cpp"},
+      {"name", "test-only-library"},
+      {"version", "test-only-version"},
+  };
+  EXPECT_EQ(expected, actual);
+}
 
+}  // namespace
 }  // namespace docfx
-
-#endif  // GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
