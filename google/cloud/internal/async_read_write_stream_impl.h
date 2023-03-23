@@ -56,9 +56,9 @@ class AsyncStreamingReadWriteRpcImpl
   future<bool> Start() override {
     struct OnStart : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options_ = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
@@ -73,9 +73,9 @@ class AsyncStreamingReadWriteRpcImpl
     struct OnRead : public AsyncGrpcOperation {
       promise<absl::optional<Response>> p;
       Response response;
-      Options options_ = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        ScopedCallContext scope(call_context);
         if (!ok) {
           p.set_value({});
           return true;
@@ -95,9 +95,9 @@ class AsyncStreamingReadWriteRpcImpl
                      grpc::WriteOptions options) override {
     struct OnWrite : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options_ = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
@@ -113,9 +113,9 @@ class AsyncStreamingReadWriteRpcImpl
   future<bool> WritesDone() override {
     struct OnWritesDone : public AsyncGrpcOperation {
       promise<bool> p;
-      Options options_ = CurrentOptions();
+      CallContext call_context;
       bool Notify(bool ok) override {
-        OptionsSpan span(options_);
+        ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
@@ -129,10 +129,10 @@ class AsyncStreamingReadWriteRpcImpl
   future<Status> Finish() override {
     struct OnFinish : public AsyncGrpcOperation {
       promise<Status> p;
-      Options options_ = CurrentOptions();
+      CallContext call_context;
       grpc::Status status;
       bool Notify(bool /*ok*/) override {
-        OptionsSpan span(options_);
+        ScopedCallContext scope(call_context);
         p.set_value(MakeStatusFromRpcError(std::move(status)));
         return true;
       }
