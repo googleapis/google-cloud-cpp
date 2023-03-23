@@ -12,19 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
-#define GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
+#include "docfx/generate_metadata.h"
+#include <gmock/gmock.h>
 
-#include <string>
-
-namespace docfx {
-
-struct Config {
-  std::string input_filename;
-  std::string library;
-  std::string version;
-};
-
-}  // namespace docfx
-
-#endif  // GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
+namespace docfx {}  // namespace docfx
