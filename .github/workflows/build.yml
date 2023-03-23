@@ -32,6 +32,8 @@ jobs:
           printf "%10s %s\n" "bazel:" "$(bazelisk --batch version 2>&1 | head -1)"
           printf "%10s %s\n" "=========="
           du -sh
+          printf "%10s %s\n" "=========="
+          df -h
       - name: run bazel fetch
         run: |
           bazelisk fetch //...
@@ -64,7 +66,7 @@ jobs:
           printf "%10s %s\n" "=========="
           du -sh
           printf "%10s %s\n" "=========="
-          dfgit -sh
+          df -h
       - name: run bazel fetch
         run: |
           bazelisk fetch //...
