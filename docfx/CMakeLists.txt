@@ -35,6 +35,8 @@ add_library(
     doxygen2markdown.h
     doxygen2toc.cc
     doxygen2toc.h
+    doxygen2yaml.cc
+    doxygen2yaml.h
     doxygen_pages.cc
     doxygen_pages.h
     generate_metadata.cc
@@ -65,8 +67,8 @@ endif ()
 
 set(unit_tests
     # cmake-format: sort
-    doxygen2markdown_test.cc doxygen2toc_test.cc doxygen_pages_test.cc
-    generate_metadata_test.cc parse_arguments_test.cc)
+    doxygen2markdown_test.cc doxygen2toc_test.cc doxygen2yaml_test.cc
+    doxygen_pages_test.cc generate_metadata_test.cc parse_arguments_test.cc)
 
 # Export the list of unit tests to a .bzl file so we do not need to maintain the
 # list in two places.
