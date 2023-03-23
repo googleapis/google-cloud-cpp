@@ -32,21 +32,16 @@ template <typename Functor, typename Request,
 Result JobLogWrapper(Functor&& functor, rest_internal::RestContext& context,
                      Request const& request, char const* where,
                      TracingOptions const& /*options*/) {
-  GCP_LOG(DEBUG) << where << "() << " << request;
-
-  if (!context.headers().empty()) {
-    GCP_LOG(DEBUG) << where << "() << RestContext{";
-    for (auto const& h : context.headers()) {
-      GCP_LOG(DEBUG) << "[header_name=" << h.first << ", header_value={"
-                     << absl::StrJoin(h.second, "&") << "}],";
-    }
-    GCP_LOG(DEBUG) << "}";
-  }
+  auto formatter = [](std::string* out, auto const& header) {
+    absl::StrAppend(out, "name=", header.first, ", value={",
+                    absl::StrJoin(header.second, "&"), "}");
+  };
+  GCP_LOG(DEBUG) << where << "() " << request << ", Context={"
+                 << absl::StrJoin(context.headers(), ", ", formatter) << "}";
 
   auto response = functor(context, request);
-  if (!response) {
-    GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
-  }
+  GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
+
   return response;
 }
 
