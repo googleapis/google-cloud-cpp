@@ -60,9 +60,17 @@ bool AppendIfSect2(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
                    pugi::xml_node const& node);
 
+/// Outputs a description node.
+void AppendDescriptionType(std::ostream& os, MarkdownContext const& ctx,
+                           pugi::xml_node const& node);
+
 /// Handles a detailed description node.
 bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
                                  pugi::xml_node const& node);
+
+/// Handles a brief description node.
+bool AppendIfBriefDescription(std::ostream& os, MarkdownContext const& ctx,
+                              pugi::xml_node const& node);
 
 /**
  * Handle plain text nodes.
