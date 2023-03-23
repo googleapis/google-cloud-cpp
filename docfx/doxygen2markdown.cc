@@ -162,7 +162,7 @@ bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
-// A "detaileddescription" node type is defined as:
+// All "*description" nodes have this type:
 //
 // clang-format off
 //   <xsd:complexType name="descriptionType" mixed="true">
@@ -174,9 +174,8 @@ bool AppendIfSect1(std::ostream& os, MarkdownContext const& ctx,
 //     </xsd:sequence>
 //   </xsd:complexType>
 // clang-format on
-bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
-                                 pugi::xml_node const& node) {
-  if (std::string_view{node.name()} != "detaileddescription") return false;
+void AppendDescriptionType(std::ostream& os, MarkdownContext const& ctx,
+                           pugi::xml_node const& node) {
   for (auto const& child : node) {
     // Unexpected: title, internal -> we do not use this...
     if (AppendIfParagraph(os, ctx, child)) continue;
@@ -189,6 +188,19 @@ bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
     if (AppendIfSect4(os, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
+}
+
+bool AppendIfDetailedDescription(std::ostream& os, MarkdownContext const& ctx,
+                                 pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "detaileddescription") return false;
+  AppendDescriptionType(os, ctx, node);
+  return true;
+}
+
+bool AppendIfBriefDescription(std::ostream& os, MarkdownContext const& ctx,
+                              pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "briefdescription") return false;
+  AppendDescriptionType(os, ctx, node);
   return true;
 }
 

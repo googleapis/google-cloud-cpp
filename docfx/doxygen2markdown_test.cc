@@ -234,6 +234,26 @@ Second paragraph (4).)md";
   EXPECT_EQ(kExpected, os.str());
 }
 
+TEST(Doxygen2Markdown, BriefDescription) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <briefdescription id='tested-node'>
+          <para>This is <bold>not</bold> too detailed.</para>
+        </briefdescription>
+    </doxygen>)xml";
+
+  auto constexpr kExpected = R"md(
+
+This is **not** too detailed.)md";
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='tested-node']");
+  ASSERT_TRUE(selected);
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfBriefDescription(os, {}, selected.node()));
+  EXPECT_EQ(kExpected, os.str());
+}
+
 TEST(Doxygen2Markdown, PlainText) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
