@@ -110,6 +110,7 @@ TEST(ListJobsRequestTest, Success) {
       .set_min_creation_time(min)
       .set_max_creation_time(max)
       .set_parent_job_id("1")
+      .set_page_token("123")
       .set_projection(Projection::Full())
       .set_state_filter(StateFilter::Running());
   Options opts;
@@ -124,7 +125,7 @@ TEST(ListJobsRequestTest, Success) {
   expected.AddQueryParameter("maxResults", "10");
   expected.AddQueryParameter("minCreationTime", internal::FormatRfc3339(min));
   expected.AddQueryParameter("maxCreationTime", internal::FormatRfc3339(max));
-  expected.AddQueryParameter("pageToken", "");
+  expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
   expected.AddQueryParameter("parentJobId", "1");

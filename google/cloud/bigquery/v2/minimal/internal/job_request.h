@@ -199,6 +199,9 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
 StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
                                                       Options const& opts);
 
+std::ostream& operator<<(std::ostream& os, GetJobRequest const& request);
+std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
