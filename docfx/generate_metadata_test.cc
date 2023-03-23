@@ -14,5 +14,23 @@
 
 #include "docfx/generate_metadata.h"
 #include <gmock/gmock.h>
+#include <nlohmann/json.hpp>
 
-namespace docfx {}  // namespace docfx
+namespace docfx {
+namespace {
+
+TEST(GenerateMetadata, Basic) {
+  auto const config = Config{"test-only-input-filename", "test-only-library",
+                             "test-only-version"};
+  auto const generated = GenerateMetadata(config);
+  auto const actual = nlohmann::json::parse(generated);
+  auto const expected = nlohmann::json{
+      {"language", "cpp"},
+      {"name", "test-only-library"},
+      {"version", "test-only-version"},
+  };
+  EXPECT_EQ(expected, actual);
+}
+
+}  // namespace
+}  // namespace docfx
