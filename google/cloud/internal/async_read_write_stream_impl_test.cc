@@ -188,7 +188,7 @@ TEST(AsyncReadWriteStreamingRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
   MockStub mock;
   EXPECT_CALL(mock, FakeRpc)
       .WillOnce([](grpc::ClientContext*, grpc::CompletionQueue*) {
-        auto stream = absl::make_unique<MockReaderWriter>();
+        auto stream = std::make_unique<MockReaderWriter>();
         EXPECT_CALL(*stream, StartCall).Times(1);
         EXPECT_CALL(*stream, Write(_, _, _)).Times(1);
         EXPECT_CALL(*stream, Read).Times(1);
