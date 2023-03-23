@@ -157,6 +157,17 @@ TEST(BigQueryJobStubTest, ListJobsSuccess) {
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
   ListJobsRequest list_jobs_request("p123");
+  auto const min = std::chrono::system_clock::now();
+  auto const duration = std::chrono::milliseconds(100);
+  auto const max = min + duration;
+  list_jobs_request.set_all_users(true)
+      .set_max_results(10)
+      .set_min_creation_time(min)
+      .set_max_creation_time(max)
+      .set_parent_job_id("1")
+      .set_projection(Projection::Full())
+      .set_state_filter(StateFilter::Running());
+
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
