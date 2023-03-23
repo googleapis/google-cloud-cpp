@@ -25,6 +25,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+static auto const kEpoch = std::chrono::system_clock::from_time_t(0);
+
 std::string GetJobsEndpoint(Options const& opts) {
   std::string endpoint = opts.get<EndpointOption>();
 
@@ -113,42 +115,37 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
   if (r.max_results() > 0) {
     request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
   }
-  if (r.min_creation_time().time_since_epoch() >
-      std::chrono::milliseconds::zero()) {
+  if (r.min_creation_time() > kEpoch) {
     request.AddQueryParameter("minCreationTime",
                               internal::FormatRfc3339(r.min_creation_time()));
   }
-  if (r.max_creation_time().time_since_epoch() >
-      std::chrono::milliseconds::zero()) {
+  if (r.max_creation_time() > kEpoch) {
     request.AddQueryParameter("maxCreationTime",
                               internal::FormatRfc3339(r.max_creation_time()));
   }
-  if (!r.page_token().empty()) {
-    request.AddQueryParameter("pageToken", r.page_token());
-  }
-  if (!r.projection().value.empty()) {
-    request.AddQueryParameter("projection", r.projection().value);
-  }
-  if (!r.state_filter().value.empty()) {
-    request.AddQueryParameter("stateFilter", r.state_filter().value);
-  }
-  if (!r.parent_job_id().empty()) {
-    request.AddQueryParameter("parentJobId", r.parent_job_id());
-  }
+
+  auto add_if_not_empty = [&](char const* key, auto const& v) {
+    if (v.empty()) return;
+    request.AddQueryParameter(key, v);
+  };
+  add_if_not_empty("pageToken", r.page_token());
+  add_if_not_empty("projection", r.projection().value);
+  add_if_not_empty("stateFilter", r.state_filter().value);
+  add_if_not_empty("parentJobId", r.parent_job_id());
 
   return request;
 }
 
 std::ostream& operator<<(std::ostream& os, GetJobRequest const& request) {
   os << "GetJobRequest{project_id=" << request.project_id()
-     << ",job_id=" << request.job_id() << ",location=" << request.location();
+     << ", job_id=" << request.job_id() << ", location=" << request.location();
   return os << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request) {
+  std::string all_users = request.all_users() ? "true" : "false";
   os << "ListJobsRequest{project_id=" << request.project_id()
-     << ", all_users=" << request.all_users()
-     << ", max_results=" << request.max_results()
+     << ", all_users=" << all_users << ", max_results=" << request.max_results()
      << ", page_token=" << request.page_token()
      << ", projection=" << request.projection().value
      << ", state_filter=" << request.state_filter().value

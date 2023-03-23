@@ -39,6 +39,21 @@ using ::testing::ByMove;
 using ::testing::Eq;
 using ::testing::Return;
 
+ListJobsRequest GetListJobsRequest() {
+  ListJobsRequest list_jobs_request("p123");
+  auto const min = std::chrono::system_clock::now();
+  auto const duration = std::chrono::milliseconds(100);
+  auto const max = min + duration;
+  list_jobs_request.set_all_users(true)
+      .set_max_results(10)
+      .set_min_creation_time(min)
+      .set_max_creation_time(max)
+      .set_parent_job_id("1")
+      .set_projection(Projection::Full())
+      .set_state_filter(StateFilter::Running());
+  return list_jobs_request;
+}
+
 TEST(BigQueryJobStubTest, GetJobSuccess) {
   std::string job_response_payload = R"({"kind": "jkind",
           "etag": "jtag",
@@ -141,7 +156,7 @@ TEST(BigQueryJobStubTest, ListJobsSuccess) {
                 "principal_subject": "principal-subj"
               }
   ]})";
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_response = std::make_unique<MockRestResponse>();
 
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kOk));
@@ -151,22 +166,12 @@ TEST(BigQueryJobStubTest, ListJobsSuccess) {
       .WillOnce(
           Return(ByMove(MakeMockHttpPayloadSuccess(job_response_payload))));
 
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
-  ListJobsRequest list_jobs_request("p123");
-  auto const min = std::chrono::system_clock::now();
-  auto const duration = std::chrono::milliseconds(100);
-  auto const max = min + duration;
-  list_jobs_request.set_all_users(true)
-      .set_max_results(10)
-      .set_min_creation_time(min)
-      .set_max_creation_time(max)
-      .set_parent_job_id("1")
-      .set_projection(Projection::Full())
-      .set_state_filter(StateFilter::Running());
+  auto list_jobs_request = GetListJobsRequest();
 
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
@@ -179,12 +184,12 @@ TEST(BigQueryJobStubTest, ListJobsSuccess) {
 }
 
 TEST(BigQueryJobStubTest, ListJobsRestClientError) {
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
       .WillOnce(
           Return(rest::AsStatus(HttpStatusCode::kInternalServerError, "")));
 
-  ListJobsRequest list_jobs_request("p123");
+  auto list_jobs_request = GetListJobsRequest();
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
@@ -195,19 +200,19 @@ TEST(BigQueryJobStubTest, ListJobsRestClientError) {
 }
 
 TEST(BigQueryJobStubTest, ListJobsRestResponseError) {
-  auto mock_payload = absl::make_unique<MockHttpPayload>();
-  auto mock_response = absl::make_unique<MockRestResponse>();
+  auto mock_payload = std::make_unique<MockHttpPayload>();
+  auto mock_response = std::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload)
       .WillOnce(Return(std::move(mock_payload)));
 
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
+  auto mock_rest_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(An<rest::RestRequest const&>()))
       .WillOnce(Return(ByMove(
           std::unique_ptr<rest::RestResponse>(std::move(mock_response)))));
 
-  ListJobsRequest list_jobs_request("p123");
+  auto list_jobs_request = GetListJobsRequest();
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
   rest_internal::RestContext context;
