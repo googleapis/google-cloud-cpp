@@ -19,10 +19,15 @@
 namespace docfx {
 namespace {
 
+using ::testing::StartsWith;
+
+auto constexpr kExpectedUsageCmd = "Usage: cmd <infile> <library> <version>";
+
 TEST(ParseArguments, Basic) {
-  auto const actual = ParseArguments({"cmd", "input-file", "library"});
+  auto const actual = ParseArguments({"cmd", "input-file", "library", "4.2"});
   EXPECT_EQ(actual.input_filename, "input-file");
   EXPECT_EQ(actual.library, "library");
+  EXPECT_EQ(actual.version, "4.2");
 }
 
 TEST(ParseArguments, Help) {
@@ -36,8 +41,8 @@ TEST(ParseArguments, Help) {
 TEST(ParseArguments, NoCommand) {
   EXPECT_THROW(
       try { ParseArguments({}); } catch (std::exception const& ex) {
-        EXPECT_STREQ(ex.what(),
-                     "Usage: program-name-missing <infile> <library>");
+        EXPECT_THAT(ex.what(),
+                    StartsWith("Usage: program-name-missing <infile> "));
         throw;
       },
       std::runtime_error);
@@ -46,7 +51,7 @@ TEST(ParseArguments, NoCommand) {
 TEST(ParseArguments, NoArguments) {
   EXPECT_THROW(
       try { ParseArguments({"cmd"}); } catch (std::exception const& ex) {
-        EXPECT_STREQ(ex.what(), "Usage: cmd <infile> <library>");
+        EXPECT_THAT(ex.what(), StartsWith(kExpectedUsageCmd));
         throw;
       },
       std::runtime_error);
@@ -57,7 +62,7 @@ TEST(ParseArguments, TooFewArguments) {
       try {
         ParseArguments({"cmd", "1"});
       } catch (std::exception const& ex) {
-        EXPECT_STREQ(ex.what(), "Usage: cmd <infile> <library>");
+        EXPECT_THAT(ex.what(), StartsWith(kExpectedUsageCmd));
         throw;
       },
       std::runtime_error);
@@ -66,9 +71,9 @@ TEST(ParseArguments, TooFewArguments) {
 TEST(ParseArguments, TooManyArguments) {
   EXPECT_THROW(
       try {
-        ParseArguments({"cmd", "1", "2", "3"});
+        ParseArguments({"cmd", "1", "2", "3", "4"});
       } catch (std::exception const& ex) {
-        EXPECT_STREQ(ex.what(), "Usage: cmd <infile> <library>");
+        EXPECT_THAT(ex.what(), StartsWith(kExpectedUsageCmd));
         throw;
       },
       std::runtime_error);

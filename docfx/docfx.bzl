@@ -21,6 +21,7 @@ docfx_hdrs = [
     "doxygen2markdown.h",
     "doxygen2toc.h",
     "doxygen_pages.h",
+    "generate_metadata.h",
     "parse_arguments.h",
     "toc_entry.h",
 ]
@@ -29,6 +30,7 @@ docfx_srcs = [
     "doxygen2markdown.cc",
     "doxygen2toc.cc",
     "doxygen_pages.cc",
+    "generate_metadata.cc",
     "parse_arguments.cc",
     "toc_entry.cc",
 ]

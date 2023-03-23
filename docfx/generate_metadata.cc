@@ -12,19 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
-#define GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H
-
-#include <string>
+#include "docfx/generate_metadata.h"
+#include <nlohmann/json.hpp>
 
 namespace docfx {
 
-struct Config {
-  std::string input_filename;
-  std::string library;
-  std::string version;
-};
+std::string GenerateMetadata(docfx::Config const& config) {
+  auto const json = nlohmann::json{
+      {"language", "cpp"},
+      {"version", config.version},
+      {"name", config.library},
+  };
+  return json.dump(4) + "\n";
+}
 
 }  // namespace docfx
-
-#endif  // GOOGLE_CLOUD_CPP_DOCFX_CONFIG_H

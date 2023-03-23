@@ -49,7 +49,7 @@ TEST(Doxygen2Toc, Simple) {
 
   pugi::xml_document doc;
   ASSERT_TRUE(doc.load_string(kXml));
-  auto const config = Config{"test-only-no-input-file", "common"};
+  auto const config = Config{"test-only-no-input-file", "common", "4.2"};
   auto const actual = Doxygen2Toc(config, doc);
 
   EXPECT_EQ(kExpected, actual);
