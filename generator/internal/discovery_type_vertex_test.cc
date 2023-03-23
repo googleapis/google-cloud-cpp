@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_type_vertex.h"
-#include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 

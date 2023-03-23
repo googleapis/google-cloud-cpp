@@ -49,6 +49,8 @@ class DiscoveryTypeVertex {
 
   struct TypeInfo {
     std::string name;
+    // Non-owning pointer to the properties JSON block of the type to be
+    // synthesized.
     nlohmann::json const* properties;
     bool is_map;
   };

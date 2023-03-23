@@ -28,26 +28,9 @@ absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
   std::string type;
   if (j.contains("type")) type = j["type"];
   if (type == "string") return "string";
-  if (type == "boolean") return std::string("bool");
-
-  if (type == "integer") {
-    if (j.contains("format")) {
-      type = j["format"];
-    } else {
-      type = "int32";
-    }
-    return type;
-  }
-
-  if (type == "number") {
-    if (j.contains("format")) {
-      type = j["format"];
-    } else {
-      type = "float";
-    }
-    return type;
-  }
-
+  if (type == "boolean") return "bool";
+  if (type == "integer") return j.value("format", "int32");
+  if (type == "number") return j.value("format", "float");
   return {};
 }
 
