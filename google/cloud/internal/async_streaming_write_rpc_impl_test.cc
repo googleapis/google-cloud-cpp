@@ -16,7 +16,9 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <deque>
@@ -33,6 +35,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::_;
 using ::testing::Return;
+using ::testing::SizeIs;
 
 struct FakeRequest {
   std::string key;
@@ -127,7 +130,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
     EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "start");
     return f.get();
   });
-  ASSERT_EQ(1, operations.size());
+  ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan start_clear(Options{});
   notify_next_op();
   EXPECT_TRUE(start.get());
@@ -135,7 +138,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
   OptionsSpan write0_span(user_project("write0"));
   auto write0 = stream->Write(FakeRequest{}, grpc::WriteOptions())
                     .then(check_write_span("write0"));
-  ASSERT_EQ(1, operations.size());
+  ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan write0_clear(Options{});
   notify_next_op();
   ASSERT_TRUE(write0.get());
@@ -143,14 +146,14 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
   OptionsSpan write1_span(user_project("write1"));
   auto write1 = stream->Write(FakeRequest{}, grpc::WriteOptions())
                     .then(check_write_span("write1"));
-  ASSERT_EQ(1, operations.size());
+  ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan write1_clear(Options{});
   notify_next_op(false);
   EXPECT_FALSE(write1.get());
 
   OptionsSpan writes_done_span(user_project("writes_done"));
   auto writes_done = stream->WritesDone().then(check_write_span("writes_done"));
-  ASSERT_EQ(1, operations.size());
+  ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan writes_done_clear(Options{});
   notify_next_op(false);
   EXPECT_FALSE(writes_done.get());
@@ -160,7 +163,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
     EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "finish");
     return f.get();
   });
-  ASSERT_EQ(1, operations.size());
+  ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan finish_clear(Options{});
   notify_next_op();
   auto response = finish.get();
@@ -179,6 +182,111 @@ TEST(AsyncStreamingWriteRpcTest, Error) {
   EXPECT_EQ(Status(StatusCode::kPermissionDenied, "uh-oh"),
             stream.Finish().get().status());
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+using ::google::cloud::testing_util::IsActive;
+
+TEST(AsyncStreamingWriteRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  MockStub mock;
+  EXPECT_CALL(mock, FakeRpc)
+      .WillOnce([](grpc::ClientContext*, FakeResponse*,
+                   grpc::CompletionQueue*) {
+        auto stream = absl::make_unique<MockWriter>();
+        EXPECT_CALL(*stream, StartCall).Times(1);
+        EXPECT_CALL(*stream, Write(_, _, _)).Times(1);
+        EXPECT_CALL(*stream, WritesDone).Times(1);
+        EXPECT_CALL(*stream, Finish).WillOnce([](grpc::Status* status, void*) {
+          *status = grpc::Status::OK;
+        });
+        return stream;
+      });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(nullptr));
+
+  std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
+  auto notify_next_op = [&](bool ok = true) {
+    auto op = std::move(operations.front());
+    operations.pop_front();
+    op->Notify(ok);
+  };
+
+  EXPECT_CALL(*mock_cq, StartOperation)
+      .WillRepeatedly([&operations](std::shared_ptr<AsyncGrpcOperation> op,
+                                    absl::FunctionRef<void(void*)> call) {
+        void* tag = op.get();
+        operations.push_back(std::move(op));
+        call(tag);
+      });
+
+  google::cloud::CompletionQueue cq(mock_cq);
+
+  auto stream = [&] {
+    auto span = MakeSpan("create");
+    auto scope = opentelemetry::trace::Scope(span);
+    return MakeStreamingWriteRpc<FakeRequest, FakeResponse>(
+        cq, std::make_shared<grpc::ClientContext>(),
+        [&mock, span](grpc::ClientContext* context, FakeResponse* response,
+                      grpc::CompletionQueue* cq) {
+          EXPECT_THAT(span, IsActive());
+          return mock.FakeRpc(context, response, cq);
+        });
+  }();
+
+  auto start = [&] {
+    auto span = MakeSpan("start");
+    auto scope = opentelemetry::trace::Scope(span);
+    return stream->Start().then([span](auto f) {
+      EXPECT_THAT(span, IsActive());
+      return f.get();
+    });
+  }();
+  ASSERT_THAT(operations, SizeIs(1));
+  notify_next_op();
+  (void)start.get();
+
+  auto write = [&] {
+    auto span = MakeSpan("write");
+    auto scope = opentelemetry::trace::Scope(span);
+    return stream->Write(FakeRequest{}, grpc::WriteOptions())
+        .then([span](auto f) {
+          EXPECT_THAT(span, IsActive());
+          return f.get();
+        });
+  }();
+  ASSERT_THAT(operations, SizeIs(1));
+  notify_next_op();
+  (void)write.get();
+
+  auto writes_done = [&] {
+    auto span = MakeSpan("writes_done");
+    auto scope = opentelemetry::trace::Scope(span);
+    return stream->WritesDone().then([span](auto f) {
+      EXPECT_THAT(span, IsActive());
+      return f.get();
+    });
+  }();
+  ASSERT_THAT(operations, SizeIs(1));
+  notify_next_op();
+  (void)writes_done.get();
+
+  auto finish = [&] {
+    auto span = MakeSpan("finish");
+    auto scope = opentelemetry::trace::Scope(span);
+    return stream->Finish().then([span](auto f) {
+      EXPECT_THAT(span, IsActive());
+      return f.get();
+    });
+  }();
+  ASSERT_THAT(operations, SizeIs(1));
+  notify_next_op();
+  (void)finish.get();
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal
