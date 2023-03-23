@@ -25,13 +25,12 @@ namespace generator_internal {
 namespace {
 
 absl::optional<std::string> CheckForScalarType(nlohmann::json const& j) {
-  std::string type;
-  if (j.contains("type")) type = j["type"];
+  std::string type = j.value("type", "");
   if (type == "string") return "string";
   if (type == "boolean") return "bool";
   if (type == "integer") return j.value("format", "int32");
   if (type == "number") return j.value("format", "float");
-  return {};
+  return absl::nullopt;
 }
 
 }  // namespace
