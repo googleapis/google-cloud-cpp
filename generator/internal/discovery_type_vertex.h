@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TYPE_VERTEX_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_DISCOVERY_TYPE_VERTEX_H
 
+#include "google/cloud/status_or.h"
 #include <nlohmann/json.hpp>
 #include <set>
 #include <string>
@@ -45,6 +46,20 @@ class DiscoveryTypeVertex {
   // Adds edge to this vertex for a type name that contains this type as a
   // field.
   void AddNeededByTypeName(std::string type_name);
+
+  struct TypeInfo {
+    std::string name;
+    // Non-owning pointer to the properties JSON block of the type to be
+    // synthesized.
+    nlohmann::json const* properties;
+    bool is_map;
+  };
+  // Determines the type of the field and if a definition of that nested type
+  // needs to be defined in the message.
+  // Returns a pair containing the name of the type and possibly the json
+  // that defines the type.
+  static StatusOr<TypeInfo> DetermineTypeAndSynthesis(
+      nlohmann::json const& v, std::string const& field_name);
 
   std::string DebugString() const;
 
