@@ -25,7 +25,7 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-static auto const kEpoch = std::chrono::system_clock::from_time_t(0);
+static auto const kDefaultTimepoint = std::chrono::system_clock::time_point{};
 
 std::string GetJobsEndpoint(Options const& opts) {
   std::string endpoint = opts.get<EndpointOption>();
@@ -68,6 +68,23 @@ StateFilter StateFilter::Done() {
   StateFilter state_filter;
   state_filter.value = "DONE";
   return state_filter;
+}
+
+GetJobRequest::GetJobRequest(std::string project_id, std::string job_id)
+    : project_id_(std::move(project_id)), job_id_(std::move(job_id)) {
+  location_ = "";
+}
+
+ListJobsRequest::ListJobsRequest(std::string project_id)
+    : project_id_(std::move(project_id)) {
+  all_users_ = false;
+  max_results_ = 0;
+  min_creation_time_ = kDefaultTimepoint;
+  max_creation_time_ = kDefaultTimepoint;
+  page_token_ = "";
+  projection_.value = "";
+  state_filter_.value = "";
+  parent_job_id_ = "";
 }
 
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
@@ -115,11 +132,11 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
   if (r.max_results() > 0) {
     request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
   }
-  if (r.min_creation_time() > kEpoch) {
+  if (r.min_creation_time() != kDefaultTimepoint) {
     request.AddQueryParameter("minCreationTime",
                               internal::FormatRfc3339(r.min_creation_time()));
   }
-  if (r.max_creation_time() > kEpoch) {
+  if (r.max_creation_time() != kDefaultTimepoint) {
     request.AddQueryParameter("maxCreationTime",
                               internal::FormatRfc3339(r.max_creation_time()));
   }

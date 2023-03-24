@@ -31,8 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GetJobRequest {
  public:
   GetJobRequest() = default;
-  explicit GetJobRequest(std::string project_id, std::string job_id)
-      : project_id_(std::move(project_id)), job_id_(std::move(job_id)) {}
+  explicit GetJobRequest(std::string project_id, std::string job_id);
 
   std::string const& project_id() const { return project_id_; }
   std::string const& job_id() const { return job_id_; }
@@ -86,8 +85,7 @@ struct StateFilter {
 class ListJobsRequest {
  public:
   ListJobsRequest() = default;
-  explicit ListJobsRequest(std::string project_id)
-      : project_id_(std::move(project_id)) {}
+  explicit ListJobsRequest(std::string project_id);
 
   std::string const& project_id() const { return project_id_; }
   bool const& all_users() const { return all_users_; }
