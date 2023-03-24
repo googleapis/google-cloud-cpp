@@ -109,7 +109,7 @@ GoldenKitchenSinkTracingStub::StreamingRead(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, internal::CurrentOptions());
   auto stream = child_->StreamingRead(context, request);
-  return absl::make_unique<internal::StreamingReadRpcTracing<google::test::admin::database::v1::Response>>(
+  return std::make_unique<internal::StreamingReadRpcTracing<google::test::admin::database::v1::Response>>(
       std::move(context), std::move(stream), std::move(span));
 }
 

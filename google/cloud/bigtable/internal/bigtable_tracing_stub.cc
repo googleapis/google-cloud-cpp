@@ -39,7 +39,7 @@ BigtableTracingStub::ReadRows(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, internal::CurrentOptions());
   auto stream = child_->ReadRows(context, request);
-  return absl::make_unique<internal::StreamingReadRpcTracing<
+  return std::make_unique<internal::StreamingReadRpcTracing<
       google::bigtable::v2::ReadRowsResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
@@ -54,7 +54,7 @@ BigtableTracingStub::SampleRowKeys(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, internal::CurrentOptions());
   auto stream = child_->SampleRowKeys(context, request);
-  return absl::make_unique<internal::StreamingReadRpcTracing<
+  return std::make_unique<internal::StreamingReadRpcTracing<
       google::bigtable::v2::SampleRowKeysResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
@@ -80,7 +80,7 @@ BigtableTracingStub::MutateRows(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, internal::CurrentOptions());
   auto stream = child_->MutateRows(context, request);
-  return absl::make_unique<internal::StreamingReadRpcTracing<
+  return std::make_unique<internal::StreamingReadRpcTracing<
       google::bigtable::v2::MutateRowsResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }

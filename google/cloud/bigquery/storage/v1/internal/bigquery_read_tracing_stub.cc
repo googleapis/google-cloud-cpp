@@ -54,7 +54,7 @@ BigQueryReadTracingStub::ReadRows(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, internal::CurrentOptions());
   auto stream = child_->ReadRows(context, request);
-  return absl::make_unique<internal::StreamingReadRpcTracing<
+  return std::make_unique<internal::StreamingReadRpcTracing<
       google::cloud::bigquery::storage::v1::ReadRowsResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }

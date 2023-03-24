@@ -186,7 +186,7 @@ $tracing_stub_class_name$::$method_name$(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, internal::CurrentOptions());
   auto stream = child_->$method_name$(context, request);
-  return absl::make_unique<internal::StreamingReadRpcTracing<$response_type$>>(
+  return std::make_unique<internal::StreamingReadRpcTracing<$response_type$>>(
       std::move(context), std::move(stream), std::move(span));
 }
 )"""}},

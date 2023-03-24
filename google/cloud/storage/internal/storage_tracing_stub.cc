@@ -229,7 +229,7 @@ StorageTracingStub::ReadObject(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(*context, internal::CurrentOptions());
   auto stream = child_->ReadObject(context, request);
-  return absl::make_unique<internal::StreamingReadRpcTracing<
+  return std::make_unique<internal::StreamingReadRpcTracing<
       google::storage::v2::ReadObjectResponse>>(
       std::move(context), std::move(stream), std::move(span));
 }
