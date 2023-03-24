@@ -55,23 +55,25 @@ std::vector<unsigned int> FetchEntropy(std::size_t desired_bits) {
   // [4]: https://linux.die.net/man/3/arc4random
   // [5]: https://en.wikipedia.org/wiki/NaCl_(software)
   //
-#if defined(__linux) && defined(__GLIBCXX__) && __GLIBCXX__ >= 20200128
-  // Workaround for a libstd++ bug:
-  //     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94087
-  // I (@coryan) would like to use `rdrand` as the token, but:
-  //   - `rdrand` is not supported by all versions of libstdc++
-  //   - even for the versions that do support it, that is CPU specific
-  //   - I know of no reliable way to detect if the library version supports
-  //     `rdrand` (other than trying and getting an exception), for
-  //     example:
-  //     * __GLIBCXX__ is 2020318 on Fedora:31 with g++-9.3.1, but it does
-  //       *not* support `rdrand`
-  //     * __GLIBCXX__ is 20200306 on openSUSE/Tumbleweed, with g++-9.2.1,
-  //       but it *does* support `rdrand`
+#if defined(__linux) && defined(__GLIBCXX__) && __GLIBCXX__ >= 20200128 && \
+    __GLIBCXX__ < 20200520
+  // While in general libstdc++ provides a good source of random bits, there
+  // are some specific versions that are buggy.  Between the 20200128 version
+  // and 20200520 the default random device can easily be exhausted by having
+  // separate threads create *different* `std::random_device` objects and have
+  // all the threads read from them:
+  //    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94087
+  // If this bug is triggered, the constructor for `std::random_device` throws
+  // and terminates the application.
+  //
+  // The workaround is to use `/dev/urandom`, which at least is not easily
+  // exhausted, though it is slower than the alternatives.  Using something like
+  // `rdrand` as a workaround does not work because not all versions of
+  // libstdc++ are compiled with support for `rdrand`.
   std::random_device rd("/dev/urandom");
 #else
   std::random_device rd;
-#endif  // defined(__GLIBCXX__) && __GLIBCXX__ >= 20200128
+#endif  //  __GLIBCXX__ >= 20200128 && __GLIBCXX < 20200519
 
   auto constexpr kWordSize = std::numeric_limits<unsigned int>::digits;
   auto const n = (desired_bits + kWordSize - 1) / kWordSize;
