@@ -13,26 +13,11 @@
 // limitations under the License.
 
 #include "docfx/doxygen2markdown.h"
+#include "docfx/doxygen_errors.h"
 #include <sstream>
 #include <unordered_set>
 
 namespace docfx {
-
-[[noreturn]] void UnknownChildType(std::string_view where,
-                                   pugi::xml_node const& child) {
-  std::ostringstream os;
-  os << "Unknown child in " << where << "(): node=";
-  child.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
-  throw std::runtime_error(std::move(os).str());
-}
-
-[[noreturn]] void MissingElement(std::string_view where, std::string_view name,
-                                 pugi::xml_node const& node) {
-  std::ostringstream os;
-  os << "Missing element <" << name << " in " << where << "(): node=";
-  node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
-  throw std::runtime_error(std::move(os).str());
-}
 
 // A "sect4" node type is defined as (note the lack of sect5):
 //

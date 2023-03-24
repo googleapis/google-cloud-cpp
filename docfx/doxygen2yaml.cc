@@ -14,6 +14,7 @@
 
 #include "docfx/doxygen2yaml.h"
 #include "docfx/doxygen2markdown.h"
+#include "docfx/doxygen_errors.h"
 #include <sstream>
 #include <string_view>
 
@@ -22,15 +23,6 @@ namespace {
 
 auto kind(pugi::xml_node const& node) {
   return std::string_view{node.attribute("kind").as_string()};
-}
-
-[[noreturn]] void MissingAttribute(std::string_view where,
-                                   std::string_view name,
-                                   pugi::xml_node const& node) {
-  std::ostringstream os;
-  os << "Missing attribute <" << name << "> in " << where << "(): node=";
-  node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
-  throw std::runtime_error(std::move(os).str());
 }
 
 std::string Summary(pugi::xml_node const& node) {

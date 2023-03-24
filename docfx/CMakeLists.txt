@@ -37,6 +37,8 @@ add_library(
     doxygen2toc.h
     doxygen2yaml.cc
     doxygen2yaml.h
+    doxygen_errors.cc
+    doxygen_errors.h
     doxygen_pages.cc
     doxygen_pages.h
     generate_metadata.cc
