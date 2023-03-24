@@ -77,18 +77,37 @@ be preferable to retry the operation even though it is not idempotent.</para>
     </doxygen>
 )xml";
 
+TEST(Doxygen2Yaml, StartAndEnd) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - 1
+  - 2
+  - 3
+)yml";
+
+  pugi::xml_document doc;
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  yaml << 1 << 2 << 3;
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, EnumValue) {
-  auto constexpr kExpected =
-      R"yml(uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-name: |
-  kIdempotent
-id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
-parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
-type: enumvalue
-langs:
-  - cpp
-summary: |
-  The operation is idempotent and can be retried after a transient failure.)yml";
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
+    name: |
+      kIdempotent
+    id: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa
+    parent: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
+    type: enumvalue
+    langs:
+      - cpp
+    summary: |
+      The operation is idempotent and can be retried after a transient failure.
+)yml";
 
   pugi::xml_document doc;
   doc.load_string(kEnumXml);
@@ -98,16 +117,18 @@ summary: |
       "1a7d65fd569564712b7cfe652613f30d9caf8bb1d9c7cccc450ecd06167c7422bfa']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
   YamlContext ctx;
   ctx.parent_id = "namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c";
   ASSERT_TRUE(AppendIfEnumValue(yaml, ctx, selected.node()));
 
-  auto const actual = std::string(yaml.c_str());
+  auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
 
 TEST(Doxygen2Yaml, Enum) {
-  auto constexpr kExpected = R"yml(items:
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
   - uid: namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c
     name: |
       Idempotency
@@ -165,7 +186,8 @@ TEST(Doxygen2Yaml, Enum) {
     langs:
       - cpp
     summary: |
-      The operation is not idempotent and should **not** be retried after a transient failure.)yml";
+      The operation is not idempotent and should **not** be retried after a transient failure.
+)yml";
 
   pugi::xml_document doc;
   doc.load_string(kEnumXml);
@@ -175,14 +197,65 @@ TEST(Doxygen2Yaml, Enum) {
       "']");
   ASSERT_TRUE(selected);
   YAML::Emitter yaml;
-  yaml << YAML::BeginMap  //
-       << YAML::Key << "items" << YAML::Value << YAML::BeginSeq;
+  StartDocFxYaml(yaml);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfEnum(yaml, ctx, selected.node()));
-  yaml << YAML::EndSeq << YAML::EndMap;
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
 
-  auto const actual = std::string(yaml.c_str());
+TEST(Doxygen2Yaml, Typedef) {
+  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="typedef" id="namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f" prot="public" static="no">
+        <type>std::function&lt; std::unique_ptr&lt; <ref refid="classgoogle_1_1cloud_1_1BackgroundThreads" kindref="compound">BackgroundThreads</ref> &gt;()&gt;</type>
+        <definition>using google::cloud::BackgroundThreadsFactory = typedef std::function&lt;std::unique_ptr&lt;BackgroundThreads&gt;()&gt;</definition>
+        <argsstring/>
+        <name>BackgroundThreadsFactory</name>
+        <qualifiedname>google::cloud::BackgroundThreadsFactory</qualifiedname>
+        <briefdescription>
+        <para>A short description of the thing.</para>
+        </briefdescription>
+        <detaileddescription>
+        <para>A longer description would go here.</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="grpc_options.h" line="148" column="1" bodyfile="grpc_options.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+    </doxygen>)xml";
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f
+    name: |
+      BackgroundThreadsFactory
+    fullName: |
+      google::cloud::BackgroundThreadsFactory
+    id: namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f
+    parent: test-only-parent-id
+    type: typedef
+    langs:
+      - cpp
+    summary: |
+      A short description of the thing.
+
+      A longer description would go here.
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f"
+      "']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfTypedef(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
 
