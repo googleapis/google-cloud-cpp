@@ -17,7 +17,6 @@
 // source: google/devtools/cloudbuild/v2/repositories.proto
 
 #include "google/cloud/cloudbuild/v2/repository_manager_connection_idempotency_policy.h"
-#include "absl/memory/memory.h"
 #include <memory>
 
 namespace google {
@@ -32,7 +31,7 @@ RepositoryManagerConnectionIdempotencyPolicy::
 
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>
 RepositoryManagerConnectionIdempotencyPolicy::clone() const {
-  return absl::make_unique<RepositoryManagerConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<RepositoryManagerConnectionIdempotencyPolicy>(*this);
 }
 
 Idempotency RepositoryManagerConnectionIdempotencyPolicy::CreateConnection(
@@ -105,7 +104,7 @@ RepositoryManagerConnectionIdempotencyPolicy::FetchLinkableRepositories(
 
 std::unique_ptr<RepositoryManagerConnectionIdempotencyPolicy>
 MakeDefaultRepositoryManagerConnectionIdempotencyPolicy() {
-  return absl::make_unique<RepositoryManagerConnectionIdempotencyPolicy>();
+  return std::make_unique<RepositoryManagerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
