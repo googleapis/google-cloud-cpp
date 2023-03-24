@@ -19,6 +19,7 @@
 unit_tests = [
     "doxygen2markdown_test.cc",
     "doxygen2toc_test.cc",
+    "doxygen2yaml_test.cc",
     "doxygen_pages_test.cc",
     "generate_metadata_test.cc",
     "parse_arguments_test.cc",
