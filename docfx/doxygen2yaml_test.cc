@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2yaml.h"
+#include "docfx/yaml_context.h"
 #include <gmock/gmock.h>
 
 namespace docfx {

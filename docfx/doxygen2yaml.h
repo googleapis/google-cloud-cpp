@@ -20,11 +20,7 @@
 #include <string>
 
 namespace docfx {
-
-struct YamlContext {
-  std::string library_root = "google/cloud/";
-  std::string parent_id;
-};
+struct YamlContext;
 
 // Initialize a YAML Emitter with the preamble elements required by DocFx.
 void StartDocFxYaml(YAML::Emitter& yaml);

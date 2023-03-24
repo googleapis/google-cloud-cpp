@@ -19,6 +19,7 @@
 docfx_hdrs = [
     "config.h",
     "doxygen2markdown.h",
+    "doxygen2syntax.h",
     "doxygen2toc.h",
     "doxygen2yaml.h",
     "doxygen_errors.h",
@@ -26,10 +27,13 @@ docfx_hdrs = [
     "generate_metadata.h",
     "parse_arguments.h",
     "toc_entry.h",
+    "yaml_context.h",
+    "yaml_emit.h",
 ]
 
 docfx_srcs = [
     "doxygen2markdown.cc",
+    "doxygen2syntax.cc",
     "doxygen2toc.cc",
     "doxygen2yaml.cc",
     "doxygen_errors.cc",
@@ -37,4 +41,5 @@ docfx_srcs = [
     "generate_metadata.cc",
     "parse_arguments.cc",
     "toc_entry.cc",
+    "yaml_emit.cc",
 ]
