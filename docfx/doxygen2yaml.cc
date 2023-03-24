@@ -15,7 +15,6 @@
 #include "docfx/doxygen2yaml.h"
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
-#include "docfx/yaml_context.h"
 #include "docfx/yaml_emit.h"
 #include <sstream>
 #include <string_view>

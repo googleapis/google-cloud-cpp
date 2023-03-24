@@ -14,7 +14,6 @@
 
 #include "docfx/doxygen2syntax.h"
 #include "docfx/doxygen_errors.h"
-#include "docfx/yaml_context.h"
 #include "docfx/yaml_emit.h"
 
 namespace docfx {
@@ -46,8 +45,7 @@ void AppendLocation(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "branch" << YAML::Value << branch   //
        << YAML::Key << "path" << YAML::Value << path       //
        << YAML::EndMap                                     // remote
-       << YAML::EndMap                                     // source
-      ;
+       << YAML::EndMap;                                    // source
 }
 
 }  // namespace

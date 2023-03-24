@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2SYNTAX_H
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2SYNTAX_H
 
+#include "docfx/yaml_context.h"
 #include <pugixml.hpp>
 #include <yaml-cpp/yaml.h>
 
 namespace docfx {
-struct YamlContext;
 
 // Generate the `syntax` element in a DocFX YAML.
 //
