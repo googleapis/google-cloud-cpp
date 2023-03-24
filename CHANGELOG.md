@@ -121,6 +121,12 @@ info, see [#7463] and [#5976].
 
 ## v2.9.0 - TBD
 
+### [Cloud Build](/google/cloud/cloudbuild/README.md)
+
+The library has been expanded to include the Cloud Build repositories (2nd gen)
+API. Note that the client is tagged as experimental, because the service is
+still in [preview][product-launch-stages].
+
 ### Testing
 
 We have stopped testing with MSVC 2017. Microsoft stopped mainstream support for
@@ -3476,6 +3482,7 @@ releases.  The relevant notes are:
 [modern-table-ctor]: https://github.com/googleapis/google-cloud-cpp/blob/62740c8e9180056db77d4dd3e80a6fa7ae71295a/google/cloud/bigtable/table.h#L182-L214
 [nlohmann-json-gh]: https://github.com/nlohmann/json.git
 [oss-cxx-support]: https://opensource.google/documentation/policies/cplusplus-support
+[product-launch-stages]: https://cloud.google.com/products/#product-launch-stages
 [pub/sub lite]: /google/cloud/pubsublite/README.md
 [resource-types-with-policies]: https://cloud.google.com/iam/docs/resource-types-with-policies
 [secret manager]: /google/cloud/secretmanager/README.md
