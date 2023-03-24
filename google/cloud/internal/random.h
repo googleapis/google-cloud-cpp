@@ -38,8 +38,7 @@ using DefaultPRNG = std::mt19937_64;
 
 /// Create a new PRNG.
 inline DefaultPRNG MakeDefaultPRNG() {
-  // Fetch a few (typically 64) bits of entropy to initialize the PRNG. We used
-  // to fetch a lot more entropy, but that is overkill for our purposes.
+  // Fetch a few bits of entropy, which is sufficient for our purposes.
   auto const desired_bits = DefaultPRNG::word_size;
   // Extract the necessary number of entropy bits.
   auto const entropy = FetchEntropy(desired_bits);
