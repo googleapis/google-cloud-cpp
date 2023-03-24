@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <ostream>
 #include <string>
 
 namespace google {
@@ -86,8 +87,7 @@ struct StateFilter {
 class ListJobsRequest {
  public:
   ListJobsRequest() = default;
-  explicit ListJobsRequest(std::string project_id)
-      : project_id_(std::move(project_id)) {}
+  explicit ListJobsRequest(std::string project_id);
 
   std::string const& project_id() const { return project_id_; }
   bool const& all_users() const { return all_users_; }
@@ -198,6 +198,9 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
 // Builds RestRequest from ListJobsRequest.
 StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
                                                       Options const& opts);
+
+std::ostream& operator<<(std::ostream& os, GetJobRequest const& request);
+std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

@@ -14,9 +14,11 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -25,6 +27,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
+
+ListJobsRequest GetListJobsRequest() {
+  ListJobsRequest request("1");
+  auto const min = std::chrono::system_clock::now();
+  auto const duration = std::chrono::milliseconds(100);
+  auto const max = min + duration;
+  request.set_all_users(true)
+      .set_max_results(10)
+      .set_min_creation_time(min)
+      .set_max_creation_time(max)
+      .set_parent_job_id("1")
+      .set_page_token("123")
+      .set_projection(Projection::Full())
+      .set_state_filter(StateFilter::Running());
+  return request;
+}
 
 TEST(GetJobRequestTest, SuccessWithLocation) {
   GetJobRequest request("1", "2");
@@ -100,18 +118,19 @@ TEST(GetJobRequest, EmptyJobId) {
                                      HasSubstr("Job Id is empty")));
 }
 
+TEST(GetJobRequest, OutputStream) {
+  GetJobRequest request("test-project-id", "test-job-id");
+  request.set_location("test-location");
+  std::string expected = absl::StrCat(
+      "GetJobRequest{project_id=", request.project_id(),
+      ", job_id=", request.job_id(), ", location=", request.location(), "}");
+  std::ostringstream os;
+  os << request;
+  EXPECT_EQ(expected, os.str());
+}
+
 TEST(ListJobsRequestTest, Success) {
-  ListJobsRequest request("1");
-  auto const min = std::chrono::system_clock::now();
-  auto const duration = std::chrono::milliseconds(100);
-  auto const max = min + duration;
-  request.set_all_users(true)
-      .set_max_results(10)
-      .set_min_creation_time(min)
-      .set_max_creation_time(max)
-      .set_parent_job_id("1")
-      .set_projection(Projection::Full())
-      .set_state_filter(StateFilter::Running());
+  auto const request = GetListJobsRequest();
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
   auto actual = BuildRestRequest(request, opts);
@@ -122,9 +141,11 @@ TEST(ListJobsRequestTest, Success) {
       "https://bigquery.googleapis.com/bigquery/v2/projects/1/jobs");
   expected.AddQueryParameter("allUsers", "true");
   expected.AddQueryParameter("maxResults", "10");
-  expected.AddQueryParameter("minCreationTime", internal::FormatRfc3339(min));
-  expected.AddQueryParameter("maxCreationTime", internal::FormatRfc3339(max));
-  expected.AddQueryParameter("pageToken", "");
+  expected.AddQueryParameter(
+      "minCreationTime", internal::FormatRfc3339(request.min_creation_time()));
+  expected.AddQueryParameter(
+      "maxCreationTime", internal::FormatRfc3339(request.max_creation_time()));
+  expected.AddQueryParameter("pageToken", "123");
   expected.AddQueryParameter("projection", "FULL");
   expected.AddQueryParameter("stateFilter", "RUNNING");
   expected.AddQueryParameter("parentJobId", "1");
@@ -133,12 +154,27 @@ TEST(ListJobsRequestTest, Success) {
 }
 
 TEST(ListJobsRequestTest, EmptyProjectId) {
-  GetJobRequest request;
+  ListJobsRequest request("");
   Options opts;
   opts.set<EndpointOption>("bigquery.googleapis.com");
   auto rest_request = BuildRestRequest(request, opts);
   EXPECT_THAT(rest_request, StatusIs(StatusCode::kInvalidArgument,
                                      HasSubstr("Project Id is empty")));
+}
+
+TEST(ListJobsRequestTest, OutputStream) {
+  auto const request = GetListJobsRequest();
+  std::string all_users = request.all_users() ? "true" : "false";
+  std::string expected = absl::StrCat(
+      "ListJobsRequest{project_id=", request.project_id(),
+      ", all_users=", all_users, ", max_results=", request.max_results(),
+      ", page_token=", request.page_token(),
+      ", projection=", request.projection().value,
+      ", state_filter=", request.state_filter().value,
+      ", parent_job_id=", request.parent_job_id(), "}");
+  std::ostringstream os;
+  os << request;
+  EXPECT_EQ(expected, os.str());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -25,6 +25,8 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+static auto const kDefaultTimepoint = std::chrono::system_clock::time_point{};
+
 std::string GetJobsEndpoint(Options const& opts) {
   std::string endpoint = opts.get<EndpointOption>();
 
@@ -68,6 +70,13 @@ StateFilter StateFilter::Done() {
   return state_filter;
 }
 
+ListJobsRequest::ListJobsRequest(std::string project_id)
+    : project_id_(std::move(project_id)),
+      all_users_(false),
+      max_results_(0),
+      min_creation_time_(kDefaultTimepoint),
+      max_creation_time_(kDefaultTimepoint) {}
+
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
                                                       Options const& opts) {
   rest_internal::RestRequest request;
@@ -110,17 +119,45 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
   if (r.all_users()) {
     request.AddQueryParameter("allUsers", "true");
   }
-  request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
-  request.AddQueryParameter("minCreationTime",
-                            internal::FormatRfc3339(r.min_creation_time()));
-  request.AddQueryParameter("maxCreationTime",
-                            internal::FormatRfc3339(r.max_creation_time()));
-  request.AddQueryParameter("pageToken", r.page_token());
-  request.AddQueryParameter("projection", r.projection().value);
-  request.AddQueryParameter("stateFilter", r.state_filter().value);
-  request.AddQueryParameter("parentJobId", r.parent_job_id());
+  if (r.max_results() > 0) {
+    request.AddQueryParameter("maxResults", std::to_string(r.max_results()));
+  }
+  if (r.min_creation_time() != kDefaultTimepoint) {
+    request.AddQueryParameter("minCreationTime",
+                              internal::FormatRfc3339(r.min_creation_time()));
+  }
+  if (r.max_creation_time() != kDefaultTimepoint) {
+    request.AddQueryParameter("maxCreationTime",
+                              internal::FormatRfc3339(r.max_creation_time()));
+  }
+
+  auto if_not_empty_add = [&](char const* key, auto const& v) {
+    if (v.empty()) return;
+    request.AddQueryParameter(key, v);
+  };
+  if_not_empty_add("pageToken", r.page_token());
+  if_not_empty_add("projection", r.projection().value);
+  if_not_empty_add("stateFilter", r.state_filter().value);
+  if_not_empty_add("parentJobId", r.parent_job_id());
 
   return request;
+}
+
+std::ostream& operator<<(std::ostream& os, GetJobRequest const& request) {
+  os << "GetJobRequest{project_id=" << request.project_id()
+     << ", job_id=" << request.job_id() << ", location=" << request.location();
+  return os << "}";
+}
+
+std::ostream& operator<<(std::ostream& os, ListJobsRequest const& request) {
+  std::string all_users = request.all_users() ? "true" : "false";
+  os << "ListJobsRequest{project_id=" << request.project_id()
+     << ", all_users=" << all_users << ", max_results=" << request.max_results()
+     << ", page_token=" << request.page_token()
+     << ", projection=" << request.projection().value
+     << ", state_filter=" << request.state_filter().value
+     << ", parent_job_id=" << request.parent_job_id();
+  return os << "}";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
