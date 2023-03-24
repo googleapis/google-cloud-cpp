@@ -26,6 +26,12 @@ struct YamlContext {
   std::string parent_id;
 };
 
+// Initialize a YAML Emitter with the preamble elements required by DocFx.
+void StartDocFxYaml(YAML::Emitter& yaml);
+
+// Close the preamble elements required by DocFx and return the file contents.
+std::string EndDocFxYaml(YAML::Emitter& yaml);
+
 // Create a YAML entry for an enum value.
 bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
                        pugi::xml_node const& node);
@@ -33,6 +39,10 @@ bool AppendIfEnumValue(YAML::Emitter& yaml, YamlContext const& ctx,
 // Create a YAML entry for an enum definition.
 bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
                   pugi::xml_node const& node);
+
+// Create a YAML entry for a typedef definition.
+bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
+                     pugi::xml_node const& node);
 
 }  // namespace docfx
 
