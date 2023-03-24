@@ -20,6 +20,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <ostream>
 #include <string>
 
 namespace google {
@@ -31,7 +32,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GetJobRequest {
  public:
   GetJobRequest() = default;
-  explicit GetJobRequest(std::string project_id, std::string job_id);
+  explicit GetJobRequest(std::string project_id, std::string job_id)
+      : project_id_(std::move(project_id)), job_id_(std::move(job_id)) {}
 
   std::string const& project_id() const { return project_id_; }
   std::string const& job_id() const { return job_id_; }

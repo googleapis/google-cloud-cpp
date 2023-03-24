@@ -16,6 +16,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_logging.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
@@ -31,13 +32,16 @@ template <typename Functor, typename Request,
               Functor, rest_internal::RestContext&, Request const&>>
 Result JobLogWrapper(Functor&& functor, rest_internal::RestContext& context,
                      Request const& request, char const* where,
-                     TracingOptions const& /*options*/) {
+                     TracingOptions const& options) {
   auto formatter = [](std::string* out, auto const& header) {
     absl::StrAppend(out, "name=", header.first, ", value={",
                     absl::StrJoin(header.second, "&"), "}");
   };
   GCP_LOG(DEBUG) << where << "() " << request << ", Context={"
-                 << absl::StrJoin(context.headers(), ", ", formatter) << "}";
+                 << internal::DebugString(
+                        absl::StrJoin(context.headers(), ", ", formatter),
+                        options)
+                 << "}";
 
   auto response = functor(context, request);
   GCP_LOG(DEBUG) << where << "() >> status=" << response.status();

@@ -38,7 +38,6 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::An;
 using ::testing::ByMove;
 using ::testing::Eq;
-using ::testing::HasSubstr;
 using ::testing::Return;
 
 ListJobsRequest GetListJobsRequest() {
@@ -110,7 +109,7 @@ TEST(BigQueryJobStubTest, GetJobRestClientError) {
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto response = rest_stub.GetJob(context, std::move(job_request));
-  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable, HasSubstr("")));
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(BigQueryJobStubTest, GetJobRestResponseError) {
@@ -134,7 +133,7 @@ TEST(BigQueryJobStubTest, GetJobRestResponseError) {
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto response = rest_stub.GetJob(context, std::move(job_request));
-  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument, HasSubstr("")));
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
 }
 
 TEST(BigQueryJobStubTest, ListJobsSuccess) {
@@ -195,7 +194,7 @@ TEST(BigQueryJobStubTest, ListJobsRestClientError) {
   rest_internal::RestContext context;
   DefaultBigQueryJobRestStub rest_stub(std::move(mock_rest_client), opts);
   auto response = rest_stub.ListJobs(context, std::move(list_jobs_request));
-  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable, HasSubstr("")));
+  EXPECT_THAT(response, StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(BigQueryJobStubTest, ListJobsRestResponseError) {
@@ -219,7 +218,7 @@ TEST(BigQueryJobStubTest, ListJobsRestResponseError) {
 
   auto response = rest_stub.ListJobs(context, std::move(list_jobs_request));
 
-  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument, HasSubstr("")));
+  EXPECT_THAT(response, StatusIs(StatusCode::kInvalidArgument));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

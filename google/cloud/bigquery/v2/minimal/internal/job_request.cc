@@ -70,22 +70,12 @@ StateFilter StateFilter::Done() {
   return state_filter;
 }
 
-GetJobRequest::GetJobRequest(std::string project_id, std::string job_id)
-    : project_id_(std::move(project_id)), job_id_(std::move(job_id)) {
-  location_ = "";
-}
-
 ListJobsRequest::ListJobsRequest(std::string project_id)
-    : project_id_(std::move(project_id)) {
-  all_users_ = false;
-  max_results_ = 0;
-  min_creation_time_ = kDefaultTimepoint;
-  max_creation_time_ = kDefaultTimepoint;
-  page_token_ = "";
-  projection_.value = "";
-  state_filter_.value = "";
-  parent_job_id_ = "";
-}
+    : project_id_(std::move(project_id)),
+      all_users_(false),
+      max_results_(0),
+      min_creation_time_(kDefaultTimepoint),
+      max_creation_time_(kDefaultTimepoint) {}
 
 StatusOr<rest_internal::RestRequest> BuildRestRequest(GetJobRequest const& r,
                                                       Options const& opts) {
@@ -141,14 +131,14 @@ StatusOr<rest_internal::RestRequest> BuildRestRequest(ListJobsRequest const& r,
                               internal::FormatRfc3339(r.max_creation_time()));
   }
 
-  auto add_if_not_empty = [&](char const* key, auto const& v) {
+  auto if_not_empty_add = [&](char const* key, auto const& v) {
     if (v.empty()) return;
     request.AddQueryParameter(key, v);
   };
-  add_if_not_empty("pageToken", r.page_token());
-  add_if_not_empty("projection", r.projection().value);
-  add_if_not_empty("stateFilter", r.state_filter().value);
-  add_if_not_empty("parentJobId", r.parent_job_id());
+  if_not_empty_add("pageToken", r.page_token());
+  if_not_empty_add("projection", r.projection().value);
+  if_not_empty_add("stateFilter", r.state_filter().value);
+  if_not_empty_add("parentJobId", r.parent_job_id());
 
   return request;
 }
