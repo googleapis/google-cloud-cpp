@@ -28,7 +28,7 @@ auto kind(pugi::xml_node const& node) {
                                    std::string_view name,
                                    pugi::xml_node const& node) {
   std::ostringstream os;
-  os << "Missing attribute <" << name << " in " << where << "(): node=";
+  os << "Missing attribute <" << name << "> in " << where << "(): node=";
   node.print(os, /*indent=*/"", /*flags=*/pugi::format_raw);
   throw std::runtime_error(std::move(os).str());
 }
