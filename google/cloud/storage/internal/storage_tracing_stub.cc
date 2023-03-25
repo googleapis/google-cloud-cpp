@@ -18,6 +18,7 @@
 
 #include "google/cloud/storage/internal/storage_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/streaming_read_rpc_tracing.h"
 
 namespace google {
 namespace cloud {
@@ -224,7 +225,13 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 StorageTracingStub::ReadObject(
     std::shared_ptr<grpc::ClientContext> context,
     google::storage::v2::ReadObjectRequest const& request) {
-  return child_->ReadObject(std::move(context), request);
+  auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "ReadObject");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, internal::CurrentOptions());
+  auto stream = child_->ReadObject(context, request);
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::storage::v2::ReadObjectResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 StatusOr<google::storage::v2::Object> StorageTracingStub::UpdateObject(

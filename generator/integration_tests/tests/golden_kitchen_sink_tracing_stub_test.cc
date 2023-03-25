@@ -174,18 +174,35 @@ TEST(GoldenKitchenSinkTracingStubTest, ListLogs) {
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, StreamingRead) {
+  auto span_catcher = InstallSpanCatcher();
+  auto mock_propagator = InstallMockPropagator();
+  EXPECT_CALL(*mock_propagator, Inject);
+
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   using ErrorStream =
       ::google::cloud::internal::StreamingReadRpcError<Response>;
-  EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(ByMove(
-          std::make_unique<ErrorStream>(internal::AbortedError("fail")))));
+  EXPECT_CALL(*mock, StreamingRead).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return std::make_unique<ErrorStream>(internal::AbortedError("fail"));
+  });
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.StreamingRead(
       std::make_shared<grpc::ClientContext>(), Request{});
   auto v = stream->Read();
   EXPECT_THAT(v, VariantWith<Status>(StatusIs(StatusCode::kAborted)));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "google.test.admin.database.v1.GoldenKitchenSink/StreamingRead"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>("grpc.peer", _),
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, ListServiceAccountKeys) {
