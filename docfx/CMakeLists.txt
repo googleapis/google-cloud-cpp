@@ -33,6 +33,8 @@ add_library(
     config.h
     doxygen2markdown.cc
     doxygen2markdown.h
+    doxygen2syntax.cc
+    doxygen2syntax.h
     doxygen2toc.cc
     doxygen2toc.h
     doxygen2yaml.cc
@@ -46,7 +48,10 @@ add_library(
     parse_arguments.cc
     parse_arguments.h
     toc_entry.cc
-    toc_entry.h)
+    toc_entry.h
+    yaml_context.h
+    yaml_emit.cc
+    yaml_emit.h)
 google_cloud_cpp_add_common_options(docfx)
 target_include_directories(docfx PUBLIC "${PROJECT_SOURCE_DIR}")
 target_compile_features(docfx PUBLIC cxx_std_17)
@@ -69,8 +74,13 @@ endif ()
 
 set(unit_tests
     # cmake-format: sort
-    doxygen2markdown_test.cc doxygen2toc_test.cc doxygen2yaml_test.cc
-    doxygen_pages_test.cc generate_metadata_test.cc parse_arguments_test.cc)
+    doxygen2markdown_test.cc
+    doxygen2syntax_test.cc
+    doxygen2toc_test.cc
+    doxygen2yaml_test.cc
+    doxygen_pages_test.cc
+    generate_metadata_test.cc
+    parse_arguments_test.cc)
 
 # Export the list of unit tests to a .bzl file so we do not need to maintain the
 # list in two places.

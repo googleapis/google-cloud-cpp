@@ -15,16 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2YAML_H
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2YAML_H
 
+#include "docfx/yaml_context.h"
 #include <pugixml.hpp>
 #include <yaml-cpp/yaml.h>
 #include <string>
 
 namespace docfx {
-
-struct YamlContext {
-  std::string library_root = "google/cloud/";
-  std::string parent_id;
-};
 
 // Initialize a YAML Emitter with the preamble elements required by DocFx.
 void StartDocFxYaml(YAML::Emitter& yaml);

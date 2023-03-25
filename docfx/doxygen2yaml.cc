@@ -15,6 +15,7 @@
 #include "docfx/doxygen2yaml.h"
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
+#include "docfx/yaml_emit.h"
 #include <sstream>
 #include <string_view>
 
@@ -40,10 +41,6 @@ std::string Summary(pugi::xml_node const& node) {
 }
 
 }  // namespace
-
-YAML::Emitter& operator<<(YAML::Emitter& e, std::string_view rhs) {
-  return e.Write(std::string(rhs));
-}
 
 void StartDocFxYaml(YAML::Emitter& yaml) {
   yaml << YAML::BeginMap << YAML::Key << "items" << YAML::Value
