@@ -7,3 +7,5 @@
 @com_google_googleapis//google/cloud/connectors/v1:destination_config.proto
 @com_google_googleapis//google/cloud/connectors/v1:provider.proto
 @com_google_googleapis//google/cloud/connectors/v1:runtime.proto
+@com_google_googleapis//google/cloud/connectors/v1:settings.proto
+@com_google_googleapis//google/cloud/connectors/v1:ssl_config.proto

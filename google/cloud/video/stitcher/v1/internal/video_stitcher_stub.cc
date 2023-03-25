@@ -20,6 +20,7 @@
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/video/stitcher/v1/video_stitcher_service.grpc.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -29,16 +30,22 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VideoStitcherServiceStub::~VideoStitcherServiceStub() = default;
 
-StatusOr<google::cloud::video::stitcher::v1::CdnKey>
-DefaultVideoStitcherServiceStub::CreateCdnKey(
-    grpc::ClientContext& client_context,
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncCreateCdnKey(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
-  google::cloud::video::stitcher::v1::CdnKey response;
-  auto status = grpc_stub_->CreateCdnKey(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::CreateCdnKeyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateCdnKey(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListCdnKeysResponse>
@@ -65,27 +72,40 @@ DefaultVideoStitcherServiceStub::GetCdnKey(
   return response;
 }
 
-Status DefaultVideoStitcherServiceStub::DeleteCdnKey(
-    grpc::ClientContext& client_context,
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncDeleteCdnKey(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteCdnKey(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteCdnKey(context, request, cq);
+      },
+      request, std::move(context));
 }
 
-StatusOr<google::cloud::video::stitcher::v1::CdnKey>
-DefaultVideoStitcherServiceStub::UpdateCdnKey(
-    grpc::ClientContext& client_context,
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncUpdateCdnKey(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
-  google::cloud::video::stitcher::v1::CdnKey response;
-  auto status = grpc_stub_->UpdateCdnKey(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::UpdateCdnKeyRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateCdnKey(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
@@ -198,16 +218,22 @@ DefaultVideoStitcherServiceStub::GetLiveAdTagDetail(
   return response;
 }
 
-StatusOr<google::cloud::video::stitcher::v1::Slate>
-DefaultVideoStitcherServiceStub::CreateSlate(
-    grpc::ClientContext& client_context,
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncCreateSlate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
-  google::cloud::video::stitcher::v1::Slate response;
-  auto status = grpc_stub_->CreateSlate(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::CreateSlateRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateSlate(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListSlatesResponse>
@@ -234,27 +260,40 @@ DefaultVideoStitcherServiceStub::GetSlate(
   return response;
 }
 
-StatusOr<google::cloud::video::stitcher::v1::Slate>
-DefaultVideoStitcherServiceStub::UpdateSlate(
-    grpc::ClientContext& client_context,
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncUpdateSlate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
-  google::cloud::video::stitcher::v1::Slate response;
-  auto status = grpc_stub_->UpdateSlate(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::UpdateSlateRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateSlate(context, request, cq);
+      },
+      request, std::move(context));
 }
 
-Status DefaultVideoStitcherServiceStub::DeleteSlate(
-    grpc::ClientContext& client_context,
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncDeleteSlate(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
-  google::protobuf::Empty response;
-  auto status = grpc_stub_->DeleteSlate(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return google::cloud::Status();
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::DeleteSlateRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteSlate(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
@@ -281,6 +320,103 @@ DefaultVideoStitcherServiceStub::GetLiveSession(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncCreateLiveConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateLiveConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::cloud::video::stitcher::v1::ListLiveConfigsResponse>
+DefaultVideoStitcherServiceStub::ListLiveConfigs(
+    grpc::ClientContext& client_context,
+    google::cloud::video::stitcher::v1::ListLiveConfigsRequest const& request) {
+  google::cloud::video::stitcher::v1::ListLiveConfigsResponse response;
+  auto status =
+      grpc_stub_->ListLiveConfigs(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::video::stitcher::v1::LiveConfig>
+DefaultVideoStitcherServiceStub::GetLiveConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request) {
+  google::cloud::video::stitcher::v1::LiveConfig response;
+  auto status = grpc_stub_->GetLiveConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncDeleteLiveConfig(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteLiveConfig(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultVideoStitcherServiceStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::GetOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
+                                    google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::longrunning::GetOperationRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return operations_->AsyncGetOperation(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<Status> DefaultVideoStitcherServiceStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
+                                    google::protobuf::Empty>(
+             cq,
+             [this](grpc::ClientContext* context,
+                    google::longrunning::CancelOperationRequest const& request,
+                    grpc::CompletionQueue* cq) {
+               return operations_->AsyncCancelOperation(context, request, cq);
+             },
+             request, std::move(context))
+      .then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -47,7 +47,8 @@ std::shared_ptr<VideoStitcherServiceStub> CreateDefaultVideoStitcherServiceStub(
           channel);
   std::shared_ptr<VideoStitcherServiceStub> stub =
       std::make_shared<DefaultVideoStitcherServiceStub>(
-          std::move(service_grpc_stub));
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<VideoStitcherServiceAuth>(std::move(auth),

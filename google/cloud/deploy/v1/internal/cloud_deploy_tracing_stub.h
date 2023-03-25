@@ -109,6 +109,14 @@ class CloudDeployTracingStub : public CloudDeployStub {
       grpc::ClientContext& context,
       google::cloud::deploy::v1::ApproveRolloutRequest const& request) override;
 
+  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request) override;
+
+  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::CancelRolloutRequest const& request) override;
+
   StatusOr<google::cloud::deploy::v1::ListRolloutsResponse> ListRollouts(
       grpc::ClientContext& context,
       google::cloud::deploy::v1::ListRolloutsRequest const& request) override;
@@ -122,6 +130,10 @@ class CloudDeployTracingStub : public CloudDeployStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
 
+  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::IgnoreJobRequest const& request) override;
+
   StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
       grpc::ClientContext& context,
       google::cloud::deploy::v1::RetryJobRequest const& request) override;
@@ -133,6 +145,11 @@ class CloudDeployTracingStub : public CloudDeployStub {
   StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
       grpc::ClientContext& context,
       google::cloud::deploy::v1::GetJobRunRequest const& request) override;
+
+  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request)
+      override;
 
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       grpc::ClientContext& context,

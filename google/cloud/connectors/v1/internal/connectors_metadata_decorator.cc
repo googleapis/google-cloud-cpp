@@ -134,6 +134,17 @@ ConnectorsMetadata::GetConnectionSchemaMetadata(
   return child_->GetConnectionSchemaMetadata(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ConnectorsMetadata::AsyncRefreshConnectionSchemaMetadata(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncRefreshConnectionSchemaMetadata(cq, std::move(context),
+                                                      request);
+}
+
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 ConnectorsMetadata::ListRuntimeEntitySchemas(
     grpc::ClientContext& context,
@@ -158,6 +169,14 @@ ConnectorsMetadata::GetRuntimeConfig(
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetRuntimeConfig(context, request);
+}
+
+StatusOr<google::cloud::connectors::v1::Settings>
+ConnectorsMetadata::GetGlobalSettings(
+    grpc::ClientContext& context,
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetGlobalSettings(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

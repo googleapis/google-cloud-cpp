@@ -159,6 +159,22 @@ CloudDeployMetadata::ApproveRollout(
   return child_->ApproveRollout(context, request);
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployMetadata::AdvanceRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->AdvanceRollout(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployMetadata::CancelRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->CancelRollout(context, request);
+}
+
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 CloudDeployMetadata::ListRollouts(
     grpc::ClientContext& context,
@@ -183,6 +199,14 @@ CloudDeployMetadata::AsyncCreateRollout(
   return child_->AsyncCreateRollout(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployMetadata::IgnoreJob(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+  SetMetadata(context, "rollout=" + request.rollout());
+  return child_->IgnoreJob(context, request);
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployMetadata::RetryJob(
     grpc::ClientContext& context,
@@ -204,6 +228,14 @@ StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployMetadata::GetJobRun(
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetJobRun(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployMetadata::TerminateJobRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->TerminateJobRun(context, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployMetadata::GetConfig(

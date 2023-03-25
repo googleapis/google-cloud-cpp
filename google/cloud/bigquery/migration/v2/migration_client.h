@@ -99,7 +99,7 @@ class MigrationServiceClient {
   /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
   /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L102}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
   /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
   /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
@@ -114,14 +114,14 @@ class MigrationServiceClient {
   /// Creates a migration workflow.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L102}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::CreateMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L110}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
   /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L102}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
   /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
   /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
@@ -141,7 +141,7 @@ class MigrationServiceClient {
   /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
   /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L117}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
   /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
   /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
@@ -152,14 +152,14 @@ class MigrationServiceClient {
   /// Gets a previously created migration workflow.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L117}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L126}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
   /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L117}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
   /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
   /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
@@ -181,7 +181,7 @@ class MigrationServiceClient {
   /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
   /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L132}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
   /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
   /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
@@ -192,14 +192,14 @@ class MigrationServiceClient {
   /// Lists previously created migration workflow.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L132}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L141}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationWorkflow,google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
   /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L132}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
   /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]:
   /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
   ///
@@ -218,7 +218,7 @@ class MigrationServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L168}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
   ///
   Status DeleteMigrationWorkflow(std::string const& name, Options opts = {});
 
@@ -226,12 +226,12 @@ class MigrationServiceClient {
   /// Deletes a migration workflow by name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L168}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::DeleteMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L177}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.migration.v2.DeleteMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L168}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L177}
   ///
   Status DeleteMigrationWorkflow(
       google::cloud::bigquery::migration::v2::
@@ -250,7 +250,7 @@ class MigrationServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L180}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
   ///
   Status StartMigrationWorkflow(std::string const& name, Options opts = {});
 
@@ -261,12 +261,12 @@ class MigrationServiceClient {
   /// DRAFT or RUNNING.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L180}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L189}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.migration.v2.StartMigrationWorkflowRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L180}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L189}
   ///
   Status StartMigrationWorkflow(
       google::cloud::bigquery::migration::v2::
@@ -281,12 +281,12 @@ class MigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L192}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
   /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
   GetMigrationSubtask(std::string const& name, Options opts = {});
@@ -295,16 +295,16 @@ class MigrationServiceClient {
   /// Gets a previously created migration subtask.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L192}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L201}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L192}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
   /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
   GetMigrationSubtask(
@@ -320,12 +320,12 @@ class MigrationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L207}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
   /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
   ListMigrationSubtasks(std::string const& parent, Options opts = {});
@@ -334,16 +334,16 @@ class MigrationServiceClient {
   /// Lists previously created migration subtasks.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L207}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest,google/cloud/bigquery/migration/v2/migration_service.proto#L217}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_link{google::cloud::bigquery::migration::v2::MigrationSubtask,google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L207}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
   /// [google.cloud.bigquery.migration.v2.MigrationSubtask]:
-  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L159}
+  /// @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
   ///
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
   ListMigrationSubtasks(

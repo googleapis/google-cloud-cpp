@@ -36,10 +36,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 VideoStitcherServiceConnection::~VideoStitcherServiceConnection() = default;
 
-StatusOr<google::cloud::video::stitcher::v1::CdnKey>
+future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnection::CreateCdnKey(
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::CdnKey>
@@ -56,15 +58,20 @@ VideoStitcherServiceConnection::GetCdnKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status VideoStitcherServiceConnection::DeleteCdnKey(
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceConnection::DeleteCdnKey(
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-StatusOr<google::cloud::video::stitcher::v1::CdnKey>
+future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
 VideoStitcherServiceConnection::UpdateCdnKey(
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::CdnKey>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
@@ -121,10 +128,12 @@ VideoStitcherServiceConnection::GetLiveAdTagDetail(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::video::stitcher::v1::Slate>
+future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnection::CreateSlate(
     google::cloud::video::stitcher::v1::CreateSlateRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::Slate>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::Slate>
@@ -141,15 +150,20 @@ VideoStitcherServiceConnection::GetSlate(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::video::stitcher::v1::Slate>
+future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
 VideoStitcherServiceConnection::UpdateSlate(
     google::cloud::video::stitcher::v1::UpdateSlateRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::Slate>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-Status VideoStitcherServiceConnection::DeleteSlate(
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceConnection::DeleteSlate(
     google::cloud::video::stitcher::v1::DeleteSlateRequest const&) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
@@ -162,6 +176,36 @@ StatusOr<google::cloud::video::stitcher::v1::LiveSession>
 VideoStitcherServiceConnection::GetLiveSession(
     google::cloud::video::stitcher::v1::GetLiveSessionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+VideoStitcherServiceConnection::CreateLiveConfig(
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::cloud::video::stitcher::v1::LiveConfig>
+VideoStitcherServiceConnection::ListLiveConfigs(
+    google::cloud::video::stitcher::v1::
+        ListLiveConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::video::stitcher::v1::LiveConfig>>();
+}
+
+StatusOr<google::cloud::video::stitcher::v1::LiveConfig>
+VideoStitcherServiceConnection::GetLiveConfig(
+    google::cloud::video::stitcher::v1::GetLiveConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+VideoStitcherServiceConnection::DeleteLiveConfig(
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<VideoStitcherServiceConnection>

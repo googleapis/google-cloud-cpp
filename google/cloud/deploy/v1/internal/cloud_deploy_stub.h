@@ -115,6 +115,16 @@ class CloudDeployStub {
       grpc::ClientContext& context,
       google::cloud::deploy::v1::ApproveRolloutRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+  AdvanceRollout(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+  CancelRollout(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::CancelRolloutRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
   ListRollouts(
       grpc::ClientContext& context,
@@ -129,6 +139,10 @@ class CloudDeployStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::deploy::v1::CreateRolloutRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::IgnoreJobRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
       grpc::ClientContext& context,
       google::cloud::deploy::v1::RetryJobRequest const& request) = 0;
@@ -140,6 +154,11 @@ class CloudDeployStub {
   virtual StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
       grpc::ClientContext& context,
       google::cloud::deploy::v1::GetJobRunRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+  TerminateJobRun(
+      grpc::ClientContext& context,
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       grpc::ClientContext& context,
@@ -238,6 +257,14 @@ class DefaultCloudDeployStub : public CloudDeployStub {
       grpc::ClientContext& client_context,
       google::cloud::deploy::v1::ApproveRolloutRequest const& request) override;
 
+  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
+      grpc::ClientContext& client_context,
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request) override;
+
+  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
+      grpc::ClientContext& client_context,
+      google::cloud::deploy::v1::CancelRolloutRequest const& request) override;
+
   StatusOr<google::cloud::deploy::v1::ListRolloutsResponse> ListRollouts(
       grpc::ClientContext& client_context,
       google::cloud::deploy::v1::ListRolloutsRequest const& request) override;
@@ -251,6 +278,10 @@ class DefaultCloudDeployStub : public CloudDeployStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
 
+  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
+      grpc::ClientContext& client_context,
+      google::cloud::deploy::v1::IgnoreJobRequest const& request) override;
+
   StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
       grpc::ClientContext& client_context,
       google::cloud::deploy::v1::RetryJobRequest const& request) override;
@@ -262,6 +293,11 @@ class DefaultCloudDeployStub : public CloudDeployStub {
   StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
       grpc::ClientContext& client_context,
       google::cloud::deploy::v1::GetJobRunRequest const& request) override;
+
+  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
+      grpc::ClientContext& client_context,
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request)
+      override;
 
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       grpc::ClientContext& client_context,

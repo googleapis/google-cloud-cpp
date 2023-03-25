@@ -26,10 +26,13 @@
 #include "google/cloud/video/stitcher/v1/video_stitcher_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -50,7 +53,7 @@ class VideoStitcherServiceConnectionImpl
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request)
       override;
 
@@ -61,11 +64,11 @@ class VideoStitcherServiceConnectionImpl
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request)
       override;
 
-  Status DeleteCdnKey(
-      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request)
-      override;
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteCdnKey(google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request)
       override;
 
@@ -107,7 +110,7 @@ class VideoStitcherServiceConnectionImpl
       google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
           request) override;
 
-  StatusOr<google::cloud::video::stitcher::v1::Slate> CreateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request)
       override;
 
@@ -118,13 +121,13 @@ class VideoStitcherServiceConnectionImpl
       google::cloud::video::stitcher::v1::GetSlateRequest const& request)
       override;
 
-  StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request)
       override;
 
-  Status DeleteSlate(
-      google::cloud::video::stitcher::v1::DeleteSlateRequest const& request)
-      override;
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteSlate(google::cloud::video::stitcher::v1::DeleteSlateRequest const&
+                  request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
@@ -133,6 +136,24 @@ class VideoStitcherServiceConnectionImpl
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  CreateLiveConfig(
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+          request) override;
+
+  StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
+      google::cloud::video::stitcher::v1::ListLiveConfigsRequest request)
+      override;
+
+  StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
+      google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteLiveConfig(
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+          request) override;
 
  private:
   std::unique_ptr<video_stitcher_v1::VideoStitcherServiceRetryPolicy>
@@ -177,6 +198,19 @@ class VideoStitcherServiceConnectionImpl
     return options_
         .get<video_stitcher_v1::
                  VideoStitcherServiceConnectionIdempotencyPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<PollingPolicy> polling_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()) {
+      return options
+          .get<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<video_stitcher_v1::VideoStitcherServicePollingPolicyOption>()
         ->clone();
   }
 

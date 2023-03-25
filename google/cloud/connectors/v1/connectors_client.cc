@@ -232,6 +232,24 @@ ConnectorsClient::GetConnectionSchemaMetadata(
   return connection_->GetConnectionSchemaMetadata(request);
 }
 
+future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+ConnectorsClient::RefreshConnectionSchemaMetadata(std::string const& name,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest request;
+  request.set_name(name);
+  return connection_->RefreshConnectionSchemaMetadata(request);
+}
+
+future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+ConnectorsClient::RefreshConnectionSchemaMetadata(
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RefreshConnectionSchemaMetadata(request);
+}
+
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
 ConnectorsClient::ListRuntimeEntitySchemas(std::string const& parent,
                                            Options opts) {
@@ -280,6 +298,22 @@ ConnectorsClient::GetRuntimeConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRuntimeConfig(request);
+}
+
+StatusOr<google::cloud::connectors::v1::Settings>
+ConnectorsClient::GetGlobalSettings(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::connectors::v1::GetGlobalSettingsRequest request;
+  request.set_name(name);
+  return connection_->GetGlobalSettings(request);
+}
+
+StatusOr<google::cloud::connectors::v1::Settings>
+ConnectorsClient::GetGlobalSettings(
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGlobalSettings(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

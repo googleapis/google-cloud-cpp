@@ -65,6 +65,31 @@ Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteInstance(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListSnapshots(
+    google::cloud::filestore::v1::ListSnapshotsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::GetSnapshot(
+    google::cloud::filestore::v1::GetSnapshotRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::CreateSnapshot(
+    google::cloud::filestore::v1::CreateSnapshotRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::DeleteSnapshot(
+    google::cloud::filestore::v1::DeleteSnapshotRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::UpdateSnapshot(
+    google::cloud::filestore::v1::UpdateSnapshotRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudFilestoreManagerConnectionIdempotencyPolicy::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest) {  // NOLINT
   return Idempotency::kIdempotent;

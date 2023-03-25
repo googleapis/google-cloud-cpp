@@ -96,10 +96,10 @@ class MetricServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
+  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L41}
   ///
   /// [google.api.MonitoredResourceDescriptor]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L41}
   /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   ///
@@ -115,10 +115,10 @@ class MetricServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
+  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L41}
   ///
   /// [google.api.MonitoredResourceDescriptor]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L41}
   /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   ///
@@ -139,10 +139,10 @@ class MetricServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
+  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L41}
   ///
   /// [google.api.MonitoredResourceDescriptor]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L41}
   /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   ///
@@ -158,10 +158,10 @@ class MetricServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
+  /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L41}
   ///
   /// [google.api.MonitoredResourceDescriptor]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L41}
   /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   ///

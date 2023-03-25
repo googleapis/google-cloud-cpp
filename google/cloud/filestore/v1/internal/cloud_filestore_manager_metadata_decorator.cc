@@ -86,6 +86,49 @@ CloudFilestoreManagerMetadata::AsyncDeleteInstance(
   return child_->AsyncDeleteInstance(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
+CloudFilestoreManagerMetadata::ListSnapshots(
+    grpc::ClientContext& context,
+    google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListSnapshots(context, request);
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerMetadata::GetSnapshot(
+    grpc::ClientContext& context,
+    google::cloud::filestore::v1::GetSnapshotRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetSnapshot(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerMetadata::AsyncCreateSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateSnapshot(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerMetadata::AsyncDeleteSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteSnapshot(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerMetadata::AsyncUpdateSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  SetMetadata(*context, "snapshot.name=" + request.snapshot().name());
+  return child_->AsyncUpdateSnapshot(cq, std::move(context), request);
+}
+
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
 CloudFilestoreManagerMetadata::ListBackups(
     grpc::ClientContext& context,

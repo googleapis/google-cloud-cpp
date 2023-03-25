@@ -207,6 +207,143 @@ CloudFilestoreManagerConnectionImpl::DeleteInstance(
       __func__);
 }
 
+StreamRange<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerConnectionImpl::ListSnapshots(
+    google::cloud::filestore::v1::ListSnapshotsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<filestore_v1::CloudFilestoreManagerRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListSnapshots(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::filestore::v1::Snapshot>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::filestore::v1::ListSnapshotsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::filestore::v1::ListSnapshotsRequest const&
+                       request) {
+              return stub->ListSnapshots(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::filestore::v1::ListSnapshotsResponse r) {
+        std::vector<google::cloud::filestore::v1::Snapshot> result(
+            r.snapshots().size());
+        auto& messages = *r.mutable_snapshots();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerConnectionImpl::GetSnapshot(
+    google::cloud::filestore::v1::GetSnapshotRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetSnapshot(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::filestore::v1::GetSnapshotRequest const& request) {
+        return stub_->GetSnapshot(context, request);
+      },
+      request, __func__);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerConnectionImpl::CreateSnapshot(
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::filestore::v1::Snapshot>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+        return stub->AsyncCreateSnapshot(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::filestore::v1::Snapshot>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateSnapshot(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerConnectionImpl::DeleteSnapshot(
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::common::OperationMetadata>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+        return stub->AsyncDeleteSnapshot(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultMetadata<
+          google::cloud::common::OperationMetadata>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteSnapshot(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerConnectionImpl::UpdateSnapshot(
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::filestore::v1::Snapshot>(
+      background_->cq(), request,
+      [stub](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+        return stub->AsyncUpdateSnapshot(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::filestore::v1::Snapshot>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateSnapshot(request), polling_policy(),
+      __func__);
+}
+
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerConnectionImpl::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {

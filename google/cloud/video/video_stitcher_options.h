@@ -28,6 +28,11 @@ namespace cloud {
 namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use video_stitcher_v1::VideoStitcherServicePollingPolicyOption
+/// directly.
+using ::google::cloud::video_stitcher_v1::
+    VideoStitcherServicePollingPolicyOption;
+
 /// @deprecated Use video_stitcher_v1::VideoStitcherServiceBackoffPolicyOption
 /// directly.
 using ::google::cloud::video_stitcher_v1::

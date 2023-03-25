@@ -236,6 +236,24 @@ CloudDeployAuth::ApproveRollout(
   return child_->ApproveRollout(context, request);
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployAuth::AdvanceRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AdvanceRollout(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployAuth::CancelRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CancelRollout(context, request);
+}
+
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 CloudDeployAuth::ListRollouts(
     grpc::ClientContext& context,
@@ -272,6 +290,15 @@ CloudDeployAuth::AsyncCreateRollout(
       });
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployAuth::IgnoreJob(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->IgnoreJob(context, request);
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse> CloudDeployAuth::RetryJob(
     grpc::ClientContext& context,
     google::cloud::deploy::v1::RetryJobRequest const& request) {
@@ -295,6 +322,15 @@ StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployAuth::GetJobRun(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetJobRun(context, request);
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployAuth::TerminateJobRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TerminateJobRun(context, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployAuth::GetConfig(

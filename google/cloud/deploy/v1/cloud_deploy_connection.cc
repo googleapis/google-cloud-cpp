@@ -144,6 +144,18 @@ CloudDeployConnection::ApproveRollout(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployConnection::AdvanceRollout(
+    google::cloud::deploy::v1::AdvanceRolloutRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployConnection::CancelRollout(
+    google::cloud::deploy::v1::CancelRolloutRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::deploy::v1::Rollout>
 CloudDeployConnection::ListRollouts(
     google::cloud::deploy::v1::
@@ -165,6 +177,12 @@ CloudDeployConnection::CreateRollout(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployConnection::IgnoreJob(
+    google::cloud::deploy::v1::IgnoreJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployConnection::RetryJob(
     google::cloud::deploy::v1::RetryJobRequest const&) {
@@ -181,6 +199,12 @@ CloudDeployConnection::ListJobRuns(
 
 StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployConnection::GetJobRun(
     google::cloud::deploy::v1::GetJobRunRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployConnection::TerminateJobRun(
+    google::cloud::deploy::v1::TerminateJobRunRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

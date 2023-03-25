@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 
@@ -95,12 +96,12 @@ class VideoStitcherServiceClient {
   /// Creates a new CDN key.
   ///
   /// @param parent  Required. The project in which the CDN key should be
-  /// created, in the form of
-  ///  `projects/{project_number}/locations/{location}`.
+  /// created, in the form
+  ///  of `projects/{project_number}/locations/{location}`.
   /// @param cdn_key  Required. The CDN key resource to create.
   /// @param cdn_key_id  Required. The ID to use for the CDN key, which will
-  /// become the final component of
-  ///  the CDN key's resource name.
+  /// become the final
+  ///  component of the CDN key's resource name.
   ///  This value should conform to RFC-1034, which restricts to
   ///  lower-case letters, numbers, and hyphen, with the first character a
   ///  letter, the last a letter or a number, and a 63 character maximum.
@@ -112,9 +113,9 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L217}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
       std::string const& parent,
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       std::string const& cdn_key_id, Options opts = {});
@@ -123,7 +124,7 @@ class VideoStitcherServiceClient {
   /// Creates a new CDN key.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L217}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -132,9 +133,9 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.CreateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L217}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L295}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
       Options opts = {});
 
@@ -152,7 +153,7 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L240}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
   ///
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
       std::string const& parent, Options opts = {});
@@ -161,7 +162,7 @@ class VideoStitcherServiceClient {
   /// Lists all CDN keys in the specified project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListCdnKeysRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L240}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::ListCdnKeysRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -170,7 +171,7 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.ListCdnKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L240}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L318}
   ///
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
       google::cloud::video::stitcher::v1::ListCdnKeysRequest request,
@@ -190,7 +191,7 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L277}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
       std::string const& name, Options opts = {});
@@ -199,7 +200,7 @@ class VideoStitcherServiceClient {
   /// Returns the specified CDN key.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L277}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -208,7 +209,7 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.GetCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L277}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L355}
   ///
   StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request,
@@ -222,24 +223,34 @@ class VideoStitcherServiceClient {
   ///  `projects/{project_number}/locations/{location}/cdnKeys/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
   /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L289}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
-  Status DeleteCdnKey(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteCdnKey(std::string const& name, Options opts = {});
 
   ///
   /// Deletes the specified CDN key.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L289}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
   /// [google.cloud.video.stitcher.v1.DeleteCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L289}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L367}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
-  Status DeleteCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteCdnKey(
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request,
       Options opts = {});
 
@@ -260,9 +271,9 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L301}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -271,7 +282,7 @@ class VideoStitcherServiceClient {
   /// in the call method body.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::UpdateCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L301}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::UpdateCdnKeyRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -280,9 +291,9 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.CdnKey]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/cdn_keys.proto#L30}
   /// [google.cloud.video.stitcher.v1.UpdateCdnKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L301}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L379}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
       Options opts = {});
 
@@ -291,18 +302,18 @@ class VideoStitcherServiceClient {
   /// tracking and playback metadata of the session.
   ///
   /// @param parent  Required. The project and location in which the VOD session
-  /// should be created, in the
-  ///  form of `projects/{project_number}/locations/{location}`.
+  /// should be
+  ///  created, in the form of `projects/{project_number}/locations/{location}`.
   /// @param vod_session  Required. Parameters for creating a session.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L312}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
       std::string const& parent,
@@ -314,16 +325,16 @@ class VideoStitcherServiceClient {
   /// tracking and playback metadata of the session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateVodSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L312}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateVodSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   /// [google.cloud.video.stitcher.v1.CreateVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L312}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L391}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
       google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
@@ -340,12 +351,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L327}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> GetVodSession(
       std::string const& name, Options opts = {});
@@ -355,16 +366,16 @@ class VideoStitcherServiceClient {
   /// logs for the specified VOD session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L327}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::VodSession,google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L327}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L406}
   /// [google.cloud.video.stitcher.v1.VodSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L31}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L41}
   ///
   StatusOr<google::cloud::video::stitcher::v1::VodSession> GetVodSession(
       google::cloud::video::stitcher::v1::GetVodSessionRequest const& request,
@@ -375,15 +386,15 @@ class VideoStitcherServiceClient {
   /// session.
   ///
   /// @param parent  Required. The VOD session where the stitch details belong
-  /// to, in the form of
-  ///  `projects/{project}/locations/{location}/vodSessions/{id}`.
+  /// to, in the form
+  ///  of `projects/{project}/locations/{location}/vodSessions/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
   /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L339}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
@@ -395,14 +406,14 @@ class VideoStitcherServiceClient {
   /// session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L339}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
   /// [google.cloud.video.stitcher.v1.ListVodStitchDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L339}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L418}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
@@ -415,7 +426,8 @@ class VideoStitcherServiceClient {
   /// Returns the specified stitching information for the specified VOD session.
   ///
   /// @param name  Required. The name of the stitch detail in the specified VOD
-  /// session, in the form of
+  /// session, in
+  ///  the form of
   ///  `projects/{project}/locations/{location}/vodSessions/{vod_session_id}/vodStitchDetails/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -423,7 +435,7 @@ class VideoStitcherServiceClient {
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L366}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
@@ -434,14 +446,14 @@ class VideoStitcherServiceClient {
   /// Returns the specified stitching information for the specified VOD session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodStitchDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L366}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodStitchDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodStitchDetail,google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodStitchDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L366}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L445}
   /// [google.cloud.video.stitcher.v1.VodStitchDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/stitch_details.proto#L30}
   ///
@@ -455,7 +467,8 @@ class VideoStitcherServiceClient {
   /// Return the list of ad tag details for the specified VOD session.
   ///
   /// @param parent  Required. The VOD session which the ad tag details belong
-  /// to, in the form of
+  /// to, in the form
+  ///  of
   ///  `projects/{project}/locations/{location}/vodSessions/{vod_session_id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -463,7 +476,7 @@ class VideoStitcherServiceClient {
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
   /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L378}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
   /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
@@ -474,14 +487,14 @@ class VideoStitcherServiceClient {
   /// Return the list of ad tag details for the specified VOD session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L378}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
   /// [google.cloud.video.stitcher.v1.ListVodAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L378}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L458}
   /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
@@ -494,7 +507,8 @@ class VideoStitcherServiceClient {
   /// Returns the specified ad tag detail for the specified VOD session.
   ///
   /// @param name  Required. The name of the ad tag detail for the specified VOD
-  /// session, in the form of
+  /// session, in
+  ///  the form of
   ///  `projects/{project}/locations/{location}/vodSessions/{vod_session_id}/vodAdTagDetails/{vod_ad_tag_detail}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -502,7 +516,7 @@ class VideoStitcherServiceClient {
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L405}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
   /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
@@ -513,14 +527,14 @@ class VideoStitcherServiceClient {
   /// Returns the specified ad tag detail for the specified VOD session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L405}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::VodAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
   /// [google.cloud.video.stitcher.v1.GetVodAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L405}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L485}
   /// [google.cloud.video.stitcher.v1.VodAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L44}
   ///
@@ -541,7 +555,7 @@ class VideoStitcherServiceClient {
   /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
   /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L417}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
   /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
@@ -552,14 +566,14 @@ class VideoStitcherServiceClient {
   /// Return the list of ad tag details for the specified live session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L417}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
   /// [google.cloud.video.stitcher.v1.ListLiveAdTagDetailsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L417}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L498}
   /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
@@ -579,7 +593,7 @@ class VideoStitcherServiceClient {
   /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
   /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L444}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
   /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
@@ -590,14 +604,14 @@ class VideoStitcherServiceClient {
   /// Returns the specified ad tag detail for the specified live session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L444}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::LiveAdTagDetail,google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
   /// [google.cloud.video.stitcher.v1.GetLiveAdTagDetailRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L444}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
   /// [google.cloud.video.stitcher.v1.LiveAdTagDetail]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/ad_tag_details.proto#L29}
   ///
@@ -612,7 +626,7 @@ class VideoStitcherServiceClient {
   ///
   /// @param parent  Required. The project in which the slate should be created,
   /// in the form of
-  ///  `projects/{project_number}`.
+  ///  `projects/{project_number}/locations/{location}`.
   /// @param slate  Required. The slate to create.
   /// @param slate_id  Required. The unique identifier for the slate.
   ///  This value should conform to RFC-1034, which restricts to
@@ -624,11 +638,11 @@ class VideoStitcherServiceClient {
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   /// [google.cloud.video.stitcher.v1.CreateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L456}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::Slate> CreateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
       std::string const& parent,
       google::cloud::video::stitcher::v1::Slate const& slate,
       std::string const& slate_id, Options opts = {});
@@ -637,18 +651,18 @@ class VideoStitcherServiceClient {
   /// Creates a slate.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L456}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   /// [google.cloud.video.stitcher.v1.CreateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L456}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L537}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::Slate> CreateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
       Options opts = {});
 
@@ -656,14 +670,14 @@ class VideoStitcherServiceClient {
   /// Lists all slates in the specified project and location.
   ///
   /// @param parent  Required. The project to list slates, in the form of
-  /// `projects/{project_number}`.
+  ///  `projects/{project_number}/locations/{location}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   /// [google.cloud.video.stitcher.v1.ListSlatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L489}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
@@ -674,14 +688,14 @@ class VideoStitcherServiceClient {
   /// Lists all slates in the specified project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::ListSlatesRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L489}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::ListSlatesRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   /// [google.cloud.video.stitcher.v1.ListSlatesRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L489}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L585}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
@@ -693,15 +707,15 @@ class VideoStitcherServiceClient {
   /// Returns the specified slate.
   ///
   /// @param name  Required. The name of the slate to be retrieved, of the
-  /// slate, in the form of
-  ///  `projects/{project_number}/locations/{location}/slates/{id}`.
+  /// slate, in the form
+  ///  of `projects/{project_number}/locations/{location}/slates/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   /// [google.cloud.video.stitcher.v1.GetSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L477}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
@@ -712,14 +726,14 @@ class VideoStitcherServiceClient {
   /// Returns the specified slate.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L477}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::stitcher::v1::Slate,google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
   /// [google.cloud.video.stitcher.v1.GetSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L477}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L573}
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   ///
@@ -741,9 +755,9 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
       google::cloud::video::stitcher::v1::Slate const& slate,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -751,7 +765,7 @@ class VideoStitcherServiceClient {
   /// Updates the specified slate.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::UpdateSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::UpdateSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -760,9 +774,9 @@ class VideoStitcherServiceClient {
   /// [google.cloud.video.stitcher.v1.Slate]:
   /// @googleapis_reference_link{google/cloud/video/stitcher/v1/slates.proto#L28}
   /// [google.cloud.video.stitcher.v1.UpdateSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L525}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L622}
   ///
-  StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
       Options opts = {});
 
@@ -773,24 +787,34 @@ class VideoStitcherServiceClient {
   ///  `projects/{project_number}/locations/{location}/slates/{id}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
   /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L534}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
-  Status DeleteSlate(std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteSlate(std::string const& name, Options opts = {});
 
   ///
   /// Deletes the specified slate.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L534}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteSlateRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
   /// [google.cloud.video.stitcher.v1.DeleteSlateRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L534}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L632}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
   ///
-  Status DeleteSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteSlate(
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
       Options opts = {});
 
@@ -798,18 +822,18 @@ class VideoStitcherServiceClient {
   /// Creates a new live session.
   ///
   /// @param parent  Required. The project and location in which the live
-  /// session should be created,
-  ///  in the form of `projects/{project_number}/locations/{location}`.
+  /// session should be
+  ///  created, in the form of `projects/{project_number}/locations/{location}`.
   /// @param live_session  Required. Parameters for creating a live session.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L546}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       std::string const& parent,
@@ -820,16 +844,16 @@ class VideoStitcherServiceClient {
   /// Creates a new live session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateLiveSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L546}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateLiveSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   /// [google.cloud.video.stitcher.v1.CreateLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L546}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L644}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
@@ -844,12 +868,12 @@ class VideoStitcherServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L561}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       std::string const& name, Options opts = {});
@@ -858,19 +882,188 @@ class VideoStitcherServiceClient {
   /// Returns the details for the specified live session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L561}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveSessionRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveSession,google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   /// [google.cloud.video.stitcher.v1.GetLiveSessionRequest]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L561}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L659}
   /// [google.cloud.video.stitcher.v1.LiveSession]:
-  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L130}
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/sessions.proto#L142}
   ///
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Registers the live config with the provided unique ID in
+  /// the specified region.
+  ///
+  /// @param parent  Required. The project in which the live config should be
+  /// created, in
+  ///  the form of `projects/{project_number}/locations/{location}`.
+  /// @param live_config  Required. The live config resource to create.
+  /// @param live_config_id  Required. The unique identifier ID to use for the
+  /// live config.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  CreateLiveConfig(
+      std::string const& parent,
+      google::cloud::video::stitcher::v1::LiveConfig const& live_config,
+      std::string const& live_config_id, Options opts = {});
+
+  ///
+  /// Registers the live config with the provided unique ID in
+  /// the specified region.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::video::stitcher::v1::CreateLiveConfigRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  /// [google.cloud.video.stitcher.v1.CreateLiveConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L671}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  CreateLiveConfig(
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+          request,
+      Options opts = {});
+
+  ///
+  /// Lists all live configs managed by the Video Stitcher that
+  /// belong to the specified project and region.
+  ///
+  /// @param parent  Required. The project that contains the list of live
+  /// configs, in the
+  ///  form of `projects/{project_number}/locations/{location}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
+      std::string const& parent, Options opts = {});
+
+  ///
+  /// Lists all live configs managed by the Video Stitcher that
+  /// belong to the specified project and region.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::video::stitcher::v1::ListLiveConfigsRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  /// [google.cloud.video.stitcher.v1.ListLiveConfigsRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L704}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
+      google::cloud::video::stitcher::v1::ListLiveConfigsRequest request,
+      Options opts = {});
+
+  ///
+  /// Returns the specified live config managed by the Video
+  /// Stitcher service.
+  ///
+  /// @param name  Required. The name of the live config to be retrieved, in the
+  /// form
+  ///  of
+  ///  `projects/{project_number}/locations/{location}/liveConfigs/{id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Returns the specified live config managed by the Video
+  /// Stitcher service.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::video::stitcher::v1::GetLiveConfigRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::LiveConfig,google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  /// [google.cloud.video.stitcher.v1.GetLiveConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L743}
+  /// [google.cloud.video.stitcher.v1.LiveConfig]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/live_configs.proto#L43}
+  ///
+  StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
+      google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Deletes the specified live config.
+  ///
+  /// @param name  Required. The name of the live config to be deleted, in the
+  /// form of
+  ///  `projects/{project_number}/locations/{location}/liveConfigs/{id}`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  ///
+  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  ///
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteLiveConfig(std::string const& name, Options opts = {});
+
+  ///
+  /// Deletes the specified live config.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::video::stitcher::v1::DeleteLiveConfigRequest,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::video::stitcher::v1::OperationMetadata,google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  ///
+  /// [google.cloud.video.stitcher.v1.DeleteLiveConfigRequest]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L756}
+  /// [google.cloud.video.stitcher.v1.OperationMetadata]:
+  /// @googleapis_reference_link{google/cloud/video/stitcher/v1/video_stitcher_service.proto#L768}
+  ///
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteLiveConfig(
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+          request,
       Options opts = {});
 
  private:

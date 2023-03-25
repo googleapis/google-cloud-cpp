@@ -94,6 +94,13 @@ Idempotency ConnectorsConnectionIdempotencyPolicy::GetConnectionSchemaMetadata(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+ConnectorsConnectionIdempotencyPolicy::RefreshConnectionSchemaMetadata(
+    google::cloud::connectors::v1::
+        RefreshConnectionSchemaMetadataRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ConnectorsConnectionIdempotencyPolicy::ListRuntimeEntitySchemas(
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -106,6 +113,11 @@ Idempotency ConnectorsConnectionIdempotencyPolicy::ListRuntimeActionSchemas(
 
 Idempotency ConnectorsConnectionIdempotencyPolicy::GetRuntimeConfig(
     google::cloud::connectors::v1::GetRuntimeConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ConnectorsConnectionIdempotencyPolicy::GetGlobalSettings(
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const&) {
   return Idempotency::kIdempotent;
 }
 

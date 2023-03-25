@@ -59,6 +59,16 @@ struct VideoStitcherServiceConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-video-options
+ */
+struct VideoStitcherServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to VideoStitcherService.
  *
  * @ingroup google-cloud-video-options
@@ -66,6 +76,7 @@ struct VideoStitcherServiceConnectionIdempotencyPolicyOption {
 using VideoStitcherServicePolicyOptionList =
     OptionList<VideoStitcherServiceRetryPolicyOption,
                VideoStitcherServiceBackoffPolicyOption,
+               VideoStitcherServicePollingPolicyOption,
                VideoStitcherServiceConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

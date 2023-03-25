@@ -91,17 +91,17 @@ class CloudDeployClient {
   /// Lists DeliveryPipelines in a given project and location.
   ///
   /// @param parent  Required. The parent, which owns this collection of
-  /// pipelines. Format must be
-  ///  projects/{project_id}/locations/{location_name}.
+  /// pipelines. Format must
+  ///  be projects/{project_id}/locations/{location_name}.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   /// [google.cloud.deploy.v1.ListDeliveryPipelinesRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L422}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L613}
   ///
   StreamRange<google::cloud::deploy::v1::DeliveryPipeline>
   ListDeliveryPipelines(std::string const& parent, Options opts = {});
@@ -110,16 +110,16 @@ class CloudDeployClient {
   /// Lists DeliveryPipelines in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::ListDeliveryPipelinesRequest,google/cloud/deploy/v1/cloud_deploy.proto#L422}
+  /// @googleapis_link{google::cloud::deploy::v1::ListDeliveryPipelinesRequest,google/cloud/deploy/v1/cloud_deploy.proto#L613}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   /// [google.cloud.deploy.v1.ListDeliveryPipelinesRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L422}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L613}
   ///
   StreamRange<google::cloud::deploy::v1::DeliveryPipeline>
   ListDeliveryPipelines(
@@ -134,12 +134,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L467}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L658}
   ///
   StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
       std::string const& name, Options opts = {});
@@ -148,16 +148,16 @@ class CloudDeployClient {
   /// Gets details of a single DeliveryPipeline.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::GetDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L467}
+  /// @googleapis_link{google::cloud::deploy::v1::GetDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L658}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L467}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L658}
   ///
   StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
       google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request,
@@ -167,19 +167,20 @@ class CloudDeployClient {
   /// Creates a new DeliveryPipeline in a given project and location.
   ///
   /// @param parent  Required. The parent collection in which the
-  /// `DeliveryPipeline` should be created.
-  ///  Format should be projects/{project_id}/locations/{location_name}.
+  /// `DeliveryPipeline` should be
+  ///  created. Format should be
+  ///  projects/{project_id}/locations/{location_name}.
   /// @param delivery_pipeline  Required. The `DeliveryPipeline` to create.
   /// @param delivery_pipeline_id  Required. ID of the `DeliveryPipeline`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.CreateDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L479}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L670}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   CreateDeliveryPipeline(
@@ -191,16 +192,16 @@ class CloudDeployClient {
   /// Creates a new DeliveryPipeline in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::CreateDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L479}
+  /// @googleapis_link{google::cloud::deploy::v1::CreateDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L670}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.CreateDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L479}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L670}
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   CreateDeliveryPipeline(
@@ -220,12 +221,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   /// [google.cloud.deploy.v1.UpdateDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L516}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L708}
   ///
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
@@ -236,16 +237,16 @@ class CloudDeployClient {
   /// Updates the parameters of a single DeliveryPipeline.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::UpdateDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L516}
+  /// @googleapis_link{google::cloud::deploy::v1::UpdateDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L708}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_link{google::cloud::deploy::v1::DeliveryPipeline,google/cloud/deploy/v1/cloud_deploy.proto#L333}
   ///
   /// [google.cloud.deploy.v1.DeliveryPipeline]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L282}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L333}
   /// [google.cloud.deploy.v1.UpdateDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L516}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L708}
   ///
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
@@ -261,12 +262,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   /// [google.cloud.deploy.v1.DeleteDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L552}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L746}
   /// [google.cloud.deploy.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteDeliveryPipeline(std::string const& name, Options opts = {});
@@ -275,16 +276,16 @@ class CloudDeployClient {
   /// Deletes a single DeliveryPipeline.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::DeleteDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L552}
+  /// @googleapis_link{google::cloud::deploy::v1::DeleteDeliveryPipelineRequest,google/cloud/deploy/v1/cloud_deploy.proto#L746}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   /// [google.cloud.deploy.v1.DeleteDeliveryPipelineRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L552}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L746}
   /// [google.cloud.deploy.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteDeliveryPipeline(
@@ -300,12 +301,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.ListTargetsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L812}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1019}
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   StreamRange<google::cloud::deploy::v1::Target> ListTargets(
       std::string const& parent, Options opts = {});
@@ -314,16 +315,16 @@ class CloudDeployClient {
   /// Lists Targets in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::ListTargetsRequest,google/cloud/deploy/v1/cloud_deploy.proto#L812}
+  /// @googleapis_link{google::cloud::deploy::v1::ListTargetsRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1019}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.ListTargetsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L812}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1019}
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   StreamRange<google::cloud::deploy::v1::Target> ListTargets(
       google::cloud::deploy::v1::ListTargetsRequest request, Options opts = {});
@@ -336,12 +337,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.GetTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L856}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1065}
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   StatusOr<google::cloud::deploy::v1::Target> GetTarget(std::string const& name,
                                                         Options opts = {});
@@ -350,16 +351,16 @@ class CloudDeployClient {
   /// Gets details of a single Target.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::GetTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L856}
+  /// @googleapis_link{google::cloud::deploy::v1::GetTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1065}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.GetTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L856}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1065}
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   StatusOr<google::cloud::deploy::v1::Target> GetTarget(
       google::cloud::deploy::v1::GetTargetRequest const& request,
@@ -377,12 +378,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.CreateTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L868}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1077}
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
       std::string const& parent,
@@ -393,16 +394,16 @@ class CloudDeployClient {
   /// Creates a new Target in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::CreateTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L868}
+  /// @googleapis_link{google::cloud::deploy::v1::CreateTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1077}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.CreateTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L868}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1077}
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
       google::cloud::deploy::v1::CreateTargetRequest const& request,
@@ -421,12 +422,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   /// [google.cloud.deploy.v1.UpdateTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L906}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1115}
   ///
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::cloud::deploy::v1::Target const& target,
@@ -436,16 +437,16 @@ class CloudDeployClient {
   /// Updates the parameters of a single Target.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::UpdateTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L906}
+  /// @googleapis_link{google::cloud::deploy::v1::UpdateTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1115}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_link{google::cloud::deploy::v1::Target,google/cloud/deploy/v1/cloud_deploy.proto#L794}
   ///
   /// [google.cloud.deploy.v1.Target]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L600}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L794}
   /// [google.cloud.deploy.v1.UpdateTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L906}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1115}
   ///
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::cloud::deploy::v1::UpdateTargetRequest const& request,
@@ -460,12 +461,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   /// [google.cloud.deploy.v1.DeleteTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L942}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1152}
   /// [google.cloud.deploy.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       std::string const& name, Options opts = {});
@@ -474,16 +475,16 @@ class CloudDeployClient {
   /// Deletes a single Target.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::DeleteTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L942}
+  /// @googleapis_link{google::cloud::deploy::v1::DeleteTargetRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1152}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_link{google::cloud::deploy::v1::OperationMetadata,google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   /// [google.cloud.deploy.v1.DeleteTargetRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L942}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1152}
   /// [google.cloud.deploy.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1654}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2041}
   ///
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       google::cloud::deploy::v1::DeleteTargetRequest const& request,
@@ -493,16 +494,17 @@ class CloudDeployClient {
   /// Lists Releases in a given project and location.
   ///
   /// @param parent  Required. The `DeliveryPipeline` which owns this collection
-  /// of `Release` objects.
+  /// of `Release`
+  ///  objects.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   /// [google.cloud.deploy.v1.ListReleasesRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1168}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1471}
   /// [google.cloud.deploy.v1.Release]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   StreamRange<google::cloud::deploy::v1::Release> ListReleases(
       std::string const& parent, Options opts = {});
@@ -511,16 +513,16 @@ class CloudDeployClient {
   /// Lists Releases in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::ListReleasesRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1168}
+  /// @googleapis_link{google::cloud::deploy::v1::ListReleasesRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1471}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   /// [google.cloud.deploy.v1.ListReleasesRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1168}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1471}
   /// [google.cloud.deploy.v1.Release]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   StreamRange<google::cloud::deploy::v1::Release> ListReleases(
       google::cloud::deploy::v1::ListReleasesRequest request,
@@ -534,12 +536,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   /// [google.cloud.deploy.v1.GetReleaseRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1211}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1517}
   /// [google.cloud.deploy.v1.Release]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   StatusOr<google::cloud::deploy::v1::Release> GetRelease(
       std::string const& name, Options opts = {});
@@ -548,16 +550,16 @@ class CloudDeployClient {
   /// Gets details of a single Release.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::GetReleaseRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1211}
+  /// @googleapis_link{google::cloud::deploy::v1::GetReleaseRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1517}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   /// [google.cloud.deploy.v1.GetReleaseRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1211}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1517}
   /// [google.cloud.deploy.v1.Release]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   StatusOr<google::cloud::deploy::v1::Release> GetRelease(
       google::cloud::deploy::v1::GetReleaseRequest const& request,
@@ -575,12 +577,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   /// [google.cloud.deploy.v1.CreateReleaseRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1223}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1529}
   /// [google.cloud.deploy.v1.Release]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
       std::string const& parent,
@@ -591,16 +593,16 @@ class CloudDeployClient {
   /// Creates a new Release in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::CreateReleaseRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1223}
+  /// @googleapis_link{google::cloud::deploy::v1::CreateReleaseRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1529}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_link{google::cloud::deploy::v1::Release,google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   /// [google.cloud.deploy.v1.CreateReleaseRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1223}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1529}
   /// [google.cloud.deploy.v1.Release]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L985}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1195}
   ///
   future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
       google::cloud::deploy::v1::CreateReleaseRequest const& request,
@@ -615,12 +617,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::AbandonReleaseResponse,google/cloud/deploy/v1/cloud_deploy.proto#L1739}
+  /// @googleapis_link{google::cloud::deploy::v1::AbandonReleaseResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2182}
   ///
   /// [google.cloud.deploy.v1.AbandonReleaseRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1726}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2169}
   /// [google.cloud.deploy.v1.AbandonReleaseResponse]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1739}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2182}
   ///
   StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
       std::string const& name, Options opts = {});
@@ -629,16 +631,16 @@ class CloudDeployClient {
   /// Abandons a Release in the Delivery Pipeline.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::AbandonReleaseRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1726}
+  /// @googleapis_link{google::cloud::deploy::v1::AbandonReleaseRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::AbandonReleaseResponse,google/cloud/deploy/v1/cloud_deploy.proto#L1739}
+  /// @googleapis_link{google::cloud::deploy::v1::AbandonReleaseResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2182}
   ///
   /// [google.cloud.deploy.v1.AbandonReleaseRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1726}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2169}
   /// [google.cloud.deploy.v1.AbandonReleaseResponse]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1739}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2182}
   ///
   StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
       google::cloud::deploy::v1::AbandonReleaseRequest const& request,
@@ -653,12 +655,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::ApproveRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L1697}
+  /// @googleapis_link{google::cloud::deploy::v1::ApproveRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2087}
   ///
   /// [google.cloud.deploy.v1.ApproveRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1681}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2071}
   /// [google.cloud.deploy.v1.ApproveRolloutResponse]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1697}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2087}
   ///
   StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
       std::string const& name, Options opts = {});
@@ -667,19 +669,96 @@ class CloudDeployClient {
   /// Approves a Rollout.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::ApproveRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1681}
+  /// @googleapis_link{google::cloud::deploy::v1::ApproveRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2071}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::ApproveRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L1697}
+  /// @googleapis_link{google::cloud::deploy::v1::ApproveRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2087}
   ///
   /// [google.cloud.deploy.v1.ApproveRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1681}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2071}
   /// [google.cloud.deploy.v1.ApproveRolloutResponse]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1697}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2087}
   ///
   StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
       google::cloud::deploy::v1::ApproveRolloutRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Advances a Rollout in a given project and location.
+  ///
+  /// @param name  Required. Name of the Rollout. Format is
+  ///  projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/
+  ///  releases/{release}/rollouts/{rollout}.
+  /// @param phase_id  Required. The phase ID to advance the `Rollout` to.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::AdvanceRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2106}
+  ///
+  /// [google.cloud.deploy.v1.AdvanceRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2090}
+  /// [google.cloud.deploy.v1.AdvanceRolloutResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2106}
+  ///
+  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
+      std::string const& name, std::string const& phase_id, Options opts = {});
+
+  ///
+  /// Advances a Rollout in a given project and location.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::deploy::v1::AdvanceRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2090}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::AdvanceRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2106}
+  ///
+  /// [google.cloud.deploy.v1.AdvanceRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2090}
+  /// [google.cloud.deploy.v1.AdvanceRolloutResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2106}
+  ///
+  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Cancels a Rollout in a given project and location.
+  ///
+  /// @param name  Required. Name of the Rollout. Format is
+  ///  projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/
+  ///  releases/{release}/rollouts/{rollout}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::CancelRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2122}
+  ///
+  /// [google.cloud.deploy.v1.CancelRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2109}
+  /// [google.cloud.deploy.v1.CancelRolloutResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2122}
+  ///
+  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Cancels a Rollout in a given project and location.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::deploy::v1::CancelRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2109}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::CancelRolloutResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2122}
+  ///
+  /// [google.cloud.deploy.v1.CancelRolloutRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2109}
+  /// [google.cloud.deploy.v1.CancelRolloutResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2122}
+  ///
+  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
+      google::cloud::deploy::v1::CancelRolloutRequest const& request,
       Options opts = {});
 
   ///
@@ -690,12 +769,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   /// [google.cloud.deploy.v1.ListRolloutsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1561}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1942}
   /// [google.cloud.deploy.v1.Rollout]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   StreamRange<google::cloud::deploy::v1::Rollout> ListRollouts(
       std::string const& parent, Options opts = {});
@@ -704,16 +783,16 @@ class CloudDeployClient {
   /// Lists Rollouts in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::ListRolloutsRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1561}
+  /// @googleapis_link{google::cloud::deploy::v1::ListRolloutsRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1942}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   /// [google.cloud.deploy.v1.ListRolloutsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1561}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1942}
   /// [google.cloud.deploy.v1.Rollout]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   StreamRange<google::cloud::deploy::v1::Rollout> ListRollouts(
       google::cloud::deploy::v1::ListRolloutsRequest request,
@@ -727,12 +806,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   /// [google.cloud.deploy.v1.GetRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1604}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
   /// [google.cloud.deploy.v1.Rollout]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   StatusOr<google::cloud::deploy::v1::Rollout> GetRollout(
       std::string const& name, Options opts = {});
@@ -741,16 +820,16 @@ class CloudDeployClient {
   /// Gets details of a single Rollout.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::GetRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1604}
+  /// @googleapis_link{google::cloud::deploy::v1::GetRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1987}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   /// [google.cloud.deploy.v1.GetRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1604}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
   /// [google.cloud.deploy.v1.Rollout]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   StatusOr<google::cloud::deploy::v1::Rollout> GetRollout(
       google::cloud::deploy::v1::GetRolloutRequest const& request,
@@ -768,12 +847,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   /// [google.cloud.deploy.v1.CreateRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1616}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1999}
   /// [google.cloud.deploy.v1.Rollout]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
       std::string const& parent,
@@ -784,19 +863,60 @@ class CloudDeployClient {
   /// Creates a new Rollout in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::CreateRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1616}
+  /// @googleapis_link{google::cloud::deploy::v1::CreateRolloutRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1999}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_link{google::cloud::deploy::v1::Rollout,google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   /// [google.cloud.deploy.v1.CreateRolloutRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1616}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1999}
   /// [google.cloud.deploy.v1.Rollout]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1263}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1569}
   ///
   future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
       google::cloud::deploy::v1::CreateRolloutRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Ignores the specified Job in a Rollout.
+  ///
+  /// @param rollout  Required. Name of the Rollout. Format is
+  ///  projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/
+  ///  releases/{release}/rollouts/{rollout}.
+  /// @param phase_id  Required. The phase ID the Job to ignore belongs to.
+  /// @param job_id  Required. The job ID for the Job to ignore.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::IgnoreJobResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2144}
+  ///
+  /// [google.cloud.deploy.v1.IgnoreJobRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2125}
+  /// [google.cloud.deploy.v1.IgnoreJobResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2144}
+  ///
+  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
+      std::string const& rollout, std::string const& phase_id,
+      std::string const& job_id, Options opts = {});
+
+  ///
+  /// Ignores the specified Job in a Rollout.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::deploy::v1::IgnoreJobRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2125}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::IgnoreJobResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2144}
+  ///
+  /// [google.cloud.deploy.v1.IgnoreJobRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2125}
+  /// [google.cloud.deploy.v1.IgnoreJobResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2144}
+  ///
+  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
+      google::cloud::deploy::v1::IgnoreJobRequest const& request,
       Options opts = {});
 
   ///
@@ -810,12 +930,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::RetryJobResponse,google/cloud/deploy/v1/cloud_deploy.proto#L1721}
+  /// @googleapis_link{google::cloud::deploy::v1::RetryJobResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2166}
   ///
   /// [google.cloud.deploy.v1.RetryJobRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1702}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2147}
   /// [google.cloud.deploy.v1.RetryJobResponse]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1721}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2166}
   ///
   StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
       std::string const& rollout, std::string const& phase_id,
@@ -825,16 +945,16 @@ class CloudDeployClient {
   /// Retries the specified Job in a Rollout.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::RetryJobRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1702}
+  /// @googleapis_link{google::cloud::deploy::v1::RetryJobRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2147}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::RetryJobResponse,google/cloud/deploy/v1/cloud_deploy.proto#L1721}
+  /// @googleapis_link{google::cloud::deploy::v1::RetryJobResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2166}
   ///
   /// [google.cloud.deploy.v1.RetryJobRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1702}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2147}
   /// [google.cloud.deploy.v1.RetryJobResponse]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1721}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2166}
   ///
   StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
       google::cloud::deploy::v1::RetryJobRequest const& request,
@@ -848,12 +968,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   ///
   /// [google.cloud.deploy.v1.JobRun]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   /// [google.cloud.deploy.v1.ListJobRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1896}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2395}
   ///
   StreamRange<google::cloud::deploy::v1::JobRun> ListJobRuns(
       std::string const& parent, Options opts = {});
@@ -862,16 +982,16 @@ class CloudDeployClient {
   /// Lists JobRuns in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::ListJobRunsRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1896}
+  /// @googleapis_link{google::cloud::deploy::v1::ListJobRunsRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2395}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   ///
   /// [google.cloud.deploy.v1.JobRun]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   /// [google.cloud.deploy.v1.ListJobRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1896}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2395}
   ///
   StreamRange<google::cloud::deploy::v1::JobRun> ListJobRuns(
       google::cloud::deploy::v1::ListJobRunsRequest request, Options opts = {});
@@ -884,12 +1004,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   ///
   /// [google.cloud.deploy.v1.GetJobRunRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1939}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2440}
   /// [google.cloud.deploy.v1.JobRun]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   ///
   StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(std::string const& name,
                                                         Options opts = {});
@@ -898,19 +1018,57 @@ class CloudDeployClient {
   /// Gets details of a single JobRun.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::GetJobRunRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1939}
+  /// @googleapis_link{google::cloud::deploy::v1::GetJobRunRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2440}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_link{google::cloud::deploy::v1::JobRun,google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   ///
   /// [google.cloud.deploy.v1.GetJobRunRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1939}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2440}
   /// [google.cloud.deploy.v1.JobRun]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1746}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2187}
   ///
   StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
       google::cloud::deploy::v1::GetJobRunRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Terminates a Job Run in a given project and location.
+  ///
+  /// @param name  Required. Name of the `JobRun`. Format must be
+  ///  projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/
+  ///  releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::TerminateJobRunResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2465}
+  ///
+  /// [google.cloud.deploy.v1.TerminateJobRunRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2452}
+  /// [google.cloud.deploy.v1.TerminateJobRunResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2465}
+  ///
+  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// Terminates a Job Run in a given project and location.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::deploy::v1::TerminateJobRunRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2452}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::deploy::v1::TerminateJobRunResponse,google/cloud/deploy/v1/cloud_deploy.proto#L2465}
+  ///
+  /// [google.cloud.deploy.v1.TerminateJobRunRequest]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2452}
+  /// [google.cloud.deploy.v1.TerminateJobRunResponse]:
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2465}
+  ///
+  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request,
       Options opts = {});
 
   ///
@@ -920,12 +1078,12 @@ class CloudDeployClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Config,google/cloud/deploy/v1/cloud_deploy.proto#L1951}
+  /// @googleapis_link{google::cloud::deploy::v1::Config,google/cloud/deploy/v1/cloud_deploy.proto#L2468}
   ///
   /// [google.cloud.deploy.v1.Config]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1951}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2468}
   /// [google.cloud.deploy.v1.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1978}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2501}
   ///
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(std::string const& name,
                                                         Options opts = {});
@@ -934,16 +1092,16 @@ class CloudDeployClient {
   /// Gets the configuration for a location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::deploy::v1::GetConfigRequest,google/cloud/deploy/v1/cloud_deploy.proto#L1978}
+  /// @googleapis_link{google::cloud::deploy::v1::GetConfigRequest,google/cloud/deploy/v1/cloud_deploy.proto#L2501}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::deploy::v1::Config,google/cloud/deploy/v1/cloud_deploy.proto#L1951}
+  /// @googleapis_link{google::cloud::deploy::v1::Config,google/cloud/deploy/v1/cloud_deploy.proto#L2468}
   ///
   /// [google.cloud.deploy.v1.Config]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1951}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2468}
   /// [google.cloud.deploy.v1.GetConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1978}
+  /// @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2501}
   ///
   StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       google::cloud::deploy::v1::GetConfigRequest const& request,

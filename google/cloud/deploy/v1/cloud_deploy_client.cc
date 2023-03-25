@@ -285,6 +285,40 @@ CloudDeployClient::ApproveRollout(
   return connection_->ApproveRollout(request);
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployClient::AdvanceRollout(std::string const& name,
+                                  std::string const& phase_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::AdvanceRolloutRequest request;
+  request.set_name(name);
+  request.set_phase_id(phase_id);
+  return connection_->AdvanceRollout(request);
+}
+
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployClient::AdvanceRollout(
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AdvanceRollout(request);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployClient::CancelRollout(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::CancelRolloutRequest request;
+  request.set_name(name);
+  return connection_->CancelRollout(request);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployClient::CancelRollout(
+    google::cloud::deploy::v1::CancelRolloutRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CancelRollout(request);
+}
+
 StreamRange<google::cloud::deploy::v1::Rollout> CloudDeployClient::ListRollouts(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -334,6 +368,25 @@ CloudDeployClient::CreateRollout(
   return connection_->CreateRollout(request);
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployClient::IgnoreJob(std::string const& rollout,
+                             std::string const& phase_id,
+                             std::string const& job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::IgnoreJobRequest request;
+  request.set_rollout(rollout);
+  request.set_phase_id(phase_id);
+  request.set_job_id(job_id);
+  return connection_->IgnoreJob(request);
+}
+
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployClient::IgnoreJob(
+    google::cloud::deploy::v1::IgnoreJobRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->IgnoreJob(request);
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployClient::RetryJob(std::string const& rollout,
                             std::string const& phase_id,
@@ -379,6 +432,22 @@ StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployClient::GetJobRun(
     google::cloud::deploy::v1::GetJobRunRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJobRun(request);
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployClient::TerminateJobRun(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::deploy::v1::TerminateJobRunRequest request;
+  request.set_name(name);
+  return connection_->TerminateJobRun(request);
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployClient::TerminateJobRun(
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->TerminateJobRun(request);
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployClient::GetConfig(

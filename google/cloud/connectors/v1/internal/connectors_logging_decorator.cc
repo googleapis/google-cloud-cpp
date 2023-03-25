@@ -195,6 +195,23 @@ ConnectorsLogging::GetConnectionSchemaMetadata(
       context, request, __func__, tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ConnectorsLogging::AsyncRefreshConnectionSchemaMetadata(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::connectors::v1::
+                 RefreshConnectionSchemaMetadataRequest const& request) {
+        return child_->AsyncRefreshConnectionSchemaMetadata(
+            cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 ConnectorsLogging::ListRuntimeEntitySchemas(
     grpc::ClientContext& context,
@@ -234,6 +251,19 @@ ConnectorsLogging::GetRuntimeConfig(
              google::cloud::connectors::v1::GetRuntimeConfigRequest const&
                  request) {
         return child_->GetRuntimeConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::connectors::v1::Settings>
+ConnectorsLogging::GetGlobalSettings(
+    grpc::ClientContext& context,
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::connectors::v1::GetGlobalSettingsRequest const&
+                 request) {
+        return child_->GetGlobalSettings(context, request);
       },
       context, request, __func__, tracing_options_);
 }

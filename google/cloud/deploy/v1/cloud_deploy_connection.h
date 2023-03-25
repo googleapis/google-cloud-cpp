@@ -118,6 +118,13 @@ class CloudDeployConnection {
   ApproveRollout(
       google::cloud::deploy::v1::ApproveRolloutRequest const& request);
 
+  virtual StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+  AdvanceRollout(
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request);
+
+  virtual StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+  CancelRollout(google::cloud::deploy::v1::CancelRolloutRequest const& request);
+
   virtual StreamRange<google::cloud::deploy::v1::Rollout> ListRollouts(
       google::cloud::deploy::v1::ListRolloutsRequest request);
 
@@ -127,6 +134,9 @@ class CloudDeployConnection {
   virtual future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
       google::cloud::deploy::v1::CreateRolloutRequest const& request);
 
+  virtual StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
+      google::cloud::deploy::v1::IgnoreJobRequest const& request);
+
   virtual StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
       google::cloud::deploy::v1::RetryJobRequest const& request);
 
@@ -135,6 +145,10 @@ class CloudDeployConnection {
 
   virtual StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
       google::cloud::deploy::v1::GetJobRunRequest const& request);
+
+  virtual StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+  TerminateJobRun(
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request);
 
   virtual StatusOr<google::cloud::deploy::v1::Config> GetConfig(
       google::cloud::deploy::v1::GetConfigRequest const& request);

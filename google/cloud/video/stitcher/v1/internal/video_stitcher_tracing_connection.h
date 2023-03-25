@@ -40,7 +40,7 @@ class VideoStitcherServiceTracingConnection
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request)
       override;
 
@@ -51,11 +51,11 @@ class VideoStitcherServiceTracingConnection
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request)
       override;
 
-  Status DeleteCdnKey(
-      google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request)
-      override;
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteCdnKey(google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const&
+                   request) override;
 
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
+  future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request)
       override;
 
@@ -97,7 +97,7 @@ class VideoStitcherServiceTracingConnection
       google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
           request) override;
 
-  StatusOr<google::cloud::video::stitcher::v1::Slate> CreateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request)
       override;
 
@@ -108,13 +108,13 @@ class VideoStitcherServiceTracingConnection
       google::cloud::video::stitcher::v1::GetSlateRequest const& request)
       override;
 
-  StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
+  future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request)
       override;
 
-  Status DeleteSlate(
-      google::cloud::video::stitcher::v1::DeleteSlateRequest const& request)
-      override;
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteSlate(google::cloud::video::stitcher::v1::DeleteSlateRequest const&
+                  request) override;
 
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
@@ -123,6 +123,24 @@ class VideoStitcherServiceTracingConnection
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> GetLiveSession(
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request)
       override;
+
+  future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  CreateLiveConfig(
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+          request) override;
+
+  StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
+      google::cloud::video::stitcher::v1::ListLiveConfigsRequest request)
+      override;
+
+  StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
+      google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteLiveConfig(
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+          request) override;
 
  private:
   std::shared_ptr<video_stitcher_v1::VideoStitcherServiceConnection> child_;

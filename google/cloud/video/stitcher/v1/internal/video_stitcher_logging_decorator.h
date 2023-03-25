@@ -22,6 +22,7 @@
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <set>
 #include <string>
@@ -38,8 +39,9 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
                               TracingOptions tracing_options,
                               std::set<std::string> components);
 
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateCdnKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request)
       override;
 
@@ -53,13 +55,15 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request)
       override;
 
-  Status DeleteCdnKey(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteCdnKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request)
       override;
 
-  StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateCdnKey(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request)
       override;
 
@@ -109,8 +113,9 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
           request) override;
 
-  StatusOr<google::cloud::video::stitcher::v1::Slate> CreateSlate(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateSlate(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request)
       override;
 
@@ -124,13 +129,15 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       google::cloud::video::stitcher::v1::GetSlateRequest const& request)
       override;
 
-  StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateSlate(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request)
       override;
 
-  Status DeleteSlate(
-      grpc::ClientContext& context,
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteSlate(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request)
       override;
 
@@ -143,6 +150,39 @@ class VideoStitcherServiceLogging : public VideoStitcherServiceStub {
       grpc::ClientContext& context,
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateLiveConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::video::stitcher::v1::ListLiveConfigsResponse>
+  ListLiveConfigs(
+      grpc::ClientContext& context,
+      google::cloud::video::stitcher::v1::ListLiveConfigsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::stitcher::v1::LiveConfig> GetLiveConfig(
+      grpc::ClientContext& context,
+      google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteLiveConfig(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<VideoStitcherServiceStub> child_;

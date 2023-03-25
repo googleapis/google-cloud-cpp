@@ -105,12 +105,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L218}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L226}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       std::string const& parent,
@@ -122,16 +122,16 @@ class LivestreamServiceClient {
   /// region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::CreateChannelRequest,google/cloud/video/livestream/v1/service.proto#L218}
+  /// @googleapis_link{google::cloud::video::livestream::v1::CreateChannelRequest,google/cloud/video/livestream/v1/service.proto#L226}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.CreateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L218}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L226}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       google::cloud::video::livestream::v1::CreateChannelRequest const& request,
@@ -146,12 +146,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L253}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L261}
   ///
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
       std::string const& parent, Options opts = {});
@@ -160,16 +160,16 @@ class LivestreamServiceClient {
   /// Returns a list of all channels in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::ListChannelsRequest,google/cloud/video/livestream/v1/service.proto#L253}
+  /// @googleapis_link{google::cloud::video::livestream::v1::ListChannelsRequest,google/cloud/video/livestream/v1/service.proto#L261}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.ListChannelsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L253}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L261}
   ///
   StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
       google::cloud::video::livestream::v1::ListChannelsRequest request,
@@ -183,12 +183,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L295}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L303}
   ///
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
       std::string const& name, Options opts = {});
@@ -197,16 +197,16 @@ class LivestreamServiceClient {
   /// Returns the specified channel.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::GetChannelRequest,google/cloud/video/livestream/v1/service.proto#L295}
+  /// @googleapis_link{google::cloud::video::livestream::v1::GetChannelRequest,google/cloud/video/livestream/v1/service.proto#L303}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.GetChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L295}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L303}
   ///
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
       google::cloud::video::livestream::v1::GetChannelRequest const& request,
@@ -220,12 +220,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
   ///
   /// [google.cloud.video.livestream.v1.DeleteChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L307}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L315}
   /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(std::string const& name, Options opts = {});
@@ -234,16 +234,16 @@ class LivestreamServiceClient {
   /// Deletes the specified channel.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteChannelRequest,google/cloud/video/livestream/v1/service.proto#L307}
+  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteChannelRequest,google/cloud/video/livestream/v1/service.proto#L315}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
   ///
   /// [google.cloud.video.livestream.v1.DeleteChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L307}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L315}
   /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(
@@ -258,22 +258,29 @@ class LivestreamServiceClient {
   /// overwritten in the Channel
   ///  resource by the update. You can only update the following fields:
   ///  * [`inputAttachments`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#inputattachment)
+  ///  * [`inputConfig`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#inputconfig)
   ///  * [`output`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#output)
-  ///  * [`elementaryStreams`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#ElementaryStream)
+  ///  * [`elementaryStreams`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#elementarystream)
   ///  * [`muxStreams`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#muxstream)
-  ///  * [`manifests`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#Manifest)
-  ///  * [`spritesheets`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#spritesheet)
+  ///  * [`manifests`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#manifest)
+  ///  * [`spriteSheets`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#spritesheet)
+  ///  * [`logConfig`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#logconfig)
+  ///  * [`timecodeConfig`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#timecodeconfig)
+  ///  * [`encryptions`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.channels#encryption)
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask.
+  ///  If the mask is not present, then each field from the list above is
+  ///  updated if the field appears in the request payload. To unset a field,
+  ///  add the field to the update mask and remove it from the request payload.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L340}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L348}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       google::cloud::video::livestream::v1::Channel const& channel,
@@ -283,16 +290,16 @@ class LivestreamServiceClient {
   /// Updates the specified channel.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::UpdateChannelRequest,google/cloud/video/livestream/v1/service.proto#L340}
+  /// @googleapis_link{google::cloud::video::livestream::v1::UpdateChannelRequest,google/cloud/video/livestream/v1/service.proto#L348}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Channel,google/cloud/video/livestream/v1/resources.proto#L128}
   ///
   /// [google.cloud.video.livestream.v1.Channel]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L124}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L128}
   /// [google.cloud.video.livestream.v1.UpdateChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L340}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L348}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
@@ -307,12 +314,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
   ///
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
   /// [google.cloud.video.livestream.v1.StartChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L375}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L391}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -323,16 +330,16 @@ class LivestreamServiceClient {
   /// only when the StartChannel request is received by the server.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::StartChannelRequest,google/cloud/video/livestream/v1/service.proto#L375}
+  /// @googleapis_link{google::cloud::video::livestream::v1::StartChannelRequest,google/cloud/video/livestream/v1/service.proto#L391}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
   ///
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
   /// [google.cloud.video.livestream.v1.StartChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L375}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L391}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -349,12 +356,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
   ///
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
   /// [google.cloud.video.livestream.v1.StopChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L418}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -365,16 +372,16 @@ class LivestreamServiceClient {
   /// when the StopChannel request is received by the server.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::StopChannelRequest,google/cloud/video/livestream/v1/service.proto#L402}
+  /// @googleapis_link{google::cloud::video::livestream::v1::StopChannelRequest,google/cloud/video/livestream/v1/service.proto#L418}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_link{google::cloud::video::livestream::v1::ChannelOperationResponse,google/cloud/video/livestream/v1/service.proto#L712}
   ///
   /// [google.cloud.video.livestream.v1.ChannelOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L692}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L712}
   /// [google.cloud.video.livestream.v1.StopChannelRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L402}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L418}
   ///
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -398,7 +405,7 @@ class LivestreamServiceClient {
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   /// [google.cloud.video.livestream.v1.CreateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L429}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L445}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
@@ -411,14 +418,14 @@ class LivestreamServiceClient {
   /// Creates an input with the provided unique ID in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::CreateInputRequest,google/cloud/video/livestream/v1/service.proto#L429}
+  /// @googleapis_link{google::cloud::video::livestream::v1::CreateInputRequest,google/cloud/video/livestream/v1/service.proto#L445}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   /// [google.cloud.video.livestream.v1.CreateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L429}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L445}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
@@ -440,7 +447,7 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   /// [google.cloud.video.livestream.v1.ListInputsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L464}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L480}
   ///
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
       std::string const& parent, Options opts = {});
@@ -449,7 +456,7 @@ class LivestreamServiceClient {
   /// Returns a list of all inputs in the specified region.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::ListInputsRequest,google/cloud/video/livestream/v1/service.proto#L464}
+  /// @googleapis_link{google::cloud::video::livestream::v1::ListInputsRequest,google/cloud/video/livestream/v1/service.proto#L480}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -458,7 +465,7 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   /// [google.cloud.video.livestream.v1.ListInputsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L464}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L480}
   ///
   StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
       google::cloud::video::livestream::v1::ListInputsRequest request,
@@ -475,7 +482,7 @@ class LivestreamServiceClient {
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   /// [google.cloud.video.livestream.v1.GetInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L506}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L522}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
@@ -486,14 +493,14 @@ class LivestreamServiceClient {
   /// Returns the specified input.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::GetInputRequest,google/cloud/video/livestream/v1/service.proto#L506}
+  /// @googleapis_link{google::cloud::video::livestream::v1::GetInputRequest,google/cloud/video/livestream/v1/service.proto#L522}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::video::livestream::v1::Input,google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   /// [google.cloud.video.livestream.v1.GetInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L506}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L522}
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
@@ -509,12 +516,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
   ///
   /// [google.cloud.video.livestream.v1.DeleteInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L518}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L534}
   /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteInput(std::string const& name, Options opts = {});
@@ -523,16 +530,16 @@ class LivestreamServiceClient {
   /// Deletes the specified input.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteInputRequest,google/cloud/video/livestream/v1/service.proto#L518}
+  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteInputRequest,google/cloud/video/livestream/v1/service.proto#L534}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_link{google::cloud::video::livestream::v1::OperationMetadata,google/cloud/video/livestream/v1/service.proto#L715}
   ///
   /// [google.cloud.video.livestream.v1.DeleteInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L518}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L534}
   /// [google.cloud.video.livestream.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L697}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L715}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteInput(
@@ -550,6 +557,9 @@ class LivestreamServiceClient {
   ///  * [`securityRules`](https://cloud.google.com/livestream/docs/reference/rest/v1/projects.locations.inputs#SecurityRule)
   ///  The fields specified in the update_mask are relative to the resource, not
   ///  the full request. A field will be overwritten if it is in the mask.
+  ///  If the mask is not present, then each field from the list above is
+  ///  updated if the field appears in the request payload. To unset a field,
+  ///  add the field to the update mask and remove it from the request payload.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -558,7 +568,7 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L545}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L561}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::Input const& input,
@@ -568,7 +578,7 @@ class LivestreamServiceClient {
   /// Updates the specified input.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::UpdateInputRequest,google/cloud/video/livestream/v1/service.proto#L545}
+  /// @googleapis_link{google::cloud::video::livestream::v1::UpdateInputRequest,google/cloud/video/livestream/v1/service.proto#L561}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -577,7 +587,7 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]:
   /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   /// [google.cloud.video.livestream.v1.UpdateInputRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L545}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L561}
   ///
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       google::cloud::video::livestream::v1::UpdateInputRequest const& request,
@@ -596,12 +606,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   /// [google.cloud.video.livestream.v1.CreateEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L576}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L596}
   /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       std::string const& parent,
@@ -612,16 +622,16 @@ class LivestreamServiceClient {
   /// Creates an event with the provided unique ID in the specified channel.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::CreateEventRequest,google/cloud/video/livestream/v1/service.proto#L576}
+  /// @googleapis_link{google::cloud::video::livestream::v1::CreateEventRequest,google/cloud/video/livestream/v1/service.proto#L596}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   /// [google.cloud.video.livestream.v1.CreateEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L576}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L596}
   /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
       google::cloud::video::livestream::v1::CreateEventRequest const& request,
@@ -636,12 +646,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   /// [google.cloud.video.livestream.v1.ListEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L611}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L631}
   ///
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
       std::string const& parent, Options opts = {});
@@ -650,16 +660,16 @@ class LivestreamServiceClient {
   /// Returns a list of all events in the specified channel.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::ListEventsRequest,google/cloud/video/livestream/v1/service.proto#L611}
+  /// @googleapis_link{google::cloud::video::livestream::v1::ListEventsRequest,google/cloud/video/livestream/v1/service.proto#L631}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   /// [google.cloud.video.livestream.v1.ListEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L611}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L631}
   ///
   StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
       google::cloud::video::livestream::v1::ListEventsRequest request,
@@ -673,12 +683,12 @@ class LivestreamServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   /// [google.cloud.video.livestream.v1.GetEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L653}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L673}
   ///
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
       std::string const& name, Options opts = {});
@@ -687,16 +697,16 @@ class LivestreamServiceClient {
   /// Returns the specified event.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::GetEventRequest,google/cloud/video/livestream/v1/service.proto#L653}
+  /// @googleapis_link{google::cloud::video::livestream::v1::GetEventRequest,google/cloud/video/livestream/v1/service.proto#L673}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_link{google::cloud::video::livestream::v1::Event,google/cloud/video/livestream/v1/resources.proto#L390}
   ///
   /// [google.cloud.video.livestream.v1.Event]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L337}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L390}
   /// [google.cloud.video.livestream.v1.GetEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L653}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L673}
   ///
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
       google::cloud::video::livestream::v1::GetEventRequest const& request,
@@ -711,7 +721,7 @@ class LivestreamServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.video.livestream.v1.DeleteEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L665}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L685}
   ///
   Status DeleteEvent(std::string const& name, Options opts = {});
 
@@ -719,12 +729,12 @@ class LivestreamServiceClient {
   /// Deletes the specified event.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteEventRequest,google/cloud/video/livestream/v1/service.proto#L665}
+  /// @googleapis_link{google::cloud::video::livestream::v1::DeleteEventRequest,google/cloud/video/livestream/v1/service.proto#L685}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.video.livestream.v1.DeleteEventRequest]:
-  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L665}
+  /// @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L685}
   ///
   Status DeleteEvent(
       google::cloud::video::livestream::v1::DeleteEventRequest const& request,

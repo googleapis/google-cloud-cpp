@@ -100,6 +100,13 @@ class ConnectorsMetadata : public ConnectorsStub {
       google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncRefreshConnectionSchemaMetadata(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request) override;
+
   StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
   ListRuntimeEntitySchemas(
       grpc::ClientContext& context,
@@ -115,6 +122,11 @@ class ConnectorsMetadata : public ConnectorsStub {
   StatusOr<google::cloud::connectors::v1::RuntimeConfig> GetRuntimeConfig(
       grpc::ClientContext& context,
       google::cloud::connectors::v1::GetRuntimeConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
+      grpc::ClientContext& context,
+      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

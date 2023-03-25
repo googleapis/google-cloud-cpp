@@ -74,6 +74,10 @@ class ConnectorsConnectionIdempotencyPolicy {
       google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
           request);
 
+  virtual google::cloud::Idempotency RefreshConnectionSchemaMetadata(
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request);
+
   virtual google::cloud::Idempotency ListRuntimeEntitySchemas(
       google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request);
 
@@ -82,6 +86,9 @@ class ConnectorsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetRuntimeConfig(
       google::cloud::connectors::v1::GetRuntimeConfigRequest const& request);
+
+  virtual google::cloud::Idempotency GetGlobalSettings(
+      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request);
 };
 
 std::unique_ptr<ConnectorsConnectionIdempotencyPolicy>
