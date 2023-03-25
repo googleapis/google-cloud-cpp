@@ -72,6 +72,33 @@ class CloudFilestoreManagerLogging : public CloudFilestoreManagerStub {
       google::cloud::filestore::v1::DeleteInstanceRequest const& request)
       override;
 
+  StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse> ListSnapshots(
+      grpc::ClientContext& context,
+      google::cloud::filestore::v1::ListSnapshotsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
+      grpc::ClientContext& context,
+      google::cloud::filestore::v1::GetSnapshotRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request)
+      override;
+
   StatusOr<google::cloud::filestore::v1::ListBackupsResponse> ListBackups(
       grpc::ClientContext& context,
       google::cloud::filestore::v1::ListBackupsRequest const& request) override;

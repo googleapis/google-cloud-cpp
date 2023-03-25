@@ -234,6 +234,30 @@ CloudDeployLogging::ApproveRollout(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployLogging::AdvanceRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+        return child_->AdvanceRollout(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployLogging::CancelRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+        return child_->CancelRollout(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 CloudDeployLogging::ListRollouts(
     grpc::ClientContext& context,
@@ -271,6 +295,18 @@ CloudDeployLogging::AsyncCreateRollout(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployLogging::IgnoreJob(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+        return child_->IgnoreJob(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployLogging::RetryJob(
     grpc::ClientContext& context,
@@ -302,6 +338,18 @@ StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployLogging::GetJobRun(
       [this](grpc::ClientContext& context,
              google::cloud::deploy::v1::GetJobRunRequest const& request) {
         return child_->GetJobRun(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployLogging::TerminateJobRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+        return child_->TerminateJobRun(context, request);
       },
       context, request, __func__, tracing_options_);
 }

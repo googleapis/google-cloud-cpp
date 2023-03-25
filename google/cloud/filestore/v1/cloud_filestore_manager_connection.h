@@ -90,6 +90,24 @@ class CloudFilestoreManagerConnection {
   DeleteInstance(
       google::cloud::filestore::v1::DeleteInstanceRequest const& request);
 
+  virtual StreamRange<google::cloud::filestore::v1::Snapshot> ListSnapshots(
+      google::cloud::filestore::v1::ListSnapshotsRequest request);
+
+  virtual StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
+      google::cloud::filestore::v1::GetSnapshotRequest const& request);
+
+  virtual future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+  CreateSnapshot(
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request);
+
+  virtual future<StatusOr<google::cloud::common::OperationMetadata>>
+  DeleteSnapshot(
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request);
+
+  virtual future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+  UpdateSnapshot(
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request);
+
   virtual StreamRange<google::cloud::filestore::v1::Backup> ListBackups(
       google::cloud::filestore::v1::ListBackupsRequest request);
 

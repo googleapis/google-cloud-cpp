@@ -82,6 +82,44 @@ CloudFilestoreManagerConnection::DeleteInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerConnection::ListSnapshots(
+    google::cloud::filestore::v1::
+        ListSnapshotsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::filestore::v1::Snapshot>>();
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerConnection::GetSnapshot(
+    google::cloud::filestore::v1::GetSnapshotRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerConnection::CreateSnapshot(
+    google::cloud::filestore::v1::CreateSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::filestore::v1::Snapshot>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerConnection::DeleteSnapshot(
+    google::cloud::filestore::v1::DeleteSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::common::OperationMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerConnection::UpdateSnapshot(
+    google::cloud::filestore::v1::UpdateSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::filestore::v1::Snapshot>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerConnection::ListBackups(
     google::cloud::filestore::v1::

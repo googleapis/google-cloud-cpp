@@ -82,6 +82,12 @@ class CloudDeployConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ApproveRollout(
       google::cloud::deploy::v1::ApproveRolloutRequest const& request);
 
+  virtual google::cloud::Idempotency AdvanceRollout(
+      google::cloud::deploy::v1::AdvanceRolloutRequest const& request);
+
+  virtual google::cloud::Idempotency CancelRollout(
+      google::cloud::deploy::v1::CancelRolloutRequest const& request);
+
   virtual google::cloud::Idempotency ListRollouts(
       google::cloud::deploy::v1::ListRolloutsRequest request);
 
@@ -91,6 +97,9 @@ class CloudDeployConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateRollout(
       google::cloud::deploy::v1::CreateRolloutRequest const& request);
 
+  virtual google::cloud::Idempotency IgnoreJob(
+      google::cloud::deploy::v1::IgnoreJobRequest const& request);
+
   virtual google::cloud::Idempotency RetryJob(
       google::cloud::deploy::v1::RetryJobRequest const& request);
 
@@ -99,6 +108,9 @@ class CloudDeployConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency GetJobRun(
       google::cloud::deploy::v1::GetJobRunRequest const& request);
+
+  virtual google::cloud::Idempotency TerminateJobRun(
+      google::cloud::deploy::v1::TerminateJobRunRequest const& request);
 
   virtual google::cloud::Idempotency GetConfig(
       google::cloud::deploy::v1::GetConfigRequest const& request);

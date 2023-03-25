@@ -114,6 +114,13 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
+      RefreshConnectionSchemaMetadata,
+      (google::cloud::connectors::v1::
+           RefreshConnectionSchemaMetadataRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>,
       ListRuntimeEntitySchemas,
       (google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request),
@@ -128,6 +135,11 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
   MOCK_METHOD(
       StatusOr<google::cloud::connectors::v1::RuntimeConfig>, GetRuntimeConfig,
       (google::cloud::connectors::v1::GetRuntimeConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::connectors::v1::Settings>, GetGlobalSettings,
+      (google::cloud::connectors::v1::GetGlobalSettingsRequest const& request),
       (override));
 };
 

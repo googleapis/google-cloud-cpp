@@ -168,6 +168,27 @@ ConnectorsAuth::GetConnectionSchemaMetadata(
   return child_->GetConnectionSchemaMetadata(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+ConnectorsAuth::AsyncRefreshConnectionSchemaMetadata(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncRefreshConnectionSchemaMetadata(
+            cq, *std::move(context), request);
+      });
+}
+
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 ConnectorsAuth::ListRuntimeEntitySchemas(
     grpc::ClientContext& context,
@@ -195,6 +216,15 @@ ConnectorsAuth::GetRuntimeConfig(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetRuntimeConfig(context, request);
+}
+
+StatusOr<google::cloud::connectors::v1::Settings>
+ConnectorsAuth::GetGlobalSettings(
+    grpc::ClientContext& context,
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGlobalSettings(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

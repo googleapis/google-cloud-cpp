@@ -410,6 +410,32 @@ CloudDeployConnectionImpl::ApproveRollout(
       request, __func__);
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployConnectionImpl::AdvanceRollout(
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->AdvanceRollout(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+        return stub_->AdvanceRollout(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployConnectionImpl::CancelRollout(
+    google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CancelRollout(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+        return stub_->CancelRollout(context, request);
+      },
+      request, __func__);
+}
+
 StreamRange<google::cloud::deploy::v1::Rollout>
 CloudDeployConnectionImpl::ListRollouts(
     google::cloud::deploy::v1::ListRolloutsRequest request) {
@@ -484,6 +510,19 @@ CloudDeployConnectionImpl::CreateRollout(
       idempotency_policy()->CreateRollout(request), polling_policy(), __func__);
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployConnectionImpl::IgnoreJob(
+    google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->IgnoreJob(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+        return stub_->IgnoreJob(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployConnectionImpl::RetryJob(
     google::cloud::deploy::v1::RetryJobRequest const& request) {
@@ -538,6 +577,19 @@ CloudDeployConnectionImpl::GetJobRun(
       [this](grpc::ClientContext& context,
              google::cloud::deploy::v1::GetJobRunRequest const& request) {
         return stub_->GetJobRun(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployConnectionImpl::TerminateJobRun(
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->TerminateJobRun(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+        return stub_->TerminateJobRun(context, request);
       },
       request, __func__);
 }

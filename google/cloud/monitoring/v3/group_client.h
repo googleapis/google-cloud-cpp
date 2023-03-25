@@ -292,10 +292,10 @@ class GroupServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L90}
+  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L93}
   ///
   /// [google.api.MonitoredResource]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L90}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L93}
   /// [google.monitoring.v3.ListGroupMembersRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   ///
@@ -310,10 +310,10 @@ class GroupServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L90}
+  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L93}
   ///
   /// [google.api.MonitoredResource]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L90}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L93}
   /// [google.monitoring.v3.ListGroupMembersRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   ///

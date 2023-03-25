@@ -5,6 +5,7 @@
 @com_google_googleapis//google/cloud/video/stitcher/v1:cdn_keys.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:companions.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:events.proto
+@com_google_googleapis//google/cloud/video/stitcher/v1:live_configs.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:sessions.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:slates.proto
 @com_google_googleapis//google/cloud/video/stitcher/v1:stitch_details.proto

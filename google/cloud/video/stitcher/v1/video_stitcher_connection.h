@@ -23,10 +23,13 @@
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_stub.h"
 #include "google/cloud/video/stitcher/v1/video_stitcher_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -65,7 +68,8 @@ class VideoStitcherServiceConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::video::stitcher::v1::CdnKey> CreateCdnKey(
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
+  CreateCdnKey(
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request);
 
   virtual StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
@@ -74,10 +78,13 @@ class VideoStitcherServiceConnection {
   virtual StatusOr<google::cloud::video::stitcher::v1::CdnKey> GetCdnKey(
       google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request);
 
-  virtual Status DeleteCdnKey(
+  virtual future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteCdnKey(
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request);
 
-  virtual StatusOr<google::cloud::video::stitcher::v1::CdnKey> UpdateCdnKey(
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>
+  UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request);
 
   virtual StatusOr<google::cloud::video::stitcher::v1::VodSession>
@@ -116,7 +123,8 @@ class VideoStitcherServiceConnection {
       google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
           request);
 
-  virtual StatusOr<google::cloud::video::stitcher::v1::Slate> CreateSlate(
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
+  CreateSlate(
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request);
 
   virtual StreamRange<google::cloud::video::stitcher::v1::Slate> ListSlates(
@@ -125,10 +133,13 @@ class VideoStitcherServiceConnection {
   virtual StatusOr<google::cloud::video::stitcher::v1::Slate> GetSlate(
       google::cloud::video::stitcher::v1::GetSlateRequest const& request);
 
-  virtual StatusOr<google::cloud::video::stitcher::v1::Slate> UpdateSlate(
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::Slate>>
+  UpdateSlate(
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request);
 
-  virtual Status DeleteSlate(
+  virtual future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteSlate(
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request);
 
   virtual StatusOr<google::cloud::video::stitcher::v1::LiveSession>
@@ -139,6 +150,25 @@ class VideoStitcherServiceConnection {
   virtual StatusOr<google::cloud::video::stitcher::v1::LiveSession>
   GetLiveSession(
       google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
+  CreateLiveConfig(
+      google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::video::stitcher::v1::LiveConfig>
+  ListLiveConfigs(
+      google::cloud::video::stitcher::v1::ListLiveConfigsRequest request);
+
+  virtual StatusOr<google::cloud::video::stitcher::v1::LiveConfig>
+  GetLiveConfig(
+      google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
+  DeleteLiveConfig(
+      google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+          request);
 };
 
 /**

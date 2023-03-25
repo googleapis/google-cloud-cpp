@@ -122,6 +122,15 @@ ConnectorsConnection::GetConnectionSchemaMetadata(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+ConnectorsConnection::RefreshConnectionSchemaMetadata(
+    google::cloud::connectors::v1::
+        RefreshConnectionSchemaMetadataRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
 ConnectorsConnection::ListRuntimeEntitySchemas(
     google::cloud::connectors::v1::
@@ -141,6 +150,12 @@ ConnectorsConnection::ListRuntimeActionSchemas(
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 ConnectorsConnection::GetRuntimeConfig(
     google::cloud::connectors::v1::GetRuntimeConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::connectors::v1::Settings>
+ConnectorsConnection::GetGlobalSettings(
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

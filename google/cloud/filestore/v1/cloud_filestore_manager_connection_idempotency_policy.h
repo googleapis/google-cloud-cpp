@@ -56,6 +56,21 @@ class CloudFilestoreManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteInstance(
       google::cloud::filestore::v1::DeleteInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency ListSnapshots(
+      google::cloud::filestore::v1::ListSnapshotsRequest request);
+
+  virtual google::cloud::Idempotency GetSnapshot(
+      google::cloud::filestore::v1::GetSnapshotRequest const& request);
+
+  virtual google::cloud::Idempotency CreateSnapshot(
+      google::cloud::filestore::v1::CreateSnapshotRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteSnapshot(
+      google::cloud::filestore::v1::DeleteSnapshotRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateSnapshot(
+      google::cloud::filestore::v1::UpdateSnapshotRequest const& request);
+
   virtual google::cloud::Idempotency ListBackups(
       google::cloud::filestore::v1::ListBackupsRequest request);
 

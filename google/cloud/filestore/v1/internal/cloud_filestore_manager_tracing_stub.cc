@@ -114,6 +114,75 @@ CloudFilestoreManagerTracingStub::AsyncDeleteInstance(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
+CloudFilestoreManagerTracingStub::ListSnapshots(
+    grpc::ClientContext& context,
+    google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.filestore.v1.CloudFilestoreManager", "ListSnapshots");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->ListSnapshots(context, request));
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerTracingStub::GetSnapshot(
+    grpc::ClientContext& context,
+    google::cloud::filestore::v1::GetSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.filestore.v1.CloudFilestoreManager", "GetSnapshot");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->GetSnapshot(context, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerTracingStub::AsyncCreateSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.filestore.v1.CloudFilestoreManager", "CreateSnapshot");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncCreateSnapshot(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerTracingStub::AsyncDeleteSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.filestore.v1.CloudFilestoreManager", "DeleteSnapshot");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncDeleteSnapshot(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerTracingStub::AsyncUpdateSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.filestore.v1.CloudFilestoreManager", "UpdateSnapshot");
+  {
+    auto scope = opentelemetry::trace::Scope(span);
+    internal::InjectTraceContext(*context, internal::CurrentOptions());
+  }
+  auto f = child_->AsyncUpdateSnapshot(cq, context, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
 CloudFilestoreManagerTracingStub::ListBackups(
     grpc::ClientContext& context,

@@ -228,6 +228,30 @@ CloudDeployTracingStub::ApproveRollout(
                            child_->ApproveRollout(context, request));
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployTracingStub::AdvanceRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "AdvanceRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->AdvanceRollout(context, request));
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployTracingStub::CancelRollout(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "CancelRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->CancelRollout(context, request));
+}
+
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 CloudDeployTracingStub::ListRollouts(
     grpc::ClientContext& context,
@@ -266,6 +290,17 @@ CloudDeployTracingStub::AsyncCreateRollout(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployTracingStub::IgnoreJob(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy", "IgnoreJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span, child_->IgnoreJob(context, request));
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployTracingStub::RetryJob(
     grpc::ClientContext& context,
@@ -297,6 +332,18 @@ StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployTracingStub::GetJobRun(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, internal::CurrentOptions());
   return internal::EndSpan(context, *span, child_->GetJobRun(context, request));
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployTracingStub::TerminateJobRun(
+    grpc::ClientContext& context,
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
+                                     "TerminateJobRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, internal::CurrentOptions());
+  return internal::EndSpan(context, *span,
+                           child_->TerminateJobRun(context, request));
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployTracingStub::GetConfig(

@@ -86,6 +86,11 @@ class ConnectorsTracingConnection : public connectors_v1::ConnectorsConnection {
       google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
           request) override;
 
+  future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata(
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request) override;
+
   StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
   ListRuntimeEntitySchemas(
       google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request)
@@ -98,6 +103,10 @@ class ConnectorsTracingConnection : public connectors_v1::ConnectorsConnection {
 
   StatusOr<google::cloud::connectors::v1::RuntimeConfig> GetRuntimeConfig(
       google::cloud::connectors::v1::GetRuntimeConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
+      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request)
       override;
 
  private:

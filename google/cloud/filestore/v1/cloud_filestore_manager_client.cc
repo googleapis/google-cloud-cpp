@@ -129,6 +129,96 @@ CloudFilestoreManagerClient::DeleteInstance(
   return connection_->DeleteInstance(request);
 }
 
+StreamRange<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerClient::ListSnapshots(std::string const& parent,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::ListSnapshotsRequest request;
+  request.set_parent(parent);
+  return connection_->ListSnapshots(request);
+}
+
+StreamRange<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerClient::ListSnapshots(
+    google::cloud::filestore::v1::ListSnapshotsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListSnapshots(std::move(request));
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerClient::GetSnapshot(std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::GetSnapshotRequest request;
+  request.set_name(name);
+  return connection_->GetSnapshot(request);
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerClient::GetSnapshot(
+    google::cloud::filestore::v1::GetSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSnapshot(request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerClient::CreateSnapshot(
+    std::string const& parent,
+    google::cloud::filestore::v1::Snapshot const& snapshot,
+    std::string const& snapshot_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::CreateSnapshotRequest request;
+  request.set_parent(parent);
+  *request.mutable_snapshot() = snapshot;
+  request.set_snapshot_id(snapshot_id);
+  return connection_->CreateSnapshot(request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerClient::CreateSnapshot(
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSnapshot(request);
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerClient::DeleteSnapshot(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::DeleteSnapshotRequest request;
+  request.set_name(name);
+  return connection_->DeleteSnapshot(request);
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerClient::DeleteSnapshot(
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSnapshot(request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerClient::UpdateSnapshot(
+    google::cloud::filestore::v1::Snapshot const& snapshot,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::UpdateSnapshotRequest request;
+  *request.mutable_snapshot() = snapshot;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSnapshot(request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerClient::UpdateSnapshot(
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSnapshot(request);
+}
+
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerClient::ListBackups(std::string const& parent,
                                          Options opts) {

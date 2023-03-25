@@ -198,6 +198,26 @@ DefaultConnectorsStub::GetConnectionSchemaMetadata(
   return response;
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultConnectorsStub::AsyncRefreshConnectionSchemaMetadata(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::connectors::v1::
+                 RefreshConnectionSchemaMetadataRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRefreshConnectionSchemaMetadata(context,
+                                                                request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 DefaultConnectorsStub::ListRuntimeEntitySchemas(
     grpc::ClientContext& client_context,
@@ -233,6 +253,19 @@ DefaultConnectorsStub::GetRuntimeConfig(
   google::cloud::connectors::v1::RuntimeConfig response;
   auto status =
       grpc_stub_->GetRuntimeConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::connectors::v1::Settings>
+DefaultConnectorsStub::GetGlobalSettings(
+    grpc::ClientContext& client_context,
+    google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
+  google::cloud::connectors::v1::Settings response;
+  auto status =
+      grpc_stub_->GetGlobalSettings(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

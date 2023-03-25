@@ -140,6 +140,26 @@ Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveSession(
   return Idempotency::kIdempotent;
 }
 
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::CreateLiveConfig(
+    google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::ListLiveConfigs(
+    google::cloud::video::stitcher::v1::ListLiveConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::GetLiveConfig(
+    google::cloud::video::stitcher::v1::GetLiveConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VideoStitcherServiceConnectionIdempotencyPolicy::DeleteLiveConfig(
+    google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
 MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy() {
   return std::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>();

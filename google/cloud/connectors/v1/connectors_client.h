@@ -92,12 +92,12 @@ class ConnectorsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L222}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L270}
   ///
   StreamRange<google::cloud::connectors::v1::Connection> ListConnections(
       std::string const& parent, Options opts = {});
@@ -106,16 +106,16 @@ class ConnectorsClient {
   /// Lists Connections in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::ListConnectionsRequest,google/cloud/connectors/v1/connection.proto#L222}
+  /// @googleapis_link{google::cloud::connectors::v1::ListConnectionsRequest,google/cloud/connectors/v1/connection.proto#L270}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.ListConnectionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L222}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L270}
   ///
   StreamRange<google::cloud::connectors::v1::Connection> ListConnections(
       google::cloud::connectors::v1::ListConnectionsRequest request,
@@ -129,12 +129,12 @@ class ConnectorsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L262}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L310}
   ///
   StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
       std::string const& name, Options opts = {});
@@ -143,16 +143,16 @@ class ConnectorsClient {
   /// Gets details of a single Connection.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::GetConnectionRequest,google/cloud/connectors/v1/connection.proto#L262}
+  /// @googleapis_link{google::cloud::connectors::v1::GetConnectionRequest,google/cloud/connectors/v1/connection.proto#L310}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.GetConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L262}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L310}
   ///
   StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
       google::cloud::connectors::v1::GetConnectionRequest const& request,
@@ -165,17 +165,17 @@ class ConnectorsClient {
   ///  `projects/*/locations/*`
   /// @param connection  Required. Connection resource.
   /// @param connection_id  Required. Identifier to assign to the Connection.
-  /// Must be unique within scope of
-  ///  the parent resource.
+  /// Must be unique within
+  ///  scope of the parent resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L278}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L326}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
       std::string const& parent,
@@ -186,16 +186,16 @@ class ConnectorsClient {
   /// Creates a new Connection in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::CreateConnectionRequest,google/cloud/connectors/v1/connection.proto#L278}
+  /// @googleapis_link{google::cloud::connectors::v1::CreateConnectionRequest,google/cloud/connectors/v1/connection.proto#L326}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.CreateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L278}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L326}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
       google::cloud::connectors::v1::CreateConnectionRequest const& request,
@@ -205,21 +205,28 @@ class ConnectorsClient {
   /// Updates the parameters of a single Connection.
   ///
   /// @param connection  Required. Connection resource.
-  /// @param update_mask  Required. Field mask is used to specify the fields to
-  /// be overwritten in the
-  ///  Connection resource by the update.
-  ///  The fields specified in the update_mask are relative to the resource, not
-  ///  the full request. A field will be overwritten if it is in the mask. If
-  ///  the user does not provide a mask then all fields will be overwritten.
+  /// @param update_mask  Required. You can modify only the fields listed below.
+  ///  To lock/unlock a connection:
+  ///  * `lock_config`
+  ///  To suspend/resume a connection:
+  ///  * `suspended`
+  ///  To update the connection details:
+  ///  * `description`
+  ///  * `labels`
+  ///  * `connector_version`
+  ///  * `config_variables`
+  ///  * `auth_config`
+  ///  * `destination_configs`
+  ///  * `node_config`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L297}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L345}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
       google::cloud::connectors::v1::Connection const& connection,
@@ -229,16 +236,16 @@ class ConnectorsClient {
   /// Updates the parameters of a single Connection.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::UpdateConnectionRequest,google/cloud/connectors/v1/connection.proto#L297}
+  /// @googleapis_link{google::cloud::connectors::v1::UpdateConnectionRequest,google/cloud/connectors/v1/connection.proto#L345}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_link{google::cloud::connectors::v1::Connection,google/cloud/connectors/v1/connection.proto#L35}
   ///
   /// [google.cloud.connectors.v1.Connection]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L34}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L35}
   /// [google.cloud.connectors.v1.UpdateConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L297}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L345}
   ///
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
       google::cloud::connectors::v1::UpdateConnectionRequest const& request,
@@ -255,7 +262,7 @@ class ConnectorsClient {
   /// @googleapis_link{google::cloud::connectors::v1::OperationMetadata,google/cloud/connectors/v1/common.proto#L28}
   ///
   /// [google.cloud.connectors.v1.DeleteConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L310}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L370}
   /// [google.cloud.connectors.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/common.proto#L28}
   ///
@@ -266,14 +273,14 @@ class ConnectorsClient {
   /// Deletes a single Connection.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::DeleteConnectionRequest,google/cloud/connectors/v1/connection.proto#L310}
+  /// @googleapis_link{google::cloud::connectors::v1::DeleteConnectionRequest,google/cloud/connectors/v1/connection.proto#L370}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::OperationMetadata,google/cloud/connectors/v1/common.proto#L28}
   ///
   /// [google.cloud.connectors.v1.DeleteConnectionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L310}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L370}
   /// [google.cloud.connectors.v1.OperationMetadata]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/common.proto#L28}
   ///
@@ -294,7 +301,7 @@ class ConnectorsClient {
   /// @googleapis_link{google::cloud::connectors::v1::Provider,google/cloud/connectors/v1/provider.proto#L30}
   ///
   /// [google.cloud.connectors.v1.ListProvidersRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L85}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L87}
   /// [google.cloud.connectors.v1.Provider]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
@@ -305,14 +312,14 @@ class ConnectorsClient {
   /// Lists Providers in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::ListProvidersRequest,google/cloud/connectors/v1/provider.proto#L85}
+  /// @googleapis_link{google::cloud::connectors::v1::ListProvidersRequest,google/cloud/connectors/v1/provider.proto#L87}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Provider,google/cloud/connectors/v1/provider.proto#L30}
   ///
   /// [google.cloud.connectors.v1.ListProvidersRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L85}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L87}
   /// [google.cloud.connectors.v1.Provider]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
@@ -332,7 +339,7 @@ class ConnectorsClient {
   /// @googleapis_link{google::cloud::connectors::v1::Provider,google/cloud/connectors/v1/provider.proto#L30}
   ///
   /// [google.cloud.connectors.v1.GetProviderRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L72}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L74}
   /// [google.cloud.connectors.v1.Provider]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
@@ -343,14 +350,14 @@ class ConnectorsClient {
   /// Gets details of a provider.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::GetProviderRequest,google/cloud/connectors/v1/provider.proto#L72}
+  /// @googleapis_link{google::cloud::connectors::v1::GetProviderRequest,google/cloud/connectors/v1/provider.proto#L74}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::connectors::v1::Provider,google/cloud/connectors/v1/provider.proto#L30}
   ///
   /// [google.cloud.connectors.v1.GetProviderRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L72}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L74}
   /// [google.cloud.connectors.v1.Provider]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/provider.proto#L30}
   ///
@@ -372,7 +379,7 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
   /// [google.cloud.connectors.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L86}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L88}
   ///
   StreamRange<google::cloud::connectors::v1::Connector> ListConnectors(
       std::string const& parent, Options opts = {});
@@ -381,7 +388,7 @@ class ConnectorsClient {
   /// Lists Connectors in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::ListConnectorsRequest,google/cloud/connectors/v1/connector.proto#L86}
+  /// @googleapis_link{google::cloud::connectors::v1::ListConnectorsRequest,google/cloud/connectors/v1/connector.proto#L88}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -390,7 +397,7 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
   /// [google.cloud.connectors.v1.ListConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L86}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L88}
   ///
   StreamRange<google::cloud::connectors::v1::Connector> ListConnectors(
       google::cloud::connectors::v1::ListConnectorsRequest request,
@@ -410,7 +417,7 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
   /// [google.cloud.connectors.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L73}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L75}
   ///
   StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
       std::string const& name, Options opts = {});
@@ -419,7 +426,7 @@ class ConnectorsClient {
   /// Gets details of a single Connector.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::GetConnectorRequest,google/cloud/connectors/v1/connector.proto#L73}
+  /// @googleapis_link{google::cloud::connectors::v1::GetConnectorRequest,google/cloud/connectors/v1/connector.proto#L75}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -428,7 +435,7 @@ class ConnectorsClient {
   /// [google.cloud.connectors.v1.Connector]:
   /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L30}
   /// [google.cloud.connectors.v1.GetConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L73}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector.proto#L75}
   ///
   StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
       google::cloud::connectors::v1::GetConnectorRequest const& request,
@@ -443,12 +450,12 @@ class ConnectorsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L32}
   ///
   /// [google.cloud.connectors.v1.ConnectorVersion]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L32}
   /// [google.cloud.connectors.v1.ListConnectorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L101}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L114}
   ///
   StreamRange<google::cloud::connectors::v1::ConnectorVersion>
   ListConnectorVersions(std::string const& parent, Options opts = {});
@@ -457,16 +464,16 @@ class ConnectorsClient {
   /// Lists Connector Versions in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::ListConnectorVersionsRequest,google/cloud/connectors/v1/connector_version.proto#L101}
+  /// @googleapis_link{google::cloud::connectors::v1::ListConnectorVersionsRequest,google/cloud/connectors/v1/connector_version.proto#L114}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L32}
   ///
   /// [google.cloud.connectors.v1.ConnectorVersion]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L32}
   /// [google.cloud.connectors.v1.ListConnectorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L101}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L114}
   ///
   StreamRange<google::cloud::connectors::v1::ConnectorVersion>
   ListConnectorVersions(
@@ -482,12 +489,12 @@ class ConnectorsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L32}
   ///
   /// [google.cloud.connectors.v1.ConnectorVersion]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L32}
   /// [google.cloud.connectors.v1.GetConnectorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L84}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L97}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
       std::string const& name, Options opts = {});
@@ -496,16 +503,16 @@ class ConnectorsClient {
   /// Gets details of a single connector version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::GetConnectorVersionRequest,google/cloud/connectors/v1/connector_version.proto#L84}
+  /// @googleapis_link{google::cloud::connectors::v1::GetConnectorVersionRequest,google/cloud/connectors/v1/connector_version.proto#L97}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectorVersion,google/cloud/connectors/v1/connector_version.proto#L32}
   ///
   /// [google.cloud.connectors.v1.ConnectorVersion]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L31}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L32}
   /// [google.cloud.connectors.v1.GetConnectorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L84}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connector_version.proto#L97}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
       google::cloud::connectors::v1::GetConnectorVersionRequest const& request,
@@ -521,12 +528,12 @@ class ConnectorsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L120}
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L132}
   ///
   /// [google.cloud.connectors.v1.ConnectionSchemaMetadata]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L120}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L132}
   /// [google.cloud.connectors.v1.GetConnectionSchemaMetadataRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L322}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L382}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
   GetConnectionSchemaMetadata(std::string const& name, Options opts = {});
@@ -536,21 +543,61 @@ class ConnectorsClient {
   /// SchemaMetadata is a singleton resource for each connection.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest,google/cloud/connectors/v1/connection.proto#L322}
+  /// @googleapis_link{google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest,google/cloud/connectors/v1/connection.proto#L382}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L120}
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L132}
   ///
   /// [google.cloud.connectors.v1.ConnectionSchemaMetadata]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L120}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L132}
   /// [google.cloud.connectors.v1.GetConnectionSchemaMetadataRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L322}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L382}
   ///
   StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
   GetConnectionSchemaMetadata(
       google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
           request,
+      Options opts = {});
+
+  ///
+  /// Refresh runtime schema of a connection.
+  ///
+  /// @param name  Required. Resource name.
+  ///  Format:
+  ///  projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L132}
+  ///
+  /// [google.cloud.connectors.v1.ConnectionSchemaMetadata]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L132}
+  /// [google.cloud.connectors.v1.RefreshConnectionSchemaMetadataRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L395}
+  ///
+  future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata(std::string const& name, Options opts = {});
+
+  ///
+  /// Refresh runtime schema of a connection.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest,google/cloud/connectors/v1/connection.proto#L395}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::connectors::v1::ConnectionSchemaMetadata,google/cloud/connectors/v1/connection.proto#L132}
+  ///
+  /// [google.cloud.connectors.v1.ConnectionSchemaMetadata]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L132}
+  /// [google.cloud.connectors.v1.RefreshConnectionSchemaMetadataRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L395}
+  ///
+  future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata(
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request,
       Options opts = {});
 
   ///
@@ -562,12 +609,12 @@ class ConnectorsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::RuntimeEntitySchema,google/cloud/connectors/v1/connection.proto#L129}
+  /// @googleapis_link{google::cloud::connectors::v1::RuntimeEntitySchema,google/cloud/connectors/v1/connection.proto#L175}
   ///
   /// [google.cloud.connectors.v1.ListRuntimeEntitySchemasRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L338}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L411}
   /// [google.cloud.connectors.v1.RuntimeEntitySchema]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L129}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L175}
   ///
   StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
   ListRuntimeEntitySchemas(std::string const& parent, Options opts = {});
@@ -576,16 +623,16 @@ class ConnectorsClient {
   /// List schema of a runtime entities filtered by entity name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest,google/cloud/connectors/v1/connection.proto#L338}
+  /// @googleapis_link{google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest,google/cloud/connectors/v1/connection.proto#L411}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::RuntimeEntitySchema,google/cloud/connectors/v1/connection.proto#L129}
+  /// @googleapis_link{google::cloud::connectors::v1::RuntimeEntitySchema,google/cloud/connectors/v1/connection.proto#L175}
   ///
   /// [google.cloud.connectors.v1.ListRuntimeEntitySchemasRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L338}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L411}
   /// [google.cloud.connectors.v1.RuntimeEntitySchema]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L129}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L175}
   ///
   StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
   ListRuntimeEntitySchemas(
@@ -601,12 +648,12 @@ class ConnectorsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::RuntimeActionSchema,google/cloud/connectors/v1/connection.proto#L169}
+  /// @googleapis_link{google::cloud::connectors::v1::RuntimeActionSchema,google/cloud/connectors/v1/connection.proto#L215}
   ///
   /// [google.cloud.connectors.v1.ListRuntimeActionSchemasRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L377}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L450}
   /// [google.cloud.connectors.v1.RuntimeActionSchema]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L169}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L215}
   ///
   StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
   ListRuntimeActionSchemas(std::string const& parent, Options opts = {});
@@ -615,16 +662,16 @@ class ConnectorsClient {
   /// List schema of a runtime actions filtered by action name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::connectors::v1::ListRuntimeActionSchemasRequest,google/cloud/connectors/v1/connection.proto#L377}
+  /// @googleapis_link{google::cloud::connectors::v1::ListRuntimeActionSchemasRequest,google/cloud/connectors/v1/connection.proto#L450}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::connectors::v1::RuntimeActionSchema,google/cloud/connectors/v1/connection.proto#L169}
+  /// @googleapis_link{google::cloud::connectors::v1::RuntimeActionSchema,google/cloud/connectors/v1/connection.proto#L215}
   ///
   /// [google.cloud.connectors.v1.ListRuntimeActionSchemasRequest]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L377}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L450}
   /// [google.cloud.connectors.v1.RuntimeActionSchema]:
-  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L169}
+  /// @googleapis_reference_link{google/cloud/connectors/v1/connection.proto#L215}
   ///
   StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>
   ListRuntimeActionSchemas(
@@ -668,6 +715,44 @@ class ConnectorsClient {
   ///
   StatusOr<google::cloud::connectors::v1::RuntimeConfig> GetRuntimeConfig(
       google::cloud::connectors::v1::GetRuntimeConfigRequest const& request,
+      Options opts = {});
+
+  ///
+  /// GetGlobalSettings gets settings of a project.
+  /// GlobalSettings is a singleton resource.
+  ///
+  /// @param name  Required. The resource name of the Settings.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::connectors::v1::Settings,google/cloud/connectors/v1/settings.proto#L39}
+  ///
+  /// [google.cloud.connectors.v1.GetGlobalSettingsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/settings.proto#L28}
+  /// [google.cloud.connectors.v1.Settings]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/settings.proto#L39}
+  ///
+  StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
+      std::string const& name, Options opts = {});
+
+  ///
+  /// GetGlobalSettings gets settings of a project.
+  /// GlobalSettings is a singleton resource.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::connectors::v1::GetGlobalSettingsRequest,google/cloud/connectors/v1/settings.proto#L28}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::connectors::v1::Settings,google/cloud/connectors/v1/settings.proto#L39}
+  ///
+  /// [google.cloud.connectors.v1.GetGlobalSettingsRequest]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/settings.proto#L28}
+  /// [google.cloud.connectors.v1.Settings]:
+  /// @googleapis_reference_link{google/cloud/connectors/v1/settings.proto#L39}
+  ///
+  StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
+      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request,
       Options opts = {});
 
  private:

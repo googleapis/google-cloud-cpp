@@ -248,6 +248,30 @@ DefaultCloudDeployStub::ApproveRollout(
   return response;
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+DefaultCloudDeployStub::AdvanceRollout(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+  google::cloud::deploy::v1::AdvanceRolloutResponse response;
+  auto status = grpc_stub_->AdvanceRollout(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+DefaultCloudDeployStub::CancelRollout(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+  google::cloud::deploy::v1::CancelRolloutResponse response;
+  auto status = grpc_stub_->CancelRollout(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 DefaultCloudDeployStub::ListRollouts(
     grpc::ClientContext& client_context,
@@ -288,6 +312,18 @@ DefaultCloudDeployStub::AsyncCreateRollout(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+DefaultCloudDeployStub::IgnoreJob(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+  google::cloud::deploy::v1::IgnoreJobResponse response;
+  auto status = grpc_stub_->IgnoreJob(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 DefaultCloudDeployStub::RetryJob(
     grpc::ClientContext& client_context,
@@ -317,6 +353,19 @@ StatusOr<google::cloud::deploy::v1::JobRun> DefaultCloudDeployStub::GetJobRun(
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
   google::cloud::deploy::v1::JobRun response;
   auto status = grpc_stub_->GetJobRun(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+DefaultCloudDeployStub::TerminateJobRun(
+    grpc::ClientContext& client_context,
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+  google::cloud::deploy::v1::TerminateJobRunResponse response;
+  auto status =
+      grpc_stub_->TerminateJobRun(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -109,6 +109,16 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::ApproveRollout(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudDeployConnectionIdempotencyPolicy::AdvanceRollout(
+    google::cloud::deploy::v1::AdvanceRolloutRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::CancelRollout(
+    google::cloud::deploy::v1::CancelRolloutRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency CloudDeployConnectionIdempotencyPolicy::ListRollouts(
     google::cloud::deploy::v1::ListRolloutsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
@@ -121,6 +131,11 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::GetRollout(
 
 Idempotency CloudDeployConnectionIdempotencyPolicy::CreateRollout(
     google::cloud::deploy::v1::CreateRolloutRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::IgnoreJob(
+    google::cloud::deploy::v1::IgnoreJobRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
@@ -137,6 +152,11 @@ Idempotency CloudDeployConnectionIdempotencyPolicy::ListJobRuns(
 Idempotency CloudDeployConnectionIdempotencyPolicy::GetJobRun(
     google::cloud::deploy::v1::GetJobRunRequest const&) {
   return Idempotency::kIdempotent;
+}
+
+Idempotency CloudDeployConnectionIdempotencyPolicy::TerminateJobRun(
+    google::cloud::deploy::v1::TerminateJobRunRequest const&) {
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency CloudDeployConnectionIdempotencyPolicy::GetConfig(

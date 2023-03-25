@@ -119,6 +119,16 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::ApproveRolloutRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>,
+              AdvanceRollout,
+              (google::cloud::deploy::v1::AdvanceRolloutRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>,
+              CancelRollout,
+              (google::cloud::deploy::v1::CancelRolloutRequest const& request),
+              (override));
+
   MOCK_METHOD(StreamRange<google::cloud::deploy::v1::Rollout>, ListRollouts,
               (google::cloud::deploy::v1::ListRolloutsRequest request),
               (override));
@@ -132,6 +142,10 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
               (google::cloud::deploy::v1::CreateRolloutRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>, IgnoreJob,
+              (google::cloud::deploy::v1::IgnoreJobRequest const& request),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::deploy::v1::RetryJobResponse>, RetryJob,
               (google::cloud::deploy::v1::RetryJobRequest const& request),
               (override));
@@ -143,6 +157,12 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   MOCK_METHOD(StatusOr<google::cloud::deploy::v1::JobRun>, GetJobRun,
               (google::cloud::deploy::v1::GetJobRunRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>,
+      TerminateJobRun,
+      (google::cloud::deploy::v1::TerminateJobRunRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::cloud::deploy::v1::Config>, GetConfig,
               (google::cloud::deploy::v1::GetConfigRequest const& request),

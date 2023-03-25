@@ -176,6 +176,24 @@ CloudDeployTracingConnection::ApproveRollout(
   return internal::EndSpan(*span, child_->ApproveRollout(request));
 }
 
+StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+CloudDeployTracingConnection::AdvanceRollout(
+    google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::AdvanceRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AdvanceRollout(request));
+}
+
+StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+CloudDeployTracingConnection::CancelRollout(
+    google::cloud::deploy::v1::CancelRolloutRequest const& request) {
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::CancelRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelRollout(request));
+}
+
 StreamRange<google::cloud::deploy::v1::Rollout>
 CloudDeployTracingConnection::ListRollouts(
     google::cloud::deploy::v1::ListRolloutsRequest request) {
@@ -205,6 +223,14 @@ CloudDeployTracingConnection::CreateRollout(
   return internal::EndSpan(std::move(span), child_->CreateRollout(request));
 }
 
+StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+CloudDeployTracingConnection::IgnoreJob(
+    google::cloud::deploy::v1::IgnoreJobRequest const& request) {
+  auto span = internal::MakeSpan("deploy_v1::CloudDeployConnection::IgnoreJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->IgnoreJob(request));
+}
+
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployTracingConnection::RetryJob(
     google::cloud::deploy::v1::RetryJobRequest const& request) {
@@ -230,6 +256,15 @@ CloudDeployTracingConnection::GetJobRun(
   auto span = internal::MakeSpan("deploy_v1::CloudDeployConnection::GetJobRun");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetJobRun(request));
+}
+
+StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+CloudDeployTracingConnection::TerminateJobRun(
+    google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
+  auto span =
+      internal::MakeSpan("deploy_v1::CloudDeployConnection::TerminateJobRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TerminateJobRun(request));
 }
 
 StatusOr<google::cloud::deploy::v1::Config>

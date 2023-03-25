@@ -110,6 +110,12 @@ class ConnectorsConnection {
       google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
           request);
 
+  virtual future<
+      StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata(
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request);
+
   virtual StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
   ListRuntimeEntitySchemas(
       google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest request);
@@ -121,6 +127,9 @@ class ConnectorsConnection {
   virtual StatusOr<google::cloud::connectors::v1::RuntimeConfig>
   GetRuntimeConfig(
       google::cloud::connectors::v1::GetRuntimeConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
+      google::cloud::connectors::v1::GetGlobalSettingsRequest const& request);
 };
 
 /**

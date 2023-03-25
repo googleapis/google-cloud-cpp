@@ -88,6 +88,53 @@ CloudFilestoreManagerTracingConnection::DeleteInstance(
   return internal::EndSpan(std::move(span), child_->DeleteInstance(request));
 }
 
+StreamRange<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerTracingConnection::ListSnapshots(
+    google::cloud::filestore::v1::ListSnapshotsRequest request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::ListSnapshots");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ListSnapshots(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::cloud::filestore::v1::Snapshot>(std::move(span), std::move(sr));
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerTracingConnection::GetSnapshot(
+    google::cloud::filestore::v1::GetSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::GetSnapshot");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSnapshot(request));
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerTracingConnection::CreateSnapshot(
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::CreateSnapshot");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->CreateSnapshot(request));
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerTracingConnection::DeleteSnapshot(
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::DeleteSnapshot");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->DeleteSnapshot(request));
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerTracingConnection::UpdateSnapshot(
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  auto span = internal::MakeSpan(
+      "filestore_v1::CloudFilestoreManagerConnection::UpdateSnapshot");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(std::move(span), child_->UpdateSnapshot(request));
+}
+
 StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerTracingConnection::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {

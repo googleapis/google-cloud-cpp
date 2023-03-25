@@ -119,6 +119,76 @@ CloudFilestoreManagerLogging::AsyncDeleteInstance(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
+CloudFilestoreManagerLogging::ListSnapshots(
+    grpc::ClientContext& context,
+    google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::filestore::v1::ListSnapshotsRequest const& request) {
+        return child_->ListSnapshots(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::filestore::v1::Snapshot>
+CloudFilestoreManagerLogging::GetSnapshot(
+    grpc::ClientContext& context,
+    google::cloud::filestore::v1::GetSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::filestore::v1::GetSnapshotRequest const& request) {
+        return child_->GetSnapshot(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerLogging::AsyncCreateSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
+        return child_->AsyncCreateSnapshot(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerLogging::AsyncDeleteSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
+        return child_->AsyncDeleteSnapshot(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CloudFilestoreManagerLogging::AsyncUpdateSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
+        return child_->AsyncUpdateSnapshot(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
 CloudFilestoreManagerLogging::ListBackups(
     grpc::ClientContext& context,
