@@ -36,27 +36,19 @@ std::vector<unsigned int> FetchEntropy(std::size_t desired_bits);
 // in particular.
 using DefaultPRNG = std::mt19937_64;
 
-/**
- * Initialize any of the C++11 PRNGs in `<random>` using std::random_device.
- */
-template <typename Generator>
-Generator MakePRNG() {
-  // We need to get enough entropy to fully initialize the PRNG, that depends
-  // on the size of its state.  The size in bits is `Generator::state_size`.
-  // We convert that to the number of `unsigned int` values; as this is what
-  // std::random_device returns.
-  auto const desired_bits = Generator::state_size * Generator::word_size;
-
+/// Create a new PRNG.
+inline DefaultPRNG MakeDefaultPRNG() {
+  // Fetch a few bits of entropy, which is sufficient for our purposes.
+  auto const desired_bits = DefaultPRNG::word_size;
   // Extract the necessary number of entropy bits.
   auto const entropy = FetchEntropy(desired_bits);
-
   // Finally, put the entropy into the form that the C++11 PRNG classes want.
+  // We need a named object because the constructor consumes a reference (and
+  // does not consume rvalue references). And `std::seed_seq` is not friendly
+  // to "Almost Always Auto" grrr..
   std::seed_seq seq(entropy.begin(), entropy.end());
-  return Generator(seq);
+  return DefaultPRNG(seq);
 }
-
-/// Create a new PRNG.
-inline DefaultPRNG MakeDefaultPRNG() { return MakePRNG<DefaultPRNG>(); }
 
 /**
  * Take @p n samples out of @p population, using the @p gen PRNG.
