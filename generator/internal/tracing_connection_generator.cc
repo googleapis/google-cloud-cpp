@@ -253,10 +253,9 @@ StreamRange<$response_type$>
 $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
   auto span = internal::MakeSpan("$product_namespace$::$connection_class_name$::$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
-  auto sr = child_->$method_name$(std::move(request));
+  auto sr = child_->$method_name$(request);
   return internal::MakeTracedStreamRange<$response_type$>(
         std::move(span), std::move(sr));
-  return child_->$method_name$(request);
 })""";
   }
 

@@ -87,10 +87,9 @@ StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkTracingConnection::StreamingRead(google::test::admin::database::v1::Request const& request) {
   auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::StreamingRead");
   auto scope = opentelemetry::trace::Scope(span);
-  auto sr = child_->StreamingRead(std::move(request));
+  auto sr = child_->StreamingRead(request);
   return internal::MakeTracedStreamRange<google::test::admin::database::v1::Response>(
         std::move(span), std::move(sr));
-  return child_->StreamingRead(request);
 }
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Request,
