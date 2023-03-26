@@ -248,10 +248,13 @@ TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, StreamingRead)
-      .WillOnce(Return(mocks::MakeStreamRange<Response>(
-          {}, internal::AbortedError("fail"))));
+  EXPECT_CALL(*mock, StreamingRead).WillOnce([] {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    return mocks::MakeStreamRange<Response>({}, internal::AbortedError("fail"));
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   auto stream = under_test.StreamingRead(Request{});
@@ -259,6 +262,16 @@ TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
   ASSERT_FALSE(*it);
   EXPECT_THAT(*it, StatusIs(StatusCode::kAborted));
   EXPECT_EQ(++it, stream.end());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::StreamingRead"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, AsyncStreamingReadWrite) {

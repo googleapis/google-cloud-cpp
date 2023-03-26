@@ -85,7 +85,11 @@ GoldenKitchenSinkTracingConnection::Deprecated2(google::test::admin::database::v
 
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkTracingConnection::StreamingRead(google::test::admin::database::v1::Request const& request) {
-  return child_->StreamingRead(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::StreamingRead");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->StreamingRead(request);
+  return internal::MakeTracedStreamRange<google::test::admin::database::v1::Response>(
+        std::move(span), std::move(sr));
 }
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Request,

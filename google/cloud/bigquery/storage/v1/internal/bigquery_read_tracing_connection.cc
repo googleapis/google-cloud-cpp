@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 
 namespace google {
@@ -44,7 +45,13 @@ BigQueryReadTracingConnection::CreateReadSession(
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
 BigQueryReadTracingConnection::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
-  return child_->ReadRows(request);
+  auto span = internal::MakeSpan(
+      "bigquery_storage_v1::BigQueryReadConnection::ReadRows");
+  auto scope = opentelemetry::trace::Scope(span);
+  auto sr = child_->ReadRows(request);
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::storage::v1::ReadRowsResponse>(std::move(span),
+                                                              std::move(sr));
 }
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadTracingConnection::SplitReadStream(
