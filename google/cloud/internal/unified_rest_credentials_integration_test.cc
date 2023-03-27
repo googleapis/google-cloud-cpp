@@ -61,8 +61,8 @@ void MakeBigQueryRpcCall(Options options) {
   auto payload = ReadAll(std::move(response_payload));
   ASSERT_STATUS_OK(payload);
   auto parsed = nlohmann::json::parse(*payload, nullptr, false);
-  ASSERT_TRUE(parsed.is_object());
-  ASSERT_TRUE(parsed.contains("kind"));
+  ASSERT_TRUE(parsed.is_object()) << "parsed=" << parsed;
+  ASSERT_TRUE(parsed.contains("kind")) << "parsed=" << parsed;
   EXPECT_EQ(parsed.value("kind", ""), "bigquery#datasetList");
 }
 
