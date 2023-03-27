@@ -41,6 +41,8 @@ add_library(
     doxygen2yaml.h
     doxygen_errors.cc
     doxygen_errors.h
+    doxygen_groups.cc
+    doxygen_groups.h
     doxygen_pages.cc
     doxygen_pages.h
     generate_metadata.cc
@@ -78,6 +80,7 @@ set(unit_tests
     doxygen2syntax_test.cc
     doxygen2toc_test.cc
     doxygen2yaml_test.cc
+    doxygen_groups_test.cc
     doxygen_pages_test.cc
     generate_metadata_test.cc
     parse_arguments_test.cc)
