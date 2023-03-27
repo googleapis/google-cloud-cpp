@@ -158,7 +158,7 @@ StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
     std::string const& name, nlohmann::json const& json,
     int indent_level) const {
   if (indent_level > kMaxRecursionDepth) {
-    GCP_LOG(FATAL) << __PRETTY_FUNCTION__ << " exceeded kMaxRecursionDepth";
+    GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
   }
   std::string indent(indent_level * 2, ' ');
   auto lines = FormatProperties(name, json, indent_level + 1);
@@ -172,7 +172,7 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
     std::string const& message_name, nlohmann::json const& json,
     int indent_level) const {
   if (indent_level > kMaxRecursionDepth) {
-    GCP_LOG(FATAL) << __PRETTY_FUNCTION__ << " exceeded kMaxRecursionDepth";
+    GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
   }
   int field_number = 1;
   std::string indent(indent_level * 2, ' ');
