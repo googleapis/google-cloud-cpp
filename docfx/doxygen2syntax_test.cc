@@ -74,6 +74,66 @@ auto constexpr kTypedefXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
       </memberdef>
     </doxygen>)xml";
 
+auto constexpr kFunctionXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="function" id="classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename Rep</type>
+          </param>
+          <param>
+            <type>typename Period</type>
+          </param>
+        </templateparamlist>
+        <type><ref refid="classgoogle_1_1cloud_1_1future" kindref="compound">future</ref>&lt; <ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound">StatusOr</ref>&lt; std::chrono::system_clock::time_point &gt; &gt;</type>
+        <definition>future&lt; StatusOr&lt; std::chrono::system_clock::time_point &gt; &gt; google::cloud::CompletionQueue::MakeRelativeTimer</definition>
+        <argsstring>(std::chrono::duration&lt; Rep, Period &gt; duration)</argsstring>
+        <name>MakeRelativeTimer</name>
+        <qualifiedname>google::cloud::CompletionQueue::MakeRelativeTimer</qualifiedname>
+        <param>
+          <type>std::chrono::duration&lt; Rep, Period &gt;</type>
+          <declname>duration</declname>
+        </param>
+        <briefdescription>
+<para>Create a timer that fires after the <computeroutput>duration</computeroutput>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>Rep</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a placeholder to match the Rep tparam for <computeroutput>duration</computeroutput> type, the semantics of this template parameter are documented in <computeroutput>std::chrono::duration&lt;&gt;</computeroutput> (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>Period</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>a placeholder to match the Period tparam for <computeroutput>duration</computeroutput> type, the semantics of this template parameter are documented in <computeroutput>std::chrono::duration&lt;&gt;</computeroutput> (in brief, the length of the tick in seconds, expressed as a <computeroutput>std::ratio&lt;&gt;</computeroutput>), for our purposes it is simply a formal parameter.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>duration</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>when should the timer expire relative to the current time.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>a future that becomes satisfied after <computeroutput>duration</computeroutput> time has elapsed. The result of the future is the time at which it expired, or an error <ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref> if the timer did not run to expiration (e.g. it was cancelled). </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="completion_queue.h" line="96" column="10" bodyfile="completion_queue.h" bodystart="96" bodyend="100"/>
+      </memberdef>
+    </doxygen>)xml";
+
 TEST(Doxygen2SyntaxContent, Enum) {
   auto constexpr kExpected = R"""(enum class google::cloud::Idempotency {
   kIdempotent,
@@ -102,6 +162,27 @@ TEST(Doxygen2SyntaxContent, Typedef) {
       "']");
   ASSERT_TRUE(selected);
   auto const actual = TypedefSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2SyntaxContent, Function) {
+  auto constexpr kExpected =
+      R"""(template <
+    typename Rep,
+    typename Period>
+future< StatusOr< std::chrono::system_clock::time_point > >
+google::cloud::CompletionQueue::MakeRelativeTimer (
+    std::chrono::duration< Rep, Period > duration
+  ))""";
+  pugi::xml_document doc;
+  doc.load_string(kFunctionXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "classgoogle_1_1cloud_1_1CompletionQueue_"
+      "1a760d68ec606a03ab8cc80eea8bd965b3"
+      "']");
+  ASSERT_TRUE(selected);
+  auto const actual = FunctionSyntaxContent(selected.node());
   EXPECT_EQ(actual, kExpected);
 }
 
@@ -164,6 +245,49 @@ TEST(Doxygen2Syntax, Typedef) {
   YAML::Emitter yaml;
   yaml << YAML::BeginMap;
   AppendTypedefSyntax(yaml, ctx, selected.node());
+  yaml << YAML::EndMap;
+  auto const actual = std::string{yaml.c_str()};
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Syntax, Function) {
+  auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    template <
+        typename Rep,
+        typename Period>
+    future< StatusOr< std::chrono::system_clock::time_point > >
+    google::cloud::CompletionQueue::MakeRelativeTimer (
+        std::chrono::duration< Rep, Period > duration
+      )
+  returns:
+    var_type: |
+      future< StatusOr< std::chrono::system_clock::time_point > >
+  parameters:
+    - id: duration
+      var_type: |
+        std::chrono::duration< Rep, Period >
+  source:
+    id: MakeRelativeTimer
+    path: google/cloud/completion_queue.h
+    startLine: 96
+    remote:
+      repo: https://github.com/googleapis/google-cloud-cpp/
+      branch: main
+      path: google/cloud/completion_queue.h)yml";
+  pugi::xml_document doc;
+  doc.load_string(kFunctionXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "classgoogle_1_1cloud_1_1CompletionQueue_"
+      "1a760d68ec606a03ab8cc80eea8bd965b3"
+      "']");
+  ASSERT_TRUE(selected);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  YAML::Emitter yaml;
+  yaml << YAML::BeginMap;
+  AppendFunctionSyntax(yaml, ctx, selected.node());
   yaml << YAML::EndMap;
   auto const actual = std::string{yaml.c_str()};
   EXPECT_EQ(actual, kExpected);

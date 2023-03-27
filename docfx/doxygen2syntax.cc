@@ -105,6 +105,40 @@ std::string TypedefSyntaxContent(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
+std::string FunctionSyntaxContent(pugi::xml_node const& node) {
+  std::ostringstream os;
+  auto templateparamlist = node.child("templateparamlist");
+  if (templateparamlist) {
+    os << "template <";
+    auto sep = std::string_view{"\n    "};
+    for (auto const& param : templateparamlist) {
+      if (std::string_view{param.name()} != "param") {
+        UnknownChildType(__func__, param);
+      }
+      os << sep << LinkedTextType(param.child("type"));
+      auto const defval = param.child("defval");
+      if (defval) {
+        os << " = " << LinkedTextType(param.child("defval"));
+      }
+      sep = std::string_view{",\n    "};
+    }
+    os << ">\n";
+  }
+  os << LinkedTextType(node.child("type")) << "\n"
+     << node.child_value("qualifiedname") << " (";
+  auto sep = std::string_view();
+  auto params = node.select_nodes("param");
+  if (!params.empty()) {
+    for (auto const& i : params) {
+      os << "\n    " << LinkedTextType(i.node().child("type")) << " "
+         << i.node().child_value("declname");
+    }
+    sep = std::string_view("\n  ");
+  }
+  os << sep << ")";
+  return std::move(os).str();
+}
+
 void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
@@ -121,6 +155,35 @@ void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << TypedefSyntaxContent(node);
+  AppendLocation(yaml, ctx, node, "file", "line");
+  yaml << YAML::EndMap;
+}
+
+void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                          pugi::xml_node const& node) {
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << FunctionSyntaxContent(node);
+  yaml << YAML::Key << "returns" << YAML::Value                //
+       << YAML::BeginMap                                       //
+       << YAML::Key << "var_type" << YAML::Value               //
+       << YAML::Literal << LinkedTextType(node.child("type"))  //
+       << YAML::EndMap;
+  auto params = node.select_nodes("param");
+  if (!params.empty()) {
+    yaml << YAML::Key << "parameters" << YAML::Value  //
+         << YAML::BeginSeq;
+    for (auto const& i : params) {
+      auto declname = std::string{i.node().child("declname").child_value()};
+      yaml << YAML::BeginMap                                           //
+           << YAML::Key << "id" << YAML::Value << declname             //
+           << YAML::Key << "var_type" << YAML::Value                   //
+           << YAML::Literal << LinkedTextType(i.node().child("type"))  //
+           << YAML::EndMap;
+    }
+    yaml << YAML::EndSeq;
+  }
   AppendLocation(yaml, ctx, node, "file", "line");
   yaml << YAML::EndMap;
 }
