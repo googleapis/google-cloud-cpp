@@ -50,21 +50,24 @@ void AppendReferences(YAML::Emitter& yaml, pugi::xml_node const& node) {
 std::string Group2Yaml(Config const& /*config*/, pugi::xml_node const& node) {
   auto const id = std::string{node.attribute("id").as_string()};
   YAML::Emitter yaml;
-  yaml << YAML::BeginMap;
-  yaml << YAML::Key << "items" << YAML::Value << YAML::BeginSeq;
-  yaml << YAML::BeginMap;
-  yaml << YAML::Key << "uid" << YAML::Value << id         //
+  yaml << YAML::BeginMap                                  // top-level
+       << YAML::Key << "items"                            //
+       << YAML::Value << YAML::BeginSeq                   //
+       << YAML::BeginMap                                  // group
+       << YAML::Key << "uid" << YAML::Value << id         //
        << YAML::Key << "name" << YAML::Value << id        //
        << YAML::Key << "id" << YAML::Value << id          //
        << YAML::Key << "type" << YAML::Value << "module"  //
-       << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq
+       << YAML::Key << "langs"                            //
+       << YAML::BeginSeq << "cpp" << YAML::EndSeq         //
        << YAML::Key << "summary" << YAML::Literal
        << Group2SummaryMarkdown(node);
   yaml << YAML::Key << "references" << YAML::BeginSeq;
   AppendReferences(yaml, node);
-  yaml << YAML::EndSeq;
-  yaml << YAML::EndMap;
-  yaml << YAML::EndSeq << YAML::EndMap;
+  yaml << YAML::EndSeq   // references
+       << YAML::EndMap   // group
+       << YAML::EndSeq   // items
+       << YAML::EndMap;  // top-level
   return std::string{"### YamlMime:UniversalReference\n"} + yaml.c_str() + "\n";
 }
 
