@@ -52,9 +52,9 @@ std::string DiscoveryTypeVertex::DetermineIntroducer(
     nlohmann::json const& field) {
   if (field.empty()) return "";
   if (field.value("required", false)) return "";
-  if (field.contains("type") && field["type"] == "array") return "repeated ";
+  if (field.value("type", "notarray") == "array") return "repeated ";
   // Test for map field.
-  if (field.contains("type") && field["type"] == "object" &&
+  if (field.value("type", "notobject") == "object" &&
       field.contains("additionalProperties")) {
     return "";
   }

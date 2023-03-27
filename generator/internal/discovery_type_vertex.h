@@ -47,7 +47,7 @@ class DiscoveryTypeVertex {
   // field.
   void AddNeededByTypeName(std::string type_name);
 
-  // Returns "optional ", "repeated ", or and empty string depending on the
+  // Returns "optional ", "repeated ", or an empty string depending on the
   // field type.
   static std::string DetermineIntroducer(nlohmann::json const& field);
 
