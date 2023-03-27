@@ -85,13 +85,9 @@ TEST(Options, Defaults) {
   EXPECT_TRUE(opts.has<SpannerBackoffPolicyOption>());
   EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
 
-#if 1
-  // TODO(#11111): Enable on-by-default behavior.
+  // TODO(#11111): Restore on-by-default behavior.
   ASSERT_TRUE(opts.has<spanner::RouteToLeaderOption>());
   EXPECT_FALSE(opts.get<spanner::RouteToLeaderOption>());
-#else
-  EXPECT_FALSE(opts.has<spanner::RouteToLeaderOption>());
-#endif
 }
 
 TEST(Options, AdminDefaults) {

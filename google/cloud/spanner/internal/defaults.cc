@@ -105,8 +105,7 @@ Options DefaultOptions(Options opts) {
       (std::min)(min_sessions, max_sessions_per_channel * num_channels);
 
   if (!opts.has<spanner::RouteToLeaderOption>()) {
-#if 1
-    // TODO(#11111): Enable on-by-default behavior.
+    // TODO(#11111): Restore on-by-default behavior.
     opts.set<spanner::RouteToLeaderOption>(false);
     if (auto e = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER")) {
       for (auto const* enable : {"Y", "y", "T", "t", "1", "on"}) {
@@ -118,18 +117,6 @@ Options DefaultOptions(Options opts) {
         }
       }
     }
-#else
-    if (auto e = internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER")) {
-      for (auto const* disable : {"N", "n", "F", "f", "0", "off"}) {
-        if (*e == disable) {
-          // Change the default from "for RW/PartitionedDml transactions"
-          // to "never".
-          opts.set<spanner::RouteToLeaderOption>(false);
-          break;
-        }
-      }
-    }
-#endif
   }
 
   return opts;
