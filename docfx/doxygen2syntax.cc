@@ -48,20 +48,79 @@ void AppendLocation(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::EndMap;                                    // source
 }
 
+// A `linkedTextType` is defined as below. It is basically a sequence of
+// references (links) mixed with plain text. We ignore the references in the
+// formatting of the syntax content.
+//
+// clang-format off
+//   <xsd:complexType name="linkedTextType" mixed="true">
+//     <xsd:sequence>
+//     <xsd:element name="ref" type="refTextType" minOccurs="0" maxOccurs="unbounded" />
+//     </xsd:sequence>
+//   </xsd:complexType>
+// ... ..
+//   <xsd:complexType name="refTextType">
+//     <xsd:simpleContent>
+//       <xsd:extension base="xsd:string">
+//        <xsd:attribute name="refid" type="xsd:string" />
+//        <xsd:attribute name="kindref" type="DoxRefKind" />
+//        <xsd:attribute name="external" type="xsd:string" use="optional"/>
+//        <xsd:attribute name="tooltip" type="xsd:string" use="optional"/>
+//       </xsd:extension>
+//     </xsd:simpleContent>
+//   </xsd:complexType>
+// clang-format on
+std::string LinkedTextType(pugi::xml_node const& node) {
+  std::ostringstream os;
+  for (auto const& child : node) {
+    auto const name = std::string_view{child.name()};
+    if (name == "ref") {
+      os << child.child_value();
+    } else {
+      os << child.value();
+    }
+  }
+  return std::move(os).str();
+}
+
 }  // namespace
+
+std::string EnumSyntaxContent(pugi::xml_node const& node) {
+  std::ostringstream os;
+  auto const strong = std::string_view{node.attribute("strong").as_string()};
+  os << "enum " << (strong == "yes" ? "class " : "")
+     << node.child_value("qualifiedname") << " {\n";
+  for (auto const& child : node) {
+    if (std::string_view{child.name()} != "enumvalue") continue;
+    os << "  " << child.child_value("name") << ",\n";
+  }
+  os << "};";
+  return std::move(os).str();
+}
+
+std::string TypedefSyntaxContent(pugi::xml_node const& node) {
+  std::ostringstream os;
+  os << "using " << node.child_value("qualifiedname") << " =\n"  //
+     << "  " << LinkedTextType(node.child("type")) << ";";
+  return std::move(os).str();
+}
 
 void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node) {
-  yaml << YAML::Key << "syntax" << YAML::Value  //
-       << YAML::BeginMap;
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << EnumSyntaxContent(node);
   AppendLocation(yaml, ctx, node, "file", "line");
   yaml << YAML::EndMap;
 }
 
 void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                          pugi::xml_node const& node) {
-  yaml << YAML::Key << "syntax" << YAML::Value  //
-       << YAML::BeginMap;
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << TypedefSyntaxContent(node);
   AppendLocation(yaml, ctx, node, "file", "line");
   yaml << YAML::EndMap;
 }
