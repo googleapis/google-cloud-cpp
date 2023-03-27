@@ -85,7 +85,13 @@ TEST(Options, Defaults) {
   EXPECT_TRUE(opts.has<SpannerBackoffPolicyOption>());
   EXPECT_TRUE(opts.has<spanner_internal::SessionPoolClockOption>());
 
+#if 1
+  // TODO(#11111): Enable on-by-default behavior.
+  ASSERT_TRUE(opts.has<spanner::RouteToLeaderOption>());
+  EXPECT_FALSE(opts.get<spanner::RouteToLeaderOption>());
+#else
   EXPECT_FALSE(opts.has<spanner::RouteToLeaderOption>());
+#endif
 }
 
 TEST(Options, AdminDefaults) {
@@ -154,12 +160,19 @@ TEST(Options, SpannerEmulatorHost) {
   EXPECT_NE(opts.get<GrpcCredentialOption>(), nullptr);
 }
 
-TEST(Options, RouteToLeaderFromEnv) {
+TEST(Options, RouteToLeaderFromEnvOff) {
   testing_util::ScopedEnvironment route_to_leader_env(
       "GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER", "off");
   auto opts = spanner_internal::DefaultOptions();
   EXPECT_TRUE(opts.has<spanner::RouteToLeaderOption>());
   EXPECT_FALSE(opts.get<spanner::RouteToLeaderOption>());
+}
+
+TEST(Options, RouteToLeaderFromEnvOn) {
+  testing_util::ScopedEnvironment route_to_leader_env(
+      "GOOGLE_CLOUD_CPP_SPANNER_ROUTE_TO_LEADER", "on");
+  auto opts = spanner_internal::DefaultOptions();
+  EXPECT_FALSE(opts.has<spanner::RouteToLeaderOption>());
 }
 
 TEST(Options, TracingComponentsFromEnv) {
