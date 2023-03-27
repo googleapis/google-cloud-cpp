@@ -48,6 +48,19 @@ void DiscoveryTypeVertex::AddNeededByTypeName(std::string type_name) {
   needed_by_.insert(std::move(type_name));
 }
 
+std::string DiscoveryTypeVertex::DetermineIntroducer(
+    nlohmann::json const& field) {
+  if (field.empty()) return "";
+  if (field.value("required", false)) return "";
+  if (field.value("type", "notarray") == "array") return "repeated ";
+  // Test for map field.
+  if (field.value("type", "notobject") == "object" &&
+      field.contains("additionalProperties")) {
+    return "";
+  }
+  return "optional ";
+}
+
 StatusOr<DiscoveryTypeVertex::TypeInfo>
 DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                                                std::string const& field_name) {
@@ -136,6 +149,40 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
 
   return internal::InvalidArgumentError(
       absl::StrFormat("field: %s has unknown type: %s.", field_name, type));
+}
+
+std::string DiscoveryTypeVertex::FormatFieldOptions(
+    std::string const& field_name, nlohmann::json const& field_json) {
+  std::vector<std::pair<std::string, std::string>> field_options;
+  if (field_json.value("required", false)) {
+    field_options.emplace_back("google.api.field_behavior", "REQUIRED");
+  }
+
+  if (field_json.value("operation_request_field", false)) {
+    field_options.emplace_back("google.cloud.operation_request_field",
+                               absl::StrCat("\"", field_name, "\""));
+  }
+
+  if (!field_options.empty()) {
+    auto formatter = [](std::string* s,
+                        std::pair<std::string, std::string> const& p) {
+      *s += absl::StrFormat("(%s) = %s", p.first, p.second);
+    };
+    return absl::StrCat(" [", absl::StrJoin(field_options, ",", formatter),
+                        "]");
+  }
+
+  return {};
+}
+
+StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(std::string const&,
+                                                  std::string const&,
+                                                  std::string const&,
+                                                  int field_number) {
+  // TODO(#11095): check protoc descriptors of previous generation protobuf
+  // files for an existing field and the correct field_number to use.
+  // For now, just return back the field_number provided.
+  return field_number;
 }
 
 std::string DiscoveryTypeVertex::DebugString() const {

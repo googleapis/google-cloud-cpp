@@ -25,6 +25,111 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 
+TEST(DiscoveryTypeVertexTest, DetermineIntroducerEmpty) {
+  auto constexpr kOptionalEmptyFieldJson = R"""({})""";
+  auto json = nlohmann::json::parse(kOptionalEmptyFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::DetermineIntroducer(json), Eq(""));
+}
+
+TEST(DiscoveryTypeVertexTest, DetermineIntroducerRequiredRef) {
+  auto constexpr kRequiredRefFieldJson = R"""(
+{
+  "$ref": "Foo",
+  "required": true
+}
+)""";
+  auto json = nlohmann::json::parse(kRequiredRefFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::DetermineIntroducer(json), Eq(""));
+}
+
+TEST(DiscoveryTypeVertexTest, DetermineIntroducerRepeated) {
+  auto constexpr kArrayFieldJson = R"""(
+{
+  "type": "array"
+}
+)""";
+  auto json = nlohmann::json::parse(kArrayFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::DetermineIntroducer(json), Eq("repeated "));
+}
+
+TEST(DiscoveryTypeVertexTest, DetermineIntroducerMap) {
+  auto constexpr kMapFieldJson = R"""(
+{
+  "type": "object",
+  "additionalProperties": {}
+}
+)""";
+  auto json = nlohmann::json::parse(kMapFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::DetermineIntroducer(json), Eq(""));
+}
+
+TEST(DiscoveryTypeVertexTest, DetermineIntroducerOptionalString) {
+  auto constexpr kOptionalStringFieldJson = R"""(
+{
+  "type": "string"
+}
+)""";
+  auto json = nlohmann::json::parse(kOptionalStringFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::DetermineIntroducer(json), Eq("optional "));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsEmpty) {
+  auto constexpr kOptionalEmptyFieldJson = R"""({})""";
+  auto json = nlohmann::json::parse(kOptionalEmptyFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+              Eq(""));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequired) {
+  auto constexpr kOptionalRequiredFieldJson = R"""(
+{
+  "type": "string",
+  "required": true
+}
+)""";
+  auto json = nlohmann::json::parse(kOptionalRequiredFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+              Eq(" [(google.api.field_behavior) = REQUIRED]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsOperationRequestField) {
+  auto constexpr kOptionalOperationRequestFieldJson = R"""(
+{
+  "type": "string",
+  "operation_request_field": true
+}
+)""";
+  auto json =
+      nlohmann::json::parse(kOptionalOperationRequestFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+              Eq(" [(google.cloud.operation_request_field) = \"test_field\"]"));
+}
+
+TEST(DiscoveryTypeVertexTest, FormatFieldOptionsRequiredOperationRequestField) {
+  auto constexpr kOptionalOperationRequestFieldJson = R"""(
+{
+  "type": "string",
+  "required": true,
+  "operation_request_field": true
+}
+)""";
+  auto json =
+      nlohmann::json::parse(kOptionalOperationRequestFieldJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  EXPECT_THAT(
+      DiscoveryTypeVertex::FormatFieldOptions("test_field", json),
+      Eq(" [(google.api.field_behavior) = "
+         "REQUIRED,(google.cloud.operation_request_field) = \"test_field\"]"));
+}
+
 struct DetermineTypesSuccess {
   std::string json;
   std::string expected_name;

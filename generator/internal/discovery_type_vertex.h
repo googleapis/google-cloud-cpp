@@ -47,6 +47,10 @@ class DiscoveryTypeVertex {
   // field.
   void AddNeededByTypeName(std::string type_name);
 
+  // Returns "optional ", "repeated ", or an empty string depending on the
+  // field type.
+  static std::string DetermineIntroducer(nlohmann::json const& field);
+
   struct TypeInfo {
     std::string name;
     // Non-owning pointer to the properties JSON block of the type to be
@@ -60,6 +64,16 @@ class DiscoveryTypeVertex {
   // that defines the type.
   static StatusOr<TypeInfo> DetermineTypeAndSynthesis(
       nlohmann::json const& v, std::string const& field_name);
+
+  // Formats any field options as indicated by the field_json.
+  static std::string FormatFieldOptions(std::string const& field_name,
+                                        nlohmann::json const& field_json);
+
+  // Determines the correct field_number to use for the specified field.
+  static StatusOr<int> GetFieldNumber(std::string const& message_name,
+                                      std::string const& field_name,
+                                      std::string const& field_type,
+                                      int field_number);
 
   std::string DebugString() const;
 
