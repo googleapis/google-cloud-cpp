@@ -59,11 +59,11 @@ def google_cloud_cpp_deps(name = None):
         http_archive,
         name = "com_google_absl",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20230125.1.tar.gz",
-            "https://github.com/abseil/abseil-cpp/archive/20230125.1.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20230125.2.tar.gz",
+            "https://github.com/abseil/abseil-cpp/archive/20230125.2.tar.gz",
         ],
-        sha256 = "81311c17599b3712069ded20cca09a62ab0bf2a89dfa16993786c8782b7ed145",
-        strip_prefix = "abseil-cpp-20230125.1",
+        sha256 = "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+        strip_prefix = "abseil-cpp-20230125.2",
     )
 
     # Load a version of googletest that we know works.
