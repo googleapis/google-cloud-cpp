@@ -19,8 +19,7 @@
 namespace docfx {
 namespace {
 
-TEST(Doxygen2Yaml, Enum) {
-  auto constexpr kEnumXml = R"xml(<?xml version="1.0" standalone="yes"?>
+auto constexpr kEnumXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <memberdef kind="enum" id="namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c" prot="public" static="no" strong="yes">
         <type/>
@@ -55,7 +54,64 @@ TEST(Doxygen2Yaml, Enum) {
     </doxygen>
 )xml";
 
+auto constexpr kTypedefXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="typedef" id="namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f" prot="public" static="no">
+        <type>std::function&lt; std::unique_ptr&lt; <ref refid="classgoogle_1_1cloud_1_1BackgroundThreads" kindref="compound">BackgroundThreads</ref> &gt;()&gt;</type>
+        <definition>using google::cloud::BackgroundThreadsFactory = typedef std::function&lt;std::unique_ptr&lt;BackgroundThreads&gt;()&gt;</definition>
+        <argsstring/>
+        <name>BackgroundThreadsFactory</name>
+        <qualifiedname>google::cloud::BackgroundThreadsFactory</qualifiedname>
+        <briefdescription>
+        <para>A short description of the thing.</para>
+        </briefdescription>
+        <detaileddescription>
+        <para>A longer description would go here.</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="grpc_options.h" line="148" column="1" bodyfile="grpc_options.h" bodystart="149" bodyend="-1"/>
+      </memberdef>
+    </doxygen>)xml";
+
+TEST(Doxygen2SyntaxContent, Enum) {
+  auto constexpr kExpected = R"""(enum class google::cloud::Idempotency {
+  kIdempotent,
+  kNonIdempotent,
+};)""";
+  pugi::xml_document doc;
+  doc.load_string(kEnumXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c"
+      "']");
+  ASSERT_TRUE(selected);
+  auto const actual = EnumSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2SyntaxContent, Typedef) {
+  auto constexpr kExpected =
+      R"""(using google::cloud::BackgroundThreadsFactory =
+  std::function< std::unique_ptr< BackgroundThreads >()>;)""";
+  pugi::xml_document doc;
+  doc.load_string(kTypedefXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f"
+      "']");
+  ASSERT_TRUE(selected);
+  auto const actual = TypedefSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Syntax, Enum) {
   auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    enum class google::cloud::Idempotency {
+      kIdempotent,
+      kNonIdempotent,
+    };
   source:
     id: Idempotency
     path: google/cloud/idempotency.h
@@ -82,27 +138,11 @@ TEST(Doxygen2Yaml, Enum) {
   EXPECT_EQ(actual, kExpected);
 }
 
-TEST(Doxygen2Yaml, Typedef) {
-  auto constexpr kXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
-    <doxygen version="1.9.1" xml:lang="en-US">
-      <memberdef kind="typedef" id="namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f" prot="public" static="no">
-        <type>std::function&lt; std::unique_ptr&lt; <ref refid="classgoogle_1_1cloud_1_1BackgroundThreads" kindref="compound">BackgroundThreads</ref> &gt;()&gt;</type>
-        <definition>using google::cloud::BackgroundThreadsFactory = typedef std::function&lt;std::unique_ptr&lt;BackgroundThreads&gt;()&gt;</definition>
-        <argsstring/>
-        <name>BackgroundThreadsFactory</name>
-        <qualifiedname>google::cloud::BackgroundThreadsFactory</qualifiedname>
-        <briefdescription>
-        <para>A short description of the thing.</para>
-        </briefdescription>
-        <detaileddescription>
-        <para>A longer description would go here.</para>
-        </detaileddescription>
-        <inbodydescription>
-        </inbodydescription>
-        <location file="grpc_options.h" line="148" column="1" bodyfile="grpc_options.h" bodystart="149" bodyend="-1"/>
-      </memberdef>
-    </doxygen>)xml";
+TEST(Doxygen2Syntax, Typedef) {
   auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    using google::cloud::BackgroundThreadsFactory =
+      std::function< std::unique_ptr< BackgroundThreads >()>;
   source:
     id: BackgroundThreadsFactory
     path: google/cloud/grpc_options.h
@@ -113,7 +153,7 @@ TEST(Doxygen2Yaml, Typedef) {
       path: google/cloud/grpc_options.h)yml";
 
   pugi::xml_document doc;
-  doc.load_string(kXml);
+  doc.load_string(kTypedefXml);
   auto selected = doc.select_node(
       "//*[@id='"
       "namespacegoogle_1_1cloud_1a1498c1ea55d81842f37bbc42d003df1f"

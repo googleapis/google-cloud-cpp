@@ -32,6 +32,11 @@ namespace docfx {
 // - The type aliased by a typedef or using definition.
 // - The value of enums (if applicable).
 
+// Generate the `syntax.content` element for an enum.
+std::string EnumSyntaxContent(pugi::xml_node const& node);
+
+std::string TypedefSyntaxContent(pugi::xml_node const& node);
+
 // Generate the `syntax` element for an enum.
 void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node);
