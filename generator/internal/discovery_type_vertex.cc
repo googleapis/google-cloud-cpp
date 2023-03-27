@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include "absl/strings/str_format.h"
 #include "absl/types/optional.h"
 
@@ -151,6 +152,86 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       absl::StrFormat("field: %s has unknown type: %s.", field_name, type));
 }
 
+auto constexpr kMaxRecursionDepth = 32;
+// NOLINTNEXTLINE(misc-no-recursion)
+StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
+    std::string const& name, nlohmann::json const& json,
+    int indent_level) const {
+  if (indent_level > kMaxRecursionDepth) {
+    GCP_LOG(FATAL) << __PRETTY_FUNCTION__ << " exceeded kMaxRecursionDepth";
+  }
+  std::string indent(indent_level * 2, ' ');
+  auto lines = FormatProperties(name, json, indent_level + 1);
+  if (!lines) return lines.status();
+  return absl::StrCat(indent, absl::StrFormat("message %s {\n", name),
+                      absl::StrJoin(*lines, "\n\n"), "\n", indent, "}");
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
+    std::string const& message_name, nlohmann::json const& json,
+    int indent_level) const {
+  if (indent_level > kMaxRecursionDepth) {
+    GCP_LOG(FATAL) << __PRETTY_FUNCTION__ << " exceeded kMaxRecursionDepth";
+  }
+  int field_number = 1;
+  std::string indent(indent_level * 2, ' ');
+  std::vector<std::string> text;
+  auto const& properties = json.find("properties");
+  for (auto p = properties->begin(); p != properties->end(); ++p) {
+    auto const& v = p.value();
+    std::string field_name = v.value("id", p.key());
+    auto type_and_synthesize = DetermineTypeAndSynthesis(v, field_name);
+    if (!type_and_synthesize) return type_and_synthesize.status();
+
+    std::string type = type_and_synthesize->name;
+    if (type_and_synthesize->properties != nullptr) {
+      auto result =
+          FormatMessage(type, *type_and_synthesize->properties, indent_level);
+      if (!result) return result.status();
+      text.push_back(*result);
+    }
+
+    std::string description;
+    if (v.contains("description")) {
+      description = absl::StrCat(
+          FormatCommentBlock(std::string(v["description"]), indent_level),
+          "\n");
+    }
+
+    if (v.contains("enum")) {
+      std::vector<std::pair<std::string, std::string>> enum_comments;
+      for (unsigned int i = 0; i < v["enum"].size(); ++i) {
+        if (v.contains("enumDescriptions") &&
+            i < v["enumDescriptions"].size()) {
+          enum_comments.emplace_back(std::string(v["enum"][i]),
+                                     std::string(v["enumDescriptions"][i]));
+        } else {
+          enum_comments.emplace_back(std::string(v["enum"][i]), std::string());
+        }
+      }
+      absl::StrAppend(&description,
+                      FormatCommentKeyValueList(enum_comments, indent_level),
+                      "\n");
+    }
+
+    field_name = CamelCaseToSnakeCase(field_name);
+    auto field_number_status =
+        GetFieldNumber(message_name, field_name, type, field_number);
+    if (!field_number_status) return field_number_status.status();
+    field_number = *field_number_status;
+    if (type_and_synthesize->is_map) {
+      type = absl::StrFormat("map<string, %s>", type);
+    }
+    text.push_back(absl::StrFormat(
+        "%s%s%s%s %s = %d%s;", description, indent, DetermineIntroducer(v),
+        type, field_name, field_number, FormatFieldOptions(field_name, v)));
+    ++field_number;
+  }
+
+  return text;
+}
+
 std::string DiscoveryTypeVertex::FormatFieldOptions(
     std::string const& field_name, nlohmann::json const& field_json) {
   std::vector<std::pair<std::string, std::string>> field_options;
@@ -183,6 +264,21 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(std::string const&,
   // files for an existing field and the correct field_number to use.
   // For now, just return back the field_number provided.
   return field_number;
+}
+
+StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage() const {
+  int indent_level = 0;
+  std::string proto;
+  if (json_.contains("description")) {
+    absl::StrAppend(
+        &proto,
+        FormatCommentBlock(std::string(json_["description"]), indent_level),
+        "\n");
+  }
+  auto message = FormatMessage(name_, json_, indent_level);
+  if (!message) return message.status();
+  absl::StrAppend(&proto, *message, "\n");
+  return proto;
 }
 
 std::string DiscoveryTypeVertex::DebugString() const {

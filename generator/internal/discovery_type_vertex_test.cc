@@ -249,6 +249,371 @@ INSTANTIATE_TEST_SUITE_P(
             "field: testField is array with items having neither $ref nor "
             "type."}));
 
+TEST(DiscoveryTypeVertexTest, JsonToProtobufScalarTypes) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "id": "TestSchema",
+  "properties": {
+    "refField": {
+      "$ref": "Foo",
+      "description": "Description for refField."
+    },
+    "booleanField": {
+      "type": "boolean",
+      "description": "Description for booleanField."
+    },
+    "integerNoFormatField": {
+      "type": "integer",
+      "description": "Description for integerNoFormatField."
+    },
+    "integerFormatInt64Field": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Description for integerFormatInt64Field."
+    },
+    "numberNoFormatField": {
+      "type": "number",
+      "description": "Description for numberNoFormatField."
+    },
+    "numberFormatDoubleField": {
+      "type": "number",
+      "format": "double",
+      "description": "Description for numberFormatDoubleField."
+    },
+    "stringField": {
+      "type": "string",
+      "description": "Description for stringField."
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(message TestSchema {
+  // Description for booleanField.
+  optional bool boolean_field = 1;
+
+  // Description for integerFormatInt64Field.
+  optional int64 integer_format_int64_field = 2;
+
+  // Description for integerNoFormatField.
+  optional int32 integer_no_format_field = 3;
+
+  // Description for numberFormatDoubleField.
+  optional double number_format_double_field = 4;
+
+  // Description for numberNoFormatField.
+  optional float number_no_format_field = 5;
+
+  // Description for refField.
+  optional Foo ref_field = 6;
+
+  // Description for stringField.
+  optional string string_field = 7;
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", json);
+
+  auto result = t.JsonToProtobufMessage();
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST(DiscoveryTypeVertexTest, JsonToProtobufMapType) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "id": "TestSchema",
+  "properties": {
+    "mapRefField": {
+      "type": "object",
+      "description": "Description for mapRefField.",
+      "additionalProperties": {
+        "$ref": "Foo"
+      }
+    },
+    "mapStringField": {
+      "type": "object",
+      "description": "Description for mapStringField.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "mapSynthesizedField": {
+      "type": "object",
+      "description": "Description for mapSynthesizedField.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "field1": {
+            "type": "string"
+          },
+          "field2": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(message TestSchema {
+  // Description for mapRefField.
+  map<string, Foo> map_ref_field = 1;
+
+  // Description for mapStringField.
+  map<string, string> map_string_field = 2;
+
+  message MapSynthesizedFieldItem {
+    optional string field1 = 1;
+
+    optional float field2 = 2;
+  }
+
+  // Description for mapSynthesizedField.
+  map<string, MapSynthesizedFieldItem> map_synthesized_field = 3;
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", json);
+
+  auto result = t.JsonToProtobufMessage();
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST(DiscoveryTypeVertexTest, JsonToProtobufArrayTypes) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "id": "TestSchema",
+  "properties": {
+    "booleanArray": {
+      "type": "array",
+      "description": "Description of booleanArray.",
+      "items": {
+        "type": "boolean"
+      }
+    },
+    "integerFormatInt64Array": {
+      "type": "array",
+      "description": "Description of integerFormatInt64Array.",
+      "items": {
+        "type": "integer",
+        "format": "int64"
+      }
+    },
+    "integerNoFormatArray": {
+      "type": "array",
+      "description": "Description of integerNoFormatArray.",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "numberFormatDoubleArray": {
+      "type": "array",
+      "description": "Description of numberFormatDoubleArray.",
+      "items": {
+        "type": "number",
+        "format": "double"
+      }
+    },
+    "numberNoFormatArray": {
+      "type": "array",
+      "description": "Description of numberNoFormatArray.",
+      "items": {
+        "type": "number"
+      }
+    },
+    "refArray": {
+      "type": "array",
+      "description": "Description of refArray.",
+      "items": {
+        "$ref": "Foo"
+      }
+    },
+    "stringArray": {
+      "type": "array",
+      "description": "Description of stringArray.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "synthesizedArray": {
+      "type": "array",
+      "description": "Description of synthesizedArray.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field1": {
+            "type": "string",
+            "description": "Description of field1."
+          },
+          "field2": {
+            "type": "array",
+            "description": "Description of field2.",
+            "items": {
+              "type": "integer",
+              "format": "uint8"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(message TestSchema {
+  // Description of booleanArray.
+  repeated bool boolean_array = 1;
+
+  // Description of integerFormatInt64Array.
+  repeated int64 integer_format_int64_array = 2;
+
+  // Description of integerNoFormatArray.
+  repeated int32 integer_no_format_array = 3;
+
+  // Description of numberFormatDoubleArray.
+  repeated double number_format_double_array = 4;
+
+  // Description of numberNoFormatArray.
+  repeated float number_no_format_array = 5;
+
+  // Description of refArray.
+  repeated Foo ref_array = 6;
+
+  // Description of stringArray.
+  repeated string string_array = 7;
+
+  message SynthesizedArrayItem {
+    // Description of field1.
+    optional string field1 = 1;
+
+    // Description of field2.
+    repeated uint8 field2 = 2;
+  }
+
+  // Description of synthesizedArray.
+  repeated SynthesizedArrayItem synthesized_array = 8;
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", json);
+
+  auto result = t.JsonToProtobufMessage();
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST(DiscoveryTypeVertex, JsonToProtobufMessage) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "stringField": {
+      "type": "string",
+      "description": "Description for stringField."
+    },
+    "enumField": {
+      "enum": [
+        "ENUM_VALUE1",
+        "ENUM_VALUE2",
+        "ENUM_VALUE3",
+        "ENUM_VALUE4"
+      ],
+      "enumDescriptions": [
+        "Description for ENUM_VALUE1.",
+        "Description for ENUM_VALUE2.",
+        "Description for ENUM_VALUE3.",
+        "Description for ENUM_VALUE4."
+      ],
+      "type": "string"
+    },
+    "int32Field": {
+      "type": "integer",
+      "description": "Description for int32Field.",
+      "format": "int32"
+    },
+    "mapStringField": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object",
+      "description": "Description for mapStringField."
+    },
+    "mapRefField": {
+      "additionalProperties": {
+        "$ref": "Foo"
+      },
+      "type": "object",
+      "description": "Description for mapRefField."
+    },
+    "nestedTypeField": {
+      "description": "Description for nestedTypeField.",
+      "type": "object",
+      "properties": {
+        "nestedField1": {
+          "type": "string",
+          "description": "Description for nestedField1."
+        },
+        "nestedField2": {
+          "$ref": "Bar",
+          "description": "Description for nestedField2."
+        }
+      }
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(message TestSchema {
+  // ENUM_VALUE1: Description for ENUM_VALUE1.
+  // ENUM_VALUE2: Description for ENUM_VALUE2.
+  // ENUM_VALUE3: Description for ENUM_VALUE3.
+  // ENUM_VALUE4: Description for ENUM_VALUE4.
+  optional string enum_field = 1;
+
+  // Description for int32Field.
+  optional int32 int32_field = 2;
+
+  // Description for mapRefField.
+  map<string, Foo> map_ref_field = 3;
+
+  // Description for mapStringField.
+  map<string, string> map_string_field = 4;
+
+  message NestedTypeField {
+    // Description for nestedField1.
+    optional string nested_field1 = 1;
+
+    // Description for nestedField2.
+    optional Bar nested_field2 = 2;
+  }
+
+  // Description for nestedTypeField.
+  optional NestedTypeField nested_type_field = 5;
+
+  // Description for stringField.
+  optional string string_field = 6;
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", json);
+
+  auto result = t.JsonToProtobufMessage();
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud
