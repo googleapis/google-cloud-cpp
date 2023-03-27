@@ -29,6 +29,7 @@ using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 
 static auto const kUserProject = "test-only-project";
 static auto const kQuotaUser = "test-quota-user";
@@ -41,7 +42,7 @@ std::shared_ptr<BigQueryJobMetadata> CreateMockJobMetadata(
 void VerifyMetadataContext(rest_internal::RestContext& context) {
   EXPECT_THAT(context.GetHeader("x-goog-api-client"),
               Contains(HasSubstr("bigquery_v2_job")));
-  EXPECT_TRUE(context.GetHeader("x-goog-request-params").empty());
+  EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
   EXPECT_THAT(context.GetHeader("x-goog-user-project"),
               ElementsAre(kUserProject));
   EXPECT_THAT(context.GetHeader("x-goog-quota-user"), ElementsAre(kQuotaUser));
@@ -49,11 +50,10 @@ void VerifyMetadataContext(rest_internal::RestContext& context) {
 }
 
 Options GetMetadataOptions() {
-  Options opts;
-  opts.set<UserProjectOption>(kUserProject);
-  opts.set<QuotaUserOption>(kQuotaUser);
-  opts.set<ServerTimeoutOption>(std::chrono::milliseconds(3141));
-  return opts;
+  return Options{}
+      .set<UserProjectOption>(kUserProject)
+      .set<QuotaUserOption>(kQuotaUser)
+      .set<ServerTimeoutOption>(std::chrono::milliseconds(3141));
 }
 
 TEST(JobMetadataTest, GetJob) {
@@ -74,8 +74,8 @@ TEST(JobMetadataTest, GetJob) {
   EXPECT_CALL(*mock_stub, GetJob)
       .WillOnce([&](rest_internal::RestContext&,
                     GetJobRequest const& request) -> StatusOr<GetJobResponse> {
-        EXPECT_TRUE(!request.project_id().empty());
-        EXPECT_TRUE(!request.job_id().empty());
+        EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+        EXPECT_THAT(request.job_id(), Not(IsEmpty()));
         BigQueryHttpResponse http_response;
         http_response.payload = kExpectedPayload;
         return GetJobResponse::BuildFromHttpResponse(std::move(http_response));
@@ -120,7 +120,7 @@ TEST(JobMetadataTest, ListJobs) {
       .WillOnce(
           [&](rest_internal::RestContext&,
               ListJobsRequest const& request) -> StatusOr<ListJobsResponse> {
-            EXPECT_TRUE(!request.project_id().empty());
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
             BigQueryHttpResponse http_response;
             http_response.payload = kExpectedPayload;
             return ListJobsResponse::BuildFromHttpResponse(
