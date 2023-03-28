@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include <iostream>
 
 namespace google {
 namespace cloud {
@@ -40,6 +42,17 @@ StatusOr<BigQueryHttpResponse> BigQueryHttpResponse::BuildFromRestResponse(
 
   response.payload = std::move(*payload);
   return response;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         BigQueryHttpResponse const& response) {
+  // Payload is not being printed as it may contain user sensitive PII data like
+  // email etc.
+  os << "BigQueryHttpResponse{Status_Code=" << response.http_status_code
+     << ", headers={"
+     << absl::StrJoin(response.http_headers, ", ", absl::PairFormatter(": "))
+     << "}";
+  return os << "}";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

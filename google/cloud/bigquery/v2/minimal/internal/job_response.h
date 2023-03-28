@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <iosfwd>
 
 namespace google {
 namespace cloud {
@@ -52,6 +53,14 @@ class ListJobsResponse {
 
   BigQueryHttpResponse http_response;
 };
+
+std::ostream& operator<<(std::ostream& os, Job const& job);
+std::ostream& operator<<(std::ostream& os,
+                         ListFormatJob const& list_format_job);
+std::ostream& operator<<(std::ostream& os,
+                         std::vector<ListFormatJob> const& jobs);
+std::ostream& operator<<(std::ostream& os, GetJobResponse const& response);
+std::ostream& operator<<(std::ostream& os, ListJobsResponse const& response);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
