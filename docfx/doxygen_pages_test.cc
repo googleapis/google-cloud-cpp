@@ -60,8 +60,11 @@ TEST(DoxygenPages, CommonPage) {
       </compounddef>
     </doxygen>)xml";
 
-  auto constexpr kExpected =
-      R"md(# Common Components for the Google Cloud C++ Client Libraries
+  auto constexpr kExpected = R"md(---
+uid: indexpage
+---
+
+# Common Components for the Google Cloud C++ Client Libraries
 
 
 ## Overview

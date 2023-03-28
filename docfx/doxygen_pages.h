@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
 
-#include "docfx/config.h"
 #include "docfx/toc_entry.h"
 #include <pugixml.hpp>
 #include <string>

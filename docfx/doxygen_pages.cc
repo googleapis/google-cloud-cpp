@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen_pages.h"
+#include "docfx/config.h"
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
 #include <algorithm>
@@ -88,8 +89,13 @@ std::string Page2Markdown(pugi::xml_node const& node) {
     throw std::runtime_error(std::move(os).str());
   }
   std::ostringstream os;
-  MarkdownContext ctx;
+  os << "---\n";
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  os << "uid: " << id << "\n";
+  os << "---\n\n";
   os << "# ";
+
+  MarkdownContext ctx;
   AppendTitle(os, ctx, node);
   os << "\n";
   for (auto const& child : node) {
