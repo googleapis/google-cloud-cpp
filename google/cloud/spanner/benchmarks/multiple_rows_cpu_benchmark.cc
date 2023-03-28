@@ -540,7 +540,7 @@ class ReadExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != 10; ++i) {
         grpc::ClientContext context;
-        spanner_internal::RouteToLeader(context);
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);
@@ -680,7 +680,7 @@ class SelectExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != ExperimentImpl<Traits>::kColumnCount; ++i) {
         grpc::ClientContext context;
-        spanner_internal::RouteToLeader(context);
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);
@@ -840,7 +840,7 @@ class UpdateExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != 10; ++i) {
         grpc::ClientContext context;
-        spanner_internal::RouteToLeader(context);
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);
@@ -1026,7 +1026,7 @@ class MutationExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != 10; ++i) {
         grpc::ClientContext context;
-        spanner_internal::RouteToLeader(context);
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);

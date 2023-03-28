@@ -397,7 +397,7 @@ Status SessionPool::CreateSessionsSync(
       google::cloud::Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               google::spanner::v1::BatchCreateSessionsRequest const& request) {
-        RouteToLeader(context);
+        RouteToLeader(context);  // always for BatchCreateSessions()
         return stub->BatchCreateSessions(context, request);
       },
       request, __func__);
@@ -457,7 +457,7 @@ SessionPool::AsyncBatchCreateSessions(
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::BatchCreateSessionsRequest const& request) {
-        RouteToLeader(*context);
+        RouteToLeader(*context);  // always for BatchCreateSessions()
         return stub->AsyncBatchCreateSessions(cq, std::move(context), request);
       },
       std::move(request), __func__);

@@ -531,7 +531,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 google::spanner::v1::PartitionReadRequest const& request) {
-          RouteToLeader(context);
+          RouteToLeader(context);  // always for PartitionRead()
           return stub->PartitionRead(context, request);
         },
         request, __func__);
@@ -841,7 +841,7 @@ ConnectionImpl::PartitionQueryImpl(
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 google::spanner::v1::PartitionQueryRequest const& request) {
-          RouteToLeader(context);
+          RouteToLeader(context);  // always for PartitionQuery()
           return stub->PartitionQuery(context, request);
         },
         request, __func__);
@@ -916,7 +916,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         Idempotency::kIdempotent,
         [&stub](grpc::ClientContext& context,
                 google::spanner::v1::ExecuteBatchDmlRequest const& request) {
-          RouteToLeader(context);
+          RouteToLeader(context);  // always for ExecuteBatchDml()
           return stub->ExecuteBatchDml(context, request);
         },
         request, __func__);
@@ -1040,7 +1040,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               google::spanner::v1::CommitRequest const& request) {
-        RouteToLeader(context);
+        RouteToLeader(context);  // always for Commit()
         return stub->Commit(context, request);
       },
       request, __func__);
@@ -1104,7 +1104,7 @@ Status ConnectionImpl::RollbackImpl(
       Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               google::spanner::v1::RollbackRequest const& request) {
-        RouteToLeader(context);
+        RouteToLeader(context);  // always for Rollback()
         return stub->Rollback(context, request);
       },
       request, __func__);
