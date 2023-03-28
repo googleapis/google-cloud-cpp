@@ -48,6 +48,14 @@ jobs:
     steps:
       - uses: 'actions/checkout@v3'
       - uses: 'bazelbuild/setup-bazelisk@v2'
+      - id: 'auth'
+        if: '!github.event.pull_request.head.repo.fork'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          create_credentials_file: 'true'
+          workload_identity_provider: 'projects/49427430084/locations/global/workloadIdentityPools/github-wif-pool/providers/github-wif-provider'
+          service_account: 'github-actions@cloud-cpp-identity-federation.iam.gserviceaccount.com'
       - name: dump machine info
         run: |
           printf "%10s %s\n" "host:" "$(date -u -R)"
@@ -69,7 +77,7 @@ jobs:
           df -h
       - name: run bazel fetch
         run: |
-          bazelisk fetch //...
+          bazelisk fetch --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }} //...
       - name: run bazel build
         run: |
-          bazelisk build //google/cloud/storage/...
+          bazelisk build --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }} //google/cloud/storage/...
