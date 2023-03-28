@@ -25,6 +25,7 @@ endif ()
 
 find_package(pugixml CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 
 include(EnableWerror)
 
@@ -57,7 +58,8 @@ add_library(
 google_cloud_cpp_add_common_options(docfx)
 target_include_directories(docfx PUBLIC "${PROJECT_SOURCE_DIR}")
 target_compile_features(docfx PUBLIC cxx_std_17)
-target_link_libraries(docfx PUBLIC pugixml::pugixml yaml-cpp)
+target_link_libraries(docfx PUBLIC pugixml::pugixml yaml-cpp
+                                   nlohmann_json::nlohmann_json)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
