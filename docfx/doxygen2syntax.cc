@@ -20,14 +20,12 @@ namespace docfx {
 namespace {
 
 void AppendLocation(YAML::Emitter& yaml, YamlContext const& ctx,
-                    pugi::xml_node const& node, char const* file_attribute,
-                    char const* line_attribute) {
-  auto const name = std::string_view{node.child("name").child_value()};
+                    pugi::xml_node const& node, char const* name_attribute) {
+  auto const name = std::string_view{node.child(name_attribute).child_value()};
   auto const location = node.child("location");
   if (name.empty() || !location) return;
-  auto const line =
-      std::string_view{location.attribute(line_attribute).as_string()};
-  auto const file = std::string{location.attribute(file_attribute).as_string()};
+  auto const line = std::string_view{location.attribute("line").as_string()};
+  auto const file = std::string{location.attribute("file").as_string()};
   if (line.empty() || file.empty()) return;
 
   auto const repo =
@@ -139,13 +137,20 @@ std::string FunctionSyntaxContent(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
+std::string ClassSyntaxContent(pugi::xml_node const& node) {
+  std::ostringstream os;
+  os << "// Found in #include <" << node.child_value("includes") << ">\n"
+     << "class " << node.child_value("compoundname") << " { ... };";
+  return std::move(os).str();
+}
+
 void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << EnumSyntaxContent(node);
-  AppendLocation(yaml, ctx, node, "file", "line");
+  AppendLocation(yaml, ctx, node, "name");
   yaml << YAML::EndMap;
 }
 
@@ -155,7 +160,7 @@ void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << TypedefSyntaxContent(node);
-  AppendLocation(yaml, ctx, node, "file", "line");
+  AppendLocation(yaml, ctx, node, "name");
   yaml << YAML::EndMap;
 }
 
@@ -184,7 +189,18 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
     }
     yaml << YAML::EndSeq;
   }
-  AppendLocation(yaml, ctx, node, "file", "line");
+  AppendLocation(yaml, ctx, node, "name");
+  yaml << YAML::EndMap;
+}
+
+// Generate the `syntax` element for a class.
+void AppendClassSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                       pugi::xml_node const& node) {
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << ClassSyntaxContent(node);
+  AppendLocation(yaml, ctx, node, "compoundname");
   yaml << YAML::EndMap;
 }
 

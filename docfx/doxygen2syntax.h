@@ -41,6 +41,9 @@ std::string TypedefSyntaxContent(pugi::xml_node const& node);
 // Generate the `syntax.content` element for a function.
 std::string FunctionSyntaxContent(pugi::xml_node const& node);
 
+// Generate the `syntax.content` element for a class.
+std::string ClassSyntaxContent(pugi::xml_node const& node);
+
 // Generate the `syntax` element for an enum.
 void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node);
@@ -52,6 +55,10 @@ void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 // Generate the `syntax` element for a function.
 void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                           pugi::xml_node const& node);
+
+// Generate the `syntax` element for a class.
+void AppendClassSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                       pugi::xml_node const& node);
 
 }  // namespace docfx
 
