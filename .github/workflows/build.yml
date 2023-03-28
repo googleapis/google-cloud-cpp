@@ -7,6 +7,11 @@ on:
   push:
     branches: [ 'main' ]
 
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: read
+
 jobs:
   # Compiles and runs unit tests with macOS and Bazel
   # TODO(coryan) - currently it is just testing the runner
