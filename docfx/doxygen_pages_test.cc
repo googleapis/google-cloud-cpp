@@ -60,8 +60,11 @@ TEST(DoxygenPages, CommonPage) {
       </compounddef>
     </doxygen>)xml";
 
-  auto constexpr kExpected =
-      R"md(# Common Components for the Google Cloud C++ Client Libraries
+  auto constexpr kExpected = R"md(---
+uid: indexpage
+---
+
+# Common Components for the Google Cloud C++ Client Libraries
 
 
 ## Overview
@@ -93,7 +96,8 @@ This library contains common components shared by all the Google Cloud C++ Clien
   doc.load_string(kXml);
   auto selected = doc.select_node("//*[@id='indexpage']");
   ASSERT_TRUE(selected);
-  auto const actual = Page2Markdown(selected.node());
+  auto const actual = Page2Markdown(
+      Config{{}, /*.library=*/"common", /*version=*/"4.2"}, selected.node());
   EXPECT_EQ(kExpected, actual);
 }
 

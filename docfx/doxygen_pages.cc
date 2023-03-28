@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen_pages.h"
+#include "docfx/config.h"
 #include "docfx/doxygen2markdown.h"
 #include "docfx/doxygen_errors.h"
 #include <algorithm>
@@ -78,7 +79,8 @@ namespace docfx {
 //   <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
 // </xsd:complexType>
 // clang-format on
-std::string Page2Markdown(pugi::xml_node const& node) {
+std::string Page2Markdown(Config const& /*config*/,
+                          pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "compounddef" ||
       std::string_view{node.attribute("kind").as_string()} != "page") {
     std::ostringstream os;
@@ -88,8 +90,13 @@ std::string Page2Markdown(pugi::xml_node const& node) {
     throw std::runtime_error(std::move(os).str());
   }
   std::ostringstream os;
-  MarkdownContext ctx;
+  os << "---\n";
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  os << "uid: " << id << "\n";
+  os << "---\n\n";
   os << "# ";
+
+  MarkdownContext ctx;
   AppendTitle(os, ctx, node);
   os << "\n";
   for (auto const& child : node) {

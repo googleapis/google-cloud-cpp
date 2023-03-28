@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
   for (auto const& i : doc.select_nodes("//*[@kind='page']")) {
     auto const& page = i.node();
     auto const filename = std::string{page.attribute("id").as_string()} + ".md";
-    std::ofstream(filename) << docfx::Page2Markdown(page);
+    std::ofstream(filename) << docfx::Page2Markdown(config, page);
   }
 
   return 0;
