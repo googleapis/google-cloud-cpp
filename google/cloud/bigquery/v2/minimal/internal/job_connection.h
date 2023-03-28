@@ -35,6 +35,7 @@ class BigQueryJobConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<GetJobResponse> GetJob(GetJobRequest const& request);
+  virtual StatusOr<ListJobsResponse> ListJobs(ListJobsRequest const& request);
 };
 
 std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(

@@ -30,6 +30,11 @@ StatusOr<GetJobResponse> BigQueryJobConnection::GetJob(GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<ListJobsResponse> BigQueryJobConnection::ListJobs(
+    ListJobsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<BigQueryJobConnection> MakeBigQueryJobConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, UnifiedCredentialsOptionList,

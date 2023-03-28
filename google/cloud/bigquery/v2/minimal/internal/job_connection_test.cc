@@ -32,6 +32,7 @@ using ::google::cloud::bigquery_v2_minimal_testing::MockBigQueryJobRestStub;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Return;
 
 std::shared_ptr<BigQueryJobConnection> CreateTestingConnection(
@@ -99,6 +100,65 @@ TEST(JobConnectionTest, GetJobSuccess) {
   EXPECT_EQ(result->job.configuration.query_config.query, "select 1;");
 }
 
+TEST(JobConnectionTest, ListJobsSuccess) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+
+  auto constexpr kExpectedPayload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "jobs": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "reference": {"project_id": "p123", "job_id": "j123"},
+                "state": "DONE",
+                "configuration": {
+                   "job_type": "QUERY",
+                   "query_config": {"query": "select 1;"}
+                },
+                "status": {"state": "DONE"},
+                "user_email": "user-email",
+                "principal_subject": "principal-subj"
+              }
+  ]})";
+
+  EXPECT_CALL(*mock, ListJobs)
+      .WillOnce(
+          [&](rest_internal::RestContext&,
+              ListJobsRequest const& request) -> StatusOr<ListJobsResponse> {
+            EXPECT_THAT(request.project_id(), Not(IsEmpty()));
+            BigQueryHttpResponse http_response;
+            http_response.payload = kExpectedPayload;
+            return ListJobsResponse::BuildFromHttpResponse(
+                std::move(http_response));
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+
+  ListJobsRequest request;
+  request.set_project_id("test-project-id");
+
+  auto list_jobs_response = conn->ListJobs(request);
+
+  ASSERT_STATUS_OK(list_jobs_response);
+  EXPECT_EQ(list_jobs_response->kind, "kind-1");
+  EXPECT_EQ(list_jobs_response->etag, "tag-1");
+  EXPECT_EQ(list_jobs_response->next_page_token, "npt-123");
+
+  auto const jobs = list_jobs_response->jobs;
+  ASSERT_EQ(jobs.size(), 1);
+  EXPECT_EQ(jobs[0].id, "1");
+  EXPECT_EQ(jobs[0].kind, "kind-2");
+  EXPECT_EQ(jobs[0].status.state, "DONE");
+  EXPECT_EQ(jobs[0].state, "DONE");
+  EXPECT_EQ(jobs[0].user_email, "user-email");
+  EXPECT_EQ(jobs[0].reference.project_id, "p123");
+  EXPECT_EQ(jobs[0].reference.job_id, "j123");
+  EXPECT_EQ(jobs[0].configuration.job_type, "QUERY");
+  EXPECT_EQ(jobs[0].configuration.query_config.query, "select 1;");
+}
+
 // Verify that permanent errors are reported immediately.
 TEST(JobConnectionTest, GetJobPermanentError) {
   auto mock = std::make_shared<MockBigQueryJobRestStub>();
@@ -108,6 +168,18 @@ TEST(JobConnectionTest, GetJobPermanentError) {
   auto conn = CreateTestingConnection(std::move(mock));
   GetJobRequest request;
   auto result = conn->GetJob(request);
+  EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
+                               HasSubstr("permission-denied")));
+}
+
+TEST(JobConnectionTest, ListJobsPermanentError) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, ListJobs)
+      .WillOnce(
+          Return(Status(StatusCode::kPermissionDenied, "permission-denied")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ListJobsRequest request;
+  auto result = conn->ListJobs(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied,
                                HasSubstr("permission-denied")));
 }
@@ -122,6 +194,19 @@ TEST(JobConnectionTest, GetJobTooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   GetJobRequest request;
   auto result = conn->GetJob(request);
+  EXPECT_THAT(result,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
+}
+
+TEST(JobConnectionTest, ListJobsTooManyTransients) {
+  auto mock = std::make_shared<MockBigQueryJobRestStub>();
+  EXPECT_CALL(*mock, ListJobs)
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Return(Status(StatusCode::kDeadlineExceeded, "try-again")));
+  auto conn = CreateTestingConnection(std::move(mock));
+  ListJobsRequest request;
+  auto result = conn->ListJobs(request);
   EXPECT_THAT(result,
               StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("try-again")));
 }
