@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/session_pool.h"
+#include "google/cloud/spanner/internal/route_to_leader.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/options.h"
@@ -396,6 +397,7 @@ Status SessionPool::CreateSessionsSync(
       google::cloud::Idempotency::kIdempotent,
       [&stub](grpc::ClientContext& context,
               google::spanner::v1::BatchCreateSessionsRequest const& request) {
+        RouteToLeader(context);  // always for BatchCreateSessions()
         return stub->BatchCreateSessions(context, request);
       },
       request, __func__);
@@ -455,6 +457,7 @@ SessionPool::AsyncBatchCreateSessions(
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::BatchCreateSessionsRequest const& request) {
+        RouteToLeader(*context);  // always for BatchCreateSessions()
         return stub->AsyncBatchCreateSessions(cq, std::move(context), request);
       },
       std::move(request), __func__);
@@ -491,6 +494,7 @@ SessionPool::AsyncRefreshSession(CompletionQueue& cq,
       Idempotency::kIdempotent, cq,
       [stub](CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
              google::spanner::v1::ExecuteSqlRequest const& request) {
+        // Read-only transaction, so no route-to-leader.
         return stub->AsyncExecuteSql(cq, std::move(context), request);
       },
       std::move(request), __func__);

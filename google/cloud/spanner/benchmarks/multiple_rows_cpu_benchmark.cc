@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/internal/defaults.h"
+#include "google/cloud/spanner/internal/route_to_leader.h"
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
@@ -539,6 +540,7 @@ class ReadExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != 10; ++i) {
         grpc::ClientContext context;
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);
@@ -678,6 +680,7 @@ class SelectExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != ExperimentImpl<Traits>::kColumnCount; ++i) {
         grpc::ClientContext context;
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);
@@ -837,6 +840,7 @@ class UpdateExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != 10; ++i) {
         grpc::ClientContext context;
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);
@@ -1022,6 +1026,7 @@ class MutationExperiment : public BasicExperiment<Traits> {
       Status last_status;
       for (int i = 0; i != 10; ++i) {
         grpc::ClientContext context;
+        spanner_internal::RouteToLeader(context);  // always for CreateSession
         google::spanner::v1::CreateSessionRequest request{};
         request.set_database(database.FullName());
         auto response = stub->CreateSession(context, request);
