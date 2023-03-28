@@ -65,6 +65,15 @@ class DiscoveryTypeVertex {
   static StatusOr<TypeInfo> DetermineTypeAndSynthesis(
       nlohmann::json const& v, std::string const& field_name);
 
+  // Formats the properties of the json into proto message fields.
+  StatusOr<std::vector<std::string>> FormatProperties(
+      std::string const& message_name, nlohmann::json const& json,
+      int indent_level) const;
+
+  StatusOr<std::string> FormatMessage(std::string const& name,
+                                      nlohmann::json const& json,
+                                      int indent_level) const;
+
   // Formats any field options as indicated by the field_json.
   static std::string FormatFieldOptions(std::string const& field_name,
                                         nlohmann::json const& field_json);
@@ -74,6 +83,9 @@ class DiscoveryTypeVertex {
                                       std::string const& field_name,
                                       std::string const& field_type,
                                       int field_number);
+
+  // Emits the protobuf message definition for this type.
+  StatusOr<std::string> JsonToProtobufMessage() const;
 
   std::string DebugString() const;
 
