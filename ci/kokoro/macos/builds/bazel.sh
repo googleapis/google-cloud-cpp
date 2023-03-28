@@ -48,15 +48,6 @@ if [[ -r "${TEST_KEY_FILE_JSON}" ]]; then
   io::log "Using bazel remote cache: ${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
   bazel_args+=(
     "--remote_cache=${BAZEL_CACHE}/macos/${BUILD_NAME:-}"
-    # Reduce the timeout for the remote cache from the 60s default:
-    #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
-    # If the build machine has network problems we would rather build locally
-    # over blocking the build for 60s. When adjusting this parameter, keep in
-    # mind that:
-    # - Some of the objects in the cache in the ~60MiB range.
-    # - Without tuning uploads run in the 50 MiB/s range, and downloads in
-    #   the 150 MiB/s range.
-    "--remote_timeout=5"
   )
   bazel_args+=("--google_credentials=${TEST_KEY_FILE_JSON}")
   # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
