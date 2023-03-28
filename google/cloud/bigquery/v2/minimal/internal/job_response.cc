@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
 #include "google/cloud/internal/make_status.h"
+#include <iostream>
 
 namespace google {
 namespace cloud {
@@ -96,6 +97,54 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
   }
 
   return result;
+}
+
+std::ostream& operator<<(std::ostream& os, Job const& job) {
+  os << "Job{etag=" << job.etag << ", kind=" << job.kind << ", id=" << job.id
+     << ", job_configuration={job_type=" << job.configuration.job_type
+     << ", query=" << job.configuration.query_config.query << "}"
+     << ", job_reference={"
+     << "job_id=" << job.reference.job_id
+     << ", location=" << job.reference.location
+     << ", project_id=" << job.reference.project_id << "}";
+  os << ", job_status=" << job.status.state
+     << ", error_result=" << job.status.error_result.message << "}";
+  return os;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         ListFormatJob const& list_format_job) {
+  os << "Job{id=" << list_format_job.id << ", kind=" << list_format_job.kind
+     << ", state=" << list_format_job.state << ", job_configuration={job_type="
+     << list_format_job.configuration.job_type
+     << ", query=" << list_format_job.configuration.query_config.query << "}"
+     << ", job_reference={"
+     << "job_id=" << list_format_job.reference.job_id
+     << ", location=" << list_format_job.reference.location
+     << ", project_id=" << list_format_job.reference.project_id << "}";
+  os << ", job_status=" << list_format_job.status.state
+     << ", error_result=" << list_format_job.error_result.message << "}";
+  return os;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         std::vector<ListFormatJob> const& jobs) {
+  for (auto const& j : jobs) {
+    os << j << ",";
+  }
+  return os;
+}
+
+std::ostream& operator<<(std::ostream& os, GetJobResponse const& response) {
+  os << "GetJobResponse{http_response={" << response.http_response << "}";
+  os << ", job={" << response.job << "}";
+  return os;
+}
+
+std::ostream& operator<<(std::ostream& os, ListJobsResponse const& response) {
+  os << "ListJobsResponse{http_response={" << response.http_response << "}";
+  os << ", jobs={" << response.jobs << "}";
+  return os;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
