@@ -39,6 +39,17 @@ StatusOr<GetJobResponse> BigQueryJobRestConnectionImpl::GetJob(
       request, __func__);
 }
 
+StatusOr<ListJobsResponse> BigQueryJobRestConnectionImpl::ListJobs(
+    ListJobsRequest const& request) {
+  return rest_internal::RestRetryLoop(
+      retry_policy(), backoff_policy(), idempotency_policy()->ListJobs(request),
+      [this](rest_internal::RestContext& rest_context,
+             ListJobsRequest const& request) {
+        return stub_->ListJobs(rest_context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
