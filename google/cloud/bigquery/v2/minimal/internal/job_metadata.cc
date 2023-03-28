@@ -35,22 +35,13 @@ BigQueryJobMetadata::BigQueryJobMetadata(
 
 StatusOr<GetJobResponse> BigQueryJobMetadata::GetJob(
     rest_internal::RestContext& context, GetJobRequest const& request) {
-  SetMetadata(context,
-              {"project_id=" + request.project_id(),
-               "job_id=" + request.job_id(), "location=" + request.location()});
+  SetMetadata(context);
   return child_->GetJob(context, request);
 }
 
 StatusOr<ListJobsResponse> BigQueryJobMetadata::ListJobs(
     rest_internal::RestContext& context, ListJobsRequest const& request) {
-  std::string all_users = request.all_users() ? "true" : "false";
-  SetMetadata(context,
-              {"project_id=" + request.project_id(), "all_users=" + all_users,
-               "max_results=" + std::to_string(request.max_results()),
-               "page_token=" + request.page_token(),
-               "projection=" + request.projection().value,
-               "state_filter=" + request.state_filter().value,
-               "parent_job_id=" + request.parent_job_id()});
+  SetMetadata(context);
   return child_->ListJobs(context, request);
 }
 
