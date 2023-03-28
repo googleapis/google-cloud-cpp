@@ -15,12 +15,14 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -200,6 +202,77 @@ TEST(ListJobsResponseTest, InvalidListFormatJob) {
   EXPECT_THAT(response,
               StatusIs(StatusCode::kInternal,
                        HasSubstr("Not a valid Json ListFormatJob object")));
+}
+
+TEST(GetJobResponseTest, OutputStream) {
+  BigQueryHttpResponse http_response;
+  http_response.http_status_code = HttpStatusCode::kOk;
+  http_response.http_headers.insert({{"header1", "value1"}});
+  http_response.payload =
+      R"({"kind": "jkind",
+          "etag": "jtag",
+          "id": "j123",
+          "self_link": "jselfLink",
+          "user_email": "juserEmail",
+          "status": {"state": "DONE"},
+          "reference": {"project_id": "p123", "job_id": "j123"},
+          "configuration": {
+            "job_type": "QUERY",
+            "query_config": {"query": "select 1;"}
+          }})";
+  auto const response = GetJobResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  std::string expected =
+      "GetJobResponse{"
+      "http_response={BigQueryHttpResponse{"
+      "Status_Code=200, headers={header1: value1}}}, "
+      "job={Job{etag=jtag, kind=jkind, id=j123, "
+      "job_configuration={job_type=QUERY, query=select 1;}, "
+      "job_reference={job_id=j123, location=, project_id=p123}, "
+      "job_status=DONE, error_result=}}";
+  std::ostringstream os;
+  os << *response;
+  EXPECT_EQ(expected, os.str());
+}
+
+TEST(ListJobsResponseTest, OutputStream) {
+  BigQueryHttpResponse http_response;
+  http_response.http_status_code = HttpStatusCode::kOk;
+  http_response.http_headers.insert({{"header1", "value1"}});
+  http_response.payload =
+      R"({"etag": "tag-1",
+          "kind": "kind-1",
+          "next_page_token": "npt-123",
+          "jobs": [
+              {
+                "id": "1",
+                "kind": "kind-2",
+                "reference": {"project_id": "p123", "job_id": "j123"},
+                "state": "DONE",
+                "configuration": {
+                   "job_type": "QUERY",
+                   "query_config": {"query": "select 1;"}
+                },
+                "status": {"state": "DONE"},
+                "user_email": "user-email",
+                "principal_subject": "principal-subj"
+              }
+  ]})";
+  auto const response = ListJobsResponse::BuildFromHttpResponse(http_response);
+  ASSERT_STATUS_OK(response);
+
+  std::string expected =
+      "ListJobsResponse{"
+      "http_response={BigQueryHttpResponse{"
+      "Status_Code=200, headers={header1: value1}}}, "
+      "jobs={Job{id=1, kind=kind-2, state=DONE, "
+      "job_configuration={job_type=QUERY, query=select 1;}, "
+      "job_reference={job_id=j123, location=, project_id=p123}, "
+      "job_status=DONE, error_result=},}";
+  std::ostringstream os;
+  os << *response;
+  EXPECT_EQ(expected, os.str());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

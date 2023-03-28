@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -91,6 +92,19 @@ TEST(BigQueryHttpResponseTest, NullPtr) {
   EXPECT_THAT(http_response,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("RestResponse argument passed in is null")));
+}
+
+TEST(BigQueryHttpResponseTest, OutputStream) {
+  std::string payload = "some-payload";
+  BigQueryHttpResponse response;
+  response.http_status_code = HttpStatusCode::kOk;
+  response.http_headers.insert({{"header1", "value1"}});
+  response.payload = payload;
+  std::ostringstream os;
+  std::string expected =
+      R"(BigQueryHttpResponse{Status_Code=200, headers={header1: value1}})";
+  os << response;
+  EXPECT_EQ(expected, os.str());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
