@@ -14,12 +14,11 @@
 # limitations under the License.
 # ~~~
 
-set(CMAKE_CXX_STANDARD 17)
-
 find_package(CURL REQUIRED)
 find_package(fmt REQUIRED)
 find_package(functions_framework_cpp REQUIRED)
 
 add_library(functions_framework_cpp_function function.cc)
+target_compile_features(functions_framework_cpp_function PUBLIC cxx_std_17)
 target_link_libraries(functions_framework_cpp_function
                       functions-framework-cpp::framework fmt::fmt CURL::libcurl)

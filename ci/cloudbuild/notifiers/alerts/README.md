@@ -14,15 +14,6 @@ docker run hello-world
 # Output: Hello from Docker! and then some more informational messages.
 ```
 
-Verify the [pack tool][pack-install] is functional on our workstation. These
-instructions were tested with `v0.17.0`, although they should work with newer
-versions. Some commands may not work with older versions.
-
-```shell
-pack version
-# Output: a version number, e.g., 0.17.0+git-d9cb4e7.build-2045
-```
-
 ## Build and deploy
 
 The steps to build and deploy this notifier are in the `deploy.sh` script. You
@@ -32,13 +23,17 @@ can read that for details or just run it.
 deploy.sh
 ```
 
-## One-time setup: Set the `GCB_BUILD_ALERT_WEBHOOK` secret
+## One-time setup: Set the `GCB_*BUILD_ALERT_WEBHOOK` secrets
 
 Note: This command only needs to be run once. It is here in case we ever move
 the build to a different project.
 
 Go to Secret Manager and create a secret named `GCB_BUILD_ALERT_WEBHOOK`. Set
 its value to the Webhook URL for the Google Chat room of your choice.
+
+Go to Secret Manager and create a secret named
+`GCB_FRIENDS_BUILD_ALERT_WEBHOOK`. Set its value to the Webhook URL for the
+Google Chat room of your choice.
 
 Then go to Cloud Run in the UI and edit this deployment. There will be a
 "Variables & Secrets" tab. On there you can configure this secret to be
@@ -66,4 +61,3 @@ gcloud beta eventarc triggers create send-build-alerts-trigger \
 ```
 
 [docker]: https://docker.com/
-[pack-install]: https://buildpacks.io/docs/install-pack/

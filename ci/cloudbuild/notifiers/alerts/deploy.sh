@@ -24,13 +24,8 @@ readonly GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
 readonly IMAGE="gcr.io/${GOOGLE_CLOUD_PROJECT}/send-build-alerts"
 
 io::log_h1 "Building code with pack"
-pack build --builder gcr.io/buildpacks/builder:latest \
-  --env "GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent" \
-  --env "GOOGLE_FUNCTION_TARGET=SendBuildAlerts" \
-  --path "function" "${IMAGE}"
-
-io::log_h1 "Pushing image to gcr"
-docker push "${IMAGE}:latest"
+gcloud builds submit --project="${GOOGLE_CLOUD_PROJECT}" \
+  --pack="image=${IMAGE},env=GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent,env=GOOGLE_FUNCTION_TARGET=SendBuildAlerts"
 
 io::log_h1 "Deploying to Cloud Run"
 gcloud run deploy send-build-alerts \
@@ -38,4 +33,5 @@ gcloud run deploy send-build-alerts \
   --image="${IMAGE}:latest" \
   --region="us-central1" \
   --platform="managed" \
+  --set-secrets=GCB_BUILD_ALERT_WEBHOOK=GCB_BUILD_ALERT_WEBHOOK:latest,GCB_FRIENDS_BUILD_ALERT_WEBHOOK=GCB_FRIENDS_BUILD_ALERT_WEBHOOK:latest \
   --no-allow-unauthenticated

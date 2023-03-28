@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <google/cloud/functions/cloud_event.h>
+#include <google/cloud/functions/function.h>
 #include <cppcodec/base64_rfc4648.hpp>
 #include <curl/curl.h>
 #include <fmt/core.h>
@@ -22,6 +23,8 @@
 #include <stdexcept>
 
 namespace {
+
+namespace gcf = google::cloud::functions;
 
 struct BuildStatus {
   nlohmann::json build;
@@ -72,11 +75,15 @@ void HttpPost(std::string const& url, std::string const& data) {
   if (code != CURLE_OK) throw std::runtime_error(curl_easy_strerror(code));
 }
 
-}  // namespace
-
-void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
+void Impl(google::cloud::functions::CloudEvent event) {
   static auto const webhook = [] {
     std::string const name = "GCB_BUILD_ALERT_WEBHOOK";
+    auto const* env = std::getenv(name.c_str());
+    if (env) return std::string{env};
+    throw std::runtime_error("Missing environment variable: " + name);
+  }();
+  static auto const webhook_friends = [] {
+    std::string const name = "GCB_FRIENDS_BUILD_ALERT_WEBHOOK";
     auto const* env = std::getenv(name.c_str());
     if (env) return std::string{env};
     throw std::runtime_error("Missing environment variable: " + name);
@@ -95,4 +102,14 @@ void SendBuildAlerts(google::cloud::functions::CloudEvent event) {
   auto const chat = MakeChatPayload(bs);
   std::cout << nlohmann::json{{"severity", "INFO"}, {"chat", chat}} << "\n";
   HttpPost(webhook, chat.dump());
+  std::cout << "bs = " << bs.build.dump() << std::endl;
+  auto const tags = bs.build.value("tags", std::vector<std::string>{});
+  auto const loc = std::find(tags.begin(), tags.end(), "friends");
+  if (loc != tags.end()) HttpPost(webhook_friends, chat.dump());
+}
+
+}  // namespace
+
+google::cloud::functions::Function SendBuildAlerts() {
+  return gcf::MakeFunction([](gcf::CloudEvent e) { Impl(std::move(e)); });
 }
