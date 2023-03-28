@@ -511,7 +511,7 @@ TEST(DiscoveryTypeVertexTest, JsonToProtobufArrayTypes) {
   EXPECT_THAT(*result, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryTypeVertex, JsonToProtobufMessage) {
+TEST(DiscoveryTypeVertex, JsonToProtobufMessageNoDescription) {
   auto constexpr kSchemaJson = R"""(
 {
   "type": "object",
@@ -602,6 +602,37 @@ TEST(DiscoveryTypeVertex, JsonToProtobufMessage) {
 
   // Description for stringField.
   optional string string_field = 6;
+}
+)""";
+
+  auto json = nlohmann::json::parse(kSchemaJson, nullptr, false);
+  ASSERT_TRUE(json.is_object());
+  DiscoveryTypeVertex t("TestSchema", json);
+
+  auto result = t.JsonToProtobufMessage();
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, Eq(kExpectedProto));
+}
+
+TEST(DiscoveryTypeVertex, JsonToProtobufMessageWithDescription) {
+  auto constexpr kSchemaJson = R"""(
+{
+  "description": "Description of the message.",
+  "type": "object",
+  "id": "TestSchema",
+  "properties": {
+    "stringField": {
+      "type": "string",
+      "description": "Description for stringField."
+    }
+  }
+}
+)""";
+
+  auto constexpr kExpectedProto = R"""(// Description of the message.
+message TestSchema {
+  // Description for stringField.
+  optional string string_field = 1;
 }
 )""";
 

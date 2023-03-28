@@ -162,7 +162,7 @@ StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
   }
   std::string indent(indent_level * 2, ' ');
   auto lines = FormatProperties(name, json, indent_level + 1);
-  if (!lines) return lines.status();
+  if (!lines) return std::move(lines).status();
   return absl::StrCat(indent, absl::StrFormat("message %s {\n", name),
                       absl::StrJoin(*lines, "\n\n"), "\n", indent, "}");
 }
@@ -182,14 +182,14 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
     auto const& v = p.value();
     std::string field_name = v.value("id", p.key());
     auto type_and_synthesize = DetermineTypeAndSynthesis(v, field_name);
-    if (!type_and_synthesize) return type_and_synthesize.status();
+    if (!type_and_synthesize) return std::move(type_and_synthesize).status();
 
     std::string type = type_and_synthesize->name;
-    if (type_and_synthesize->properties != nullptr) {
+    if (type_and_synthesize->properties) {
       auto result =
           FormatMessage(type, *type_and_synthesize->properties, indent_level);
-      if (!result) return result.status();
-      text.push_back(*result);
+      if (!result) return std::move(result).status();
+      text.push_back(*std::move(result));
     }
 
     std::string description;
@@ -218,8 +218,8 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
     field_name = CamelCaseToSnakeCase(field_name);
     auto field_number_status =
         GetFieldNumber(message_name, field_name, type, field_number);
-    if (!field_number_status) return field_number_status.status();
-    field_number = *field_number_status;
+    if (!field_number_status) return std::move(field_number_status).status();
+    field_number = *std::move(field_number_status);
     if (type_and_synthesize->is_map) {
       type = absl::StrFormat("map<string, %s>", type);
     }
@@ -276,7 +276,7 @@ StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage() const {
         "\n");
   }
   auto message = FormatMessage(name_, json_, indent_level);
-  if (!message) return message.status();
+  if (!message) return std::move(message).status();
   absl::StrAppend(&proto, *message, "\n");
   return proto;
 }
