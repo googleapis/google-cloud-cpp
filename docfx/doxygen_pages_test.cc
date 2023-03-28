@@ -96,8 +96,7 @@ This library contains common components shared by all the Google Cloud C++ Clien
   doc.load_string(kXml);
   auto selected = doc.select_node("//*[@id='indexpage']");
   ASSERT_TRUE(selected);
-  auto const actual = Page2Markdown(
-      Config{{}, /*.library=*/"common", /*version=*/"4.2"}, selected.node());
+  auto const actual = Page2Markdown(selected.node());
   EXPECT_EQ(kExpected, actual);
 }
 

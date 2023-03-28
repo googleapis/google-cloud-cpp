@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN_PAGES_H
 
-#include "docfx/config.h"
 #include "docfx/toc_entry.h"
 #include <pugixml.hpp>
 #include <string>
@@ -28,7 +27,7 @@ namespace docfx {
  *
  * This creates the root MarkdownContext, so no need to consume it.
  */
-std::string Page2Markdown(Config const& config, pugi::xml_node const& node);
+std::string Page2Markdown(pugi::xml_node const& node);
 
 // Get the table of contents for pages.
 std::vector<TocEntry> PagesToc(pugi::xml_document const& doc);

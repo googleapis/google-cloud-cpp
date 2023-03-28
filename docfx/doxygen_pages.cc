@@ -79,8 +79,7 @@ namespace docfx {
 //   <xsd:attribute name="abstract" type="DoxBool" use="optional"/>
 // </xsd:complexType>
 // clang-format on
-std::string Page2Markdown(Config const& /*config*/,
-                          pugi::xml_node const& node) {
+std::string Page2Markdown(pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "compounddef" ||
       std::string_view{node.attribute("kind").as_string()} != "page") {
     std::ostringstream os;
