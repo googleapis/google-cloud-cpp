@@ -58,6 +58,7 @@ jobs:
           service_account: 'github-actions@cloud-cpp-identity-federation.iam.gserviceaccount.com'
       - name: dump machine info
         run: |
+          bazelisk --batch version >/dev/null 2>&1
           printf "%10s %s\n" "host:" "$(date -u -R)"
           printf "%10s %s\n" "kernel:" "$(uname -v)"
           printf "%10s %s\n" "os:" "$(sw_vers | xargs)"
@@ -76,12 +77,16 @@ jobs:
           printf "%10s %s\n" "=========="
           df -h
       - name: run bazel fetch
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: "${{ steps.auth.outputs.credentials_file_path }}"
         run: |
+          args=(
+            --google_credentials="${{ steps.auth.outputs.credentials_file_path }}"
+            --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }}
+          )
           bazelisk fetch --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }} //...
       - name: run bazel build
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: "${{ steps.auth.outputs.credentials_file_path }}"
         run: |
-          bazelisk build --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }} //google/cloud/storage/...
+          args=(
+            --google_credentials="${{ steps.auth.outputs.credentials_file_path }}"
+            --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }}
+          )
+          bazelisk build "${args[@]}" //google/cloud/storage/...
