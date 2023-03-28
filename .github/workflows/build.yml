@@ -7,11 +7,6 @@ on:
   push:
     branches: [ 'main' ]
 
-permissions:
-  id-token: write
-  contents: read
-  pull-requests: read
-
 jobs:
   # Compiles and runs unit tests with macOS and Bazel
   # TODO(coryan) - currently it is just testing the runner
@@ -22,6 +17,7 @@ jobs:
       - uses: 'bazelbuild/setup-bazelisk@v2'
       - name: dump machine info
         run: |
+          bazelisk --batch version >/dev/null 2>&1
           printf "%10s %s\n" "host:" "$(date -u -R)"
           printf "%10s %s\n" "kernel:" "$(uname -v)"
           printf "%10s %s\n" "os:" "$(sw_vers | xargs)"
@@ -39,17 +35,14 @@ jobs:
           du -sh
           printf "%10s %s\n" "=========="
           df -h
-      - name: run bazel fetch
-        run: |
-          bazelisk fetch //...
-      - name: run bazel build
-        run: |
-          bazelisk build //google/cloud/storage/...
 
   # Compiles and runs unit tests with macOS and Bazel
   # TODO(coryan) - currently it is just testing the XL runner
   macos-bazel-xl:
     runs-on: 'macos-12-xl'
+    permissions:
+      contents: 'read'
+      id-token: 'write'
     steps:
       - uses: 'actions/checkout@v3'
       - uses: 'bazelbuild/setup-bazelisk@v2'
@@ -87,7 +80,7 @@ jobs:
             --google_credentials="${{ steps.auth.outputs.credentials_file_path }}"
             --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }}
           )
-          bazelisk fetch --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }} //...
+          bazelisk fetch "${args[@]}" //...
       - name: run bazel build
         run: |
           args=(
