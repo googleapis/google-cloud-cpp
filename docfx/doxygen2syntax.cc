@@ -118,7 +118,7 @@ std::string FunctionSyntaxContent(pugi::xml_node const& node) {
       os << sep << LinkedTextType(param.child("type"));
       auto const defval = param.child("defval");
       if (defval) {
-        os << " = " << LinkedTextType(param.child("defval"));
+        os << " = " << LinkedTextType(defval);
       }
       sep = std::string_view{",\n    "};
     }
