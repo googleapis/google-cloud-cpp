@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -68,6 +69,25 @@ StateFilter StateFilter::Done() {
   StateFilter state_filter;
   state_filter.value = "DONE";
   return state_filter;
+}
+
+std::string GetJobRequest::DebugString(TracingOptions const& options) const {
+  std::string out;
+  absl::StrAppend(&out, "GetJobRequest{project_id=", project_id_,
+                  ", job_id=", job_id_, ", location=", location_, "}");
+  return internal::DebugString(out, options);
+}
+
+std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
+  std::string out;
+  std::string all_users = all_users_ ? "true" : "false";
+  absl::StrAppend(&out, "ListJobsRequest{project_id=", project_id_,
+                  ", all_users=", all_users, ", max_results=", max_results_,
+                  ", page_token=", page_token_,
+                  ", projection=", projection_.value,
+                  ", state_filter=", state_filter_.value,
+                  ", parent_job_id=", parent_job_id_, "}");
+  return internal::DebugString(out, options);
 }
 
 ListJobsRequest::ListJobsRequest(std::string project_id)

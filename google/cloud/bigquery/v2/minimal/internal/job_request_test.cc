@@ -177,6 +177,32 @@ TEST(ListJobsRequestTest, OutputStream) {
   EXPECT_EQ(expected, os.str());
 }
 
+TEST(GetJobRequest, DebugString) {
+  GetJobRequest request("test-project-id", "test-job-id");
+  request.set_location("test-location");
+  std::string expected = absl::StrCat(
+      "GetJobRequest{project_id=", request.project_id(),
+      ", job_id=", request.job_id(), ", location=", request.location(), "}");
+
+  EXPECT_EQ(expected, request.DebugString(TracingOptions{}.SetOptions(
+                          "truncate_string_field_longer_than=1024")));
+}
+
+TEST(ListJobsRequestTest, DebugString) {
+  auto const request = GetListJobsRequest();
+  std::string all_users = request.all_users() ? "true" : "false";
+  std::string expected = absl::StrCat(
+      "ListJobsRequest{project_id=", request.project_id(),
+      ", all_users=", all_users, ", max_results=", request.max_results(),
+      ", page_token=", request.page_token(),
+      ", projection=", request.projection().value,
+      ", state_filter=", request.state_filter().value,
+      ", parent_job_id=", request.parent_job_id(), "}");
+
+  EXPECT_EQ(expected, request.DebugString(TracingOptions{}.SetOptions(
+                          "truncate_string_field_longer_than=1024")));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud
