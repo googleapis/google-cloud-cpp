@@ -10,7 +10,7 @@ on:
 jobs:
   # Compiles and runs unit tests with macOS and Bazel
   # TODO(coryan) - currently it is just testing the XL runner
-  macos-bazel-xl:
+  bazel:
     strategy:
       matrix:
         runner: [macos-12-xl, macos-12]
@@ -54,9 +54,9 @@ jobs:
         run: |
           args=(
           )
-          echo bazelisk fetch "${args[@]}" //...
+          bazelisk fetch "${args[@]}" //... || true
       - name: run bazel build
         run: |
           args=(
           )
-          echo bazelisk build "${args[@]}" //google/cloud/storage/...
+          bazelisk build "${args[@]}" //google/cloud/storage/...
