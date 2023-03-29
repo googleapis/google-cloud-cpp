@@ -852,7 +852,6 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [cmake-download-link]: https://cmake.org/download/
-[bazel-grpc-macos-bug]: https://github.com/bazelbuild/bazel/issues/4341
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
