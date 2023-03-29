@@ -94,7 +94,7 @@ TEST(BigQueryHttpResponseTest, NullPtr) {
                        HasSubstr("RestResponse argument passed in is null")));
 }
 
-TEST(BigQueryHttpResponseTest, OutputStream) {
+TEST(BigQueryHttpResponseTest, DebugString) {
   std::string payload = "some-payload";
   BigQueryHttpResponse response;
   response.http_status_code = HttpStatusCode::kOk;
@@ -103,8 +103,7 @@ TEST(BigQueryHttpResponseTest, OutputStream) {
   std::ostringstream os;
   std::string expected =
       R"(BigQueryHttpResponse{Status_Code=200, headers={header1: value1}})";
-  os << response;
-  EXPECT_EQ(expected, os.str());
+  EXPECT_EQ(expected, response.DebugString(TracingOptions{}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
