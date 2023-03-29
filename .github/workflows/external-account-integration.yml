@@ -3,7 +3,6 @@ name: "External Account Integration"
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
 on:
-  pull_request:
   push:
     branches: [ 'main' ]
 
