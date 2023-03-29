@@ -74,17 +74,19 @@ jobs:
           du -sh
           printf "%10s %s\n" "=========="
           df -h
+          printf "%10s %s\n" "=========="
+          printenv
       - name: run bazel fetch
         run: |
           args=(
             --google_credentials="${{ steps.auth.outputs.credentials_file_path }}"
             --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }}
           )
-          bazelisk fetch "${args[@]}" //...
+          echo bazelisk fetch "${args[@]}" //...
       - name: run bazel build
         run: |
           args=(
             --google_credentials="${{ steps.auth.outputs.credentials_file_path }}"
             --remote_cache=https://storage.googleapis.com/cloud-cpp-gha-cache/bazel/${{ github.job }}
           )
-          bazelisk build "${args[@]}" //google/cloud/storage/...
+          echo bazelisk build "${args[@]}" //google/cloud/storage/...
