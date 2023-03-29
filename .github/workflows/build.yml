@@ -12,8 +12,8 @@ jobs:
   # TODO(coryan) - currently it is just testing the XL runner
   macos-bazel-xl:
     strategy:
-    matrix:
-      runner: [macos-12-xl, macos-12]
+      matrix:
+        runner: [macos-12-xl, macos-12]
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: 'read'
