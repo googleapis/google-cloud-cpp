@@ -102,7 +102,6 @@ void Impl(google::cloud::functions::CloudEvent event) {
   auto const chat = MakeChatPayload(bs);
   std::cout << nlohmann::json{{"severity", "INFO"}, {"chat", chat}} << "\n";
   HttpPost(webhook, chat.dump());
-  std::cout << "bs = " << bs.build.dump() << std::endl;
   auto const tags = bs.build.value("tags", std::vector<std::string>{});
   auto const loc = std::find(tags.begin(), tags.end(), "friends");
   if (loc != tags.end()) HttpPost(webhook_friends, chat.dump());
