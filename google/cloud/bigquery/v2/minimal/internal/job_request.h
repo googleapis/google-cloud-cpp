@@ -18,6 +18,7 @@
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <ostream>
@@ -62,6 +63,8 @@ class GetJobRequest {
   GetJobRequest&& set_location(std::string location) && {
     return std::move(set_location(std::move(location)));
   }
+
+  std::string DebugString(TracingOptions const& options) const;
 
  private:
   std::string project_id_;
@@ -178,6 +181,8 @@ class ListJobsRequest {
   ListJobsRequest&& set_parent_job_id(std::string parent_job_id) && {
     return std::move(set_parent_job_id(std::move(parent_job_id)));
   }
+
+  std::string DebugString(TracingOptions const& options) const;
 
   // Members
  private:
