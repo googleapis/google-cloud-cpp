@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <iosfwd>
 
@@ -32,13 +33,12 @@ class BigQueryHttpResponse {
   static StatusOr<BigQueryHttpResponse> BuildFromRestResponse(
       std::unique_ptr<rest_internal::RestResponse> rest_response);
 
+  std::string DebugString(TracingOptions const& options) const;
+
   rest_internal::HttpStatusCode http_status_code;
   std::multimap<std::string, std::string> http_headers;
   std::string payload;
 };
-
-std::ostream& operator<<(std::ostream& os,
-                         BigQueryHttpResponse const& response);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

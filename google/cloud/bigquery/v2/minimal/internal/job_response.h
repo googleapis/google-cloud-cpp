@@ -18,6 +18,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/bigquery_http_response.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <iosfwd>
 
@@ -34,6 +35,8 @@ class GetJobResponse {
   static StatusOr<GetJobResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
+  std::string DebugString(TracingOptions const& options) const;
+
   Job job;
   BigQueryHttpResponse http_response;
 };
@@ -46,6 +49,8 @@ class ListJobsResponse {
   static StatusOr<ListJobsResponse> BuildFromHttpResponse(
       BigQueryHttpResponse const& http_response);
 
+  std::string DebugString(TracingOptions const& options) const;
+
   std::vector<ListFormatJob> jobs;
   std::string next_page_token;
   std::string kind;
@@ -53,14 +58,6 @@ class ListJobsResponse {
 
   BigQueryHttpResponse http_response;
 };
-
-std::ostream& operator<<(std::ostream& os, Job const& job);
-std::ostream& operator<<(std::ostream& os,
-                         ListFormatJob const& list_format_job);
-std::ostream& operator<<(std::ostream& os,
-                         std::vector<ListFormatJob> const& jobs);
-std::ostream& operator<<(std::ostream& os, GetJobResponse const& response);
-std::ostream& operator<<(std::ostream& os, ListJobsResponse const& response);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal

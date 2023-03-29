@@ -204,7 +204,7 @@ TEST(ListJobsResponseTest, InvalidListFormatJob) {
                        HasSubstr("Not a valid Json ListFormatJob object")));
 }
 
-TEST(GetJobResponseTest, OutputStream) {
+TEST(GetJobResponseTest, DebugString) {
   BigQueryHttpResponse http_response;
   http_response.http_status_code = HttpStatusCode::kOk;
   http_response.http_headers.insert({{"header1", "value1"}});
@@ -220,7 +220,7 @@ TEST(GetJobResponseTest, OutputStream) {
             "job_type": "QUERY",
             "query_config": {"query": "select 1;"}
           }})";
-  auto const response = GetJobResponse::BuildFromHttpResponse(http_response);
+  auto response = GetJobResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
   std::string expected =
@@ -231,9 +231,9 @@ TEST(GetJobResponseTest, OutputStream) {
       "job_configuration={job_type=QUERY, query=select 1;}, "
       "job_reference={job_id=j123, location=, project_id=p123}, "
       "job_status=DONE, error_result=}}";
-  std::ostringstream os;
-  os << *response;
-  EXPECT_EQ(expected, os.str());
+
+  EXPECT_EQ(expected, response->DebugString(TracingOptions{}.SetOptions(
+                          "truncate_string_field_longer_than=1024")));
 }
 
 TEST(ListJobsResponseTest, OutputStream) {
@@ -259,20 +259,20 @@ TEST(ListJobsResponseTest, OutputStream) {
                 "principal_subject": "principal-subj"
               }
   ]})";
-  auto const response = ListJobsResponse::BuildFromHttpResponse(http_response);
+  auto response = ListJobsResponse::BuildFromHttpResponse(http_response);
   ASSERT_STATUS_OK(response);
 
   std::string expected =
       "ListJobsResponse{"
       "http_response={BigQueryHttpResponse{"
       "Status_Code=200, headers={header1: value1}}}, "
-      "jobs={Job{id=1, kind=kind-2, state=DONE, "
+      "jobs={ListFormatJob{id=1, kind=kind-2, state=DONE, "
       "job_configuration={job_type=QUERY, query=select 1;}, "
       "job_reference={job_id=j123, location=, project_id=p123}, "
       "job_status=DONE, error_result=},}";
-  std::ostringstream os;
-  os << *response;
-  EXPECT_EQ(expected, os.str());
+
+  EXPECT_EQ(expected, response->DebugString(TracingOptions{}.SetOptions(
+                          "truncate_string_field_longer_than=1024")));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
