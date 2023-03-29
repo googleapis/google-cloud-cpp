@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_response.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/make_status.h"
 #include <iostream>
 
@@ -52,6 +54,16 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
   return json;
 }
 
+std::string DebugJobsString(std::vector<ListFormatJob> const& jobs,
+                            TracingOptions const& options) {
+  std::string out;
+  for (auto const& j : jobs) {
+    std::string jout;
+    absl::StrAppend(&out, j.DebugString(options), ",");
+  }
+  return internal::DebugString(out, options);
+}
+
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
     BigQueryHttpResponse const& http_response) {
   auto json = parse_json(http_response.payload);
@@ -67,6 +79,14 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
   result.http_response = http_response;
 
   return result;
+}
+
+std::string GetJobResponse::DebugString(TracingOptions const& options) const {
+  std::string out;
+  absl::StrAppend(&out, "GetJobResponse{http_response={",
+                  http_response.DebugString(options), "}, job={",
+                  job.DebugString(options), "}");
+  return internal::DebugString(out, options);
 }
 
 StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
@@ -99,52 +119,12 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
   return result;
 }
 
-std::ostream& operator<<(std::ostream& os, Job const& job) {
-  os << "Job{etag=" << job.etag << ", kind=" << job.kind << ", id=" << job.id
-     << ", job_configuration={job_type=" << job.configuration.job_type
-     << ", query=" << job.configuration.query_config.query << "}"
-     << ", job_reference={"
-     << "job_id=" << job.reference.job_id
-     << ", location=" << job.reference.location
-     << ", project_id=" << job.reference.project_id << "}";
-  os << ", job_status=" << job.status.state
-     << ", error_result=" << job.status.error_result.message << "}";
-  return os;
-}
-
-std::ostream& operator<<(std::ostream& os,
-                         ListFormatJob const& list_format_job) {
-  os << "Job{id=" << list_format_job.id << ", kind=" << list_format_job.kind
-     << ", state=" << list_format_job.state << ", job_configuration={job_type="
-     << list_format_job.configuration.job_type
-     << ", query=" << list_format_job.configuration.query_config.query << "}"
-     << ", job_reference={"
-     << "job_id=" << list_format_job.reference.job_id
-     << ", location=" << list_format_job.reference.location
-     << ", project_id=" << list_format_job.reference.project_id << "}";
-  os << ", job_status=" << list_format_job.status.state
-     << ", error_result=" << list_format_job.error_result.message << "}";
-  return os;
-}
-
-std::ostream& operator<<(std::ostream& os,
-                         std::vector<ListFormatJob> const& jobs) {
-  for (auto const& j : jobs) {
-    os << j << ",";
-  }
-  return os;
-}
-
-std::ostream& operator<<(std::ostream& os, GetJobResponse const& response) {
-  os << "GetJobResponse{http_response={" << response.http_response << "}";
-  os << ", job={" << response.job << "}";
-  return os;
-}
-
-std::ostream& operator<<(std::ostream& os, ListJobsResponse const& response) {
-  os << "ListJobsResponse{http_response={" << response.http_response << "}";
-  os << ", jobs={" << response.jobs << "}";
-  return os;
+std::string ListJobsResponse::DebugString(TracingOptions const& options) const {
+  std::string out;
+  absl::StrAppend(&out, "ListJobsResponse{http_response={",
+                  http_response.DebugString(options), "}, jobs={",
+                  DebugJobsString(jobs, options), "}");
+  return internal::DebugString(out, options);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_V2_MINIMAL_INTERNAL_JOB_H
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_configuration.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
@@ -52,6 +53,8 @@ struct Job {
   JobStatus status;
   JobReference reference;
   JobConfiguration configuration;
+
+  std::string DebugString(TracingOptions const& options) const;
 };
 
 struct ListFormatJob {
@@ -66,6 +69,8 @@ struct ListFormatJob {
   JobStatus status;
 
   ErrorProto error_result;
+
+  std::string DebugString(TracingOptions const& options) const;
 };
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(JobStatus, error_result, errors,
