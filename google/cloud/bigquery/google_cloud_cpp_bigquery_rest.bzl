@@ -38,6 +38,7 @@ google_cloud_cpp_bigquery_rest_hdrs = [
 google_cloud_cpp_bigquery_rest_srcs = [
     "v2/minimal/internal/bigquery_http_response.cc",
     "v2/minimal/internal/common_v2_resources.cc",
+    "v2/minimal/internal/job.cc",
     "v2/minimal/internal/job_client.cc",
     "v2/minimal/internal/job_connection.cc",
     "v2/minimal/internal/job_idempotency_policy.cc",
