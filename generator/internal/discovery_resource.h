@@ -25,11 +25,36 @@ namespace generator_internal {
 
 class DiscoveryResource {
  public:
-  DiscoveryResource() = default;
+  DiscoveryResource();
   DiscoveryResource(std::string name, std::string default_host,
                     std::string base_path, nlohmann::json json);
 
   nlohmann::json const& json() const { return json_; }
+
+  // Examines the method JSON to determine the google.api.http,
+  // google.api.method_signature, and google.cloud.operation_service options.
+  StatusOr<std::string> FormatRpcOptions(
+      nlohmann::json const& method_json,
+      DiscoveryTypeVertex const& request_type) const;
+
+  // Summarize all the scopes found in the resource methods for inclusion as
+  // a service level google.api.oauth_scopes option.
+  StatusOr<std::string> FormatOAuthScopes() const;
+
+  // Package names for service proto definitions are created in the format:
+  // "google.cloud.cpp.${product_name}.${resource_name}.${version}"
+  std::string FormatPackageName(std::string const& product_name,
+                                std::string const& version) const;
+
+  // File paths for service protos are formatted such:
+  // "${output_path}/google/cloud/${product_name}/${resource_name}/${version}/${resource_name}.proto"
+  std::string FormatFilePath(std::string const& product_name,
+                             std::string const& version,
+                             std::string const& output_path) const;
+
+  // Method names are formatted as is, except for primitive method names which
+  // are concatenated with the resource name.
+  std::string FormatMethodName(std::string method_name) const;
 
  private:
   std::string name_;
