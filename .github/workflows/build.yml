@@ -26,7 +26,7 @@ jobs:
         with:
           path: |
             /private/var/tmp/_bazel_runner/
-          key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelversion', '.bazelrc', 'WORKSPACE.bazel', 'bazel/google_cloud_cpp_deps.bzl') }}
+          key: ${{ runner.os }}-bazel-${{ hashFiles('.github/workflows/build.yml', '.bazelversion', '.bazelrc', 'WORKSPACE.bazel', 'bazel/google_cloud_cpp_deps.bzl') }}
           restore-keys: |
             ${{ runner.os }}-bazel-
       - name: dump machine info
