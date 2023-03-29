@@ -236,6 +236,20 @@ auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     </compounddef>
   </doxygen>)xml";
 
+auto constexpr kNamespaceXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+    <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1mocks" kind="namespace" language="C++">
+        <compoundname>google::cloud::mocks</compoundname>
+        <briefdescription>
+          <para>Contains helpers for testing the Google Cloud C++ Client Libraries.</para>
+        </briefdescription>
+        <detaileddescription>
+          <para>The symbols defined in this namespace are offered for public consumption.</para>
+        </detaileddescription>
+        <location file="mocks/mock_stream_range.h" line="30" column="1"/>
+      </compounddef>
+  </doxygen>)xml";
+
 TEST(Doxygen2SyntaxContent, Enum) {
   auto constexpr kExpected = R"""(enum class google::cloud::Idempotency {
   kIdempotent,
@@ -298,6 +312,17 @@ class google::cloud::RuntimeStatusError { ... };)""";
       doc.select_node("//*[@id='classgoogle_1_1cloud_1_1RuntimeStatusError']");
   ASSERT_TRUE(selected);
   auto const actual = ClassSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2SyntaxContent, Namespace) {
+  auto constexpr kExpected = R"""(namespace google::cloud::mocks { ... };)""";
+  pugi::xml_document doc;
+  doc.load_string(kNamespaceXml);
+  auto selected =
+      doc.select_node("//*[@id='namespacegoogle_1_1cloud_1_1mocks']");
+  ASSERT_TRUE(selected);
+  auto const actual = NamespaceSyntaxContent(selected.node());
   EXPECT_EQ(actual, kExpected);
 }
 
@@ -431,6 +456,33 @@ TEST(Doxygen2Syntax, Class) {
   YAML::Emitter yaml;
   yaml << YAML::BeginMap;
   AppendClassSyntax(yaml, ctx, selected.node());
+  yaml << YAML::EndMap;
+  auto const actual = std::string{yaml.c_str()};
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Syntax, Namespace) {
+  auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    namespace google::cloud::mocks { ... };
+  source:
+    id: google::cloud::mocks
+    path: google/cloud/mocks/mock_stream_range.h
+    startLine: 30
+    remote:
+      repo: https://github.com/googleapis/google-cloud-cpp/
+      branch: main
+      path: google/cloud/mocks/mock_stream_range.h)yml";
+  pugi::xml_document doc;
+  doc.load_string(kNamespaceXml);
+  auto selected =
+      doc.select_node("//*[@id='namespacegoogle_1_1cloud_1_1mocks']");
+  ASSERT_TRUE(selected);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  YAML::Emitter yaml;
+  yaml << YAML::BeginMap;
+  AppendNamespaceSyntax(yaml, ctx, selected.node());
   yaml << YAML::EndMap;
   auto const actual = std::string{yaml.c_str()};
   EXPECT_EQ(actual, kExpected);
