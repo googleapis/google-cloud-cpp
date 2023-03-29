@@ -144,6 +144,12 @@ std::string ClassSyntaxContent(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
+std::string NamespaceSyntaxContent(pugi::xml_node const& node) {
+  std::ostringstream os;
+  os << "namespace " << node.child_value("compoundname") << " { ... };";
+  return std::move(os).str();
+}
+
 void AppendEnumSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
@@ -193,13 +199,22 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
   yaml << YAML::EndMap;
 }
 
-// Generate the `syntax` element for a class.
 void AppendClassSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                        pugi::xml_node const& node) {
   yaml << YAML::Key << "syntax" << YAML::Value                     //
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << ClassSyntaxContent(node);
+  AppendLocation(yaml, ctx, node, "compoundname");
+  yaml << YAML::EndMap;
+}
+
+void AppendNamespaceSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                           pugi::xml_node const& node) {
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << NamespaceSyntaxContent(node);
   AppendLocation(yaml, ctx, node, "compoundname");
   yaml << YAML::EndMap;
 }
