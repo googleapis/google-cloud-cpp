@@ -73,21 +73,36 @@ StateFilter StateFilter::Done() {
 
 std::string GetJobRequest::DebugString(TracingOptions const& options) const {
   std::string out;
-  absl::StrAppend(&out, "GetJobRequest{project_id=", project_id_,
-                  ", job_id=", job_id_, ", location=", location_, "}");
-  return internal::DebugString(out, options);
+  auto project_id = project_id_;
+  auto job_id = job_id_;
+  auto location = location_;
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  absl::StrAppend(&out, "GetJobRequest{", delim,
+                  "project_id=", internal::DebugString(project_id, options),
+                  delim, "job_id=", internal::DebugString(job_id, options),
+                  delim, internal::DebugString(location, options), delim, "}");
+  return out;
 }
 
 std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
   std::string out;
-  std::string all_users = all_users_ ? "true" : "false";
-  absl::StrAppend(&out, "ListJobsRequest{project_id=", project_id_,
-                  ", all_users=", all_users, ", max_results=", max_results_,
-                  ", page_token=", page_token_,
-                  ", projection=", projection_.value,
-                  ", state_filter=", state_filter_.value,
-                  ", parent_job_id=", parent_job_id_, "}");
-  return internal::DebugString(out, options);
+  auto project_id = project_id_;
+  auto page_token = page_token_;
+  auto projection = projection_.value;
+  auto state_filter = state_filter_.value;
+  auto parent_job_id = parent_job_id_;
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  auto const* all_users = all_users_ ? "true" : "false";
+  absl::StrAppend(
+      &out,
+      "ListJobsRequest{project_id=", internal::DebugString(project_id, options),
+      delim, ", all_users=", all_users, delim, ", max_results=", max_results_,
+      delim, ", page_token=", internal::DebugString(page_token, options), delim,
+      ", projection=", internal::DebugString(projection, options), delim,
+      ", state_filter=", internal::DebugString(state_filter, options), delim,
+      ", parent_job_id=", internal::DebugString(parent_job_id, options), delim,
+      "}");
+  return out;
 }
 
 ListJobsRequest::ListJobsRequest(std::string project_id)
