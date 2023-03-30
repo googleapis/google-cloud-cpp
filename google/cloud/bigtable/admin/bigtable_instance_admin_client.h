@@ -741,20 +741,6 @@ class BigtableInstanceAdminClient {
   ///
   /// Deletes an app profile from an instance.
   ///
-  /// @param name  Required. The unique name of the app profile to be deleted.
-  /// Values are of the form
-  ///  `projects/{project}/instances/{instance}/appProfiles/{app_profile}`.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  ///
-  /// [google.bigtable.admin.v2.DeleteAppProfileRequest]:
-  /// @googleapis_reference_link{google/bigtable/admin/v2/bigtable_instance_admin.proto#L669}
-  ///
-  Status DeleteAppProfile(std::string const& name, Options opts = {});
-
-  ///
-  /// Deletes an app profile from an instance.
-  ///
   /// @param request
   /// @googleapis_link{google::bigtable::admin::v2::DeleteAppProfileRequest,google/bigtable/admin/v2/bigtable_instance_admin.proto#L669}
   /// @param opts Optional. Override the class-level options, such as retry and
