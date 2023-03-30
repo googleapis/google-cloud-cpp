@@ -26,6 +26,30 @@ auto kind(pugi::xml_node const& node) {
   return std::string_view{node.attribute("kind").as_string()};
 }
 
+bool IgnoreForRecurse(pugi::xml_node const& node) {
+  static auto const* const kNames = [] {
+    return new std::set<std::string>{
+        "location",    "briefdescription", "detaileddescription", "includes",
+        "innertclass", "compoundname",     "listofallmembers",
+    };
+  }();
+  auto const name = std::string{node.name()};
+  return kNames->find(name) != kNames->end();
+}
+
+void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
+                     pugi::xml_node const& node) {
+  for (auto const& child : node) {
+    if (!IncludeInPublicDocuments(child)) continue;
+    if (IgnoreForRecurse(child)) continue;
+    if (AppendIfSectionDef(yaml, ctx, child)) continue;
+    if (AppendIfEnumValue(yaml, ctx, child)) continue;
+    if (AppendIfEnum(yaml, ctx, child)) continue;
+    if (AppendIfTypedef(yaml, ctx, child)) continue;
+    UnknownChildType(__func__, child);
+  }
+}
+
 std::string Summary(pugi::xml_node const& node) {
   std::ostringstream os;
   MarkdownContext ctx;
@@ -145,6 +169,13 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
   yaml << YAML::EndMap;
+  return true;
+}
+
+bool AppendIfSectionDef(YAML::Emitter& yaml, YamlContext const& ctx,
+                        pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "sectiondef") return false;
+  CompoundRecurse(yaml, ctx, node);
   return true;
 }
 

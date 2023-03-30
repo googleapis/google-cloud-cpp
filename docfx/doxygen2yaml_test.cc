@@ -78,6 +78,39 @@ be preferable to retry the operation even though it is not idempotent.</para>
     </doxygen>
 )xml";
 
+auto constexpr kStructXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+  <doxygen>
+    <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1AccessTokenLifetimeOption" kind="struct" language="C++" prot="public">
+      <compoundname>google::cloud::AccessTokenLifetimeOption</compoundname>
+      <includes refid="credentials_8h" local="no">google/cloud/credentials.h</includes>
+        <sectiondef kind="public-type">
+        <memberdef kind="typedef" id="structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2" prot="public" static="no">
+          <type>std::chrono::seconds</type>
+          <definition>using google::cloud::AccessTokenLifetimeOption::Type =  std::chrono::seconds</definition>
+          <argsstring/>
+          <name>Type</name>
+          <qualifiedname>google::cloud::AccessTokenLifetimeOption::Type</qualifiedname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="credentials.h" line="301" column="3" bodyfile="credentials.h" bodystart="301" bodyend="-1"/>
+        </memberdef>
+        </sectiondef>
+      <briefdescription>
+        <para>Configure the access token lifetime. </para>
+      </briefdescription>
+      <detaileddescription>
+      </detaileddescription>
+      <location file="credentials.h" line="300" column="1" bodyfile="credentials.h" bodystart="300" bodyend="302"/>
+      <listofallmembers>
+        <member refid="structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2" prot="public" virt="non-virtual"><scope>google::cloud::AccessTokenLifetimeOption</scope><name>Type</name></member>
+      </listofallmembers>
+    </compounddef>
+  </doxygen>)xml";
+
 TEST(Doxygen2Yaml, IncludeInPublicDocs) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
@@ -300,6 +333,34 @@ items:
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfTypedef(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Yaml, SectionDef) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2
+    name: |
+      Type
+    fullName: |
+      google::cloud::AccessTokenLifetimeOption::Type
+    id: structgoogle_1_1cloud_1_1AccessTokenLifetimeOption_1ad6b8a4672f1c196926849229f62d0de2
+    parent: test-only-parent-id
+    type: typedef
+    langs:
+      - cpp
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kStructXml);
+  auto selected = doc.select_node("//sectiondef[@kind='public-type']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfSectionDef(yaml, ctx, selected.node()));
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
