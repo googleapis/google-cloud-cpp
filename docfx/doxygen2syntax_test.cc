@@ -236,6 +236,55 @@ auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     </compounddef>
   </doxygen>)xml";
 
+auto constexpr kStructXml = R"xml(xml(xml(<?xml version="1.0" standalone="yes"?>
+  <doxygen version="1.9.1" xml:lang="en-US">
+    <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1AsyncTimerResult" kind="struct" language="C++" prot="public">
+      <compoundname>google::cloud::AsyncTimerResult</compoundname>
+      <includes refid="async__operation_8h" local="no">google/cloud/async_operation.h</includes>
+        <sectiondef kind="public-attrib">
+        <memberdef kind="variable" id="structgoogle_1_1cloud_1_1AsyncTimerResult_1a691ee4398edc058285993e47977d2127" prot="public" static="no" mutable="no">
+          <type>std::chrono::system_clock::time_point</type>
+          <definition>std::chrono::system_clock::time_point google::cloud::AsyncTimerResult::deadline</definition>
+          <argsstring/>
+          <name>deadline</name>
+          <qualifiedname>google::cloud::AsyncTimerResult::deadline</qualifiedname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="async_operation.h" line="32" column="41" bodyfile="async_operation.h" bodystart="32" bodyend="-1"/>
+        </memberdef>
+        <memberdef kind="variable" id="structgoogle_1_1cloud_1_1AsyncTimerResult_1a199c812e0d81c7adfd5720386cd5030a" prot="public" static="no" mutable="no">
+          <type>bool</type>
+          <definition>bool google::cloud::AsyncTimerResult::cancelled</definition>
+          <argsstring/>
+          <name>cancelled</name>
+          <qualifiedname>google::cloud::AsyncTimerResult::cancelled</qualifiedname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="async_operation.h" line="33" column="8" bodyfile="async_operation.h" bodystart="33" bodyend="-1"/>
+        </memberdef>
+        </sectiondef>
+      <briefdescription>
+        <para>The result of an async timer operation.</para>
+      </briefdescription>
+      <detaileddescription>
+        <para>Callbacks for async timers will receive an object of this class.</para>
+      </detaileddescription>
+      <location file="async_operation.h" line="31" column="1" bodyfile="async_operation.h" bodystart="31" bodyend="34"/>
+      <listofallmembers>
+        <member refid="structgoogle_1_1cloud_1_1AsyncTimerResult_1a199c812e0d81c7adfd5720386cd5030a" prot="public" virt="non-virtual"><scope>google::cloud::AsyncTimerResult</scope><name>cancelled</name></member>
+        <member refid="structgoogle_1_1cloud_1_1AsyncTimerResult_1a691ee4398edc058285993e47977d2127" prot="public" virt="non-virtual"><scope>google::cloud::AsyncTimerResult</scope><name>deadline</name></member>
+      </listofallmembers>
+    </compounddef>
+  </doxygen>)xml";
+
 auto constexpr kNamespaceXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
     <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1mocks" kind="namespace" language="C++">
@@ -299,6 +348,19 @@ google::cloud::CompletionQueue::MakeRelativeTimer (
       "']");
   ASSERT_TRUE(selected);
   auto const actual = FunctionSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2SyntaxContent, Struct) {
+  auto constexpr kExpected =
+      R"""(// Found in #include <google/cloud/async_operation.h>
+struct google::cloud::AsyncTimerResult { ... };)""";
+  pugi::xml_document doc;
+  doc.load_string(kStructXml);
+  auto selected =
+      doc.select_node("//*[@id='structgoogle_1_1cloud_1_1AsyncTimerResult']");
+  ASSERT_TRUE(selected);
+  auto const actual = StructSyntaxContent(selected.node());
   EXPECT_EQ(actual, kExpected);
 }
 
@@ -456,6 +518,34 @@ TEST(Doxygen2Syntax, Class) {
   YAML::Emitter yaml;
   yaml << YAML::BeginMap;
   AppendClassSyntax(yaml, ctx, selected.node());
+  yaml << YAML::EndMap;
+  auto const actual = std::string{yaml.c_str()};
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Syntax, Struct) {
+  auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    // Found in #include <google/cloud/async_operation.h>
+    struct google::cloud::AsyncTimerResult { ... };
+  source:
+    id: google::cloud::AsyncTimerResult
+    path: google/cloud/async_operation.h
+    startLine: 31
+    remote:
+      repo: https://github.com/googleapis/google-cloud-cpp/
+      branch: main
+      path: google/cloud/async_operation.h)yml";
+  pugi::xml_document doc;
+  doc.load_string(kStructXml);
+  auto selected =
+      doc.select_node("//*[@id='structgoogle_1_1cloud_1_1AsyncTimerResult']");
+  ASSERT_TRUE(selected);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  YAML::Emitter yaml;
+  yaml << YAML::BeginMap;
+  AppendStructSyntax(yaml, ctx, selected.node());
   yaml << YAML::EndMap;
   auto const actual = std::string{yaml.c_str()};
   EXPECT_EQ(actual, kExpected);
