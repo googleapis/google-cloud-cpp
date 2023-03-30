@@ -313,6 +313,14 @@ bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
   return true;
 }
 
+// The `ndash` element is just a convenient way to represent long dashes.
+bool AppendIfNDash(std::ostream& os, MarkdownContext const& /*ctx*/,
+                   pugi::xml_node const& node) {
+  if (std::string_view{node.name()} != "ndash") return false;
+  os << "&ndash;";
+  return true;
+}
+
 // The `docTitleCmdGroup` element type in Doxygen is defined as below.
 //
 // Only one is possible. We will ignore most of them because they do not
@@ -376,6 +384,7 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: linebreak
   // Unexpected: nonbreakablespace
   // Unexpected: many many symbols
+  if (AppendIfNDash(os, ctx, node)) return true;
   return false;
 }
 

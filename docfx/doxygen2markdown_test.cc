@@ -399,6 +399,18 @@ TEST(Doxygen2Markdown, RefInternal) {
   EXPECT_EQ("[Reference Text](xref:some_id)", os.str());
 }
 
+TEST(Doxygen2Markdown, NDash) {
+  pugi::xml_document doc;
+  doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <ndash id="test-node" />
+    </doxygen>)xml");
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfNDash(os, {}, selected.node()));
+  EXPECT_EQ("&ndash;", os.str());
+}
+
 TEST(Doxygen2Markdown, Paragraph) {
   pugi::xml_document doc;
   doc.load_string(R"xml(<?xml version="1.0" standalone="yes"?>
@@ -458,6 +470,7 @@ TEST(Doxygen2Markdown, ParagraphSimpleContents) {
         <para id='test-004'><computeroutput>The answer is 42.</computeroutput></para>
         <para id='test-005'><ref refid="test_id">The answer is 42.</ref></para>
         <para id='test-006'><ulink url="https://example.com/">The answer is 42.</ulink></para>
+        <para id='test-007'><ndash/></para>
     </doxygen>)xml";
 
   struct TestCase {
@@ -471,6 +484,7 @@ TEST(Doxygen2Markdown, ParagraphSimpleContents) {
       {"test-004", "\n\n`The answer is 42.`"},
       {"test-005", "\n\n[The answer is 42.](xref:test_id)"},
       {"test-006", "\n\n[The answer is 42.](https://example.com/)"},
+      {"test-007", "\n\n&ndash;"},
   };
 
   pugi::xml_document doc;
