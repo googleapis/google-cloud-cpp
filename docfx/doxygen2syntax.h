@@ -66,7 +66,7 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
 void AppendClassSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                        pugi::xml_node const& node);
 
-// Generate the `syntax` element for a class.
+// Generate the `syntax` element for a struct.
 void AppendStructSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
                         pugi::xml_node const& node);
 
