@@ -109,6 +109,10 @@ bool AppendIfComputerOutput(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfRef(std::ostream& os, MarkdownContext const& ctx,
                  pugi::xml_node const& node);
 
+/// Handles `ndash` elements.
+bool AppendIfNDash(std::ostream& os, MarkdownContext const& ctx,
+                   pugi::xml_node const& node);
+
 /// Part of the implementation of AppendIfParagraph().
 bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
                               pugi::xml_node const& node);
