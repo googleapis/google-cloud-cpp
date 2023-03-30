@@ -103,6 +103,13 @@ std::string TypedefSyntaxContent(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
+std::string VariableSyntaxContent(pugi::xml_node const& node) {
+  std::ostringstream os;
+  os << LinkedTextType(node.child("type")) << " " << node.child_value("name")
+     << ";";
+  return std::move(os).str();
+}
+
 std::string FunctionSyntaxContent(pugi::xml_node const& node) {
   std::ostringstream os;
   auto templateparamlist = node.child("templateparamlist");
@@ -173,6 +180,17 @@ void AppendTypedefSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << TypedefSyntaxContent(node);
+  AppendLocation(yaml, ctx, node, "name");
+  yaml << YAML::EndMap;
+}
+
+void AppendVariableSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                          pugi::xml_node const& node) {
+  auto full_name = std::string{node.child("qualifiedname").child_value()};
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << VariableSyntaxContent(node);
   AppendLocation(yaml, ctx, node, "name");
   yaml << YAML::EndMap;
 }

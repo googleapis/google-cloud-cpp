@@ -74,6 +74,24 @@ auto constexpr kTypedefXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
       </memberdef>
     </doxygen>)xml";
 
+auto constexpr kVariableXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a830f8e86e1581dddbbb2cd922cbc" prot="public" static="no" mutable="no">
+        <type><ref refid="namespacegoogle_1_1cloud_1aeeb9b9a1eeb3fc7f6ff13bd078172922" kindref="member">Severity</ref></type>
+        <definition>Severity google::cloud::LogRecord::severity</definition>
+        <argsstring/>
+        <name>severity</name>
+        <qualifiedname>google::cloud::LogRecord::severity</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="log.h" line="152" column="12" bodyfile="log.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+    </doxygen>)xml";
+
 auto constexpr kFunctionXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <memberdef kind="function" id="classgoogle_1_1cloud_1_1CompletionQueue_1a760d68ec606a03ab8cc80eea8bd965b3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
@@ -330,6 +348,19 @@ TEST(Doxygen2SyntaxContent, Typedef) {
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2SyntaxContent, Variable) {
+  auto constexpr kExpected = R"""(Severity severity;)""";
+  pugi::xml_document doc;
+  doc.load_string(kVariableXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "structgoogle_1_1cloud_1_1LogRecord_1a830f8e86e1581dddbbb2cd922cbc"
+      "']");
+  ASSERT_TRUE(selected);
+  auto const actual = VariableSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2SyntaxContent, Function) {
   auto constexpr kExpected =
       R"""(template <
@@ -447,6 +478,36 @@ TEST(Doxygen2Syntax, Typedef) {
   YAML::Emitter yaml;
   yaml << YAML::BeginMap;
   AppendTypedefSyntax(yaml, ctx, selected.node());
+  yaml << YAML::EndMap;
+  auto const actual = std::string{yaml.c_str()};
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Syntax, Variable) {
+  auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    Severity severity;
+  source:
+    id: severity
+    path: google/cloud/log.h
+    startLine: 152
+    remote:
+      repo: https://github.com/googleapis/google-cloud-cpp/
+      branch: main
+      path: google/cloud/log.h)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kVariableXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "structgoogle_1_1cloud_1_1LogRecord_1a830f8e86e1581dddbbb2cd922cbc"
+      "']");
+  ASSERT_TRUE(selected);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  YAML::Emitter yaml;
+  yaml << YAML::BeginMap;
+  AppendVariableSyntax(yaml, ctx, selected.node());
   yaml << YAML::EndMap;
   auto const actual = std::string{yaml.c_str()};
   EXPECT_EQ(actual, kExpected);
