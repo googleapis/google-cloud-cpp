@@ -235,22 +235,21 @@ void SetMethodSignatureMethodVars(
     // See: https://google.aip.dev/client-libraries/4232#method-signatures_1
     auto p = method_signature_uids.insert(method_signature_uid);
     if (!p.second) continue;
+    auto signature = absl::StrCat(
+        method_name, "(",
+        method_signature_uid.substr(0, method_signature_uid.length() - 2), ")");
+    auto qualified_signature = absl::StrCat(service.name(), ".", signature);
+    auto any_match = [&](std::string const& v) {
+      return v == method_name || v == qualified_method_name || v == signature ||
+             v == qualified_signature;
+    };
+    if (internal::ContainsIf(omitted_rpcs, any_match)) continue;
     if (field_deprecated) {
       // RPCs with deprecated fields must be listed in either omitted_rpcs
       // or emitted_rpcs. The former is used for newly-generated services,
       // where we never want to support the deprecated field, and the
       // latter for newly-deprecated fields, where we want to maintain
       // backwards compatibility.
-      auto signature = absl::StrCat(
-          method_name, "(",
-          method_signature_uid.substr(0, method_signature_uid.length() - 2),
-          ")");
-      auto qualified_signature = absl::StrCat(service.name(), ".", signature);
-      auto any_match = [&](std::string const& v) {
-        return v == method_name || v == qualified_method_name ||
-               v == signature || v == qualified_signature;
-      };
-      if (internal::ContainsIf(omitted_rpcs, any_match)) continue;
       if (!internal::ContainsIf(emitted_rpcs, any_match)) {
         GCP_LOG(FATAL) << "Deprecated RPC " << qualified_signature
                        << " must be listed in either omitted_rpcs"
