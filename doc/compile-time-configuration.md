@@ -88,7 +88,7 @@ generate libraries for the "target" environment.
 
 [OpenTelemetry] is enabled by default.  Turning this off may reduce your build
 times but will also lose the benefits of instrumenting the libraries for
-distributed tracing.  Add `--//:experimental-opentelementry=false` to your
+distributed tracing.  Add `--//:experimental-opentelemetry=false` to your
 Bazel command-line parameters to disable Open Telemetry.
 
 [ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html
