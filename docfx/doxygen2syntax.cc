@@ -144,6 +144,13 @@ std::string ClassSyntaxContent(pugi::xml_node const& node) {
   return std::move(os).str();
 }
 
+std::string StructSyntaxContent(pugi::xml_node const& node) {
+  std::ostringstream os;
+  os << "// Found in #include <" << node.child_value("includes") << ">\n"
+     << "struct " << node.child_value("compoundname") << " { ... };";
+  return std::move(os).str();
+}
+
 std::string NamespaceSyntaxContent(pugi::xml_node const& node) {
   std::ostringstream os;
   os << "namespace " << node.child_value("compoundname") << " { ... };";
@@ -205,6 +212,16 @@ void AppendClassSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << ClassSyntaxContent(node);
+  AppendLocation(yaml, ctx, node, "compoundname");
+  yaml << YAML::EndMap;
+}
+
+void AppendStructSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
+                        pugi::xml_node const& node) {
+  yaml << YAML::Key << "syntax" << YAML::Value                     //
+       << YAML::BeginMap                                           //
+       << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
+       << StructSyntaxContent(node);
   AppendLocation(yaml, ctx, node, "compoundname");
   yaml << YAML::EndMap;
 }
