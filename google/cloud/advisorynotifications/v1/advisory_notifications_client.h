@@ -98,12 +98,12 @@ class AdvisoryNotificationsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L189}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L204}
   /// [google.cloud.advisorynotifications.v1.Notification]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
   ListNotifications(std::string const& parent, Options opts = {});
@@ -112,16 +112,16 @@ class AdvisoryNotificationsServiceClient {
   /// Lists notifications under a given parent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::advisorynotifications::v1::ListNotificationsRequest,google/cloud/advisorynotifications/v1/service.proto#L189}
+  /// @googleapis_link{google::cloud::advisorynotifications::v1::ListNotificationsRequest,google/cloud/advisorynotifications/v1/service.proto#L204}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   /// [google.cloud.advisorynotifications.v1.ListNotificationsRequest]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L189}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L204}
   /// [google.cloud.advisorynotifications.v1.Notification]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   StreamRange<google::cloud::advisorynotifications::v1::Notification>
   ListNotifications(
@@ -138,12 +138,12 @@ class AdvisoryNotificationsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L236}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L251}
   /// [google.cloud.advisorynotifications.v1.Notification]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
   GetNotification(std::string const& name, Options opts = {});
@@ -152,16 +152,16 @@ class AdvisoryNotificationsServiceClient {
   /// Gets a notification.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::advisorynotifications::v1::GetNotificationRequest,google/cloud/advisorynotifications/v1/service.proto#L236}
+  /// @googleapis_link{google::cloud::advisorynotifications::v1::GetNotificationRequest,google/cloud/advisorynotifications/v1/service.proto#L251}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_link{google::cloud::advisorynotifications::v1::Notification,google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   /// [google.cloud.advisorynotifications.v1.GetNotificationRequest]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L236}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L251}
   /// [google.cloud.advisorynotifications.v1.Notification]:
-  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L97}
+  /// @googleapis_reference_link{google/cloud/advisorynotifications/v1/service.proto#L109}
   ///
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
   GetNotification(

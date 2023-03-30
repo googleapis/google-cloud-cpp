@@ -33,7 +33,7 @@ namespace bigquery_reservation_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// This API allows users to manage their flat-rate BigQuery reservations.
+/// This API allows users to manage their BigQuery reservations.
 ///
 /// A reservation provides computational resource guarantees, in the form of
 /// [slots](https://cloud.google.com/bigquery/docs/slots), to users. A slot is a
@@ -116,7 +116,7 @@ class ReservationServiceClient {
   /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
   /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L611}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L617}
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
@@ -130,14 +130,14 @@ class ReservationServiceClient {
   /// Creates a new reservation resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L611}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L617}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
   /// [google.cloud.bigquery.reservation.v1.CreateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L611}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L617}
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
@@ -159,7 +159,7 @@ class ReservationServiceClient {
   /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
   /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L632}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L638}
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
@@ -170,14 +170,14 @@ class ReservationServiceClient {
   /// Lists all the reservations for the project in the specified location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListReservationsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L632}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListReservationsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L638}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
   /// [google.cloud.bigquery.reservation.v1.ListReservationsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L632}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L638}
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
@@ -197,7 +197,7 @@ class ReservationServiceClient {
   /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
   /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L662}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L668}
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
@@ -208,14 +208,14 @@ class ReservationServiceClient {
   /// Returns information about the reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L662}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L668}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::reservation::v1::Reservation,google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
   /// [google.cloud.bigquery.reservation.v1.GetReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L662}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L668}
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   ///
@@ -236,7 +236,7 @@ class ReservationServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L675}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L681}
   ///
   Status DeleteReservation(std::string const& name, Options opts = {});
 
@@ -246,12 +246,12 @@ class ReservationServiceClient {
   /// assignments.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L675}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L681}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.reservation.v1.DeleteReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L675}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L681}
   ///
   Status DeleteReservation(
       google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
@@ -272,7 +272,7 @@ class ReservationServiceClient {
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L688}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L694}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   UpdateReservation(
@@ -283,7 +283,7 @@ class ReservationServiceClient {
   /// Updates an existing reservation resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L688}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L694}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
@@ -292,7 +292,7 @@ class ReservationServiceClient {
   /// [google.cloud.bigquery.reservation.v1.Reservation]:
   /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L395}
   /// [google.cloud.bigquery.reservation.v1.UpdateReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L688}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L694}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   UpdateReservation(
@@ -309,12 +309,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L698}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L704}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
@@ -327,16 +327,16 @@ class ReservationServiceClient {
   /// Creates a new capacity commitment resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L698}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L704}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.CreateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L698}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L704}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(google::cloud::bigquery::reservation::v1::
@@ -351,12 +351,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L725}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L731}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   ListCapacityCommitments(std::string const& parent, Options opts = {});
@@ -365,16 +365,16 @@ class ReservationServiceClient {
   /// Lists all the capacity commitments for the admin project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L725}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L731}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.ListCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L725}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L731}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   ListCapacityCommitments(
@@ -391,12 +391,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L755}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L761}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   GetCapacityCommitment(std::string const& name, Options opts = {});
@@ -405,16 +405,16 @@ class ReservationServiceClient {
   /// Returns information about the capacity commitment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L755}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L761}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.GetCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L755}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L761}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   GetCapacityCommitment(google::cloud::bigquery::reservation::v1::
@@ -433,7 +433,7 @@ class ReservationServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L768}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L774}
   ///
   Status DeleteCapacityCommitment(std::string const& name, Options opts = {});
 
@@ -443,12 +443,12 @@ class ReservationServiceClient {
   /// `google.rpc.Code.FAILED_PRECONDITION`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L768}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L774}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.reservation.v1.DeleteCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L768}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L774}
   ///
   Status DeleteCapacityCommitment(
       google::cloud::bigquery::reservation::v1::
@@ -470,12 +470,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L786}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L792}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   UpdateCapacityCommitment(
@@ -493,16 +493,16 @@ class ReservationServiceClient {
   /// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L786}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L792}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.UpdateCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L786}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L792}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   UpdateCapacityCommitment(google::cloud::bigquery::reservation::v1::
@@ -526,12 +526,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse,google/cloud/bigquery/reservation/v1/reservation.proto#L812}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse,google/cloud/bigquery/reservation/v1/reservation.proto#L818}
   ///
   /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L796}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L802}
   /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L812}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
   ///
   StatusOr<
       google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
@@ -549,16 +549,16 @@ class ReservationServiceClient {
   /// you delete the first one after the commitment end time passes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L796}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L802}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse,google/cloud/bigquery/reservation/v1/reservation.proto#L812}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse,google/cloud/bigquery/reservation/v1/reservation.proto#L818}
   ///
   /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L796}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L802}
   /// [google.cloud.bigquery.reservation.v1.SplitCapacityCommitmentResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L812}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L818}
   ///
   StatusOr<
       google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
@@ -586,12 +586,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L822}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   MergeCapacityCommitments(
@@ -609,16 +609,16 @@ class ReservationServiceClient {
   /// with the error code `google.rpc.Code.FAILED_PRECONDITION`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L822}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::MergeCapacityCommitmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L828}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CapacityCommitment,google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   ///
   /// [google.cloud.bigquery.reservation.v1.CapacityCommitment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L484}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L487}
   /// [google.cloud.bigquery.reservation.v1.MergeCapacityCommitmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L822}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L828}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   MergeCapacityCommitments(google::cloud::bigquery::reservation::v1::
@@ -668,12 +668,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L901}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L907}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   CreateAssignment(
@@ -719,16 +719,16 @@ class ReservationServiceClient {
   /// does not match location of the reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L901}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::CreateAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L907}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.CreateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L901}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L907}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   CreateAssignment(
@@ -766,12 +766,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L923}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L929}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   ListAssignments(std::string const& parent, Options opts = {});
@@ -800,16 +800,16 @@ class ReservationServiceClient {
   /// **Note** "-" cannot be used for projects nor locations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L923}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::ListAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L929}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.ListAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L923}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L929}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   ListAssignments(
@@ -839,7 +839,7 @@ class ReservationServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L960}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L966}
   ///
   Status DeleteAssignment(std::string const& name, Options opts = {});
 
@@ -861,12 +861,12 @@ class ReservationServiceClient {
   /// `project2` will switch to use on-demand mode.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L960}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L966}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.reservation.v1.DeleteAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L960}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L966}
   ///
   Status DeleteAssignment(
       google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
@@ -910,12 +910,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L975}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAssignments(std::string const& parent, std::string const& query,
@@ -947,16 +947,16 @@ class ReservationServiceClient {
   /// nor locations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L975}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L981}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L975}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAssignments(
@@ -998,12 +998,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1006}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAllAssignments(std::string const& parent, std::string const& query,
@@ -1032,16 +1032,16 @@ class ReservationServiceClient {
   ///    `projects/*/locations/*reservations/*`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1006}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.SearchAllAssignmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1006}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1012}
   ///
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAllAssignments(
@@ -1064,12 +1064,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1064}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
       std::string const& name, std::string const& destination_id,
@@ -1083,16 +1083,16 @@ class ReservationServiceClient {
   /// associated reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::MoveAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1064}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::MoveAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.MoveAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1064}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1070}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
@@ -1110,12 +1110,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1091}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   UpdateAssignment(
@@ -1128,16 +1128,16 @@ class ReservationServiceClient {
   /// Only the `priority` field can be updated.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1091}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::Assignment,google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   ///
   /// [google.cloud.bigquery.reservation.v1.Assignment]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L845}
   /// [google.cloud.bigquery.reservation.v1.UpdateAssignmentRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1091}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1097}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   UpdateAssignment(
@@ -1153,12 +1153,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   ///
   /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(std::string const& name, Options opts = {});
@@ -1167,16 +1167,16 @@ class ReservationServiceClient {
   /// Retrieves a BI reservation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetBiReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1136}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::GetBiReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   ///
   /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   /// [google.cloud.bigquery.reservation.v1.GetBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1136}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1142}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
@@ -1199,12 +1199,12 @@ class ReservationServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   ///
   /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1148}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   UpdateBiReservation(
@@ -1223,16 +1223,16 @@ class ReservationServiceClient {
   /// must be set to 0.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1148}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest,google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_link{google::cloud::bigquery::reservation::v1::BiReservation,google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   ///
   /// [google.cloud.bigquery.reservation.v1.BiReservation]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1113}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1119}
   /// [google.cloud.bigquery.reservation.v1.UpdateBiReservationRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1148}
+  /// @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L1154}
   ///
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   UpdateBiReservation(google::cloud::bigquery::reservation::v1::
