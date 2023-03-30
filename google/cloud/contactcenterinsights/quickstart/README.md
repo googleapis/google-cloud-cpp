@@ -128,14 +128,6 @@ curl -Lo roots.pem https://pki.google.com/roots.pem
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="$PWD/roots.pem"
 ```
 
-To workaround a [bug in Bazel][bazel-grpc-macos-bug], gRPC requires this flag on
-macOS builds, you can add the option manually or include it in your `.bazelrc`
-file:
-
-```bash
-bazel build --copt=-DGRPC_BAZEL_BUILD ...
-```
-
 ### Windows
 
 Bazel tends to create very long file names and paths. You may need to use a
@@ -157,7 +149,6 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
 [authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started "Authentication Getting Started"
-[bazel-grpc-macos-bug]: https://github.com/bazelbuild/bazel/issues/4341
 [bazel-install]: https://docs.bazel.build/versions/main/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [create-conversations]: https://cloud.google.com/contact-center/insights/docs/create-analyze-conversation-ui
