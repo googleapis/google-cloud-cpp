@@ -101,10 +101,10 @@ void Impl(google::cloud::functions::CloudEvent event) {
   if (trigger_type == "pr" || trigger_name.empty()) return;
   auto const chat = MakeChatPayload(bs);
   std::cout << nlohmann::json{{"severity", "INFO"}, {"chat", chat}} << "\n";
-  HttpPost(webhook, chat.dump());
   auto const tags = bs.build.value("tags", std::vector<std::string>{});
   auto const loc = std::find(tags.begin(), tags.end(), "friends");
-  if (loc != tags.end()) HttpPost(webhook_friends, chat.dump());
+  auto const friends_only = loc != tags.end();
+  HttpPost(friends_only ? webhook_friends : webhook, chat.dump());
 }
 
 }  // namespace

@@ -25,7 +25,7 @@ readonly IMAGE="gcr.io/${GOOGLE_CLOUD_PROJECT}/send-build-alerts"
 
 io::log_h1 "Building code with pack"
 gcloud builds submit --project="${GOOGLE_CLOUD_PROJECT}" \
-  --pack="image=${IMAGE},env=GOOGLE_FUNCTION_SIGNATURE_TYPE=cloudevent,env=GOOGLE_FUNCTION_TARGET=SendBuildAlerts"
+  --pack="image=${IMAGE},env=GOOGLE_FUNCTION_TARGET=SendBuildAlerts"
 
 io::log_h1 "Deploying to Cloud Run"
 gcloud run deploy send-build-alerts \
