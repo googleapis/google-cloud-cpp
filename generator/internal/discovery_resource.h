@@ -31,6 +31,14 @@ class DiscoveryResource {
 
   nlohmann::json const& json() const { return json_; }
 
+  void AddRequestType(std::string name, DiscoveryTypeVertex const* type);
+
+  // Examines the provided the path and converts any parameter names in curly
+  // braces to snake case, e.g.
+  // "projects/{projectId}/zone/{zone}" yields
+  // "projects/{project_id}/zone/{zone}".
+  static std::string FormatUrlPath(std::string const& path);
+
   // Examines the method JSON to determine the google.api.http,
   // google.api.method_signature, and google.cloud.operation_service options.
   StatusOr<std::string> FormatRpcOptions(
@@ -56,11 +64,14 @@ class DiscoveryResource {
   // are concatenated with the resource name.
   std::string FormatMethodName(std::string method_name) const;
 
+  StatusOr<std::string> JsonToProtoService() const;
+
  private:
   std::string name_;
   std::string default_host_;
   std::string base_path_;
   nlohmann::json json_;
+  std::map<std::string, DiscoveryTypeVertex const*> request_types_;
 };
 
 }  // namespace generator_internal
