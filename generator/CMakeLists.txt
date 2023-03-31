@@ -191,6 +191,7 @@ function (google_cloud_cpp_generator_define_tests)
         generator_test.cc
         internal/codegen_utils_test.cc
         internal/descriptor_utils_test.cc
+        internal/discovery_resource_test.cc
         internal/discovery_to_proto_test.cc
         internal/discovery_type_vertex_test.cc
         internal/format_class_comments_test.cc
