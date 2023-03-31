@@ -46,7 +46,7 @@ class DiscoveryResource {
   std::string FormatPackageName(std::string const& product_name,
                                 std::string const& version) const;
 
-  // File paths for service protos are formatted such:
+  // File paths for service protos are formatted such that:
   // "${output_path}/google/cloud/${product_name}/${resource_name}/${version}/${resource_name}.proto"
   std::string FormatFilePath(std::string const& product_name,
                              std::string const& version,

@@ -86,6 +86,40 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPatchZone) {
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
 
+TEST(DiscoveryResourceTest, FormatRpcOptionsPutRegion) {
+  auto constexpr kTypeJson = R"""({
+  "request_resource_field_name": "my_request_resource"
+})""";
+  auto constexpr kMethodJson = R"""({
+  "path": "projects/{project}/regions/{region}/myTests/{fooId}/method1",
+  "httpMethod": "PUT",
+  "response": {
+    "$ref": "Operation"
+  },
+  "parameterOrder": [
+    "project",
+    "region",
+    "fooId"
+  ]
+})""";
+  auto constexpr kExpectedProto =
+      R"""(    option (google.api.http) = {
+      put: "base/path/projects/{project}/regions/{region}/myTests/{fooId}/method1"
+      body: "my_request_resource"
+    };
+    option (google.api.method_signature) = "project,region,fooId,my_request_resource";
+    option (google.cloud.operation_service) = "RegionOperations";)""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(type_json.is_object());
+  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryTypeVertex t("myType", type_json);
+  auto options = r.FormatRpcOptions(method_json, t);
+  ASSERT_STATUS_OK(options);
+  EXPECT_THAT(*options, Eq(kExpectedProto));
+}
+
 TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobal) {
   auto constexpr kTypeJson = R"""({})""";
   auto constexpr kMethodJson = R"""({
@@ -102,6 +136,37 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobal) {
       body: "*"
     };
     option (google.api.method_signature) = "project,foo";)""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(type_json.is_object());
+  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryTypeVertex t("myType", type_json);
+  auto options = r.FormatRpcOptions(method_json, t);
+  ASSERT_STATUS_OK(options);
+  EXPECT_THAT(*options, Eq(kExpectedProto));
+}
+
+TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobalOperationResponse) {
+  auto constexpr kTypeJson = R"""({})""";
+  auto constexpr kMethodJson = R"""({
+  "path": "projects/{project}/global/myTests/{foo}:cancel",
+  "httpMethod": "POST",
+  "response": {
+    "$ref": "Operation"
+  },
+  "parameterOrder": [
+    "project",
+    "foo"
+  ]
+})""";
+  auto constexpr kExpectedProto =
+      R"""(    option (google.api.http) = {
+      post: "base/path/projects/{project}/global/myTests/{foo}:cancel"
+      body: "*"
+    };
+    option (google.api.method_signature) = "project,foo";
+    option (google.cloud.operation_service) = "GlobalOperations";)""";
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
@@ -132,6 +197,29 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParams) {
   auto options = r.FormatRpcOptions(method_json, t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
+}
+
+TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParamsOperation) {
+  auto constexpr kTypeJson = R"""({})""";
+  auto constexpr kMethodJson = R"""({
+    "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
+    "httpMethod": "POST",
+    "response": {
+      "$ref": "Operation"
+    }
+})""";
+  auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
+  ASSERT_TRUE(method_json.is_object());
+  auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
+  ASSERT_TRUE(type_json.is_object());
+  DiscoveryResource r("myTests", "", "base/path", method_json);
+  DiscoveryTypeVertex t("myType", type_json);
+  auto options = r.FormatRpcOptions(method_json, t);
+  EXPECT_THAT(
+      options,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr("Method response is Operation but no scope is defined.")));
 }
 
 TEST(DiscoveryResourceTest, FormatRpcOptionsMissingPath) {

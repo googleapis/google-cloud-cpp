@@ -63,6 +63,11 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   }
   rpc_options.push_back(absl::StrCat(http_option, "    };"));
 
+  // Defining long running operations in Discovery Documents relies upon
+  // conventions. This implements the convention used by compute. It may be
+  // that we need to introduce additional in the future if we come across other
+  // LRO defining conventions.
+  // https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources
   std::string operation_scope;
   std::vector<std::string> params =
       method_json.value("parameterOrder", std::vector<std::string>{});
@@ -71,8 +76,6 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
       operation_scope = "ZoneOperations";
     } else if (internal::Contains(params, "region")) {
       operation_scope = "RegionOperations";
-    } else if (absl::StrContains(path, "/global/")) {
-      operation_scope = "GlobalOperations";
     }
     if (!request_resource_field_name.empty()) {
       params.push_back(request_resource_field_name);
@@ -84,6 +87,14 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
 
   if (method_json.contains("response") &&
       method_json["response"].value("$ref", "") == "Operation") {
+    if (absl::StrContains(path, "/global/")) {
+      operation_scope = "GlobalOperations";
+    }
+    if (operation_scope.empty()) {
+      return internal::InvalidArgumentError(
+          "Method response is Operation but no scope is defined.",
+          GCP_ERROR_INFO().WithMetadata("json", method_json.dump()));
+    }
     rpc_options.push_back(
         absl::StrFormat("    option (google.cloud.operation_service) = \"%s\";",
                         operation_scope));
