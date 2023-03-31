@@ -25,6 +25,21 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 
+TEST(DiscoveryResourceTest, FormatUrlPath) {
+  EXPECT_THAT(DiscoveryResource::FormatUrlPath("base/path/test"),
+              Eq("base/path/test"));
+  EXPECT_THAT(DiscoveryResource::FormatUrlPath(
+                  "projects/{project}/zones/{zone}/myTests/{foo}/method1"),
+              Eq("projects/{project}/zones/{zone}/myTests/{foo}/method1"));
+  EXPECT_THAT(DiscoveryResource::FormatUrlPath(
+                  "projects/{project}/zones/{zone}/myTests/{fooId}/method1"),
+              Eq("projects/{project}/zones/{zone}/myTests/{foo_id}/method1"));
+  EXPECT_THAT(
+      DiscoveryResource::FormatUrlPath(
+          "projects/{project}/zones/{zoneName}/myTests/{fooId}:method1"),
+      Eq("projects/{project}/zones/{zone_name}/myTests/{foo_id}:method1"));
+}
+
 TEST(DiscoveryResourceTest, FormatRpcOptionsGetRegion) {
   auto constexpr kTypeJson = R"""({})""";
   auto constexpr kMethodJson = R"""({
@@ -57,7 +72,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPatchZone) {
   "request_resource_field_name": "my_request_resource"
 })""";
   auto constexpr kMethodJson = R"""({
-  "path": "projects/{project}/zones/{zone}/myTests/{foo}/method1",
+  "path": "projects/{project}/zones/{zone}/myTests/{fooId}/method1",
   "httpMethod": "PATCH",
   "response": {
     "$ref": "Operation"
@@ -65,15 +80,15 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPatchZone) {
   "parameterOrder": [
     "project",
     "zone",
-    "foo"
+    "fooId"
   ]
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      patch: "base/path/projects/{project}/zones/{zone}/myTests/{foo}/method1"
+      patch: "base/path/projects/{project}/zones/{zone}/myTests/{foo_id}/method1"
       body: "my_request_resource"
     };
-    option (google.api.method_signature) = "project,zone,foo,my_request_resource";
+    option (google.api.method_signature) = "project,zone,foo_id,my_request_resource";
     option (google.cloud.operation_service) = "ZoneOperations";)""";
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
   ASSERT_TRUE(method_json.is_object());
@@ -104,10 +119,10 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPutRegion) {
 })""";
   auto constexpr kExpectedProto =
       R"""(    option (google.api.http) = {
-      put: "base/path/projects/{project}/regions/{region}/myTests/{fooId}/method1"
+      put: "base/path/projects/{project}/regions/{region}/myTests/{foo_id}/method1"
       body: "my_request_resource"
     };
-    option (google.api.method_signature) = "project,region,fooId,my_request_resource";
+    option (google.api.method_signature) = "project,region,foo_id,my_request_resource";
     option (google.cloud.operation_service) = "RegionOperations";)""";
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
   ASSERT_TRUE(method_json.is_object());
@@ -354,6 +369,185 @@ TEST(DiscoveryResourceTest, FormatMethodName) {
   EXPECT_THAT(r.FormatMethodName("patch"), Eq("PatchMyTests"));
   EXPECT_THAT(r.FormatMethodName("update"), Eq("UpdateMyTests"));
   EXPECT_THAT(r.FormatMethodName("testPermissions"), Eq("TestPermissions"));
+}
+
+TEST(DiscoveryResourceTest, JsonToProtoService) {
+  auto constexpr kGetRequestTypeJson = R"""({})""";
+  auto constexpr kDoFooRequestTypeJson = R"""({
+  "request_resource_field_name": "my_foo_resource"
+})""";
+  auto constexpr kResourceJson = R"""({
+    "methods": {
+      "get": {
+        "description": "Description for the get method.",
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ],
+        "path": "projects/{project}/regions/{region}/myResources/{foo}",
+        "httpMethod": "GET",
+        "parameterOrder": [
+          "project",
+          "region",
+          "foo"
+        ]
+      },
+      "doFoo": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ],
+        "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
+        "httpMethod": "POST",
+        "response": {
+          "$ref": "Operation"
+        },
+        "parameterOrder": [
+          "project",
+          "zone",
+          "fooId"
+        ]
+      }
+    }
+})""";
+  auto constexpr kExpectedProto =
+      R"""(// Service for the myResources resource.
+// https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources
+service MyResources {
+  option (google.api.default_host) = "https://my.endpoint.com";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform";
+
+  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "base/path/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
+      body: "my_foo_resource"
+    };
+    option (google.api.method_signature) = "project,zone,foo_id,my_foo_resource";
+    option (google.cloud.operation_service) = "ZoneOperations";
+  }
+
+  // Description for the get method.
+  rpc GetMyResources(GetMyResourcesRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      get: "base/path/projects/{project}/regions/{region}/myResources/{foo}"
+    };
+    option (google.api.method_signature) = "project,region,foo";
+  }
+}
+
+)""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto get_request_type_json =
+      nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(get_request_type_json.is_object());
+  auto do_foo_request_type_json =
+      nlohmann::json::parse(kDoFooRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(do_foo_request_type_json.is_object());
+  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
+                      resource_json);
+  DiscoveryTypeVertex t("GetMyResourcesRequest", get_request_type_json);
+  DiscoveryTypeVertex t2("DoFooRequest", do_foo_request_type_json);
+  r.AddRequestType("GetMyResourcesRequest", &t);
+  r.AddRequestType("DoFooRequest", &t2);
+  auto emitted_proto = r.JsonToProtoService();
+  ASSERT_STATUS_OK(emitted_proto);
+  EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
+}
+
+TEST(DiscoveryResourceTest, JsonToProtoServiceMissingOAuthScopes) {
+  auto constexpr kGetRequestTypeJson = R"""({})""";
+  auto constexpr kResourceJson = R"""({
+    "methods": {
+      "get": {
+        "path": "projects/{project}/regions/{region}/myResources/{foo}",
+        "httpMethod": "GET",
+        "parameterOrder": [
+          "project",
+          "region",
+          "foo"
+        ]
+      }
+    }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto get_request_type_json =
+      nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(get_request_type_json.is_object());
+  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
+                      resource_json);
+  DiscoveryTypeVertex t("GetMyResourcesRequest", get_request_type_json);
+  r.AddRequestType("GetMyResourcesRequest", &t);
+  auto emitted_proto = r.JsonToProtoService();
+  EXPECT_THAT(
+      emitted_proto,
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("No OAuth scopes found for service: myResources.")));
+}
+
+TEST(DiscoveryResourceTest, JsonToProtoServiceMissingRequestType) {
+  auto constexpr kResourceJson = R"""({
+    "methods": {
+      "doFoo": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ],
+        "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
+        "httpMethod": "POST",
+        "response": {
+          "$ref": "Operation"
+        },
+        "parameterOrder": [
+          "project",
+          "zone",
+          "fooId"
+        ]
+      }
+    }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
+                      resource_json);
+  auto emitted_proto = r.JsonToProtoService();
+  EXPECT_THAT(
+      emitted_proto,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          HasSubstr("Cannot find request_type_key=DoFooRequest in type_map")));
+}
+
+TEST(DiscoveryResourceTest, JsonToProtoServiceErrorFormattingRpcOptions) {
+  auto constexpr kGetRequestTypeJson = R"""({})""";
+  auto constexpr kResourceJson = R"""({
+    "methods": {
+      "get": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ],
+        "path": "projects/{project}/regions/{region}/myResources/{foo}",
+        "parameterOrder": [
+          "project",
+          "region",
+          "foo"
+        ]
+      }
+    }
+})""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  auto get_request_type_json =
+      nlohmann::json::parse(kGetRequestTypeJson, nullptr, false);
+  ASSERT_TRUE(get_request_type_json.is_object());
+  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
+                      resource_json);
+  DiscoveryTypeVertex t("GetMyResourcesRequest", get_request_type_json);
+  r.AddRequestType("GetMyResourcesRequest", &t);
+  auto emitted_proto = r.JsonToProtoService();
+  EXPECT_THAT(
+      emitted_proto,
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("Method does not define httpMethod and/or path.")));
 }
 
 }  // namespace

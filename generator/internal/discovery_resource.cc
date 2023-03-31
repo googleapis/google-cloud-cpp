@@ -36,6 +36,29 @@ DiscoveryResource::DiscoveryResource(std::string name, std::string default_host,
       base_path_(std::move(base_path)),
       json_(std::move(json)) {}
 
+void DiscoveryResource::AddRequestType(std::string name,
+                                       DiscoveryTypeVertex const* type) {
+  request_types_.insert(std::make_pair(std::move(name), type));
+}
+
+std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
+  auto open = path.find('{');
+  if (open == std::string::npos) return path;
+  std::string output;
+  std::size_t current = 0;
+  while (open < path.length() && open != std::string::npos) {
+    absl::StrAppend(&output, path.substr(current, open - current + 1));
+    current = open + 1;
+    auto close = path.find('}', current);
+    absl::StrAppend(
+        &output, CamelCaseToSnakeCase(path.substr(current, close - current)));
+    current = close;
+    open = path.find('{', current);
+  }
+  absl::StrAppend(&output, path.substr(current, open - current));
+  return output;
+}
+
 StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     nlohmann::json const& method_json,
     DiscoveryTypeVertex const& request_type) const {
@@ -52,7 +75,9 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
   std::string http_option = absl::StrFormat(
       "    option (google.api.http) = {\n"
       "      %s: \"%s\"\n",
-      verb, absl::StrCat(absl::StripSuffix(base_path_, "/"), "/", path));
+      verb,
+      absl::StrCat(absl::StripSuffix(base_path_, "/"), "/",
+                   FormatUrlPath(path)));
   std::string request_resource_field_name;
   if (verb == "post" || verb == "patch" || verb == "put") {
     std::string http_body =
@@ -80,9 +105,11 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     if (!request_resource_field_name.empty()) {
       params.push_back(request_resource_field_name);
     }
-    rpc_options.push_back(
-        absl::StrFormat("    option (google.api.method_signature) = \"%s\";",
-                        absl::StrJoin(params, ",")));
+    rpc_options.push_back(absl::StrFormat(
+        "    option (google.api.method_signature) = \"%s\";",
+        absl::StrJoin(params, ",", [](std::string* s, std::string const& p) {
+          *s += CamelCaseToSnakeCase(p);
+        })));
   }
 
   if (method_json.contains("response") &&
@@ -147,6 +174,63 @@ std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
     return absl::StrCat(method_name, CapitalizeFirstLetter(name_));
   }
   return method_name;
+}
+
+StatusOr<std::string> DiscoveryResource::JsonToProtoService() const {
+  std::vector<std::string> service_text;
+  auto constexpr kServiceComments =
+      R"""(Service for the %s resource. https://cloud.google.com/$product_name$/docs/reference/rest/$version$/%s
+)""";
+  service_text.push_back(
+      absl::StrFormat("service %s {", CapitalizeFirstLetter(name_)));
+  service_text.push_back(absl::StrFormat(
+      "  option (google.api.default_host) = \"%s\";", default_host_));
+  auto scopes = FormatOAuthScopes();
+  if (!scopes) return std::move(scopes).status();
+  service_text.push_back(
+      absl::StrFormat("  option (google.api.oauth_scopes) =\n%s\n", *scopes));
+
+  auto const& methods = json_.find("methods");
+  std::vector<std::string> rpcs_text;
+  for (auto iter = methods->begin(); iter != methods->end(); ++iter) {
+    std::vector<std::string> rpc_text;
+    std::string method_name = FormatMethodName(iter.key());
+    auto const& method_json = iter.value();
+
+    std::string request_type_key = absl::StrCat(method_name, "Request");
+    auto const& request_type = request_types_.find(request_type_key);
+    if (request_type == request_types_.end()) {
+      return internal::InvalidArgumentError(absl::StrFormat(
+          "Cannot find request_type_key=%s in type_map", request_type_key));
+    }
+
+    std::string response_type_name = "google.protobuf.Empty";
+    auto const& response = method_json.find("response");
+    if (response != method_json.end()) {
+      std::string ref = response->value("$ref", "");
+      if (!ref.empty()) {
+        response_type_name = absl::StrCat("google.cloud.cpp.compute.v1.", ref);
+      }
+    }
+
+    std::string method_description = method_json.value("description", "");
+    if (!method_description.empty()) {
+      rpc_text.push_back(FormatCommentBlock(method_description, 1));
+    }
+    rpc_text.push_back(absl::StrFormat("  rpc %s(%s) returns (%s) {",
+                                       method_name, request_type_key,
+                                       response_type_name));
+    auto rpc_options = FormatRpcOptions(method_json, *request_type->second);
+    if (!rpc_options) return std::move(rpc_options).status();
+    rpc_text.push_back(*rpc_options);
+    rpc_text.emplace_back("  }");
+    rpcs_text.push_back(absl::StrJoin(rpc_text, "\n"));
+  }
+
+  return absl::StrCat(
+      FormatCommentBlock(absl::StrFormat(kServiceComments, name_, name_), 0),
+      absl::StrJoin(service_text, "\n"), absl::StrJoin(rpcs_text, "\n\n"),
+      "\n}\n\n");
 }
 
 }  // namespace generator_internal
