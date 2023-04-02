@@ -221,7 +221,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/tpu/v1:tpu_cc_grpc" \
       "@com_google_googleapis//google/cloud/tpu/v2:tpu_cc_grpc"
   )"
-  ["trace"]="@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_grpc"
+  ["trace"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/devtools/cloudtrace/v1:cloudtrace_cc_grpc" \
+      "@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_grpc" \
+  )"
   ["translate"]="@com_google_googleapis//google/cloud/translate/v3:translation_cc_grpc"
   ["video"]="$(
     printf ",%s" \

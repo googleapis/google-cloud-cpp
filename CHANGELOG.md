@@ -127,6 +127,10 @@ The library has been expanded to include the Cloud Build repositories (2nd gen)
 API. Note that the client is tagged as experimental, because the service is
 still in [preview][product-launch-stages].
 
+### [Cloud Trace](/google/cloud/cloudbuild/README.md)
+
+The library has been expanded to include the v1 service.
+
 ### Testing
 
 We have stopped testing with MSVC 2017. Microsoft stopped mainstream support for
