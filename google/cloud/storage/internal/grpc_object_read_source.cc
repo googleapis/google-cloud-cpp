@@ -40,16 +40,9 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
     char* buf, std::size_t n) {
   using google::storage::v2::ReadObjectResponse;
 
-  auto buffer_manager = [buf, n](absl::string_view source, std::size_t offset) {
-    if (source.empty()) return std::make_pair(source, offset);
-    auto const nbytes = std::min(n - offset, source.size());
-    source.copy(buf + offset, nbytes);
-    return std::make_pair(source.substr(nbytes), offset + nbytes);
-  };
-
   storage::internal::ReadSourceResult result;
   result.response.status_code = storage::internal::HttpStatusCode::kContinue;
-  std::tie(spill_view_, result.bytes_received) = buffer_manager(spill_view_, 0);
+  result.bytes_received = buffer_.FillBuffer(buf, n);
 
   while (result.bytes_received < n && stream_) {
     auto watchdog = timer_source_().then([this](auto f) {
@@ -74,26 +67,23 @@ StatusOr<storage::internal::ReadSourceResult> GrpcObjectReadSource::Read(
       if (!status_.ok()) return status_;
       return result;
     }
-    HandleResponse(result, absl::get<ReadObjectResponse>(std::move(data)),
-                   buffer_manager);
+    HandleResponse(result, buf, n,
+                   absl::get<ReadObjectResponse>(std::move(data)));
   }
 
   return result;
 }
 
 void GrpcObjectReadSource::HandleResponse(
-    storage::internal::ReadSourceResult& result,
-    google::storage::v2::ReadObjectResponse response,
-    BufferManager buffer_manager) {
+    storage::internal::ReadSourceResult& result, char* buf, std::size_t n,
+    google::storage::v2::ReadObjectResponse response) {
   // The google.storage.v1.Storage documentation says this field can be
   // empty.
   if (response.has_checksummed_data()) {
-    // Sometimes protobuf bytes are not strings, but the explicit conversion
-    // always works.
-    spill_ = std::string(
+    auto const offset = result.bytes_received;
+    result.bytes_received += buffer_.HandleResponse(
+        buf + offset, n - offset,
         std::move(*response.mutable_checksummed_data()->mutable_content()));
-    std::tie(spill_view_, result.bytes_received) =
-        buffer_manager(spill_, result.bytes_received);
   }
   if (response.has_object_checksums()) {
     auto const& checksums = response.object_checksums();
