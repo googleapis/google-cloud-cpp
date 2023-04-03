@@ -15,6 +15,7 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_request.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/debug_string.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status.h"
@@ -68,6 +69,32 @@ StateFilter StateFilter::Done() {
   StateFilter state_filter;
   state_filter.value = "DONE";
   return state_filter;
+}
+
+std::string GetJobRequest::DebugString(TracingOptions const& options) const {
+  std::string out;
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  absl::StrAppend(&out, "GetJobRequest{", delim,
+                  "project_id=", internal::DebugString(project_id_, options),
+                  delim, "job_id=", internal::DebugString(job_id_, options),
+                  delim, internal::DebugString(location_, options), delim, "}");
+  return out;
+}
+
+std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
+  std::string out;
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  auto const* all_users = all_users_ ? "true" : "false";
+  absl::StrAppend(
+      &out, "ListJobsRequest{", delim,
+      "project_id=", internal::DebugString(project_id_, options), delim,
+      ", all_users=", all_users, delim, ", max_results=", max_results_, delim,
+      ", page_token=", internal::DebugString(page_token_, options), delim,
+      ", projection=", internal::DebugString(projection_.value, options), delim,
+      ", state_filter=", internal::DebugString(state_filter_.value, options),
+      delim, ", parent_job_id=", internal::DebugString(parent_job_id_, options),
+      delim, "}");
+  return out;
 }
 
 ListJobsRequest::ListJobsRequest(std::string project_id)

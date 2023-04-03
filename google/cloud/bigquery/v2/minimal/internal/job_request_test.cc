@@ -165,16 +165,34 @@ TEST(ListJobsRequestTest, EmptyProjectId) {
 TEST(ListJobsRequestTest, OutputStream) {
   auto const request = GetListJobsRequest();
   std::string all_users = request.all_users() ? "true" : "false";
-  std::string expected = absl::StrCat(
-      "ListJobsRequest{project_id=", request.project_id(),
-      ", all_users=", all_users, ", max_results=", request.max_results(),
-      ", page_token=", request.page_token(),
-      ", projection=", request.projection().value,
-      ", state_filter=", request.state_filter().value,
-      ", parent_job_id=", request.parent_job_id(), "}");
+  std::string expected =
+      "ListJobsRequest{project_id=1, all_users=true, max_results=10"
+      ", page_token=123, projection=FULL, state_filter=RUNNING"
+      ", parent_job_id=1}";
   std::ostringstream os;
   os << request;
   EXPECT_EQ(expected, os.str());
+}
+
+TEST(GetJobRequest, DebugString) {
+  GetJobRequest request("test-project-id", "test-job-id");
+  request.set_location("test-location");
+  std::string expected =
+      "GetJobRequest{ project_id=test-project-id job_id=test-job-id "
+      "test-location }";
+
+  EXPECT_EQ(expected, request.DebugString(TracingOptions{}));
+}
+
+TEST(ListJobsRequestTest, DebugString) {
+  auto const request = GetListJobsRequest();
+  std::string all_users = request.all_users() ? "true" : "false";
+  std::string expected =
+      "ListJobsRequest{ project_id=1 , all_users=true , max_results=10 , "
+      "page_token=123 , projection=FULL , state_filter=RUNNING , "
+      "parent_job_id=1 }";
+
+  EXPECT_EQ(expected, request.DebugString(TracingOptions{}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
