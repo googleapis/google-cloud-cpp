@@ -371,7 +371,7 @@ TEST(DiscoveryResourceTest, FormatMethodName) {
   EXPECT_THAT(r.FormatMethodName("testPermissions"), Eq("TestPermissions"));
 }
 
-TEST(DiscoveryResourceTest, JsonToProtoService) {
+TEST(DiscoveryResourceTest, JsonToProtobufService) {
   auto constexpr kGetRequestTypeJson = R"""({})""";
   auto constexpr kDoFooRequestTypeJson = R"""({
   "request_resource_field_name": "my_foo_resource"
@@ -416,7 +416,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
-  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.$product_name$.v1.Operation) {
     option (google.api.http) = {
       post: "base/path/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
       body: "my_foo_resource"
@@ -433,7 +433,6 @@ service MyResources {
     option (google.api.method_signature) = "project,region,foo";
   }
 }
-
 )""";
   auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
   ASSERT_TRUE(resource_json.is_object());
@@ -449,12 +448,12 @@ service MyResources {
   DiscoveryTypeVertex t2("DoFooRequest", do_foo_request_type_json);
   r.AddRequestType("GetMyResourcesRequest", &t);
   r.AddRequestType("DoFooRequest", &t2);
-  auto emitted_proto = r.JsonToProtoService();
+  auto emitted_proto = r.JsonToProtobufService();
   ASSERT_STATUS_OK(emitted_proto);
   EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
 }
 
-TEST(DiscoveryResourceTest, JsonToProtoServiceMissingOAuthScopes) {
+TEST(DiscoveryResourceTest, JsonToProtobufServiceMissingOAuthScopes) {
   auto constexpr kGetRequestTypeJson = R"""({})""";
   auto constexpr kResourceJson = R"""({
     "methods": {
@@ -478,14 +477,14 @@ TEST(DiscoveryResourceTest, JsonToProtoServiceMissingOAuthScopes) {
                       resource_json);
   DiscoveryTypeVertex t("GetMyResourcesRequest", get_request_type_json);
   r.AddRequestType("GetMyResourcesRequest", &t);
-  auto emitted_proto = r.JsonToProtoService();
+  auto emitted_proto = r.JsonToProtobufService();
   EXPECT_THAT(
       emitted_proto,
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("No OAuth scopes found for service: myResources.")));
 }
 
-TEST(DiscoveryResourceTest, JsonToProtoServiceMissingRequestType) {
+TEST(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
   auto constexpr kResourceJson = R"""({
     "methods": {
       "doFoo": {
@@ -509,7 +508,7 @@ TEST(DiscoveryResourceTest, JsonToProtoServiceMissingRequestType) {
   ASSERT_TRUE(resource_json.is_object());
   DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
                       resource_json);
-  auto emitted_proto = r.JsonToProtoService();
+  auto emitted_proto = r.JsonToProtobufService();
   EXPECT_THAT(
       emitted_proto,
       StatusIs(
@@ -517,7 +516,7 @@ TEST(DiscoveryResourceTest, JsonToProtoServiceMissingRequestType) {
           HasSubstr("Cannot find request_type_key=DoFooRequest in type_map")));
 }
 
-TEST(DiscoveryResourceTest, JsonToProtoServiceErrorFormattingRpcOptions) {
+TEST(DiscoveryResourceTest, JsonToProtobufServiceErrorFormattingRpcOptions) {
   auto constexpr kGetRequestTypeJson = R"""({})""";
   auto constexpr kResourceJson = R"""({
     "methods": {
@@ -543,7 +542,7 @@ TEST(DiscoveryResourceTest, JsonToProtoServiceErrorFormattingRpcOptions) {
                       resource_json);
   DiscoveryTypeVertex t("GetMyResourcesRequest", get_request_type_json);
   r.AddRequestType("GetMyResourcesRequest", &t);
-  auto emitted_proto = r.JsonToProtoService();
+  auto emitted_proto = r.JsonToProtobufService();
   EXPECT_THAT(
       emitted_proto,
       StatusIs(StatusCode::kInvalidArgument,
