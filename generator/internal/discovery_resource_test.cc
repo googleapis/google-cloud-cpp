@@ -416,7 +416,7 @@ service MyResources {
   option (google.api.oauth_scopes) =
     "https://www.googleapis.com/auth/cloud-platform";
 
-  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.$product_name$.v1.Operation) {
+  rpc DoFoo(DoFooRequest) returns (google.cloud.cpp.$product_name$.$version$.Operation) {
     option (google.api.http) = {
       post: "base/path/projects/{project}/zones/{zone}/myResources/{foo_id}/doFoo"
       body: "my_foo_resource"
