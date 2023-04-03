@@ -19,6 +19,7 @@ namespace docfx {
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 TEST(Doxygen2Markdown, Sect4) {
@@ -776,8 +777,8 @@ First paragraph.
 Second paragraph.)md";
 
   auto const cases = std::vector<std::string>{
-      "see", "return", "author",    "authors",   "version", "since", "date",
-      "pre", "post",   "copyright", "invariant", "par",     "rcs",
+      "see", "author", "authors",   "version",   "since", "date",
+      "pre", "post",   "copyright", "invariant", "par",   "rcs",
   };
 
   for (auto const& kind : cases) {
@@ -832,6 +833,23 @@ TEST(Doxygen2Markdown, SimpleSectBlockQuote) {
     auto const expected = std::string("\n\n") + test.header + kExpectedBody;
     EXPECT_EQ(expected, os.str());
   }
+}
+
+TEST(Doxygen2Markdown, SimpleSectReturn) {
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+        <simplesect id='test-node' kind='return'>
+          <para>First paragraph.</para>
+          <para>Second paragraph.</para>
+        </simplesect>
+    </doxygen>)xml";
+
+  pugi::xml_document doc;
+  doc.load_string(kXml);
+  auto selected = doc.select_node("//*[@id='test-node']");
+  std::ostringstream os;
+  ASSERT_TRUE(AppendIfSimpleSect(os, {}, selected.node()));
+  EXPECT_THAT(os.str(), IsEmpty());
 }
 
 TEST(Doxygen2Markdown, Anchor) {

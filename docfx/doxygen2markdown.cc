@@ -420,6 +420,11 @@ bool AppendIfDocTitleCmdGroup(std::ostream& os, MarkdownContext const& ctx,
 // </xsd:group>
 bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
                          pugi::xml_node const& node) {
+  auto const name = std::string_view{node.name()};
+  // <parameterlist> is part of the detailed description for functions. In
+  // DocFX YAML the parameters get their own YAML elements, and do not need
+  // to be documented in the markdown too.
+  if (name == "parameterlist") return true;
   if (AppendIfDocTitleCmdGroup(os, ctx, node)) return true;
   // Unexpected: hruler, preformatted
   if (AppendIfProgramListing(os, ctx, node)) return true;
@@ -430,7 +435,7 @@ bool AppendIfDocCmdGroup(std::ostream& os, MarkdownContext const& ctx,
   // Unexpected: title
   if (AppendIfVariableList(os, ctx, node)) return true;
   // Unexpected: table, header, dotfile, mscfile, diafile, toclist, language
-  // Unexpected: parameterlist, xrefsect, copydoc, blockquote, parblock
+  // Unexpected: xrefsect, copydoc, blockquote, parblock
   return false;
 }
 
@@ -742,8 +747,8 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   if (std::string_view{node.name()} != "simplesect") return false;
   static auto const* const kUseH6 = [] {
     return new std::unordered_set<std::string>{
-        "see", "return", "author",    "authors",   "version", "since", "date",
-        "pre", "post",   "copyright", "invariant", "par",     "rcs",
+        "see", "author", "authors",   "version",   "since", "date",
+        "pre", "post",   "copyright", "invariant", "par",   "rcs",
     };
   }();
 
@@ -756,6 +761,11 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
     nested = ctx;
     os << "\n\n###### ";
     AppendTitle(os, nested, node);
+  } else if (kind == "return") {
+    // In DocFX YAML the return description and type are captured as
+    // separate YAML elements. Including them in the markdown section would
+    // just repeat the text.
+    return true;
   } else if (kind == "note") {
     os << "\n";
     os << nested.paragraph_start << nested.paragraph_indent << "**Note:**";
