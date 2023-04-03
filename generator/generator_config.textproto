@@ -1783,6 +1783,16 @@ service {
 
 # Cloud Trace
 service {
+  service_proto_path: "google/devtools/cloudtrace/v1/trace.proto"
+  product_path: "google/cloud/trace/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  idempotency_overrides: [
+    {rpc_name: "TraceService.PatchTraces", idempotency: IDEMPOTENT}
+  ]
+}
+
+service {
   service_proto_path: "google/devtools/cloudtrace/v2/tracing.proto"
   product_path: "google/cloud/trace/v2"
   forwarding_product_path: "google/cloud/trace"
