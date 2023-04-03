@@ -46,7 +46,7 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
   if (open == std::string::npos) return path;
   std::string output;
   std::size_t current = 0;
-  while (open < path.length() && open != std::string::npos) {
+  while (open != std::string::npos) {
     absl::StrAppend(&output, path.substr(current, open - current + 1));
     current = open + 1;
     auto close = path.find('}', current);
@@ -176,7 +176,7 @@ std::string DiscoveryResource::FormatMethodName(std::string method_name) const {
   return method_name;
 }
 
-StatusOr<std::string> DiscoveryResource::JsonToProtoService() const {
+StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
   std::vector<std::string> service_text;
   auto constexpr kServiceComments =
       R"""(Service for the %s resource. https://cloud.google.com/$product_name$/docs/reference/rest/$version$/%s
@@ -209,7 +209,8 @@ StatusOr<std::string> DiscoveryResource::JsonToProtoService() const {
     if (response != method_json.end()) {
       std::string ref = response->value("$ref", "");
       if (!ref.empty()) {
-        response_type_name = absl::StrCat("google.cloud.cpp.compute.v1.", ref);
+        response_type_name =
+            absl::StrCat("google.cloud.cpp.$product_name$.v1.", ref);
       }
     }
 
@@ -222,7 +223,7 @@ StatusOr<std::string> DiscoveryResource::JsonToProtoService() const {
                                        response_type_name));
     auto rpc_options = FormatRpcOptions(method_json, *request_type->second);
     if (!rpc_options) return std::move(rpc_options).status();
-    rpc_text.push_back(*rpc_options);
+    rpc_text.push_back(*std::move(rpc_options));
     rpc_text.emplace_back("  }");
     rpcs_text.push_back(absl::StrJoin(rpc_text, "\n"));
   }
@@ -230,7 +231,7 @@ StatusOr<std::string> DiscoveryResource::JsonToProtoService() const {
   return absl::StrCat(
       FormatCommentBlock(absl::StrFormat(kServiceComments, name_, name_), 0),
       absl::StrJoin(service_text, "\n"), absl::StrJoin(rpcs_text, "\n\n"),
-      "\n}\n\n");
+      "\n}\n");
 }
 
 }  // namespace generator_internal
