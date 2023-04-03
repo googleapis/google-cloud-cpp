@@ -558,6 +558,9 @@
 ./include/google/cloud/tpu/v2/mocks
 ./include/google/cloud/trace
 ./include/google/cloud/trace/mocks
+./include/google/cloud/trace/v1
+./include/google/cloud/trace/v1/internal
+./include/google/cloud/trace/v1/mocks
 ./include/google/cloud/trace/v2
 ./include/google/cloud/trace/v2/internal
 ./include/google/cloud/trace/v2/mocks
@@ -636,6 +639,7 @@
 ./include/google/devtools/cloudprofiler
 ./include/google/devtools/cloudprofiler/v2
 ./include/google/devtools/cloudtrace
+./include/google/devtools/cloudtrace/v1
 ./include/google/devtools/cloudtrace/v2
 ./include/google/devtools/containeranalysis
 ./include/google/devtools/containeranalysis/v1
