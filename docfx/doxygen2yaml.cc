@@ -52,7 +52,8 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
   }
 }
 
-YamlContext NewYamlContext(YamlContext const& ctx, pugi::xml_node const& node) {
+YamlContext NestedYamlContext(YamlContext const& ctx,
+                              pugi::xml_node const& node) {
   auto const id = std::string{node.attribute("id").as_string()};
   auto nested = ctx;
   nested.parent_id = id;
@@ -206,7 +207,7 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
   }
   yaml << YAML::EndMap;
-  CompoundRecurse(yaml, NewYamlContext(ctx, node), node);
+  CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
   return true;
 }
 
