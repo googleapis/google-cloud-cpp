@@ -14,6 +14,7 @@
 
 #include "docfx/doxygen2yaml.h"
 #include "docfx/doxygen2markdown.h"
+#include "docfx/doxygen2syntax.h"
 #include "docfx/doxygen_errors.h"
 #include "docfx/yaml_emit.h"
 #include <sstream>
@@ -135,6 +136,7 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
        << YAML::Key << "type" << YAML::Value << "enum"                      //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
+  AppendEnumSyntax(yaml, ctx, node);
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
@@ -164,6 +166,7 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
        << YAML::Key << "type" << YAML::Value << "typedef"                   //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
+  AppendTypedefSyntax(yaml, ctx, node);
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;

@@ -217,6 +217,20 @@ items:
     type: enum
     langs:
       - cpp
+    syntax:
+      contents: |
+        enum class google::cloud::Idempotency {
+          kIdempotent,
+          kNonIdempotent,
+        };
+      source:
+        id: Idempotency
+        path: google/cloud/idempotency.h
+        startLine: 55
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/idempotency.h
     summary: |
       Whether a request is [idempotent](https://en.wikipedia.org/wiki/Idempotence).
 
@@ -315,6 +329,18 @@ items:
     type: typedef
     langs:
       - cpp
+    syntax:
+      contents: |
+        using google::cloud::BackgroundThreadsFactory =
+          std::function< std::unique_ptr< BackgroundThreads >()>;
+      source:
+        id: BackgroundThreadsFactory
+        path: google/cloud/grpc_options.h
+        startLine: 148
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/grpc_options.h
     summary: |
       A short description of the thing.
 
@@ -350,6 +376,18 @@ items:
     type: typedef
     langs:
       - cpp
+    syntax:
+      contents: |
+        using google::cloud::AccessTokenLifetimeOption::Type =
+          std::chrono::seconds;
+      source:
+        id: Type
+        path: google/cloud/credentials.h
+        startLine: 301
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/credentials.h
 )yml";
 
   pugi::xml_document doc;
