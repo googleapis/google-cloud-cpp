@@ -116,10 +116,11 @@ Working in your fork of `google-cloud-cpp`: bump the version numbers to the
 *next* version, i.e., one version past the release you just did above. Then
 send the PR for review against `main`. You need to:
 
-- In the top-level `CMakeLists.txt` file, increment the version number,
-  and set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to "rc".
-- Add a "vX.Y.Z - TBD" header, corresponding to the new version number,
-  to the `CHANGELOG.md` file.
+- In the top-level `CMakeLists.txt` file:
+  - Increment the version number in the `project()` function.
+  - Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to "rc".
+- In the `CHANGELOG.md` file:
+  - Add a "vX.Y.Z - TBD" header, corresponding to the new version number.
 - Update the ABI baseline to include the new version numbers in the inline
   namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will
   leave the updated ABI files in `ci/abi-dumps`, and also update the
