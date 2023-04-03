@@ -33,10 +33,10 @@ class DiscoveryResource {
 
   void AddRequestType(std::string name, DiscoveryTypeVertex const* type);
 
-  // Examines the provided the path and converts any parameter names in curly
-  // braces to snake case, e.g.
-  // "projects/{projectId}/zone/{zone}" yields
+  // Examines the provided path and converts any parameter names in curly braces
+  // to snake case, e.g. "projects/{projectId}/zone/{zone}" yields
   // "projects/{project_id}/zone/{zone}".
+  // It is the caller's responsibility to ensure curly braces exist in pairs.
   static std::string FormatUrlPath(std::string const& path);
 
   // Examines the method JSON to determine the google.api.http,
@@ -64,7 +64,7 @@ class DiscoveryResource {
   // are concatenated with the resource name.
   std::string FormatMethodName(std::string method_name) const;
 
-  StatusOr<std::string> JsonToProtoService() const;
+  StatusOr<std::string> JsonToProtobufService() const;
 
  private:
   std::string name_;
