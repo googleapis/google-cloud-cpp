@@ -119,7 +119,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.9.0 - TBD
+## v2.9.0 - 2023-04
 
 ### [Cloud Build](/google/cloud/cloudbuild/README.md)
 
@@ -127,9 +127,27 @@ The library has been expanded to include the Cloud Build repositories (2nd gen)
 API. Note that the client is tagged as experimental, because the service is
 still in [preview][product-launch-stages].
 
-### [Cloud Trace](/google/cloud/cloudbuild/README.md)
+### [Cloud Trace](/google/cloud/trace/README.md)
 
 The library has been expanded to include the v1 service.
+
+### [IAM](/google/cloud/iam/README.md)
+
+- fix(iam): override idempotency on idempotent POST methods ([#11045](https://github.com/googleapis/google-cloud-cpp/pull/11045))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add the final pieces for the RouteToLeaderOption ([#11112](https://github.com/googleapis/google-cloud-cpp/pull/11112))
+- feat(spanner): support "data boost" on partitioned queries and reads ([#10998](https://github.com/googleapis/google-cloud-cpp/pull/10998))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): reduce copies in `InsertObject()` ([#11014](https://github.com/googleapis/google-cloud-cpp/pull/11014))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: consume less entropy for PRNG ([#11102](https://github.com/googleapis/google-cloud-cpp/pull/11102))
+- feat(mocks): provide access to call options in client tests ([#11050](https://github.com/googleapis/google-cloud-cpp/pull/11050))
 
 ### Testing
 
