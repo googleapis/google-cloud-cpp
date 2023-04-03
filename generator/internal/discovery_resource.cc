@@ -42,20 +42,18 @@ void DiscoveryResource::AddRequestType(std::string name,
 }
 
 std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
-  auto open = path.find('{');
-  if (open == std::string::npos) return path;
   std::string output;
   std::size_t current = 0;
-  while (open != std::string::npos) {
+  for (auto open = path.find('{'); open != std::string::npos;
+       open = path.find('{', current)) {
     absl::StrAppend(&output, path.substr(current, open - current + 1));
     current = open + 1;
     auto close = path.find('}', current);
     absl::StrAppend(
         &output, CamelCaseToSnakeCase(path.substr(current, close - current)));
     current = close;
-    open = path.find('{', current);
   }
-  absl::StrAppend(&output, path.substr(current, open - current));
+  absl::StrAppend(&output, path.substr(current));
   return output;
 }
 
@@ -210,7 +208,7 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
       std::string ref = response->value("$ref", "");
       if (!ref.empty()) {
         response_type_name =
-            absl::StrCat("google.cloud.cpp.$product_name$.v1.", ref);
+            absl::StrCat("google.cloud.cpp.$product_name$.$version$.", ref);
       }
     }
 
