@@ -119,8 +119,6 @@ info, see [#7463] and [#5976].
 
 </details>
 
-## v2.10.0 - TBD
-
 ## v2.9.0 - 2023-04
 
 ### [Cloud Build](/google/cloud/cloudbuild/README.md)
@@ -129,7 +127,7 @@ The library has been expanded to include the Cloud Build repositories (2nd gen)
 API. Note that the client is tagged as experimental, because the service is
 still in [preview][product-launch-stages].
 
-### [Cloud Trace](/google/cloud/cloudbuild/README.md)
+### [Cloud Trace](/google/cloud/trace/README.md)
 
 The library has been expanded to include the v1 service.
 
