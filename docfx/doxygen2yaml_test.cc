@@ -111,6 +111,25 @@ auto constexpr kStructXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     </compounddef>
   </doxygen>)xml";
 
+auto constexpr kNamespaceXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1mocks" kind="namespace" language="C++">
+        <compoundname>google::cloud::mocks</compoundname>
+          <sectiondef kind="func">
+          </sectiondef>
+        <briefdescription>
+          <para>Contains helpers for testing the Google Cloud C++ Client Libraries.</para>
+        </briefdescription>
+        <detaileddescription>
+<para>The symbols defined in this namespace are part of
+<computeroutput>google-cloud-cpp</computeroutput>'s public API. Application
+developers may use them when mocking the client libraries in their own
+tests.</para>
+        </detaileddescription>
+        <location file="mocks/mock_stream_range.h" line="30" column="1"/>
+      </compounddef>
+    </doxygen>)xml";
+
 TEST(Doxygen2Yaml, IncludeInPublicDocs) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
@@ -361,6 +380,50 @@ items:
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfSectionDef(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Yaml, Namespace) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: namespacegoogle_1_1cloud_1_1mocks
+    name: google::cloud::mocks
+    id: namespacegoogle_1_1cloud_1_1mocks
+    parent: test-only-parent-id
+    type: namespace
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        namespace google::cloud::mocks { ... };
+      source:
+        id: google::cloud::mocks
+        path: google/cloud/mocks/mock_stream_range.h
+        startLine: 30
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/mocks/mock_stream_range.h
+    summary: |
+      Contains helpers for testing the Google Cloud C++ Client Libraries.
+
+      The symbols defined in this namespace are part of
+      `google-cloud-cpp`'s public API. Application
+      developers may use them when mocking the client libraries in their own
+      tests.
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kNamespaceXml);
+  auto selected =
+      doc.select_node("//*[@id='namespacegoogle_1_1cloud_1_1mocks']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfNamespace(yaml, ctx, selected.node()));
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
