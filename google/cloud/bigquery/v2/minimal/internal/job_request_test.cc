@@ -188,7 +188,7 @@ TEST(ListJobsRequestTest, DebugString) {
   auto const request = GetListJobsRequest();
   std::string all_users = request.all_users() ? "true" : "false";
   std::string expected =
-      "ListJobsRequest{project_id=1 , all_users=true , max_results=10 , "
+      "ListJobsRequest{ project_id=1 , all_users=true , max_results=10 , "
       "page_token=123 , projection=FULL , state_filter=RUNNING , "
       "parent_job_id=1 }";
 

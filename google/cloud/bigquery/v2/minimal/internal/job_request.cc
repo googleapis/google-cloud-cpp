@@ -86,8 +86,8 @@ std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
   auto const* delim = options.single_line_mode() ? " " : "\n";
   auto const* all_users = all_users_ ? "true" : "false";
   absl::StrAppend(
-      &out, "ListJobsRequest{project_id=",
-      internal::DebugString(project_id_, options), delim,
+      &out, "ListJobsRequest{", delim,
+      "project_id=", internal::DebugString(project_id_, options), delim,
       ", all_users=", all_users, delim, ", max_results=", max_results_, delim,
       ", page_token=", internal::DebugString(page_token_, options), delim,
       ", projection=", internal::DebugString(projection_.value, options), delim,
