@@ -23,26 +23,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::string Job::DebugString(TracingOptions const& options) const {
   std::string out;
-  absl::StrAppend(
-      &out, "Job{etag=", etag, ", kind=", kind, ", id=", id,
-      ", job_configuration={job_type=", configuration.job_type,
-      ", query=", configuration.query_config.query, "}", ", job_reference={",
-      "job_id=", reference.job_id, ", location=", reference.location,
-      ", project_id=", reference.project_id, "}", ", job_status=", status.state,
-      ", error_result=", status.error_result.message, "}");
-  return internal::DebugString(out, options);
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  absl::StrAppend(&out, "Job{", delim, "etag=", etag, delim, ", kind=", kind,
+                  delim, ", id=", id, delim, ", job_configuration={", delim,
+                  "job_type=", configuration.job_type, delim,
+                  ", query=", configuration.query_config.query, delim, "}",
+                  delim, ", job_reference={", delim,
+                  "job_id=", reference.job_id, delim,
+                  ", location=", reference.location, delim,
+                  ", project_id=", reference.project_id, delim, "}", delim,
+                  ", job_status=", status.state, delim,
+                  ", error_result=", status.error_result.message, delim, "}");
+  return out;
 }
 
 std::string ListFormatJob::DebugString(TracingOptions const& options) const {
   std::string out;
+  auto const* delim = options.single_line_mode() ? " " : "\n";
   absl::StrAppend(
-      &out, "ListFormatJob{id=", id, ", kind=", kind, ", state=", state,
-      ", job_configuration={job_type=", configuration.job_type,
-      ", query=", configuration.query_config.query, "}", ", job_reference={",
-      "job_id=", reference.job_id, ", location=", reference.location,
-      ", project_id=", reference.project_id, "}", ", job_status=", status.state,
-      ", error_result=", error_result.message, "}");
-  return internal::DebugString(out, options);
+      &out, "ListFormatJob{", delim, "id=", id, delim, ", kind=", kind, delim,
+      ", state=", state, delim, ", job_configuration={", delim,
+      "job_type=", configuration.job_type, delim,
+      ", query=", configuration.query_config.query, delim, "}", delim,
+      ", job_reference={", delim, "job_id=", reference.job_id, delim,
+      ", location=", reference.location, delim,
+      ", project_id=", reference.project_id, delim, "}",
+      ", job_status=", status.state, delim,
+      ", error_result=", error_result.message, delim, "}");
+  return out;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

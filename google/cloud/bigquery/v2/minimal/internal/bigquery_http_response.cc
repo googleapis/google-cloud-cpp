@@ -50,11 +50,12 @@ std::string BigQueryHttpResponse::DebugString(
   // Payload is not being printed as it may contain user sensitive data like
   // email, ldap etc.
   std::string out;
-  absl::StrAppend(&out, "BigQueryHttpResponse{Status_Code=", http_status_code,
-                  ", headers={",
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  absl::StrAppend(&out, "BigQueryHttpResponse{", delim,
+                  "Status_Code=", http_status_code, delim, ", headers={", delim,
                   absl::StrJoin(http_headers, ", ", absl::PairFormatter(": ")),
-                  "}}");
-  return internal::DebugString(out, options);
+                  delim, "}}");
+  return out;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -57,11 +57,12 @@ StatusOr<nlohmann::json> parse_json(std::string const& payload) {
 std::string DebugJobsString(std::vector<ListFormatJob> const& jobs,
                             TracingOptions const& options) {
   std::string out;
+  auto const* delim = options.single_line_mode() ? " " : "\n";
   for (auto const& j : jobs) {
     std::string jout;
-    absl::StrAppend(&out, j.DebugString(options), ",");
+    absl::StrAppend(&out, j.DebugString(options), delim);
   }
-  return internal::DebugString(out, options);
+  return out;
 }
 
 StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
@@ -83,10 +84,11 @@ StatusOr<GetJobResponse> GetJobResponse::BuildFromHttpResponse(
 
 std::string GetJobResponse::DebugString(TracingOptions const& options) const {
   std::string out;
-  absl::StrAppend(&out, "GetJobResponse{http_response={",
-                  http_response.DebugString(options), "}, job={",
-                  job.DebugString(options), "}");
-  return internal::DebugString(out, options);
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  absl::StrAppend(&out, "GetJobResponse{", delim, "http_response={", delim,
+                  http_response.DebugString(options), delim, "}", delim,
+                  ", job={", delim, job.DebugString(options), delim, "}");
+  return out;
 }
 
 StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
@@ -121,9 +123,11 @@ StatusOr<ListJobsResponse> ListJobsResponse::BuildFromHttpResponse(
 
 std::string ListJobsResponse::DebugString(TracingOptions const& options) const {
   std::string out;
-  absl::StrAppend(&out, "ListJobsResponse{http_response={",
-                  http_response.DebugString(options), "}, jobs={",
-                  DebugJobsString(jobs, options), "}");
+  auto const* delim = options.single_line_mode() ? " " : "\n";
+  absl::StrAppend(&out, "ListJobsResponse{", delim, "http_response={", delim,
+                  http_response.DebugString(options), delim, "}", delim,
+                  ", jobs={", delim, DebugJobsString(jobs, options), delim,
+                  "}");
   return internal::DebugString(out, options);
 }
 
