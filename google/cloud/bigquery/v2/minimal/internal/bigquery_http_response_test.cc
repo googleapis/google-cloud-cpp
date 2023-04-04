@@ -102,7 +102,7 @@ TEST(BigQueryHttpResponseTest, DebugString) {
   response.payload = payload;
   std::ostringstream os;
   std::string expected =
-      R"(BigQueryHttpResponse{Status_Code=200, headers={header1: value1}})";
+      "BigQueryHttpResponse{ Status_Code=200 , headers={ header1: value1 }}";
   EXPECT_EQ(expected, response.DebugString(TracingOptions{}));
 }
 
