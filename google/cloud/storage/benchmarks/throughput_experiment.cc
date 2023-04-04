@@ -15,6 +15,7 @@
 #include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <curl/curl.h>
@@ -372,7 +373,8 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     std::string generation = "[generation-N/A]";
     while (stream->Read(&response)) {
       if (response.has_checksummed_data()) {
-        bytes_received += response.checksummed_data().content().size();
+        bytes_received +=
+            storage_internal::GetContent(response.checksummed_data()).size();
       }
       if (response.has_metadata()) {
         generation = std::to_string(response.metadata().generation());

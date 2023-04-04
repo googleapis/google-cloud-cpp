@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -39,19 +40,23 @@ GrpcObjectReadSource::TimerSource MakeSimpleTimerSource() {
   return []() { return make_ready_future(false); };
 }
 
+void SetContent(storage_proto::ReadObjectResponse& response,
+                absl::string_view value) {
+  SetMutableContent(*response.mutable_checksummed_data(), ContentType(value));
+}
+
 TEST(GrpcObjectReadSource, Simple) {
   auto mock = std::make_unique<MockObjectMediaStream>();
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content("0123456789");
+        SetContent(response, "0123456789");
         return response;
       })
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content(
-            " The quick brown fox jumps over the lazy dog");
+        SetContent(response, " The quick brown fox jumps over the lazy dog");
         return response;
       })
       .WillOnce(Return(Status{}));
@@ -97,7 +102,7 @@ TEST(GrpcObjectReadSource, DataWithError) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content("0123456789");
+        SetContent(response, "0123456789");
         return response;
       })
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -127,7 +132,7 @@ TEST(GrpcObjectReadSource, UseSpillBuffer) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([&contents]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content(contents);
+        SetContent(response, contents);
         return response;
       })
       .WillOnce(Return(Status{}));
@@ -163,7 +168,7 @@ TEST(GrpcObjectReadSource, UseSpillBufferMany) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([&contents]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content(contents);
+        SetContent(response, contents);
         return response;
       })
       .WillOnce(Return(Status{}));
@@ -208,7 +213,7 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([&]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content("The quick brown");
+        SetContent(response, "The quick brown");
         response.mutable_object_checksums()->set_md5_hash(
             storage_internal::MD5ToProto(expected_md5).value());
         response.mutable_object_checksums()->set_crc32c(
@@ -217,8 +222,7 @@ TEST(GrpcObjectReadSource, CaptureChecksums) {
       })
       .WillOnce([&] {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content(
-            " fox jumps over the lazy dog");
+        SetContent(response, " fox jumps over the lazy dog");
         // The headers may be included more than once in the stream,
         // `GrpcObjectReadSource` should return them only once.
         response.mutable_object_checksums()->set_md5_hash(
@@ -256,14 +260,13 @@ TEST(GrpcObjectReadSource, CaptureGeneration) {
         // to return immediately.
         storage_proto::ReadObjectResponse response;
         response.mutable_metadata()->set_generation(1234);
-        response.mutable_checksummed_data()->set_content("The quick brown");
+        SetContent(response, "The quick brown");
         return response;
       })
       .WillOnce([&] {
         // The last response, without metadata or generation.
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content(
-            " fox jumps over the lazy dog");
+        SetContent(response, " fox jumps over the lazy dog");
         return response;
       })
       .WillOnce(Return(Status{}));
@@ -286,19 +289,19 @@ TEST(GrpcObjectReadSource, HandleEmptyResponses) {
       .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content("The quick brown ");
+        SetContent(response, "The quick brown ");
         return response;
       })
       .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content("fox jumps over ");
+        SetContent(response, "fox jumps over ");
         return response;
       })
       .WillOnce(make_empty_response)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content("the lazy dog");
+        SetContent(response, "the lazy dog");
         return response;
       })
       .WillOnce(Return(Status{}));
@@ -324,8 +327,8 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        response.mutable_checksummed_data()->set_content(
-            "The quick brown fox jumps over the lazy dog");
+        SetMutableContent(*response.mutable_checksummed_data(),
+                          "The quick brown fox jumps over the lazy dog");
         return response;
       })
       .WillOnce(Return(Status{}));

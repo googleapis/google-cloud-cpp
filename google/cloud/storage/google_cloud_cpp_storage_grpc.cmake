@@ -50,6 +50,7 @@ else ()
         internal/grpc_client.h
         internal/grpc_configure_client_context.cc
         internal/grpc_configure_client_context.h
+        internal/grpc_ctype_cord_workaround.h
         internal/grpc_hmac_key_metadata_parser.cc
         internal/grpc_hmac_key_metadata_parser.h
         internal/grpc_hmac_key_request_parser.cc
