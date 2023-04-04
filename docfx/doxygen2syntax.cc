@@ -129,8 +129,9 @@ std::string FunctionSyntaxContent(pugi::xml_node const& node) {
     }
     os << ">\n";
   }
-  os << LinkedTextType(node.child("type")) << "\n"
-     << node.child_value("qualifiedname") << " (";
+  auto const rettype = LinkedTextType(node.child("type"));
+  if (!rettype.empty()) os << rettype << "\n";
+  os << node.child_value("qualifiedname") << " (";
   auto sep = std::string_view();
   auto params = node.select_nodes("param");
   if (!params.empty()) {
@@ -201,11 +202,14 @@ void AppendFunctionSyntax(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::BeginMap                                           //
        << YAML::Key << "contents" << YAML::Value << YAML::Literal  //
        << FunctionSyntaxContent(node);
-  yaml << YAML::Key << "returns" << YAML::Value                //
-       << YAML::BeginMap                                       //
-       << YAML::Key << "var_type" << YAML::Value               //
-       << YAML::Literal << LinkedTextType(node.child("type"))  //
-       << YAML::EndMap;
+  auto const rettype = LinkedTextType(node.child("type"));
+  if (!rettype.empty()) {
+    yaml << YAML::Key << "returns" << YAML::Value   //
+         << YAML::BeginMap                          //
+         << YAML::Key << "var_type" << YAML::Value  //
+         << YAML::Literal << rettype                //
+         << YAML::EndMap;
+  }
   auto params = node.select_nodes("param");
   if (!params.empty()) {
     yaml << YAML::Key << "parameters" << YAML::Value  //
