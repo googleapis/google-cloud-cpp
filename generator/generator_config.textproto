@@ -1592,6 +1592,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/api/servicecontrol/v2/service_controller.proto"
+  product_path: "google/cloud/servicecontrol/v2"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Service Directory
 service {
   service_proto_path: "google/cloud/servicedirectory/v1/lookup_service.proto"
