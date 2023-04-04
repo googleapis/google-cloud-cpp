@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
 #include "google/cloud/storage/internal/crc32c.h"
+#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
 #include <iterator>
 #include <numeric>
@@ -237,7 +238,7 @@ class AsyncAccumulateReadObjectFullHandle
         partial.payload.begin(), partial.payload.end(), std::int64_t{0},
         [](std::int64_t a, google::storage::v2::ReadObjectResponse const& r) {
           if (!r.has_checksummed_data()) return a;
-          auto const s = r.checksummed_data().content().size();
+          auto const s = GetContent(r.checksummed_data()).size();
           return a + static_cast<std::int64_t>(s);
         });
     accumulator_.status = std::move(partial.status);
@@ -333,12 +334,12 @@ storage_experimental::AsyncReadObjectRangeResponse ToResponse(
   for (auto& r : accumulated.payload) {
     if (!r.has_checksummed_data()) continue;
     auto& data = *r.mutable_checksummed_data();
-    if (data.has_crc32c() && Crc32c(data.content()) != data.crc32c()) {
+    if (data.has_crc32c() && Crc32c(GetContent(data)) != data.crc32c()) {
       response.status = Status(StatusCode::kDataLoss,
                                "Mismatched CRC32C checksum in downloaded data");
       return response;
     }
-    response.contents.emplace_back(std::move(*data.mutable_content()));
+    response.contents.emplace_back(StealMutableContent(data));
   }
   response.object_metadata = [&] {
     for (auto& r : accumulated.payload) {

@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_object_read_source.h"
+#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc_object_metadata_parser.h"
+#include "google/cloud/internal/type_traits.h"
 #include "absl/strings/string_view.h"
 #include <algorithm>
 #include <limits>
@@ -83,7 +85,7 @@ void GrpcObjectReadSource::HandleResponse(
     auto const offset = result.bytes_received;
     result.bytes_received += buffer_.HandleResponse(
         buf + offset, n - offset,
-        std::move(*response.mutable_checksummed_data()->mutable_content()));
+        StealMutableContent(*response.mutable_checksummed_data()));
   }
   if (response.has_object_checksums()) {
     auto const& checksums = response.object_checksums();
