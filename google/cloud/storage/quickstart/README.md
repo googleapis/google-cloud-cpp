@@ -103,7 +103,7 @@ https://cloud.google.com/docs/authentication/production
    the dependencies:
 
    ```bash
-   cd $HOME/gooogle-cloud-cpp/google/cloud/storage/quickstart
+   cd $HOME/google-cloud-cpp/google/cloud/storage/quickstart
    cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
@@ -141,7 +141,7 @@ feature. To enable the feature add `-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON`
 to your CMake configuration step. Using the previous example:
 
 ```sh
-cd $HOME/gooogle-cloud-cpp/google/cloud/storage/quickstart
+cd $HOME/google-cloud-cpp/google/cloud/storage/quickstart
 cmake -H. -B.build -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON \
     -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build .build --target quickstart_grpc
