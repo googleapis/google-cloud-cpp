@@ -99,7 +99,7 @@ https://cloud.google.com/docs/authentication/production
    the dependencies:
 
    ```bash
-   cd $HOME/gooogle-cloud-cpp/google/cloud/vpcaccess/quickstart
+   cd $HOME/google-cloud-cpp/google/cloud/vpcaccess/quickstart
    cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```

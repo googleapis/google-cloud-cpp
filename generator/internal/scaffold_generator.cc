@@ -803,7 +803,7 @@ https://cloud.google.com/docs/authentication/production
    the dependencies:
 
    ```bash
-   cd $$HOME/gooogle-cloud-cpp/google/cloud/$library$/quickstart
+   cd $$HOME/google-cloud-cpp/google/cloud/$library$/quickstart
    cmake -H. -B.build -DCMAKE_TOOLCHAIN_FILE=$$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
    cmake --build .build
    ```
