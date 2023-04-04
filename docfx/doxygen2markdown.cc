@@ -757,15 +757,15 @@ bool AppendIfSimpleSect(std::ostream& os, MarkdownContext const& ctx,
   nested.paragraph_indent = ctx.paragraph_indent + "> ";
 
   auto const kind = std::string{node.attribute("kind").as_string()};
+  // In DocFX YAML the return description and type are captured as
+  // separate YAML elements. Including them in the markdown section would
+  // just repeat the text.
+  if (kind == "return") return true;
+
   if (kUseH6->count(kind) != 0) {
     nested = ctx;
     os << "\n\n###### ";
     AppendTitle(os, nested, node);
-  } else if (kind == "return") {
-    // In DocFX YAML the return description and type are captured as
-    // separate YAML elements. Including them in the markdown section would
-    // just repeat the text.
-    return true;
   } else if (kind == "note") {
     os << "\n";
     os << nested.paragraph_start << nested.paragraph_indent << "**Note:**";
