@@ -44,11 +44,20 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
     if (!IncludeInPublicDocuments(child)) continue;
     if (IgnoreForRecurse(child)) continue;
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
+    if (AppendIfNamespace(yaml, ctx, child)) continue;
     if (AppendIfEnumValue(yaml, ctx, child)) continue;
     if (AppendIfEnum(yaml, ctx, child)) continue;
     if (AppendIfTypedef(yaml, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
+}
+
+YamlContext NestedYamlContext(YamlContext const& ctx,
+                              pugi::xml_node const& node) {
+  auto const id = std::string{node.attribute("id").as_string()};
+  auto nested = ctx;
+  nested.parent_id = id;
+  return nested;
 }
 
 std::string Summary(pugi::xml_node const& node) {
@@ -179,6 +188,28 @@ bool AppendIfSectionDef(YAML::Emitter& yaml, YamlContext const& ctx,
                         pugi::xml_node const& node) {
   if (std::string_view{node.name()} != "sectiondef") return false;
   CompoundRecurse(yaml, ctx, node);
+  return true;
+}
+
+bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
+                       pugi::xml_node const& node) {
+  if (kind(node) != "namespace") return false;
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  auto const name = std::string_view{node.child("compoundname").child_value()};
+  yaml << YAML::BeginMap                                                    //
+       << YAML::Key << "uid" << YAML::Value << id                           //
+       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "id" << YAML::Value << id                            //
+       << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
+       << YAML::Key << "type" << YAML::Value << "namespace"                 //
+       << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
+  AppendNamespaceSyntax(yaml, ctx, node);
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  yaml << YAML::EndMap;
+  CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
   return true;
 }
 
