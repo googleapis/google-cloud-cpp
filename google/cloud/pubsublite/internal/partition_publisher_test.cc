@@ -49,6 +49,8 @@ using google::cloud::pubsublite::v1::Cursor;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
+using CursorRange =
+    google::cloud::pubsublite::v1::MessagePublishResponse::CursorRange;
 
 using ::google::cloud::pubsublite_testing::MockAlarmRegistry;
 using ::google::cloud::pubsublite_testing::MockAlarmRegistryCancelToken;
@@ -66,17 +68,18 @@ using ResumableAsyncReadWriteStream = std::unique_ptr<
 
 auto const kAlarmDuration = std::chrono::milliseconds(std::chrono::hours(1000));
 
-PublishRequest GetInitializerPublishRequest() {
-  PublishRequest publish_request;
-  *publish_request.mutable_initial_request() =
-      InitialPublishRequest::default_instance();
-  return publish_request;
-}
-
 PublishResponse GetInitializerPublishResponse() {
   PublishResponse pr;
   *pr.mutable_initial_response() = InitialPublishResponse::default_instance();
   return pr;
+}
+
+CursorRange MakeCursorRange(std::int64_t start_offset, int start, int end) {
+  CursorRange cursor_range;
+  cursor_range.mutable_start_cursor()->set_offset(start_offset);
+  cursor_range.set_start_index(start);
+  cursor_range.set_end_index(end);
+  return cursor_range;
 }
 
 class PartitionPublisherBatchingTest : public ::testing::Test {
@@ -89,9 +92,10 @@ class PartitionPublisherBatchingTest : public ::testing::Test {
   static std::deque<std::deque<MessagePromisePair>> TestCreateBatches(
       std::deque<MessagePromisePair> messages, BatchingOptions const& options) {
     std::deque<PartitionPublisher::MessageWithPromise> message_with_promises;
+    const PublishSequenceNumber unused_sequence = -1;
     for (auto& message_with_future : messages) {
       message_with_promises.emplace_back(PartitionPublisher::MessageWithPromise{
-          std::move(message_with_future.first),
+          std::move(message_with_future.first), unused_sequence,
           std::move(message_with_future.second)});
     }
     auto batches = PartitionPublisher::CreateBatches(
@@ -301,8 +305,9 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
 
 class PartitionPublisherTest : public ::testing::Test {
  protected:
-  PartitionPublisherTest()
-      : alarm_token_ref_{*(new StrictMock<MockAlarmRegistryCancelToken>)},
+  PartitionPublisherTest(std::string const& client_id)
+      : client_id_(client_id),
+        alarm_token_ref_{*(new StrictMock<MockAlarmRegistryCancelToken>)},
         resumable_stream_ref_{*(
             new StrictMock<MockResumableAsyncReaderWriter<PublishRequest,
                                                           PublishResponse>>)} {
@@ -319,6 +324,8 @@ class PartitionPublisherTest : public ::testing::Test {
     options.set_maximum_batch_message_count(kBatchBoundary_);
     options.set_alarm_period(kAlarmDuration);
 
+    InitialPublishRequest initial_request;
+    initial_request.set_client_id(client_id_);
     publisher_ = std::make_unique<PartitionPublisher>(
         [&](StreamInitializer<PublishRequest, PublishResponse> initializer) {
           // as this is a unit test, we mock the resumable stream behavior
@@ -327,8 +334,16 @@ class PartitionPublisherTest : public ::testing::Test {
           initializer_ = std::move(initializer);
           return absl::WrapUnique(&resumable_stream_ref_);
         },
-        std::move(options), InitialPublishRequest::default_instance(),
+        std::move(options), initial_request, initial_sequence_,
         alarm_registry_);
+  }
+
+  PartitionPublisherTest() : PartitionPublisherTest("publisher") {}
+
+  PublishRequest GetInitializerPublishRequest() {
+    PublishRequest publish_request;
+    publish_request.mutable_initial_request()->set_client_id(client_id_);
+    return publish_request;
   }
 
   static std::vector<PubSubMessage> CreateTestMessages(
@@ -343,15 +358,20 @@ class PartitionPublisherTest : public ::testing::Test {
     return individual_publish_messages;
   }
 
-  static PublishRequest ExpectedBatch(std::vector<PubSubMessage> const& tm,
-                                      std::size_t begin, std::size_t end) {
+  PublishRequest ExpectedBatch(std::vector<PubSubMessage> const& tm,
+                               std::size_t begin, std::size_t end) {
     PublishRequest r;
+    auto* message_publish_request = r.mutable_message_publish_request();
+    message_publish_request->set_first_sequence_number(initial_sequence_ +
+                                                       begin);
     for (auto i = begin; i != end; ++i)
-      *r.mutable_message_publish_request()->add_messages() = tm[i];
+      *message_publish_request->add_messages() = tm[i];
     return r;
   }
 
-  unsigned int const kBatchBoundary_ = 5;
+  unsigned int const kBatchBoundary_ = 10;
+  PublishSequenceNumber const initial_sequence_ = 100;
+  std::string const client_id_;
   StreamInitializer<PublishRequest, PublishResponse> initializer_;
   // we use *ref_ to maintain access to the underlying object of `std::move`d
   // `std::unique_ptr<>`s to call `EXPECT_CALL` on them at various points in
@@ -459,8 +479,10 @@ TEST_F(PartitionPublisherTest, InvalidReadResponse) {
       publisher_->Publish(PubSubMessage::default_instance());
 
   PublishRequest publish_request;
-  *publish_request.mutable_message_publish_request()->add_messages() =
-      PubSubMessage::default_instance();
+  auto* message_publish_request =
+      publish_request.mutable_message_publish_request();
+  *message_publish_request->add_messages() = PubSubMessage::default_instance();
+  message_publish_request->set_first_sequence_number(initial_sequence_);
   EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
@@ -521,7 +543,8 @@ TEST_F(PartitionPublisherTest, ReadFinishedWhenNothingInFlight) {
       publisher_->Publish(PubSubMessage::default_instance());
 
   PublishResponse pr;
-  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(0, 0, 1);
   promise<absl::optional<PublishResponse>> read_promise1;
   read_promise.set_value(std::move(pr));
 
@@ -746,6 +769,65 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
       publisher_->Publish(PubSubMessage::default_instance());
 
   PublishRequest publish_request;
+  auto* message_publish_request =
+      publish_request.mutable_message_publish_request();
+  *message_publish_request->add_messages() = PubSubMessage::default_instance();
+  message_publish_request->set_first_sequence_number(initial_sequence_);
+  EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  on_alarm_();
+
+  start_promise.set_value(Status(StatusCode::kInternal, "Permanent Error"));
+  read_promise.set_value(absl::optional<PublishResponse>());
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  publisher_->Shutdown().get();
+
+  auto message_response = publish_future.get();
+  EXPECT_FALSE(message_response);
+  EXPECT_EQ(message_response.status(),
+            Status(StatusCode::kInternal, "Permanent Error"));
+}
+
+class PartitionPublisherWithUnsetClientIdTest : public PartitionPublisherTest {
+ protected:
+  PartitionPublisherWithUnsetClientIdTest()
+      : PartitionPublisherTest(std::string()) {}
+};
+
+TEST_F(PartitionPublisherWithUnsetClientIdTest, SequenceNumbersUnset) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(resumable_stream_ref_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto underlying_stream = std::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(std::move(underlying_stream));
+
+  future<StatusOr<Cursor>> publish_future =
+      publisher_->Publish(PubSubMessage::default_instance());
+
+  // publish request should not have sequence number populated.
+  PublishRequest publish_request;
   *publish_request.mutable_message_publish_request()->add_messages() =
       PubSubMessage::default_instance();
   EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
@@ -753,6 +835,7 @@ TEST_F(PartitionPublisherTest, ResumableStreamPermanentError) {
 
   on_alarm_();
 
+  // the rest of the test is irrelevant.
   start_promise.set_value(Status(StatusCode::kInternal, "Permanent Error"));
   read_promise.set_value(absl::optional<PublishResponse>());
 
@@ -819,8 +902,10 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
       publisher_->Publish(PubSubMessage::default_instance());
 
   PublishRequest publish_request;
-  *publish_request.mutable_message_publish_request()->add_messages() =
-      PubSubMessage::default_instance();
+  auto* message_publish_request =
+      publish_request.mutable_message_publish_request();
+  *message_publish_request->add_messages() = PubSubMessage::default_instance();
+  message_publish_request->set_first_sequence_number(initial_sequence_);
 
   // the batch that is written should only contain a single empty message
   EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
@@ -829,7 +914,8 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGood) {
   on_alarm_();
 
   PublishResponse pr;
-  pr.mutable_message_response()->mutable_start_cursor()->set_offset(20);
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(20, 0, 1);
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
@@ -864,15 +950,18 @@ TEST_F(InitializedPartitionPublisherTest, SinglePublishGoodThroughFlush) {
       publisher_->Publish(PubSubMessage::default_instance());
 
   PublishRequest publish_request;
-  *publish_request.mutable_message_publish_request()->add_messages() =
-      PubSubMessage::default_instance();
+  auto* message_publish_request =
+      publish_request.mutable_message_publish_request();
+  *message_publish_request->add_messages() = PubSubMessage::default_instance();
+  message_publish_request->set_first_sequence_number(initial_sequence_);
   EXPECT_CALL(resumable_stream_ref_, Write(IsProtoEqual(publish_request)))
       .WillOnce(Return(ByMove(make_ready_future(true))));
 
   publisher_->Flush();
 
   PublishResponse pr;
-  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(0, 0, 1);
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   EXPECT_CALL(resumable_stream_ref_, Read)
@@ -949,7 +1038,8 @@ TEST_F(InitializedPartitionPublisherTest,
   on_alarm_();
 
   PublishResponse pr;
-  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(0, 0, 3);
   auto temp_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
   // expect continuous Reads
@@ -997,9 +1087,9 @@ TEST_F(InitializedPartitionPublisherTest,
 
   on_alarm_();
 
-  // push 11th unacked message
+  // push 21st unacked message
   publish_message_futures.push_back(
-      publisher_->Publish(individual_publish_messages[10]));
+      publisher_->Publish(individual_publish_messages[2 * kBatchBoundary_]));
 
   // expect a reinitialize because Write call fails with false
   underlying_stream = std::make_unique<StrictMock<AsyncReaderWriter>>();
@@ -1043,7 +1133,8 @@ TEST_F(InitializedPartitionPublisherTest,
   for (std::size_t i = 0; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
     PublishResponse pr;
-    pr.mutable_message_response()->mutable_start_cursor()->set_offset(i);
+    *pr.mutable_message_response()->add_cursor_ranges() =
+        MakeCursorRange(i, 0, kBatchBoundary_);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
     // expect continuous Read calls
@@ -1075,7 +1166,7 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
   auto individual_publish_messages =
       CreateTestMessages(2 * kBatchBoundary_ + 1);
 
-  // publish first 10 messages but not acked
+  // publish first 2 batches but not acked
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
   for (unsigned int i = 0; i != 2 * kBatchBoundary_; ++i) {
     publish_message_futures.push_back(
@@ -1098,9 +1189,9 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
 
   on_alarm_();
 
-  // send 11th unacked message
+  // send 21st unacked message
   publish_message_futures.push_back(
-      publisher_->Publish(individual_publish_messages[10]));
+      publisher_->Publish(individual_publish_messages[2 * kBatchBoundary_]));
 
   // expect reinitialize
   underlying_stream = std::make_unique<StrictMock<AsyncReaderWriter>>();
@@ -1144,7 +1235,8 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteBeforeRead) {
   for (std::size_t i = 0; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
     PublishResponse pr;
-    pr.mutable_message_response()->mutable_start_cursor()->set_offset(i);
+    *pr.mutable_message_response()->add_cursor_ranges() =
+        MakeCursorRange(i, 0, kBatchBoundary_);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
     EXPECT_CALL(resumable_stream_ref_, Read)
@@ -1194,7 +1286,8 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
       .WillOnce(Return(ByMove(write_promise.get_future())));
 
   PublishResponse pr;
-  pr.mutable_message_response()->mutable_start_cursor()->set_offset(0);
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(0, 0, kBatchBoundary_);
 
   auto temp_read_promise = std::move(read_promise_);
   read_promise_ = promise<absl::optional<PublishResponse>>{};
@@ -1205,9 +1298,9 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
   // first Read is successful so first kBatchBoundary_ messages are acked
   temp_read_promise.set_value(std::move(pr));
 
-  // send 11th unacked message
+  // send 21st unacked message
   publish_message_futures.push_back(
-      publisher_->Publish(individual_publish_messages[10]));
+      publisher_->Publish(individual_publish_messages[2 * kBatchBoundary_]));
 
   // assert that first kBatchBoundary_ messages are acked
   for (unsigned int i = 0; i != kBatchBoundary_; ++i) {
@@ -1255,7 +1348,8 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
   for (std::size_t i = kBatchBoundary_; i < individual_publish_messages.size();
        i += kBatchBoundary_) {
     PublishResponse pr1;
-    pr1.mutable_message_response()->mutable_start_cursor()->set_offset(i);
+    *pr1.mutable_message_response()->add_cursor_ranges() =
+        MakeCursorRange(i, 0, kBatchBoundary_);
     temp_read_promise = std::move(read_promise_);
     read_promise_ = promise<absl::optional<PublishResponse>>{};
     // expect continuous Reads
@@ -1271,6 +1365,56 @@ TEST_F(InitializedPartitionPublisherTest, RetryAfterSuccessfulWriteAfterRead) {
     EXPECT_TRUE(message_response);
     EXPECT_EQ(message_response->offset(), i);
   }
+}
+
+TEST_F(InitializedPartitionPublisherTest, HandlesMissingCursorRanges) {
+  InSequence seq;
+
+  auto underlying_stream = std::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(std::move(underlying_stream));
+
+  auto individual_publish_messages = CreateTestMessages(7);
+
+  std::vector<future<StatusOr<Cursor>>> publish_message_futures;
+  for (auto& message : individual_publish_messages) {
+    publish_message_futures.push_back(publisher_->Publish(message));
+  }
+
+  EXPECT_CALL(
+      resumable_stream_ref_,
+      Write(IsProtoEqual(ExpectedBatch(individual_publish_messages, 0, 7))))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+
+  // publish the batch
+  on_alarm_();
+
+  PublishResponse pr;
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(50, 4, 5);
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(80, 5, 6);
+  *pr.mutable_message_response()->add_cursor_ranges() =
+      MakeCursorRange(10, 1, 3);
+  auto temp_promise = std::move(read_promise_);
+  read_promise_ = promise<absl::optional<PublishResponse>>{};
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(Return(ByMove(read_promise_.get_future())));
+  temp_promise.set_value(std::move(pr));
+
+  // assert that all messages are acked
+  EXPECT_EQ(publish_message_futures[0].get()->offset(), -1);
+  EXPECT_EQ(publish_message_futures[1].get()->offset(), 10);
+  EXPECT_EQ(publish_message_futures[2].get()->offset(), 11);
+  EXPECT_EQ(publish_message_futures[3].get()->offset(), -1);
+  EXPECT_EQ(publish_message_futures[4].get()->offset(), 50);
+  EXPECT_EQ(publish_message_futures[5].get()->offset(), 80);
+  EXPECT_EQ(publish_message_futures[6].get()->offset(), -1);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

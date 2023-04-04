@@ -28,13 +28,15 @@ using google::cloud::pubsublite::v1::MessagePublishRequest;
 using google::cloud::pubsublite::v1::PublishRequest;
 using google::cloud::pubsublite::v1::PublishResponse;
 using google::cloud::pubsublite::v1::PubSubMessage;
+using CursorRange =
+    google::cloud::pubsublite::v1::MessagePublishResponse::CursorRange;
 
 PartitionPublisher::PartitionPublisher(
     absl::FunctionRef<std::unique_ptr<ResumableStream>(
         StreamInitializer<PublishRequest, PublishResponse>)>
         resumable_stream_factory,
     BatchingOptions batching_options, InitialPublishRequest ipr,
-    AlarmRegistry& alarm_registry)
+    PublishSequenceNumber initial_sequence, AlarmRegistry& alarm_registry)
     : batching_options_{std::move(batching_options)},
       initial_publish_request_{std::move(ipr)},
       resumable_stream_{resumable_stream_factory(
@@ -42,6 +44,7 @@ PartitionPublisher::PartitionPublisher(
             return Initializer(std::move(stream));
           })},
       service_composite_{resumable_stream_.get()},
+      next_sequence_(initial_sequence),
       cancel_token_{alarm_registry.RegisterAlarm(
           batching_options_.alarm_period(), [this] { Flush(); })} {}
 
@@ -70,7 +73,8 @@ future<StatusOr<Cursor>> PartitionPublisher::Publish(PubSubMessage m) {
   if (!status.ok()) {
     return make_ready_future(StatusOr<Cursor>(std::move(status)));
   }
-  MessageWithPromise unbatched{std::move(m), promise<StatusOr<Cursor>>{}};
+  MessageWithPromise unbatched{std::move(m), next_sequence_++,
+                               promise<StatusOr<Cursor>>{}};
   future<StatusOr<Cursor>> message_future =
       unbatched.message_promise.get_future();
   unbatched_messages_.emplace_back(std::move(unbatched));
@@ -118,7 +122,12 @@ void PartitionPublisher::WriteBatches() {
   PublishRequest publish_request;
   MessagePublishRequest& message_publish_request =
       *publish_request.mutable_message_publish_request();
-  for (auto& message : in_flight_batches_.back()) {
+  auto& batch = in_flight_batches_.back();
+  if (!initial_publish_request_.client_id().empty()) {
+    message_publish_request.set_first_sequence_number(
+        batch.front().sequence_number);
+  }
+  for (auto& message : batch) {
     // don't move so that messages can be rewritten on failure
     *message_publish_request.add_messages() = message.message;
   }
@@ -159,11 +168,30 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
                "Server sent message response when no batches were "
                "outstanding."));
   }
-  std::int64_t offset = response->message_response().start_cursor().offset();
-  for (auto& message : batch) {
+
+  // ensure cursor ranges are sorted by increasing message batch index
+  auto* ranges = response->mutable_message_response()->mutable_cursor_ranges();
+  std::sort(ranges->begin(), ranges->end(),
+            [](CursorRange const& a, CursorRange const& b) {
+              return a.start_index() < b.start_index();
+            });
+  std::size_t range_idx = 0;
+  for (std::size_t msg_idx = 0; msg_idx < batch.size(); ++msg_idx) {
+    auto& message = batch[msg_idx];
+    if (range_idx < ranges->size() &&
+        ranges->Get(range_idx).end_index() <= msg_idx) {
+      ++range_idx;
+    }
+    std::int64_t offset = -1;
+    if (range_idx < ranges->size() &&
+        msg_idx >= ranges->Get(range_idx).start_index() &&
+        msg_idx < ranges->Get(range_idx).end_index()) {
+      const auto& range = ranges->Get(range_idx);
+      std::int64_t offset_in_range = msg_idx - range.start_index();
+      offset = range.start_cursor().offset() + offset_in_range;
+    }
     Cursor c;
     c.set_offset(offset);
-    ++offset;
     message.message_promise.set_value(std::move(c));
   }
   Read();

@@ -63,6 +63,15 @@ struct PublishFlushAlarmPeriodOption {
   using Type = std::chrono::milliseconds;
 };
 
+/**
+ * Whether idempotence is enabled, where the server will ensure that unique
+ * messages within a single publisher session are stored only once. The default
+ * is true.
+ */
+struct EnablePublishIdempotenceOption {
+  using Type = bool;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
 }  // namespace cloud

@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/containing_publisher_connection.h"
 #include "google/cloud/pubsublite/internal/admin_connection_impl.h"
 #include "google/cloud/pubsublite/internal/alarm_registry_impl.h"
+#include "google/cloud/pubsublite/internal/client_id_generator.h"
 #include "google/cloud/pubsublite/internal/batching_options.h"
 #include "google/cloud/pubsublite/internal/default_publish_message_transformer.h"
 #include "google/cloud/pubsublite/internal/default_routing_policy.h"
@@ -147,10 +148,18 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
   auto publisher_service_stub = CreateDefaultPublisherServiceStub(cq, opts);
   auto batching_options = MakeBatchingOptions(opts);
 
+  bool enable_idempotence = true;
+  if (opts.has<EnablePublishIdempotenceOption>()) {
+    enable_idempotence = opts.get<EnablePublishIdempotenceOption>();
+  }
+  std::string client_id;
+  if (enable_idempotence) client_id = pubsublite_internal::GenerateClientId();
+
   auto partition_publisher_factory = [=](std::uint32_t partition) {
     InitialPublishRequest request;
     request.set_topic(topic.FullName());
     request.set_partition(partition);
+    request.set_client_id(client_id);
     AlarmRegistryImpl alarm_registry{cq};
     auto stream_factory = MakeStreamFactory(
         publisher_service_stub, cq, MakeClientMetadata(topic, partition));
@@ -161,7 +170,7 @@ StatusOr<std::unique_ptr<PublisherConnection>> MakePublisherConnection(
               [] { return std::make_unique<StreamRetryPolicy>(); },
               backoff_policy, sleeper, stream_factory, std::move(initializer));
         },
-        batching_options, std::move(request), alarm_registry);
+        batching_options, std::move(request), 0, alarm_registry);
   };
 
   AlarmRegistryImpl alarm_registry{cq};

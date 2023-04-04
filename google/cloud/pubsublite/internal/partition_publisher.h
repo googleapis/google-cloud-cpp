@@ -30,6 +30,8 @@ namespace cloud {
 namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using PublishSequenceNumber = std::int64_t;
+
 class PartitionPublisher
     : public Publisher<google::cloud::pubsublite::v1::Cursor> {
  private:
@@ -46,7 +48,7 @@ class PartitionPublisher
           StreamInitializer<google::cloud::pubsublite::v1::PublishRequest,
                             google::cloud::pubsublite::v1::PublishResponse>)>,
       BatchingOptions, google::cloud::pubsublite::v1::InitialPublishRequest,
-      AlarmRegistry&);
+      PublishSequenceNumber, AlarmRegistry&);
 
   ~PartitionPublisher() override;
 
@@ -62,6 +64,7 @@ class PartitionPublisher
  private:
   struct MessageWithPromise {
     google::cloud::pubsublite::v1::PubSubMessage message;
+    PublishSequenceNumber sequence_number;
     promise<StatusOr<google::cloud::pubsublite::v1::Cursor>> message_promise;
   };
 
@@ -103,6 +106,7 @@ class PartitionPublisher
       in_flight_batches_;                  // ABSL_GUARDED_BY(mu_)
   bool writing_ = false;                   // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<void>> reading_;  // ABSL_GUARDED_BY(mu_)
+  PublishSequenceNumber next_sequence_;    // ABSL_GUARDED_BY(mu_)
 
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
 
