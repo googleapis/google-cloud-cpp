@@ -6,6 +6,7 @@
 ./include/google/api/apikeys/v2
 ./include/google/api/servicecontrol
 ./include/google/api/servicecontrol/v1
+./include/google/api/servicecontrol/v2
 ./include/google/api/servicemanagement
 ./include/google/api/servicemanagement/v1
 ./include/google/api/serviceusage
@@ -494,6 +495,9 @@
 ./include/google/cloud/servicecontrol/v1
 ./include/google/cloud/servicecontrol/v1/internal
 ./include/google/cloud/servicecontrol/v1/mocks
+./include/google/cloud/servicecontrol/v2
+./include/google/cloud/servicecontrol/v2/internal
+./include/google/cloud/servicecontrol/v2/mocks
 ./include/google/cloud/servicedirectory
 ./include/google/cloud/servicedirectory/mocks
 ./include/google/cloud/servicedirectory/v1

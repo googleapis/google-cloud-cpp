@@ -104,6 +104,7 @@ expected_dirs+=(
   ./include/google/logging/type
   ./include/google/longrunning
   ./include/google/rpc
+  ./include/google/rpc/context
   ./include/google/spanner/v1
   ./include/google/type
   ./include/grafeas
