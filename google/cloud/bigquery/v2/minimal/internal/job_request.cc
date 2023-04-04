@@ -88,9 +88,11 @@ std::string GetJobRequest::DebugString(TracingOptions const& options) const {
     return absl::StrCat("\"", internal::DebugString(s, options), "\"");
   };
   return absl::StrCat(
-      "google::cloud::bigquery_v2_minimal_internal::GetJobRequest {", sep(1),
-      "project_id: ", quoted(project_id_), sep(1), "job_id: ", quoted(job_id_),
-      sep(1), "location: ", quoted(location_), sep(0), "}");
+      "google::cloud::bigquery_v2_minimal_internal::GetJobRequest {",  //
+      sep(1), "project_id: ", quoted(project_id_),                     //
+      sep(1), "job_id: ", quoted(job_id_),                             //
+      sep(1), "location: ", quoted(location_),                         //
+      sep(0), "}");
 }
 
 std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
@@ -101,20 +103,25 @@ std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
     return absl::StrCat("\"", internal::DebugString(s, options), "\"");
   };
   return absl::StrCat(
-      "google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {", sep(1),
-      "project_id: ", quoted(project_id_), sep(1),
-      "all_users: ", all_users_ ? "true" : "false", sep(1),
-      "max_results: ", max_results_, sep(1),  //
-      "min_creation_time {", sep(2), "\"",
-      internal::FormatRfc3339(min_creation_time_), "\"", sep(1), "}", sep(1),
-      "max_creation_time {", sep(2), "\"",
-      internal::FormatRfc3339(max_creation_time_), "\"", sep(1), "}", sep(1),
-      "page_token: ", quoted(page_token_), sep(1),  //
-      "projection {", sep(2),                       //
-      "value: ", quoted(projection_.value), sep(1), "}", sep(1),
-      "state_filter {", sep(2),  //
-      "value: ", quoted(state_filter_.value), sep(1), "}", sep(1),
-      "parent_job_id: ", quoted(parent_job_id_), sep(0), "}");
+      "google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {",  //
+      sep(1), "project_id: ", quoted(project_id_),                       //
+      sep(1), "all_users: ", all_users_ ? "true" : "false",              //
+      sep(1), "max_results: ", max_results_,                             //
+      sep(1), "min_creation_time {",                                     //
+      sep(2), "\"", internal::FormatRfc3339(min_creation_time_), "\"",   //
+      sep(1), "}",                                                       //
+      sep(1), "max_creation_time {",                                     //
+      sep(2), "\"", internal::FormatRfc3339(max_creation_time_), "\"",   //
+      sep(1), "}",                                                       //
+      sep(1), "page_token: ", quoted(page_token_),                       //
+      sep(1), "projection {",                                            //
+      sep(2), "value: ", quoted(projection_.value),                      //
+      sep(1), "}",                                                       //
+      sep(1), "state_filter {",                                          //
+      sep(2), "value: ", quoted(state_filter_.value),                    //
+      sep(1), "}",                                                       //
+      sep(1), "parent_job_id: ", quoted(parent_job_id_),                 //
+      sep(0), "}");
 }
 
 ListJobsRequest::ListJobsRequest(std::string project_id)
