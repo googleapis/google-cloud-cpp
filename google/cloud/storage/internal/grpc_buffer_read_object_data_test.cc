@@ -38,8 +38,7 @@ TEST(GrpcBufferReadObjectData, SimpleString) {
     actual.append(buf, buf + n);
     return n;
   };
-  for (auto n = response(); n == kBufferSize; n = fill())
-    ;
+  for (auto n = response(); n == kBufferSize; n = fill()) continue;
   EXPECT_EQ(actual, contents);
 }
 
@@ -61,8 +60,7 @@ TEST(GrpcBufferReadObjectData, SimpleCord) {
     actual.append(buf, buf + n);
     return n;
   };
-  for (auto n = response(); n == kBufferSize; n = fill())
-    ;
+  for (auto n = response(); n == kBufferSize; n = fill()) continue;
   EXPECT_EQ(actual, contents);
 }
 

@@ -17,7 +17,6 @@
 
 #include "google/cloud/version.h"
 #include "absl/strings/cord.h"
-#include "absl/strings/string_view.h"
 #include <string>
 
 namespace google {
@@ -30,15 +29,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * The client library API to download objects keeps the download open until all
  * the data is received (or the download is interrupted by the application).
- * While downloading data, the application requests fixed amounts of data. This
- * may be smaller than the amount of data received in a
+ * While downloading, the application requests fixed amounts of data, which may
+ * be smaller than the amount of data received in a
  * `google.storage.v2.ReadObjectResponse` message. This class buffers any
  * excess data until the application requests more.
  *
  * It may be possible to further optimize this class by using `std::string` and
  * `absl::string_view` if `g.c.s.v2.ChecksummedData` does not use `absl::Cord`.
  * We expect that case to be rare in the near future, and while it would save
- * some allocations, but will not save any data copies. The data copies are
+ * some allocations, it will not save any data copies. The data copies are
  * shown to be more expensive in our experiments.
  */
 class GrpcBufferReadObjectData {
@@ -49,15 +48,15 @@ class GrpcBufferReadObjectData {
   std::size_t FillBuffer(char* buffer, std::size_t n);
 
   /**
-   *  Save @p contents in the internal buffers and use them to fill @p buffer.
+   * Save @p contents in the internal buffers and use them to fill @p buffer.
    *
    * This overload is used when Protobuf does **not** implement `[ctype = CORD]`
-   * or if the storage service proto files lacks this annotation.
+   * or if the storage service proto files lack this annotation.
    */
   std::size_t HandleResponse(char* buffer, std::size_t n, std::string contents);
 
   /**
-   *  Save @p contents in the internal buffers and use them to fill @p buffer.
+   * Save @p contents in the internal buffers and use them to fill @p buffer.
    *
    * This overload is used when Protobuf implements `[ctype = CORD]` and the
    * storage service proto files use this annotation.

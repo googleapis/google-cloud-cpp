@@ -22,7 +22,7 @@ namespace storage_internal {
 std::size_t GrpcBufferReadObjectData::FillBuffer(char* buffer, std::size_t n) {
   std::size_t offset = 0;
   for (auto v : spill_view_.Chunks()) {
-    if (offset >= n) break;
+    if (offset == n) break;
     auto const count = std::min(v.size(), n - offset);
     std::copy(v.data(), v.data() + count, buffer + offset);
     offset += count;
@@ -34,9 +34,7 @@ std::size_t GrpcBufferReadObjectData::FillBuffer(char* buffer, std::size_t n) {
 std::size_t GrpcBufferReadObjectData::HandleResponse(char* buffer,
                                                      std::size_t n,
                                                      std::string contents) {
-  contents_ = absl::Cord(std::move(contents));
-  spill_view_ = contents_;
-  return FillBuffer(buffer, n);
+  return HandleResponse(buffer, n, absl::Cord(std::move(contents)));
 }
 
 std::size_t GrpcBufferReadObjectData::HandleResponse(char* buffer,
