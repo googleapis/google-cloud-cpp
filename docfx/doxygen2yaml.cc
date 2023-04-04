@@ -188,6 +188,31 @@ bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
   return true;
 }
 
+bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
+                      pugi::xml_node const& node) {
+  if (kind(node) != "variable") return false;
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  auto const name = std::string_view{node.child("name").child_value()};
+  auto const qualified_name =
+      std::string_view{node.child("qualifiedname").child_value()};
+  yaml << YAML::BeginMap                                                    //
+       << YAML::Key << "uid" << YAML::Value << id                           //
+       << YAML::Key << "name" << YAML::Value << YAML::Literal << name       //
+       << YAML::Key << "fullName"                                           //
+       << YAML::Value << YAML::Literal << qualified_name                    //
+       << YAML::Key << "id" << YAML::Value << id                            //
+       << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
+       << YAML::Key << "type" << YAML::Value << "variable"                  //
+       << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
+  AppendVariableSyntax(yaml, ctx, node);
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  yaml << YAML::EndMap;
+  return true;
+}
+
 bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node) {
   if (kind(node) != "function") return false;

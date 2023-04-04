@@ -171,6 +171,148 @@ auto constexpr kStructXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     </compounddef>
   </doxygen>)xml";
 
+auto constexpr kStruct2Xml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+  <doxygen>
+    <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1LogRecord" kind="struct" language="C++" prot="public">
+        <compoundname>google::cloud::LogRecord</compoundname>
+        <includes refid="log_8h" local="no">google/cloud/log.h</includes>
+          <sectiondef kind="public-attrib">
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc" prot="public" static="no" mutable="no">
+            <type><ref refid="namespacegoogle_1_1cloud_1aeeb9b9a1eeb3fc7f6ff13bd078172922" kindref="member">Severity</ref></type>
+            <definition>Severity google::cloud::LogRecord::severity</definition>
+            <argsstring/>
+            <name>severity</name>
+            <qualifiedname>google::cloud::LogRecord::severity</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="152" column="12" bodyfile="log.h" bodystart="152" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6" prot="public" static="no" mutable="no">
+            <type>std::string</type>
+            <definition>std::string google::cloud::LogRecord::function</definition>
+            <argsstring/>
+            <name>function</name>
+            <qualifiedname>google::cloud::LogRecord::function</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="153" column="15" bodyfile="log.h" bodystart="153" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6" prot="public" static="no" mutable="no">
+            <type>std::string</type>
+            <definition>std::string google::cloud::LogRecord::filename</definition>
+            <argsstring/>
+            <name>filename</name>
+            <qualifiedname>google::cloud::LogRecord::filename</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="154" column="15" bodyfile="log.h" bodystart="154" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0" prot="public" static="no" mutable="no">
+            <type>int</type>
+            <definition>int google::cloud::LogRecord::lineno</definition>
+            <argsstring/>
+            <name>lineno</name>
+            <qualifiedname>google::cloud::LogRecord::lineno</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="155" column="7" bodyfile="log.h" bodystart="155" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834" prot="public" static="no" mutable="no">
+            <type>std::thread::id</type>
+            <definition>std::thread::id google::cloud::LogRecord::thread_id</definition>
+            <argsstring/>
+            <name>thread_id</name>
+            <qualifiedname>google::cloud::LogRecord::thread_id</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="156" column="19" bodyfile="log.h" bodystart="156" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152" prot="public" static="no" mutable="no">
+            <type>std::chrono::system_clock::time_point</type>
+            <definition>std::chrono::system_clock::time_point google::cloud::LogRecord::timestamp</definition>
+            <argsstring/>
+            <name>timestamp</name>
+            <qualifiedname>google::cloud::LogRecord::timestamp</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="157" column="41" bodyfile="log.h" bodystart="157" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0" prot="public" static="no" mutable="no">
+            <type>std::string</type>
+            <definition>std::string google::cloud::LogRecord::message</definition>
+            <argsstring/>
+            <name>message</name>
+            <qualifiedname>google::cloud::LogRecord::message</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="158" column="15" bodyfile="log.h" bodystart="158" bodyend="-1"/>
+          </memberdef>
+          </sectiondef>
+        <briefdescription>
+    <para>Represents a single log message.</para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <collaborationgraph>
+          <node id="1">
+            <label>google::cloud::LogRecord</label>
+            <link refid="structgoogle_1_1cloud_1_1LogRecord"/>
+            <childnode refid="2" relation="usage">
+              <edgelabel>filename</edgelabel>
+              <edgelabel>function</edgelabel>
+              <edgelabel>message</edgelabel>
+            </childnode>
+          </node>
+          <node id="3">
+            <label>std::basic_string&lt; Char &gt;</label>
+          </node>
+          <node id="2">
+            <label>std::string</label>
+            <childnode refid="3" relation="public-inheritance">
+            </childnode>
+          </node>
+        </collaborationgraph>
+        <location file="log.h" line="151" column="1" bodyfile="log.h" bodystart="151" bodyend="159"/>
+        <listofallmembers>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>filename</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>function</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>lineno</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>message</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>severity</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>thread_id</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>timestamp</name></member>
+        </listofallmembers>
+      </compounddef>
+    </doxygen>)xml";
+
 auto constexpr kNamespaceXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1mocks" kind="namespace" language="C++">
@@ -540,6 +682,48 @@ items:
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfTypedef(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Yaml, Variable) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
+    name: |
+      severity
+    fullName: |
+      google::cloud::LogRecord::severity
+    id: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
+    parent: test-only-parent-id
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        Severity severity;
+      source:
+        id: severity
+        path: google/cloud/log.h
+        startLine: 152
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kStruct2Xml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc"
+      "']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfVariable(yaml, ctx, selected.node()));
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
