@@ -60,6 +60,10 @@ bool AppendIfSectionDef(YAML::Emitter& yaml, YamlContext const& ctx,
 bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
                        pugi::xml_node const& node);
 
+// Create YAML entries for a class and its children.
+bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
+                   pugi::xml_node const& node);
+
 }  // namespace docfx
 
 #endif  // GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2YAML_H

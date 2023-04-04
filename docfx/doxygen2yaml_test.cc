@@ -190,6 +190,108 @@ tests.</para>
       </compounddef>
     </doxygen>)xml";
 
+auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1RuntimeStatusError" kind="class" language="C++" prot="public">
+      <compoundname>google::cloud::RuntimeStatusError</compoundname>
+      <basecompoundref prot="public" virt="non-virtual">std::runtime_error</basecompoundref>
+      <includes refid="status_8h" local="no">google/cloud/status.h</includes>
+        <sectiondef kind="private-attrib">
+        <memberdef kind="variable" id="classgoogle_1_1cloud_1_1RuntimeStatusError_1a85bebd1a98468aff6b7f5fe54f7b4241" prot="private" static="no" mutable="no">
+          <type><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref></type>
+          <definition>Status google::cloud::RuntimeStatusError::status_</definition>
+          <argsstring/>
+          <name>status_</name>
+          <qualifiedname>google::cloud::RuntimeStatusError::status_</qualifiedname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="status.h" line="168" column="10" bodyfile="status.h" bodystart="168" bodyend="-1"/>
+        </memberdef>
+        </sectiondef>
+        <sectiondef kind="public-func">
+        <memberdef kind="function" id="classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+          <type/>
+          <definition>google::cloud::RuntimeStatusError::RuntimeStatusError</definition>
+          <argsstring>(Status status)</argsstring>
+          <name>RuntimeStatusError</name>
+          <qualifiedname>google::cloud::RuntimeStatusError::RuntimeStatusError</qualifiedname>
+          <param>
+            <type><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref></type>
+            <declname>status</declname>
+          </param>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="status.h" line="163" column="12"/>
+        </memberdef>
+        <memberdef kind="function" id="classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+          <type><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref> const &amp;</type>
+          <definition>Status const  &amp; google::cloud::RuntimeStatusError::status</definition>
+          <argsstring>() const</argsstring>
+          <name>status</name>
+          <qualifiedname>google::cloud::RuntimeStatusError::status</qualifiedname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="status.h" line="165" column="16" bodyfile="status.h" bodystart="165" bodyend="165"/>
+        </memberdef>
+        </sectiondef>
+      <briefdescription>
+  <para>A runtime error that wraps a <computeroutput><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">google::cloud::Status</ref></computeroutput>.</para>
+      </briefdescription>
+      <detaileddescription>
+      </detaileddescription>
+      <inheritancegraph>
+        <node id="1">
+          <label>google::cloud::RuntimeStatusError</label>
+          <link refid="classgoogle_1_1cloud_1_1RuntimeStatusError"/>
+          <childnode refid="2" relation="public-inheritance">
+          </childnode>
+        </node>
+        <node id="3">
+          <label>std::exception</label>
+        </node>
+        <node id="2">
+          <label>std::runtime_error</label>
+          <childnode refid="3" relation="public-inheritance">
+          </childnode>
+        </node>
+      </inheritancegraph>
+      <collaborationgraph>
+        <node id="1">
+          <label>google::cloud::RuntimeStatusError</label>
+          <link refid="classgoogle_1_1cloud_1_1RuntimeStatusError"/>
+          <childnode refid="2" relation="public-inheritance">
+          </childnode>
+        </node>
+        <node id="3">
+          <label>std::exception</label>
+        </node>
+        <node id="2">
+          <label>std::runtime_error</label>
+          <childnode refid="3" relation="public-inheritance">
+          </childnode>
+        </node>
+      </collaborationgraph>
+      <location file="status.h" line="161" column="1" bodyfile="status.h" bodystart="161" bodyend="169"/>
+      <listofallmembers>
+        <member refid="classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95" prot="public" virt="non-virtual"><scope>google::cloud::RuntimeStatusError</scope><name>RuntimeStatusError</name></member>
+        <member refid="classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e" prot="public" virt="non-virtual"><scope>google::cloud::RuntimeStatusError</scope><name>status</name></member>
+        <member refid="classgoogle_1_1cloud_1_1RuntimeStatusError_1a85bebd1a98468aff6b7f5fe54f7b4241" prot="private" virt="non-virtual"><scope>google::cloud::RuntimeStatusError</scope><name>status_</name></member>
+      </listofallmembers>
+    </compounddef>
+  </doxygen>)xml";
+
 TEST(Doxygen2Yaml, IncludeInPublicDocs) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
@@ -580,6 +682,96 @@ items:
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfNamespace(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Yaml, Class) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: classgoogle_1_1cloud_1_1RuntimeStatusError
+    name: google::cloud::RuntimeStatusError
+    id: classgoogle_1_1cloud_1_1RuntimeStatusError
+    parent: test-only-parent-id
+    type: class
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        // Found in #include <google/cloud/status.h>
+        class google::cloud::RuntimeStatusError { ... };
+      source:
+        id: google::cloud::RuntimeStatusError
+        path: google/cloud/status.h
+        startLine: 161
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status.h
+    summary: |
+      A runtime error that wraps a [`google::cloud::Status`](xref:classgoogle_1_1cloud_1_1Status).
+  - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
+    name: RuntimeStatusError
+    fullName: |
+      google::cloud::RuntimeStatusError::RuntimeStatusError
+    id: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
+    parent: classgoogle_1_1cloud_1_1RuntimeStatusError
+    type: function
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        google::cloud::RuntimeStatusError::RuntimeStatusError (
+            Status status
+          )
+      parameters:
+        - id: status
+          var_type: |
+            Status
+      source:
+        id: RuntimeStatusError
+        path: google/cloud/status.h
+        startLine: 163
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status.h
+  - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
+    name: status
+    fullName: |
+      google::cloud::RuntimeStatusError::status
+    id: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
+    parent: classgoogle_1_1cloud_1_1RuntimeStatusError
+    type: function
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        Status const &
+        google::cloud::RuntimeStatusError::status ()
+      returns:
+        var_type: |
+          Status const &
+      source:
+        id: status
+        path: google/cloud/status.h
+        startLine: 165
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status.h
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kClassXml);
+  auto selected =
+      doc.select_node("//*[@id='classgoogle_1_1cloud_1_1RuntimeStatusError']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfClass(yaml, ctx, selected.node()));
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }

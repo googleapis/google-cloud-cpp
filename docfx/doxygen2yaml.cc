@@ -30,8 +30,10 @@ auto kind(pugi::xml_node const& node) {
 bool IgnoreForRecurse(pugi::xml_node const& node) {
   static auto const* const kNames = [] {
     return new std::set<std::string>{
-        "location",   "briefdescription", "detaileddescription", "includes",
-        "innerclass", "compoundname",     "listofallmembers",
+        "location",           "briefdescription", "detaileddescription",
+        "includes",           "innerclass",       "compoundname",
+        "listofallmembers",   "basecompoundref",  "inheritancegraph",
+        "collaborationgraph",
     };
   }();
   auto const name = std::string{node.name()};
@@ -45,6 +47,7 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
     if (IgnoreForRecurse(child)) continue;
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
     if (AppendIfNamespace(yaml, ctx, child)) continue;
+    if (AppendIfClass(yaml, ctx, child)) continue;
     if (AppendIfEnumValue(yaml, ctx, child)) continue;
     if (AppendIfEnum(yaml, ctx, child)) continue;
     if (AppendIfTypedef(yaml, ctx, child)) continue;
@@ -231,6 +234,28 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "namespace"                 //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendNamespaceSyntax(yaml, ctx, node);
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  yaml << YAML::EndMap;
+  CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
+  return true;
+}
+
+bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
+                   pugi::xml_node const& node) {
+  if (kind(node) != "class") return false;
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  auto const name = std::string_view{node.child("compoundname").child_value()};
+  yaml << YAML::BeginMap                                                    //
+       << YAML::Key << "uid" << YAML::Value << id                           //
+       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "id" << YAML::Value << id                            //
+       << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
+       << YAML::Key << "type" << YAML::Value << "class"                     //
+       << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
+  AppendClassSyntax(yaml, ctx, node);
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
