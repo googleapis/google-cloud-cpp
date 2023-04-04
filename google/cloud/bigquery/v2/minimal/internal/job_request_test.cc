@@ -184,11 +184,11 @@ TEST(GetJobRequest, DebugString) {
             R"( location: "test-location")"
             R"( })");
   EXPECT_EQ(request.DebugString(TracingOptions{}.SetOptions(
-                "truncate_string_field_longer_than=4")),
+                "truncate_string_field_longer_than=7")),
             R"(google::cloud::bigquery_v2_minimal_internal::GetJobRequest {)"
-            R"( project_id: "test...<truncated>...")"
-            R"( job_id: "test...<truncated>...")"
-            R"( location: "test...<truncated>...")"
+            R"( project_id: "test-pr...<truncated>...")"
+            R"( job_id: "test-jo...<truncated>...")"
+            R"( location: "test-lo...<truncated>...")"
             R"( })");
   EXPECT_EQ(
       request.DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
@@ -227,17 +227,17 @@ TEST(ListJobsRequestTest, DebugString) {
             R"( parent_job_id: "test-job-id")"
             R"( })");
   EXPECT_EQ(request.DebugString(TracingOptions{}.SetOptions(
-                "truncate_string_field_longer_than=6")),
+                "truncate_string_field_longer_than=7")),
             R"(google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {)"
-            R"( project_id: "test-p...<truncated>...")"
+            R"( project_id: "test-pr...<truncated>...")"
             R"( all_users: true)"
             R"( max_results: 10)"
             R"( min_creation_time { "2020-03-25T04:58:36.123456Z" })"
             R"( max_creation_time { "2020-03-25T05:08:12.654321Z" })"
-            R"( page_token: "test-p...<truncated>...")"
+            R"( page_token: "test-pa...<truncated>...")"
             R"( projection { value: "FULL" })"
-            R"( state_filter { value: "RUNNIN...<truncated>..." })"
-            R"( parent_job_id: "test-j...<truncated>...")"
+            R"( state_filter { value: "RUNNING" })"
+            R"( parent_job_id: "test-jo...<truncated>...")"
             R"( })");
   EXPECT_EQ(
       request.DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
