@@ -164,7 +164,6 @@ TEST(ListJobsRequestTest, EmptyProjectId) {
 
 TEST(ListJobsRequestTest, OutputStream) {
   auto const request = GetListJobsRequest();
-  std::string all_users = request.all_users() ? "true" : "false";
   std::string expected =
       "ListJobsRequest{project_id=1, all_users=true, max_results=10"
       ", page_token=123, projection=FULL, state_filter=RUNNING"
@@ -177,22 +176,90 @@ TEST(ListJobsRequestTest, OutputStream) {
 TEST(GetJobRequest, DebugString) {
   GetJobRequest request("test-project-id", "test-job-id");
   request.set_location("test-location");
-  std::string expected =
-      "GetJobRequest{ project_id=test-project-id job_id=test-job-id "
-      "test-location }";
 
-  EXPECT_EQ(expected, request.DebugString(TracingOptions{}));
+  EXPECT_EQ(request.DebugString(TracingOptions{}),
+            R"(google::cloud::bigquery_v2_minimal_internal::GetJobRequest {)"
+            R"( project_id: "test-project-id")"
+            R"( job_id: "test-job-id")"
+            R"( location: "test-location")"
+            R"( })");
+  EXPECT_EQ(request.DebugString(TracingOptions{}.SetOptions(
+                "truncate_string_field_longer_than=4")),
+            R"(google::cloud::bigquery_v2_minimal_internal::GetJobRequest {)"
+            R"( project_id: "test...<truncated>...")"
+            R"( job_id: "test...<truncated>...")"
+            R"( location: "test...<truncated>...")"
+            R"( })");
+  EXPECT_EQ(
+      request.DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(google::cloud::bigquery_v2_minimal_internal::GetJobRequest {
+  project_id: "test-project-id"
+  job_id: "test-job-id"
+  location: "test-location"
+})");
 }
 
 TEST(ListJobsRequestTest, DebugString) {
-  auto const request = GetListJobsRequest();
-  std::string all_users = request.all_users() ? "true" : "false";
-  std::string expected =
-      "ListJobsRequest{ project_id=1 , all_users=true , max_results=10 , "
-      "page_token=123 , projection=FULL , state_filter=RUNNING , "
-      "parent_job_id=1 }";
+  ListJobsRequest request("test-project-id");
+  request.set_all_users(true)
+      .set_max_results(10)
+      .set_min_creation_time(
+          std::chrono::system_clock::from_time_t(1585112316) +
+          std::chrono::microseconds(123456))
+      .set_max_creation_time(
+          std::chrono::system_clock::from_time_t(1585112892) +
+          std::chrono::microseconds(654321))
+      .set_page_token("test-page-token")
+      .set_projection(Projection::Full())
+      .set_state_filter(StateFilter::Running())
+      .set_parent_job_id("test-job-id");
 
-  EXPECT_EQ(expected, request.DebugString(TracingOptions{}));
+  EXPECT_EQ(request.DebugString(TracingOptions{}),
+            R"(google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {)"
+            R"( project_id: "test-project-id")"
+            R"( all_users: true)"
+            R"( max_results: 10)"
+            R"( min_creation_time { "2020-03-25T04:58:36.123456Z" })"
+            R"( max_creation_time { "2020-03-25T05:08:12.654321Z" })"
+            R"( page_token: "test-page-token")"
+            R"( projection { value: "FULL" })"
+            R"( state_filter { value: "RUNNING" })"
+            R"( parent_job_id: "test-job-id")"
+            R"( })");
+  EXPECT_EQ(request.DebugString(TracingOptions{}.SetOptions(
+                "truncate_string_field_longer_than=6")),
+            R"(google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {)"
+            R"( project_id: "test-p...<truncated>...")"
+            R"( all_users: true)"
+            R"( max_results: 10)"
+            R"( min_creation_time { "2020-03-25T04:58:36.123456Z" })"
+            R"( max_creation_time { "2020-03-25T05:08:12.654321Z" })"
+            R"( page_token: "test-p...<truncated>...")"
+            R"( projection { value: "FULL" })"
+            R"( state_filter { value: "RUNNIN...<truncated>..." })"
+            R"( parent_job_id: "test-j...<truncated>...")"
+            R"( })");
+  EXPECT_EQ(
+      request.DebugString(TracingOptions{}.SetOptions("single_line_mode=F")),
+      R"(google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {
+  project_id: "test-project-id"
+  all_users: true
+  max_results: 10
+  min_creation_time {
+    "2020-03-25T04:58:36.123456Z"
+  }
+  max_creation_time {
+    "2020-03-25T05:08:12.654321Z"
+  }
+  page_token: "test-page-token"
+  projection {
+    value: "FULL"
+  }
+  state_filter {
+    value: "RUNNING"
+  }
+  parent_job_id: "test-job-id"
+})");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -26,7 +26,14 @@ namespace cloud {
 namespace bigquery_v2_minimal_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-static auto const kDefaultTimepoint = std::chrono::system_clock::time_point{};
+namespace {
+
+auto const kDefaultTimepoint = std::chrono::system_clock::time_point{};
+
+std::string DebugStringSeparator(bool single_line_mode, int indent) {
+  if (single_line_mode) return " ";
+  return absl::StrCat("\n", std::string(indent * 2, ' '));
+}
 
 std::string GetJobsEndpoint(Options const& opts) {
   std::string endpoint = opts.get<EndpointOption>();
@@ -40,6 +47,8 @@ std::string GetJobsEndpoint(Options const& opts) {
 
   return endpoint;
 }
+
+}  // namespace
 
 Projection Projection::Full() {
   Projection projection;
@@ -72,29 +81,40 @@ StateFilter StateFilter::Done() {
 }
 
 std::string GetJobRequest::DebugString(TracingOptions const& options) const {
-  std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
-  absl::StrAppend(&out, "GetJobRequest{", delim,
-                  "project_id=", internal::DebugString(project_id_, options),
-                  delim, "job_id=", internal::DebugString(job_id_, options),
-                  delim, internal::DebugString(location_, options), delim, "}");
-  return out;
+  auto sep = [single_line_mode = options.single_line_mode()](int indent) {
+    return DebugStringSeparator(single_line_mode, indent);
+  };
+  auto quoted = [&options](std::string const& s) {
+    return absl::StrCat("\"", internal::DebugString(s, options), "\"");
+  };
+  return absl::StrCat(
+      "google::cloud::bigquery_v2_minimal_internal::GetJobRequest {", sep(1),
+      "project_id: ", quoted(project_id_), sep(1), "job_id: ", quoted(job_id_),
+      sep(1), "location: ", quoted(location_), sep(0), "}");
 }
 
 std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
-  std::string out;
-  auto const* delim = options.single_line_mode() ? " " : "\n";
-  auto const* all_users = all_users_ ? "true" : "false";
-  absl::StrAppend(
-      &out, "ListJobsRequest{", delim,
-      "project_id=", internal::DebugString(project_id_, options), delim,
-      ", all_users=", all_users, delim, ", max_results=", max_results_, delim,
-      ", page_token=", internal::DebugString(page_token_, options), delim,
-      ", projection=", internal::DebugString(projection_.value, options), delim,
-      ", state_filter=", internal::DebugString(state_filter_.value, options),
-      delim, ", parent_job_id=", internal::DebugString(parent_job_id_, options),
-      delim, "}");
-  return out;
+  auto sep = [single_line_mode = options.single_line_mode()](int indent) {
+    return DebugStringSeparator(single_line_mode, indent);
+  };
+  auto quoted = [&options](std::string const& s) {
+    return absl::StrCat("\"", internal::DebugString(s, options), "\"");
+  };
+  return absl::StrCat(
+      "google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {", sep(1),
+      "project_id: ", quoted(project_id_), sep(1),
+      "all_users: ", all_users_ ? "true" : "false", sep(1),
+      "max_results: ", max_results_, sep(1),  //
+      "min_creation_time {", sep(2), "\"",
+      internal::FormatRfc3339(min_creation_time_), "\"", sep(1), "}", sep(1),
+      "max_creation_time {", sep(2), "\"",
+      internal::FormatRfc3339(max_creation_time_), "\"", sep(1), "}", sep(1),
+      "page_token: ", quoted(page_token_), sep(1),  //
+      "projection {", sep(2),                       //
+      "value: ", quoted(projection_.value), sep(1), "}", sep(1),
+      "state_filter {", sep(2),  //
+      "value: ", quoted(state_filter_.value), sep(1), "}", sep(1),
+      "parent_job_id: ", quoted(parent_job_id_), sep(0), "}");
 }
 
 ListJobsRequest::ListJobsRequest(std::string project_id)
