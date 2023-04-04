@@ -217,12 +217,18 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParams) {
 TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParamsOperation) {
   auto constexpr kTypeJson = R"""({})""";
   auto constexpr kMethodJson = R"""({
-    "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
+    "path": "doFoo",
     "httpMethod": "POST",
     "response": {
       "$ref": "Operation"
     }
 })""";
+  auto constexpr kExpectedProto =
+      R"""(    option (google.api.http) = {
+      post: "base/path/doFoo"
+      body: "*"
+    };
+    option (google.cloud.operation_service) = "GlobalOperations";)""";
   auto method_json = nlohmann::json::parse(kMethodJson, nullptr, false);
   ASSERT_TRUE(method_json.is_object());
   auto type_json = nlohmann::json::parse(kTypeJson, nullptr, false);
@@ -230,11 +236,8 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParamsOperation) {
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
   auto options = r.FormatRpcOptions(method_json, t);
-  EXPECT_THAT(
-      options,
-      StatusIs(
-          StatusCode::kInvalidArgument,
-          HasSubstr("Method response is Operation but no scope is defined.")));
+  ASSERT_STATUS_OK(options);
+  EXPECT_THAT(*options, Eq(kExpectedProto));
 }
 
 TEST(DiscoveryResourceTest, FormatRpcOptionsMissingPath) {
