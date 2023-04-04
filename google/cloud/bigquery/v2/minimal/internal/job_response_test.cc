@@ -224,16 +224,14 @@ TEST(GetJobResponseTest, DebugString) {
   ASSERT_STATUS_OK(response);
 
   std::string expected =
-      "GetJobResponse{"
-      "http_response={BigQueryHttpResponse{"
-      "Status_Code=200, headers={header1: value1}}}, "
-      "job={Job{etag=jtag, kind=jkind, id=j123, "
-      "job_configuration={job_type=QUERY, query=select 1;}, "
-      "job_reference={job_id=j123, location=, project_id=p123}, "
-      "job_status=DONE, error_result=}}";
+      "GetJobResponse{ http_response={ BigQueryHttpResponse{ "
+      "Status_Code=200 , headers={ header1: value1 }} } , job={ Job{ "
+      "etag=jtag , kind=jkind , id=j123 , job_configuration={ job_type=QUERY , "
+      "query=select 1; } , job_reference={ job_id=j123 , location= , "
+      "project_id=p123 } , "
+      "job_status=DONE , error_result= } }";
 
-  EXPECT_EQ(expected, response->DebugString(TracingOptions{}.SetOptions(
-                          "truncate_string_field_longer_than=1024")));
+  EXPECT_EQ(expected, response->DebugString(TracingOptions{}));
 }
 
 TEST(ListJobsResponseTest, OutputStream) {
@@ -263,16 +261,11 @@ TEST(ListJobsResponseTest, OutputStream) {
   ASSERT_STATUS_OK(response);
 
   std::string expected =
-      "ListJobsResponse{"
-      "http_response={BigQueryHttpResponse{"
-      "Status_Code=200, headers={header1: value1}}}, "
-      "jobs={ListFormatJob{id=1, kind=kind-2, state=DONE, "
-      "job_configuration={job_type=QUERY, query=select 1;}, "
-      "job_reference={job_id=j123, location=, project_id=p123}, "
-      "job_status=DONE, error_result=},}";
+      "ListJobsResponse{ http_response={ BigQueryHttpResponse{ Status_Code=200 "
+      ", "
+      "headers={ header1: value1 }} } , jobs={ ListFormatJob{...<truncated>...";
 
-  EXPECT_EQ(expected, response->DebugString(TracingOptions{}.SetOptions(
-                          "truncate_string_field_longer_than=1024")));
+  EXPECT_EQ(expected, response->DebugString(TracingOptions{}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

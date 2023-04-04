@@ -34,19 +34,12 @@ TEST(JobTest, JobDebugString) {
   job.configuration.query_config.query = "select 1;";
 
   std::string expected =
-      "Job{etag=etag, kind=Job, id=1, "
-      "job_configuration={job_type=QUERY, query=select 1;}, "
-      "job_reference={job_id=2, location=, project_id=1}, job_status=DONE, "
-      "error_result=}";
-  std::string truncated =
-      "Job{etag=etag, kind=Job, id=1, "
-      "job_configuration={job_type=QUERY, "
-      "query=select 1;}, job_reference={job_id=2, location=, "
-      "project_...<truncated>...";
+      "Job{ etag=etag , kind=Job , id=1 , "
+      "job_configuration={ job_type=QUERY , query=select 1; } , "
+      "job_reference={ job_id=2 , location= , project_id=1 } , "
+      "job_status=DONE , error_result= }";
 
-  EXPECT_EQ(expected, job.DebugString(TracingOptions{}.SetOptions(
-                          "truncate_string_field_longer_than=1024")));
-  EXPECT_EQ(truncated, job.DebugString(TracingOptions{}));
+  EXPECT_EQ(expected, job.DebugString(TracingOptions{}));
 }
 
 TEST(JobTest, ListFormatJobDebugString) {
@@ -61,19 +54,12 @@ TEST(JobTest, ListFormatJobDebugString) {
   job.configuration.query_config.query = "select 1;";
 
   std::string expected =
-      "ListFormatJob{id=1, kind=Job, state=DONE, "
-      "job_configuration={job_type=QUERY, query=select 1;}, "
-      "job_reference={job_id=2, location=, project_id=1}, job_status=DONE, "
-      "error_result=}";
+      "ListFormatJob{ id=1 , kind=Job , "
+      "state=DONE , job_configuration={ job_type=QUERY , "
+      "query=select 1; } , job_reference={ job_id=2 , "
+      "location= , project_id=1 }, job_status=DONE , error_result= }";
 
-  std::string truncated =
-      "ListFormatJob{id=1, kind=Job, state=DONE, "
-      "job_configuration={job_type=QUERY, query=select 1;}, "
-      "job_reference={job_id=2, location...<truncated>...";
-
-  EXPECT_EQ(expected, job.DebugString(TracingOptions{}.SetOptions(
-                          "truncate_string_field_longer_than=1024")));
-  EXPECT_EQ(truncated, job.DebugString(TracingOptions{}));
+  EXPECT_EQ(expected, job.DebugString(TracingOptions{}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
