@@ -388,7 +388,7 @@ TEST(DiscoveryResourceTest, JsonToProtobufService) {
         ],
         "path": "projects/{project}/regions/{region}/myResources/{foo}",
         "httpMethod": "GET",
-        "properties": {
+        "parameters": {
           "project": {
             "type": "string"
           }
@@ -405,7 +405,7 @@ TEST(DiscoveryResourceTest, JsonToProtobufService) {
         ],
         "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
         "httpMethod": "POST",
-        "properties": {
+        "parameters": {
           "project": {
             "type": "string"
           }
@@ -506,7 +506,7 @@ TEST(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
         ],
         "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
         "httpMethod": "POST",
-        "properties": {
+        "parameters": {
           "project": {
             "type": "string"
           }

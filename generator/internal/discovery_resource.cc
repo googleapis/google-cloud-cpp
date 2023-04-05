@@ -190,7 +190,7 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
 
     std::string request_type_name = "google.protobuf.Empty";
     DiscoveryTypeVertex const* request_type = nullptr;
-    if (method_json.contains("properties")) {
+    if (method_json.contains("parameters")) {
       request_type_name = absl::StrCat(method_name, "Request");
       auto const& request = request_types_.find(request_type_name);
       if (request == request_types_.end()) {
