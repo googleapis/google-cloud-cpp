@@ -23,14 +23,14 @@
 
 namespace docfx {
 
+/// Get the table of contents for groups.
+std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc);
+
 /// Generates the YAML contents for a given group node.
-std::string Group2Yaml(Config const& config, pugi::xml_node const& node);
+std::string Group2Yaml(pugi::xml_node const& node);
 
 /// Generate the description of the group.
 std::string Group2SummaryMarkdown(pugi::xml_node const& node);
-
-// Get the table of contents for pages.
-std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc);
 
 }  // namespace docfx
 
