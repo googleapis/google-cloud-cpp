@@ -82,6 +82,35 @@ std::string Summary(pugi::xml_node const& node) {
 
 }  // namespace
 
+std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc) {
+  std::vector<TocEntry> result;
+  // Insert only namespaces in the TOC. Other entities (functions, typedefs,
+  // classes, structs) are always part of a namespace and will appear in the
+  // references from them.
+  for (auto const& i : doc.select_nodes("//compounddef[@kind='namespace']")) {
+    auto const& node = i.node();
+    if (!IncludeInPublicDocuments(node)) continue;
+    auto const id = std::string{node.attribute("id").as_string()};
+    result.push_back(TocEntry{id + ".yml", id});
+  }
+  return result;
+}
+
+std::string Compound2Yaml(pugi::xml_node const& node) {
+  auto const id = std::string{node.attribute("id").as_string()};
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  (void)AppendIfEnum(yaml, ctx, node);
+  (void)AppendIfTypedef(yaml, ctx, node);
+  (void)AppendIfVariable(yaml, ctx, node);
+  (void)AppendIfFunction(yaml, ctx, node);
+  (void)AppendIfNamespace(yaml, ctx, node);
+  (void)AppendIfClass(yaml, ctx, node);
+  (void)AppendIfStruct(yaml, ctx, node);
+  return EndDocFxYaml(yaml);
+}
+
 bool IncludeInPublicDocuments(pugi::xml_node const& node) {
   // We do not generate documents for files and directories.
   if (kind(node) == "file" || kind(node) == "dir") return false;

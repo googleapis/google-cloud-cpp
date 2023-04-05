@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2toc.h"
+#include "docfx/doxygen2yaml.h"
 #include "docfx/doxygen_groups.h"
 #include "docfx/doxygen_pages.h"
 #include <yaml-cpp/yaml.h>
@@ -34,6 +35,12 @@ std::string Doxygen2Toc(Config const& config, pugi::xml_document const& doc) {
         << YAML::EndMap;
   }
   for (auto const& [filename, name] : GroupsToc(doc)) {
+    out << YAML::BeginMap                              //
+        << YAML::Key << "uid" << YAML::Value << name   //
+        << YAML::Key << "name" << YAML::Value << name  //
+        << YAML::EndMap;
+  }
+  for (auto const& [filename, name] : CompoundToc(doc)) {
     out << YAML::BeginMap                              //
         << YAML::Key << "uid" << YAML::Value << name   //
         << YAML::Key << "name" << YAML::Value << name  //

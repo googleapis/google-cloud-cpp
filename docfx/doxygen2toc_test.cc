@@ -59,6 +59,10 @@ items:
     href: indexpage.md
   - uid: group__terminate
     name: group__terminate
+  - uid: namespacegoogle
+    name: namespacegoogle
+  - uid: namespacegoogle_1_1cloud
+    name: namespacegoogle_1_1cloud
 )""";
 
   pugi::xml_document doc;

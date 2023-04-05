@@ -19,6 +19,8 @@
 namespace docfx {
 namespace {
 
+using ::testing::ElementsAre;
+
 auto constexpr kEnumXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <memberdef kind="enum" id="namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c" prot="public" static="no" strong="yes">
@@ -433,6 +435,31 @@ auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
       </listofallmembers>
     </compounddef>
   </doxygen>)xml";
+
+TEST(Doxygen2Yaml, CompoundToc) {
+  auto constexpr kDocXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle" kind="namespace" language="C++">
+        <compoundname>google</compoundname>
+        <innernamespace refid="namespacegoogle_1_1cloud">google::cloud</innernamespace>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
+        <compoundname>google::cloud</compoundname>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacestd" kind="namespace" language="Unknown">
+        <compoundname>std</compoundname>
+      </compounddef>
+    </doxygen>)xml";
+
+  pugi::xml_document doc;
+  ASSERT_TRUE(doc.load_string(kDocXml));
+  auto const actual = CompoundToc(doc);
+
+  EXPECT_THAT(actual,
+              ElementsAre(TocEntry{"namespacegoogle.yml", "namespacegoogle"},
+                          TocEntry{"namespacegoogle_1_1cloud.yml",
+                                   "namespacegoogle_1_1cloud"}));
+}
 
 TEST(Doxygen2Yaml, IncludeInPublicDocs) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
