@@ -15,6 +15,7 @@
 #include "docfx/doxygen2toc.h"
 #include "docfx/doxygen_groups.h"
 #include "docfx/doxygen_pages.h"
+#include "docfx/generate_metadata.h"
 #include "docfx/parse_arguments.h"
 #include <fstream>
 #include <iostream>
@@ -25,6 +26,8 @@ int main(int argc, char* argv[]) try {
   pugi::xml_document doc;
   auto load = doc.load_file(config.input_filename.c_str());
   if (!load) throw std::runtime_error("Error loading XML input file");
+
+  std::ofstream("docs.metadata.json") << docfx::GenerateMetadata(config);
 
   std::ofstream("toc.yml") << docfx::Doxygen2Toc(config, doc);
   for (auto const& entry : docfx::PagesToc(doc)) {
