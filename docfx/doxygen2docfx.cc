@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2toc.h"
+#include "docfx/doxygen2yaml.h"
 #include "docfx/doxygen_groups.h"
 #include "docfx/doxygen_pages.h"
 #include "docfx/generate_metadata.h"
@@ -30,16 +31,22 @@ int main(int argc, char* argv[]) try {
   std::ofstream("docs.metadata.json") << docfx::GenerateMetadata(config);
 
   std::ofstream("toc.yml") << docfx::Doxygen2Toc(config, doc);
-  for (auto const& entry : docfx::PagesToc(doc)) {
-    auto const filter = std::string{"//compounddef[@id='"} + entry.name + "']";
+  for (auto const& [filename, name] : docfx::PagesToc(doc)) {
+    auto const filter = std::string{"//compounddef[@id='"} + name + "']";
     auto const node = doc.select_node(filter.c_str()).node();
-    std::ofstream(entry.filename) << docfx::Page2Markdown(node);
+    std::ofstream(filename) << docfx::Page2Markdown(node);
   }
 
-  for (auto const& entry : docfx::GroupsToc(doc)) {
-    auto const filter = std::string{"//compounddef[@id='"} + entry.name + "']";
+  for (auto const& [filename, name] : docfx::GroupsToc(doc)) {
+    auto const filter = std::string{"//compounddef[@id='"} + name + "']";
     auto const node = doc.select_node(filter.c_str()).node();
-    std::ofstream(entry.filename) << docfx::Group2Yaml(node);
+    std::ofstream(filename) << docfx::Group2Yaml(node);
+  }
+
+  for (auto const& [filename, name] : docfx::CompoundToc(doc)) {
+    auto const filter = std::string{"//compounddef[@id='"} + name + "']";
+    auto const node = doc.select_node(filter.c_str()).node();
+    std::ofstream(filename) << docfx::Compound2Yaml(node);
   }
 
   return 0;
