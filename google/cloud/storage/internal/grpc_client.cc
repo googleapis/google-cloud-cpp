@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/grpc_bucket_name.h"
 #include "google/cloud/storage/internal/grpc_bucket_request_parser.h"
 #include "google/cloud/storage/internal/grpc_configure_client_context.h"
+#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
 #include "google/cloud/storage/internal/grpc_hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/grpc_hmac_key_request_parser.h"
 #include "google/cloud/storage/internal/grpc_notification_metadata_parser.h"
@@ -411,9 +412,6 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
   ApplyRoutingHeaders(*context, request);
   auto stream = stub_->WriteObject(std::move(context));
 
-  using ContentType = std::remove_const_t<std::remove_reference_t<
-      decltype(std::declval<google::storage::v2::ChecksummedData>()
-                   .content())>>;
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   std::int64_t offset = 0;
 
@@ -422,10 +420,10 @@ StatusOr<storage::ObjectMetadata> GrpcClient::InsertObjectMedia(
   do {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
-    data.set_content(splitter.Next());
-    data.set_crc32c(Crc32c(data.content()));
-    request.hash_function().Update(offset, data.content(), data.crc32c());
-    offset += data.content().size();
+    SetMutableContent(data, splitter.Next());
+    data.set_crc32c(Crc32c(GetContent(data)));
+    request.hash_function().Update(offset, GetContent(data), data.crc32c());
+    offset += GetContent(data).size();
 
     auto options = grpc::WriteOptions{};
     MaybeFinalize(proto_request, options, request, !splitter.Done());
@@ -660,9 +658,6 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
   ApplyRoutingHeaders(*context, request);
   auto stream = stub_->WriteObject(std::move(context));
 
-  using ContentType = std::remove_const_t<std::remove_reference_t<
-      decltype(std::declval<google::storage::v2::ChecksummedData>()
-                   .content())>>;
   auto splitter = SplitObjectWriteData<ContentType>(request.payload());
   auto offset = request.offset();
 
@@ -671,10 +666,10 @@ GrpcClient::UploadChunk(storage::internal::UploadChunkRequest const& request) {
   do {
     proto_request.set_write_offset(offset);
     auto& data = *proto_request.mutable_checksummed_data();
-    data.set_content(splitter.Next());
-    data.set_crc32c(Crc32c(data.content()));
-    request.hash_function().Update(offset, data.content(), data.crc32c());
-    offset += data.content().size();
+    SetMutableContent(data, splitter.Next());
+    data.set_crc32c(Crc32c(GetContent(data)));
+    request.hash_function().Update(offset, GetContent(data), data.crc32c());
+    offset += GetContent(data).size();
 
     auto options = grpc::WriteOptions();
     MaybeFinalize(proto_request, options, request, !splitter.Done());

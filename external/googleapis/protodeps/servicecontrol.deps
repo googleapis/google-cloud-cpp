@@ -4,4 +4,5 @@
 @com_google_googleapis//google/api:http_proto
 @com_google_googleapis//google/api:launch_stage_proto
 @com_google_googleapis//google/logging/type:type_proto
+@com_google_googleapis//google/rpc/context:attribute_context_proto
 @com_google_googleapis//google/rpc:status_proto

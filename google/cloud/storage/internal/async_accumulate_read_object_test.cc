@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async_accumulate_read_object.h"
+#include "google/cloud/storage/internal/grpc_ctype_cord_workaround.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
@@ -342,7 +343,7 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
   ReadObjectResponse r1;
   ASSERT_TRUE(TextFormat::ParseFromString(kText1, &r1));
 
-  auto const r0_size = r0.checksummed_data().content().size();
+  auto const r0_size = GetContent(r0.checksummed_data()).size();
   auto constexpr kReadOffset = 1024;
   auto constexpr kReadLimit = 2048;
 

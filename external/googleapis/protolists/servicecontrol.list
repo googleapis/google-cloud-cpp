@@ -6,3 +6,4 @@
 @com_google_googleapis//google/api/servicecontrol/v1:operation.proto
 @com_google_googleapis//google/api/servicecontrol/v1:quota_controller.proto
 @com_google_googleapis//google/api/servicecontrol/v1:service_controller.proto
+@com_google_googleapis//google/api/servicecontrol/v2:service_controller.proto

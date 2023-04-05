@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_READ_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OBJECT_READ_SOURCE_H
 
+#include "google/cloud/storage/internal/grpc_buffer_read_object_data.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/future.h"
@@ -64,22 +65,16 @@ class GrpcObjectReadSource : public storage::internal::ObjectReadSource {
                                                      std::size_t n) override;
 
  private:
-  using BufferManager =
-      absl::FunctionRef<std::pair<absl::string_view, std::size_t>(
-          absl::string_view, std::size_t)>;
-
-  void HandleResponse(storage::internal::ReadSourceResult& result,
-                      google::storage::v2::ReadObjectResponse response,
-                      BufferManager buffer_manager);
+  void HandleResponse(storage::internal::ReadSourceResult& result, char* buf,
+                      std::size_t n,
+                      google::storage::v2::ReadObjectResponse response);
 
   TimerSource timer_source_;
   std::unique_ptr<StreamingRpc> stream_;
 
   // In some cases the gRPC response may contain more data than the buffer
   // provided by the application. This buffer stores any excess results.
-  std::string spill_;
-  // The current portion of `spill_` that has not been consumed.
-  absl::string_view spill_view_;
+  GrpcBufferReadObjectData buffer_;
 
   // The status of the request.
   google::cloud::Status status_;

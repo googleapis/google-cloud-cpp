@@ -71,6 +71,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/devtools/source/v1/source_context.proto"
     "google/longrunning/operations.proto"
     "google/rpc/code.proto"
+    "google/rpc/context/attribute_context.proto"
     "google/rpc/error_details.proto"
     "google/rpc/status.proto"
     "google/type/calendar_period.proto"

@@ -44,10 +44,13 @@ else ()
         internal/grpc_bucket_name.h
         internal/grpc_bucket_request_parser.cc
         internal/grpc_bucket_request_parser.h
+        internal/grpc_buffer_read_object_data.cc
+        internal/grpc_buffer_read_object_data.h
         internal/grpc_client.cc
         internal/grpc_client.h
         internal/grpc_configure_client_context.cc
         internal/grpc_configure_client_context.h
+        internal/grpc_ctype_cord_workaround.h
         internal/grpc_hmac_key_metadata_parser.cc
         internal/grpc_hmac_key_metadata_parser.h
         internal/grpc_hmac_key_request_parser.cc
@@ -177,6 +180,7 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc_bucket_metadata_parser_test.cc
         internal/grpc_bucket_name_test.cc
         internal/grpc_bucket_request_parser_test.cc
+        internal/grpc_buffer_read_object_data_test.cc
         internal/grpc_client_acl_test.cc
         internal/grpc_client_failures_test.cc
         internal/grpc_client_insert_object_media_test.cc

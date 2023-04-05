@@ -48,6 +48,10 @@ bool AppendIfEnum(YAML::Emitter& yaml, YamlContext const& ctx,
 bool AppendIfTypedef(YAML::Emitter& yaml, YamlContext const& ctx,
                      pugi::xml_node const& node);
 
+// Create a YAML entry for a variable definition.
+bool AppendIfVariable(YAML::Emitter& yaml, YamlContext const& ctx,
+                      pugi::xml_node const& node);
+
 // Create a YAML entry for a function declaration.
 bool AppendIfFunction(YAML::Emitter& yaml, YamlContext const& ctx,
                       pugi::xml_node const& node);
@@ -59,6 +63,10 @@ bool AppendIfSectionDef(YAML::Emitter& yaml, YamlContext const& ctx,
 // Create YAML entries for a namespace and its children.
 bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
                        pugi::xml_node const& node);
+
+// Create YAML entries for a class and its children.
+bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
+                   pugi::xml_node const& node);
 
 }  // namespace docfx
 

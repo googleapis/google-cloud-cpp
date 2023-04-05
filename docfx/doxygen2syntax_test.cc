@@ -382,6 +382,22 @@ google::cloud::CompletionQueue::MakeRelativeTimer (
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2SyntaxContent, Constructor) {
+  auto constexpr kExpected =
+      R"""(google::cloud::RuntimeStatusError::RuntimeStatusError (
+    Status status
+  ))""";
+  pugi::xml_document doc;
+  doc.load_string(kClassXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "classgoogle_1_1cloud_1_1RuntimeStatusError"
+      "_1aac6b78160cce6468696ce77eb1276a95']");
+  ASSERT_TRUE(selected);
+  auto const actual = FunctionSyntaxContent(selected.node());
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2SyntaxContent, Struct) {
   auto constexpr kExpected =
       R"""(// Found in #include <google/cloud/async_operation.h>
@@ -545,6 +561,41 @@ TEST(Doxygen2Syntax, Function) {
       "classgoogle_1_1cloud_1_1CompletionQueue_"
       "1a760d68ec606a03ab8cc80eea8bd965b3"
       "']");
+  ASSERT_TRUE(selected);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  YAML::Emitter yaml;
+  yaml << YAML::BeginMap;
+  AppendFunctionSyntax(yaml, ctx, selected.node());
+  yaml << YAML::EndMap;
+  auto const actual = std::string{yaml.c_str()};
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Syntax, Constructor) {
+  auto constexpr kExpected = R"yml(syntax:
+  contents: |
+    google::cloud::RuntimeStatusError::RuntimeStatusError (
+        Status status
+      )
+  parameters:
+    - id: status
+      var_type: |
+        Status
+  source:
+    id: RuntimeStatusError
+    path: google/cloud/status.h
+    startLine: 163
+    remote:
+      repo: https://github.com/googleapis/google-cloud-cpp/
+      branch: main
+      path: google/cloud/status.h)yml";
+  pugi::xml_document doc;
+  doc.load_string(kClassXml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "classgoogle_1_1cloud_1_1RuntimeStatusError"
+      "_1aac6b78160cce6468696ce77eb1276a95']");
   ASSERT_TRUE(selected);
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";

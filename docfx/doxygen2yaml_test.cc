@@ -171,6 +171,148 @@ auto constexpr kStructXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
     </compounddef>
   </doxygen>)xml";
 
+auto constexpr kStruct2Xml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+  <doxygen>
+    <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="structgoogle_1_1cloud_1_1LogRecord" kind="struct" language="C++" prot="public">
+        <compoundname>google::cloud::LogRecord</compoundname>
+        <includes refid="log_8h" local="no">google/cloud/log.h</includes>
+          <sectiondef kind="public-attrib">
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc" prot="public" static="no" mutable="no">
+            <type><ref refid="namespacegoogle_1_1cloud_1aeeb9b9a1eeb3fc7f6ff13bd078172922" kindref="member">Severity</ref></type>
+            <definition>Severity google::cloud::LogRecord::severity</definition>
+            <argsstring/>
+            <name>severity</name>
+            <qualifiedname>google::cloud::LogRecord::severity</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="152" column="12" bodyfile="log.h" bodystart="152" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6" prot="public" static="no" mutable="no">
+            <type>std::string</type>
+            <definition>std::string google::cloud::LogRecord::function</definition>
+            <argsstring/>
+            <name>function</name>
+            <qualifiedname>google::cloud::LogRecord::function</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="153" column="15" bodyfile="log.h" bodystart="153" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6" prot="public" static="no" mutable="no">
+            <type>std::string</type>
+            <definition>std::string google::cloud::LogRecord::filename</definition>
+            <argsstring/>
+            <name>filename</name>
+            <qualifiedname>google::cloud::LogRecord::filename</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="154" column="15" bodyfile="log.h" bodystart="154" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0" prot="public" static="no" mutable="no">
+            <type>int</type>
+            <definition>int google::cloud::LogRecord::lineno</definition>
+            <argsstring/>
+            <name>lineno</name>
+            <qualifiedname>google::cloud::LogRecord::lineno</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="155" column="7" bodyfile="log.h" bodystart="155" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834" prot="public" static="no" mutable="no">
+            <type>std::thread::id</type>
+            <definition>std::thread::id google::cloud::LogRecord::thread_id</definition>
+            <argsstring/>
+            <name>thread_id</name>
+            <qualifiedname>google::cloud::LogRecord::thread_id</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="156" column="19" bodyfile="log.h" bodystart="156" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152" prot="public" static="no" mutable="no">
+            <type>std::chrono::system_clock::time_point</type>
+            <definition>std::chrono::system_clock::time_point google::cloud::LogRecord::timestamp</definition>
+            <argsstring/>
+            <name>timestamp</name>
+            <qualifiedname>google::cloud::LogRecord::timestamp</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="157" column="41" bodyfile="log.h" bodystart="157" bodyend="-1"/>
+          </memberdef>
+          <memberdef kind="variable" id="structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0" prot="public" static="no" mutable="no">
+            <type>std::string</type>
+            <definition>std::string google::cloud::LogRecord::message</definition>
+            <argsstring/>
+            <name>message</name>
+            <qualifiedname>google::cloud::LogRecord::message</qualifiedname>
+            <briefdescription>
+            </briefdescription>
+            <detaileddescription>
+            </detaileddescription>
+            <inbodydescription>
+            </inbodydescription>
+            <location file="log.h" line="158" column="15" bodyfile="log.h" bodystart="158" bodyend="-1"/>
+          </memberdef>
+          </sectiondef>
+        <briefdescription>
+    <para>Represents a single log message.</para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <collaborationgraph>
+          <node id="1">
+            <label>google::cloud::LogRecord</label>
+            <link refid="structgoogle_1_1cloud_1_1LogRecord"/>
+            <childnode refid="2" relation="usage">
+              <edgelabel>filename</edgelabel>
+              <edgelabel>function</edgelabel>
+              <edgelabel>message</edgelabel>
+            </childnode>
+          </node>
+          <node id="3">
+            <label>std::basic_string&lt; Char &gt;</label>
+          </node>
+          <node id="2">
+            <label>std::string</label>
+            <childnode refid="3" relation="public-inheritance">
+            </childnode>
+          </node>
+        </collaborationgraph>
+        <location file="log.h" line="151" column="1" bodyfile="log.h" bodystart="151" bodyend="159"/>
+        <listofallmembers>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>filename</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>function</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>lineno</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>message</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>severity</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>thread_id</name></member>
+          <member refid="structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152" prot="public" virt="non-virtual"><scope>google::cloud::LogRecord</scope><name>timestamp</name></member>
+        </listofallmembers>
+      </compounddef>
+    </doxygen>)xml";
+
 auto constexpr kNamespaceXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud_1_1mocks" kind="namespace" language="C++">
@@ -189,6 +331,108 @@ tests.</para>
         <location file="mocks/mock_stream_range.h" line="30" column="1"/>
       </compounddef>
     </doxygen>)xml";
+
+auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="classgoogle_1_1cloud_1_1RuntimeStatusError" kind="class" language="C++" prot="public">
+      <compoundname>google::cloud::RuntimeStatusError</compoundname>
+      <basecompoundref prot="public" virt="non-virtual">std::runtime_error</basecompoundref>
+      <includes refid="status_8h" local="no">google/cloud/status.h</includes>
+        <sectiondef kind="private-attrib">
+        <memberdef kind="variable" id="classgoogle_1_1cloud_1_1RuntimeStatusError_1a85bebd1a98468aff6b7f5fe54f7b4241" prot="private" static="no" mutable="no">
+          <type><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref></type>
+          <definition>Status google::cloud::RuntimeStatusError::status_</definition>
+          <argsstring/>
+          <name>status_</name>
+          <qualifiedname>google::cloud::RuntimeStatusError::status_</qualifiedname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="status.h" line="168" column="10" bodyfile="status.h" bodystart="168" bodyend="-1"/>
+        </memberdef>
+        </sectiondef>
+        <sectiondef kind="public-func">
+        <memberdef kind="function" id="classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95" prot="public" static="no" const="no" explicit="yes" inline="no" virt="non-virtual">
+          <type/>
+          <definition>google::cloud::RuntimeStatusError::RuntimeStatusError</definition>
+          <argsstring>(Status status)</argsstring>
+          <name>RuntimeStatusError</name>
+          <qualifiedname>google::cloud::RuntimeStatusError::RuntimeStatusError</qualifiedname>
+          <param>
+            <type><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref></type>
+            <declname>status</declname>
+          </param>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="status.h" line="163" column="12"/>
+        </memberdef>
+        <memberdef kind="function" id="classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+          <type><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">Status</ref> const &amp;</type>
+          <definition>Status const  &amp; google::cloud::RuntimeStatusError::status</definition>
+          <argsstring>() const</argsstring>
+          <name>status</name>
+          <qualifiedname>google::cloud::RuntimeStatusError::status</qualifiedname>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+          <inbodydescription>
+          </inbodydescription>
+          <location file="status.h" line="165" column="16" bodyfile="status.h" bodystart="165" bodyend="165"/>
+        </memberdef>
+        </sectiondef>
+      <briefdescription>
+  <para>A runtime error that wraps a <computeroutput><ref refid="classgoogle_1_1cloud_1_1Status" kindref="compound">google::cloud::Status</ref></computeroutput>.</para>
+      </briefdescription>
+      <detaileddescription>
+      </detaileddescription>
+      <inheritancegraph>
+        <node id="1">
+          <label>google::cloud::RuntimeStatusError</label>
+          <link refid="classgoogle_1_1cloud_1_1RuntimeStatusError"/>
+          <childnode refid="2" relation="public-inheritance">
+          </childnode>
+        </node>
+        <node id="3">
+          <label>std::exception</label>
+        </node>
+        <node id="2">
+          <label>std::runtime_error</label>
+          <childnode refid="3" relation="public-inheritance">
+          </childnode>
+        </node>
+      </inheritancegraph>
+      <collaborationgraph>
+        <node id="1">
+          <label>google::cloud::RuntimeStatusError</label>
+          <link refid="classgoogle_1_1cloud_1_1RuntimeStatusError"/>
+          <childnode refid="2" relation="public-inheritance">
+          </childnode>
+        </node>
+        <node id="3">
+          <label>std::exception</label>
+        </node>
+        <node id="2">
+          <label>std::runtime_error</label>
+          <childnode refid="3" relation="public-inheritance">
+          </childnode>
+        </node>
+      </collaborationgraph>
+      <location file="status.h" line="161" column="1" bodyfile="status.h" bodystart="161" bodyend="169"/>
+      <listofallmembers>
+        <member refid="classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95" prot="public" virt="non-virtual"><scope>google::cloud::RuntimeStatusError</scope><name>RuntimeStatusError</name></member>
+        <member refid="classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e" prot="public" virt="non-virtual"><scope>google::cloud::RuntimeStatusError</scope><name>status</name></member>
+        <member refid="classgoogle_1_1cloud_1_1RuntimeStatusError_1a85bebd1a98468aff6b7f5fe54f7b4241" prot="private" virt="non-virtual"><scope>google::cloud::RuntimeStatusError</scope><name>status_</name></member>
+      </listofallmembers>
+    </compounddef>
+  </doxygen>)xml";
 
 TEST(Doxygen2Yaml, IncludeInPublicDocs) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
@@ -442,6 +686,48 @@ items:
   EXPECT_EQ(actual, kExpected);
 }
 
+TEST(Doxygen2Yaml, Variable) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
+    name: |
+      severity
+    fullName: |
+      google::cloud::LogRecord::severity
+    id: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
+    parent: test-only-parent-id
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        Severity severity;
+      source:
+        id: severity
+        path: google/cloud/log.h
+        startLine: 152
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kStruct2Xml);
+  auto selected = doc.select_node(
+      "//*[@id='"
+      "structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc"
+      "']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfVariable(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
 TEST(Doxygen2Yaml, Function) {
   auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
 items:
@@ -580,6 +866,96 @@ items:
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfNamespace(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Yaml, Class) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: classgoogle_1_1cloud_1_1RuntimeStatusError
+    name: google::cloud::RuntimeStatusError
+    id: classgoogle_1_1cloud_1_1RuntimeStatusError
+    parent: test-only-parent-id
+    type: class
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        // Found in #include <google/cloud/status.h>
+        class google::cloud::RuntimeStatusError { ... };
+      source:
+        id: google::cloud::RuntimeStatusError
+        path: google/cloud/status.h
+        startLine: 161
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status.h
+    summary: |
+      A runtime error that wraps a [`google::cloud::Status`](xref:classgoogle_1_1cloud_1_1Status).
+  - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
+    name: RuntimeStatusError
+    fullName: |
+      google::cloud::RuntimeStatusError::RuntimeStatusError
+    id: classgoogle_1_1cloud_1_1RuntimeStatusError_1aac6b78160cce6468696ce77eb1276a95
+    parent: classgoogle_1_1cloud_1_1RuntimeStatusError
+    type: function
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        google::cloud::RuntimeStatusError::RuntimeStatusError (
+            Status status
+          )
+      parameters:
+        - id: status
+          var_type: |
+            Status
+      source:
+        id: RuntimeStatusError
+        path: google/cloud/status.h
+        startLine: 163
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status.h
+  - uid: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
+    name: status
+    fullName: |
+      google::cloud::RuntimeStatusError::status
+    id: classgoogle_1_1cloud_1_1RuntimeStatusError_1ac30dbdb272a62aee4eb8f9bf45966c7e
+    parent: classgoogle_1_1cloud_1_1RuntimeStatusError
+    type: function
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        Status const &
+        google::cloud::RuntimeStatusError::status ()
+      returns:
+        var_type: |
+          Status const &
+      source:
+        id: status
+        path: google/cloud/status.h
+        startLine: 165
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/status.h
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kClassXml);
+  auto selected =
+      doc.select_node("//*[@id='classgoogle_1_1cloud_1_1RuntimeStatusError']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfClass(yaml, ctx, selected.node()));
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }
