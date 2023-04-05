@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "docfx/doxygen2toc.h"
+#include "docfx/doxygen_groups.h"
 #include "docfx/doxygen_pages.h"
 #include <yaml-cpp/yaml.h>
 #include <sstream>
@@ -20,21 +21,25 @@
 namespace docfx {
 
 std::string Doxygen2Toc(Config const& config, pugi::xml_document const& doc) {
-  auto const pages = PagesToc(doc);
   auto const uid = std::string{"cloud.google.com/cpp/"} + config.library;
   YAML::Emitter out;
-  out << YAML::BeginSeq << YAML::BeginMap           //
-      << YAML::Key << "uid" << YAML::Value << uid   //
-      << YAML::Key << "name" << YAML::Value << uid  //
-      << YAML::Key << "items" << YAML::Value        //
+  out << YAML::BeginMap                                        //
+      << YAML::Key << "name" << YAML::Value << config.library  //
+      << YAML::Key << "items" << YAML::Value                   //
       << YAML::BeginSeq;
-  for (auto const& [filename, name] : pages) {
+  for (auto const& [filename, name] : PagesToc(doc)) {
     out << YAML::BeginMap                                  //
         << YAML::Key << "name" << YAML::Value << name      //
         << YAML::Key << "href" << YAML::Value << filename  //
         << YAML::EndMap;
   }
-  out << YAML::EndSeq << YAML::EndMap << YAML::EndSeq;
+  for (auto const& [filename, name] : GroupsToc(doc)) {
+    out << YAML::BeginMap                              //
+        << YAML::Key << "uid" << YAML::Value << name   //
+        << YAML::Key << "name" << YAML::Value << name  //
+        << YAML::EndMap;
+  }
+  out << YAML::EndSeq << YAML::EndMap;
 
   std::ostringstream os;
   os << "### YamlMime:TableOfContent\n" << out.c_str() << "\n";
