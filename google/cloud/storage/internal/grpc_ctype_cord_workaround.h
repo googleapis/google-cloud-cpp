@@ -19,6 +19,7 @@
 #include "google/cloud/version.h"
 #include <google/storage/v2/storage.pb.h>
 #include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -74,19 +75,48 @@ struct GetContentTag {
 extern template struct BypassPrivateControl<
     GetContentTag, &google::storage::v2::ChecksummedData::content>;
 
-inline ContentType StealMutableContent(
-    google::storage::v2::ChecksummedData& d) {
-  return std::move(*(d.*GetMemberPointer(GetMutableContentTag{}))());
-}
+// The OSS version of [ctype = CORD] will not support `mutable_content()`. That
+// means we can only use `set_content()` when `ContentType == absl::Cord`.
+// But for `ContentType == std::string` we really want to use `mutable_*()` to
+// steal the contents with zero copy. This extra layer of SFINAE deals with
+// this (hopefully the last) layer of complexity.
+template <typename T, typename C = typename ContentTypeImpl<T>::type>
+struct AccessContent {
+  static C const& Get(T const& d) {
+    return (d.*GetMemberPointer(GetContentTag{}))();
+  }
+
+  static void Set(T& d, C value) {
+    *(d.*GetMemberPointer(GetMutableContentTag{}))() = std::move(value);
+  }
+
+  static C Steal(T& d) {
+    return std::move(*(d.*GetMemberPointer(GetMutableContentTag{}))());
+  }
+};
+
+template <typename T>
+struct AccessContent<T, absl::Cord> {
+  static absl::Cord const& Get(T const& d) { return d.content(); }
+
+  static void Set(T& d, absl::Cord value) { d.set_content(std::move(value)); }
+
+  static absl::Cord Steal(T& d) { return d.content(); }
+};
 
 inline ContentType const& GetContent(
     google::storage::v2::ChecksummedData const& d) {
-  return (d.*GetMemberPointer(GetContentTag{}))();
+  return AccessContent<google::storage::v2::ChecksummedData>::Get(d);
 }
 
 inline void SetMutableContent(google::storage::v2::ChecksummedData& d,
                               ContentType value) {
-  *(d.*GetMemberPointer(GetMutableContentTag{}))() = std::move(value);
+  AccessContent<google::storage::v2::ChecksummedData>::Set(d, std::move(value));
+}
+
+inline ContentType StealMutableContent(
+    google::storage::v2::ChecksummedData& d) {
+  return AccessContent<google::storage::v2::ChecksummedData>::Steal(d);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
