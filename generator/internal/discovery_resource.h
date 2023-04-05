@@ -43,7 +43,7 @@ class DiscoveryResource {
   // google.api.method_signature, and google.cloud.operation_service options.
   StatusOr<std::string> FormatRpcOptions(
       nlohmann::json const& method_json,
-      DiscoveryTypeVertex const& request_type) const;
+      DiscoveryTypeVertex const* request_type) const;
 
   // Summarize all the scopes found in the resource methods for inclusion as
   // a service level google.api.oauth_scopes option.

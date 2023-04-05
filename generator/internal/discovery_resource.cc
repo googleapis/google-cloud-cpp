@@ -59,7 +59,7 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
 
 StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     nlohmann::json const& method_json,
-    DiscoveryTypeVertex const& request_type) const {
+    DiscoveryTypeVertex const* request_type) const {
   std::vector<std::string> rpc_options;
   std::string verb = absl::AsciiStrToLower(method_json.value("httpMethod", ""));
   std::string path = method_json.value("path", "");
@@ -77,9 +77,9 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
       absl::StrCat(absl::StripSuffix(base_path_, "/"), "/",
                    FormatUrlPath(path)));
   std::string request_resource_field_name;
-  if (verb == "post" || verb == "patch" || verb == "put") {
+  if (request_type && (verb == "post" || verb == "patch" || verb == "put")) {
     std::string http_body =
-        request_type.json().value("request_resource_field_name", "*");
+        request_type->json().value("request_resource_field_name", "*");
     if (http_body != "*") request_resource_field_name = http_body;
     absl::StrAppend(&http_option,
                     absl::StrFormat("      body: \"%s\"\n", http_body));
@@ -188,11 +188,16 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
     std::string method_name = FormatMethodName(iter.key());
     auto const& method_json = iter.value();
 
-    std::string request_type_key = absl::StrCat(method_name, "Request");
-    auto const& request_type = request_types_.find(request_type_key);
-    if (request_type == request_types_.end()) {
-      return internal::InvalidArgumentError(absl::StrFormat(
-          "Cannot find request_type_key=%s in type_map", request_type_key));
+    std::string request_type_name = "google.protobuf.Empty";
+    DiscoveryTypeVertex const* request_type = nullptr;
+    if (method_json.contains("properties")) {
+      request_type_name = absl::StrCat(method_name, "Request");
+      auto const& request = request_types_.find(request_type_name);
+      if (request == request_types_.end()) {
+        return internal::InvalidArgumentError(absl::StrFormat(
+            "Cannot find request_type_name=%s in type_map", request_type_name));
+      }
+      request_type = request->second;
     }
 
     std::string response_type_name = "google.protobuf.Empty";
@@ -210,9 +215,9 @@ StatusOr<std::string> DiscoveryResource::JsonToProtobufService() const {
       rpc_text.push_back(FormatCommentBlock(method_description, 1));
     }
     rpc_text.push_back(absl::StrFormat("  rpc %s(%s) returns (%s) {",
-                                       method_name, request_type_key,
+                                       method_name, request_type_name,
                                        response_type_name));
-    auto rpc_options = FormatRpcOptions(method_json, *request_type->second);
+    auto rpc_options = FormatRpcOptions(method_json, request_type);
     if (!rpc_options) return std::move(rpc_options).status();
     rpc_text.push_back(*std::move(rpc_options));
     rpc_text.emplace_back("  }");

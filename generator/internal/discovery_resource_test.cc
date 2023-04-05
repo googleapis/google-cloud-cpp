@@ -62,7 +62,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetRegion) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
@@ -96,7 +96,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPatchZone) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
@@ -130,7 +130,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPutRegion) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
@@ -157,7 +157,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobal) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
@@ -188,7 +188,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsPostGlobalOperationResponse) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
@@ -209,7 +209,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParams) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
@@ -235,7 +235,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsGetNoParamsOperation) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   ASSERT_STATUS_OK(options);
   EXPECT_THAT(*options, Eq(kExpectedProto));
 }
@@ -251,7 +251,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsMissingPath) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   EXPECT_THAT(
       options,
       StatusIs(StatusCode::kInvalidArgument,
@@ -269,7 +269,7 @@ TEST(DiscoveryResourceTest, FormatRpcOptionsMissingHttpMethod) {
   ASSERT_TRUE(type_json.is_object());
   DiscoveryResource r("myTests", "", "base/path", method_json);
   DiscoveryTypeVertex t("myType", type_json);
-  auto options = r.FormatRpcOptions(method_json, t);
+  auto options = r.FormatRpcOptions(method_json, &t);
   EXPECT_THAT(
       options,
       StatusIs(StatusCode::kInvalidArgument,
@@ -388,6 +388,11 @@ TEST(DiscoveryResourceTest, JsonToProtobufService) {
         ],
         "path": "projects/{project}/regions/{region}/myResources/{foo}",
         "httpMethod": "GET",
+        "properties": {
+          "project": {
+            "type": "string"
+          }
+        },
         "parameterOrder": [
           "project",
           "region",
@@ -400,6 +405,11 @@ TEST(DiscoveryResourceTest, JsonToProtobufService) {
         ],
         "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
         "httpMethod": "POST",
+        "properties": {
+          "project": {
+            "type": "string"
+          }
+        },
         "response": {
           "$ref": "Operation"
         },
@@ -496,6 +506,11 @@ TEST(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
         ],
         "path": "projects/{project}/zones/{zone}/myResources/{fooId}/doFoo",
         "httpMethod": "POST",
+        "properties": {
+          "project": {
+            "type": "string"
+          }
+        },
         "response": {
           "$ref": "Operation"
         },
@@ -516,7 +531,43 @@ TEST(DiscoveryResourceTest, JsonToProtobufServiceMissingRequestType) {
       emitted_proto,
       StatusIs(
           StatusCode::kInvalidArgument,
-          HasSubstr("Cannot find request_type_key=DoFooRequest in type_map")));
+          HasSubstr("Cannot find request_type_name=DoFooRequest in type_map")));
+}
+
+TEST(DiscoveryResourceTest, JsonToProtobufServiceEmptyRequestType) {
+  auto constexpr kResourceJson = R"""({
+    "methods": {
+      "noop": {
+        "scopes": [
+          "https://www.googleapis.com/auth/cloud-platform"
+        ],
+        "path": "noop",
+        "httpMethod": "POST"
+      }
+    }
+})""";
+  auto constexpr kExpectedProto =
+      R"""(// Service for the myResources resource.
+// https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources
+service MyResources {
+  option (google.api.default_host) = "https://my.endpoint.com";
+  option (google.api.oauth_scopes) =
+    "https://www.googleapis.com/auth/cloud-platform";
+
+  rpc Noop(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "base/path/noop"
+    };
+  }
+}
+)""";
+  auto resource_json = nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  DiscoveryResource r("myResources", "https://my.endpoint.com", "base/path",
+                      resource_json);
+  auto emitted_proto = r.JsonToProtobufService();
+  ASSERT_STATUS_OK(emitted_proto);
+  EXPECT_THAT(*emitted_proto, Eq(kExpectedProto));
 }
 
 TEST(DiscoveryResourceTest, JsonToProtobufServiceErrorFormattingRpcOptions) {
