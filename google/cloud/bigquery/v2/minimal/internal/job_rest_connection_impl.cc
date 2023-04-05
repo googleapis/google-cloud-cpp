@@ -15,8 +15,11 @@
 #include "google/cloud/bigquery/v2/minimal/internal/job_rest_connection_impl.h"
 #include "google/cloud/bigquery/v2/minimal/internal/job_options.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
+#include "google/cloud/status_or.h"
 #include <memory>
+
 namespace google {
 namespace cloud {
 namespace bigquery_v2_minimal_internal {
@@ -28,26 +31,48 @@ BigQueryJobRestConnectionImpl::BigQueryJobRestConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       BigQueryJobConnection::options())) {}
 
-StatusOr<GetJobResponse> BigQueryJobRestConnectionImpl::GetJob(
+StatusOr<Job> BigQueryJobRestConnectionImpl::GetJob(
     GetJobRequest const& request) {
-  return rest_internal::RestRetryLoop(
+  auto result = rest_internal::RestRetryLoop(
       retry_policy(), backoff_policy(), idempotency_policy()->GetJob(request),
       [this](rest_internal::RestContext& rest_context,
              GetJobRequest const& request) {
         return stub_->GetJob(rest_context, request);
       },
       request, __func__);
+  if (!result) return std::move(result).status();
+  return result->job;
 }
 
-StatusOr<ListJobsResponse> BigQueryJobRestConnectionImpl::ListJobs(
+StreamRange<ListFormatJob> BigQueryJobRestConnectionImpl::ListJobs(
     ListJobsRequest const& request) {
-  return rest_internal::RestRetryLoop(
-      retry_policy(), backoff_policy(), idempotency_policy()->ListJobs(request),
-      [this](rest_internal::RestContext& rest_context,
-             ListJobsRequest const& request) {
-        return stub_->ListJobs(rest_context, request);
+  auto req = request;
+  req.set_page_token("");
+
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<BigQueryJobRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListJobs(req);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<ListFormatJob>>(
+      std::move(req),
+      [stub, retry, backoff, idempotency,
+       function_name](ListJobsRequest const& r) {
+        return rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& context,
+                   ListJobsRequest const& request) {
+              return stub->ListJobs(context, request);
+            },
+            r, function_name);
       },
-      request, __func__);
+      [](ListJobsResponse r) {
+        std::vector<ListFormatJob> result(r.jobs.size());
+        auto& messages = r.jobs;
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

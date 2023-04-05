@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -52,8 +53,9 @@ class JobClient {
 
   /// Gets Job information from Bigquery. For more details on BigQuery jobs,
   /// please refer to: https://cloud.google.com/bigquery/docs/jobs-overview
-  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request,
-                                  Options opts = {});
+  StatusOr<Job> GetJob(GetJobRequest const& request, Options opts = {});
+  StreamRange<ListFormatJob> ListJobs(ListJobsRequest const& request,
+                                      Options opts = {});
 
  private:
   std::shared_ptr<BigQueryJobConnection> connection_;

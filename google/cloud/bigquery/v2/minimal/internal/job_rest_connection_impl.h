@@ -23,6 +23,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -40,8 +41,8 @@ class BigQueryJobRestConnectionImpl : public BigQueryJobConnection {
 
   Options options() override { return options_; }
 
-  StatusOr<GetJobResponse> GetJob(GetJobRequest const& request) override;
-  StatusOr<ListJobsResponse> ListJobs(ListJobsRequest const& request) override;
+  StatusOr<Job> GetJob(GetJobRequest const& request) override;
+  StreamRange<ListFormatJob> ListJobs(ListJobsRequest const& request) override;
 
  private:
   std::unique_ptr<BigQueryJobRetryPolicy> retry_policy() {
