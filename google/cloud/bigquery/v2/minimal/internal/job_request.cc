@@ -30,11 +30,6 @@ namespace {
 
 auto const kDefaultTimepoint = std::chrono::system_clock::time_point{};
 
-std::string DebugStringSeparator(bool single_line_mode, int indent) {
-  if (single_line_mode) return " ";
-  return absl::StrCat("\n", std::string(indent * 2, ' '));
-}
-
 std::string GetJobsEndpoint(Options const& opts) {
   std::string endpoint = opts.get<EndpointOption>();
 
@@ -81,47 +76,37 @@ StateFilter StateFilter::Done() {
 }
 
 std::string GetJobRequest::DebugString(TracingOptions const& options) const {
-  auto sep = [single_line_mode = options.single_line_mode()](int indent) {
-    return DebugStringSeparator(single_line_mode, indent);
-  };
-  auto quoted = [&options](std::string const& s) {
-    return absl::StrCat("\"", internal::DebugString(s, options), "\"");
-  };
-  return absl::StrCat(
-      "google::cloud::bigquery_v2_minimal_internal::GetJobRequest {",  //
-      sep(1), "project_id: ", quoted(project_id_),                     //
-      sep(1), "job_id: ", quoted(job_id_),                             //
-      sep(1), "location: ", quoted(location_),                         //
-      sep(0), "}");
+  return internal::DebugFormatter(
+             options,
+             "google::cloud::bigquery_v2_minimal_internal::GetJobRequest")
+      .StringField("project_id", project_id_)
+      .StringField("job_id", job_id_)
+      .StringField("location", location_)
+      .Build();
 }
 
 std::string ListJobsRequest::DebugString(TracingOptions const& options) const {
-  auto sep = [single_line_mode = options.single_line_mode()](int indent) {
-    return DebugStringSeparator(single_line_mode, indent);
-  };
-  auto quoted = [&options](std::string const& s) {
-    return absl::StrCat("\"", internal::DebugString(s, options), "\"");
-  };
-  return absl::StrCat(
-      "google::cloud::bigquery_v2_minimal_internal::ListJobsRequest {",  //
-      sep(1), "project_id: ", quoted(project_id_),                       //
-      sep(1), "all_users: ", all_users_ ? "true" : "false",              //
-      sep(1), "max_results: ", max_results_,                             //
-      sep(1), "min_creation_time {",                                     //
-      sep(2), "\"", internal::FormatRfc3339(min_creation_time_), "\"",   //
-      sep(1), "}",                                                       //
-      sep(1), "max_creation_time {",                                     //
-      sep(2), "\"", internal::FormatRfc3339(max_creation_time_), "\"",   //
-      sep(1), "}",                                                       //
-      sep(1), "page_token: ", quoted(page_token_),                       //
-      sep(1), "projection {",                                            //
-      sep(2), "value: ", quoted(projection_.value),                      //
-      sep(1), "}",                                                       //
-      sep(1), "state_filter {",                                          //
-      sep(2), "value: ", quoted(state_filter_.value),                    //
-      sep(1), "}",                                                       //
-      sep(1), "parent_job_id: ", quoted(parent_job_id_),                 //
-      sep(0), "}");
+  return internal::DebugFormatter(
+             options,
+             "google::cloud::bigquery_v2_minimal_internal::ListJobsRequest")
+      .StringField("project_id", project_id_)
+      .Field("all_users", all_users_)
+      .Field("max_results", max_results_)
+      .SubMessage("min_creation_time")
+      .QuotedField(internal::FormatRfc3339(min_creation_time_))
+      .EndMessage()
+      .SubMessage("max_creation_time")
+      .QuotedField(internal::FormatRfc3339(max_creation_time_))
+      .EndMessage()
+      .StringField("page_token", page_token_)
+      .SubMessage("projection")
+      .StringField("value", projection_.value)
+      .EndMessage()
+      .SubMessage("state_filter")
+      .StringField("value", state_filter_.value)
+      .EndMessage()
+      .StringField("parent_job_id", parent_job_id_)
+      .Build();
 }
 
 ListJobsRequest::ListJobsRequest(std::string project_id)
