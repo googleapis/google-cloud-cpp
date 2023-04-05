@@ -48,9 +48,11 @@ void CompoundRecurse(YAML::Emitter& yaml, YamlContext const& ctx,
     if (AppendIfSectionDef(yaml, ctx, child)) continue;
     if (AppendIfNamespace(yaml, ctx, child)) continue;
     if (AppendIfClass(yaml, ctx, child)) continue;
+    if (AppendIfStruct(yaml, ctx, child)) continue;
     if (AppendIfEnumValue(yaml, ctx, child)) continue;
     if (AppendIfEnum(yaml, ctx, child)) continue;
     if (AppendIfTypedef(yaml, ctx, child)) continue;
+    if (AppendIfVariable(yaml, ctx, child)) continue;
     if (AppendIfFunction(yaml, ctx, child)) continue;
     UnknownChildType(__func__, child);
   }
@@ -281,6 +283,28 @@ bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
        << YAML::Key << "type" << YAML::Value << "class"                     //
        << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
   AppendClassSyntax(yaml, ctx, node);
+  auto const summary = Summary(node);
+  if (!summary.empty()) {
+    yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
+  }
+  yaml << YAML::EndMap;
+  CompoundRecurse(yaml, NestedYamlContext(ctx, node), node);
+  return true;
+}
+
+bool AppendIfStruct(YAML::Emitter& yaml, YamlContext const& ctx,
+                    pugi::xml_node const& node) {
+  if (kind(node) != "struct") return false;
+  auto const id = std::string_view{node.attribute("id").as_string()};
+  auto const name = std::string_view{node.child("compoundname").child_value()};
+  yaml << YAML::BeginMap                                                    //
+       << YAML::Key << "uid" << YAML::Value << id                           //
+       << YAML::Key << "name" << YAML::Value << name                        //
+       << YAML::Key << "id" << YAML::Value << id                            //
+       << YAML::Key << "parent" << YAML::Value << ctx.parent_id             //
+       << YAML::Key << "type" << YAML::Value << "struct"                    //
+       << YAML::Key << "langs" << YAML::BeginSeq << "cpp" << YAML::EndSeq;  //
+  AppendStructSyntax(yaml, ctx, node);
   auto const summary = Summary(node);
   if (!summary.empty()) {
     yaml << YAML::Key << "summary" << YAML::Value << YAML::Literal << summary;
