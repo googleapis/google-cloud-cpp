@@ -25,12 +25,20 @@ GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
 load(":google_cloud_cpp_storage_grpc.bzl", "google_cloud_cpp_storage_grpc_hdrs", "google_cloud_cpp_storage_grpc_srcs")
 
+config_setting(
+    name = "ctype_cord_workaround_enabled",
+    flag_values = {"//:enable-ctype-cord-workaround": "true"},
+)
+
 cc_library(
     name = "google_cloud_cpp_storage_grpc",
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
     defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"] + select({
         "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
+        "//conditions:default": [],
+    }) + select({
+        ":ctype_cord_workaround_enabled": ["GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND"],
         "//conditions:default": [],
     }),
     visibility = [

@@ -120,6 +120,11 @@ else ()
                            PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
     target_compile_definitions(google_cloud_cpp_storage_grpc
                                PUBLIC GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC)
+    if (GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+        target_compile_definitions(
+            google_cloud_cpp_storage_grpc
+            PUBLIC GOOGLE_CLOUD_CPP_ENABLE_CTYPE_CORD_WORKAROUND)
+    endif ()
     set_target_properties(
         google_cloud_cpp_storage_grpc
         PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage-grpc"
