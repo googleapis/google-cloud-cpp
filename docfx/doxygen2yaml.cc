@@ -97,7 +97,6 @@ std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc) {
 }
 
 std::string Compound2Yaml(pugi::xml_node const& node) {
-  auto const id = std::string{node.attribute("id").as_string()};
   YAML::Emitter yaml;
   StartDocFxYaml(yaml);
   YamlContext ctx;
