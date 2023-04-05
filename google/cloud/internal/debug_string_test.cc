@@ -28,7 +28,7 @@ TEST(DebugFormatter, SingleLine) {
                 .SubMessage("sub_message")
                 .QuotedField("field2", 3.14159)
                 .EndMessage()
-                .StringField("field2", "foo")
+                .StringField("field2", "foobar")
                 .Field("field3", true)
                 .Build(),
             R"(message_name {)"
@@ -36,7 +36,7 @@ TEST(DebugFormatter, SingleLine) {
             R"( sub_message {)"
             R"( field2: "3.14159")"
             R"( })"
-            R"( field2: "foo")"
+            R"( field2: "foobar")"
             R"( field3: true)"
             R"( })");
 }
@@ -48,7 +48,7 @@ TEST(DebugFormatter, MultiLine) {
                 .SubMessage("sub_message")
                 .QuotedField("field2", 3.14159)
                 .EndMessage()
-                .StringField("field2", "foo")
+                .StringField("field2", "foobar")
                 .Field("field3", true)
                 .Build(),
             R"(message_name {
@@ -56,20 +56,20 @@ TEST(DebugFormatter, MultiLine) {
   sub_message {
     field2: "3.14159"
   }
-  field2: "foo"
+  field2: "foobar"
   field3: true
 })");
 }
 
 TEST(DebugFormatter, Truncated) {
   EXPECT_EQ(DebugFormatter(TracingOptions{}.SetOptions(
-                               "truncate_string_field_longer_than=2"),
+                               "truncate_string_field_longer_than=3"),
                            "message_name")
                 .Field("field1", 42)
                 .SubMessage("sub_message")
                 .QuotedField("field2", 3.14159)
                 .EndMessage()
-                .StringField("field2", "foo")
+                .StringField("field2", "foobar")
                 .Field("field3", true)
                 .Build(),
             R"(message_name {)"
@@ -77,7 +77,7 @@ TEST(DebugFormatter, Truncated) {
             R"( sub_message {)"
             R"( field2: "3.14159")"
             R"( })"
-            R"( field2: "fo...<truncated>...")"
+            R"( field2: "foo...<truncated>...")"
             R"( field3: true)"
             R"( })");
 }
