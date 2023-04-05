@@ -327,8 +327,7 @@ TEST(GrpcObjectReadSource, HandleExtraRead) {
   EXPECT_CALL(*mock, Read)
       .WillOnce([]() {
         storage_proto::ReadObjectResponse response;
-        SetMutableContent(*response.mutable_checksummed_data(),
-                          "The quick brown fox jumps over the lazy dog");
+        SetContent(response, "The quick brown fox jumps over the lazy dog");
         return response;
       })
       .WillOnce(Return(Status{}));
