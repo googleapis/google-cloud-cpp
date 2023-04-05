@@ -28,6 +28,7 @@ function features::always_build() {
     # These have hand-crafted code, therefore we always want to build them.
     bigtable
     experimental-bigquery_rest
+    experimental-opentelemetry_sdk
     spanner
     storage
     pubsub
