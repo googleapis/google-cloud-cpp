@@ -305,8 +305,8 @@ TEST_F(PartitionPublisherBatchingTest, FullBatchesMessageSizeRestriction) {
 
 class PartitionPublisherTest : public ::testing::Test {
  protected:
-  PartitionPublisherTest(std::string const& client_id)
-      : client_id_(client_id),
+  explicit PartitionPublisherTest(std::string client_id)
+      : client_id_(std::move(client_id)),
         alarm_token_ref_{*(new StrictMock<MockAlarmRegistryCancelToken>)},
         resumable_stream_ref_{*(
             new StrictMock<MockResumableAsyncReaderWriter<PublishRequest,
@@ -359,7 +359,7 @@ class PartitionPublisherTest : public ::testing::Test {
   }
 
   PublishRequest ExpectedBatch(std::vector<PubSubMessage> const& tm,
-                               std::size_t begin, std::size_t end) {
+                               std::size_t begin, std::size_t end) const {
     PublishRequest r;
     auto* message_publish_request = r.mutable_message_publish_request();
     message_publish_request->set_first_sequence_number(initial_sequence_ +
@@ -1382,6 +1382,7 @@ TEST_F(InitializedPartitionPublisherTest, HandlesMissingCursorRanges) {
   auto individual_publish_messages = CreateTestMessages(7);
 
   std::vector<future<StatusOr<Cursor>>> publish_message_futures;
+  publish_message_futures.reserve(individual_publish_messages.size());
   for (auto& message : individual_publish_messages) {
     publish_message_futures.push_back(publisher_->Publish(message));
   }

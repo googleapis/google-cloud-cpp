@@ -175,8 +175,8 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
             [](CursorRange const& a, CursorRange const& b) {
               return a.start_index() < b.start_index();
             });
-  std::size_t range_idx = 0;
-  for (std::size_t msg_idx = 0; msg_idx < batch.size(); ++msg_idx) {
+  int range_idx = 0;
+  for (int msg_idx = 0; msg_idx < batch.size(); ++msg_idx) {
     auto& message = batch[msg_idx];
     if (range_idx < ranges->size() &&
         ranges->Get(range_idx).end_index() <= msg_idx) {
@@ -186,7 +186,7 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
     if (range_idx < ranges->size() &&
         msg_idx >= ranges->Get(range_idx).start_index() &&
         msg_idx < ranges->Get(range_idx).end_index()) {
-      const auto& range = ranges->Get(range_idx);
+      auto const& range = ranges->Get(range_idx);
       std::int64_t offset_in_range = msg_idx - range.start_index();
       offset = range.start_cursor().offset() + offset_in_range;
     }
