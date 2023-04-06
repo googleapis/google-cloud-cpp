@@ -223,5 +223,7 @@ time {
   done
 }
 
-# Report the differences, which should break the build.
-git diff --exit-code .
+# If there are any diffs, report them and exit with a non-zero status so
+# as to break the build. Use a distinctive status so that callers have a
+# chance to distinguish formatting updates from other check failures.
+git diff --exit-code . || exit 111
