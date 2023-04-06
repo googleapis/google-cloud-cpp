@@ -100,11 +100,21 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 
+# There is no Fedora package for opentelemetry-cpp, so we must build it
+# from source. We use C++17 to match the language standard that Abseil is
+# compiled with. And we use the compiler flags from ci/etc/m32-toolchain.cmake
+# to force a 32-bit install.
 WORKDIR /var/tmp/build/opentelemetry
 RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_CXX_STANDARD=20 \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DCMAKE_CXX_COMPILER=g++ \
+        -DCMAKE_CXX_FLAGS=-m32 \
+        -DCMAKE_FIND_ROOT_PATH=/usr/ \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+        -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+        -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
         -DBUILD_SHARED_LIBS=ON \
@@ -112,14 +122,8 @@ RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.3
         -DWITH_ABSEIL=ON \
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
-        -DCMAKE_CXX_COMPILER=g++ \
-        -DCMAKE_CXX_FLAGS=-m32 \
-        -DCMAKE_FIND_ROOT_PATH=/usr/ \
-        -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
-        -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
-        -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
-        -H. -Bcmake-out && \
-    cmake --build cmake-out --target install && \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
