@@ -22,6 +22,7 @@ bigquery_rest_unit_tests = [
     "v2/minimal/internal/job_client_test.cc",
     "v2/minimal/internal/job_connection_test.cc",
     "v2/minimal/internal/job_idempotency_policy_test.cc",
+    "v2/minimal/internal/job_logging_test.cc",
     "v2/minimal/internal/job_metadata_test.cc",
     "v2/minimal/internal/job_options_test.cc",
     "v2/minimal/internal/job_request_test.cc",
