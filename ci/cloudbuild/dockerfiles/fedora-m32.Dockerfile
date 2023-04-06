@@ -100,6 +100,28 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 
+WORKDIR /var/tmp/build/opentelemetry
+RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.3.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_CXX_STANDARD=20 \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+        -DBUILD_SHARED_LIBS=ON \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -DOPENTELEMETRY_INSTALL=ON \
+        -DCMAKE_CXX_COMPILER=g++ \
+        -DCMAKE_CXX_FLAGS=-m32 \
+        -DCMAKE_FIND_ROOT_PATH=/usr/ \
+        -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+        -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=ONLY \
+        -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig
+
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
