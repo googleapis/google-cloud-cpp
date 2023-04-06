@@ -37,7 +37,8 @@ Result JobLogWrapper(Functor&& functor, rest_internal::RestContext& context,
     absl::StrAppend(out, "name=", header.first, ", value={",
                     absl::StrJoin(header.second, "&"), "}");
   };
-  GCP_LOG(DEBUG) << where << "() " << request << ", Context={"
+  GCP_LOG(DEBUG) << where << "() << " << request.DebugString(options)
+                 << ", Context={"
                  << internal::DebugString(
                         absl::StrJoin(context.headers(), ", ", formatter),
                         options)
