@@ -175,7 +175,7 @@ TEST(JobConnectionTest, ListJobsPermanentError) {
   auto range = conn->ListJobs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kPermissionDenied));
 }
 
 // Verify that too many transients errors are reported correctly.
@@ -205,7 +205,7 @@ TEST(JobConnectionTest, ListJobsTooManyTransients) {
   auto range = conn->ListJobs(request);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
-  EXPECT_EQ(StatusCode::kDeadlineExceeded, begin->status().code());
+  EXPECT_THAT(*begin, StatusIs(StatusCode::kDeadlineExceeded));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

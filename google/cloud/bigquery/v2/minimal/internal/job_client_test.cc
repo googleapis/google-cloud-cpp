@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigquery/v2/minimal/internal/job_client.h"
 #include "google/cloud/bigquery/v2/minimal/mocks/mock_job_connection.h"
+#include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_response.h"
@@ -31,30 +32,30 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
+Job GetJob() {
+  Job job;
+  job.etag = "jtag";
+  job.kind = "jkind";
+  job.id = "j123";
+  job.self_link = "jselfLink";
+  job.user_email = "juserEmail";
+  job.status.state = "DONE";
+  job.reference.project_id = "p123";
+  job.reference.job_id = "j123";
+  job.configuration.job_type = "QUERY";
+  job.configuration.query_config.query = "select 1;";
+  return job;
+}
+
 TEST(JobClientTest, GetJobSuccess) {
   auto mock_job_connection = std::make_shared<MockBigQueryJobConnection>();
 
-  std::string expected_payload =
-      R"({"kind": "jkind",
-          "etag": "jtag",
-          "id": "j123",
-          "self_link": "jselfLink",
-          "user_email": "juserEmail",
-          "status": {"state": "DONE"},
-          "reference": {"project_id": "p123", "job_id": "j123"},
-          "configuration": {
-            "job_type": "QUERY",
-            "query_config": {"query": "select 1;"}
-          }})";
   EXPECT_CALL(*mock_job_connection, GetJob)
       .WillOnce([&](GetJobRequest const& request) {
         EXPECT_EQ("test-project-id", request.project_id());
         EXPECT_EQ("test-job-id", request.job_id());
-        BigQueryHttpResponse http_response;
-        http_response.payload = expected_payload;
-        auto const& job_response =
-            GetJobResponse::BuildFromHttpResponse(http_response);
-        return make_status_or(job_response->job);
+        auto job = GetJob();
+        return make_status_or(job);
       });
 
   JobClient job_client(mock_job_connection);
@@ -100,14 +101,9 @@ TEST(JobClientTest, ListJobs) {
 
   EXPECT_CALL(*mock, ListJobs).WillOnce([](ListJobsRequest const& request) {
     EXPECT_EQ(request.project_id(), "test-project-id");
-    return google::cloud::internal::MakePaginationRange<
-        StreamRange<ListFormatJob>>(
-        ListJobsRequest{},
-        [](ListJobsRequest const&) {
-          return StatusOr<ListJobsResponse>(
-              Status(StatusCode::kPermissionDenied, "denied"));
-        },
-        [](ListJobsResponse const&) { return std::vector<ListFormatJob>{}; });
+    return mocks::MakeStreamRange<ListFormatJob>(
+        {}, internal::PermissionDeniedError("denied"));
+    ;
   });
 
   JobClient client(std::move(mock));

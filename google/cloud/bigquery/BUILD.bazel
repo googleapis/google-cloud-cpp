@@ -153,6 +153,7 @@ load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
         ":bigquery_rest_testing",
         ":google_cloud_cpp_bigquery_rest",
         ":google_cloud_cpp_bigquery_rest_mocks",
+        "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googletest//:gtest",

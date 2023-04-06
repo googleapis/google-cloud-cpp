@@ -51,9 +51,18 @@ class JobClient {
     return !(a == b);
   }
 
-  /// Gets Job information from Bigquery. For more details on BigQuery jobs,
-  /// please refer to: https://cloud.google.com/bigquery/docs/jobs-overview
+  /// Gets specific job information from Bigquery. For more details on BigQuery
+  /// jobs, please refer to:
+  /// https://cloud.google.com/bigquery/docs/jobs-overview
   StatusOr<Job> GetJob(GetJobRequest const& request, Options opts = {});
+
+  /// Lists all jobs that user started in the specified project. Job information
+  /// is available for a six month period after creation. The job list is sorted
+  /// in reverse chronological order, by job creation time. Requires the Can
+  /// View project role, or the Is Owner project role if you set the allUsers
+  /// property.
+  /// For more details on BigQuery jobs,
+  /// please refer to: https://cloud.google.com/bigquery/docs/jobs-overview
   StreamRange<ListFormatJob> ListJobs(ListJobsRequest const& request,
                                       Options opts = {});
 
