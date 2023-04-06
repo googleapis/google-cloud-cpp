@@ -32,7 +32,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-Job GetJob() {
+Job MakeTestJob() {
   Job job;
   job.etag = "jtag";
   job.kind = "jkind";
@@ -54,8 +54,7 @@ TEST(JobClientTest, GetJobSuccess) {
       .WillOnce([&](GetJobRequest const& request) {
         EXPECT_EQ("test-project-id", request.project_id());
         EXPECT_EQ("test-job-id", request.job_id());
-        auto job = GetJob();
-        return make_status_or(job);
+        return make_status_or(MakeTestJob());
       });
 
   JobClient job_client(mock_job_connection);
