@@ -70,9 +70,7 @@ items:
   doc.load_string(kXml);
   auto selected = doc.select_node("//*[@id='group__terminate']");
   ASSERT_TRUE(selected);
-  auto const config =
-      Config{"test-only-filename", "test-only-library", "v42.0.0"};
-  auto const actual = Group2Yaml(config, selected.node());
+  auto const actual = Group2Yaml(selected.node());
   EXPECT_EQ(kExpected, actual);
 }
 

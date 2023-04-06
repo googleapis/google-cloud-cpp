@@ -47,7 +47,20 @@ void AppendReferences(YAML::Emitter& yaml, pugi::xml_node const& node) {
 
 }  // namespace
 
-std::string Group2Yaml(Config const& /*config*/, pugi::xml_node const& node) {
+std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc) {
+  std::vector<TocEntry> result;
+  auto nodes = doc.select_nodes("//*[@kind='group']");
+  std::transform(nodes.begin(), nodes.end(), std::back_inserter(result),
+                 [](auto const& i) {
+                   auto const& page = i.node();
+                   auto const id =
+                       std::string{page.attribute("id").as_string()};
+                   return TocEntry{id + ".yml", id};
+                 });
+  return result;
+}
+
+std::string Group2Yaml(pugi::xml_node const& node) {
   auto const id = std::string{node.attribute("id").as_string()};
   YAML::Emitter yaml;
   yaml << YAML::BeginMap                                  // top-level
@@ -159,19 +172,6 @@ std::string Group2SummaryMarkdown(pugi::xml_node const& node) {
   }
   os << "\n";
   return std::move(os).str();
-}
-
-std::vector<TocEntry> GroupsToc(pugi::xml_document const& doc) {
-  std::vector<TocEntry> result;
-  auto nodes = doc.select_nodes("//*[@kind='group']");
-  std::transform(nodes.begin(), nodes.end(), std::back_inserter(result),
-                 [](auto const& i) {
-                   auto const& page = i.node();
-                   auto const id =
-                       std::string_view{page.attribute("id").as_string()};
-                   return TocEntry{std::string(id) + ".yml", std::string(id)};
-                 });
-  return result;
 }
 
 }  // namespace docfx

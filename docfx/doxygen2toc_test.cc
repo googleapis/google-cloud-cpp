@@ -19,8 +19,8 @@ namespace docfx {
 namespace {
 
 TEST(Doxygen2Toc, Simple) {
-  auto constexpr kXml =
-      R"xml(<?xml version="1.0" standalone="yes"?><doxygen version="1.9.1" xml:lang="en-US">
+  auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
         <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="common-error-handling" kind="page">
           <compoundname>common-error-handling</compoundname>
           <title>Error Handling</title>
@@ -35,16 +35,34 @@ TEST(Doxygen2Toc, Simple) {
           </briefdescription>
           <detaileddescription><para>More details about the index.</para></detaileddescription>
         </compounddef>
-      </doxygen>)xml";
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle" kind="namespace" language="C++">
+        <compoundname>google</compoundname>
+        <innernamespace refid="namespacegoogle_1_1cloud">google::cloud</innernamespace>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
+        <compoundname>google::cloud</compoundname>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacestd" kind="namespace" language="Unknown">
+        <compoundname>std</compoundname>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="group__terminate" kind="group">
+        <compoundname>terminate</compoundname>
+      </compounddef>
+    </doxygen>)xml";
 
   auto constexpr kExpected = R"""(### YamlMime:TableOfContent
-- uid: cloud.google.com/cpp/common
-  name: cloud.google.com/cpp/common
-  items:
-    - name: common-error-handling
-      href: common-error-handling.md
-    - name: README
-      href: indexpage.md
+name: common
+items:
+  - name: common-error-handling
+    href: common-error-handling.md
+  - name: README
+    href: indexpage.md
+  - uid: group__terminate
+    name: group__terminate
+  - uid: namespacegoogle
+    name: namespacegoogle
+  - uid: namespacegoogle_1_1cloud
+    name: namespacegoogle_1_1cloud
 )""";
 
   pugi::xml_document doc;

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2YAML_H
 #define GOOGLE_CLOUD_CPP_DOCFX_DOXYGEN2YAML_H
 
+#include "docfx/toc_entry.h"
 #include "docfx/yaml_context.h"
 #include <pugixml.hpp>
 #include <yaml-cpp/yaml.h>
@@ -29,6 +30,13 @@ namespace docfx {
 // namespaces. This helper allows us to short circuit the recursion over the
 // doxygen structure when an element is not needed for the public docs.
 bool IncludeInPublicDocuments(pugi::xml_node const& node);
+
+// Get the table of contents for `<compounddef>` nodes representing C++ types.
+std::vector<TocEntry> CompoundToc(pugi::xml_document const& doc);
+
+// Generate the YAML file contents for `<compounddef>` nodes representing C++
+// types.
+std::string Compound2Yaml(pugi::xml_node const& node);
 
 // Initialize a YAML Emitter with the preamble elements required by DocFx.
 void StartDocFxYaml(YAML::Emitter& yaml);
@@ -67,6 +75,10 @@ bool AppendIfNamespace(YAML::Emitter& yaml, YamlContext const& ctx,
 // Create YAML entries for a class and its children.
 bool AppendIfClass(YAML::Emitter& yaml, YamlContext const& ctx,
                    pugi::xml_node const& node);
+
+// Create YAML entries for a struct and its children.
+bool AppendIfStruct(YAML::Emitter& yaml, YamlContext const& ctx,
+                    pugi::xml_node const& node);
 
 }  // namespace docfx
 

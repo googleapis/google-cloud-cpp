@@ -19,6 +19,8 @@
 namespace docfx {
 namespace {
 
+using ::testing::ElementsAre;
+
 auto constexpr kEnumXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
       <memberdef kind="enum" id="namespacegoogle_1_1cloud_1a7d65fd569564712b7cfe652613f30d9c" prot="public" static="no" strong="yes">
@@ -433,6 +435,31 @@ auto constexpr kClassXml = R"xml(xml(<?xml version="1.0" standalone="yes"?>
       </listofallmembers>
     </compounddef>
   </doxygen>)xml";
+
+TEST(Doxygen2Yaml, CompoundToc) {
+  auto constexpr kDocXml = R"xml(<?xml version="1.0" standalone="yes"?>
+    <doxygen version="1.9.1" xml:lang="en-US">
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle" kind="namespace" language="C++">
+        <compoundname>google</compoundname>
+        <innernamespace refid="namespacegoogle_1_1cloud">google::cloud</innernamespace>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacegoogle_1_1cloud" kind="namespace" language="C++">
+        <compoundname>google::cloud</compoundname>
+      </compounddef>
+      <compounddef xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="namespacestd" kind="namespace" language="Unknown">
+        <compoundname>std</compoundname>
+      </compounddef>
+    </doxygen>)xml";
+
+  pugi::xml_document doc;
+  ASSERT_TRUE(doc.load_string(kDocXml));
+  auto const actual = CompoundToc(doc);
+
+  EXPECT_THAT(actual,
+              ElementsAre(TocEntry{"namespacegoogle.yml", "namespacegoogle"},
+                          TocEntry{"namespacegoogle_1_1cloud.yml",
+                                   "namespacegoogle_1_1cloud"}));
+}
 
 TEST(Doxygen2Yaml, IncludeInPublicDocs) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
@@ -956,6 +983,193 @@ items:
   YamlContext ctx;
   ctx.parent_id = "test-only-parent-id";
   ASSERT_TRUE(AppendIfClass(yaml, ctx, selected.node()));
+  auto const actual = EndDocFxYaml(yaml);
+  EXPECT_EQ(actual, kExpected);
+}
+
+TEST(Doxygen2Yaml, Struct) {
+  auto constexpr kExpected = R"yml(### YamlMime:UniversalReference
+items:
+  - uid: structgoogle_1_1cloud_1_1LogRecord
+    name: google::cloud::LogRecord
+    id: structgoogle_1_1cloud_1_1LogRecord
+    parent: test-only-parent-id
+    type: struct
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        // Found in #include <google/cloud/log.h>
+        struct google::cloud::LogRecord { ... };
+      source:
+        id: google::cloud::LogRecord
+        path: google/cloud/log.h
+        startLine: 151
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+    summary: |
+      Represents a single log message.
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
+    name: |
+      severity
+    fullName: |
+      google::cloud::LogRecord::severity
+    id: structgoogle_1_1cloud_1_1LogRecord_1a830f8xx5fe86e1581dddbbb2cd922cbc
+    parent: structgoogle_1_1cloud_1_1LogRecord
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        Severity severity;
+      source:
+        id: severity
+        path: google/cloud/log.h
+        startLine: 152
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6
+    name: |
+      function
+    fullName: |
+      google::cloud::LogRecord::function
+    id: structgoogle_1_1cloud_1_1LogRecord_1a8a04caf649e69b55404abf2d3b72d4a6
+    parent: structgoogle_1_1cloud_1_1LogRecord
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        std::string function;
+      source:
+        id: function
+        path: google/cloud/log.h
+        startLine: 153
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6
+    name: |
+      filename
+    fullName: |
+      google::cloud::LogRecord::filename
+    id: structgoogle_1_1cloud_1_1LogRecord_1a46bc9a3adab542be80be9671d2ff82e6
+    parent: structgoogle_1_1cloud_1_1LogRecord
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        std::string filename;
+      source:
+        id: filename
+        path: google/cloud/log.h
+        startLine: 154
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0
+    name: |
+      lineno
+    fullName: |
+      google::cloud::LogRecord::lineno
+    id: structgoogle_1_1cloud_1_1LogRecord_1a29f2cf2bafa97addc548c26xx48a4fe0
+    parent: structgoogle_1_1cloud_1_1LogRecord
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        int lineno;
+      source:
+        id: lineno
+        path: google/cloud/log.h
+        startLine: 155
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834
+    name: |
+      thread_id
+    fullName: |
+      google::cloud::LogRecord::thread_id
+    id: structgoogle_1_1cloud_1_1LogRecord_1a9acea199684809e231263a486559f834
+    parent: structgoogle_1_1cloud_1_1LogRecord
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        std::thread::id thread_id;
+      source:
+        id: thread_id
+        path: google/cloud/log.h
+        startLine: 156
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
+    name: |
+      timestamp
+    fullName: |
+      google::cloud::LogRecord::timestamp
+    id: structgoogle_1_1cloud_1_1LogRecord_1a949e7b4cb62d085ee13b107e63f83152
+    parent: structgoogle_1_1cloud_1_1LogRecord
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        std::chrono::system_clock::time_point timestamp;
+      source:
+        id: timestamp
+        path: google/cloud/log.h
+        startLine: 157
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+  - uid: structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
+    name: |
+      message
+    fullName: |
+      google::cloud::LogRecord::message
+    id: structgoogle_1_1cloud_1_1LogRecord_1a95652739567b944a4ffbbb6d31b3f2e0
+    parent: structgoogle_1_1cloud_1_1LogRecord
+    type: variable
+    langs:
+      - cpp
+    syntax:
+      contents: |
+        std::string message;
+      source:
+        id: message
+        path: google/cloud/log.h
+        startLine: 158
+        remote:
+          repo: https://github.com/googleapis/google-cloud-cpp/
+          branch: main
+          path: google/cloud/log.h
+)yml";
+
+  pugi::xml_document doc;
+  doc.load_string(kStruct2Xml);
+  auto selected =
+      doc.select_node("//*[@id='structgoogle_1_1cloud_1_1LogRecord']");
+  ASSERT_TRUE(selected);
+  YAML::Emitter yaml;
+  StartDocFxYaml(yaml);
+  YamlContext ctx;
+  ctx.parent_id = "test-only-parent-id";
+  ASSERT_TRUE(AppendIfStruct(yaml, ctx, selected.node()));
   auto const actual = EndDocFxYaml(yaml);
   EXPECT_EQ(actual, kExpected);
 }

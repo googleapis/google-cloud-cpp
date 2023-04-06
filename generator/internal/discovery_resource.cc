@@ -112,14 +112,7 @@ StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
 
   if (method_json.contains("response") &&
       method_json["response"].value("$ref", "") == "Operation") {
-    if (absl::StrContains(path, "/global/")) {
-      operation_scope = "GlobalOperations";
-    }
-    if (operation_scope.empty()) {
-      return internal::InvalidArgumentError(
-          "Method response is Operation but no scope is defined.",
-          GCP_ERROR_INFO().WithMetadata("json", method_json.dump()));
-    }
+    if (operation_scope.empty()) operation_scope = "GlobalOperations";
     rpc_options.push_back(
         absl::StrFormat("    option (google.cloud.operation_service) = \"%s\";",
                         operation_scope));

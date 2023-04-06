@@ -26,6 +26,14 @@ struct TocEntry {
   std::string name;
 };
 
+inline bool operator==(TocEntry const& lhs, TocEntry const& rhs) {
+  return lhs.filename == rhs.filename && lhs.name == rhs.name;
+}
+
+inline bool operator!=(TocEntry const& lhs, TocEntry const& rhs) {
+  return !(lhs == rhs);
+}
+
 std::ostream& operator<<(std::ostream& os, TocEntry const& entry);
 
 }  // namespace docfx
