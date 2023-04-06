@@ -41,6 +41,17 @@ void DiscoveryResource::AddRequestType(std::string name,
   request_types_.insert(std::make_pair(std::move(name), type));
 }
 
+std::vector<DiscoveryTypeVertex const*> DiscoveryResource::GetRequestTypesList()
+    const {
+  std::vector<DiscoveryTypeVertex const*> v;
+  std::transform(
+      request_types_.begin(), request_types_.end(), std::back_inserter(v),
+      [](std::pair<std::string, DiscoveryTypeVertex const*> const& p) {
+        return p.second;
+      });
+  return v;
+}
+
 std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
   std::string output;
   std::size_t current = 0;
